@@ -1,0 +1,150 @@
+<?php
+/**
+ * Applicationクラス
+ * @author Ryuichi Tanaka
+ * @since 2011/08/19
+ */
+class Application {
+    /** appディレクトリ */
+    private $app_dir = "app";
+    /** ページ名 */
+    private $page_name;
+    /** ルーティング解決後のパラメータ */
+    private $route;
+    
+    /**
+     * アプリケーション共通で使用するクラスを初期化する
+     */
+    function __construct() {
+        /** プロジェクトディレクトリの絶対パスを定義 */
+        define('STREAM_ROOT', Utility::getRoot());
+        /** ドキュメントルートからプロジェクトディレクトリへのパスを定義 */
+        $request = new Request();
+        define('STREAM_BASE_URI', $request->getBaseURL());
+        define('STREAM_ROUTING_PATH', $request->getPathInfo());
+        /** streamのバージョン定義 */
+        define('STREAM_VERSION', '0.1.0');
+    }
+    
+    /**
+     * アプリケーションを起動する
+     */
+    public function run() {
+        try {
+            // ルーティングを解決する
+            $this->route = new Router();
+            // ページ名を設定
+            $this->page_name = $this->route->controller();
+            // ルーティングの解決に成功した場合、コントローラを呼び出す
+            if ($this->controller() && $this->action()) {
+                $this->runContoller();
+            }
+            // 静的ファイルを呼び出す
+            else if ($this->staticFile()) {
+                $view = new CoreView();
+                $file_path = STREAM_ROOT . "/" . $this->app_dir . 
+                    "/views/public" . $this->staticFile();
+                $view->renderPublicFile($file_path);
+            }
+            else if (false) {
+                
+            }
+            // 存在しないURLにアクセスしたときは404
+            else {
+                throw new ResoureceNotFoundException("Failed to resolve the routing");
+            }
+        }
+        // CSRFエラーの場合は400
+        catch (CsrfException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->error(400);
+        }
+        // ルーティング解決に失敗した場合は500
+        catch (RouterException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->error(500);
+        }
+        // リソース(URI)が見つからない場合は404
+        catch (ResoureceNotFoundException $e) {
+            Logger::error($e->getMessage() . ": " . STREAM_ROUTING_PATH);
+            $this->error(404);
+        }
+        // それ以外のエラーは500
+        catch (Exception $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->error(500);
+        }
+    }
+
+    /**
+     * コントローラを起動する
+     */
+    private function runContoller() {
+        // Controllerクラスをインポート
+        import($this->app_dir . "/controllers/AppController");
+        import($this->app_dir . "/controllers/" . $this->controller());
+        
+        // Controllerクラスを起動
+        $class = new ReflectionClass($this->controller());
+        $instance = $class->newInstance($this->app_dir, $this->page_name);
+        // before_filter
+        $before_filter = $class->getMethod("before");
+        $before_filter->invoke($instance);
+        // action
+        $action = $class->getMethod($this->action());
+        $action->invoke($instance, safetyIn($this->params()));
+        // after_filter
+        $after_filter = $class->getMethod("after");
+        $after_filter->invoke($instance);
+    }
+    
+    /**
+     * エラー画面を表示する
+     * @param int ステータスコード
+     */
+    private function error($status_code) {
+        $view = new CoreView();
+        $view->move($status_code);
+    }
+
+    /**
+     * コントローラ名を返却する
+     * @return String コントローラ名
+     */
+    private function controller() {
+        $controller = null;
+        if ($this->route->controller() !== null) {
+            // _[a-z]を[A-Z]に置換する
+            $controller = preg_replace_callback('/_(?=[a-z])(.+)/', create_function(
+                '$matches',
+                'return ucfirst($matches[1]);'
+            ), $this->route->controller());
+            $controller = ucfirst($controller) . "Controller";
+        }
+        return $controller;
+    }
+    
+    /**
+     * アクション名を返却する
+     * @return String アクション名
+     */
+    private function action() {
+        $action = null;
+        if ($this->route->action() !== null) {
+            $action = ucfirst($this->route->action());
+        }
+        return $action;
+    }
+    
+    /**
+     * パラメータを返却する
+     * @return Array パラメータ
+     */
+    private function params() {
+        return $this->route->params();
+    }
+    
+    private function staticFile() {
+        return $this->route->staticFile();
+    }
+}

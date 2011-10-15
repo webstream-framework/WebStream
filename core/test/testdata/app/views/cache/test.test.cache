@@ -1,0 +1,2 @@
+<form method="post" action="/eclipse/stream/core/test/testdata/csrf_post">
+        <input type="hidden" name="__CSRF_TOKEN__" value="<?php echo $__csrf_token__; ?>"></form>
