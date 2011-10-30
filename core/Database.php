@@ -39,7 +39,7 @@ class DatabaseCore {
             }
             // Sqlite
             else if ($dbms === self::SQLITE) {
-                $manager = new PDO("sqlite:" . STREAM_ROOT . "/db/" . $options["dbfile"]);
+                $manager = new PDO("sqlite:" . Utility::getRoot() . "/db/" . $options["dbfile"]);
             }
         }
         catch(PDOException $e) {

@@ -4,6 +4,7 @@
  */
 Router::setRule(
     array(
-        '/index' => "sample#index"
+        '/index' => "sample#index",
+        '/yuruyuri' => "yuru_yuri#execute"
     )
 );

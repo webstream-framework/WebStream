@@ -263,7 +263,7 @@ HTML;
         $s = preg_replace('/^<\?xml/', '<<?php ?>?xml', $s);
         $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $s);
-        $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1； ?>', $s);
+        $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1 ?>', $s);
         return $s;
     }
     

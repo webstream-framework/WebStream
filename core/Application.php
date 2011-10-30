@@ -46,9 +46,6 @@ class Application {
                     "/views/public" . $this->staticFile();
                 $view->renderPublicFile($file_path);
             }
-            else if (false) {
-                
-            }
             // 存在しないURLにアクセスしたときは404
             else {
                 throw new ResoureceNotFoundException("Failed to resolve the routing");
@@ -131,7 +128,11 @@ class Application {
     private function action() {
         $action = null;
         if ($this->route->action() !== null) {
-            $action = ucfirst($this->route->action());
+            // _[a-z]を[A-Z]に置換する
+            $action = preg_replace_callback('/_(?=[a-z])(.+)/', create_function(
+                '$matches',
+                'return ucfirst($matches[1]);'
+            ), $this->route->action());
         }
         return $action;
     }

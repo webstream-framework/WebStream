@@ -54,7 +54,7 @@ class Router {
                 // ルーティング定義(Controller#Action)が正しい場合
                 // _(アンダースコア)は許可するが、２回以上の連続の場合、末尾につく場合は許可しない
                 // NG例：my__blog, my_blog_
-                if (preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#([a-z0-9A-Z]+)$/', $ca, $matches)) {
+                if (preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
                     // アクション名にrender, errorが指定された場合
                     // 正しいルーティング定義のとき、かつ、render,errorが指定された場合にエラーとする
                     if (preg_match('/#((?:re(?:direct|nder)|l(?:ayout|oad)|before|after)$)/', $ca, $matches)) {
@@ -112,10 +112,9 @@ class Router {
                         }
                     }
                 }
-                
                 // プレースホルダを展開済みのパス定義が完全一致したときはController、Actionを展開する
                 if ($this->path_info === $expantion_path &&
-                    preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#([a-z0-9A-Z]+)$/', $ca, $matches)) {
+                    preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
                     $route["controller"] = $matches[1];
                     $route["action"] = $matches[2];
                 }
