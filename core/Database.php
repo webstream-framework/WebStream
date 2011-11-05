@@ -159,7 +159,14 @@ class Database extends DatabaseCore {
             $this->stmt = null;
             $this->execSQL($sql, $bind);
         }
-        return $this->stmt->fetch(PDO::FETCH_ASSOC);
+            
+        // 取得結果を連想配列に入れる
+        $result = array();
+        while ($row = $this->stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row;
+        }
+        
+        return $result;  
     }
 
     /**
