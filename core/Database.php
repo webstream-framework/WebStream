@@ -104,7 +104,8 @@ class Database extends DatabaseCore {
         try {
             $config = Utility::parseConfig(self::$config_path);
             $stmt = parent::getManager($config)->prepare($sql);
-            Logger::info("Executed: " . $sql);
+            Logger::info("Executed SQL: " . $sql);
+            Logger::info("Bind statement: " . implode(",", $bind));
             if ($stmt === false) {
                 throw new Exception("Can't create statement. - ". $sql);
             }
