@@ -17,6 +17,18 @@ class Utility {
     }
     
     /**
+     * プロジェクトディレクトリ名を返却する
+     * @return String プロジェクトディレクトリ名
+     */
+    public static function getProjectName() {
+        $pjname = null;
+        if (preg_match('/.*\/(.*)/', self::getRoot(), $matches)) {
+            $pjname = $matches[1];
+        }
+        return $pjname;
+    }
+    
+    /**
      * プロジェクトディレクトリの絶対パスを返す
      * @return String プロジェクトディレクトリの絶対パス
      */

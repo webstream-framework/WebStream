@@ -4,9 +4,8 @@
  * @author Ryuichi TANAKA.
  * @since 2011/08/25
  */
-require_once '../../core/AutoImport.php';
-import("core/test/UnitTestBase");
-
+require_once 'UnitTestBase.php';
+ 
 class LoggerTest extends UnitTestBase {
     private $logger;
     private $logfile;
@@ -30,13 +29,13 @@ class LoggerTest extends UnitTestBase {
     
     public function tearDown() {
         // TODO ログファイルを削除する処理
-        // unlink($this->logfile);
+        unlink($this->logfile);
     }
  
     /**
      * 正常系
      * エラーメッセージのみ指定された場合、ログレベルが「debug」のログを書き出せること
-     * @dataProvider testOkWriteDebugProvider
+     * @dataProvider writeDebugProvider
      */
     public function testOkWriteDebug($msg) {
         $method = $this->logger->getMethod("debug");
@@ -58,7 +57,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「debug」のログを書き出せること
-     * @dataProvider testOkWriteDebugWithStackTraceProvider
+     * @dataProvider writeDebugWithStackTraceProvider
      */
     public function testOkWriteDebugWithStackTrace($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("debug");
@@ -80,7 +79,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージのみ指定された場合、ログレベルが「info」のログを書き出せること
-     * @dataProvider testOkWriteInfoProvider
+     * @dataProvider writeInfoProvider
      */
     public function testOkWriteInfo($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("info");
@@ -102,7 +101,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「debug」のログを書き出せること
-     * @dataProvider testOkWriteInfoWithStackTraceProvider
+     * @dataProvider writeInfoWithStackTraceProvider
      */
     public function testOkWriteInfoWithStackTrace($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("info");
@@ -124,7 +123,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージのみ指定された場合、ログレベルが「warn」のログを書き出せること
-     * @dataProvider testOkWriteWarnProvider
+     * @dataProvider writeWarnProvider
      */
     public function testOkWriteWarn($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("warn");
@@ -146,7 +145,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「warn」のログを書き出せること
-     * @dataProvider testOkWriteWarnWithStackTraceProvider
+     * @dataProvider writeWarnWithStackTraceProvider
      */
     public function testOkWriteWarnWithStackTrace($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("warn");
@@ -168,7 +167,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージのみ指定された場合、ログレベルが「error」のログを書き出せること
-     * @dataProvider testOkWriteErrorProvider
+     * @dataProvider writeErrorProvider
      */
     public function testOkWriteError($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("error");
@@ -190,7 +189,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「error」のログを書き出せること
-     * @dataProvider testOkWriteErrorWithStackTraceProvider
+     * @dataProvider writeErrorWithStackTraceProvider
      */
     public function testOkWriteErrorWithStackTrace($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("error");
@@ -212,7 +211,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージのみ指定された場合、ログレベルが「fatal」のログを書き出せること
-     * @dataProvider testOkWriteFatalProvider
+     * @dataProvider writeFatalProvider
      */
     public function testOkWriteFatal($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("fatal");
@@ -234,7 +233,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 正常系
      * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「fatal」のログを書き出せること
-     * @dataProvider testOkWriteFatalWithStackTraceProvider
+     * @dataProvider writeFatalWithStackTraceProvider
      */
     public function testOkWriteFatalWithStackTrace($msg, $stacktrace = null) {
         $method = $this->logger->getMethod("fatal");

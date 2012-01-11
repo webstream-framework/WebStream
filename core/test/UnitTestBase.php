@@ -4,11 +4,13 @@
  * @author Ryuichi TANAKA.
  * @since 2011/08/25
  */
-importAll("core");
-
 class UnitTestBase extends PHPUnit_Framework_TestCase {
     /** テスト用ルートURL */
-    protected $root_url = "http://localhost/eclipse/stream/core/test/testdata";
+    protected $document_root = "http://localhost/eclipse/";
+    protected $project_name = "stream";
+    protected $testdata_dir = "/core/test/testdata";
+    protected $root_url;
+
     /** テスト用ログディレクトリ */
     protected $log_dir = "core/test/testdata/log";
     /** テスト用データベース(MySQL)設定ファイル */
@@ -17,187 +19,207 @@ class UnitTestBase extends PHPUnit_Framework_TestCase {
     protected $cache_dir_777 = "/core/test/testdata/cache_777";
     /** テスト用のキャッシュファイル(000)ディレクトリ */
     protected $cache_dir_000 = "/core/test/testdata/cache_000";
-    
+
     protected $create_sql = <<< SQL
 CREATE TABLE stream_test (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-);    
+);
 SQL;
 
     protected $drop_sql = "DROP TABLE stream_test";
-    
+
+    public function setUp() {
+        $this->loadModule();
+    }
+
+    private function loadModule() {
+        require_once $this->getRoot() . "/core/AutoImport.php";
+        importAll("core");
+        $this->root_url = $this->document_root . $this->project_name . $this->testdata_dir;
+    }
+
+    private function getRoot() {
+        $current = dirname(__FILE__);
+        $path_hierarchy_list = explode(DIRECTORY_SEPARATOR, $current);
+        array_pop($path_hierarchy_list);
+        array_pop($path_hierarchy_list);
+        $project_root = implode("/", $path_hierarchy_list);
+
+        return is_dir($project_root) ? $project_root : null;
+    }
+
     /**
      * データプロバイダ
      */
-    public function testOkResolveRootPathProvider() {
+    public function resolveRootPathProvider() {
         return array(
             array('/', "test#test1")
         );
     }
-    
-    public function testOkResolveWithoutPlaceHolderProvider() {
+
+    public function resolveWithoutPlaceHolderProvider() {
         return array(
             array('/top', "test#test2")
         );
     }
-    
-    public function testOkResolveWithPlaceHolderProvider() {
+
+    public function resolveWithPlaceHolderProvider() {
         return array(
             array('/top/:id', "test#test3", "test3")
         );
     }
-    
-    public function testOkResolveCamelActionProvider() {
+
+    public function resolveCamelActionProvider() {
         return array(
             array('/action')
         );
     }
-    
-    public function testOkResolveWithPlaceHolderFormatProvider() {
+
+    public function resolveWithPlaceHolderFormatProvider() {
         return array(
             array('/feed.rss')
         );
     }
-    
-    public function testOkSnakeControllerProvider() {
+
+    public function snakeControllerProvider() {
         return array(
             array("/snake")
         );
     }
-    
-    public function testOkUriWithEncodedStringProvider() {
+
+    public function uriWithEncodedStringProvider() {
         return array(
             array('/encoded/%E3%81%A6%E3%81%99%E3%81%A8', 'てすと')
         );
     }
-    
-    public function testNgResolveUnknownProvider() {
+
+    public function resolveUnknownProvider() {
         return array(
             array('/notfound/controller', "notfound#test"),
             array('/notfound/action', "test#notfound")
         );
     }
-    
-    public function testNgResolveNotDefinePathProvider() {
+
+    public function resolveNotDefinePathProvider() {
         return array(
             array('/notdefine', "notdefine#path")
         );
     }
-    
-    public function testNgResolveRenderProvider() {
+
+    public function resolveRenderProvider() {
         return array(
             array('/render')
         );
     }
-    
-    public function testNgResolveLayoutProvider() {
+
+    public function resolveLayoutProvider() {
         return array(
             array('/layout')
         );
     }
 
-    public function testNgResolveRerdirectProvider() {
+    public function resolveRerdirectProvider() {
         return array(
             array('/redirect')
         );
     }
-    
-    public function testNgResolveLoadProvider() {
+
+    public function resolveLoadProvider() {
         return array(
             array('/load')
         );
     }
 
-    public function testNgResolveBeforeProvider() {
+    public function resolveBeforeProvider() {
         return array(
             array('/before')
         );
     }
 
-    public function testNgResolveAfterProvider() {
+    public function resolveAfterProvider() {
         return array(
             array('/after')
         );
     }
-    
-    public function testNgResolveCamelControllerProvider() {
+
+    public function resolveCamelControllerProvider() {
         return array(
             array('/error2', 'Test#test1'),
             array('/error3', 'teSt#test1'),
             array('/error3', '1test#test1')
         );
     }
-    
-    public function testOkWriteDebugProvider() {
+
+    public function writeDebugProvider() {
         return array(
             array("debug message")
         );
     }
-    
-    public function testOkWriteDebugWithStackTraceProvider() {
+
+    public function writeDebugWithStackTraceProvider() {
         return array(
             array("debug message", "#0 /path/to/test.php(0)")
         );
     }
-    
-    public function testOkWriteInfoProvider() {
+
+    public function writeInfoProvider() {
         return array(
             array("info message")
         );
     }
-    
-    public function testOkWriteInfoWithStackTraceProvider() {
+
+    public function writeInfoWithStackTraceProvider() {
         return array(
             array("info message", "#0 /path/to/test.php(0)")
         );
     }
-    
-    public function testOkWriteWarnProvider() {
+
+    public function writeWarnProvider() {
         return array(
             array("warn message")
         );
     }
-    
-    public function testOkWriteWarnWithStackTraceProvider() {
+
+    public function writeWarnWithStackTraceProvider() {
         return array(
             array("warn message", "#0 /path/to/test.php(0)")
         );
     }
-    
-    public function testOkWriteErrorProvider() {
+
+    public function writeErrorProvider() {
         return array(
             array("error message")
         );
     }
-    
-    public function testOkWriteErrorWithStackTraceProvider() {
+
+    public function writeErrorWithStackTraceProvider() {
         return array(
             array("error message", "#0 /path/to/test.php(0)")
         );
     }
-    
-    public function testOkWriteFatalProvider() {
+
+    public function writeFatalProvider() {
         return array(
             array("fatal message")
         );
     }
-    
-    public function testOkWriteFatalWithStackTraceProvider() {
+
+    public function writeFatalWithStackTraceProvider() {
         return array(
             array("fatal message", "#0 /path/to/test.php(0)")
         );
     }
-    
-    public function testNgResolveInvalidPathProvider() {
+
+    public function resolveInvalidPathProvider() {
         return array(
             array('/0aaa'),  // 先頭が数字
             array('/,aaa'),  // 先頭が半角英数ハイフンドットアンスコ以外
             array('/aaa,a'), // 途中にカンマ
         );
     }
-    
-    public function testNgProhibitPathProvider() {
+
+    public function prohibitPathProvider() {
         return array(
             array("/img"),
             array("/img/"),
@@ -210,48 +232,48 @@ SQL;
             array("/css/xxx")
         );
     }
-    
-    public function testNgMultipleSnakeControllerProvider() {
+
+    public function multipleSnakeControllerProvider() {
         return array(
             array("/snake_ng1"),
             array("/snake_ng2")
         );
     }
 
-    public function testNgUriWithoutUtf8EncodedStringProvider() {
+    public function uriWithoutUtf8EncodedStringProvider() {
         return array(
-            array('/encoded/てすと', 'てすと'),
             array('/encoded/%A4%C6%A4%B9%A4%C8', 'てすと'), // EUC-JP
             array('/encoded/%82%C4%82%B7%82%C6', 'てすと')  // Shift_JIS
         );
     }
-    
-    public function testNgWithNullByteProvider() {
+
+    public function withNullByteProvider() {
         return array(
             array('/encoded/%00')
         );
     }
-    
-    public function testOkDeleteInvisibleCharacterProvider() {
+
+    public function deleteInvisibleCharacterProvider() {
         return array(
             array('%E3%81%82%00%08%09', '%E3%81%82%09') // 00,08は制御文字
         );
     }
-    
-    public function testOkReplaceXSSStringsProvider() {
+
+    public function replaceXSSStringsProvider() {
         return array(
             array('<div>\\a\t\n\r\r\n<!-- --><![CDATA[</div>',
                   '&lt;div&gt;\\\\a&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/>&lt;!-- --&gt;&lt;![CDATA[&lt;/div&gt;')
         );
     }
-    
-    public function testOkCreateCacheCustomDirProvider() {
+
+    public function createCacheCustomDirProvider() {
+        $this->loadModule();
         return array(
             array(Utility::getRoot() . $this->cache_dir_777)
         );
     }
-    
-    public function testOkSaveProvider() {
+
+    public function saveProvider() {
         import("core/Cache");
         return array(
             array("cache_test_save_string", "abcde"),
@@ -260,47 +282,55 @@ SQL;
             array("cache_test_save_object", new Cache())
         );
     }
-    
-    public function testOkMetaDataProvider() {
+
+    public function metaDataProvider() {
         return array(
             array("cache_test_metadata"),
             array("cache_test_metadata_ttl", 10)
         );
     }
-    
-    public function testOkDeleteCacheProvider() {
+
+    public function deleteCacheProvider() {
         return array(
             array("cache_test_delete")
         );
     }
-    
-    public function testOkOverwriteSaveProvider() {
+
+    public function overwriteSaveProvider() {
         return array(
             array("cache_test_overwrite_save", "abcde", "fghij")
         );
     }
-    
-    public function testNgInvalidSaveDirProvider() {
+
+    public function invalidSaveDirProvider() {
         return array(
             array("/dummy")
         );
     }
-    
-    public function testNgCreateCacheCustomDirProvider() {
+
+    public function createCacheCustomDir000Provider() {
+        $this->loadModule();
         return array(
             array(Utility::getRoot() . $this->cache_dir_000)
         );
     }
-    
-    public function testNgInvalidDeletePathProvider() {
+
+    public function invalidDeletePathProvider() {
         return array(
             array("dummy")
         );
     }
-    
-    public function testNgTimeOverCacheProvider() {
+
+    public function timeOverCacheProvider() {
         return array(
             array("cache_test_time_over", 1)
+        );
+    }
+    
+    public function resolveSimilarUrlProvider() {
+        return array(
+            array("/similar/name", "similar1"),
+            array("/similar/name/2", "similar2")
         );
     }
 }

@@ -4,8 +4,7 @@
  * @author Ryuichi TANAKA.
  * @since 2011/10/08
  */
-require_once '../../core/AutoImport.php';
-import("core/test/UnitTestBase");
+require_once 'UnitTestBase.php';
 
 class CacheTest extends UnitTestBase {
     private $cache_id = "cache_test";
@@ -28,7 +27,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 正常系
      * キャッシュファイルを指定ディレクトリに作成できること
-     * @dataProvider testOkCreateCacheCustomDirProvider
+     * @dataProvider createCacheCustomDirProvider
      */
     public function testOkCreateCacheCustomDir($dir) {
         $cache = new Cache($dir);
@@ -39,7 +38,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 正常系
      * キャッシュファイルにデータを保存できること
-     * @dataProvider testOkSaveProvider
+     * @dataProvider saveProvider
      */
     public function testOkSave($cache_id, $data) {
         $cache = new Cache();
@@ -51,11 +50,11 @@ class CacheTest extends UnitTestBase {
     /**
      * 正常系
      * キャッシュファイルからメタデータを取得できること
-     * @dataProvider testOkMetaDataProvider
+     * @dataProvider metaDataProvider
      */
     public function testOkMetaData($cache_id, $ttl = 60) {
         $cache = new Cache();
-        $cache->save($cache_id, $this->save_data_str, $ttl);
+        $cache->save($cache_id, $this->save_data_str, $ttl, true);
         $meta = $cache->meta($cache_id);
         $this->assertEquals($meta["ttl"], $ttl);
     }
@@ -63,7 +62,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 正常系
      * キャッシュファイルを削除できること
-     * @dataProvider testOkDeleteCacheProvider
+     * @dataProvider deleteCacheProvider
      */
     public function testOkDeleteCache($cache_id) {
         $cache = new Cache();
@@ -76,7 +75,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 正常系
      * キャッシュファイルを上書きして保存できること
-     * @dataProvider testOkOverwriteSaveProvider
+     * @dataProvider overwriteSaveProvider
      */
     public function testOkOverwriteSave($cache_id, $before_data, $after_data) {
         $cache = new Cache();
@@ -90,7 +89,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 異常系
      * 存在しないディレクトリにキャッシュファイルを保存できないこと
-     * @dataProvider testNgInvalidSaveDirProvider
+     * @dataProvider invalidSaveDirProvider
      */
     public function testNgInvalidSaveDir($dir) {
         $cache = new Cache($dir);
@@ -100,7 +99,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 異常系
      * 書き込み権限のないディレクトリにキャッシュファイルを保存できないこと
-     * @dataProvider testNgCreateCacheCustomDirProvider
+     * @dataProvider createCacheCustomDirProvider
      */
     public function testNgCreateCacheCustomDir($dir) {
         $cache = new Cache($dir);
@@ -110,7 +109,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 異常系
      * 存在しないキャッシュファイルは削除できないこと
-     * @dataProvider testNgInvalidDeletePathProvider
+     * @dataProvider invalidDeletePathProvider
      */
     public function testNgInvalidDeletePath($cache_id) {
         $cache = new Cache();
@@ -120,7 +119,7 @@ class CacheTest extends UnitTestBase {
     /**
      * 異常系
      * 有効期限を過ぎたキャッシュは取得できず、キャッシュは削除されること
-     * @dataProvider testNgTimeOverCacheProvider
+     * @dataProvider timeOverCacheProvider
      */
     public function testNgTimeOverCache($cache_id, $ttl) {
         $cache = new Cache();

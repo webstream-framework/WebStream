@@ -64,4 +64,18 @@ class TestController extends CoreController {
     public function testEncoded($params) {
         echo $params["name"];
     }
+    
+    /**
+     * 定義名が部分一致する場合のテスト1
+     */
+    public function testSimilar1() {
+        echo "similar1";
+    }
+
+    /**
+     * 定義名が部分一致する場合のテスト2
+     */
+    public function testSimilar2($params) {
+        echo "similar". $params["page"];
+    }
 }

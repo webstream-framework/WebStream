@@ -4,8 +4,7 @@
  * @author Ryuichi TANAKA.
  * @since 2011/09/10
  */
-require_once '../../core/AutoImport.php';
-import("core/test/UnitTestBase");
+require_once 'UnitTestBase.php';
 
 class DatabaseTest extends UnitTestBase {
     private $db;
@@ -47,7 +46,7 @@ class DatabaseTest extends UnitTestBase {
         ));
         // SELECT
         $result = $this->db->select("SELECT name FROM stream_test");
-        $name = $result["name"];
+        $name = $result[0]["name"];
         $this->assertEquals("select test", $name);
         
     }
@@ -67,7 +66,7 @@ class DatabaseTest extends UnitTestBase {
         ));
         // SELECT
         $result = $this->db->select("SELECT name FROM stream_test");
-        $name = $result["name"];
+        $name = $result[0]["name"];
         $this->assertEquals("update test", $name);
     }
     

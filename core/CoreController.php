@@ -28,7 +28,7 @@ class CoreController {
         $this->session = Session::start();
         $this->request = new Request();
         $this->csrf();
-        $this->load(ucfirst($page_name) . "Service");
+        $this->load($page_name);
     }
     
     /**
@@ -53,13 +53,22 @@ class CoreController {
      * @param String Serviceクラス名
      */
     final private function load($service_name) {
+        // _[a-z]を[A-Z]に置換する
+        $service_name = ucfirst(preg_replace_callback('/_(?=[a-z])(.+)/', create_function(
+            '$matches',
+            'return ucfirst($matches[1]);'
+        ), $service_name));
+        
+        $service_class = $service_name . "Service";
+        
         // Serviceクラスをインポート
         $service_ins = null;
-        if (import($this->app_dir . "/services/" . $service_name)) {
-            $class = new ReflectionClass($service_name);
-            $service_ins = $class->newInstance($this->app_dir, $this->page_name);
+        if (import($this->app_dir . "/services/" . $service_class)) {
+            $class = new ReflectionClass($service_class);
+            $service_ins = $class->newInstance($this->app_dir, $service_name);
         }
-        $this->{ucfirst($this->page_name)} = $service_ins;
+
+        $this->{$service_name} = $service_ins;
     }
     
     /**

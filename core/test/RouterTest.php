@@ -4,8 +4,7 @@
  * @author Ryuichi TANAKA.
  * @since 2011/08/25
  */
-require_once '../../core/AutoImport.php';
-import("core/test/UnitTestBase");
+require_once 'UnitTestBase.php';
 
 class RouterTest extends UnitTestBase {
     private $route;
@@ -13,7 +12,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 正常系
      * ルートパス(/)にアクセスできること
-     * @dataProvider testOkResolveRootPathProvider
+     * @dataProvider resolveRootPathProvider
      */
     public function testOkResolveRootPath($path, $ca) {
         $url = $this->root_url . $path;
@@ -24,7 +23,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 正常系
      * プレースホルダなしのパス(/top)にアクセスできること
-     * @dataProvider testOkResolveWithoutPlaceHolderProvider
+     * @dataProvider resolveWithoutPlaceHolderProvider
      */
     public function testOkResolveWithoutPlaceHolder($path, $ca) {
         $url = $this->root_url . $path;
@@ -35,7 +34,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 正常系
      * プレースホルダなしのパス(/top)にアクセスできること
-     * @dataProvider testOkResolveWithPlaceHolderProvider
+     * @dataProvider resolveWithPlaceHolderProvider
      */
     public function testOkResolveWithPlaceHolder($path, $ca, $param) {
         $path = preg_replace('/:[a-zA-Z0-9]+/', $param,  $path, 1);
@@ -47,7 +46,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 正常系
      * アクション名がキャメルケースの場合、正常に実行出来ること
-     * @dataProvider testOkResolveCamelActionProvider
+     * @dataProvider resolveCamelActionProvider
      */
     public function testOkResolveCamelAction($path) {
         $url = $this->root_url . $path;
@@ -58,7 +57,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 正常系
      * 拡張子指定のようなプレースホルダ定義(/feed.:format)にアクセスできること
-     * @dataProvider testOkResolveWithPlaceHolderFormatProvider
+     * @dataProvider resolveWithPlaceHolderFormatProvider
      */
     public function testOkResolveWithPlaceHolderFormat($path) {
         $url = $this->root_url . $path;
@@ -70,7 +69,7 @@ class RouterTest extends UnitTestBase {
      * 正常系
      * コントローラ名の指定にアンダースコアが含まれている場合、キャメルケースに変換された
      * コントローラクラスにアクセスできること
-     * @dataProvider testOkSnakeControllerProvider
+     * @dataProvider snakeControllerProvider
      */
     public function testOkSnakeController($path) {
         $url = $this->root_url . $path;
@@ -82,7 +81,7 @@ class RouterTest extends UnitTestBase {
      * 正常系
      * プレースホルダにURLエンコードされた文字列が指定された場合、
      * 正常にアクセスでき、文字化けしないこと
-     * @dataProvider testOkUriWithEncodedStringProvider
+     * @dataProvider uriWithEncodedStringProvider
      */
     public function testOkUriWithEncodedString($path, $str) {
         $url = $this->root_url . $path;
@@ -93,9 +92,22 @@ class RouterTest extends UnitTestBase {
     }
     
     /**
+     * 正常系
+     * ルーティング定義の前半部分一致が起きる場合でも正常にパスの解決ができること
+     * @dataProvider resolveSimilarUrlProvider
+     */
+    public function testOkResolveSimilarUrl($path, $str) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $str);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
+    
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
-     * @dataProvider testNgResolveUnknownProvider
+     * @dataProvider resolveUnknownProvider
      */
     public function testNgResolveUnknown($path, $ca) {
         $url = $this->root_url . $path;
@@ -107,7 +119,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * routes.phpに未定義のパスが指定された場合、404エラーになること
-     * @dataProvider testNgResolveNotDefinePathProvider
+     * @dataProvider resolveNotDefinePathProvider
      */
     public function testNgResolveNotDefinePath($path, $ca) {
         $url = $this->root_url . $path;
@@ -119,7 +131,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * renderメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider testNgResolveRenderProvider
+     * @dataProvider resolveRenderProvider
      */
     public function testNgResolveRender($path) {
         $url = $this->root_url . $path;
@@ -131,7 +143,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * layoutメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider testNgResolveLayoutProvider
+     * @dataProvider resolveLayoutProvider
      */
     public function testNgResolveLayout($path) {
         $url = $this->root_url . $path;
@@ -143,7 +155,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * redirectメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider testNgResolveLayoutProvider
+     * @dataProvider resolveLayoutProvider
      */
     public function testNgResolveRedirect($path) {
         $url = $this->root_url . $path;
@@ -155,7 +167,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * loadメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider testNgResolveLoadProvider
+     * @dataProvider resolveLoadProvider
      */
     public function testNgResolveLoad($path) {
         $url = $this->root_url . $path;
@@ -167,7 +179,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * beforeメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider testNgResolveBeforeProvider
+     * @dataProvider resolveBeforeProvider
      */
     public function testNgResolveBefore($path) {
         $url = $this->root_url . $path;
@@ -179,7 +191,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * afterメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider testNgResolveAfterProvider
+     * @dataProvider resolveAfterProvider
      */
     public function testNgResolveAfter($path) {
         $url = $this->root_url . $path;
@@ -191,7 +203,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * コントローラ名に半角小文字英字、数字以外が含まれている場合、500エラーになること
-     * @dataProvider testNgResolveCamelControllerProvider
+     * @dataProvider resolveCamelControllerProvider
      */
     public function testNgResolveCamelController($path, $ca) {
         $url = $this->root_url . $path;
@@ -203,8 +215,8 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * ルーティングルールが指定された文字以外で構成されていた場合、例外が発生すること
-     * @dataProvider testNgResolveInvalidPathProvider
-     * @expectedException Exception
+     * @dataProvider resolveInvalidPathProvider
+     * @expectedException RouterException
      */
     public function testNgResolveInvalidPath($path) {
         Router::setRule(array(
@@ -216,8 +228,8 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * ルーティングルールに静的ファイルへのパスが指定された場合、例外が発生すること
-     * @dataProvider testNgProhibitPathProvider
-     * @expectedException Exception
+     * @dataProvider prohibitPathProvider
+     * @expectedException RouterException
      */
     public function testNgProhibitPath($path) {
         Router::setRule(array(
@@ -229,7 +241,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * コントローラ名の指定にアンダースコアの連続が含まれている場合、500エラーになること
-     * @dataProvider testNgMultipleSnakeControllerProvider
+     * @dataProvider multipleSnakeControllerProvider
      */
     public function testNgMultipleSnakeController($path) {
         $url = $this->root_url . $path;
@@ -242,7 +254,7 @@ class RouterTest extends UnitTestBase {
      * 異常系
      * プレースホルダにURLエンコードされていない文字列またはUTF-8以外でエンコードした場合、
      * 200が返ってくるが、文字化けしていること
-     * @dataProvider testNgUriWithoutUtf8EncodedStringProvider
+     * @dataProvider uriWithoutUtf8EncodedStringProvider
      */
     public function testNgUriWithoutUtf8EncodedString($path, $str) {
         $url = $this->root_url . $path;
@@ -255,7 +267,7 @@ class RouterTest extends UnitTestBase {
     /**
      * 異常系
      * NULLバイトが含まれるURLが指定された場合、404エラーになること
-     * @dataProvider testNgWithNullByteProvider
+     * @dataProvider withNullByteProvider
      */
     public function testNgUriWithNullByte($path) {
         $url = $this->root_url . $path;

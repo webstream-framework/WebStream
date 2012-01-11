@@ -41,12 +41,12 @@ class Router {
             // 静的ファイルへのパスがルーティングルールに定義された場合
             // パス定義された時点で弾く
             if (preg_match('/\/(img|js|css)(?:$|\/)/', $path)) {
-                throw new Exception("Include the prohibit routing path: " . $path);
+                throw new RouterException("Include the prohibit routing path: " . $path);
             }
             
             // 許可したルーティングパス定義に合っていなければ弾く
             if (!preg_match('/^\/{1}(?:$|[a-zA-Z]{1}[a-zA-Z0-9.-_\/]*$)/', $path)) {
-                throw new Exception("Invalid path defintion: " . $path);
+                throw new RouterException("Invalid path defintion: " . $path);
             }
             // ルールとURLがマッチした場合に動的にチェックを掛ける
             // パスがマッチしたときにアクション名をチェックし、その時点で弾く
@@ -58,12 +58,12 @@ class Router {
                     // アクション名にrender, errorが指定された場合
                     // 正しいルーティング定義のとき、かつ、render,errorが指定された場合にエラーとする
                     if (preg_match('/#((?:re(?:direct|nder)|l(?:ayout|oad)|before|after)$)/', $ca, $matches)) {
-                        throw new Exception("Invalid action definition: " . $matches[1]);
+                        throw new RouterException("Invalid action definition: " . $matches[1]);
                     }
                 }
                 // ルーティング定義(Controller#Action)が正しくない場合
                 else {
-                    throw new Exception("Invalid controller#action definition: " . $ca);
+                    throw new RouterException("Invalid controller#action definition: " . $ca);
                 }
             }
         }
@@ -100,7 +100,9 @@ class Router {
                 }
                 // プレースホルダのパラメータをセット
                 $expantion_path = $path;
-                if ($this->path_info !== $path) {
+                // PATH_INFOの階層数とルーティング定義の階層数が一致すればルーティングがマッチ
+                if (($this->path_info !== $path) &&
+                     count(explode('/', $path)) === count(explode('/', $this->path_info))) {
                     // プレースホルダと実URLをひもづける
                     $path_pattern = "/^\/" . implode("\/", $tokens) . "$/";
                     if (preg_match($path_pattern, $this->path_info, $matches)) {

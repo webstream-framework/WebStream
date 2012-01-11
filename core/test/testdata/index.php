@@ -1,3 +1,2 @@
 <?php
-require "bootstrapTest.php";
-?>
+require "bootstrap.php";

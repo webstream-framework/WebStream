@@ -4,9 +4,8 @@
  * @author Ryuichi TANAKA.
  * @since 2011/10/01
  */
-require_once '../../core/AutoImport.php';
-import("core/test/UnitTestBase");
-
+require_once 'UnitTestBase.php';
+ 
 class HttpAgentTest extends UnitTestBase {
     const URL_OK = "http://www.yahoo.co.jp";
     const URL_RSS = "http://headlines.yahoo.co.jp/rss/itmedia_ait.xml";

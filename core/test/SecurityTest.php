@@ -4,20 +4,20 @@
  * @author Ryuichi TANAKA.
  * @since 2011/09/17
  */
-require_once '../../core/AutoImport.php';
-import("core/test/UnitTestBase");
+require_once 'UnitTestBase.php';
 
 class SecurityTest extends UnitTestBase {
     private $security;
     
     public function setUp() {
+        parent::setUp();
         $this->security = new Security();
     }
     
     /**
      * 正常系
      * URLエンコード済みの文字列に制御文字列がある場合、削除されること
-     * @dataProvider testOkDeleteInvisibleCharacterProvider
+     * @dataProvider deleteInvisibleCharacterProvider
      */
     public function testOkDeleteInvisibleCharacter($within_invisible_str, $without_invisible_str) {
         $this->assertEquals($this->security->safetyIn($within_invisible_str), 
@@ -27,7 +27,7 @@ class SecurityTest extends UnitTestBase {
     /**
      * 正常系
      * XSS対象の文字列を置換できること
-     * @dataProvider testOkReplaceXSSStringsProvider
+     * @dataProvider replaceXSSStringsProvider
      */
     public function testOkReplaceXSSStrings($within_xss_html, $without_xss_html) {
         $this->assertEquals($this->security->safetyOut($within_xss_html), $without_xss_html);
