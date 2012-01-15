@@ -32,6 +32,17 @@ class TestController extends CoreController {
         echo "testAction";
     }
     
+    /**
+     * 長いアクション名のテスト
+     * path: /action2
+     */
+    public function testActionHogeFuga() {
+        echo "testAction2";
+    }
+    
+    /**
+     * フィードのテスト
+     */
     public function testFeed($params) {
         echo $params["format"];
     }
@@ -54,7 +65,6 @@ class TestController extends CoreController {
      * CsrfのPOSTテスト
      */
     public function testCsrfPost() {
-        var_dump(session_id());
         echo "csrf post is ok.";
     }
     

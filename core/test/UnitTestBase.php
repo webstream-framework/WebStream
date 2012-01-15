@@ -45,8 +45,18 @@ SQL;
         array_pop($path_hierarchy_list);
         array_pop($path_hierarchy_list);
         $project_root = implode("/", $path_hierarchy_list);
-
         return is_dir($project_root) ? $project_root : null;
+    }
+    
+    /**
+     * テスト用にログ出力設定を変更する
+     */
+    protected function getLogFilePathForTest() {
+        $class = new ReflectionClass("Logger");
+        $property = $class->getProperty("log_filename");
+        $property->setAccessible(true);
+        $log_filename = $property->getValue();
+        return Utility::getRoot() . '/' . $this->log_dir . '/' . $log_filename;
     }
 
     /**
@@ -72,7 +82,8 @@ SQL;
 
     public function resolveCamelActionProvider() {
         return array(
-            array('/action')
+            array('/action', "testAction"),
+            array('/action2', "testAction2")
         );
     }
 
@@ -84,7 +95,8 @@ SQL;
 
     public function snakeControllerProvider() {
         return array(
-            array("/snake")
+            array("/snake", "snake"),
+            array("/snake2", "snake2")
         );
     }
 
@@ -333,4 +345,67 @@ SQL;
             array("/similar/name/2", "similar2")
         );
     }
+    
+    public function noServiceClass() {
+        return array(
+            array("/no_service", "no service class")
+        );
+    }
+    
+    public function noServiceMethod() {
+        return array(
+            array("/no_service2", "no service method")
+        );
+    }
+    
+    public function noServiceNoModel() {
+        return array(
+            array('/no_service_no_model', "TestNoServiceAndModelService and TestNoServiceAndModelModel is not defined.")
+        );
+    }
+    
+    public function existServiceExistModelNoMethod() {
+        return array(
+            array('/exist_service_exist_model_no_method', "TestExistServiceExistModelNoMethodService#get is not defined.")
+        );
+    }
+    
+    public function noServiceExistModelNoMethod() {
+        return array(
+            array("/no_service_exist_model_no_method", "TestNoServiceExistModelNoMethodModel#get is not defined.")
+        );
+    }
+    
+    public function existServiceNoModelNoMethod() {
+        return array(
+            array("/exist_service_no_model_no_method", "TestExistServiceNoModelNoMethodService#get is not defined.")
+        );
+    }
+    
+    public function camel2SnakeProvider() {
+        return array(
+            array("test", "Test"),
+            array("test_hoge", "TestHoge"),
+            array("test_hoge", "testHoge"),
+            array("test_hoge_hoge", "TestHogeHoge"),
+            array("test_hoge_hoge", "testHogeHoge")
+        );
+    }
+    
+    public function renderTemplateProvider() {
+        return array(
+            array('/view1', "test_view"),
+            array('/view2', "test_view_sub"),
+            array('/view3', "test_aaa_bbb_view"),
+            array('/view4', "test_aaa_bbb_view_sub"),
+        );
+    }
+    
+    public function renderLayoutTemplateProvider() {
+        return array(
+            array('/layout1', "test_layout_view"),
+            array('/layout2', "test_layout_view_sub")
+        );
+    }
+    
 }

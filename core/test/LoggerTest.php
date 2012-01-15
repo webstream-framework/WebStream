@@ -11,6 +11,7 @@ class LoggerTest extends UnitTestBase {
     private $logfile;
     
     public function setUp() {
+        parent::setUp();
         // ログ出力ディレクトリ、ログレベルをテスト用に変更
         $class = new ReflectionClass("Logger");
         $property = $class->getProperty("log_dir");
@@ -28,8 +29,7 @@ class LoggerTest extends UnitTestBase {
     }
     
     public function tearDown() {
-        // TODO ログファイルを削除する処理
-        unlink($this->logfile);
+        //unlink($this->logfile);
     }
  
     /**

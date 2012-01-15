@@ -9,6 +9,10 @@ require_once 'UnitTestBase.php';
 class RouterTest extends UnitTestBase {
     private $route;
     
+    public function setUp() {
+        parent::setUp();
+    }
+    
     /**
      * 正常系
      * ルートパス(/)にアクセスできること
@@ -48,10 +52,10 @@ class RouterTest extends UnitTestBase {
      * アクション名がキャメルケースの場合、正常に実行出来ること
      * @dataProvider resolveCamelActionProvider
      */
-    public function testOkResolveCamelAction($path) {
+    public function testOkResolveCamelAction($path, $str) {
         $url = $this->root_url . $path;
         $response = file_get_contents($url);
-        $this->assertEquals($response, "testAction");
+        $this->assertEquals($response, $str);
     }
     
     /**
@@ -71,10 +75,10 @@ class RouterTest extends UnitTestBase {
      * コントローラクラスにアクセスできること
      * @dataProvider snakeControllerProvider
      */
-    public function testOkSnakeController($path) {
+    public function testOkSnakeController($path, $str) {
         $url = $this->root_url . $path;
         $response = file_get_contents($url);
-        $this->assertEquals($response, "snake");
+        $this->assertEquals($response, $str);
     }
     
     /**
@@ -97,6 +101,58 @@ class RouterTest extends UnitTestBase {
      * @dataProvider resolveSimilarUrlProvider
      */
     public function testOkResolveSimilarUrl($path, $str) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $str);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
+    
+    /**
+     * 正常系
+     * Serviceクラスが存在しない場合、直接Modelクラスを呼び出せること
+     * @dataProvider noServiceClass
+     */
+    public function testOkNoServiceClass($path, $str) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $str);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
+    
+    /**
+     * 正常系
+     * Serviceクラスに該当するメソッドがない場合、Modelクラスのメソッドに移譲できること
+     * @dataProvider noServiceMethod
+     */
+    public function testOkNoServiceMethod($path, $str) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $str);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
+    
+    /**
+     * 正常系
+     * テンプレートファイルを使ったViewの描画が正常に実行出来ること
+     * @dataProvider renderTemplateProvider
+     */
+    public function testOkRenderTemplate($path, $str) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $str);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
+    
+    /**
+     * 正常系
+     * レイアウト連プレートファイルを使ったViewの描画が正常に実行出来ること
+     * @dataProvider renderLayoutTemplateProvider
+     */
+    public function testOkRenderLayoutTemplate($path, $str) {
         $url = $this->root_url . $path;
         $response = file_get_contents($url);
         $this->assertEquals($response, $str);
@@ -274,5 +330,97 @@ class RouterTest extends UnitTestBase {
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "404");
+    }
+    
+    /**
+     * 異常系
+     * ControllerからService、Modelを呼び出したとき、
+     * Serviceクラス、Modelクラスともに存在しない場合、500エラーとなり、
+     * Serviceクラス名 and Modelクラス名 is not found.とログ出力されること
+     * @dataProvider noServiceNoModel
+     */
+    public function testNgNoServiceNoModel($path, $error_msg) {
+        $url = $this->root_url . $path;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "500");
+        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $line_tail = array_pop($file);
+        
+        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
+                       $line_tail, $matches)) {
+            $target = array("ERROR", $error_msg);
+            $result = array($matches[1], $matches[2]);
+            $this->assertEquals($target, $result);           
+        }
+    }
+    
+    /**
+     * 異常系
+     * ControllerからService、Modelを呼び出したとき、
+     * Serviceクラス、Modelクラスともに存在するが、メソッドが存在しない場合、500エラーになり、
+     * Serviceクラス名#メソッド名 and Modelクラス名#メソッド名 is not defined.とログ出力されること
+     * @dataProvider existServiceExistModelNoMethod
+     */
+    public function testExistServiceExistModelNoMethod($path, $error_msg) {
+        $url = $this->root_url . $path;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "500");
+        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $line_tail = array_pop($file);
+        
+        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
+                       $line_tail, $matches)) {
+            $target = array("ERROR", $error_msg);
+            $result = array($matches[1], $matches[2]);
+            $this->assertEquals($target, $result);           
+        }
+    }
+    
+    /**
+     * 異常系
+     * ControllerからService、Modelを呼び出したとき、
+     * Serviceクラスが存在せず、Modelクラスが存在するが、メソッドが存在しない場合、500エラーになり
+     * Modelクラス名#メソッド名 is not defined.とログ出力されること
+     * @dataProvider noServiceExistModelNoMethod
+     */
+    public function testNgNoServiceExistModelNoMethod($path, $error_msg) {
+        $url = $this->root_url . $path;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "500");
+        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $line_tail = array_pop($file);
+        
+        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
+                       $line_tail, $matches)) {
+            $target = array("ERROR", $error_msg);
+            $result = array($matches[1], $matches[2]);
+            $this->assertEquals($target, $result);           
+        }
+    }
+    
+    /**
+     * 異常系
+     * ControllerからService、Modelを呼び出したとき、
+     * Serviceクラスが存在し、Modelクラスが存在しないが、メソッドが存在しない場合、500エラーになり、
+     * Serviceクラス名#メソッド名 is not defined.とログ出力されること
+     * @dataProvider existServiceNoModelNoMethod
+     */
+    public function testNgExistServiceNoModelNoMethod($path, $error_msg) {
+        $url = $this->root_url . $path;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "500");
+        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $line_tail = array_pop($file);
+        
+        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
+                       $line_tail, $matches)) {
+            $target = array("ERROR", $error_msg);
+            $result = array($matches[1], $matches[2]);
+            $this->assertEquals($target, $result);           
+        }
     }
 }

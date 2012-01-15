@@ -5,36 +5,40 @@
  * @since 2011/08/19
  */
 class Application {
-    /** appディレクトリ */
     private $app_dir = "app";
-    /** ページ名 */
-    private $page_name;
     /** ルーティング解決後のパラメータ */
     private $route;
     
     /**
      * アプリケーション共通で使用するクラスを初期化する
      */
-    function __construct() {
+    public function __construct() {
+        /** streamのバージョン定義 */
+        define('STREAM_VERSION', '0.1.1');
+    }
+    
+    /**
+     * 内部で使用する定数を定義
+     */
+    private function init() {
         /** プロジェクトディレクトリの絶対パスを定義 */
         define('STREAM_ROOT', Utility::getRoot());
+        /** アプリケーションディレクトリ */
+        define('STREAM_APP_DIR', $this->app_dir);
         /** ドキュメントルートからプロジェクトディレクトリへのパスを定義 */
         $request = new Request();
         define('STREAM_BASE_URI', $request->getBaseURL());
         define('STREAM_ROUTING_PATH', $request->getPathInfo());
-        /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.1.0');
     }
     
     /**
      * アプリケーションを起動する
      */
     public function run() {
+        $this->init();
         try {
             // ルーティングを解決する
             $this->route = new Router();
-            // ページ名を設定
-            $this->page_name = $this->route->controller();
             // ルーティングの解決に成功した場合、コントローラを呼び出す
             if ($this->controller() && $this->action()) {
                 $this->runContoller();
@@ -42,7 +46,7 @@ class Application {
             // 静的ファイルを呼び出す
             else if ($this->staticFile()) {
                 $view = new CoreView();
-                $file_path = STREAM_ROOT . "/" . $this->app_dir . 
+                $file_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                     "/views/public" . $this->staticFile();
                 $view->renderPublicFile($file_path);
             }
@@ -66,6 +70,11 @@ class Application {
             Logger::error($e->getMessage() . ": " . STREAM_ROUTING_PATH);
             $this->error(404);
         }
+        // Service, Modelクラスが見つからない場合は500
+        catch (ClassNotFoundException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->error(500);
+        }
         // それ以外のエラーは500
         catch (Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
@@ -78,12 +87,12 @@ class Application {
      */
     private function runContoller() {
         // Controllerクラスをインポート
-        import($this->app_dir . "/controllers/AppController");
-        import($this->app_dir . "/controllers/" . $this->controller());
+        import(STREAM_APP_DIR . "/controllers/AppController");
+        import(STREAM_APP_DIR . "/controllers/" . $this->controller());
         
         // Controllerクラスを起動
         $class = new ReflectionClass($this->controller());
-        $instance = $class->newInstance($this->app_dir, $this->page_name);
+        $instance = $class->newInstance();
         // before_filter
         $before_filter = $class->getMethod("before");
         $before_filter->invoke($instance);
@@ -112,7 +121,7 @@ class Application {
         $controller = null;
         if ($this->route->controller() !== null) {
             // _[a-z]を[A-Z]に置換する
-            $controller = preg_replace_callback('/_(?=[a-z])(.+)/', create_function(
+            $controller = preg_replace_callback('/_(?=[a-z])(.+?)/', create_function(
                 '$matches',
                 'return ucfirst($matches[1]);'
             ), $this->route->controller());
@@ -129,7 +138,7 @@ class Application {
         $action = null;
         if ($this->route->action() !== null) {
             // _[a-z]を[A-Z]に置換する
-            $action = preg_replace_callback('/_(?=[a-z])(.+)/', create_function(
+            $action = preg_replace_callback('/_(?=[a-z])(.+?)/', create_function(
                 '$matches',
                 'return ucfirst($matches[1]);'
             ), $this->route->action());

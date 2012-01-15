@@ -5,8 +5,6 @@
  * @since 2011/09/12
  */
 class CoreView {
-    /** appディレクトリ */
-    private $app_dir;
     /** ページ名 */
     private $page_name;
     /** セッション */
@@ -19,8 +17,7 @@ class CoreView {
      * @param String appディレクトリパス
      * @param String ページ名
      */
-    public function __construct($app_dir = null, $page_name = null) {
-        $this->app_dir = $app_dir;
+    public function __construct($page_name) {
         $this->page_name = $page_name;
         $this->session = Session::start();
     }
@@ -31,9 +28,9 @@ class CoreView {
      * @param Hash 埋め込みパラメータ
      */
     final public function layout($template, $params = array()) {
-        $template_path = STREAM_ROOT . "/" . $this->app_dir . 
+        $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                          "/views/shared/" . $template . ".tmpl";
-        $this->draw($template_path, 'shared', $params);
+        $this->draw($template_path, $params);
     }
     
     /**
@@ -43,10 +40,10 @@ class CoreView {
      * @param String Mimeタイプ
      */
     final public function render($template, $params = array(), $mime = "html") {
-        $template_path = STREAM_ROOT . "/" . $this->app_dir . 
+        $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                          "/views/" . $this->page_name . "/" . $template . ".tmpl";
         $this->setMime($mime);
-        $this->draw($template_path, $this->page_name, $params);
+        $this->draw($template_path, $params);
     }
     
     /**
@@ -114,19 +111,19 @@ HTML;
     /**
      * テンプレートファイルを描画する
      * @param String テンプレートファイルパス
-     * @param String テンプレートディレクトリ名
      * @param Hash 埋め込みパラメータ
      */
-    final private function draw($template_path, $template_name, $params) {
+    final private function draw($template_path, $params) {
         if (!file_exists(realpath($template_path))) {
             throw new Exception("Invalid template file path: " . $template_path);
         }
-        $pathinfo = pathinfo($template_path);
-
         // キャッシュファイルがなければ生成する
-        $filename = str_replace("/", ".", $pathinfo["filename"]) . ".cache";
-        $cache_file = STREAM_ROOT . '/' . $this->app_dir . '/views/cache/' . $template_name . '.' . $filename;
-        
+        $filename = preg_replace_callback('/.*views\/(.*)\.tmpl/', create_function(
+            '$matches',
+            'return preg_replace(\'/\//\', \'.\', $matches[1]) . \'.cache\';'
+        ), $template_path);
+        $cache_file = STREAM_ROOT . '/' . STREAM_APP_DIR . '/views/cache/' . $filename;
+
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = $this->convert(file_get_contents($template_path));
         

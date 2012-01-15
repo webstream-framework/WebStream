@@ -1,4 +1,2 @@
 <?php
-
-class TestModel extends CoreModel {
-}
+class TestModel extends CoreModel {}

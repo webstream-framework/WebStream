@@ -1,7 +1,4 @@
 <?php
-
 class TestService extends CoreService {
-    public function testCoreService1() {
-        
-    }
+    public function testCoreService1() {}
 }

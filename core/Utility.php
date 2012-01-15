@@ -77,4 +77,17 @@ class Utility {
         }
         return $random_str;
     }
+    
+    /**
+     * キャメルケース文字列をスネークケース文字列に置換する
+     * @param String キャメルケース文字列
+     * @return String スネークケース文字列
+     */
+    public static function camel2snake($str) {
+        $str = preg_replace_callback('/([A-Z])/', create_function(
+            '$matches',
+            'return \'_\' . lcfirst($matches[1]);'
+        ), $str);
+        return preg_replace('/^_/', '', $str);
+    }
 }

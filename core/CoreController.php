@@ -5,8 +5,6 @@
  * @since 2011/09/11
  */
 class CoreController {
-    /** appディレクトリ */
-    private $app_dir;
     /** ページ名 */
     private $page_name;
     /** view */
@@ -18,17 +16,14 @@ class CoreController {
     
     /**
      * Controllerクラス全体の初期化
-     * @param String appディレクトリパス
-     * @param String ページ名
      */
-    final public function __construct($app_dir, $page_name) {
-        $this->app_dir = $app_dir;
-        $this->page_name = $page_name;
-        $this->view = new CoreView($app_dir, $page_name);
+    final public function __construct() {
+        $this->page_name = $this->page();
+        $this->view = new CoreView(Utility::camel2snake($this->page_name));
         $this->session = Session::start();
         $this->request = new Request();
         $this->csrf();
-        $this->load($page_name);
+        $this->load();
     }
     
     /**
@@ -52,23 +47,29 @@ class CoreController {
      * Serviceクラスのインスタンスをロードする
      * @param String Serviceクラス名
      */
-    final private function load($service_name) {
-        // _[a-z]を[A-Z]に置換する
-        $service_name = ucfirst(preg_replace_callback('/_(?=[a-z])(.+)/', create_function(
-            '$matches',
-            'return ucfirst($matches[1]);'
-        ), $service_name));
-        
-        $service_class = $service_name . "Service";
-        
-        // Serviceクラスをインポート
+    final private function load() {
+        $service_class = $this->page_name . "Service";
+        $model_class = $this->page_name . "Model";
         $service_ins = null;
-        if (import($this->app_dir . "/services/" . $service_class)) {
+        $model_ins = null;
+        
+        // Serviceクラスが存在する場合、Serviceクラスをロード
+        if (import(STREAM_APP_DIR . "/services/" . $service_class)) {
             $class = new ReflectionClass($service_class);
-            $service_ins = $class->newInstance($this->app_dir, $service_name);
+            $service_ins = $class->newInstance();
+            $this->{$this->page_name} = $service_ins;
         }
-
-        $this->{$service_name} = $service_ins;
+        // Serviceクラスが存在しない場合、Modelクラスをロードする
+        else if (import(STREAM_APP_DIR . "/models/" . $model_class)) {
+            $class = new ReflectionClass($model_class);
+            $model_ins = $class->newInstance();
+            $this->{$this->page_name} = $model_ins;
+        }
+        // ServiceもModel存在しない場合
+        else {
+            $this->{$this->page_name} = 
+                new ServiceModelClassNotFoundException("${service_class} and ${model_class} is not defined.");
+        }
     }
     
     /**
@@ -130,6 +131,18 @@ class CoreController {
      */
     final protected function redirect($path) {
         $this->view->redirect(STREAM_BASE_URI . $path);
+    }
+    
+    /**
+     * ページ名を取得する
+     * @return String ページ名
+     */
+    final private function page() {
+        $page_name = null;
+        if (preg_match('/(.*)Controller$/', get_class($this), $matches)) {
+            $page_name = $matches[1];
+        }
+        return $page_name;
     }
     
     /**
