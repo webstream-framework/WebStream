@@ -37,6 +37,8 @@ Router::setRule(
         '/no_exist_service_exist_model_no_method' => "test_exist_service_no_model_no_method#execute",
         '/no_service_exist_model_no_method' => "test_no_service_exist_model_no_method#execute",
         '/exist_service_no_model_no_method' => "test_exist_service_no_model_no_method#execute",
+        '/exist_service_exist_model_exist_model_method_param' => "test_exist_service_exist_model_exist_model_method#send_param",
+        '/exist_service_exist_model_exist_model_method_params' => "test_exist_service_exist_model_exist_model_method#send_params",
         '/view1' => "test_view#index",
         '/view2' => "test_view#sub_index",
         '/view3' => "test_aaa_bbb_view#index",

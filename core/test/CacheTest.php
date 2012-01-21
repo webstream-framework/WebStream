@@ -11,7 +11,7 @@ class CacheTest extends UnitTestBase {
     private $save_data_str = "abcde";
     
     public function setUp() {
-        Logger::$level = Logger::DEBUG;
+        Logger::init($this->config_path_log . "log.test.debug.ok.ini");
     }
     
     /**

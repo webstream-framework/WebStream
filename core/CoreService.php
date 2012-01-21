@@ -10,9 +10,9 @@ class CoreService {
     
     /**
      * Controllerから存在しないメソッドが呼ばれたときの処理
-     * Modelクラスにメソッドが存在する場合、処理を移譲する
      * @param String メソッド名
      * @param Array 引数の配列
+     * @return 実行結果
      */
     final public function __call($method, $arguments) {
         // Modelクラス両方にメソッドが存在しなければエラー
@@ -20,7 +20,7 @@ class CoreService {
             $class = get_class($this);
             throw new MethodNotFoundException("${class}#${method} is not defined.");
         }
-        return $this->{$this->page_name}->{$method}($arguments);
+        return call_user_func_array(array($this->{$this->page_name}, $method), $arguments);
     }
     
     /**

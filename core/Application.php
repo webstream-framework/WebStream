@@ -14,7 +14,7 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.1.1');
+        define('STREAM_VERSION', '0.1.2');
     }
     
     /**

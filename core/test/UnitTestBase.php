@@ -11,8 +11,8 @@ class UnitTestBase extends PHPUnit_Framework_TestCase {
     protected $testdata_dir = "/core/test/testdata";
     protected $root_url;
 
-    /** テスト用ログディレクトリ */
-    protected $log_dir = "core/test/testdata/log";
+    /** テスト用ログ設定ファイルディレクトリ */
+    protected $config_path_log = "core/test/testdata/config/log_config/";
     /** テスト用データベース(MySQL)設定ファイル */
     protected $config_path_mysql = "core/test/testdata/config/database.test.ini";
     /** テスト用のキャッシュファイル(777)ディレクトリ */
@@ -47,16 +47,12 @@ SQL;
         $project_root = implode("/", $path_hierarchy_list);
         return is_dir($project_root) ? $project_root : null;
     }
-    
-    /**
-     * テスト用にログ出力設定を変更する
-     */
-    protected function getLogFilePathForTest() {
-        $class = new ReflectionClass("Logger");
-        $property = $class->getProperty("log_filename");
-        $property->setAccessible(true);
-        $log_filename = $property->getValue();
-        return Utility::getRoot() . '/' . $this->log_dir . '/' . $log_filename;
+
+    protected function logTail($config_path) {
+        $log = Utility::parseConfig($config_path);
+        $log_path = realpath(Utility::getRoot() . "/" . $log["path"]);
+        $file = file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        return array_pop($file);
     }
 
     /**
@@ -162,64 +158,79 @@ SQL;
             array('/error3', '1test#test1')
         );
     }
-
-    public function writeDebugProvider() {
+    
+    public function logLevelDebugProvider() {
         return array(
-            array("debug message")
+            array("DEBUG", "log.test.debug.ok.ini", "log message for debug1."),
+            array("DEBUG", "log.test.debug.ok.ini", "log message for debug2.", "#0 /path/to/test.php(0)"),
+            array("INFO",  "log.test.debug.ok.ini", "log message for debug3."),
+            array("INFO",  "log.test.debug.ok.ini", "log message for debug4.", "#0 /path/to/test.php(0)"),
+            array("WARN",  "log.test.debug.ok.ini", "log message for debug5."),
+            array("WARN",  "log.test.debug.ok.ini", "log message for debug6.", "#0 /path/to/test.php(0)"),
+            array("ERROR", "log.test.debug.ok.ini", "log message for debug7."),
+            array("ERROR", "log.test.debug.ok.ini", "log message for debug8.", "#0 /path/to/test.php(0)"),
+            array("FATAL", "log.test.debug.ok.ini", "log message for debug9."),
+            array("FATAL", "log.test.debug.ok.ini", "log message for debug10.", "#0 /path/to/test.php(0)"),
         );
     }
-
-    public function writeDebugWithStackTraceProvider() {
+    
+    public function logLevelInfoProvider() {
         return array(
-            array("debug message", "#0 /path/to/test.php(0)")
+            array("DEBUG", "log.test.info.ok.ini", "log message for info1."),
+            array("DEBUG", "log.test.info.ok.ini", "log message for info2.", "#0 /path/to/test.php(0)"),
+            array("INFO",  "log.test.info.ok.ini", "log message for info3."),
+            array("INFO",  "log.test.info.ok.ini", "log message for info4.", "#0 /path/to/test.php(0)"),
+            array("WARN",  "log.test.info.ok.ini", "log message for info5."),
+            array("WARN",  "log.test.info.ok.ini", "log message for info6.", "#0 /path/to/test.php(0)"),
+            array("ERROR", "log.test.info.ok.ini", "log message for info7."),
+            array("ERROR", "log.test.info.ok.ini", "log message for info8.", "#0 /path/to/test.php(0)"),
+            array("FATAL", "log.test.info.ok.ini", "log message for info9."),
+            array("FATAL", "log.test.info.ok.ini", "log message for info10.", "#0 /path/to/test.php(0)"),
         );
     }
-
-    public function writeInfoProvider() {
+    
+    public function logLevelWarnProvider() {
         return array(
-            array("info message")
+            array("DEBUG", "log.test.warn.ok.ini", "log message for warn1."),
+            array("DEBUG", "log.test.warn.ok.ini", "log message for warn2.", "#0 /path/to/test.php(0)"),
+            array("INFO",  "log.test.warn.ok.ini", "log message for warn3."),
+            array("INFO",  "log.test.warn.ok.ini", "log message for warn4.", "#0 /path/to/test.php(0)"),
+            array("WARN",  "log.test.warn.ok.ini", "log message for warn5."),
+            array("WARN",  "log.test.warn.ok.ini", "log message for warn6.", "#0 /path/to/test.php(0)"),
+            array("ERROR", "log.test.warn.ok.ini", "log message for warn7."),
+            array("ERROR", "log.test.warn.ok.ini", "log message for warn8.", "#0 /path/to/test.php(0)"),
+            array("FATAL", "log.test.warn.ok.ini", "log message for warn9."),
+            array("FATAL", "log.test.warn.ok.ini", "log message for warn10.", "#0 /path/to/test.php(0)"),
         );
     }
-
-    public function writeInfoWithStackTraceProvider() {
+    
+    public function logLevelErrorProvider() {
         return array(
-            array("info message", "#0 /path/to/test.php(0)")
+            array("DEBUG", "log.test.error.ok.ini", "log message for error1."),
+            array("DEBUG", "log.test.error.ok.ini", "log message for error2.", "#0 /path/to/test.php(0)"),
+            array("INFO",  "log.test.error.ok.ini", "log message for error3."),
+            array("INFO",  "log.test.error.ok.ini", "log message for error4.", "#0 /path/to/test.php(0)"),
+            array("WARN",  "log.test.error.ok.ini", "log message for error5."),
+            array("WARN",  "log.test.error.ok.ini", "log message for error6.", "#0 /path/to/test.php(0)"),
+            array("ERROR", "log.test.error.ok.ini", "log message for error7."),
+            array("ERROR", "log.test.error.ok.ini", "log message for error8.", "#0 /path/to/test.php(0)"),
+            array("FATAL", "log.test.error.ok.ini", "log message for error9."),
+            array("FATAL", "log.test.error.ok.ini", "log message for error10.", "#0 /path/to/test.php(0)"),
         );
     }
-
-    public function writeWarnProvider() {
+    
+    public function logLevelFatalProvider() {
         return array(
-            array("warn message")
-        );
-    }
-
-    public function writeWarnWithStackTraceProvider() {
-        return array(
-            array("warn message", "#0 /path/to/test.php(0)")
-        );
-    }
-
-    public function writeErrorProvider() {
-        return array(
-            array("error message")
-        );
-    }
-
-    public function writeErrorWithStackTraceProvider() {
-        return array(
-            array("error message", "#0 /path/to/test.php(0)")
-        );
-    }
-
-    public function writeFatalProvider() {
-        return array(
-            array("fatal message")
-        );
-    }
-
-    public function writeFatalWithStackTraceProvider() {
-        return array(
-            array("fatal message", "#0 /path/to/test.php(0)")
+            array("DEBUG", "log.test.fatal.ok.ini", "log message for fatal1."),
+            array("DEBUG", "log.test.fatal.ok.ini", "log message for fatal2.", "#0 /path/to/test.php(0)"),
+            array("INFO",  "log.test.fatal.ok.ini", "log message for fatal3."),
+            array("INFO",  "log.test.fatal.ok.ini", "log message for fatal4.", "#0 /path/to/test.php(0)"),
+            array("WARN",  "log.test.fatal.ok.ini", "log message for fatal5."),
+            array("WARN",  "log.test.fatal.ok.ini", "log message for fatal6.", "#0 /path/to/test.php(0)"),
+            array("ERROR", "log.test.fatal.ok.ini", "log message for fatal7."),
+            array("ERROR", "log.test.fatal.ok.ini", "log message for fatal8.", "#0 /path/to/test.php(0)"),
+            array("FATAL", "log.test.fatal.ok.ini", "log message for fatal9."),
+            array("FATAL", "log.test.fatal.ok.ini", "log message for fatal10.", "#0 /path/to/test.php(0)"),
         );
     }
 
@@ -408,4 +419,10 @@ SQL;
         );
     }
     
+    public function sendParamFromControllerToModelProvider() {
+        return array(
+            array('/exist_service_exist_model_exist_model_method_param', "abc"),
+            array('/exist_service_exist_model_exist_model_method_params', "abcdef")
+        );
+    }
 }

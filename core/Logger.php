@@ -2,69 +2,88 @@
 /**
  * Loggerクラス
  * @author Ryuichi Tanaka
- * @since 2011/09/04
+ * @since 2012/01/16
  */
 class Logger {
-    const DEBUG = 1;
-    const INFO  = 2;
-    const WARN  = 3;
-    const ERROR = 4;
-    const FATAL = 5;
+    /** ログレベル(数値) */
+    private static $level_value = 0;
+    /** ログパス */
+    private static $path;
     
-    /** ログファイルが格納されるディレクトリ */
-    private static $log_dir = "log";
-    
-    /** ログファイル名 */
-    private static $log_filename = "stream.log";
-    
-    /** デフォルトのログレベル */
-    public static $level = self::INFO;
-    
+    /**
+     * コンストラクタ
+     */
     private function __construct() {}
     
     /**
-     * ログレベル「DEBUG」のログ出力
-     * @param String ログメッセージ
+     * Loggerを初期化する
+     * @param String 設定ファイルパス
      */
-    public static function debug($msg, $stacktrace = null) {
-        $msg = self::message($msg, $stacktrace);
-        self::write($msg, self::DEBUG, "DEBUG");
+    public static function init($config_path = "config/log.ini") {
+        self::loadCofig($config_path);
     }
     
     /**
-     * ログレベル「」のログ出力
-     * @param String ログメッセージ
+     * Loggerメソッドの呼び出しを受ける
+     * @param String メソッド名(ログレベル文字列)
+     * @param Array 引数
      */
-    public static function info($msg, $stacktrace = null) {
-        $msg = self::message($msg, $stacktrace);
-        self::write($msg, self::INFO, "INFO");
+    public static function __callStatic($level, $arguments) {
+        if (self::level2value($level) >= self::$level_value) {
+            $logger = new Logger();
+            $log_arguments = array(self::$path, strtoupper($level));
+            call_user_func_array(array($logger, "write"), array_merge($log_arguments, $arguments));
+        }
     }
     
     /**
-     * ログレベル「WARN」のログ出力
-     * @param String ログメッセージ
+     * 設定ファイルを読み込む
      */
-    public static function warn($msg, $stacktrace = null) {
-        $msg = self::message($msg, $stacktrace);
-        self::write($msg, self::WARN, "WARN");
+    private static function loadCofig($config_path) {
+        $log = Utility::parseConfig($config_path);
+        // 設定ファイルが存在するかどうか
+        if ($log === null) {
+            throw new LoggerException("Log config file does not exist: " . $config_path);
+        }
+        
+        $level_value = self::level2value($log["level"]);
+        // 妥当なログレベルかどうか
+        if ($level_value === 0) {
+            throw new LoggerException("Invalid log level: " . $log["level"]);
+        }
+        self::$level_value = $level_value;
+        
+        $path = realpath(Utility::getRoot() . "/" . $log["path"]);
+        // ディレクトリが存在するパスかどうか
+        if (!$path) {
+            throw new LoggerException("Log directory does not exist: " . $log["path"]);
+        }
+        self::$path = $path;
     }
     
     /**
-     * ログレベル「ERROR」のログ出力
-     * @param String ログメッセージ
+     * ログレベルを数値に変換
+     * @param String ログレベル文字列
+     * @return int ログレベル数値
      */
-    public static function error($msg, $stacktrace = null) {
-        $msg = self::message($msg, $stacktrace);
-        self::write($msg, self::ERROR, "ERROR");
+    private static function level2value($level) {
+        switch (strtolower($level)) {
+            case 'debug': return 1;
+            case 'info' : return 2;
+            case 'warn' : return 3;
+            case 'error': return 4;
+            case 'fatal': return 5;
+            default: return 0;
+        }
     }
     
     /**
-     * ログレベル「FATAL」のログ出力
-     * @param String ログメッセージ
+     * タイムスタンプを取得する
+     * @return String タイムスタンプ
      */
-    public static function fatal($msg, $stacktrace = null) {
-        $msg = self::message($msg, $stacktrace);
-        self::write($msg, self::FATAL, "FATAL");
+    private function getTimeStamp() {
+        $msec = sprintf("%2d", floatval(microtime()) * 100);
+        return strftime("%Y-%m-%d %H:%M:%S") . "," . $msec;
     }
     
     /**
@@ -73,7 +92,7 @@ class Logger {
      * @param String スタックトレース文字列
      * @return String 加工済みログメッセージ
      */
-    private static function message($msg, $stacktrace = null) {
+    private function message($msg, $stacktrace = null) {
         // スタックトレースから原因となるエラー箇所のみ抽出
         if ($stacktrace !== null) {
             preg_match('/^#0\s(.*\([0-9]+\)?)/', $stacktrace, $matches);
@@ -83,34 +102,17 @@ class Logger {
     }
     
     /**
-     * ログを出力する
-     * @param String ログメッセージ
-     * @param int ログレベル
+     * ログを書き出す
+     * @param String ログパス
      * @param String ログレベル文字列
+     * @param String 書きだす文字列
+     * @param String スタックトレース文字列
      */
-    private static function write($msg, $level, $level_str) {
-        // 正規化した絶対パス
-        $realpath = Utility::getRoot() . DIRECTORY_SEPARATOR . self::$log_dir;
-        if (!realpath($realpath)) {
-            throw new Exception("stream log directory does not exist: " . $realpath);
-        }
-        
-        // メッセージを構成
-        $msg = "[" . self::getTimeStamp() . "] " . "[" . $level_str . "] " . $msg . "\n";
-        
-        // ファイルに書き出す
-        $log_path = $realpath . "/" . self::$log_filename;
-        if ($level >= self::$level) {
-            error_log($msg, 3, $log_path);
-        }
-    }
-    
-    /**
-     * タイムスタンプを取得する
-     * @return String タイムスタンプ
-     */
-    private static function getTimeStamp() {
-        $msec = sprintf("%2d", floatval(microtime()) * 100);
-        return strftime("%Y-%m-%d %H:%M:%S") . "," . $msec;
+    private function write($path, $level, $msg, $stacktrace = null) {
+        $msg = $this->message($msg, $stacktrace);
+        $msg = "[".$this->getTimeStamp()."] [".$level."] ".$msg."\n";
+        error_log($msg, 3, $path);
     }
 }
+
+class LoggerException extends Exception {}

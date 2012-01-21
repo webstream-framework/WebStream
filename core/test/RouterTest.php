@@ -136,6 +136,20 @@ class RouterTest extends UnitTestBase {
     
     /**
      * 正常系
+     * Serviceクラスに該当するメソッドがなく、Modelクラスのメソッドに以上する場合、
+     * 引数を正常に渡すことができること
+     * @dataProvider sendParamFromControllerToModelProvider
+     */
+    public function testOkSendParamFromControllerToModel($path, $str) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $str);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
+    
+    /**
+     * 正常系
      * テンプレートファイルを使ったViewの描画が正常に実行出来ること
      * @dataProvider renderTemplateProvider
      */
@@ -149,7 +163,7 @@ class RouterTest extends UnitTestBase {
     
     /**
      * 正常系
-     * レイアウト連プレートファイルを使ったViewの描画が正常に実行出来ること
+     * レイアウトテンプレートファイルを使ったViewの描画が正常に実行出来ること
      * @dataProvider renderLayoutTemplateProvider
      */
     public function testOkRenderLayoutTemplate($path, $str) {
@@ -344,8 +358,7 @@ class RouterTest extends UnitTestBase {
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
-        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
+        $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
         
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {
@@ -367,8 +380,7 @@ class RouterTest extends UnitTestBase {
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
-        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
+        $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
         
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {
@@ -390,8 +402,7 @@ class RouterTest extends UnitTestBase {
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
-        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
+        $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
         
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {
@@ -413,8 +424,7 @@ class RouterTest extends UnitTestBase {
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
-        $file = file($this->getLogFilePathForTest(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
+        $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
         
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {

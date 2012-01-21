@@ -7,248 +7,282 @@
 require_once 'UnitTestBase.php';
  
 class LoggerTest extends UnitTestBase {
-    private $logger;
-    private $logfile;
     
     public function setUp() {
         parent::setUp();
-        // ログ出力ディレクトリ、ログレベルをテスト用に変更
-        $class = new ReflectionClass("Logger");
-        $property = $class->getProperty("log_dir");
-        $property->setAccessible(true);
-        $property->setValue($class, $this->log_dir);
-        $property = $class->getProperty("level");
-        $property->setAccessible(true);
-        $property->setValue($class, 1);
-        $this->logger = $class;
-        // ログファイルパスを取得
-        $property = $class->getProperty("log_filename");
-        $property->setAccessible(true);
-        $log_filename = $property->getValue();
-        $this->logfile = Utility::getRoot() . '/' . $this->log_dir . '/' . $log_filename;
     }
     
     public function tearDown() {
         //unlink($this->logfile);
     }
- 
-    /**
-     * 正常系
-     * エラーメッセージのみ指定された場合、ログレベルが「debug」のログを書き出せること
-     * @dataProvider writeDebugProvider
-     */
-    public function testOkWriteDebug($msg) {
-        $method = $this->logger->getMethod("debug");
-        $method->invoke(null, $msg);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("DEBUG", $msg);
-            $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);
+    
+    private function write($level, $config_path, $msg, $stacktrace = null) {
+        Logger::init($config_path);
+        if ($level === "DEBUG") {
+            Logger::debug($msg, $stacktrace);
         }
-        else {
-            $this->assertTrue(false);
+        else if ($level === "INFO") {
+            Logger::info($msg, $stacktrace);
+        }
+        else if ($level === "WARN") {
+            Logger::warn($msg, $stacktrace);
+        }
+        else if ($level === "ERROR") {
+            Logger::error($msg, $stacktrace);
+        }
+        else if ($level === "FATAL") {
+            Logger::fatal($msg, $stacktrace);
         }
     }
     
     /**
      * 正常系
-     * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「debug」のログを書き出せること
-     * @dataProvider writeDebugWithStackTraceProvider
+     * ログレベルが「debug」のとき、
+     * 「debug」「info」「warn」「error」「fatal」レベルのログが書き出せること
+     * @dataProvider logLevelDebugProvider
      */
-    public function testOkWriteDebugWithStackTrace($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("debug");
-        $method->invoke(null, $msg, $stacktrace);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("DEBUG", $msg, preg_replace('/^#0\s/', '', $stacktrace));
-            $result = array($matches[1], $matches[2], $matches[3]);
-            $this->assertEquals($target, $result);
+    public function testOkWriteDebug($level, $config_path, $msg, $stacktrace = null) {
+        $config_path = $this->config_path_log . $config_path;
+        $this->write($level, $config_path, $msg, $stacktrace);
+        $line_tail = $this->logTail($config_path);
+
+        if ($stacktrace === null) {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)$/',
+                   $line_tail, $matches)) {
+                $target = array($level, $msg);
+                $result = array($matches[1], $matches[2]);
+                $this->assertEquals($target, $result);
+            }
+            else {
+                $this->assertTrue(false);
+            }
         }
         else {
-            $this->assertTrue(false);
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
+                   $line_tail, $matches)) {
+                $target = array($level, $msg, preg_replace('/^#0\s/', '', $stacktrace));
+                $result = array($matches[1], $matches[2], $matches[3]);
+                $this->assertEquals($target, $result);
+            }
+            else {
+                $this->assertTrue(false);
+            }
         }
+    }
+
+    /**
+     * 正常系
+     * ログレベルが「info」のとき、
+     * 「info」「warn」「error」「fatal」レベルのログが書き出せること
+     * @dataProvider logLevelInfoProvider
+     */
+    public function testOkWriteInfo($level, $config_path, $msg, $stacktrace = null) {
+        $config_path = $this->config_path_log . $config_path;
+        $this->write($level, $config_path, $msg, $stacktrace);
+        $line_tail = $this->logTail($config_path);
+        
+        if ($stacktrace === null) {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)$/',
+                    $line_tail, $matches)) {
+                if ($level === "DEBUG") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg);
+                    $result = array($matches[1], $matches[2]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+        else {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
+                   $line_tail, $matches)) {
+                if ($level === "DEBUG") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg, preg_replace('/^#0\s/', '', $stacktrace));
+                    $result = array($matches[1], $matches[2], $matches[3]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+    }
+
+    /**
+     * 正常系
+     * ログレベルが「warn」のとき、
+     * 「warn」「error」「fatal」レベルのログが書き出せること
+     * @dataProvider logLevelWarnProvider
+     */
+    public function testOkWriteWarn($level, $config_path, $msg, $stacktrace = null) {
+        $config_path = $this->config_path_log . $config_path;
+        $this->write($level, $config_path, $msg, $stacktrace);
+        $line_tail = $this->logTail($config_path);
+        
+        if ($stacktrace === null) {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)$/',
+                    $line_tail, $matches)) {
+                if ($level === "DEBUG" || $level === "INFO") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg);
+                    $result = array($matches[1], $matches[2]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+        else {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
+                   $line_tail, $matches)) {
+                if ($level === "DEBUG" || $level === "INFO") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg, preg_replace('/^#0\s/', '', $stacktrace));
+                    $result = array($matches[1], $matches[2], $matches[3]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+    }
+
+    /**
+     * 正常系
+     * ログレベルが「error」のとき、
+     * 「error」「fatal」レベルのログが書き出せること
+     * @dataProvider logLevelErrorProvider
+     */
+    public function testOkWriteError($level, $config_path, $msg, $stacktrace = null) {
+        $config_path = $this->config_path_log . $config_path;
+        $this->write($level, $config_path, $msg, $stacktrace);
+        $line_tail = $this->logTail($config_path);
+        
+        if ($stacktrace === null) {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)$/',
+                    $line_tail, $matches)) {
+                if ($level === "DEBUG" || $level === "INFO" || $level === "WARN") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg);
+                    $result = array($matches[1], $matches[2]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+        else {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
+                   $line_tail, $matches)) {
+                if ($level === "DEBUG" || $level === "INFO" || $level === "WARN") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg, preg_replace('/^#0\s/', '', $stacktrace));
+                    $result = array($matches[1], $matches[2], $matches[3]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+    }
+
+    /**
+     * 正常系
+     * ログレベルが「fatal」のとき、
+     * 「fatal」レベルのログが書き出せること
+     * @dataProvider logLevelFatalProvider
+     */
+    public function testOkWriteFatal($level, $config_path, $msg, $stacktrace = null) {
+        $config_path = $this->config_path_log . $config_path;
+        $this->write($level, $config_path, $msg, $stacktrace);
+        $line_tail = $this->logTail($config_path);
+        
+        if ($stacktrace === null) {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)$/',
+                    $line_tail, $matches)) {
+                if ($level === "DEBUG" || $level === "INFO" || $level === "WARN" || $level === "ERROR") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg);
+                    $result = array($matches[1], $matches[2]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+        else {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},.{2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
+                   $line_tail, $matches)) {
+                if ($level === "DEBUG" || $level === "INFO" || $level === "WARN" || $level === "ERROR") {
+                    $this->assertNotEquals($msg, $matches[2]);
+                }
+                else {
+                    $target = array($level, $msg, preg_replace('/^#0\s/', '', $stacktrace));
+                    $result = array($matches[1], $matches[2], $matches[3]);
+                    $this->assertEquals($target, $result);
+                }
+            }
+            else {
+                $this->assertTrue(false);
+            }
+        }
+    }
+
+    /**
+     * 異常系
+     * ログ設定ファイルが存在しない場合、例外が発生すること
+     * @expectedException LoggerException
+     * @expectedExceptionMessage Log config file does not exist: dummy.ini
+     */
+    public function testNgConfigFileNotFound() {
+        $comfig_path = $this->config_path_log . "log.test.ng1.ini";
+        Logger::init("dummy.ini");
+        $this->assertTrue(false);
     }
     
     /**
-     * 正常系
-     * エラーメッセージのみ指定された場合、ログレベルが「info」のログを書き出せること
-     * @dataProvider writeInfoProvider
+     * 異常系
+     * ログ設定ファイルのログファイルパスが存在しない場合、例外が発生すること
+     * @expectedException LoggerException
+     * @expectedExceptionMessage Log directory does not exist: dummy/stream.log
      */
-    public function testOkWriteInfo($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("info");
-        $method->invoke(null, $msg);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("INFO", $msg);
-            $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
+    public function testNgInvalidConfigPath() {
+        $comfig_path = $this->config_path_log . "log.test.ng1.ini";
+        Logger::init($comfig_path);
+        $this->assertTrue(false);
     }
-
+    
     /**
-     * 正常系
-     * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「debug」のログを書き出せること
-     * @dataProvider writeInfoWithStackTraceProvider
+     * 異常系
+     * ログ設定ファイルのログレベルが不正な場合、例外が発生すること
+     * @expectedException LoggerException
+     * @expectedExceptionMessage Invalid log level: dummy
      */
-    public function testOkWriteInfoWithStackTrace($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("info");
-        $method->invoke(null, $msg, $stacktrace);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("INFO", $msg, preg_replace('/^#0\s/', '', $stacktrace));
-            $result = array($matches[1], $matches[2], $matches[3]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
-    }
-
-    /**
-     * 正常系
-     * エラーメッセージのみ指定された場合、ログレベルが「warn」のログを書き出せること
-     * @dataProvider writeWarnProvider
-     */
-    public function testOkWriteWarn($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("warn");
-        $method->invoke(null, $msg);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("WARN", $msg);
-            $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
-    }
-
-    /**
-     * 正常系
-     * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「warn」のログを書き出せること
-     * @dataProvider writeWarnWithStackTraceProvider
-     */
-    public function testOkWriteWarnWithStackTrace($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("warn");
-        $method->invoke(null, $msg, $stacktrace);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("WARN", $msg, preg_replace('/^#0\s/', '', $stacktrace));
-            $result = array($matches[1], $matches[2], $matches[3]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
-    }
-
-    /**
-     * 正常系
-     * エラーメッセージのみ指定された場合、ログレベルが「error」のログを書き出せること
-     * @dataProvider writeErrorProvider
-     */
-    public function testOkWriteError($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("error");
-        $method->invoke(null, $msg);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("ERROR", $msg);
-            $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
-    }
-
-    /**
-     * 正常系
-     * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「error」のログを書き出せること
-     * @dataProvider writeErrorWithStackTraceProvider
-     */
-    public function testOkWriteErrorWithStackTrace($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("error");
-        $method->invoke(null, $msg, $stacktrace);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("ERROR", $msg, preg_replace('/^#0\s/', '', $stacktrace));
-            $result = array($matches[1], $matches[2], $matches[3]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
-    }
-
-    /**
-     * 正常系
-     * エラーメッセージのみ指定された場合、ログレベルが「fatal」のログを書き出せること
-     * @dataProvider writeFatalProvider
-     */
-    public function testOkWriteFatal($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("fatal");
-        $method->invoke(null, $msg);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("FATAL", $msg);
-            $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
-    }
-
-    /**
-     * 正常系
-     * エラーメッセージ、スタックトレースが指定された場合、ログレベルが「fatal」のログを書き出せること
-     * @dataProvider writeFatalWithStackTraceProvider
-     */
-    public function testOkWriteFatalWithStackTrace($msg, $stacktrace = null) {
-        $method = $this->logger->getMethod("fatal");
-        $method->invoke(null, $msg, $stacktrace);
-        $file = file($this->logfile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        $line_tail = array_pop($file);
-        
-        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*)\s-\s(.*)$/',
-                       $line_tail, $matches)) {
-            $target = array("FATAL", $msg, preg_replace('/^#0\s/', '', $stacktrace));
-            $result = array($matches[1], $matches[2], $matches[3]);
-            $this->assertEquals($target, $result);
-        }
-        else {
-            $this->assertTrue(false);
-        }
+    public function testNgInvalidLogLevel() {
+        $comfig_path = $this->config_path_log . "log.test.ng2.ini";
+        Logger::init($comfig_path);
+        $this->assertTrue(false);
     }
 }

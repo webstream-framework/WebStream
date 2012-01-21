@@ -50,9 +50,6 @@ class CoreController {
     final private function load() {
         $service_class = $this->page_name . "Service";
         $model_class = $this->page_name . "Model";
-        $service_ins = null;
-        $model_ins = null;
-        
         // Serviceクラスが存在する場合、Serviceクラスをロード
         if (import(STREAM_APP_DIR . "/services/" . $service_class)) {
             $class = new ReflectionClass($service_class);

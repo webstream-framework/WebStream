@@ -1,0 +1,268 @@
+[2012-01-21 14:33:46,46] [DEBUG] log message for debug1.
+[2012-01-21 14:33:46,47] [DEBUG] log message for debug2. - /path/to/test.php(0)
+[2012-01-21 14:33:46,47] [INFO] log message for debug3.
+[2012-01-21 14:33:46,48] [INFO] log message for debug4. - /path/to/test.php(0)
+[2012-01-21 14:33:46,48] [WARN] log message for debug5.
+[2012-01-21 14:33:46,48] [WARN] log message for debug6. - /path/to/test.php(0)
+[2012-01-21 14:33:46,49] [ERROR] log message for debug7.
+[2012-01-21 14:33:46,49] [ERROR] log message for debug8. - /path/to/test.php(0)
+[2012-01-21 14:33:46,49] [FATAL] log message for debug9.
+[2012-01-21 14:33:46,49] [FATAL] log message for debug10. - /path/to/test.php(0)
+[2012-01-21 14:33:46,50] [INFO] log message for info3.
+[2012-01-21 14:33:46,51] [INFO] log message for info4. - /path/to/test.php(0)
+[2012-01-21 14:33:46,51] [WARN] log message for info5.
+[2012-01-21 14:33:46,51] [WARN] log message for info6. - /path/to/test.php(0)
+[2012-01-21 14:33:46,52] [ERROR] log message for info7.
+[2012-01-21 14:33:46,52] [ERROR] log message for info8. - /path/to/test.php(0)
+[2012-01-21 14:33:46,52] [FATAL] log message for info9.
+[2012-01-21 14:33:46,52] [FATAL] log message for info10. - /path/to/test.php(0)
+[2012-01-21 14:33:46,54] [WARN] log message for warn5.
+[2012-01-21 14:33:46,54] [WARN] log message for warn6. - /path/to/test.php(0)
+[2012-01-21 14:33:46,54] [ERROR] log message for warn7.
+[2012-01-21 14:33:46,55] [ERROR] log message for warn8. - /path/to/test.php(0)
+[2012-01-21 14:33:46,55] [FATAL] log message for warn9.
+[2012-01-21 14:33:46,55] [FATAL] log message for warn10. - /path/to/test.php(0)
+[2012-01-21 14:33:46,57] [ERROR] log message for error7.
+[2012-01-21 14:33:46,57] [ERROR] log message for error8. - /path/to/test.php(0)
+[2012-01-21 14:33:46,58] [FATAL] log message for error9.
+[2012-01-21 14:33:46,58] [FATAL] log message for error10. - /path/to/test.php(0)
+[2012-01-21 14:33:46,60] [FATAL] log message for fatal9.
+[2012-01-21 14:33:46,61] [FATAL] log message for fatal10. - /path/to/test.php(0)
+[2012-01-21 14:39:14,11] [DEBUG] log message for debug1.
+[2012-01-21 14:39:14,12] [DEBUG] log message for debug2. - /path/to/test.php(0)
+[2012-01-21 14:39:14,13] [INFO] log message for debug3.
+[2012-01-21 14:39:14,13] [INFO] log message for debug4. - /path/to/test.php(0)
+[2012-01-21 14:39:14,13] [WARN] log message for debug5.
+[2012-01-21 14:39:14,13] [WARN] log message for debug6. - /path/to/test.php(0)
+[2012-01-21 14:39:14,14] [ERROR] log message for debug7.
+[2012-01-21 14:39:14,14] [ERROR] log message for debug8. - /path/to/test.php(0)
+[2012-01-21 14:39:14,14] [FATAL] log message for debug9.
+[2012-01-21 14:39:14,15] [FATAL] log message for debug10. - /path/to/test.php(0)
+[2012-01-21 14:39:14,16] [INFO] log message for info3.
+[2012-01-21 14:39:14,16] [INFO] log message for info4. - /path/to/test.php(0)
+[2012-01-21 14:39:14,16] [WARN] log message for info5.
+[2012-01-21 14:39:14,16] [WARN] log message for info6. - /path/to/test.php(0)
+[2012-01-21 14:39:14,17] [ERROR] log message for info7.
+[2012-01-21 14:39:14,17] [ERROR] log message for info8. - /path/to/test.php(0)
+[2012-01-21 14:39:14,17] [FATAL] log message for info9.
+[2012-01-21 14:39:14,18] [FATAL] log message for info10. - /path/to/test.php(0)
+[2012-01-21 14:39:14,19] [WARN] log message for warn5.
+[2012-01-21 14:39:14,19] [WARN] log message for warn6. - /path/to/test.php(0)
+[2012-01-21 14:39:14,19] [ERROR] log message for warn7.
+[2012-01-21 14:39:14,20] [ERROR] log message for warn8. - /path/to/test.php(0)
+[2012-01-21 14:39:14,20] [FATAL] log message for warn9.
+[2012-01-21 14:39:14,20] [FATAL] log message for warn10. - /path/to/test.php(0)
+[2012-01-21 14:39:14,22] [ERROR] log message for error7.
+[2012-01-21 14:39:14,22] [ERROR] log message for error8. - /path/to/test.php(0)
+[2012-01-21 14:39:14,23] [FATAL] log message for error9.
+[2012-01-21 14:39:14,23] [FATAL] log message for error10. - /path/to/test.php(0)
+[2012-01-21 14:39:14,25] [FATAL] log message for fatal9.
+[2012-01-21 14:39:14,25] [FATAL] log message for fatal10. - /path/to/test.php(0)
+[2012-01-21 14:43:28,44] [ERROR] Method notfound does not exist - /Users/stay/workspace/eclipse/stream/core/Application.php(100)
+[2012-01-21 14:43:28,46] [ERROR] Method notfound does not exist - /Users/stay/workspace/eclipse/stream/core/Application.php(100)
+[2012-01-21 14:43:28,47] [ERROR] Failed to resolve the routing: /notdefine
+[2012-01-21 14:43:28,48] [ERROR] Invalid action definition: render - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,50] [ERROR] Invalid action definition: layout - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,51] [ERROR] Invalid action definition: layout - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,53] [ERROR] Invalid action definition: load - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,54] [ERROR] Invalid action definition: before - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,55] [ERROR] Invalid action definition: after - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,56] [ERROR] Invalid controller#action definition: Test#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,57] [ERROR] Invalid controller#action definition: teSt#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,59] [ERROR] Invalid controller#action definition: teSt#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,62] [ERROR] Invalid controller#action definition: test__snake#index - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,64] [ERROR] Invalid controller#action definition: test_snake_#index - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:43:28,68] [ERROR] TestNoServiceAndModelService and TestNoServiceAndModelModel is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestNoServiceAndModelController.php(4)
+[2012-01-21 14:43:28,70] [ERROR] TestExistServiceExistModelNoMethodService#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestExistServiceExistModelNoMethodController.php(4)
+[2012-01-21 14:43:28,71] [ERROR] TestNoServiceExistModelNoMethodModel#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestNoServiceExistModelNoMethodController.php(4)
+[2012-01-21 14:43:28,73] [ERROR] TestExistServiceNoModelNoMethodService#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestExistServiceNoModelNoMethodController.php(4)
+[2012-01-21 14:44:09,71] [ERROR] TestNoServiceAndModelService and TestNoServiceAndModelModel is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestNoServiceAndModelController.php(4)
+[2012-01-21 14:57:18,95] [ERROR] Method notfound does not exist - /Users/stay/workspace/eclipse/stream/core/Application.php(100)
+[2012-01-21 14:57:18,96] [ERROR] Method notfound does not exist - /Users/stay/workspace/eclipse/stream/core/Application.php(100)
+[2012-01-21 14:57:18,98] [ERROR] Failed to resolve the routing: /notdefine
+[2012-01-21 14:57:18,99] [ERROR] Invalid action definition: render - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19, 0] [ERROR] Invalid action definition: layout - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19, 2] [ERROR] Invalid action definition: layout - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19, 3] [ERROR] Invalid action definition: load - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19, 4] [ERROR] Invalid action definition: before - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19, 6] [ERROR] Invalid action definition: after - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19, 7] [ERROR] Invalid controller#action definition: Test#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19, 9] [ERROR] Invalid controller#action definition: teSt#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19,10] [ERROR] Invalid controller#action definition: teSt#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19,14] [ERROR] Invalid controller#action definition: test__snake#index - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19,17] [ERROR] Invalid controller#action definition: test_snake_#index - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 14:57:19,22] [ERROR] TestNoServiceAndModelService and TestNoServiceAndModelModel is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestNoServiceAndModelController.php(4)
+[2012-01-21 14:57:19,24] [ERROR] TestExistServiceExistModelNoMethodService#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestExistServiceExistModelNoMethodController.php(4)
+[2012-01-21 14:57:19,25] [ERROR] TestNoServiceExistModelNoMethodModel#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestNoServiceExistModelNoMethodController.php(4)
+[2012-01-21 14:57:19,27] [ERROR] TestExistServiceNoModelNoMethodService#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestExistServiceNoModelNoMethodController.php(4)
+[2012-01-21 14:58:10,59] [DEBUG] log message for debug1.
+[2012-01-21 14:58:10,60] [DEBUG] log message for debug2. - /path/to/test.php(0)
+[2012-01-21 14:58:10,61] [INFO] log message for debug3.
+[2012-01-21 14:58:10,61] [INFO] log message for debug4. - /path/to/test.php(0)
+[2012-01-21 14:58:10,61] [WARN] log message for debug5.
+[2012-01-21 14:58:10,61] [WARN] log message for debug6. - /path/to/test.php(0)
+[2012-01-21 14:58:10,62] [ERROR] log message for debug7.
+[2012-01-21 14:58:10,63] [ERROR] log message for debug8. - /path/to/test.php(0)
+[2012-01-21 14:58:10,63] [FATAL] log message for debug9.
+[2012-01-21 14:58:10,64] [FATAL] log message for debug10. - /path/to/test.php(0)
+[2012-01-21 14:58:10,65] [INFO] log message for info3.
+[2012-01-21 14:58:10,65] [INFO] log message for info4. - /path/to/test.php(0)
+[2012-01-21 14:58:10,66] [WARN] log message for info5.
+[2012-01-21 14:58:10,66] [WARN] log message for info6. - /path/to/test.php(0)
+[2012-01-21 14:58:10,66] [ERROR] log message for info7.
+[2012-01-21 14:58:10,67] [ERROR] log message for info8. - /path/to/test.php(0)
+[2012-01-21 14:58:10,67] [FATAL] log message for info9.
+[2012-01-21 14:58:10,67] [FATAL] log message for info10. - /path/to/test.php(0)
+[2012-01-21 14:58:10,69] [WARN] log message for warn5.
+[2012-01-21 14:58:10,69] [WARN] log message for warn6. - /path/to/test.php(0)
+[2012-01-21 14:58:10,69] [ERROR] log message for warn7.
+[2012-01-21 14:58:10,70] [ERROR] log message for warn8. - /path/to/test.php(0)
+[2012-01-21 14:58:10,70] [FATAL] log message for warn9.
+[2012-01-21 14:58:10,70] [FATAL] log message for warn10. - /path/to/test.php(0)
+[2012-01-21 14:58:10,73] [ERROR] log message for error7.
+[2012-01-21 14:58:10,73] [ERROR] log message for error8. - /path/to/test.php(0)
+[2012-01-21 14:58:10,73] [FATAL] log message for error9.
+[2012-01-21 14:58:10,74] [FATAL] log message for error10. - /path/to/test.php(0)
+[2012-01-21 14:58:10,76] [FATAL] log message for fatal9.
+[2012-01-21 14:58:10,76] [FATAL] log message for fatal10. - /path/to/test.php(0)
+[2012-01-21 15:00:52,11] [DEBUG] Create cache: /private/tmp/cache_test.cache
+[2012-01-21 15:00:52,11] [ERROR] Cache delete failure: /tmp/cache_test_save_string.cache
+[2012-01-21 15:00:52,11] [DEBUG] Create cache: /private/tmp/cache_test_save_string.cache
+[2012-01-21 15:00:52,12] [ERROR] Cache delete failure: /tmp/cache_test_save_integer.cache
+[2012-01-21 15:00:52,12] [DEBUG] Create cache: /private/tmp/cache_test_save_integer.cache
+[2012-01-21 15:00:52,12] [ERROR] Cache delete failure: /tmp/cache_test_save_array.cache
+[2012-01-21 15:00:52,12] [DEBUG] Create cache: /private/tmp/cache_test_save_array.cache
+[2012-01-21 15:00:52,12] [ERROR] Cache delete failure: /tmp/cache_test_save_object.cache
+[2012-01-21 15:00:52,12] [DEBUG] Create cache: /private/tmp/cache_test_save_object.cache
+[2012-01-21 15:00:52,12] [DEBUG] Create cache: /private/tmp/cache_test_metadata.cache
+[2012-01-21 15:00:52,13] [DEBUG] Create cache: /private/tmp/cache_test_metadata_ttl.cache
+[2012-01-21 15:00:52,13] [DEBUG] Create cache: /private/tmp/cache_test_delete.cache
+[2012-01-21 15:00:52,13] [DEBUG] Cache delete success: /private/tmp/cache_test_delete.cache
+[2012-01-21 15:00:52,13] [ERROR] Cache delete failure: /tmp/cache_test_overwrite_save.cache
+[2012-01-21 15:00:52,13] [DEBUG] Create cache: /private/tmp/cache_test_overwrite_save.cache
+[2012-01-21 15:00:52,13] [DEBUG] Create cache: /private/tmp/cache_test_overwrite_save.cache
+[2012-01-21 15:00:52,13] [ERROR] Invalid cache directory: /dummy
+[2012-01-21 15:00:52,14] [ERROR] Cache delete failure: /tmp/dummy.cache
+[2012-01-21 15:00:52,14] [DEBUG] Create cache: /private/tmp/cache_test_time_over.cache
+[2012-01-21 15:00:54,14] [WARN] Expired cache: /tmp/cache_test_time_over.cache
+[2012-01-21 15:01:00,40] [DEBUG] Cache delete success: /private/tmp/cache_test_save_string.cache
+[2012-01-21 15:01:00,40] [DEBUG] Create cache: /private/tmp/cache_test_save_string.cache
+[2012-01-21 15:01:00,41] [DEBUG] Cache delete success: /private/tmp/cache_test_save_integer.cache
+[2012-01-21 15:01:00,41] [DEBUG] Create cache: /private/tmp/cache_test_save_integer.cache
+[2012-01-21 15:01:00,41] [DEBUG] Cache delete success: /private/tmp/cache_test_save_array.cache
+[2012-01-21 15:01:00,41] [DEBUG] Create cache: /private/tmp/cache_test_save_array.cache
+[2012-01-21 15:01:00,42] [DEBUG] Cache delete success: /private/tmp/cache_test_save_object.cache
+[2012-01-21 15:01:00,42] [DEBUG] Create cache: /private/tmp/cache_test_save_object.cache
+[2012-01-21 15:01:00,42] [DEBUG] Create cache: /private/tmp/cache_test_metadata.cache
+[2012-01-21 15:01:00,42] [DEBUG] Create cache: /private/tmp/cache_test_metadata_ttl.cache
+[2012-01-21 15:01:00,42] [DEBUG] Create cache: /private/tmp/cache_test_delete.cache
+[2012-01-21 15:01:00,42] [DEBUG] Cache delete success: /private/tmp/cache_test_delete.cache
+[2012-01-21 15:01:00,43] [DEBUG] Cache delete success: /private/tmp/cache_test_overwrite_save.cache
+[2012-01-21 15:01:00,43] [DEBUG] Create cache: /private/tmp/cache_test_overwrite_save.cache
+[2012-01-21 15:01:00,43] [DEBUG] Create cache: /private/tmp/cache_test_overwrite_save.cache
+[2012-01-21 15:01:00,43] [ERROR] Invalid cache directory: /dummy
+[2012-01-21 15:01:00,43] [ERROR] Cache delete failure: /tmp/dummy.cache
+[2012-01-21 15:01:00,43] [DEBUG] Create cache: /private/tmp/cache_test_time_over.cache
+[2012-01-21 15:01:02,44] [WARN] Expired cache: /tmp/cache_test_time_over.cache
+[2012-01-21 15:01:02,47] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-01-21 15:01:02,47] [INFO] Bind statement: 
+[2012-01-21 15:01:02,49] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-01-21 15:01:02,49] [INFO] Bind statement: insert test
+[2012-01-21 15:01:02,50] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-01-21 15:01:02,50] [INFO] Bind statement: 
+[2012-01-21 15:01:02,51] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-01-21 15:01:02,51] [INFO] Bind statement: 
+[2012-01-21 15:01:02,54] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-01-21 15:01:02,54] [INFO] Bind statement: select test
+[2012-01-21 15:01:02,55] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-01-21 15:01:02,55] [INFO] Bind statement: 
+[2012-01-21 15:01:02,57] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-01-21 15:01:02,57] [INFO] Bind statement: 
+[2012-01-21 15:01:02,58] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-01-21 15:01:02,58] [INFO] Bind statement: 
+[2012-01-21 15:01:02,59] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-01-21 15:01:02,59] [INFO] Bind statement: insert test
+[2012-01-21 15:01:02,61] [INFO] Executed SQL: UPDATE stream_test SET name = :name
+[2012-01-21 15:01:02,61] [INFO] Bind statement: update test
+[2012-01-21 15:01:02,62] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-01-21 15:01:02,62] [INFO] Bind statement: 
+[2012-01-21 15:01:02,63] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-01-21 15:01:02,63] [INFO] Bind statement: 
+[2012-01-21 15:01:02,64] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-01-21 15:01:02,64] [INFO] Bind statement: 
+[2012-01-21 15:01:02,68] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-01-21 15:01:02,68] [INFO] Bind statement: delete test
+[2012-01-21 15:01:02,69] [INFO] Executed SQL: DELETE FROM stream_test
+[2012-01-21 15:01:02,69] [INFO] Bind statement: 
+[2012-01-21 15:01:02,70] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-01-21 15:01:02,70] [INFO] Bind statement: 
+[2012-01-21 15:01:07,50] [INFO] HTTP GET success(200): http://www.yahoo.co.jp
+[2012-01-21 15:01:08,28] [INFO] HTTP GET success(200): http://headlines.yahoo.co.jp/rss/itmedia_ait.xml
+[2012-01-21 15:01:08,93] [INFO] HTTP GET success(200): http://tepco-usage-api.appspot.com/latest.json
+[2012-01-21 15:01:09,19] [INFO] HTTP GET success(200): http://x68000.q-e-d.net/~68user/net/sample/http-auth/secret.html
+[2012-01-21 15:01:09,59] [INFO] HTTP POST success(200): http://www.yahoo.co.jp
+[2012-01-21 15:01:09,82] [ERROR] Request timeout: http://www.yahoo.co.jp
+[2012-01-21 15:01:10, 6] [ERROR] Request timeout: http://www.yahoo.co.jp
+[2012-01-21 15:01:10,15] [ERROR] URL not found: http://wwww222.google.co.jp
+[2012-01-21 15:01:10,16] [ERROR] URL not found: http://wwww222.google.co.jp
+[2012-01-21 15:01:10,38] [ERROR] HTTP GET failure(401): http://x68000.q-e-d.net/~68user/net/sample/http-auth/secret.html
+[2012-01-21 15:01:10,38] [DEBUG] log message for debug1.
+[2012-01-21 15:01:10,39] [DEBUG] log message for debug2. - /path/to/test.php(0)
+[2012-01-21 15:01:10,39] [INFO] log message for debug3.
+[2012-01-21 15:01:10,39] [INFO] log message for debug4. - /path/to/test.php(0)
+[2012-01-21 15:01:10,40] [WARN] log message for debug5.
+[2012-01-21 15:01:10,40] [WARN] log message for debug6. - /path/to/test.php(0)
+[2012-01-21 15:01:10,40] [ERROR] log message for debug7.
+[2012-01-21 15:01:10,40] [ERROR] log message for debug8. - /path/to/test.php(0)
+[2012-01-21 15:01:10,41] [FATAL] log message for debug9.
+[2012-01-21 15:01:10,41] [FATAL] log message for debug10. - /path/to/test.php(0)
+[2012-01-21 15:01:10,42] [INFO] log message for info3.
+[2012-01-21 15:01:10,42] [INFO] log message for info4. - /path/to/test.php(0)
+[2012-01-21 15:01:10,42] [WARN] log message for info5.
+[2012-01-21 15:01:10,43] [WARN] log message for info6. - /path/to/test.php(0)
+[2012-01-21 15:01:10,43] [ERROR] log message for info7.
+[2012-01-21 15:01:10,43] [ERROR] log message for info8. - /path/to/test.php(0)
+[2012-01-21 15:01:10,44] [FATAL] log message for info9.
+[2012-01-21 15:01:10,44] [FATAL] log message for info10. - /path/to/test.php(0)
+[2012-01-21 15:01:10,45] [WARN] log message for warn5.
+[2012-01-21 15:01:10,45] [WARN] log message for warn6. - /path/to/test.php(0)
+[2012-01-21 15:01:10,46] [ERROR] log message for warn7.
+[2012-01-21 15:01:10,46] [ERROR] log message for warn8. - /path/to/test.php(0)
+[2012-01-21 15:01:10,46] [FATAL] log message for warn9.
+[2012-01-21 15:01:10,47] [FATAL] log message for warn10. - /path/to/test.php(0)
+[2012-01-21 15:01:10,48] [ERROR] log message for error7.
+[2012-01-21 15:01:10,49] [ERROR] log message for error8. - /path/to/test.php(0)
+[2012-01-21 15:01:10,49] [FATAL] log message for error9.
+[2012-01-21 15:01:10,49] [FATAL] log message for error10. - /path/to/test.php(0)
+[2012-01-21 15:01:10,52] [FATAL] log message for fatal9.
+[2012-01-21 15:01:10,52] [FATAL] log message for fatal10. - /path/to/test.php(0)
+[2012-01-21 15:01:10,85] [ERROR] Method notfound does not exist - /Users/stay/workspace/eclipse/stream/core/Application.php(100)
+[2012-01-21 15:01:10,87] [ERROR] Method notfound does not exist - /Users/stay/workspace/eclipse/stream/core/Application.php(100)
+[2012-01-21 15:01:10,88] [ERROR] Failed to resolve the routing: /notdefine
+[2012-01-21 15:01:10,90] [ERROR] Invalid action definition: render - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:10,91] [ERROR] Invalid action definition: layout - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:10,92] [ERROR] Invalid action definition: layout - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:10,93] [ERROR] Invalid action definition: load - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:10,95] [ERROR] Invalid action definition: before - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:10,96] [ERROR] Invalid action definition: after - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:10,97] [ERROR] Invalid controller#action definition: Test#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:10,98] [ERROR] Invalid controller#action definition: teSt#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:11, 0] [ERROR] Invalid controller#action definition: teSt#test1 - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:11, 4] [ERROR] Invalid controller#action definition: test__snake#index - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:11, 5] [ERROR] Invalid controller#action definition: test_snake_#index - /Users/stay/workspace/eclipse/stream/core/Router.php(22)
+[2012-01-21 15:01:11,10] [ERROR] TestNoServiceAndModelService and TestNoServiceAndModelModel is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestNoServiceAndModelController.php(4)
+[2012-01-21 15:01:11,11] [ERROR] TestExistServiceExistModelNoMethodService#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestExistServiceExistModelNoMethodController.php(4)
+[2012-01-21 15:01:11,13] [ERROR] TestNoServiceExistModelNoMethodModel#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestNoServiceExistModelNoMethodController.php(4)
+[2012-01-21 15:01:11,14] [ERROR] TestExistServiceNoModelNoMethodService#get is not defined. - /Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestExistServiceNoModelNoMethodController.php(4)

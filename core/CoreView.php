@@ -17,7 +17,7 @@ class CoreView {
      * @param String appディレクトリパス
      * @param String ページ名
      */
-    public function __construct($page_name) {
+    public function __construct($page_name = null) {
         $this->page_name = $page_name;
         $this->session = Session::start();
     }
