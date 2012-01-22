@@ -52,7 +52,7 @@ class Application {
             }
             // 存在しないURLにアクセスしたときは404
             else {
-                throw new ResoureceNotFoundException("Failed to resolve the routing");
+                throw new ResourceNotFoundException("Failed to resolve the routing");
             }
         }
         // CSRFエラーの場合は400
@@ -60,20 +60,10 @@ class Application {
             Logger::error($e->getMessage(), $e->getTraceAsString());
             $this->error(400);
         }
-        // ルーティング解決に失敗した場合は500
-        catch (RouterException $e) {
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->error(500);
-        }
         // リソース(URI)が見つからない場合は404
-        catch (ResoureceNotFoundException $e) {
+        catch (ResourceNotFoundException $e) {
             Logger::error($e->getMessage() . ": " . STREAM_ROUTING_PATH);
             $this->error(404);
-        }
-        // Service, Modelクラスが見つからない場合は500
-        catch (ClassNotFoundException $e) {
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->error(500);
         }
         // それ以外のエラーは500
         catch (Exception $e) {

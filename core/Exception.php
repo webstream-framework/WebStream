@@ -9,7 +9,7 @@ class CsrfException extends Exception {}
 /** ルーティング失敗例外 */
 class RouterException extends Exception {}
 /** リソース取得失敗例外 */
-class ResoureceNotFoundException extends Exception {}
+class ResourceNotFoundException extends Exception {}
 /** クラスロード失敗例外 */
 class ClassNotFoundException extends Exception {}
 /** メソッドロード失敗例外 */
