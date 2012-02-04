@@ -173,7 +173,12 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
+
+    // TODO
+    // CoreViewのテスト、拡張子によるファイルを取得できるか追加。.rss, .xml, など。
+
+
     /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること

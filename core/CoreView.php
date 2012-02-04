@@ -118,11 +118,11 @@ HTML;
             throw new Exception("Invalid template file path: " . $template_path);
         }
         // キャッシュファイルがなければ生成する
-        $filename = preg_replace_callback('/.*views\/(.*)\.tmpl/', create_function(
+        $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', create_function(
             '$matches',
-            'return preg_replace(\'/\//\', \'.\', $matches[1]) . \'.cache\';'
+            'return $matches[1] . \'.cache\';'
         ), $template_path);
-        $cache_file = STREAM_ROOT . '/' . STREAM_APP_DIR . '/views/cache/' . $filename;
+        $cache_file = STREAM_ROOT . '/' . STREAM_APP_DIR . '/views/cache/' . md5($filename);
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = $this->convert(file_get_contents($template_path));
@@ -215,7 +215,7 @@ HTML;
      */
     final public function renderPublicFile($filepath) {
         if (!file_exists($filepath)) {
-            throw new ResoureceNotFoundException("File not found: " . $filepath);
+            throw new ResourceNotFoundException("File not found: " . $filepath);
         }
         // 画像の場合
         if (preg_match('/.+\.((?:jp(?:e|)g|png|bmp|(?:tif|gi)f)|(?:JP(?:E|)G|PNG|BMP|(?:TIF|GI)F))$/', 

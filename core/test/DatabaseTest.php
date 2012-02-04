@@ -10,6 +10,7 @@ class DatabaseTest extends UnitTestBase {
     private $db;
     
     public function setUp() {
+        parent::setUp();
         // ログ出力ディレクトリ、ログレベルをテスト用に変更
         $class = new ReflectionClass("Database");
         $property = $class->getProperty("config_path");
@@ -48,7 +49,6 @@ class DatabaseTest extends UnitTestBase {
         $result = $this->db->select("SELECT name FROM stream_test");
         $name = $result[0]["name"];
         $this->assertEquals("select test", $name);
-        
     }
     
     /**

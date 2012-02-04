@@ -13,6 +13,10 @@ class HttpAgentTest extends UnitTestBase {
     const URL_BASIC_AUTH = "http://x68000.q-e-d.net/~68user/net/sample/http-auth/secret.html";
     const URL_NG_NOTFOUND = "http://wwww222.google.co.jp";
     
+    public function setUp() {
+        parent::setUp();
+    }
+    
     /**
      * 正常系
      * 外部サイトからGETでコンテンツを取得できること

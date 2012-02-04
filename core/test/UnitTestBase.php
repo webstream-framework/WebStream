@@ -31,9 +31,10 @@ SQL;
 
     public function setUp() {
         $this->loadModule();
+        Logger::init("core/test/testdata/config/log.ini");
     }
 
-    private function loadModule() {
+    protected function loadModule() {
         require_once $this->getRoot() . "/core/AutoImport.php";
         importAll("core");
         $this->root_url = $this->document_root . $this->project_name . $this->testdata_dir;
@@ -233,6 +234,112 @@ SQL;
             array("FATAL", "log.test.fatal.ok.ini", "log message for fatal10.", "#0 /path/to/test.php(0)"),
         );
     }
+    
+    public function rotateCycleDayWithinProvider() {
+        return array(
+            array("log.test.ok1.rotate.ini", 1),
+            array("log.test.ok1.rotate.ini", 23)
+        );
+    }
+    
+    public function rotateCycleDayProvider() {
+        return array(
+            array("log.test.ok1.rotate.ini", 24),
+            array("log.test.ok1.rotate.ini", 25)
+        );
+    }
+    
+    public function rotateCycleWeekWithinProvider() {
+        return array(
+            array("log.test.ok2.rotate.ini", 24),
+            array("log.test.ok2.rotate.ini", 24 * 7 -1)
+        );
+    }
+    
+    public function rotateCycleWeekProvider() {
+        return array(
+            array("log.test.ok2.rotate.ini", 24 * 7),
+            array("log.test.ok2.rotate.ini", 24 * 7 + 1)
+        );
+    }
+    
+    public function rotateCycleMonthWithinProvider() {
+        $day_of_month = 24 * intval(date("t", time()));
+        return array(
+            array("log.test.ok3.rotate.ini", 24),
+            array("log.test.ok3.rotate.ini", $day_of_month - 1)
+        );
+    }
+    
+    public function rotateCycleMonthProvider() {
+        $day_of_month = 24 * intval(date("t", time()));
+        return array(
+            array("log.test.ok3.rotate.ini", $day_of_month),
+            array("log.test.ok3.rotate.ini", $day_of_month + 1)
+        );
+    }
+    
+    public function rotateCycleYearWithinProvider() {
+        $day_of_year = 24 * 365;
+        $year = date("Y");
+        if (($year % 4 === 0 && $year % 100 !== 0) || $year % 400 === 0) {
+            $day_of_year = 24 * 366;
+        }
+        return array(
+            array("log.test.ok4.rotate.ini", 24),
+            array("log.test.ok4.rotate.ini", $day_of_year - 1)
+        );
+    }
+    
+    public function rotateCycleYearProvider() {
+        $day_of_year = 24 * 365;
+        $year = date("Y");
+        if (($year % 4 === 0 && $year % 100 !== 0) || $year % 400 === 0) {
+            $day_of_year = 24 * 366;
+        }
+        return array(
+            array("log.test.ok4.rotate.ini", $day_of_year),
+            array("log.test.ok4.rotate.ini", $day_of_year + 1)
+        );
+    }
+    
+    public function notFoundRotateCycleConfigProvider() {
+        return array(
+            array("log.test.ng1.rotate.ini")
+        );
+    }
+    
+    public function invalidRotateCycleConfigProvider() {
+        return array(
+            array("log.test.ng2.rotate.ini")
+        );
+    }
+    
+    public function notFoundRotateSizeConfigProvider() {
+        return array(
+            array("log.test.ng3.rotate.ini")
+        );
+    }
+    
+    public function invalidRotateSizeConfigProvider() {
+        return array(
+            array("log.test.ng4.rotate.ini")
+        );
+    }
+    
+    public function rotateSizeProvider() {
+        return array(
+            array("log.test.ok5.rotate.ini", 1024),
+            array("log.test.ok5.rotate.ini", 1025)
+        );
+    }
+    
+    public function rotateSizeWithinProvider() {
+        return array(
+            array("log.test.ok5.rotate.ini", 1023),
+            array("log.test.ok5.rotate.ini", 0)
+        );
+    }
 
     public function resolveInvalidPathProvider() {
         return array(
@@ -409,6 +516,7 @@ SQL;
             array('/view2', "test_view_sub"),
             array('/view3', "test_aaa_bbb_view"),
             array('/view4', "test_aaa_bbb_view_sub"),
+            array('/view5', "test_view_sub_test")
         );
     }
     

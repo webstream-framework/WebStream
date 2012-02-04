@@ -43,6 +43,7 @@ Router::setRule(
         '/view2' => "test_view#sub_index",
         '/view3' => "test_aaa_bbb_view#index",
         '/view4' => "test_aaa_bbb_view#sub_index",
+        '/view5' => "test_view#index2",
         '/layout1' => "test_layout_view#index",
         '/layout2' => "test_layout_view#sub_index"
     )

@@ -7,4 +7,8 @@ class TestViewController extends CoreController {
     public function subIndex() {
         $this->render("sub/test");
     }
+    
+    public function index2() {
+        $this->render("sub.test");
+    }
 }
