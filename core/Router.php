@@ -40,10 +40,9 @@ class Router {
         foreach (self::$rules as $path => $ca) {
             // 静的ファイルへのパスがルーティングルールに定義された場合
             // パス定義された時点で弾く
-            if (preg_match('/\/(img|js|css)(?:$|\/)/', $path)) {
+            if (preg_match('/\/(img|js|css|file)(?:$|\/)/', $path)) {
                 throw new RouterException("Include the prohibit routing path: " . $path);
             }
-            
             // 許可したルーティングパス定義に合っていなければ弾く
             if (!preg_match('/^\/{1}(?:$|[a-zA-Z]{1}[a-zA-Z0-9.-_\/]*$)/', $path)) {
                 throw new RouterException("Invalid path defintion: " . $path);
@@ -84,7 +83,7 @@ class Router {
             $key_list = array();
 
             // URLに静的ファイルへのパスが指定された場合
-            if (preg_match('/\/(?:img|js|css)(?:$|\/)/', $this->path_info)) {
+            if (preg_match('/^\/(?:img|js|css|file)(?:$|\/)/', $this->path_info)) {
                 $route["staticFile"] = $this->path_info;
             }
             // それ以外

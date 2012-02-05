@@ -173,11 +173,40 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-
-
-    // TODO
-    // CoreViewのテスト、拡張子によるファイルを取得できるか追加。.rss, .xml, など。
-
+    
+    /**
+     * 正常系
+     * 公開している各種リソースファイルにアクセスできること
+     * @dataProvider getResourceProvider
+     */
+    public function testOkGetResource($path, $mime) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $response_mime = null;
+        if (preg_match('/^Content-Type:\s(.*);/', $http_response_header[11], $matches)) {
+            $response_mime = $matches[1];
+        }
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+        $this->assertEquals($mime, $response_mime);
+    }
+    
+    /**
+     * 正常系
+     * 公開している各種ファイルにアクセスできること
+     * @dataProvider getFileProvider
+     */
+    public function testOkGetFile($path, $mime) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $response_mime = null;
+        if (preg_match('/^Content-Type:\s(.*);/', $http_response_header[13], $matches)) {
+            $response_mime = $matches[1];
+        }
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+        $this->assertEquals($mime, $response_mime);
+    }
 
     /**
      * 異常系

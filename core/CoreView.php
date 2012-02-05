@@ -9,8 +9,6 @@ class CoreView {
     private $page_name;
     /** セッション */
     private $session;
-    /** HTTPヘッダ */
-    private $mime;
 
     /**
      * Viewクラスの初期化
@@ -37,12 +35,10 @@ class CoreView {
      * テンプレートファイルを描画する準備をする
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
-     * @param String Mimeタイプ
      */
-    final public function render($template, $params = array(), $mime = "html") {
+    final public function render($template, $params = array()) {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                          "/views/" . $this->page_name . "/" . $template . ".tmpl";
-        $this->setMime($mime);
         $this->draw($template_path, $params);
     }
     
@@ -52,8 +48,7 @@ class CoreView {
      * @param String コールバック関数名
      */
     final public function json($params, $callback = null) {
-        $this->setMime("json");
-        $this->outputHeader();
+        $this->outputHeader("application/json");
         echo json_encode($params);
     }
     
@@ -141,7 +136,7 @@ HTML;
             file_put_contents($cache_file, $content);
         }
         
-        $this->outputHeader();
+        $this->outputHeader("text/html");
         extract($params);
         include($cache_file);
     }
@@ -217,40 +212,18 @@ HTML;
         if (!file_exists($filepath)) {
             throw new ResourceNotFoundException("File not found: " . $filepath);
         }
-        // 画像の場合
-        if (preg_match('/.+\.((?:jp(?:e|)g|png|bmp|(?:tif|gi)f)|(?:JP(?:E|)G|PNG|BMP|(?:TIF|GI)F))$/', 
-            $filepath, $matches)) {
-            $ext = $matches[1];
-            $size = filesize($filepath);
-            $handle = fopen($filepath, "rb");
-            $content = fread($handle, $size);
-            fclose($handle);
-            header("Content-type: image/" . $ext);
-            header("Content-Length: " . $size);
-            echo $content;
+        // 画像,css,jsの場合
+        if (preg_match('/\/views\/public\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
+            preg_match('/\/views\/public\/css\/.+\.css$/i', $filepath) ||
+            preg_match('/\/views\/public\/js\/.+\.js$/i', $filepath)) {
+            $this->display($filepath);
         }
-        // cssの場合
-        else if (preg_match('/.+\.css$/', $filepath)) {
-            $size = filesize($filepath);
-            $handle = fopen($filepath, "r");
-            $content = fread($handle, $size);
-            fclose($handle);
-            header("Content-type: text/css");
-            header("Content-Length: " . $size);
-            echo $content;
-        }
-        // jsの場合
-        else if (preg_match('/.+\.js$/', $filepath)) {
-            $size = filesize($filepath);
-            $handle = fopen($filepath, "r");
-            $content = fread($handle, $size);
-            fclose($handle);
-            header("Content-type: text/javascript");
-            header("Content-Length: " . $size);
-            echo $content;
+        // それ以外のファイル
+        else if (preg_match('/\/views\/public\/file\/.+$/i', $filepath)) {
+            $this->download($filepath);
         }
     }
-
+    
     /**
      * テンプレートの内容を置換する
      * @param String テンプレートファイルの内容
@@ -265,33 +238,80 @@ HTML;
     }
     
     /**
-     * MIMEタイプを設定する
-     * @param String ファイルタイプ
+     * 共通ヘッダを出力する
+     * @param String mimeタイプ
      */
-    final private function setMime($type = null) {
-        switch ($type) {
-        case "rss":
-        case "atom":
-        case "xml":
-            $this->mime = "application/xml";
-            break;
-        case "json":
-            $this->mime = "application/json";
-            break;
-        default:
-            $this->mime = "text/html";
-            break;
-        }
+    final private function outputHeader($mime) {
+        header("Content-Type: ${mime}; charset=UTF-8");
+        header("X-Content-Type-Options: nosniff");
     }
     
     /**
-     * ヘッダを出力する
+     * 画像、CSS、JavaScriptファイルを表示する
+     * @param String ファイルパス
      */
-    final private function outputHeader() {
-        if (!$this->mime) {
-            $this->setMime();
+    final private function display($filename) {
+        $this->outputHeader($this->mime($filename));
+        header("Content-Length: " . filesize($filename));
+        ob_clean();
+        flush();
+        readfile($filename);
+    }
+    
+    /**
+     * ファイルをダウンロードする
+     * @param String ファイルパス
+     */
+    final private function download($filename) {
+        $this->outputHeader($this->mime($filename));
+        header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+        header('Expires: 0');
+        header("Content-Transfer-Encoding: binary");
+        header("Content-Length: ".filesize($filename));
+        header('Pragma: no-cache');
+        if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], "MSIE") !== FALSE) {
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
         }
-        header("Content-Type: {$this->mime}; charset=UTF-8");
-        header("X-Content-Type-Options: nosniff");
+        ob_clean();
+        flush();
+        readfile($filename);
+    }
+    
+    final private function mime($filename) {
+        $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        switch ($type) {
+        case "txt":
+            return "text/plain";
+        case "jpeg":
+        case "jpg":
+            return "image/jpeg";
+        case "gif":
+            return "image/gif"; 
+        case "png":
+            return "image/png";
+        case "tiff":
+            return "image/tiff";
+        case "bmp":
+            return "image/bmp";
+        case "rss":
+        case "rdf":
+        case "atom":
+        case "xml":
+            return "application/xml";
+        case "html":
+        case "htm":
+            return "text/html";
+        case "css":
+            return "text/css";
+        case "js":
+            return "text/javascript";
+        case "json":
+            return "application/json";
+        case "pdf":
+            return "application/pdf";
+        default:
+            return "application/octet-stream";
+        }
     }
 }

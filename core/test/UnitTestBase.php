@@ -533,4 +533,29 @@ SQL;
             array('/exist_service_exist_model_exist_model_method_params', "abcdef")
         );
     }
+    
+    public function getResourceProvider() {
+        return array(
+            array("/img/sample.png", "image/png"),
+            array("/img/sample2.PNG", "image/png"),
+            array("/css/sample.css", "text/css"),
+            array("/css/sample2.CSS", "text/css"),
+            array("/js/sample.js", "text/javascript"),
+            array("/js/sample2.JS", "text/javascript")
+        );
+    }
+    
+    public function getFileProvider() {
+        return array(
+            array("/file/sample.xml", "application/xml"),
+            array("/file/sample.rdf", "application/xml"),
+            array("/file/sample.atom", "application/xml"),
+            array("/file/sample.pdf", "application/pdf"),
+            array("/file/sample.json", "application/json"),
+            array("/file/sample.txt", "text/plain"),
+            array("/file/sample.html", "text/html"),
+            array("/file/sample.htm", "text/html"),
+            array("/file/sample.php", "application/octet-stream")
+        );
+    }
 }

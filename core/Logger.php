@@ -179,7 +179,12 @@ class Logger {
         $msg = $this->message($msg, $stacktrace);
         $msg = "[".$this->getTimeStamp()."] [".$level."] ".$msg."\n";
         $this->rotate();
-        error_log($msg, 3, $this->_path);
+        try {
+            error_log($msg, 3, $this->_path);
+        }
+        catch (Exception $e) {
+            throw new LoggerException($e->getMessage());
+        }
     }
     
     /**
