@@ -14,7 +14,7 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.1.2');
+        define('STREAM_VERSION', '0.1.3');
     }
     
     /**
@@ -29,6 +29,10 @@ class Application {
         $request = new Request();
         define('STREAM_BASE_URI', $request->getBaseURL());
         define('STREAM_ROUTING_PATH', $request->getPathInfo());
+        /** publicディレクトリ */
+        define('STREAM_VIEW_SHARED', "_shared");
+        define('STREAM_VIEW_PUBLIC', "_public");
+        define('STREAM_VIEW_CACHE', "_cache");
     }
     
     /**
@@ -47,7 +51,8 @@ class Application {
             else if ($this->staticFile()) {
                 $view = new CoreView();
                 $file_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
-                    "/views/public" . $this->staticFile();
+                    "/views/" . STREAM_VIEW_PUBLIC . $this->staticFile();
+                var_dump($file_path);
                 $view->renderPublicFile($file_path);
             }
             // 存在しないURLにアクセスしたときは404

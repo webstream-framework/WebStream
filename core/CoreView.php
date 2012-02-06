@@ -26,8 +26,8 @@ class CoreView {
      * @param Hash 埋め込みパラメータ
      */
     final public function layout($template, $params = array()) {
-        $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
-                         "/views/shared/" . $template . ".tmpl";
+        $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views" .
+                         "/" . STREAM_VIEW_SHARED . "/" . $template . ".tmpl";
         $this->draw($template_path, $params);
     }
     
@@ -117,7 +117,7 @@ HTML;
             '$matches',
             'return $matches[1] . \'.cache\';'
         ), $template_path);
-        $cache_file = STREAM_ROOT . '/' . STREAM_APP_DIR . '/views/cache/' . md5($filename);
+        $cache_file = STREAM_ROOT . '/' . STREAM_APP_DIR . '/views/' . STREAM_VIEW_CACHE . "/" . md5($filename);
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = $this->convert(file_get_contents($template_path));
@@ -213,13 +213,13 @@ HTML;
             throw new ResourceNotFoundException("File not found: " . $filepath);
         }
         // 画像,css,jsの場合
-        if (preg_match('/\/views\/public\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
-            preg_match('/\/views\/public\/css\/.+\.css$/i', $filepath) ||
-            preg_match('/\/views\/public\/js\/.+\.js$/i', $filepath)) {
+        if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
+            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/css\/.+\.css$/i', $filepath) ||
+            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/js\/.+\.js$/i', $filepath)) {
             $this->display($filepath);
         }
         // それ以外のファイル
-        else if (preg_match('/\/views\/public\/file\/.+$/i', $filepath)) {
+        else if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/file\/.+$/i', $filepath)) {
             $this->download($filepath);
         }
     }
@@ -278,6 +278,11 @@ HTML;
         readfile($filename);
     }
     
+    /**
+     * ファイルからmimeタイプを返却する
+     * @param String ファイルパス
+     * @return String mimeタイプ
+     */
     final private function mime($filename) {
         $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         switch ($type) {

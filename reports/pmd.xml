@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pmd version="1.2.0" timestamp="2012-02-06T21:43:35+09:00">
+  <file name="/Users/stay/workspace/eclipse/stream/app/controllers/SampleController.php">
+    <violation beginline="10" endline="10" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$title'.
+    </violation>
+    <violation beginline="15" endline="15" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$params'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/app/libraries/Weather.php">
+    <violation beginline="4" endline="4" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$weather'.
+    </violation>
+    <violation beginline="4" endline="4" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$wid'.
+    </violation>
+    <violation beginline="4" endline="4" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$wurl'.
+    </violation>
+    <violation beginline="6" endline="6" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$params'.
+    </violation>
+    <violation beginline="6" endline="6" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$headers'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/AutoImport.php">
+    <violation beginline="66" endline="66" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $dh
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/Cache.php">
+    <violation beginline="34" endline="34" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $id
+    </violation>
+    <violation beginline="43" endline="43" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $id
+    </violation>
+    <violation beginline="59" endline="59" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $id
+    </violation>
+    <violation beginline="59" endline="77" rule="ConstructorWithNameAsEnclosingClass" ruleset="Naming Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/naming.html#constructorwithnameasenclosingclass" class="Cache" method="cache" priority="3">
+      Classes should not have a constructor method with the same name as the class
+    </violation>
+    <violation beginline="86" endline="86" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $id
+    </violation>
+    <violation beginline="125" endline="125" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $id
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/CoreController.php">
+    <violation beginline="7" endline="154" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreController" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/CoreModel.php">
+    <violation beginline="9" endline="9" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $db
+    </violation>
+    <violation beginline="17" endline="17" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$method'.
+    </violation>
+    <violation beginline="17" endline="17" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$arguments'.
+    </violation>
+    <violation beginline="18" endline="18" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$class'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/CoreService.php">
+    <violation beginline="20" endline="20" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$class'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/CoreView.php">
+    <violation beginline="7" endline="322" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreView" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+    <violation beginline="7" endline="322" rule="ExcessiveClassComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity" class="CoreView" priority="3">
+      The class CoreView has an overall complexity of 53 which is very high. The configured complexity threshold is 50.
+    </violation>
+    <violation beginline="50" endline="50" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$callback'.
+    </violation>
+    <violation beginline="83" endline="83" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
+      The method move() contains an exit expression.
+    </violation>
+    <violation beginline="232" endline="232" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $s
+    </violation>
+    <violation beginline="244" endline="244" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$mime'.
+    </violation>
+    <violation beginline="286" endline="321" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="CoreView" method="mime" priority="3">
+      The method mime() has a Cyclomatic Complexity of 18.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/Database.php">
+    <violation beginline="9" endline="9" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$manager'.
+    </violation>
+    <violation beginline="58" endline="222" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Database" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/Exception.php">
+    <violation beginline="25" endline="25" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$method'.
+    </violation>
+    <violation beginline="25" endline="25" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$arguments'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/HttpAgent.php">
+    <violation beginline="134" endline="192" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="HttpAgent" method="http" priority="3">
+      The method http() has a Cyclomatic Complexity of 13.
+    </violation>
+    <violation beginline="134" endline="192" rule="NPathComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity" class="HttpAgent" method="http" priority="3">
+      The method http() has an NPath complexity of 810.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/Logger.php">
+    <violation beginline="7" endline="287" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Logger" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+    <violation beginline="178" endline="188" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatemethod" class="Logger" method="write" priority="3">
+      Avoid unused private methods such as 'write'.
+    </violation>
+    <violation beginline="243" endline="243" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $to
+    </violation>
+    <violation beginline="244" endline="244" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$from_date'.
+    </violation>
+    <violation beginline="245" endline="245" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$to_date'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/Router.php">
+    <violation beginline="75" endline="130" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="Router" method="resolve" priority="3">
+      The method resolve() has a Cyclomatic Complexity of 14.
+    </violation>
+    <violation beginline="77" endline="77" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$routes'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/Session.php">
+    <violation beginline="42" endline="44" rule="ShortMethodName" ruleset="Naming Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/naming.html#shortmethodname" class="Session" method="id" priority="3">
+      Avoid using short method names like Session::id()
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace/eclipse/stream/core/test/testdata/app/controllers/TestController.php">
+    <violation beginline="2" endline="91" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="TestController" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+  </file>
+</pmd>
