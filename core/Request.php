@@ -78,7 +78,6 @@ class Request {
         return $_SERVER["REQUEST_METHOD"] === "GET";
     }
 
-    
     /**
      * SERVERパラメータ取得
      * @param String パラメータキー

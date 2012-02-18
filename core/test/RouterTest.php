@@ -13,6 +13,12 @@ class RouterTest extends UnitTestBase {
         parent::setUp();
     }
     
+    public function tearDown() {
+        $log_path = Utility::getRoot() . $this->testdata_dir . "/log/stream.log";
+        $handle = fopen($log_path, "w+");
+        fclose($handle);
+    }
+    
     /**
      * 正常系
      * ルートパス(/)にアクセスできること
@@ -212,6 +218,68 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
         $this->assertEquals($mime, $response_mime);
+    }
+
+    /**
+     * 正常系
+     * render系メソッドに正常にアクセスできること
+     * @dataProvider renderMethodProvider
+     */
+    public function testOkRenderMethod($path, $mime) {
+        $url = $this->root_url . $path;
+        $response = file_get_contents($url);
+        $response_mime = null;
+        foreach ($http_response_header as $header) {
+            if (preg_match('/^Content-Type:\s(.*);/', $header, $matches)) {
+                $response_mime = $matches[1];
+                break;
+            }
+        }
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+        $this->assertEquals($mime, $response_mime);
+    }
+    
+    /**
+     * 正常系
+     * GETリクエストが正常に実行出来ること
+     * @dataProvider getRequestProvider
+     */
+    public function testOkGetRequest($path, $key, $value) {
+        $url = $this->root_url . $path . "?${key}=${value}";
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $value);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
+    
+    /**
+     * 正常系
+     * POSTリクエストが正常に実行出来ること
+     * @dataProvider postRequestProvider
+     */
+    public function testOkPostRequest($path, $key, $value) {
+        $url = $url = $this->root_url . $path;
+        $http = new HttpAgent();
+        $response = $http->post($url, array($key => $value));
+        $this->assertEquals($response, $value);
+        $this->assertEquals($http->getStatusCode(), "200");
+    }
+    
+    /**
+     * 正常系
+     * SESSIONに値をセット出来ること
+     * @dataProvider setSessionProvider
+     */
+    public function testOkSetSession($path, $key, $value, $path2) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $session_id = $http->get($url);
+        $cookie = "Cookie: PHPSESSID=${session_id}";
+        $url = $this->root_url . $path2;
+        $response = $http->get($url, null, array($cookie));
+        $this->assertEquals($response, $value);
+        $this->assertEquals($http->getStatusCode(), "200");
     }
 
     /**
@@ -467,6 +535,27 @@ class RouterTest extends UnitTestBase {
         $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
         
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
+                       $line_tail, $matches)) {
+            $target = array("ERROR", $error_msg);
+            $result = array($matches[1], $matches[2]);
+            $this->assertEquals($target, $result);           
+        }
+    }
+    
+    /**
+     * 異常系
+     * 存在しないrenderメソッドにアクセスしたとき、500エラーとなり、
+     * Controllerクラス名#メソッド名 is not defined.とログ出力されること
+     * @dataProvider notFoundRenderMethodProvider
+     */
+    public function testNgNotFoundRenderMethodProvider($path, $error_msg) {
+        $url = $this->root_url . $path;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "500");
+        $line_tail = $this->logHead($this->config_path_log . "log.test.info.ok.ini");
+
+        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)$/',
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);
             $result = array($matches[1], $matches[2]);

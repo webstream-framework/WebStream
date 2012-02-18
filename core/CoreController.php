@@ -27,6 +27,16 @@ class CoreController {
     }
     
     /**
+     * 存在しないメソッドへのアクセスを制御
+     * @param String メソッド名
+     * @param Array 引数
+     */
+    final public function __call($method, $arguments) {
+        $class = get_class($this);
+        throw new MethodNotFoundException("${class}#${method} is not defined.");
+    }
+    
+    /**
      * CSRFトークンをチェックする
      */
     final private function csrf() {
@@ -95,7 +105,7 @@ class CoreController {
         $this->view->json($params, $callback);
     }
     
-    /**
+        /**
      * テンプレートファイルでXMLを描画する
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
@@ -123,11 +133,58 @@ class CoreController {
     }
     
     /**
+     * エラーページ用HTMLを描画する
+     * @param String 表示内容
+     */
+    final protected function render_error($content) {
+        $this->view->error($content);
+    }
+    
+    /**
      * リダイレクトする
      * @param String ドキュメントルートからの相対パス
      */
     final protected function redirect($path) {
-        $this->view->redirect(STREAM_BASE_URI . $path);
+        $this->move(301, $path);
+    }
+    
+    /**
+     * 静的ファイルを描画する
+     * @param String ファイルパス
+     */
+    final public function render_file($filepath) {
+        $this->view->renderPublicFile($filepath);
+    }
+    
+    /**
+     * デフォルト画面を描画する
+     * @param Integer ステータスコード
+     * @param String 遷移パス
+     */
+    final public function move($status_code, $path = null) {
+        switch ($status_code) {
+        case 301:
+            header("HTTP/1.1 301 Moved Permanently");
+            header("Location: " . $path);
+            break;
+        case 400:
+            header("HTTP/1.1 400 Bad Request");
+            $this->render_error("400 Bad Request");
+            break;
+        case 404:
+            header("HTTP/1.1 404 Not Found");
+            $this->render_error("404 Not Found");
+            break;
+        case 500:
+            header("HTTP/1.1 500 Internal Server Error");
+            $this->render_error("500 Internal Server Error");
+            break;
+        default:
+            $msg = "Unknown status code: " . $status_code;
+            Logger::fatal($msg);
+            throw new Exception($msg);
+        }
+        exit;
     }
     
     /**

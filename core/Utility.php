@@ -90,4 +90,45 @@ class Utility {
         ), $str);
         return preg_replace('/^_/', '', $str);
     }
+    
+   /**
+     * ファイルからmimeタイプを返却する
+     * @param String ファイルタイプ
+     * @return String mimeタイプ
+     */
+    public static function getMimeType($type) {
+        switch ($type) {
+        case "txt":
+            return "text/plain";
+        case "jpeg":
+        case "jpg":
+            return "image/jpeg";
+        case "gif":
+            return "image/gif"; 
+        case "png":
+            return "image/png";
+        case "tiff":
+            return "image/tiff";
+        case "bmp":
+            return "image/bmp";
+        case "xml":
+        case "rss":
+        case "rdf":
+        case "atom":
+             return "application/xml";
+        case "html":
+        case "htm":
+            return "text/html";
+        case "css":
+            return "text/css";
+        case "js":
+            return "text/javascript";
+        case "json":
+            return "application/json";
+        case "pdf":
+            return "application/pdf";
+        default:
+            return "application/octet-stream";
+        }
+    }
 }

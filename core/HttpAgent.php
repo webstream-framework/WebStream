@@ -124,7 +124,7 @@ class HttpAgent {
     }
     
     /**
-     * POSTリクエストを発行する
+     * HTTP通信を実行する
      * @param String URL
      * @param Hash リクエストパラメータ
      * @param Hash リクエストヘッダ

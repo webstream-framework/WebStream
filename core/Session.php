@@ -19,7 +19,6 @@ class Session {
 
     /**
      * セッションを開始する
-     * @param Object セッションオブジェクト
      */
     public static function start() {
         if (!is_object(Session::$accessor)) {
@@ -32,6 +31,7 @@ class Session {
      * セッションを初期化する
      */
     public static function init() {
+        $_SESSION = array();
         session_destroy();
     }
     

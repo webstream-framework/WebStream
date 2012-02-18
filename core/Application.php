@@ -14,7 +14,7 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.1.3');
+        define('STREAM_VERSION', '0.1.5');
     }
     
     /**
@@ -49,11 +49,10 @@ class Application {
             }
             // 静的ファイルを呼び出す
             else if ($this->staticFile()) {
-                $view = new CoreView();
+                $controller = new CoreController();
                 $file_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                     "/views/" . STREAM_VIEW_PUBLIC . $this->staticFile();
-                var_dump($file_path);
-                $view->renderPublicFile($file_path);
+                $controller->render_file($file_path);
             }
             // 存在しないURLにアクセスしたときは404
             else {
@@ -104,8 +103,8 @@ class Application {
      * @param int ステータスコード
      */
     private function error($status_code) {
-        $view = new CoreView();
-        $view->move($status_code);
+        $controller = new CoreController();
+        $controller->move($status_code);
     }
 
     /**

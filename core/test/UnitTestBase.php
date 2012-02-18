@@ -48,6 +48,13 @@ SQL;
         $project_root = implode("/", $path_hierarchy_list);
         return is_dir($project_root) ? $project_root : null;
     }
+    
+    protected function logHead($config_path) {
+        $log = Utility::parseConfig($config_path);
+        $log_path = realpath(Utility::getRoot() . "/" . $log["path"]);
+        $file = file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        return array_shift($file);
+    }
 
     protected function logTail($config_path) {
         $log = Utility::parseConfig($config_path);
@@ -556,6 +563,40 @@ SQL;
             array("/file/sample.html", "text/html"),
             array("/file/sample.htm", "text/html"),
             array("/file/sample.php", "application/octet-stream")
+        );
+    }
+    
+    public function renderMethodProvider() {
+        return array(
+            array("/resource/html", "text/html"),
+            array("/resource/rss", "application/xml"),
+            array("/resource/xml", "application/xml"),
+            array("/resource/atom", "application/xml"),
+            array("/resource/rdf", "application/xml"),
+        );
+    }
+    
+    public function notFoundRenderMethodProvider() {
+        return array(
+            array("/notfound_render", "TestController#render_dummy is not defined.")
+        );
+    }
+    
+    public function getRequestProvider() {
+        return array(
+            array("/get_request", "name", "test")
+        );
+    }
+    
+    public function postRequestProvider() {
+        return array(
+            array("/post_request", "name", "test")
+        );
+    }
+    
+    public function setSessionProvider() {
+        return array(
+            array("/set_session", "name", "test", "/get_session")
         );
     }
 }

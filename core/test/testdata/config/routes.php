@@ -45,6 +45,18 @@ Router::setRule(
         '/view4' => "test_aaa_bbb_view#sub_index",
         '/view5' => "test_view#index2",
         '/layout1' => "test_layout_view#index",
-        '/layout2' => "test_layout_view#sub_index"
+        '/layout2' => "test_layout_view#sub_index",
+        '/resource/html' => "test_resource#html",
+        '/resource/rss' => "test_resource#rss",
+        '/resource/xml' => "test_resource#xml",
+        '/resource/rdf' => "test_resource#rdf",
+        '/resource/atom' => "test_resource#atom",
+        '/notfound_render' => "test#test_not_found_render",
+        '/get_request' => "test_request#get",
+        '/post_request' => "test_request#post",
+        '/post_receiver' => "test_request#post_receiver",
+        '/prohibit_override' => "test_prohibit_override#render",
+        '/set_session' => "test_session#set",
+        '/get_session' => "test_session#get"
     )
 );

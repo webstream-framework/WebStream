@@ -24,22 +24,24 @@ class CoreView {
      * レイアウトファイルを描画する準備をする
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
+     * @param String ファイルタイプ
      */
-    final public function layout($template, $params = array()) {
+    final public function layout($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views" .
                          "/" . STREAM_VIEW_SHARED . "/" . $template . ".tmpl";
-        $this->draw($template_path, $params);
+        $this->draw($template_path, $params, $type);
     }
     
     /**
      * テンプレートファイルを描画する準備をする
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
+     * @param String ファイルタイプ
      */
-    final public function render($template, $params = array()) {
+    final public function render($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                          "/views/" . $this->page_name . "/" . $template . ".tmpl";
-        $this->draw($template_path, $params);
+        $this->draw($template_path, $params, $type);
     }
     
     /**
@@ -53,41 +55,10 @@ class CoreView {
     }
     
     /**
-     * デフォルト画面を描画する
-     * @param int ステータスコード
-     * @param String 遷移パス
-     */
-    final public function move($status_code, $path = null) {
-        switch ($status_code) {
-        case 301:
-            header("HTTP/1.1 301 Moved Permanently");
-            header("Location: " . $path);
-            break;
-        case 400:
-            header("HTTP/1.1 400 Bad Request");
-            $this->errorHTML("400 Bad Request");
-            break;
-        case 404:
-            header("HTTP/1.1 404 Not Found");
-            $this->errorHTML("404 Not Found");
-            break;
-        case 500:
-            header("HTTP/1.1 500 Internal Server Error");
-            $this->errorHTML("500 Internal Server Error");
-            break;
-        default:
-            $msg = "Unknown status code: " . $status_code;
-            Logger::error($msg);
-            throw new Exception($msg);
-        }
-        exit;
-    }
-    
-    /**
      * デフォルトHTMLを出力する
      * @param String エラー内容
      */
-    final private function errorHTML($content) {
+    final public function error($content) {
         echo <<< HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -107,8 +78,9 @@ HTML;
      * テンプレートファイルを描画する
      * @param String テンプレートファイルパス
      * @param Hash 埋め込みパラメータ
+     * @param String ファイルタイプ
      */
-    final private function draw($template_path, $params) {
+    final private function draw($template_path, $params, $type) {
         if (!file_exists(realpath($template_path))) {
             throw new Exception("Invalid template file path: " . $template_path);
         }
@@ -136,17 +108,9 @@ HTML;
             file_put_contents($cache_file, $content);
         }
         
-        $this->outputHeader("text/html");
+        $this->outputHeader($type);
         extract($params);
         include($cache_file);
-    }
-    
-    /**
-     * リダイレクトする
-     * @param String リダイレクト先パス
-     */
-    final public function redirect($path) {
-        $this->move(301, $path);
     }
     
     /**
@@ -239,9 +203,10 @@ HTML;
     
     /**
      * 共通ヘッダを出力する
-     * @param String mimeタイプ
+     * @param String ファイルタイプ
      */
-    final private function outputHeader($mime) {
+    final private function outputHeader($type) {
+        $mime = Utility::getMimeType($type);
         header("Content-Type: ${mime}; charset=UTF-8");
         header("X-Content-Type-Options: nosniff");
     }
@@ -251,7 +216,8 @@ HTML;
      * @param String ファイルパス
      */
     final private function display($filename) {
-        $this->outputHeader($this->mime($filename));
+        $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $this->outputHeader($type);
         header("Content-Length: " . filesize($filename));
         ob_clean();
         flush();
@@ -263,7 +229,8 @@ HTML;
      * @param String ファイルパス
      */
     final private function download($filename) {
-        $this->outputHeader($this->mime($filename));
+        $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $this->outputHeader($type);
         header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
         header('Expires: 0');
         header("Content-Transfer-Encoding: binary");
@@ -276,47 +243,5 @@ HTML;
         ob_clean();
         flush();
         readfile($filename);
-    }
-    
-    /**
-     * ファイルからmimeタイプを返却する
-     * @param String ファイルパス
-     * @return String mimeタイプ
-     */
-    final private function mime($filename) {
-        $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        switch ($type) {
-        case "txt":
-            return "text/plain";
-        case "jpeg":
-        case "jpg":
-            return "image/jpeg";
-        case "gif":
-            return "image/gif"; 
-        case "png":
-            return "image/png";
-        case "tiff":
-            return "image/tiff";
-        case "bmp":
-            return "image/bmp";
-        case "rss":
-        case "rdf":
-        case "atom":
-        case "xml":
-            return "application/xml";
-        case "html":
-        case "htm":
-            return "text/html";
-        case "css":
-            return "text/css";
-        case "js":
-            return "text/javascript";
-        case "json":
-            return "application/json";
-        case "pdf":
-            return "application/pdf";
-        default:
-            return "application/octet-stream";
-        }
     }
 }
