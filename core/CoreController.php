@@ -40,14 +40,17 @@ class CoreController {
      * CSRFトークンをチェックする
      */
     final private function csrf() {
-        // POSTメソッドによるアクセスの場合
-        if ($this->request->isPost()) {
-            $session_token = $this->session->get(Utility::getCsrfTokenKey());
-            $request_token = $this->request->post(Utility::getCsrfTokenKey());
+        $session_token = $this->session->get(Utility::getCsrfTokenKey());
+        $request_token = $this->request->isPost() ?
+            $this->request->post(Utility::getCsrfTokenKey()) :
+            $this->request->get(Utility::getCsrfTokenKey());
+        
+        // セッションにCSRFトークンがセットされている場合、チェックを実行する
+        if (isset($session_token)) {
+            // CSRFトークンはワンタイムなので削除する
             $this->session->delete(Utility::getCsrfTokenKey());
-            // セッションにCSRFトークンが存在し、かつ、送信されてきたCSRFトークンが
-            // 一致しない場合はCSRFエラーとする
-            if (!empty($session_token) && $session_token !== $request_token) {
+            // 送信されてきたCSRFトークンが一致しない場合はCSRFエラーとする
+            if ($session_token !== $request_token) {
                 throw new CsrfException("Sent invalid CSRF token");
             }
         }

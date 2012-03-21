@@ -102,7 +102,7 @@ HTML;
         else {
             $this->session->delete(Utility::getCsrfTokenKey());
         }
-        
+
         // テンプレートに書き出す
         if (!file_exists($cache_file) || filemtime($cache_file) < filemtime($template_path)) {
             file_put_contents($cache_file, $content);
@@ -134,6 +134,8 @@ HTML;
      * @param String HTML文字列の参照
      */    
     final private function addToeknHTML(&$content) {
+        // <meta>タグによるcharsetが指定されない場合は文字化けするのでその対策を行う
+        $content = mb_convert_encoding($content, 'html-entities', "UTF-8"); 
         // DOMでformにアペンドする
         $doc = new DOMDocument();
         // テンプレートがが断片でなく、完全の場合(layoutを使わずrenderだけで描画した場合)
@@ -144,9 +146,8 @@ HTML;
         $nodeLength = $nodeList->length;
         for ($i = 0; $i < $nodeLength; $i++) {
             $node = $nodeList->item($i);
-            // methodがPOSTの場合のみ実行する
             $method = $node->getAttribute("method");
-            if (preg_match('/^post$/i', $method)) {
+            if (preg_match('/^post$|^get$/i', $method)) {
                 $newNode = $doc->createElement("input");
                 $newNode->setAttribute("type", "hidden");
                 $newNode->setAttribute("name", Utility::getCsrfTokenKey());
@@ -156,11 +157,12 @@ HTML;
         }
         if ($nodeLength !== 0) {
             $innerHTML = "";
-            $bodyNodeList = $doc->getElementsByTagName("body");
+            $bodyNodeList = $doc->getElementsByTagName("html");
             $bodyNode = $bodyNodeList->item(0);
             $children = $bodyNode->childNodes;
             foreach ($children as $child) {
                 $tmp = new DOMDocument();
+                $tmp->formatOutput = true;
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
