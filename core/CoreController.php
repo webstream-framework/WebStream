@@ -20,6 +20,12 @@ class CoreController {
     final public function __construct() {
         $this->page_name = $this->page();
         $this->view = new CoreView(Utility::camel2snake($this->page_name));
+    }
+    
+    /**
+     * Controllerで使用する処理の初期化
+     */
+    final public function initialize() {
         $this->session = Session::start();
         $this->request = new Request();
         $this->csrf();
@@ -44,7 +50,7 @@ class CoreController {
         $request_token = $this->request->isPost() ?
             $this->request->post(Utility::getCsrfTokenKey()) :
             $this->request->get(Utility::getCsrfTokenKey());
-        
+
         // セッションにCSRFトークンがセットされている場合、チェックを実行する
         if (isset($session_token)) {
             // CSRFトークンはワンタイムなので削除する

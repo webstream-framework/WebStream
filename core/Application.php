@@ -14,7 +14,7 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.1.5');
+        define('STREAM_VERSION', '0.1.6');
     }
     
     /**
@@ -87,6 +87,9 @@ class Application {
         // Controllerクラスを起動
         $class = new ReflectionClass($this->controller());
         $instance = $class->newInstance();
+        // initialize
+        $initialize = $class->getMethod("initialize");
+        $initialize->invoke($instance);
         // before_filter
         $before_filter = $class->getMethod("before");
         $before_filter->invoke($instance);
