@@ -51,4 +51,33 @@ class SecurityTest extends UnitTestBase {
         }
         $this->assertRegExp('/[a-z0-9]{40}/', $token);
     }
+    
+    public function testOkCsrfCheckByPostRequest() {
+        
+    }
+    
+    /**
+     * 正常系
+     * CSRFトークンとセッション値が一致すること
+     * @dataProvider testOkCsrfCheckRequestProvider
+     */
+    public function testOkCsrfCheckRequest($path) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $html = $http->get($url);
+        $doc = new DOMDocument();
+        @$doc->loadHTML($html);
+        $token = null;
+        $nodeList = $doc->getElementsByTagName("input");
+        for ($i = 0; $i < $nodeList->length; $i++) {
+            $node = $nodeList->item($i);
+            $token = $node->getAttribute("value");
+        }
+        // SESSION_ID
+        $nodeList = $doc->getElementsByTagName("div");
+        $session_id = $nodeList->item(0)->nodeValue;
+
+        $this->assertEquals($token, $session_id);
+    }
+    
 }

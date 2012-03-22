@@ -32,6 +32,18 @@ class TestController extends CoreController {
         $this->render("test");
     }
     
+    public function testCsrfGetView() {
+        $this->render("csrf_get");
+    }
+    
+    public function testCsrfGet() {
+        echo "csrf get is ok.";
+    }
+    
+    public function testCsrfPostView() {
+        $this->render("csrf_post");
+    }
+    
     public function testCsrfPost() {
         echo "csrf post is ok.";
     }

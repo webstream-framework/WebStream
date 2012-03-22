@@ -599,4 +599,11 @@ SQL;
             array("/set_session", "name", "test", "/get_session")
         );
     }
+    
+    public function testOkCsrfCheckRequestProvider() {
+        return array(
+            array("/csrf_get_view"),
+            array("/csrf_post_view")
+        );
+    }
 }
