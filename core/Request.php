@@ -92,8 +92,25 @@ class Request {
     }
     
     /**
+     * リファラを取得する
+     * @return String リファラ
+     */
+    public function referer() {
+        return $this->server("HTTP_REFERER");
+    }
+    
+    /**
+     * ユーザエージェントを取得する
+     * @return String ユーザエージェント
+     */
+    public function userAgent() {
+        return $this->server("HTTP_USER_AGENT");
+    }
+    
+    /**
      * GETパラメータ取得
      * @param String パラメータキー
+     * @return String GETパラメータ
      */
     public function get($key) {
         if (array_key_exists($key, $_GET)) {
@@ -107,6 +124,7 @@ class Request {
     /**
      * POSTパラメータ取得
      * @param String パラメータキー
+     * @return String POSTパラメータ
      */
     public function post($key) {
         if (array_key_exists($key, $_POST)) {
