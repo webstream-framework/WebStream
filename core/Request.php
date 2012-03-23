@@ -64,7 +64,7 @@ class Request {
      * @return boolean POSTならtrue
      */
     public function isPost() {
-        return $_SERVER["REQUEST_METHOD"] === "POST" && (
+        return $this->server("REQUEST_METHOD") === "POST" && (
             $this->getHeader("Content-Type") === "application/x-www-form-urlencoded" ||
             $this->getHeader("Content-Type") === "multipart/form-data"
         );
@@ -75,7 +75,7 @@ class Request {
      * @return boolean GETならtrue
      */
     public function isGet() {
-        return $_SERVER["REQUEST_METHOD"] === "GET";
+        return $this->server("REQUEST_METHOD") === "GET";
     }
 
     /**
