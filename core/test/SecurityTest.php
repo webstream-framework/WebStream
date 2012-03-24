@@ -59,7 +59,7 @@ class SecurityTest extends UnitTestBase {
     /**
      * 正常系
      * CSRFトークンとセッション値が一致すること
-     * @dataProvider testOkCsrfCheckRequestProvider
+     * @dataProvider csrfCheckRequestProvider
      */
     public function testOkCsrfCheckRequest($path) {
         $http = new HttpAgent();

@@ -60,6 +60,12 @@ Router::setRule(
         '/post_receiver' => "test_request#post_receiver",
         '/prohibit_override' => "test_prohibit_override#render",
         '/set_session' => "test_session#set",
-        '/get_session' => "test_session#get"
+        '/get_session' => "test_session#get",
+        '/status301' => "test#test301",
+        '/status400' => "test#test400",
+        '/status403' => "test#test403",
+        '/status404' => "test#test404",
+        '/status500' => "test#test500",
+        '/status_unknown' => "test#test_unknown_status_code"
     )
 );

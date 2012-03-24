@@ -281,6 +281,18 @@ class RouterTest extends UnitTestBase {
         $this->assertEquals($response, $value);
         $this->assertEquals($http->getStatusCode(), "200");
     }
+    
+    /**
+     * 正常系
+     * 意図したステータスコードを返却できること
+     * @dataProvider retrurnStatusCodeProvider
+     */
+    public function testOkReturnStatusCode($path, $status_code) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $response = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), $status_code);
+    }
 
     /**
      * 異常系

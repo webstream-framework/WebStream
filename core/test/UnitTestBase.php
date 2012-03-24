@@ -600,10 +600,21 @@ SQL;
         );
     }
     
-    public function testOkCsrfCheckRequestProvider() {
+    public function csrfCheckRequestProvider() {
         return array(
             array("/csrf_get_view"),
             array("/csrf_post_view")
+        );
+    }
+    
+    public function retrurnStatusCodeProvider() {
+        return array(
+            array("/status301", 301),
+            array("/status400", 400),
+            array("/status403", 403),
+            array("/status404", 404),
+            array("/status500", 500),
+            array("/status_unknown", 500)
         );
     }
 }

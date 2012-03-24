@@ -14,7 +14,7 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.1.6');
+        define('STREAM_VERSION', '0.1.7');
     }
     
     /**
@@ -63,6 +63,11 @@ class Application {
         catch (CsrfException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
             $this->error(400);
+        }
+        // アクセス禁止の場合は403
+        catch (ForbiddenAccessException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->error(403);
         }
         // リソース(URI)が見つからない場合は404
         catch (ResourceNotFoundException $e) {
@@ -135,7 +140,7 @@ class Application {
         $action = null;
         if ($this->route->action() !== null) {
             // _[a-z]を[A-Z]に置換する
-            $action = preg_replace_callback('/_(?=[a-z])(.+?)/', create_function(
+            $action = preg_replace_callback('/_(?=[a-z0-9])(.+?)/', create_function(
                 '$matches',
                 'return ucfirst($matches[1]);'
             ), $this->route->action());

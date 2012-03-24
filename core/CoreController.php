@@ -158,6 +158,13 @@ class CoreController {
     }
     
     /**
+     * アクセス権限のない処理
+     */
+    final protected function forbidden() {
+        $this->move(403);
+    }
+    
+    /**
      * 静的ファイルを描画する
      * @param String ファイルパス
      */
@@ -180,6 +187,10 @@ class CoreController {
             header("HTTP/1.1 400 Bad Request");
             $this->render_error("400 Bad Request");
             break;
+        case 403:
+            header("HTTP/1.1 403 Forbidden");
+            $this->render_error("403 Forbidden");
+            break;
         case 404:
             header("HTTP/1.1 404 Not Found");
             $this->render_error("404 Not Found");
@@ -193,6 +204,7 @@ class CoreController {
             Logger::fatal($msg);
             throw new Exception($msg);
         }
+        Logger::info("HTTP access occured: status code ${status_code}");
         exit;
     }
     
