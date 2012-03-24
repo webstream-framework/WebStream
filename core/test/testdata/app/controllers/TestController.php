@@ -63,13 +63,9 @@ class TestController extends CoreController {
     public function testNotFoundRender() {
         $this->render_dummy("dummy");
     }
-    
-    public function testCamel1000() {
-        echo "kita-";
-    }
-    
+
     public function test301() {
-        $this->redirect(301, "http://www.yahoo.co.jp");
+        $this->redirect("http://www.yahoo.co.jp");
     }
     
     public function test400() {
