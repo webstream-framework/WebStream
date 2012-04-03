@@ -67,7 +67,7 @@ class Cache {
         $path = $this->save_path . $id . '.cache';
         $cache_path = realpath($path);
         if ($cache_path !== false && is_file($cache_path)) {
-            $data = unserialize(file_get_contents($cache_path));
+            $data = $this->decode(file_get_contents($cache_path));
             // 期限切れのキャッシュは削除
             if (time() > $data["time"] + $data["ttl"]) {
                 Logger::warn("Expired cache: ${cache_path}");
@@ -104,7 +104,7 @@ class Cache {
             // 上書きする場合はキャッシュを新規作成する
             if (!is_file($cache_path) || (is_file($cache_path) && $overwrite === true)) {
                 try {
-                    $result = file_put_contents($cache_path, serialize($content));
+                    $result = file_put_contents($cache_path, $this->encode($content));
                     // ファイルが書き込めた場合
                     if ($result !== false) {
                         Logger::info("Create cache: ${cache_path}");
@@ -140,5 +140,23 @@ class Cache {
             Logger::error("Cache delete failure: ${path}");
             return false;
         }
+    }
+
+    /**
+     * データをシリアライズ化してテキストデータにエンコードする
+     * @param Object 対象データ
+     * @return String エンコードしたデータ
+     */
+    private function encode($data) {
+        return base64_encode(serialize($data));
+    }
+    
+    /**
+     * データをデシリアライズ化して元のデータをデコードする
+     * @param String エンコード済みデータ
+     * @return Object デコードしたデータ
+     */
+    private function decode($data) {
+        return unserialize(base64_decode($data));
     }
 }
