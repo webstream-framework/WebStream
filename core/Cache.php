@@ -30,10 +30,17 @@ class Cache {
     /**
      * キャッシュを取得する
      * @param String キャッシュID
+     * @return String キャッシュデータ
      */
     public function get($id) {
         $cache = $this->cache($id);
-        return $cache !== null ? $cache["data"] : null;
+        if ($cache !== null) {
+            $path = $this->save_path . $id . '.cache';
+            $cache_path = realpath($path);
+            Logger::info("Get cache: ${cache_path}");
+            return $cache["data"];
+        }
+        return null;
     }
 
     /**
@@ -63,14 +70,14 @@ class Cache {
             $data = unserialize(file_get_contents($cache_path));
             // 期限切れのキャッシュは削除
             if (time() > $data["time"] + $data["ttl"]) {
-                Logger::warn("Expired cache: " . $path);
+                Logger::warn("Expired cache: ${cache_path}");
                 unlink($cache_path);
                 return null;
             }
             return $data;
         }
         else {
-            Logger::error("Can't get cache: " . $path);
+            Logger::error("Can't get cache: ${path}");
         }
         
         return null;
@@ -100,12 +107,12 @@ class Cache {
                     $result = file_put_contents($cache_path, serialize($content));
                     // ファイルが書き込めた場合
                     if ($result !== false) {
-                        Logger::debug("Create cache: " . $cache_path);
+                        Logger::info("Create cache: ${cache_path}");
                         // キャッシュファイルのパーミッションを777にする
                         @chmod($cache_path, 0777);
                         return true;
                     }
-                    Logger::error("Can't create cache: " . $cache_path);
+                    Logger::error("Can't create cache: ${cache_path}");
                 }
                 catch (Exception $e) {
                     Logger::error($e->getMessage(), $e->getTraceAsString());
@@ -126,11 +133,11 @@ class Cache {
         $path = $this->save_path . $id . '.cache';
         $cache_path = realpath($this->save_path . $id . '.cache');
         if ($cache_path) {
-            Logger::debug("Cache delete success: " . $cache_path);
+            Logger::debug("Cache delete success: ${cache_path}");
             return unlink($cache_path);
         }
         else {
-            Logger::error("Cache delete failure: " . $path);
+            Logger::error("Cache delete failure: ${path}");
             return false;
         }
     }

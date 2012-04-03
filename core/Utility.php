@@ -131,4 +131,22 @@ class Utility {
             return "application/octet-stream";
         }
     }
+  
+    /**
+     * データをシリアライズ化してテキストデータにエンコードする
+     * @param Object 対象データ
+     * @return String エンコードしたデータ
+     */
+    public static function encode($data) {
+        return base64_encode(serialize($data));
+    }
+
+    /**
+     * データをデシリアライズ化して元のデータをデコードする
+     * @param String エンコード済みデータ
+     * @return Object デコードしたデータ
+     */
+    public static function decode($data) {
+        return unserialize(base64_decode($data));
+    }
 }

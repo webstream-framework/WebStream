@@ -617,4 +617,13 @@ SQL;
             array("/status_unknown", 500)
         );
     }
+    
+    public function encodeAndDecodeProvider() {
+        return array(
+            array("abcde"),
+            array(12345),
+            array(array("name" => "azunyan")),
+            array(new UnitTestBase())
+        );
+    }
 }

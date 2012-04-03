@@ -123,7 +123,11 @@ class Database extends DatabaseCore {
                 $result = true;
             }
             else {
-                throw new Exception("Invalid SQL statement. - ". $sql);
+                $messages = $stmt->errorInfo();
+                $message = $messages[2];
+                $sqlState = "(SQL STATE: ${messages[0]})";
+                $errorCode = "(ERROR CODE: ${messages[1]})";
+                throw new Exception("${message} ${sqlState} ${errorCode}");
             }
         }
         catch (Exception $e) {
