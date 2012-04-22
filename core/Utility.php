@@ -91,6 +91,30 @@ class Utility {
         return preg_replace('/^_/', '', $str);
     }
     
+    /**
+     * XMLオブジェクトを配列に変換する
+     * @param Object XMLオブジェクト
+     * @return Hash 配列/ハッシュデータ
+     */
+    public static function xml2array($xml) {
+        $result = array();
+        if (is_object($xml)) {
+            $list = get_object_vars($xml);
+            while (list($k, $v) = each($list)) {
+                $result[$k] = Utility::xml2array($v);
+            }
+        }
+        else if (is_array($xml)) {
+            while (list($k, $v) = each($xml)) {
+                $result[$k] = Utility::xml2array($v);
+            }
+        }
+        else {
+            $result = $xml;
+        }
+        return $result;
+    }
+    
    /**
      * ファイルからmimeタイプを返却する
      * @param String ファイルタイプ

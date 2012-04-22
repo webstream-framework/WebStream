@@ -40,7 +40,7 @@ SQL;
         $this->root_url = $this->document_root . $this->project_name . $this->testdata_dir;
     }
 
-    private function getRoot() {
+    protected function getRoot() {
         $current = dirname(__FILE__);
         $path_hierarchy_list = explode(DIRECTORY_SEPARATOR, $current);
         array_pop($path_hierarchy_list);
@@ -624,6 +624,18 @@ SQL;
             array(12345),
             array(array("name" => "azunyan")),
             array(new UnitTestBase())
+        );
+    }
+    
+    public function writeArrayDataProvider() {
+        return array(
+            array("cache_test_write_array", array("array"))
+        );
+    }
+    
+    public function xml2ArrayProvider() {
+        return array(
+            array("http://rss.dailynews.yahoo.co.jp/fc/rss.xml")
         );
     }
 }

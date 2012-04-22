@@ -23,6 +23,19 @@ class UtilityTest extends UnitTestBase {
     
     /**
      * 正常系
+     * XMLオブジェクトを配列に変換できること
+     * @dataProvider xml2ArrayProvider
+     */
+    public function testXml2Array($url) {
+        $http = new HttpAgent();
+        $xml = simplexml_load_string($http->get($url));
+        $array = Utility::xml2array($xml);
+        $this->assertTrue(is_array($array));
+        $this->assertTrue(is_array($array["@attributes"]));
+    }
+    
+    /**
+     * 正常系
      * 文字列をエンコードし、正常にデコードできること
      * @dataProvider encodeAndDecodeProvider
      */

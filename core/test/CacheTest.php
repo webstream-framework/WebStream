@@ -87,6 +87,18 @@ class CacheTest extends UnitTestBase {
     }
     
     /**
+     * 正常系
+     * 配列データをキャッシュ出来ること
+     * @dataProvider writeArrayDataProvider
+     */
+    public function testOkWriteArrayData($cache_id, $data) {
+        $cache = new Cache();
+        $cache->delete($cache_id);
+        $cache->save($cache_id, $data);
+        $this->assertEquals($cache->get($cache_id), $data);
+    }
+    
+    /**
      * 異常系
      * 存在しないディレクトリにキャッシュファイルを保存できないこと
      * @dataProvider invalidSaveDirProvider
