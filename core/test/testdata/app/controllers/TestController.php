@@ -87,4 +87,34 @@ class TestController extends CoreController {
     public function testUnknownStatusCode() {
         $this->move(1000);
     }
+    
+    public function testHelperHtml1() {
+        $this->render("helper_html1", array(
+            "name" => "html"
+        ));
+    }
+    
+    public function testHelperHtml2() {
+        $this->render("helper_html2", array(
+            "name" => "html"
+        ));
+    }
+    
+    public function testHelperString() {
+        $this->render("helper_string", array(
+            "name" => "string"
+        ));
+    }
+    
+    public function testHelperSnake() {
+        $this->render("helper_snake");
+    }
+    
+    public function testHelperCamel() {
+        $this->render("helper_camel");
+    }
+    
+    public function testHelperNotfoundMethod() {
+        $this->render("helper_notfound_method");
+    }
 }

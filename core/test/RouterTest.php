@@ -293,7 +293,31 @@ class RouterTest extends UnitTestBase {
         $response = $http->get($url);
         $this->assertEquals($http->getStatusCode(), $status_code);
     }
-
+    
+    /**
+     * 正常系
+     * ヘルパメソッドを利用しHTMLを取得できること
+     * @dataProvider useHelperProvider
+     */
+    public function testOkUseHelper($path, $html) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $response = trim($http->get($url));
+        $this->assertEquals($response, $html);
+    }
+    
+    /**
+     * 正常系
+     * ヘルパ名がスネークケースでもキャメルケースでも、正常に結果を取得できること
+     * @dataProvider helperFunctionNameProvider
+     */
+    public function testOkHelperFunctionName($path, $html) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $response = trim($http->get($url));
+        $this->assertEquals($response, $html);
+    }
+    
     /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
@@ -561,6 +585,27 @@ class RouterTest extends UnitTestBase {
      * @dataProvider notFoundRenderMethodProvider
      */
     public function testNgNotFoundRenderMethodProvider($path, $error_msg) {
+        $url = $this->root_url . $path;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "500");
+        $line_tail = $this->logHead($this->config_path_log . "log.test.info.ok.ini");
+
+        if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)$/',
+                       $line_tail, $matches)) {
+            $target = array("ERROR", $error_msg);
+            $result = array($matches[1], $matches[2]);
+            $this->assertEquals($target, $result);           
+        }
+    }
+    
+    /**
+     * 異常系
+     * ヘルパメソッドが存在しない場合(クラス自体が存在しない場合含む)、500エラーになり、
+     * Helperクラス名#メソッド名 is not defined.とログ出力されること
+     * @dataProvider notFoundHelperMethodProvider
+     */
+    public function testNgNotFoundHelperMethod($path, $error_msg) {
         $url = $this->root_url . $path;
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);

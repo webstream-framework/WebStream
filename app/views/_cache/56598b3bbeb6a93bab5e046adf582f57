@@ -1,0 +1,3 @@
+<?php ${self::HELPER_RECEIVER}->show2($name); ?>
+<?php ${self::HELPER_RECEIVER}->show12($name); ?>
+<?php ${self::HELPER_RECEIVER}->show_snake($name); ?>

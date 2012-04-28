@@ -20,3 +20,13 @@ if (!function_exists('safetyOut')) {
         return Security::safetyOut($data);
     }
 }
+
+function convert($s) {
+    
+    
+    $s = preg_replace('/#\{(.*?)\}/', '$1', $s);
+    $s = preg_replace('/%\{(.*?)\}/', safetyOut('$1'), $s);
+    echo $s;
+    //echo call_user_func_array(array($instance, ""), $arguments);
+    
+}

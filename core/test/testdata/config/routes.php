@@ -66,6 +66,12 @@ Router::setRule(
         '/status403' => "test#test403",
         '/status404' => "test#test404",
         '/status500' => "test#test500",
-        '/status_unknown' => "test#test_unknown_status_code"
+        '/status_unknown' => "test#test_unknown_status_code",
+        '/helper1' => "test#test_helper_html1",
+        '/helper2' => "test#test_helper_html2",
+        '/helper3' => "test#test_helper_string",
+        '/helper4' => "test#test_helper_snake",
+        '/helper5' => "test#test_helper_camel",
+        '/helper6' => "test#test_helper_notfound_method"
     )
 );

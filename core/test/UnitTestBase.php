@@ -638,4 +638,25 @@ SQL;
             array("http://rss.dailynews.yahoo.co.jp/fc/rss.xml")
         );
     }
+    
+    public function useHelperProvider() {
+        return array(
+            array("/helper1", '<div class="test">html</div>'),
+            array("/helper2", '<div class="test">html</div>'),
+            array("/helper3", '<div class="test">$name</div>')
+        );
+    }
+    
+    public function helperFunctionNameProvider() {
+        return array(
+            array("/helper4", "test"),
+            array("/helper5", "test")
+        );
+    }
+    
+    public function notFoundHelperMethodProvider() {
+        return array(
+            array("/helper6", "TestHelper#notfound is not defined.")
+        );
+    }
 }

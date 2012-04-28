@@ -9,7 +9,7 @@
     </head>
     <body>
         <div>
-            <?php $this->render($template, $content); ?>
+            <?php $this->render($template, $content) ?>
         </div>
     </body>
 </html>

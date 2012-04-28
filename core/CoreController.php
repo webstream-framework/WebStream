@@ -19,7 +19,7 @@ class CoreController {
      */
     final public function __construct() {
         $this->page_name = $this->page();
-        $this->view = new CoreView(Utility::camel2snake($this->page_name));
+        $this->view = new CoreView($this->page_name);
     }
     
     /**

@@ -10,7 +10,8 @@ import("config/routes");
 import("core/Functions");
 // 独自例外をロード
 import("core/Exception");
-
+// Loggerを初期化
+Logger::init();
 // アプリケーションを起動する
 $app = new Application();
 $app->run();

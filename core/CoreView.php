@@ -5,6 +5,8 @@
  * @since 2011/09/12
  */
 class CoreView {
+    /** ヘルパのレシーバ名 */
+    const HELPER_RECEIVER = "helper";
     /** ページ名 */
     private $page_name;
     /** セッション */
@@ -12,14 +14,13 @@ class CoreView {
 
     /**
      * Viewクラスの初期化
-     * @param String appディレクトリパス
      * @param String ページ名
      */
     public function __construct($page_name = null) {
         $this->page_name = $page_name;
         $this->session = Session::start();
     }
-    
+
     /**
      * レイアウトファイルを描画する準備をする
      * @param String テンプレートファイル名
@@ -40,7 +41,7 @@ class CoreView {
      */
     final public function render($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
-                         "/views/" . $this->page_name . "/" . $template . ".tmpl";
+                         "/views/" . Utility::camel2snake($this->page_name) . "/" . $template . ".tmpl";
         $this->draw($template_path, $params, $type);
     }
     
@@ -81,9 +82,14 @@ HTML;
      * @param String ファイルタイプ
      */
     final private function draw($template_path, $params, $type) {
+        // テンプレートファイルがない場合エラー
         if (!file_exists(realpath($template_path))) {
             throw new Exception("Invalid template file path: " . $template_path);
         }
+        
+        // 埋め込みパラメータにHelperを起動するためのオブジェクトをセット
+        $params[self::HELPER_RECEIVER] = new CoreHelper($this->page_name);
+        
         // キャッシュファイルがなければ生成する
         $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', create_function(
             '$matches',
@@ -200,6 +206,7 @@ HTML;
         $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1 ?>', $s);
+        $s = preg_replace('/!\{(.*?)\}/', '<?php ${self::HELPER_RECEIVER}->$1; ?>', $s);
         return $s;
     }
     
