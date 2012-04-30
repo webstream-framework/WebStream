@@ -117,4 +117,10 @@ class TestController extends CoreController {
     public function testHelperNotfoundMethod() {
         $this->render("helper_notfound_method");
     }
+    
+    public function testAttributeValue() {
+        $this->render("test_attr", array(
+            "value" => "attr"
+        ));
+    }
 }

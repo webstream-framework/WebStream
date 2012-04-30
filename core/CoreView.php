@@ -172,6 +172,9 @@ HTML;
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
+            // DOMDocument#saveHTMLによって実体参照化するため、もとに戻す。
+            $innerHTML = str_replace('&gt;', '>', $innerHTML);
+            $innerHTML = str_replace('&lt;', '<', $innerHTML);
             $content = str_replace($dummy_value, '<?php echo $__csrf_token__; ?>', $innerHTML);
         }
     }

@@ -319,6 +319,17 @@ class RouterTest extends UnitTestBase {
     }
     
     /**
+     * 正常系
+     * fromタグの中で定義したHTMLタグの属性に埋め込み値を入れても展開されること
+     * @dataProvider notEntryReferenceInFormProvider
+     */
+    public function testOkNotEntryReferenceInForm($path, $html) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $this->assertEquals($http->get($url), $html);
+    }
+    
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider

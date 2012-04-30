@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="1.2.0" timestamp="2012-04-28T11:57:24+09:00">
+<pmd version="1.2.0" timestamp="2012-04-30T23:45:52+09:00">
   <file name="/Users/stay/workspace/github/stream/app/controllers/SampleController.php">
     <violation beginline="9" endline="9" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$title'.
@@ -106,16 +106,16 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace/github/stream/core/CoreView.php">
-    <violation beginline="7" endline="256" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreView" priority="3">
+    <violation beginline="7" endline="259" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreView" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
     <violation beginline="53" endline="53" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$callback'.
     </violation>
-    <violation beginline="204" endline="204" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+    <violation beginline="207" endline="207" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
       Avoid variables with short names like $s
     </violation>
-    <violation beginline="218" endline="218" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="221" endline="221" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$mime'.
     </violation>
   </file>
@@ -142,11 +142,6 @@
     </violation>
     <violation beginline="25" endline="25" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$arguments'.
-    </violation>
-  </file>
-  <file name="/Users/stay/workspace/github/stream/core/Functions.php">
-    <violation beginline="24" endline="24" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
-      Avoid variables with short names like $s
     </violation>
   </file>
   <file name="/Users/stay/workspace/github/stream/core/HttpAgent.php">
@@ -199,7 +194,7 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace/github/stream/core/test/testdata/app/controllers/TestController.php">
-    <violation beginline="2" endline="120" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="TestController" priority="3">
+    <violation beginline="2" endline="126" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="TestController" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
   </file>

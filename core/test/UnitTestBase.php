@@ -659,4 +659,13 @@ SQL;
             array("/helper6", "TestHelper#notfound is not defined.")
         );
     }
+    
+    public function notEntryReferenceInFormProvider() {
+        $html = "<body><form action=\".\">\n";
+        $html.= "    <input type=\"text\" value=\"attr\">\n";
+        $html.= "</form></body>";
+        return array(
+            array("/attr", $html)
+        );
+    }
 }

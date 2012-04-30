@@ -72,6 +72,7 @@ Router::setRule(
         '/helper3' => "test#test_helper_string",
         '/helper4' => "test#test_helper_snake",
         '/helper5' => "test#test_helper_camel",
-        '/helper6' => "test#test_helper_notfound_method"
+        '/helper6' => "test#test_helper_notfound_method",
+        '/attr' => "test#test_attribute_value"
     )
 );
