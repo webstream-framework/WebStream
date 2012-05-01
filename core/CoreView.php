@@ -89,7 +89,7 @@ HTML;
         
         // 埋め込みパラメータにHelperを起動するためのオブジェクトをセット
         $params[self::HELPER_RECEIVER] = new CoreHelper($this->page_name);
-        
+
         // キャッシュファイルがなければ生成する
         $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', create_function(
             '$matches',
@@ -115,8 +115,12 @@ HTML;
         }
         
         $this->outputHeader($type);
-        extract($params);
-        include($cache_file);
+        $this->outputHTML($params, $cache_file);
+    }
+
+    final private function outputHTML($__params__, $__template__) {
+        extract($__params__);
+        include($__template__);
     }
     
     /**
@@ -208,7 +212,7 @@ HTML;
         $s = preg_replace('/^<\?xml/', '<<?php ?>?xml', $s);
         $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $s);
-        $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1 ?>', $s);
+        $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
         $s = preg_replace('/!\{(.*?)\}/', '<?php ${self::HELPER_RECEIVER}->$1; ?>', $s);
         return $s;
     }
