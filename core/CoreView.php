@@ -118,6 +118,11 @@ HTML;
         $this->outputHTML($params, $cache_file);
     }
 
+    /**
+     * テンプレートを描画する
+     * @param Hash 展開するパラメータ
+     * @param String テンプレートファイル
+     */
     final private function outputHTML($__params__, $__template__) {
         extract($__params__);
         include($__template__);
