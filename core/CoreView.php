@@ -181,11 +181,14 @@ HTML;
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
-            // DOMDocument#saveHTMLによって実体参照化するため、もとに戻す。
-            $innerHTML = str_replace('&gt;', '>', $innerHTML);
-            $innerHTML = str_replace('&lt;', '<', $innerHTML);
             $content = str_replace($dummy_value, '<?php echo $__csrf_token__; ?>', $innerHTML);
         }
+        // 実体参照化をもとに戻す。
+        $map = array('&gt;' => '>',
+                     '&lt;' => '<',
+                     '%20'  => ' ',
+                     '%24'  => '$');
+        $content = str_replace(array_keys($map), array_values($map), $content);
     }
 
     /**
