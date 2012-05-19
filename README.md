@@ -1,5 +1,5 @@
-# stream
-streamはMVC＋ServiceをベースとしたWebアプリケーションフレームワークです。 
+# WebStream
+WebStreamはMVC＋ServiceをベースとしたWebアプリケーションフレームワークです。 
 ***
 ###使い方
 app以下にあるサンプルアプリケーションを参照してください。 
