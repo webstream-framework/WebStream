@@ -6,8 +6,8 @@
  */
 class UnitTestBase extends PHPUnit_Framework_TestCase {
     /** テスト用ルートURL */
-    protected $document_root = "http://localhost/eclipse/";
-    protected $project_name = "stream";
+    protected $document_root = "http://localhost/";
+    protected $project_name = "WebStream";
     protected $testdata_dir = "/core/test/testdata";
     protected $root_url;
 

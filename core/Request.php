@@ -5,9 +5,38 @@
  * @since 2011/08/21
  */
 class Request {
+    /** GETパラメータ */
+    private $get;
+    /** POSTパラメータ */
+    private $post;
+    
+    /**
+     * コンストラクタ
+     */
+    public function __construct() {
+        $this->get = safetyIn($_GET);
+        $this->post = safetyIn($_POST);
+    }
+    
+    /**
+     * 安全な値に変換済みの全てのGETパラメータを返却する
+     * @return Hash 安全なGETパラメータ
+     */
+    public function getGET() {
+        return $this->get;
+    }
+    
+    /**
+     * 安全な値に変換済みの全てのPOSTパラメータを返却する
+     * @return Hash 安全なPOSTパラメータ
+     */
+    public function getPOST() {
+        return $this->post;
+    }
+    
     /**
      * ベースURLを取得する
-     * @return ベースURL
+     * @return String ベースURL
      */
     public function getBaseURL() {
         $script_name = $this->server("SCRIPT_NAME");
@@ -28,7 +57,7 @@ class Request {
     
     /**
      * PATH情報を取得する
-     * @return PATH情報
+     * @return String PATH情報
      */
     public function getPathInfo() {
         $base_url = $this->getBaseURL();
@@ -113,8 +142,8 @@ class Request {
      * @return String GETパラメータ
      */
     public function get($key) {
-        if (array_key_exists($key, $_GET)) {
-            return safetyIn($_GET[$key]);
+        if (array_key_exists($key, $this->get)) {
+            return $this->get[$key];
         }
         else {
             return null;
@@ -127,8 +156,8 @@ class Request {
      * @return String POSTパラメータ
      */
     public function post($key) {
-        if (array_key_exists($key, $_POST)) {
-            return safetyIn($_POST[$key]);
+        if (array_key_exists($key, $this->post)) {
+            return $this->post[$key];
         }
         else {
             return null;
