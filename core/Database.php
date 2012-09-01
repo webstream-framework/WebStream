@@ -150,6 +150,23 @@ class Database extends DatabaseCore {
     }
     
     /**
+     * テーブルのフィールド情報を返却する
+     * @param String テーブル名
+     * @return Array フィールド情報
+     */
+    public function columnInfo($table) {
+        $sql = "SELECT * FROM ${table}";
+        $this->execSQL($sql);
+        $i = 0;
+        $columns = array();
+        while ($column = $this->stmt->getColumnMeta($i++)) {
+            $columns[] = $column;
+        }
+        $this->init();
+        return $columns;
+    }
+    
+    /**
      * SELECTを実行する
      * @param String SQL
      * @param Array bindする変数

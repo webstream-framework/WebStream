@@ -6,7 +6,7 @@
  */
 class Annotation {
     /** インジェクションポイント */
-    const REGEX_INJECT = '/@Inject\s+/';
+    const REGEX_INJECT = '/@Inject\n+/';
     /** リフレクションクラス */
     private $refClass;
     

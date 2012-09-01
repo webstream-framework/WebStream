@@ -4,14 +4,18 @@
  * @Database("diarysys")
  * @SQL("db/user.properties")
  */
-class TestAnnotation extends CoreModel2 {
-    
+class TestAnnotation1 extends CoreModel2 {}
+
+/**
+ * @Database("diarysys")
+ * @SQL("db/user.properties")
+ */
+class TestAnnotation2 extends CoreModel2 {}
+
+class TestAnnotation3 extends CoreModel2 {
     /**
      * @Inject
-     * @Hogehoge("test")
+     * @Database("diarysys")
      */
-    public function hogehoge() {
-        
-    }
-    
+    public function testAnnotation() {}
 }

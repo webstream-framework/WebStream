@@ -668,4 +668,11 @@ SQL;
             array("/attr", $html)
         );
     }
+    
+    public function executeSQL() {
+        return array(
+            array("select * from users"),
+            array("select * from users where id = :id", array("id" => 1))
+        );
+    }
 }
