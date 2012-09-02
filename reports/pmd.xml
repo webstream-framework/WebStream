@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="1.2.0" timestamp="2012-08-30T19:53:46+09:00">
+<pmd version="1.2.0" timestamp="2012-09-02T14:51:27+09:00">
   <file name="/Users/stay/workspace2/WebStream/app/controllers/SampleController.php">
     <violation beginline="9" endline="9" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$title'.
@@ -28,6 +28,19 @@
     </violation>
     <violation beginline="6" endline="6" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$headers'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace2/WebStream/app/services/SampleService.php">
+    <violation beginline="7" endline="7" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$sample'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace2/WebStream/core/Annotation.php">
+    <violation beginline="26" endline="26" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$annotation'.
+    </violation>
+    <violation beginline="45" endline="45" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$annotation'.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/AutoImport.php">
@@ -100,6 +113,17 @@
       Avoid unused local variables such as '$class'.
     </violation>
   </file>
+  <file name="/Users/stay/workspace2/WebStream/core/CoreModel2.php">
+    <violation beginline="9" endline="9" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $db
+    </violation>
+    <violation beginline="85" endline="85" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$table'.
+    </violation>
+    <violation beginline="108" endline="142" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="CoreModel2" method="mapper" priority="3">
+      The method mapper() has a Cyclomatic Complexity of 10.
+    </violation>
+  </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreService.php">
     <violation beginline="20" endline="20" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$class'.
@@ -123,24 +147,30 @@
     <violation beginline="9" endline="9" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
       Avoid unused private fields such as '$manager'.
     </violation>
-    <violation beginline="58" endline="226" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Database" priority="3">
+    <violation beginline="58" endline="270" rule="TooManyMethods" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Database" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
-    <violation beginline="127" endline="127" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="148" endline="148" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$message'.
     </violation>
-    <violation beginline="128" endline="128" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="149" endline="149" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$sqlState'.
     </violation>
-    <violation beginline="129" endline="129" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="150" endline="150" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$errorCode'.
+    </violation>
+    <violation beginline="178" endline="178" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$table'.
+    </violation>
+    <violation beginline="182" endline="182" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $i
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Exception.php">
-    <violation beginline="25" endline="25" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="27" endline="27" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$method'.
     </violation>
-    <violation beginline="25" endline="25" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="27" endline="27" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$arguments'.
     </violation>
   </file>

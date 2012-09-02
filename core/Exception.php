@@ -14,6 +14,8 @@ class ResourceNotFoundException extends Exception {}
 class ClassNotFoundException extends Exception {}
 /** メソッドロード失敗例外 */
 class MethodNotFoundException extends Exception {}
+/** データベース例外 */
+class DatabaseException extends Exception {}
 /** Service,Modelロード失敗例外 */
 class ServiceModelClassNotFoundException {
     private $msg;

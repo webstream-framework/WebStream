@@ -44,7 +44,7 @@ class DatabaseCore {
         }
         catch(PDOException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            throw $e;
+            throw new DatabaseException($e);
         }
         return $manager;
     }
@@ -58,6 +58,8 @@ class DatabaseCore {
 class Database extends DatabaseCore {
     /** DBマネージャ */
     private static $dbaccessor = null;
+    /** DBコネクション */
+    private $connect;
     /** 設定ファイルパス */
     private static $config_path = "config/database.ini";
     /** SQL */
@@ -74,23 +76,43 @@ class Database extends DatabaseCore {
         
     /**
      * メンバ変数を初期化
+     * @param String DB名
      */
-    private function init() {
+    private function init($dbname = null) {
         $this->sql  = null;
         $this->bind = null;
         $this->stmt = null;
+        $this->connect($dbname);
     }
     
     /**
      * DBマネージャを返却する
+     * @param String DB名
      * @return Object DBマネージャ
      */
-    public static function manager() {
+    public static function manager($dbname) {
         if (!is_object(self::$dbaccessor)) {
             self::$dbaccessor = new Database();
         }
-        self::$dbaccessor->init();
+        self::$dbaccessor->init($dbname);
         return self::$dbaccessor;
+    }
+    
+    /**
+     * DBに接続する
+     * @param String DB名
+     */
+    private function connect($dbname = null) {
+        // DBへの接続は設定ファイルまたは@Databaseアノテーションで行う
+        // 両方設定されていた場合は@Databaseアノテーションを優先する
+        $config = Utility::parseConfig(self::$config_path);
+        if ($dbname !== null) {
+            $config["dbname"] = $dbname;
+            $this->connect = parent::getManager($config);
+        }
+        if ($this->connect === null) {
+            $this->connect = parent::getManager($config);
+        }
     }
     
     /**
@@ -102,8 +124,7 @@ class Database extends DatabaseCore {
     private function execSQL($sql, $bind = array()) {
         $result = false;
         try {
-            $config = Utility::parseConfig(self::$config_path);
-            $stmt = parent::getManager($config)->prepare($sql);
+            $stmt = $this->connect->prepare($sql);
             Logger::info("Executed SQL: " . $sql);
             Logger::info("Bind statement: " . implode(",", $bind));
             if ($stmt === false) {
@@ -127,12 +148,12 @@ class Database extends DatabaseCore {
                 $message = $messages[2];
                 $sqlState = "(SQL STATE: ${messages[0]})";
                 $errorCode = "(ERROR CODE: ${messages[1]})";
-                throw new Exception("${message} ${sqlState} ${errorCode}");
+                throw new DatabaseException("${message} ${sqlState} ${errorCode}");
             }
         }
         catch (Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            throw $e;
+            throw new DatabaseException($e);
         }
         return $result;
     }
@@ -156,14 +177,20 @@ class Database extends DatabaseCore {
      */
     public function columnInfo($table) {
         $sql = "SELECT * FROM ${table}";
-        $this->execSQL($sql);
-        $i = 0;
-        $columns = array();
-        while ($column = $this->stmt->getColumnMeta($i++)) {
-            $columns[] = $column;
+        try {
+            $this->execSQL($sql);
+            $i = 0;
+            $columns = array();
+            while ($column = $this->stmt->getColumnMeta($i++)) {
+                $columns[] = $column;
+            }
+            $this->init();
+            return $columns;
         }
-        $this->init();
-        return $columns;
+        catch (Exception $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            throw new DatabaseException($e);
+        }
     }
     
     /**
