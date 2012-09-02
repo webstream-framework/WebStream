@@ -44,7 +44,7 @@ class DatabaseCore {
         }
         catch(PDOException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            throw new DatabaseException($e);
+            throw new DatabaseException($e->getMessage());
         }
         return $manager;
     }
@@ -128,7 +128,7 @@ class Database extends DatabaseCore {
             Logger::info("Executed SQL: " . $sql);
             Logger::info("Bind statement: " . implode(",", $bind));
             if ($stmt === false) {
-                throw new Exception("Can't create statement. - ". $sql);
+                throw new DatabaseException("Can't create statement. - ". $sql);
             }
             foreach ($bind as $key => $value) {
                 if (preg_match("/^[0-9]+$/", $value) && is_int($value)) {
@@ -153,7 +153,7 @@ class Database extends DatabaseCore {
         }
         catch (Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            throw new DatabaseException($e);
+            throw new DatabaseException($e->getMessage());
         }
         return $result;
     }
@@ -189,7 +189,7 @@ class Database extends DatabaseCore {
         }
         catch (Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            throw new DatabaseException($e);
+            throw new DatabaseException($e->getMessage());
         }
     }
     

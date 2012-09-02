@@ -15,7 +15,7 @@ class CoreModelTest extends UnitTestBase {
     }
     
     public function setUpTable1() {
-        $model = new TestModel2();
+        $db = Database::manager("test");
         try {
             $createTable1 = <<< SQL
 CREATE TABLE users (
@@ -25,17 +25,32 @@ CREATE TABLE users (
     primary key (id)
 );
 SQL;
-            $model->create($createTable1);
+            $db->create($createTable1);
+            
+            $createTable2 = <<< SQL
+CREATE TABLE users2 (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+SQL;
+            $db->create($createTable2);
+
         } catch (Exception $e) {}
         $sql = 'INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)';
         $bind = array("user_id" => "KON000001", "user_name" => "yui");
-        $model->insert($sql, $bind);
+        $db->insert($sql, $bind);
         $bind = array("user_id" => "KON000002", "user_name" => "azusa");
-        $model->insert($sql, $bind);
+        $db->insert($sql, $bind);
+        
+        $sql = 'INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)';
+        $bind = array("user_id" => "KON000001", "user_name" => "okarin");
+        $db->insert($sql, $bind);
     }
     
     public function setUpTable2() {
-        $model = new TestModel3();
+        $db = Database::manager("test2");
         try {
             $createTable2 = <<< SQL
 CREATE TABLE users (
@@ -45,14 +60,14 @@ CREATE TABLE users (
     primary key (id)
 );
 SQL;
-            $model->create($createTable2);
+            $db->create($createTable2);
         } catch (Exception $e) {}
         
         $sql = 'INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)';
         $bind = array("user_id" => "YRYR000001", "user_name" => "kyouko");
-        $model->insert($sql, $bind);
+        $db->insert($sql, $bind);
         $bind = array("user_id" => "YRYR000002", "user_name" => "yui");
-        $model->insert($sql, $bind);
+        $db->insert($sql, $bind);
     }
     
     /**

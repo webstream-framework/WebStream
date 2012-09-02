@@ -83,7 +83,7 @@ class CoreModel2 {
      * @param String テーブル名
      */
     private function columnInfo($table) {
-        $this->columns = $this->db->columnInfo($this->table);
+        $this->columns = $this->db->columnInfo($table);
     }
     
     /**
