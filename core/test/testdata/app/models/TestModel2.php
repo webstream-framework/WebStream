@@ -61,15 +61,8 @@ class TestModel6 extends CoreModel2 {}
 /**
  * @Inject
  * @Database("test")
- * @Table("users")
+ * @Table("users", "users2")
  * @Properties("core/test/testdata/sql/users.properties")
  */
 class TestModel7 extends CoreModel2 {
-    /**
-     * @Inject
-     * @SQL("user_join")
-     */
-    public function join() {
-        return $this->select(array("id" => 1));
-    }
 }

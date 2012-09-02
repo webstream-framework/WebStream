@@ -128,6 +128,11 @@ SQL;
     public function testTtt() {
         $model = new TestModel7();
         $result = $model->join();
+        
+        // TODO JOIN対応に向けて、まずは@Tableで複数のテーブルをInjectできるように
+        // しないとだめ。
+        
+        
         var_dump($result);
     }
     

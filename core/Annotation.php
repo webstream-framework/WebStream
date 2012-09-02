@@ -27,11 +27,14 @@ class Annotation {
         $classList = array();
         $docComment = $this->refClass->getDocComment();
         if (preg_match(self::REGEX_INJECT, $docComment)) {
-            if (preg_match("/${annotation}\([\"|\']{1}([a-zA-Z0-9.\/\\\~:-\\\\x7f-\xff]+)[\"|\']{1}\)/", $docComment, $matches)) {
-                $cls = new stdClass();
-                $cls->name = $this->refClass->getName();
-                $cls->value = $matches[1];
-                $classList[] = $cls;
+            if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
+                $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[1]));
+                foreach ($values as $value) {
+                    $cls = new stdClass();
+                    $cls->name = $this->refClass->getName();
+                    $cls->value = $value;
+                    $classList[] = $cls;
+                }
             }
         }
         return $classList;
@@ -47,11 +50,14 @@ class Annotation {
         foreach ($this->refClass->getMethods() as $method) {
             $docComment = $method->getDocComment();
             if (preg_match(self::REGEX_INJECT, $docComment)) {
-                if (preg_match("/${annotation}\([\"|\']{1}([a-zA-Z0-9.\/\\\~:-\\\\x7f-\xff]+)[\"|\']{1}\)/", $docComment, $matches)) {
-                    $cls = new stdClass();
-                    $cls->name = $method->getName();
-                    $cls->value = $matches[1];
-                    $methodList[] = $cls;
+                if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
+                    $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[1]));
+                    foreach ($values as $value) {
+                        $cls = new stdClass();
+                        $cls->name = $method->getName();
+                        $cls->value = $value;
+                        $methodList[] = $cls;
+                    }
                 }
             }
         }

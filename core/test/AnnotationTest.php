@@ -44,6 +44,28 @@ class AnnotationTest extends UnitTestBase {
     }
     
     /**
+     * 正常系
+     * クラスのアノテーションの値が複数指定された場合、複数取得できること
+     */
+    public function testOkClassAnnotations() {
+        $annotation = new Annotation("TestAnnotation4");
+        $classAnnotations = $annotation->classes("@Hoge");
+        $this->assertEquals("users", $classAnnotations[0]->value);
+        $this->assertEquals("users2", $classAnnotations[1]->value);
+    }
+    
+    /**
+     * 正常系
+     * クラスのアノテーションの値が複数指定された場合、複数取得できること
+     */
+    public function testOkMethodAnnotations() {
+        $annotation = new Annotation("TestAnnotation4");
+        $methodAnnotations = $annotation->methods("@Fuga");
+        $this->assertEquals("foo", $methodAnnotations[0]->value);
+        $this->assertEquals("bar", $methodAnnotations[1]->value);
+    }
+    
+    /**
      * 異常系
      * @Injectが付いていない場合、アノテーション情報が取得できないこと
      */
