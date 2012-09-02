@@ -90,7 +90,7 @@ class Database extends DatabaseCore {
      * @param String DB名
      * @return Object DBマネージャ
      */
-    public static function manager($dbname) {
+    public static function manager($dbname = null) {
         if (!is_object(self::$dbaccessor)) {
             self::$dbaccessor = new Database();
         }

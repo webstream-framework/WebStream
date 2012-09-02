@@ -1,3 +1,3 @@
-[2012-08-30 19:53:53,79] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_get_view
-[2012-08-30 19:53:53,81] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_post_view
-[2012-08-30 19:53:54,35] [INFO] HTTP GET success(200): http://rss.dailynews.yahoo.co.jp/fc/rss.xml
+[2012-09-02 15:05:31,16] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_get_view
+[2012-09-02 15:05:31,18] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_post_view
+[2012-09-02 15:05:31,73] [INFO] HTTP GET success(200): http://rss.dailynews.yahoo.co.jp/fc/rss.xml
