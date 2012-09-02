@@ -125,6 +125,13 @@ SQL;
         $this->assertEquals("1", $result[0]["id"]);
     }
     
+    public function testTtt() {
+        $model = new TestModel7();
+        $result = $model->join();
+        var_dump($result);
+    }
+    
+    
     /**
      * 異常系
      * カラムマッピングで存在しないカラムに対応するメソッドが指定された場合、例外が発生すること
