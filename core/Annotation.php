@@ -7,7 +7,7 @@
 class Annotation {
     /** インジェクションポイント */
     const REGEX_INJECT = '/@Inject\n+/';
-    /** リフレクションクラス */
+    /** リフレクションクラスインスタンス */
     private $refClass;
     
     /**
@@ -15,6 +15,14 @@ class Annotation {
      * @param String クラス名
      */
     public function __construct($className) {
+        $this->initClass($className);
+    }
+    
+    /**
+     * リフレクションクラスを初期化
+     * @param String クラス名
+     */
+    private function initClass($className) {
         $this->refClass = new ReflectionClass($className);
     }
     
@@ -24,21 +32,22 @@ class Annotation {
      * @return Array アノテーションリスト
      */
     public function classes($annotation) {
+        $class = $this->refClass;
         $classList = array();
-        while ($this->refClass) {
-            $docComment = $this->refClass->getDocComment();
+        while ($class) {
+            $docComment = $class->getDocComment();
             if (preg_match(self::REGEX_INJECT, $docComment)) {
                 if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
                     $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[1]));
                     foreach ($values as $value) {
                         $cls = new stdClass();
-                        $cls->className = $this->refClass->getName();
+                        $cls->className = $class->getName();
                         $cls->value = $value;
                         $classList[] = $cls;
                     }
                 }
             }
-            $this->refClass = $this->refClass->getParentClass();
+            $class = $class->getParentClass();
         }
         return $classList;
     }
@@ -49,10 +58,11 @@ class Annotation {
      * @return Array アノテーションリスト
      */
     public function methods($annotation) {
+        $class = $this->refClass;
         $methodList = array();
-        while ($this->refClass) {
-            foreach ($this->refClass->getMethods() as $method) {
-                if ($this->refClass->getName() !== $method->getDeclaringClass()->getName()) break;
+        while ($class) {
+            foreach ($class->getMethods() as $method) {
+                if ($class->getName() !== $method->getDeclaringClass()->getName()) break;
                 $docComment = $method->getDocComment();
                 if (preg_match(self::REGEX_INJECT, $docComment)) {
                     if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
@@ -67,7 +77,7 @@ class Annotation {
                     }
                 }
             }
-            $this->refClass = $this->refClass->getParentClass();
+            $class = $class->getParentClass();
         }
         return $methodList;
     }
