@@ -64,5 +64,4 @@ class TestModel6 extends CoreModel2 {}
  * @Table("users", "users2")
  * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel7 extends CoreModel2 {
-}
+class TestModel7 extends CoreModel2 {}

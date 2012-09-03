@@ -166,7 +166,7 @@ class CoreModel2 {
      */
     private function getInjectedValue($method) {
         foreach ($this->methodAnnotations as $annotation) {
-            if ($annotation->name === $method) {
+            if ($annotation->methodName === $method) {
                 return $annotation->value;
             }
         }

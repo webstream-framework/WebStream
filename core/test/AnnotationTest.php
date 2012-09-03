@@ -93,7 +93,7 @@ class AnnotationTest extends UnitTestBase {
      * 正常系
      * 親クラスのメソッドのアノテーションの値が取得できること
      */
-    public function testOkSUperClassMethodAnnotation() {
+    public function testOkSuperClassMethodAnnotation() {
         $annotation = new Annotation("TestAnnotation8");
         $methodAnnotation = $annotation->methods("@Yuri");
         $this->assertEquals("toshinou", $methodAnnotation[0]->value);
@@ -103,11 +103,22 @@ class AnnotationTest extends UnitTestBase {
      * 正常系
      * 子クラスのメソッドと親クラスのメソッドで同じアノテーションが設定された場合、両方取得できること
      */
-    public function testOkSUperClassMethodAnnotations() {
+    public function testOkSuperClassMethodAnnotations() {
         $annotation = new Annotation("TestAnnotation9");
         $methodAnnotations = $annotation->methods("@Yuri");
         $this->assertEquals("sugiura", $methodAnnotations[0]->value);
         $this->assertEquals("toshinou", $methodAnnotations[1]->value);
+    }
+    
+    /**
+     * 正常系
+     * 親クラスと同名のメソッドがあった場合、アノテーションの値が取得できること
+     */
+    public function testOkSuperClassDupulicateMethodAnnotation() {
+        $annotation = new Annotation("TestAnnotation11");
+        $methodAnnotations = $annotation->methods("@Yuruyuri");
+        $this->assertEquals("sakurako", $methodAnnotations[0]->value);
+        $this->assertEquals("himawari", $methodAnnotations[1]->value);
     }
     
     /**
@@ -119,6 +130,4 @@ class AnnotationTest extends UnitTestBase {
         $list = $annotation->classes("@Database");
         $this->assertCount(0, $list);
     }
-    
-    
 }

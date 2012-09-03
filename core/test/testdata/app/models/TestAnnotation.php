@@ -70,3 +70,19 @@ class TestAnnotation9 extends TestAnnotation7 {
     public function getAyano() {}
 }
 
+class TestAnnotation10 extends CoreModel2 {
+    /**
+     * @Inject
+     * @Yuruyuri("himawari")
+     */
+    public function getName() {}
+}
+
+class TestAnnotation11 extends TestAnnotation10 {
+    /**
+     * @Inject
+     * @Yuruyuri("sakurako")
+     */
+    public function getName() {}
+}
+
