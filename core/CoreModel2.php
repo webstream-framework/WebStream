@@ -7,6 +7,8 @@
 class CoreModel2 {
     /** DBインスタンスを格納するメンバ変数 */
     protected $db;
+    /** データベース名 */
+    //protected $dbname;
     /** テーブル名 */
     protected $table;
     /** SQL */
@@ -59,8 +61,8 @@ class CoreModel2 {
             $sql = $arguments[0];
             return $this->db->{$method}($sql);
         }
-
-        return $this->mapper($method, $arguments);
+        
+        throw new MethodNotFoundException("Undefined method called: ${method}");
     }
     
     /**
@@ -69,21 +71,33 @@ class CoreModel2 {
     protected function initialize() {
         $annotation = new Annotation(get_class($this));
         $databaseAnnotation = $annotation->classes("@Database");
-        $tableAnnotation = $annotation->classes("@Table");
+        $tableAnnotations = $annotation->classes("@Table");
         $sqlAnnotation = $annotation->classes("@Properties");
         $this->methodAnnotations = $annotation->methods("@SQL");
-        $this->dbConnection($databaseAnnotation[0]->value);
-        $this->table = $tableAnnotation[0]->value;
-        $this->columnInfo($this->table);
+        $dbname = !empty($databaseAnnotation) ? $databaseAnnotation[0]->value : null;
+        $this->dbConnection($dbname);
+        $this->columnInfo($tableAnnotations);
         $this->sqlProperties($sqlAnnotation[0]->value);
+    }
+    
+    /**
+     * DataMapperインスタンスを返却する
+     * @param String... テーブル名(複数指定可能)
+     */
+    public function getMapper() {
+        return DataMapper::get($this->db, $this->columns, func_get_args());
     }
     
     /**
      * 指定したテーブルのカラム情報を設定する
      * @param String テーブル名
      */
-    private function columnInfo($table) {
-        $this->columns = $this->db->columnInfo($table);
+    private function columnInfo($tableAnnotations) {
+        $tables = array();
+        foreach ($tableAnnotations as $annotation) {
+            $tables[] = $annotation->value;
+        }
+        $this->columns = $this->db->columnInfo($tables);
     }
     
     /**

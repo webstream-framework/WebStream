@@ -172,25 +172,28 @@ class Database extends DatabaseCore {
     
     /**
      * テーブルのフィールド情報を返却する
-     * @param String テーブル名
+     * @param Array テーブルリスト
      * @return Array フィールド情報
      */
-    public function columnInfo($table) {
-        $sql = "SELECT * FROM ${table}";
-        try {
-            $this->execSQL($sql);
+    public function columnInfo($tables) {
+        $columns = array();
+        foreach ($tables as $table) {
+            $sql = "SELECT * FROM ${table}";
             $i = 0;
-            $columns = array();
-            while ($column = $this->stmt->getColumnMeta($i++)) {
-                $columns[] = $column;
+            $columns[$table] = array();
+            try {
+                $this->execSQL($sql);
+                while ($column = $this->stmt->getColumnMeta($i++)) {
+                   $columns[$table][] = $column;
+                }
+                $this->init();
             }
-            $this->init();
-            return $columns;
+            catch (Exception $e) {
+                Logger::error($e->getMessage(), $e->getTraceAsString());
+                throw new DatabaseException($e->getMessage());
+            }
         }
-        catch (Exception $e) {
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            throw new DatabaseException($e->getMessage());
-        }
+        return $columns;
     }
     
     /**
