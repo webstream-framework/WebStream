@@ -1,0 +1,36 @@
+[2012-09-07 23:29:42,43] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:29:42,43] [INFO] Bind statement: 
+[2012-09-07 23:29:42,44] [INFO] Executed SQL: select * from users
+[2012-09-07 23:29:42,44] [INFO] Bind statement: 
+[2012-09-07 23:35:47,67] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:35:47,67] [INFO] Bind statement: 
+[2012-09-07 23:35:47,67] [INFO] Executed SQL: select * from users
+[2012-09-07 23:35:47,67] [INFO] Bind statement: 
+[2012-09-07 23:36:09,77] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:36:09,77] [INFO] Bind statement: 
+[2012-09-07 23:36:09,77] [INFO] Executed SQL: select * from users
+[2012-09-07 23:36:09,77] [INFO] Bind statement: 
+[2012-09-07 23:36:33,47] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:36:33,47] [INFO] Bind statement: 
+[2012-09-07 23:36:33,48] [INFO] Executed SQL: select * from users
+[2012-09-07 23:36:33,48] [INFO] Bind statement: 
+[2012-09-07 23:38:58,70] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:38:58,70] [INFO] Bind statement: 
+[2012-09-07 23:38:58,70] [INFO] Executed SQL: SELECT user_name FROM users
+[2012-09-07 23:38:58,71] [INFO] Bind statement: 
+[2012-09-07 23:39:12,21] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:39:12,21] [INFO] Bind statement: 
+[2012-09-07 23:39:12,22] [INFO] Executed SQL: SELECT user_name FROM users
+[2012-09-07 23:39:12,22] [INFO] Bind statement: 
+[2012-09-07 23:39:14,29] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:39:14,29] [INFO] Bind statement: 
+[2012-09-07 23:39:14,30] [INFO] Executed SQL: SELECT user_name FROM users
+[2012-09-07 23:39:14,30] [INFO] Bind statement: 
+[2012-09-07 23:39:16,65] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:39:16,65] [INFO] Bind statement: 
+[2012-09-07 23:39:16,66] [INFO] Executed SQL: select * from users
+[2012-09-07 23:39:16,66] [INFO] Bind statement: 
+[2012-09-07 23:41:35,92] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-07 23:41:35,93] [INFO] Bind statement: 
+[2012-09-07 23:41:35,93] [INFO] Executed SQL: select * from users
+[2012-09-07 23:41:35,93] [INFO] Bind statement: 
