@@ -5,7 +5,7 @@
  * @Table("users")
  * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel2 extends CoreModel2 {
+class TestModel2 extends CoreModel {
     /**
      * @Inject
      * @SQL("users")
@@ -29,7 +29,7 @@ class TestModel2 extends CoreModel2 {
  * @Table("users")
  * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel3 extends CoreModel2 {}
+class TestModel3 extends CoreModel {}
 
 /**
  * 存在しない@Propertiesが指定された場合
@@ -38,7 +38,7 @@ class TestModel3 extends CoreModel2 {}
  * @Table("users")
  * @Properties("db/users.properties")
  */
-class TestModel4 extends CoreModel2 {}
+class TestModel4 extends CoreModel {}
 
 /**
  * 存在しない@Tableが指定された場合
@@ -47,7 +47,7 @@ class TestModel4 extends CoreModel2 {}
  * @Table("dummy")
  * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel5 extends CoreModel2 {}
+class TestModel5 extends CoreModel {}
 
 /**
  * 存在しない@Databaseが指定された場合
@@ -56,7 +56,7 @@ class TestModel5 extends CoreModel2 {}
  * @Table("test")
  * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel6 extends CoreModel2 {}
+class TestModel6 extends CoreModel {}
 
 /**
  * @Inject
@@ -64,7 +64,7 @@ class TestModel6 extends CoreModel2 {}
  * @Table("users", "users2")
  * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel7 extends CoreModel2 {
+class TestModel7 extends CoreModel {
     /**
      * @Inject
      * @SQL("outer_join")

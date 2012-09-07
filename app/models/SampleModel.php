@@ -5,7 +5,7 @@
  * @Table("users")
  * @Properties("sql/users.properties")
  */
-class SampleModel extends CoreModel2 {
+class SampleModel extends CoreModel {
     /**
      * @Inject
      * @SQL("users")

@@ -5,15 +5,15 @@
  * @Table("users")
  * @SQL("db/user.properties")
  */
-class TestAnnotation1 extends CoreModel2 {}
+class TestAnnotation1 extends CoreModel {}
 
 /**
  * @Database("diarysys")
  * @SQL("db/user.properties")
  */
-class TestAnnotation2 extends CoreModel2 {}
+class TestAnnotation2 extends CoreModel {}
 
-class TestAnnotation3 extends CoreModel2 {
+class TestAnnotation3 extends CoreModel {
     /**
      * @Inject
      * @Database("diarysys")
@@ -25,7 +25,7 @@ class TestAnnotation3 extends CoreModel2 {
  * @Inject
  * @Hoge("users", "users2")
  */
-class TestAnnotation4 extends CoreModel2 {
+class TestAnnotation4 extends CoreModel {
     /**
      * @Inject
      * @Fuga("foo", "bar")
@@ -46,7 +46,7 @@ class TestAnnotation5 extends TestAnnotation4 {}
 class TestAnnotation6 extends TestAnnotation5 {}
 
 
-class TestAnnotation7 extends CoreModel2 {
+class TestAnnotation7 extends CoreModel {
     /**
      * @Inject
      * @Yuri("toshinou")
@@ -70,7 +70,7 @@ class TestAnnotation9 extends TestAnnotation7 {
     public function getAyano() {}
 }
 
-class TestAnnotation10 extends CoreModel2 {
+class TestAnnotation10 extends CoreModel {
     /**
      * @Inject
      * @Yuruyuri("himawari")

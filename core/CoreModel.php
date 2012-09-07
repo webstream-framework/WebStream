@@ -2,27 +2,163 @@
 /**
  * CoreModelクラス
  * @author Ryuichi TANAKA.
- * @since 2011/09/11
+ * @since 2012/09/01
  */
 class CoreModel {
-    /** DBインスタンスを格納するメンバ変数 */
+    /** DBインスタンス */
     protected $db;
+    /** データベース名 */
+    //protected $dbname;
+    /** テーブル名のリスト */
+    protected $tables = array();
+    /** SQL */
+    protected $sql;
+    /** BIND */
+    protected $bind = array();
+    /** カラム情報 */
+    protected $columns;
+    /** SQLプロパティファイル情報 */
+    protected $sqlProperties;
+    /** メソッドアノテーション情報 */
+    protected $methodAnnotations;
+    /** DataMapperインスタンス */
+    protected $mapper;
     
     /**
-     * Controllerから存在しないメソッドが呼ばれたときの処理
-     * Modelは移譲先がないので必ず例外にする
-     * @param String メソッド名
-     * @param Array 引数の配列
+     * コンストラクタ
      */
-    final public function __call($method, $arguments) {
-        $class = get_class($this);
-        throw new MethodNotFoundException("${class}#${method} is not defined.");
+    public function __construct() {
+        $this->initialize();
     }
     
     /**
-     * Modelクラス全体の初期化
+     * 存在しないメソッドが呼ばれたときの処理
+     * @param String メソッド名
+     * @param Array 引数のリスト
+     * @return Array 実行結果
      */
-    final public function __construct() {
-        $this->db = Database::manager();
+    public function __call($method, $arguments) {
+        if (preg_match('/(?:(?:inser|selec)t|(?:dele|upda)te)/', $method)) {
+            // Modelクラスからの呼び出し元メソッド名を取得
+            $callerMethod = $this->getCallerMethodName();
+            // メソッド名から@SQLのインジェクト値を取得する
+            $sqlPropertiesKey = $this->getInjectedValue($callerMethod);
+            // @Propertiesで指定した設定ファイル内のキーに一致するSQLを取得
+            $sql = $this->getDefinedSQL($sqlPropertiesKey);
+            $bind = array();
+            if (!empty($arguments)) {
+                foreach ($arguments as $argument) {
+                    if (is_string($argument)) {
+                        $sql = $argument;
+                    }
+                    else if (is_array($argument)) {
+                        $bind = $argument;
+                    }
+                }
+            }
+            return $this->db->{$method}($sql, $bind);
+        }
+        else if (preg_match('/(?:create|drop)/', $method)) {
+            $sql = $arguments[0];
+            return $this->db->{$method}($sql);
+        }
+        
+        return $this->mapper->{$method}($arguments);
+    }
+    
+    /**
+     * モデルの初期処理
+     */
+    protected function initialize() {
+        $annotation = new Annotation(get_class($this));
+        $databaseAnnotation = $annotation->classes("@Database");
+        $tableAnnotations = $annotation->classes("@Table");
+        $sqlAnnotation = $annotation->classes("@Properties");
+        $this->methodAnnotations = $annotation->methods("@SQL");
+        $dbname = !empty($databaseAnnotation) ? $databaseAnnotation[0]->value : null;
+        $this->setTables($tableAnnotations);
+        $this->dbConnection($dbname);
+        $this->setColumns();
+        $this->sqlProperties($sqlAnnotation[0]->value);
+        $this->setMapper();
+    }
+    
+    /**
+     * DataMapperインスタンスを返却する
+     */
+    public function setMapper() {
+        $this->mapper = DataMapper::get($this->db, $this->columns, $this->tables);
+    }
+    
+    /**
+     * テーブル一覧を設定する
+     * @param Object テーブルアノテーションオブジェクト
+     */
+    private function setTables($tableAnnotations) {
+        foreach ($tableAnnotations as $annotation) {
+            $this->tables[] = $annotation->value;
+        }
+    }
+    
+    /**
+     * 指定したテーブルのカラム情報を設定する
+     */
+    private function setColumns() {
+        $this->columns = $this->db->columnInfo($this->tables);
+    }
+    
+    /**
+     * SQLプロパティ情報を設定する
+     * @param String SQLプロパティファイルパス
+     */
+    private function sqlProperties($filepath) {
+        $config = Utility::parseConfig($filepath);
+        if ($config === null) {
+            $errorMsg = "Properties file specified by @SQL annotation is not found: ${filepath}";
+            throw new ResourceNotFoundException($errorMsg);
+        }
+        $this->sqlProperties = Utility::parseConfig($filepath);
+    }
+
+    /**
+     * DB接続する
+     * モデルクラスからは参照不可
+     * @param String アノテーション定義されたDB名
+     */
+    private function dbConnection($dbname) {
+        $this->db = Database::manager($dbname);
+    }
+    
+    /**
+     * 呼び出し元メソッド名を取得する
+     * @return String 呼び出し元メソッド名
+     */
+    private function getCallerMethodName() {
+        $trace = debug_backtrace();
+        return $trace[3]['function'];
+    }
+    
+    /**
+     * @SQLでインジェクトした値を取得する
+     * @param String インジェクト対象メソッド名
+     * @return String インジェクト値
+     */
+    private function getInjectedValue($method) {
+        foreach ($this->methodAnnotations as $annotation) {
+            if ($annotation->methodName === $method) {
+                return $annotation->value;
+            }
+        }
+    }
+    
+    /**
+     * Propertiesファイルに定義されたSQLを返却する
+     * @param String SQLキー
+     * @return String SQL
+     */
+    private function getDefinedSQL($key) {
+        if (array_key_exists($key, $this->sqlProperties)) {
+            return $this->sqlProperties[$key];
+        }
     }
 }
