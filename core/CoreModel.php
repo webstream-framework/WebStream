@@ -7,8 +7,6 @@
 class CoreModel {
     /** DBインスタンス */
     protected $db;
-    /** データベース名 */
-    //protected $dbname;
     /** テーブル名のリスト */
     protected $tables = array();
     /** SQL */
@@ -18,7 +16,7 @@ class CoreModel {
     /** カラム情報 */
     protected $columns;
     /** SQLプロパティファイル情報 */
-    protected $sqlProperties;
+    protected $sqlProperties = array();
     /** メソッドアノテーション情報 */
     protected $methodAnnotations;
     /** DataMapperインスタンス */
@@ -73,13 +71,13 @@ class CoreModel {
         $annotation = new Annotation(get_class($this));
         $databaseAnnotation = $annotation->classes("@Database");
         $tableAnnotations = $annotation->classes("@Table");
-        $sqlAnnotation = $annotation->classes("@Properties");
+        $sqlAnnotations = $annotation->classes("@Properties");
         $this->methodAnnotations = $annotation->methods("@SQL");
         $dbname = !empty($databaseAnnotation) ? $databaseAnnotation[0]->value : null;
         $this->setTables($tableAnnotations);
         $this->dbConnection($dbname);
         $this->setColumns();
-        $this->sqlProperties($sqlAnnotation[0]->value);
+        $this->sqlProperties($sqlAnnotations);
         $this->setMapper();
     }
     
@@ -109,15 +107,28 @@ class CoreModel {
     
     /**
      * SQLプロパティ情報を設定する
-     * @param String SQLプロパティファイルパス
+     * @param Object SQLプロパティファイルアノテーション
      */
-    private function sqlProperties($filepath) {
-        $config = Utility::parseConfig($filepath);
-        if ($config === null) {
-            $errorMsg = "Properties file specified by @SQL annotation is not found: ${filepath}";
-            throw new ResourceNotFoundException($errorMsg);
+    private function sqlProperties($sqlAnnotations) {
+        // Propertiesファイルに記述するキーは全体で一意にする必要がある。
+        // 重複のキーが合った場合は例外とする。
+        $properties = array();
+        foreach ($sqlAnnotations as $annotation) {
+            $filepath = $annotation->value;
+            $config = Utility::parseConfig($filepath);
+            if ($config === null) {
+                $errorMsg = "Properties file specified by @SQL annotation is not found: ${filepath}";
+                throw new ResourceNotFoundException($errorMsg);
+            }
+            $properties = Utility::parseConfig($filepath);
+            foreach ($properties as $key => $sql) {
+                if (array_key_exists($key, $this->sqlProperties)) {
+                    $errorMsg = "Properties key is duplicated: ${key}";
+                    throw new DatabasePropertiesException($errorMsg);
+                }
+                $this->sqlProperties[$key] = $sql;
+            }
         }
-        $this->sqlProperties = Utility::parseConfig($filepath);
     }
 
     /**

@@ -200,5 +200,14 @@ SQL;
     public function testNgNotFoundDatabaseAnnotation() {
         $model = new TestModel6();
     }
+    
+    /**
+     * 異常系
+     * @Propertiesファイルが複数指定され、キーが重複した場合、例外が発生すること
+     * @expectedException DatabasePropertiesException
+     */
+    public function testNgDuplicatePropertiesKey() {
+        $model = new TestModel8();
+    }
 }
     

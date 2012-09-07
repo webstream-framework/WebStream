@@ -74,5 +74,10 @@ class TestModel7 extends CoreModel {
     }
 }
 
-
-
+/**
+ * @Inject
+ * @Database("test")
+ * @Table("users", "users2")
+ * @Properties("core/test/testdata/sql/users.properties", "core/test/testdata/sql/users2.properties")
+ */
+class TestModel8 extends CoreModel {}
