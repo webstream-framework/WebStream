@@ -5,12 +5,12 @@
  * @since 2012/09/01
  */
 class CoreModel2 {
-    /** DBインスタンスを格納するメンバ変数 */
+    /** DBインスタンス */
     protected $db;
     /** データベース名 */
     //protected $dbname;
-    /** テーブル名 */
-    protected $table;
+    /** テーブル名のリスト */
+    protected $tables = array();
     /** SQL */
     protected $sql;
     /** BIND */
@@ -21,6 +21,8 @@ class CoreModel2 {
     protected $sqlProperties;
     /** メソッドアノテーション情報 */
     protected $methodAnnotations;
+    /** DataMapperインスタンス */
+    protected $mapper;
     
     /**
      * コンストラクタ
@@ -33,10 +35,9 @@ class CoreModel2 {
      * 存在しないメソッドが呼ばれたときの処理
      * @param String メソッド名
      * @param Array 引数のリスト
-     * @return mixed 実行結果
+     * @return Array 実行結果
      */
     public function __call($method, $arguments) {
-        // 通常のSQL実行
         if (preg_match('/(?:(?:inser|selec)t|(?:dele|upda)te)/', $method)) {
             // Modelクラスからの呼び出し元メソッド名を取得
             $callerMethod = $this->getCallerMethodName();
@@ -62,7 +63,7 @@ class CoreModel2 {
             return $this->db->{$method}($sql);
         }
         
-        throw new MethodNotFoundException("Undefined method called: ${method}");
+        return $this->mapper->{$method}($arguments);
     }
     
     /**
@@ -75,29 +76,35 @@ class CoreModel2 {
         $sqlAnnotation = $annotation->classes("@Properties");
         $this->methodAnnotations = $annotation->methods("@SQL");
         $dbname = !empty($databaseAnnotation) ? $databaseAnnotation[0]->value : null;
+        $this->setTables($tableAnnotations);
         $this->dbConnection($dbname);
-        $this->columnInfo($tableAnnotations);
+        $this->setColumns();
         $this->sqlProperties($sqlAnnotation[0]->value);
+        $this->setMapper();
     }
     
     /**
      * DataMapperインスタンスを返却する
-     * @param String... テーブル名(複数指定可能)
      */
-    public function getMapper() {
-        return DataMapper::get($this->db, $this->columns, func_get_args());
+    public function setMapper() {
+        $this->mapper = DataMapper::get($this->db, $this->columns, $this->tables);
+    }
+    
+    /**
+     * テーブル一覧を設定する
+     * @param Object テーブルアノテーションオブジェクト
+     */
+    private function setTables($tableAnnotations) {
+        foreach ($tableAnnotations as $annotation) {
+            $this->tables[] = $annotation->value;
+        }
     }
     
     /**
      * 指定したテーブルのカラム情報を設定する
-     * @param String テーブル名
      */
-    private function columnInfo($tableAnnotations) {
-        $tables = array();
-        foreach ($tableAnnotations as $annotation) {
-            $tables[] = $annotation->value;
-        }
-        $this->columns = $this->db->columnInfo($tables);
+    private function setColumns() {
+        $this->columns = $this->db->columnInfo($this->tables);
     }
     
     /**
@@ -111,48 +118,6 @@ class CoreModel2 {
             throw new ResourceNotFoundException($errorMsg);
         }
         $this->sqlProperties = Utility::parseConfig($filepath);
-    }
-    
-    /**
-     * メソッド名とカラムをマッピングして結果を返却する
-     * @param String メソッド名
-     * @param Array 引数のリスト
-     * @return Array selectの実行結果
-     */
-    protected function mapper($method, $arguments) {
-        $snakeMethod = Utility::camel2snake($method);
-        $columnName = null;
-        if ($this->columns != null) {
-            foreach ($this->columns as $column) {
-                if ($column["name"] === $snakeMethod) {
-                    $columnName = $snakeMethod;
-                    break;
-                }
-            }
-        }
-        
-        if ($columnName === null) {
-            $className = get_class($this);
-            $errorMsg = "Column '$snakeMethod' is not found in Table '$this->table.' " .
-                        "$className#$method mapping failed.";
-            throw new MethodNotFoundException($errorMsg);
-        }
-        
-        $sql = sprintf("SELECT %s FROM %s", $columnName, $this->table);
-        $bind = array();
-        $limitSql = "LIMIT :limit OFFSET :offset";
-        if (count($arguments) == 1 && is_int($arguments[0])) {
-            $bind["limit"] = $arguments[0];
-            $bind["offset"] = 0;
-            $sql .= " " . $limitSql;
-        }
-        else if (count($arguments) == 2 && is_int($arguments[0]) && is_int($arguments[1])) {
-            $bind["limit"] = $arguments[1];
-            $bind["offset"] = $arguments[0];
-            $sql .= " " . $limitSql;
-        }
-
-        return $this->db->select($sql, $bind);
     }
 
     /**

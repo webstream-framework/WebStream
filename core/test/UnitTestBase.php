@@ -672,7 +672,7 @@ SQL;
     public function executeSQL() {
         return array(
             array("select * from users"),
-            array("select * from users where id = :id", array("id" => 1))
+            array("select * from users where user_name = :name", array("name" => "yui"))
         );
     }
 }

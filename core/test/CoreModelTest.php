@@ -70,115 +70,135 @@ SQL;
         $db->insert($sql, $bind);
     }
     
-    public function testOkttt() {
-        $model = new TestModel7();
-        $mapper = $model->getMapper("users", "users2");
-        var_dump($mapper->userName());
+    /**
+     * 正常系
+     * 外部からSQLを指定して結果を取得できること
+     * @dataProvider executeSQL
+     */
+    public function testOkExecuteSQL($sql, $bind = array()) {
+        $model = new TestModel2();
+        $result = $model->select($sql, $bind);
+        $this->assertNotCount(0, $result);
     }
     
+    /**
+     * 正常系
+     * カラムマッピングで結果が取得できること
+     */
+    public function testOkExecuteMapping() {
+        $model = new TestModel2();
+        $result = $model->userName();
+        $this->assertNotCount(0, $result);
+        foreach ($result as $elem) {
+            $this->assertArrayHasKey("user_name", $elem);
+        }
+    }
     
-    // /**
-     // * 正常系
-     // * 外部からSQLを指定して結果を取得できること
-     // * @dataProvider executeSQL
-     // */
-    // public function testOkExecuteSQL($sql, $bind = array()) {
-        // $model = new TestModel2();
-        // $result = $model->select($sql, $bind);
-        // $this->assertNotCount(0, $result);
-    // }
-//     
-    // /**
-     // * 正常系
-     // * カラムマッピングで結果が取得できること
-     // */
-    // public function testOkExecuteMapping() {
-        // $model = new TestModel2();
-        // $result = $model->userName();
-        // $this->assertNotCount(0, $result);
-        // foreach ($result as $elem) {
-            // $this->assertArrayHasKey("user_name", $elem);
-        // }
-    // }
-//     
-    // /**
-     // * 正常系
-     // * 設定ファイルで指定されたDB名を@Databaseアノテーションで変更できること
-     // */
-    // public function testOkChangeDatabase() {
-        // $model = new TestModel3();
-        // $result = $model->userName();
-        // $this->assertEquals("kyouko", $result[0]["user_name"]);
-    // }
-//     
-    // /**
-     // * 正常系
-     // * @SQLでインジェクトしたSQLを実行出来ること
-     // */
-    // public function testOkInjectedSQL() {
-        // $model = new TestModel2();
-        // $result = $model->getUserList();
-        // $this->assertNotCount(0, $result);
-    // }
-//     
-    // /**
-     // * 正常系
-     // * @SQLでインジェクトしたSQLをバインド変数付きで実行出来ること
-     // */
-    // public function testOkInjectedSQLWithBind() {
-        // $model = new TestModel2();
-        // $result = $model->getUserList2(array("id" => 1));
-        // $this->assertCount(1, $result);
-        // $this->assertEquals("1", $result[0]["id"]);
-    // }
-//     
-    // public function testTtt() {
-        // $model = new TestModel7();
-        // $result = $model->join();
-//         
-        // // TODO JOIN対応に向けて、まずは@Tableで複数のテーブルをInjectできるように
-        // // しないとだめ。
-//         
-//         
-        // var_dump($result);
-    // }
-//     
-//     
-    // /**
-     // * 異常系
-     // * カラムマッピングで存在しないカラムに対応するメソッドが指定された場合、例外が発生すること
-     // * @expectedException MethodNotFoundException
-     // */
-    // public function testNgExecuteMapping() {
-        // $model = new TestModel2();
-        // $model->dummy();
-    // }
-//     
-    // /**
-     // * 異常系
-     // * @Propertiesに存在しないパスが指定された場合、例外が発生すること
-     // * @expectedException ResourceNotFoundException
-     // */
-    // public function testNgNotFoundPropertiesAnnotation() {
-        // $model = new TestModel4();
-    // }
-//     
-    // /**
-     // * 異常系
-     // * @Tableに存在しない値が指定された場合、例外が発生すること
-     // * @expectedException DatabaseException
-     // */
-    // public function testNgNotFoundTableAnnotation() {
-        // $model = new TestModel5();
-    // }
-//     
-    // /**
-     // * 異常系
-     // * @Databaseに存在しない値が指定された場合、例外が発生すること
-     // * @expectedException DatabaseException
-     // */
-    // public function testNgNotFoundDatabaseAnnotation() {
-        // $model = new TestModel6();
-    // }
+    /**
+     * 正常系
+     * カラムマッピングで複数のテーブルを指定し、カラム名が重複した場合、マージされた結果が取得できること
+     */
+    public function testOkExecuteMappingWithMerge() {
+        $model = new TestModel7();
+        $result = $model->userName();
+        $this->assertNotCount(0, $result);
+        $isOk1 = false;
+        $isOk2 = false;
+        $isOk3 = false;
+        foreach ($result as $elem) {
+            if ($elem["user_name"] == "yui") {
+                $isOk1 = true;
+            }
+            if ($elem["user_name"] == "azusa") {
+                $isOk2 = true;
+            }
+            if ($isOk1 && $isOk2) break;
+        }
+        foreach ($result as $elem) {
+            if ($elem["user_name"] == "okarin") {
+                $isOk3 = true;
+            }
+            if ($isOk3) break;
+        }
+        $this->assertTrue($isOk1 && $isOk2 && $isOk3);
+    }
+    
+    /**
+     * 正常系
+     * 設定ファイルで指定されたDB名を@Databaseアノテーションで変更できること
+     */
+    public function testOkChangeDatabase() {
+        $model = new TestModel3();
+        $result = $model->userName();
+        $this->assertEquals("kyouko", $result[0]["user_name"]);
+    }
+    
+    /**
+     * 正常系
+     * @SQLでインジェクトしたSQLを実行出来ること
+     */
+    public function testOkInjectedSQL() {
+        $model = new TestModel2();
+        $result = $model->getUserList();
+        $this->assertNotCount(0, $result);
+    }
+    
+    /**
+     * 正常系
+     * @SQLでインジェクトしたSQLをバインド変数付きで実行出来ること
+     */
+    public function testOkInjectedSQLWithBind() {
+        $model = new TestModel2();
+        $result = $model->getUserList2(array("name" => "yui"));
+        $this->assertNotCount(0, $result);
+        $this->assertEquals("yui", $result[0]["user_name"]);
+    }
+    
+    /**
+     * 正常系
+     * @SQLでインジェクトしたSQLをバインドしてOUTER JOINを含むSQLを実行出来ること
+     */
+    public function testOkInjectedSQLWithBindByJoin() {
+        $model = new TestModel7();
+        $result = $model->outerJoin(array("id" => "KON000001"));
+        $this->assertNotCount(0, $result);
+    }
+
+    /**
+     * 異常系
+     * カラムマッピングで存在しないカラムに対応するメソッドが指定された場合、例外が発生すること
+     * @expectedException MethodNotFoundException
+     */
+    public function testNgExecuteMapping() {
+        $model = new TestModel2();
+        $model->dummy();
+    }
+    
+    /**
+     * 異常系
+     * @Propertiesに存在しないパスが指定された場合、例外が発生すること
+     * @expectedException ResourceNotFoundException
+     */
+    public function testNgNotFoundPropertiesAnnotation() {
+        $model = new TestModel4();
+    }
+    
+    /**
+     * 異常系
+     * @Tableに存在しない値が指定された場合、例外が発生すること
+     * @expectedException DatabaseException
+     */
+    public function testNgNotFoundTableAnnotation() {
+        $model = new TestModel5();
+    }
+    
+    /**
+     * 異常系
+     * @Databaseに存在しない値が指定された場合、例外が発生すること
+     * @expectedException DatabaseException
+     */
+    public function testNgNotFoundDatabaseAnnotation() {
+        $model = new TestModel6();
+    }
 }
     

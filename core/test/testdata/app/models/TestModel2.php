@@ -64,4 +64,15 @@ class TestModel6 extends CoreModel2 {}
  * @Table("users", "users2")
  * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel7 extends CoreModel2 {}
+class TestModel7 extends CoreModel2 {
+    /**
+     * @Inject
+     * @SQL("outer_join")
+     */
+    public function outerJoin($bind) {
+        return $this->select($bind);
+    }
+}
+
+
+
