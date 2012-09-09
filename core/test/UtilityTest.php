@@ -1,4 +1,7 @@
 <?php
+namespace WebStream\Test;
+use WebStream\Utility;
+use WebStream\HttpAgent;
 /**
  * Utilityクラスのテストクラス
  * @author Ryuichi TANAKA.

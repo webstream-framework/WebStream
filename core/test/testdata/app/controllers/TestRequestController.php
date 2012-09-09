@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestRequestController extends CoreController {
     public function get() {
         echo $this->request->get("name");

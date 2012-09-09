@@ -1,4 +1,7 @@
 <?php
+namespace WebStream\Test;
+use WebStream\HttpAgent;
+use WebStream\Security;
 /**
  * Securityクラスのテストクラス
  * @author Ryuichi TANAKA.
@@ -41,7 +44,7 @@ class SecurityTest extends UnitTestBase {
         // CSRFテストページのHTMLを取得
         $html = file_get_contents($this->root_url . "/csrf");
         // DOMを使ってCSRFトークンを抜く
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         @$doc->loadHTML($html);
         $token = null;
         $nodeList = $doc->getElementsByTagName("input");
@@ -65,7 +68,7 @@ class SecurityTest extends UnitTestBase {
         $http = new HttpAgent();
         $url = $this->root_url . $path;
         $html = $http->get($url);
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         @$doc->loadHTML($html);
         $token = null;
         $nodeList = $doc->getElementsByTagName("input");
@@ -79,5 +82,4 @@ class SecurityTest extends UnitTestBase {
 
         $this->assertEquals($token, $session_id);
     }
-    
 }

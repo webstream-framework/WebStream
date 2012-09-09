@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * アノテーションクラス
  * @author Ryuichi TANAKA.
@@ -23,7 +24,7 @@ class Annotation {
      * @param String クラス名
      */
     private function initClass($className) {
-        $this->refClass = new ReflectionClass($className);
+        $this->refClass = new \ReflectionClass($className);
     }
     
     /**
@@ -40,7 +41,7 @@ class Annotation {
                 if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
                     $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[1]));
                     foreach ($values as $value) {
-                        $cls = new stdClass();
+                        $cls = new \stdClass();
                         $cls->className = $class->getName();
                         $cls->value = $value;
                         $classList[] = $cls;
@@ -68,7 +69,7 @@ class Annotation {
                     if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
                         $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[1]));
                         foreach ($values as $value) {
-                            $cls = new stdClass();
+                            $cls = new \stdClass();
                             $cls->methodName = $method->getName();
                             $cls->className = $method->getDeclaringClass()->getName();
                             $cls->value = $value;

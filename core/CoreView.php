@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * Coreクラス
  * @author Ryuichi TANAKA.
@@ -84,7 +85,7 @@ HTML;
     final private function draw($template_path, $params, $type) {
         // テンプレートファイルがない場合エラー
         if (!file_exists(realpath($template_path))) {
-            throw new Exception("Invalid template file path: " . $template_path);
+            throw new TemplateNotFoundException("Invalid template file path: " . $template_path);
         }
         
         // 埋め込みパラメータにHelperを起動するためのオブジェクトをセット
@@ -152,7 +153,7 @@ HTML;
         // <meta>タグによるcharsetが指定されない場合は文字化けするのでその対策を行う
         $content = mb_convert_encoding($content, 'html-entities', "UTF-8"); 
         // DOMでformにアペンドする
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         // テンプレートがが断片でなく、完全の場合(layoutを使わずrenderだけで描画した場合)
         // 警告が出るが処理は正常に実行出来るので無視する
         @$doc->loadHTML($content);
@@ -176,7 +177,7 @@ HTML;
             $bodyNode = $bodyNodeList->item(0);
             $children = $bodyNode->childNodes;
             foreach ($children as $child) {
-                $tmp = new DOMDocument();
+                $tmp = new \DOMDocument();
                 $tmp->formatOutput = true;
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
@@ -219,7 +220,7 @@ HTML;
     final private function convert($s) {
         $s = preg_replace('/^<\?xml/', '<<?php ?>?xml', $s);
         $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
-        $s = preg_replace('/%\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $s);
+        $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
         $s = preg_replace('/!\{(.*?)\}/', '<?php ${self::HELPER_RECEIVER}->$1; ?>', $s);
         return $s;

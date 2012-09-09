@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * @Inject
  * @Database("diarysys")

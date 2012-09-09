@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * HTTPエージェントクラス
  * @author Ryuichi TANAKA.

@@ -1,6 +1,6 @@
-<h1>Model Test1</h1>
+<h1>Model Test(Mapping)</h1>
 <ul>
 <?php foreach($data as $content) :; ?>
-	<li><?php echo safetyOut($content['user_name']); ?></li>
+	<li><?php echo \WebStream\safetyOut($content['user_name']); ?></li>
 <?php endforeach; ?>
 </ul>

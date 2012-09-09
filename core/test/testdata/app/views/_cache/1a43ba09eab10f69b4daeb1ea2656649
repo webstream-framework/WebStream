@@ -1,3 +1,0 @@
-<body><form action=".">
-    <input type="text" value="<?php echo safetyOut($value); ?>">
-</form></body>

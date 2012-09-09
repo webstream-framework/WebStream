@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestController extends CoreController {
     public function test1() {
         echo "test1";

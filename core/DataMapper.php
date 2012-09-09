@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * DataMapperクラス
  * @author Ryuichi TANAKA.

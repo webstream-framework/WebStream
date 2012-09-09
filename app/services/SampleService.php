@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class SampleService extends CoreService {
     public function model1() {
         return $this->Sample->model1();

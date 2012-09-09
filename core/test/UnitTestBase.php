@@ -1,10 +1,14 @@
 <?php
+namespace WebStream\Test;
+use WebStream\Logger;
+use WebStream\Utility;
+use WebStream\Cache;
 /**
  * テストクラスのベースクラス
  * @author Ryuichi TANAKA.
  * @since 2011/08/25
  */
-class UnitTestBase extends PHPUnit_Framework_TestCase {
+class UnitTestBase extends \PHPUnit_Framework_TestCase {
     /** テスト用ルートURL */
     protected $document_root = "http://localhost/";
     protected $project_name = "WebStream";
@@ -36,7 +40,8 @@ SQL;
 
     protected function loadModule() {
         require_once $this->getRoot() . "/core/AutoImport.php";
-        importAll("core");
+        require_once $this->getRoot() . "/core/Functions.php";
+        \WebStream\importAll("core");
         $this->root_url = $this->document_root . $this->project_name . $this->testdata_dir;
     }
 
@@ -411,7 +416,7 @@ SQL;
     }
 
     public function saveProvider() {
-        import("core/Cache");
+        \WebStream\import("core/Cache");
         return array(
             array("cache_test_save_string", "abcde"),
             array("cache_test_save_integer", 12345),
@@ -578,7 +583,7 @@ SQL;
     
     public function notFoundRenderMethodProvider() {
         return array(
-            array("/notfound_render", "TestController#render_dummy is not defined.")
+            array("/notfound_render", "WebStream\\TestController#render_dummy is not defined.")
         );
     }
     

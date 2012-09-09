@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestLayoutViewController extends CoreController {
     public function index() {
         $this->layout("test");

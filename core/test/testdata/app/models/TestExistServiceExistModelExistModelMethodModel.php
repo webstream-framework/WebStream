@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestExistServiceExistModelExistModelMethodModel extends CoreModel {
     public function get1($arg1) {
         echo $arg1;

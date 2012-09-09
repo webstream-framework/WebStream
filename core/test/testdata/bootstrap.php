@@ -1,5 +1,15 @@
 <?php
+namespace WebStream;
 require '../../../core/AutoImport.php';
+require '../../../core/Functions.php';
+use WebStream\Application;
+use WebStream\Logger;
+use WebStream\AutoImport;
+
+function __autoload($class_name) {
+    import("core/test/testdata/config/" . $class_name);
+}
+
 // core以下のファイル、ルーティングルールをロード
 importAll("core");
 import("core/test/testdata/config/routes");
@@ -8,7 +18,7 @@ import("core/test/testdata/config/routes");
 Logger::init("core/test/testdata/config/log.ini");
 
 $controller_test_dir = "core/test/testdata/app";
-$class = new ReflectionClass("Application");
+$class = new \ReflectionClass("WebStream\Application");
 $instance = $class->newInstance();
 $property = $class->getProperty("app_dir");
 $property->setAccessible(true);

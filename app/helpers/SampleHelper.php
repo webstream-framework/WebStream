@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class SampleHelper extends AppHelper {
     public function show1($name) {
         return <<< HELPER

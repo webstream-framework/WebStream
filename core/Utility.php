@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * Utilityクラス
  * @author Ryuichi Tanaka

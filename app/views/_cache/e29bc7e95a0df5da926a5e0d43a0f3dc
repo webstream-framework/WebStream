@@ -5,11 +5,11 @@
     <head>
         <link type="text/css" rel="stylesheet" href="/eclipse/stream/css/sample.css" />
         <script type="text/javascript" src="/eclipse/stream/js/sample.js"></script>
-        <title><?php echo safetyOut($title); ?></title>
+        <title><?php echo \WebStream\safetyOut($title); ?></title>
     </head>
     <body>
         <div>
-            <?php $this->render($template, $content) ?>
+            <?php $this->render($template, $content); ?>
         </div>
     </body>
 </html>

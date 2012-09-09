@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * CoreModelクラス
  * @author Ryuichi TANAKA.

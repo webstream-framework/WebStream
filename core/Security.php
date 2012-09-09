@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * Securityクラス
  * @author Ryuichi TANAKA.

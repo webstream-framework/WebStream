@@ -1,4 +1,6 @@
 <?php
+namespace WebStream\Test;
+use WebStream\Database;
 /**
  * Databaseクラスのテストクラス
  * @author Ryuichi TANAKA.
@@ -12,7 +14,7 @@ class DatabaseTest extends UnitTestBase {
     public function setUp() {
         parent::setUp();
         // ログ出力ディレクトリ、ログレベルをテスト用に変更
-        $class = new ReflectionClass("Database");
+        $class = new \ReflectionClass("WebStream\Database");
         $property = $class->getProperty("config_path");
         $property->setAccessible(true);
         $property->setValue($class, $this->config_path_mysql);

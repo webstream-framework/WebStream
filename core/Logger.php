@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * Loggerクラス
  * @author Ryuichi Tanaka
@@ -182,7 +183,7 @@ class Logger {
         try {
             error_log($msg, 3, $this->_path);
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             throw new LoggerException($e->getMessage());
         }
     }
@@ -285,5 +286,3 @@ class Logger {
         }
     }
 }
-
-class LoggerException extends Exception {}

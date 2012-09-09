@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestAaaBbbViewController extends CoreController {
     public function index() {
         $this->render("test");

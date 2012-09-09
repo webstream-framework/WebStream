@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestResourceController extends CoreController {
     public function html() {
         $this->render("html");

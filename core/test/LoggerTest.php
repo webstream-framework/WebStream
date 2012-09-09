@@ -1,4 +1,7 @@
 <?php
+namespace WebStream\Test;
+use WebStream\Logger;
+use WebStream\Utility;
 /**
  * Loggerクラスのテストクラス
  * @author Ryuichi TANAKA.
@@ -512,7 +515,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 異常系
      * ログ設定ファイルが存在しない場合、例外が発生すること
-     * @expectedException LoggerException
+     * @expectedException WebStream\LoggerException
      * @expectedExceptionMessage Log config file does not exist: dummy.ini
      */
     public function testNgConfigFileNotFound() {
@@ -524,7 +527,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 異常系
      * ログ設定ファイルのログファイルパスが存在しない場合、例外が発生すること
-     * @expectedException LoggerException
+     * @expectedException WebStream\LoggerException
      * @expectedExceptionMessage Log directory does not exist: dummy/stream.log
      */
     public function testNgInvalidConfigPath() {
@@ -536,7 +539,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 異常系
      * ログ設定ファイルのログレベルが不正な場合、例外が発生すること
-     * @expectedException LoggerException
+     * @expectedException WebStream\LoggerException
      * @expectedExceptionMessage Invalid log level: dummy
      */
     public function testNgInvalidLogLevel() {
@@ -548,7 +551,7 @@ class LoggerTest extends UnitTestBase {
     /**
      * 異常系
      * ログの書き込み権限がない場合、例外が発生すること
-     * @expectedException LoggerException
+     * @expectedException WebStream\LoggerException
      */
     public function testNgNotPermittedWriteLog() {
         $comfig_path = $this->config_path_log . "log.test.ng3.ini";
@@ -575,7 +578,7 @@ class LoggerTest extends UnitTestBase {
      * 異常系
      * ログ設定ファイルのローテート設定(時間単位)が間違っている場合、例外が発生すること
      * @dataProvider invalidRotateCycleConfigProvider
-     * @expectedException LoggerException
+     * @expectedException WebStream\LoggerException
      * @expectedExceptionMessage Invalid log rotate cycle: dummy
      */
     public function testNgInvalidRotateCycleConfig($config_path) {
@@ -601,12 +604,11 @@ class LoggerTest extends UnitTestBase {
      * 異常系
      * ログ設定ファイルのローテート設定(サイズ単位)が間違っている場合、例外が発生すること
      * @dataProvider invalidRotateSizeConfigProvider
-     * @expectedException LoggerException
+     * @expectedException WebStream\LoggerException
      * @expectedExceptionMessage Invalid log rotate size: dummy
      */
     public function testNgInvalidRotateSizeConfig($config_path) {
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
     }
-    
 }

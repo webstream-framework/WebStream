@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * CoreControllerクラス
  * @author Ryuichi TANAKA.
@@ -56,7 +57,7 @@ class CoreHelper {
         
         // Helperクラスが存在する場合、Helperクラスをロード
         if (import(STREAM_APP_DIR . "/helpers/" . $helper_class)) {
-            $class = new ReflectionClass($helper_class);
+            $class = new \ReflectionClass(STREAM_CLASSPATH . $helper_class);
             $instance = $class->newInstance();
         }
         

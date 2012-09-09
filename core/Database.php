@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * DB接続クラス
  * @author Ryuichi TANAKA.
@@ -30,7 +31,7 @@ class DatabaseCore {
         try {
             // MySQL
             if ($dbms === self::MYSQL) {
-                $manager = new PDO(
+                $manager = new \PDO(
                     "mysql:host=" . $options["host"] . "; dbname=" . $options["dbname"],
                     $options["user"],
                     $options["password"]
@@ -42,7 +43,7 @@ class DatabaseCore {
                 $manager = new PDO("sqlite:" . Utility::getRoot() . "/db/" . $options["dbfile"]);
             }
         }
-        catch(PDOException $e) {
+        catch(\PDOException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
             throw new DatabaseException($e->getMessage());
         }
@@ -132,10 +133,10 @@ class Database extends DatabaseCore {
             }
             foreach ($bind as $key => $value) {
                 if (preg_match("/^[0-9]+$/", $value) && is_int($value)) {
-                    $stmt->bindValue($key, $value, PDO::PARAM_INT);
+                    $stmt->bindValue($key, $value, \PDO::PARAM_INT);
                 }
                 else {
-                    $stmt->bindValue($key, $value, PDO::PARAM_STR);
+                    $stmt->bindValue($key, $value, \PDO::PARAM_STR);
                 }
             }
             $exec = $stmt->execute();
@@ -151,7 +152,7 @@ class Database extends DatabaseCore {
                 throw new DatabaseException("${message} ${sqlState} ${errorCode}");
             }
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
             throw new DatabaseException($e->getMessage());
         }
@@ -188,7 +189,7 @@ class Database extends DatabaseCore {
                 }
                 $this->init();
             }
-            catch (Exception $e) {
+            catch (\Exception $e) {
                 Logger::error($e->getMessage(), $e->getTraceAsString());
                 throw new DatabaseException($e->getMessage());
             }
@@ -214,7 +215,7 @@ class Database extends DatabaseCore {
             
         // 取得結果を連想配列に入れる
         $result = array();
-        while ($row = $this->stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $this->stmt->fetch(\PDO::FETCH_ASSOC)) {
             $result[] = $row;
         }
         

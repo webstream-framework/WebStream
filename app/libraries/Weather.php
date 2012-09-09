@@ -1,5 +1,5 @@
 <?php
-
+namespace WebStream;
 class Weather extends HttpAgent {
     private $weather, $wid, $wurl;
     

@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestHelper {
     public function showHtml1($name) {
         return <<< HELPER

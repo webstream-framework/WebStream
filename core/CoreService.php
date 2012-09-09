@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * CoreServiceクラス
  * @author Ryuichi TANAKA.
@@ -43,7 +44,7 @@ class CoreService {
         // Modelクラスをインポート
         $model_ins = null;
         if (import(STREAM_APP_DIR . "/models/" . $model_name)) {
-            $class = new ReflectionClass($model_name);
+            $class = new \ReflectionClass(STREAM_CLASSPATH . $model_name);
             $model_ins = $class->newInstance();
         }
         $this->{$this->page_name} = $model_ins;
@@ -55,7 +56,9 @@ class CoreService {
      */
     final private function page() {
         $page_name = null;
-        if (preg_match('/(.*)Service$/', get_class($this), $matches)) {
+        $class_path = explode('\\', get_class($this));
+        $class_name = end($class_path);
+        if (preg_match('/(.*)Service$/', $class_name, $matches)) {
             $page_name = $matches[1];
         }
         return $page_name;

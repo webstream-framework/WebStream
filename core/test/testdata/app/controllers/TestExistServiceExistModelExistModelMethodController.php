@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestExistServiceExistModelExistModelMethodController extends CoreController {
     public function sendParam() {
         $this->TestExistServiceExistModelExistModelMethod->get1("abc");

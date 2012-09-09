@@ -1,4 +1,7 @@
 <?php
+namespace WebStream\Test;
+use WebStream\Utility;
+use WebStream\Database;
 /**
  * CoreModelクラスのテストクラス
  * @author Ryuichi TANAKA.
@@ -37,7 +40,7 @@ CREATE TABLE users2 (
 SQL;
             $db->create($createTable2);
 
-        } catch (Exception $e) {}
+        } catch (\Exception $e) {}
         $sql = 'INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)';
         $bind = array("user_id" => "KON000001", "user_name" => "yui");
         $db->insert($sql, $bind);
@@ -61,7 +64,7 @@ CREATE TABLE users (
 );
 SQL;
             $db->create($createTable2);
-        } catch (Exception $e) {}
+        } catch (\Exception $e) {}
         
         $sql = 'INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)';
         $bind = array("user_id" => "YRYR000001", "user_name" => "kyouko");
@@ -76,7 +79,7 @@ SQL;
      * @dataProvider executeSQL
      */
     public function testOkExecuteSQL($sql, $bind = array()) {
-        $model = new TestModel2();
+        $model = new \WebStream\TestModel2();
         $result = $model->select($sql, $bind);
         $this->assertNotCount(0, $result);
     }
@@ -86,7 +89,7 @@ SQL;
      * カラムマッピングで結果が取得できること
      */
     public function testOkExecuteMapping() {
-        $model = new TestModel2();
+        $model = new \WebStream\TestModel2();
         $result = $model->userName();
         $this->assertNotCount(0, $result);
         foreach ($result as $elem) {
@@ -99,7 +102,7 @@ SQL;
      * カラムマッピングで複数のテーブルを指定し、カラム名が重複した場合、マージされた結果が取得できること
      */
     public function testOkExecuteMappingWithMerge() {
-        $model = new TestModel7();
+        $model = new \WebStream\TestModel7();
         $result = $model->userName();
         $this->assertNotCount(0, $result);
         $isOk1 = false;
@@ -128,7 +131,7 @@ SQL;
      * 設定ファイルで指定されたDB名を@Databaseアノテーションで変更できること
      */
     public function testOkChangeDatabase() {
-        $model = new TestModel3();
+        $model = new \WebStream\TestModel3();
         $result = $model->userName();
         $this->assertEquals("kyouko", $result[0]["user_name"]);
     }
@@ -138,7 +141,7 @@ SQL;
      * @SQLでインジェクトしたSQLを実行出来ること
      */
     public function testOkInjectedSQL() {
-        $model = new TestModel2();
+        $model = new \WebStream\TestModel2();
         $result = $model->getUserList();
         $this->assertNotCount(0, $result);
     }
@@ -148,7 +151,7 @@ SQL;
      * @SQLでインジェクトしたSQLをバインド変数付きで実行出来ること
      */
     public function testOkInjectedSQLWithBind() {
-        $model = new TestModel2();
+        $model = new \WebStream\TestModel2();
         $result = $model->getUserList2(array("name" => "yui"));
         $this->assertNotCount(0, $result);
         $this->assertEquals("yui", $result[0]["user_name"]);
@@ -159,7 +162,7 @@ SQL;
      * @SQLでインジェクトしたSQLをバインドしてOUTER JOINを含むSQLを実行出来ること
      */
     public function testOkInjectedSQLWithBindByJoin() {
-        $model = new TestModel7();
+        $model = new \WebStream\TestModel7();
         $result = $model->outerJoin(array("id" => "KON000001"));
         $this->assertNotCount(0, $result);
     }
@@ -167,47 +170,47 @@ SQL;
     /**
      * 異常系
      * カラムマッピングで存在しないカラムに対応するメソッドが指定された場合、例外が発生すること
-     * @expectedException MethodNotFoundException
+     * @expectedException WebStream\MethodNotFoundException
      */
     public function testNgExecuteMapping() {
-        $model = new TestModel2();
+        $model = new \WebStream\TestModel2();
         $model->dummy();
     }
     
     /**
      * 異常系
      * @Propertiesに存在しないパスが指定された場合、例外が発生すること
-     * @expectedException ResourceNotFoundException
+     * @expectedException WebStream\ResourceNotFoundException
      */
     public function testNgNotFoundPropertiesAnnotation() {
-        $model = new TestModel4();
+        $model = new \WebStream\TestModel4();
     }
     
     /**
      * 異常系
      * @Tableに存在しない値が指定された場合、例外が発生すること
-     * @expectedException DatabaseException
+     * @expectedException WebStream\DatabaseException
      */
     public function testNgNotFoundTableAnnotation() {
-        $model = new TestModel5();
+        $model = new \WebStream\TestModel5();
     }
     
     /**
      * 異常系
      * @Databaseに存在しない値が指定された場合、例外が発生すること
-     * @expectedException DatabaseException
+     * @expectedException WebStream\DatabaseException
      */
     public function testNgNotFoundDatabaseAnnotation() {
-        $model = new TestModel6();
+        $model = new \WebStream\TestModel6();
     }
     
     /**
      * 異常系
      * @Propertiesファイルが複数指定され、キーが重複した場合、例外が発生すること
-     * @expectedException DatabasePropertiesException
+     * @expectedException WebStream\DatabasePropertiesException
      */
     public function testNgDuplicatePropertiesKey() {
-        $model = new TestModel8();
+        $model = new \WebStream\TestModel8();
     }
 }
     

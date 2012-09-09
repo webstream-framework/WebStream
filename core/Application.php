@@ -1,10 +1,12 @@
 <?php
+namespace WebStream;
 /**
  * Applicationクラス
  * @author Ryuichi Tanaka
  * @since 2011/08/19
  */
 class Application {
+    /** アプリケーションファイルディレクトリ名 */
     private $app_dir = "app";
     /** ルーティング解決後のパラメータ */
     private $route;
@@ -14,13 +16,15 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.2.0');
+        define('STREAM_VERSION', '0.3.0');
     }
     
     /**
      * 内部で使用する定数を定義
      */
     private function init() {
+        /** クラスパス */
+        define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
         define('STREAM_ROOT', Utility::getRoot());
         /** アプリケーションディレクトリ */
@@ -75,7 +79,7 @@ class Application {
             $this->error(404);
         }
         // それ以外のエラーは500
-        catch (Exception $e) {
+        catch (\Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
             $this->error(500);
         }
@@ -88,9 +92,8 @@ class Application {
         // Controllerクラスをインポート
         import(STREAM_APP_DIR . "/controllers/AppController");
         import(STREAM_APP_DIR . "/controllers/" . $this->controller());
-        
         // Controllerクラスを起動
-        $class = new ReflectionClass($this->controller());
+        $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
         $instance = $class->newInstance();
         // initialize
         $initialize = $class->getMethod("initialize");

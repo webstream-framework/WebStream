@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 /**
  * ルーティングルールを記述する
  */

@@ -1,4 +1,8 @@
 <?php
+namespace WebStream\Test;
+use WebStream\Router;
+use WebStream\Utility;
+use WebStream\HttpAgent;
 /**
  * Routerクラスのテストクラス
  * @author Ryuichi TANAKA.
@@ -441,7 +445,7 @@ class RouterTest extends UnitTestBase {
      * 異常系
      * ルーティングルールが指定された文字以外で構成されていた場合、例外が発生すること
      * @dataProvider resolveInvalidPathProvider
-     * @expectedException RouterException
+     * @expectedException WebStream\RouterException
      */
     public function testNgResolveInvalidPath($path) {
         Router::setRule(array(
@@ -454,7 +458,7 @@ class RouterTest extends UnitTestBase {
      * 異常系
      * ルーティングルールに静的ファイルへのパスが指定された場合、例外が発生すること
      * @dataProvider prohibitPathProvider
-     * @expectedException RouterException
+     * @expectedException WebStream\RouterException
      */
     public function testNgProhibitPath($path) {
         Router::setRule(array(

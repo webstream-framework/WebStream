@@ -1,4 +1,5 @@
 <?php
+namespace WebStream;
 class TestSessionController extends CoreController {
     public function init() {
         

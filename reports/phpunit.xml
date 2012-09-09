@@ -1,419 +1,419 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="AllTests" tests="239" assertions="498" failures="0" errors="0" time="7.082811">
-    <testsuite name="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" tests="11" assertions="21" failures="0" errors="0" time="0.033434">
-      <testcase name="testOkGetInjectAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="18" assertions="1" time="0.007726"/>
-      <testcase name="testOkClassAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="28" assertions="2" time="0.006373"/>
-      <testcase name="testOkMethodAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="39" assertions="2" time="0.002186"/>
-      <testcase name="testOkClassAnnotations" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="50" assertions="2" time="0.002050"/>
-      <testcase name="testOkMethodAnnotations" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="61" assertions="2" time="0.002175"/>
-      <testcase name="testOkSuperClassAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="72" assertions="2" time="0.002033"/>
-      <testcase name="testOkSuperClassDupulicateAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="83" assertions="4" time="0.002144"/>
-      <testcase name="testOkSuperClassMethodAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="96" assertions="1" time="0.002266"/>
-      <testcase name="testOkSuperClassMethodAnnotations" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="106" assertions="2" time="0.002357"/>
-      <testcase name="testOkSuperClassDupulicateMethodAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="117" assertions="2" time="0.002199"/>
-      <testcase name="testNgGetInjectAnnotation" class="AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="128" assertions="1" time="0.001924"/>
+  <testsuite name="AllTests" tests="239" assertions="736" failures="0" errors="0" time="7.968219">
+    <testsuite name="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="11" assertions="21" failures="0" errors="0" time="0.036323">
+      <testcase name="testOkGetInjectAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="21" assertions="1" time="0.006586"/>
+      <testcase name="testOkClassAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="31" assertions="2" time="0.006588"/>
+      <testcase name="testOkMethodAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="42" assertions="2" time="0.002535"/>
+      <testcase name="testOkClassAnnotations" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="53" assertions="2" time="0.002774"/>
+      <testcase name="testOkMethodAnnotations" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="64" assertions="2" time="0.002669"/>
+      <testcase name="testOkSuperClassAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="75" assertions="2" time="0.002461"/>
+      <testcase name="testOkSuperClassDupulicateAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="86" assertions="4" time="0.002726"/>
+      <testcase name="testOkSuperClassMethodAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="99" assertions="1" time="0.002797"/>
+      <testcase name="testOkSuperClassMethodAnnotations" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="109" assertions="2" time="0.002398"/>
+      <testcase name="testOkSuperClassDupulicateMethodAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="120" assertions="2" time="0.002402"/>
+      <testcase name="testNgGetInjectAnnotation" class="WebStream\Test\AnnotationTest" file="/Users/stay/workspace2/WebStream/core/test/AnnotationTest.php" line="131" assertions="1" time="0.002387"/>
     </testsuite>
-    <testsuite name="CacheTest" file="/Users/stay/workspace2/WebStream/core/test/CacheTest.php" tests="15" assertions="20" failures="0" errors="0" time="2.035512">
-      <testcase name="testOkCreateCache" class="CacheTest" file="/Users/stay/workspace2/WebStream/core/test/CacheTest.php" line="21" assertions="1" time="0.001108"/>
-      <testsuite name="CacheTest::testOkCreateCacheCustomDir" tests="1" assertions="1" failures="0" errors="0" time="0.000716">
-        <testcase name="testOkCreateCacheCustomDir with data set #0" assertions="1" time="0.000716"/>
+    <testsuite name="WebStream\Test\CacheTest" file="/Users/stay/workspace2/WebStream/core/test/CacheTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="15" assertions="20" failures="0" errors="0" time="2.033414">
+      <testcase name="testOkCreateCache" class="WebStream\Test\CacheTest" file="/Users/stay/workspace2/WebStream/core/test/CacheTest.php" line="24" assertions="1" time="0.001139"/>
+      <testsuite name="WebStream\Test\CacheTest::testOkCreateCacheCustomDir" tests="1" assertions="1" failures="0" errors="0" time="0.000739">
+        <testcase name="testOkCreateCacheCustomDir with data set #0" assertions="1" time="0.000739"/>
       </testsuite>
-      <testsuite name="CacheTest::testOkSave" tests="4" assertions="4" failures="0" errors="0" time="0.014014">
-        <testcase name="testOkSave with data set #0" assertions="1" time="0.004242"/>
-        <testcase name="testOkSave with data set #1" assertions="1" time="0.002586"/>
-        <testcase name="testOkSave with data set #2" assertions="1" time="0.003072"/>
-        <testcase name="testOkSave with data set #3" assertions="1" time="0.004114"/>
+      <testsuite name="WebStream\Test\CacheTest::testOkSave" tests="4" assertions="4" failures="0" errors="0" time="0.011485">
+        <testcase name="testOkSave with data set #0" assertions="1" time="0.003080"/>
+        <testcase name="testOkSave with data set #1" assertions="1" time="0.002142"/>
+        <testcase name="testOkSave with data set #2" assertions="1" time="0.002973"/>
+        <testcase name="testOkSave with data set #3" assertions="1" time="0.003290"/>
       </testsuite>
-      <testsuite name="CacheTest::testOkMetaData" tests="2" assertions="2" failures="0" errors="0" time="0.002886">
-        <testcase name="testOkMetaData with data set #0" assertions="1" time="0.001439"/>
-        <testcase name="testOkMetaData with data set #1" assertions="1" time="0.001447"/>
+      <testsuite name="WebStream\Test\CacheTest::testOkMetaData" tests="2" assertions="2" failures="0" errors="0" time="0.003154">
+        <testcase name="testOkMetaData with data set #0" assertions="1" time="0.001658"/>
+        <testcase name="testOkMetaData with data set #1" assertions="1" time="0.001496"/>
       </testsuite>
-      <testsuite name="CacheTest::testOkDeleteCache" tests="1" assertions="3" failures="0" errors="0" time="0.002255">
-        <testcase name="testOkDeleteCache with data set #0" assertions="3" time="0.002255"/>
+      <testsuite name="WebStream\Test\CacheTest::testOkDeleteCache" tests="1" assertions="3" failures="0" errors="0" time="0.002763">
+        <testcase name="testOkDeleteCache with data set #0" assertions="3" time="0.002763"/>
       </testsuite>
-      <testsuite name="CacheTest::testOkOverwriteSave" tests="1" assertions="2" failures="0" errors="0" time="0.004246">
-        <testcase name="testOkOverwriteSave with data set #0" assertions="2" time="0.004246"/>
+      <testsuite name="WebStream\Test\CacheTest::testOkOverwriteSave" tests="1" assertions="2" failures="0" errors="0" time="0.003353">
+        <testcase name="testOkOverwriteSave with data set #0" assertions="2" time="0.003353"/>
       </testsuite>
-      <testsuite name="CacheTest::testOkWriteArrayData" tests="1" assertions="1" failures="0" errors="0" time="0.002249">
-        <testcase name="testOkWriteArrayData with data set #0" assertions="1" time="0.002249"/>
+      <testsuite name="WebStream\Test\CacheTest::testOkWriteArrayData" tests="1" assertions="1" failures="0" errors="0" time="0.002536">
+        <testcase name="testOkWriteArrayData with data set #0" assertions="1" time="0.002536"/>
       </testsuite>
-      <testsuite name="CacheTest::testNgInvalidSaveDir" tests="1" assertions="1" failures="0" errors="0" time="0.001240">
-        <testcase name="testNgInvalidSaveDir with data set #0" assertions="1" time="0.001240"/>
+      <testsuite name="WebStream\Test\CacheTest::testNgInvalidSaveDir" tests="1" assertions="1" failures="0" errors="0" time="0.001654">
+        <testcase name="testNgInvalidSaveDir with data set #0" assertions="1" time="0.001654"/>
       </testsuite>
-      <testsuite name="CacheTest::testNgCreateCacheCustomDir" tests="1" assertions="1" failures="0" errors="0" time="0.000674">
-        <testcase name="testNgCreateCacheCustomDir with data set #0" assertions="1" time="0.000674"/>
+      <testsuite name="WebStream\Test\CacheTest::testNgCreateCacheCustomDir" tests="1" assertions="1" failures="0" errors="0" time="0.000722">
+        <testcase name="testNgCreateCacheCustomDir with data set #0" assertions="1" time="0.000722"/>
       </testsuite>
-      <testsuite name="CacheTest::testNgInvalidDeletePath" tests="1" assertions="1" failures="0" errors="0" time="0.001041">
-        <testcase name="testNgInvalidDeletePath with data set #0" assertions="1" time="0.001041"/>
+      <testsuite name="WebStream\Test\CacheTest::testNgInvalidDeletePath" tests="1" assertions="1" failures="0" errors="0" time="0.001080">
+        <testcase name="testNgInvalidDeletePath with data set #0" assertions="1" time="0.001080"/>
       </testsuite>
-      <testsuite name="CacheTest::testNgTimeOverCache" tests="1" assertions="3" failures="0" errors="0" time="2.005083">
-        <testcase name="testNgTimeOverCache with data set #0" assertions="3" time="2.005083"/>
-      </testsuite>
-    </testsuite>
-    <testsuite name="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" tests="13" assertions="203" failures="0" errors="0" time="0.368777">
-      <testsuite name="CoreModelTest::testOkExecuteSQL" tests="2" assertions="2" failures="0" errors="0" time="0.045430">
-        <testcase name="testOkExecuteSQL with data set #0" assertions="1" time="0.023551"/>
-        <testcase name="testOkExecuteSQL with data set #1" assertions="1" time="0.021879"/>
-      </testsuite>
-      <testcase name="testOkExecuteMapping" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="88" assertions="189" time="0.022869"/>
-      <testcase name="testOkExecuteMappingWithMerge" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="101" assertions="2" time="0.019552"/>
-      <testcase name="testOkChangeDatabase" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="130" assertions="1" time="0.031375"/>
-      <testcase name="testOkInjectedSQL" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="140" assertions="1" time="0.017844"/>
-      <testcase name="testOkInjectedSQLWithBind" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="150" assertions="2" time="0.017363"/>
-      <testcase name="testOkInjectedSQLWithBindByJoin" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="161" assertions="1" time="0.120273"/>
-      <testcase name="testNgExecuteMapping" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="172" assertions="1" time="0.017724"/>
-      <testcase name="testNgNotFoundPropertiesAnnotation" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="182" assertions="1" time="0.016001"/>
-      <testcase name="testNgNotFoundTableAnnotation" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="191" assertions="1" time="0.026243"/>
-      <testcase name="testNgNotFoundDatabaseAnnotation" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="200" assertions="1" time="0.016951"/>
-      <testcase name="testNgDuplicatePropertiesKey" class="CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="209" assertions="1" time="0.017152"/>
-    </testsuite>
-    <testsuite name="DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" tests="4" assertions="4" failures="0" errors="0" time="0.103628">
-      <testcase name="testOkInsert" class="DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="32" assertions="1" time="0.026241"/>
-      <testcase name="testOkSelect" class="DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="43" assertions="1" time="0.021156"/>
-      <testcase name="testOkUpdate" class="DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="58" assertions="1" time="0.016715"/>
-      <testcase name="testOnDelete" class="DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="77" assertions="1" time="0.039516"/>
-    </testsuite>
-    <testsuite name="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" tests="10" assertions="20" failures="0" errors="0" time="1.857513">
-      <testcase name="testOkGet" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="24" assertions="2" time="0.277199"/>
-      <testcase name="testOkGetRss" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="36" assertions="2" time="0.524523"/>
-      <testcase name="testOkGetJson" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="49" assertions="2" time="0.136937"/>
-      <testcase name="testOkGetBasicAuth" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="62" assertions="2" time="0.176113"/>
-      <testcase name="testOkPost" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="78" assertions="2" time="0.206315"/>
-      <testcase name="testNgGetTimeout" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="90" assertions="2" time="0.158834"/>
-      <testcase name="testNgPostTimeout" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="105" assertions="2" time="0.155807"/>
-      <testcase name="testNgGetNotFound" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="120" assertions="2" time="0.069938"/>
-      <testcase name="testNgPostNotFound" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="133" assertions="2" time="0.005250"/>
-      <testcase name="testNgGetBasicAuth" class="HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="147" assertions="2" time="0.146597"/>
-    </testsuite>
-    <testsuite name="LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" tests="78" assertions="83" failures="0" errors="0" time="0.260518">
-      <testsuite name="LoggerTest::testOkWriteDebug" tests="10" assertions="10" failures="0" errors="0" time="0.030814">
-        <testcase name="testOkWriteDebug with data set #0" assertions="1" time="0.005571"/>
-        <testcase name="testOkWriteDebug with data set #1" assertions="1" time="0.003358"/>
-        <testcase name="testOkWriteDebug with data set #2" assertions="1" time="0.002797"/>
-        <testcase name="testOkWriteDebug with data set #3" assertions="1" time="0.002589"/>
-        <testcase name="testOkWriteDebug with data set #4" assertions="1" time="0.003153"/>
-        <testcase name="testOkWriteDebug with data set #5" assertions="1" time="0.002731"/>
-        <testcase name="testOkWriteDebug with data set #6" assertions="1" time="0.002630"/>
-        <testcase name="testOkWriteDebug with data set #7" assertions="1" time="0.002462"/>
-        <testcase name="testOkWriteDebug with data set #8" assertions="1" time="0.002635"/>
-        <testcase name="testOkWriteDebug with data set #9" assertions="1" time="0.002888"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkWriteInfo" tests="10" assertions="10" failures="0" errors="0" time="0.028707">
-        <testcase name="testOkWriteInfo with data set #0" assertions="1" time="0.002148"/>
-        <testcase name="testOkWriteInfo with data set #1" assertions="1" time="0.002015"/>
-        <testcase name="testOkWriteInfo with data set #2" assertions="1" time="0.002694"/>
-        <testcase name="testOkWriteInfo with data set #3" assertions="1" time="0.005167"/>
-        <testcase name="testOkWriteInfo with data set #4" assertions="1" time="0.003189"/>
-        <testcase name="testOkWriteInfo with data set #5" assertions="1" time="0.002522"/>
-        <testcase name="testOkWriteInfo with data set #6" assertions="1" time="0.003432"/>
-        <testcase name="testOkWriteInfo with data set #7" assertions="1" time="0.002487"/>
-        <testcase name="testOkWriteInfo with data set #8" assertions="1" time="0.002592"/>
-        <testcase name="testOkWriteInfo with data set #9" assertions="1" time="0.002461"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkWriteWarn" tests="10" assertions="10" failures="0" errors="0" time="0.026078">
-        <testcase name="testOkWriteWarn with data set #0" assertions="1" time="0.002489"/>
-        <testcase name="testOkWriteWarn with data set #1" assertions="1" time="0.001999"/>
-        <testcase name="testOkWriteWarn with data set #2" assertions="1" time="0.002008"/>
-        <testcase name="testOkWriteWarn with data set #3" assertions="1" time="0.002145"/>
-        <testcase name="testOkWriteWarn with data set #4" assertions="1" time="0.003608"/>
-        <testcase name="testOkWriteWarn with data set #5" assertions="1" time="0.002661"/>
-        <testcase name="testOkWriteWarn with data set #6" assertions="1" time="0.002675"/>
-        <testcase name="testOkWriteWarn with data set #7" assertions="1" time="0.002400"/>
-        <testcase name="testOkWriteWarn with data set #8" assertions="1" time="0.003497"/>
-        <testcase name="testOkWriteWarn with data set #9" assertions="1" time="0.002596"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkWriteError" tests="10" assertions="10" failures="0" errors="0" time="0.024861">
-        <testcase name="testOkWriteError with data set #0" assertions="1" time="0.002088"/>
-        <testcase name="testOkWriteError with data set #1" assertions="1" time="0.002019"/>
-        <testcase name="testOkWriteError with data set #2" assertions="1" time="0.002551"/>
-        <testcase name="testOkWriteError with data set #3" assertions="1" time="0.002184"/>
-        <testcase name="testOkWriteError with data set #4" assertions="1" time="0.002247"/>
-        <testcase name="testOkWriteError with data set #5" assertions="1" time="0.002100"/>
-        <testcase name="testOkWriteError with data set #6" assertions="1" time="0.003323"/>
-        <testcase name="testOkWriteError with data set #7" assertions="1" time="0.002722"/>
-        <testcase name="testOkWriteError with data set #8" assertions="1" time="0.003124"/>
-        <testcase name="testOkWriteError with data set #9" assertions="1" time="0.002503"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkWriteFatal" tests="10" assertions="10" failures="0" errors="0" time="0.023867">
-        <testcase name="testOkWriteFatal with data set #0" assertions="1" time="0.002285"/>
-        <testcase name="testOkWriteFatal with data set #1" assertions="1" time="0.002090"/>
-        <testcase name="testOkWriteFatal with data set #2" assertions="1" time="0.002028"/>
-        <testcase name="testOkWriteFatal with data set #3" assertions="1" time="0.002058"/>
-        <testcase name="testOkWriteFatal with data set #4" assertions="1" time="0.002124"/>
-        <testcase name="testOkWriteFatal with data set #5" assertions="1" time="0.003330"/>
-        <testcase name="testOkWriteFatal with data set #6" assertions="1" time="0.002088"/>
-        <testcase name="testOkWriteFatal with data set #7" assertions="1" time="0.002072"/>
-        <testcase name="testOkWriteFatal with data set #8" assertions="1" time="0.002807"/>
-        <testcase name="testOkWriteFatal with data set #9" assertions="1" time="0.002985"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleWithinDay" tests="2" assertions="2" failures="0" errors="0" time="0.006223">
-        <testcase name="testOkRotateCycleWithinDay with data set #0" assertions="1" time="0.003226"/>
-        <testcase name="testOkRotateCycleWithinDay with data set #1" assertions="1" time="0.002997"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleDay" tests="2" assertions="2" failures="0" errors="0" time="0.009361">
-        <testcase name="testOkRotateCycleDay with data set #0" assertions="1" time="0.005111"/>
-        <testcase name="testOkRotateCycleDay with data set #1" assertions="1" time="0.004250"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleWithinWeek" tests="2" assertions="2" failures="0" errors="0" time="0.008454">
-        <testcase name="testOkRotateCycleWithinWeek with data set #0" assertions="1" time="0.004895"/>
-        <testcase name="testOkRotateCycleWithinWeek with data set #1" assertions="1" time="0.003559"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleWeek" tests="2" assertions="2" failures="0" errors="0" time="0.009432">
-        <testcase name="testOkRotateCycleWeek with data set #0" assertions="1" time="0.005662"/>
-        <testcase name="testOkRotateCycleWeek with data set #1" assertions="1" time="0.003770"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleWithinMonth" tests="2" assertions="2" failures="0" errors="0" time="0.007581">
-        <testcase name="testOkRotateCycleWithinMonth with data set #0" assertions="1" time="0.003127"/>
-        <testcase name="testOkRotateCycleWithinMonth with data set #1" assertions="1" time="0.004454"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleMonth" tests="2" assertions="2" failures="0" errors="0" time="0.009170">
-        <testcase name="testOkRotateCycleMonth with data set #0" assertions="1" time="0.003923"/>
-        <testcase name="testOkRotateCycleMonth with data set #1" assertions="1" time="0.005247"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleWithinYear" tests="2" assertions="2" failures="0" errors="0" time="0.006037">
-        <testcase name="testOkRotateCycleWithinYear with data set #0" assertions="1" time="0.003112"/>
-        <testcase name="testOkRotateCycleWithinYear with data set #1" assertions="1" time="0.002925"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateCycleYear" tests="2" assertions="2" failures="0" errors="0" time="0.008707">
-        <testcase name="testOkRotateCycleYear with data set #0" assertions="1" time="0.004902"/>
-        <testcase name="testOkRotateCycleYear with data set #1" assertions="1" time="0.003805"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateSize" tests="2" assertions="2" failures="0" errors="0" time="0.024490">
-        <testcase name="testOkRotateSize with data set #0" assertions="1" time="0.012772"/>
-        <testcase name="testOkRotateSize with data set #1" assertions="1" time="0.011718"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testOkRotateSizeWithin" tests="2" assertions="2" failures="0" errors="0" time="0.015565">
-        <testcase name="testOkRotateSizeWithin with data set #0" assertions="1" time="0.012952"/>
-        <testcase name="testOkRotateSizeWithin with data set #1" assertions="1" time="0.002613"/>
-      </testsuite>
-      <testcase name="testNgConfigFileNotFound" class="LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="518" assertions="2" time="0.002463"/>
-      <testcase name="testNgInvalidConfigPath" class="LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="530" assertions="2" time="0.002448"/>
-      <testcase name="testNgInvalidLogLevel" class="LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="542" assertions="2" time="0.002668"/>
-      <testcase name="testNgNotPermittedWriteLog" class="LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="553" assertions="1" time="0.002687"/>
-      <testsuite name="LoggerTest::testNgNotFoundRotateCycleConfig" tests="1" assertions="1" failures="0" errors="0" time="0.002213">
-        <testcase name="testNgNotFoundRotateCycleConfig with data set #0" assertions="1" time="0.002213"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testNgInvalidRotateCycleConfig" tests="1" assertions="2" failures="0" errors="0" time="0.002266">
-        <testcase name="testNgInvalidRotateCycleConfig with data set #0" assertions="2" time="0.002266"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testNgNotFoundRotateSizeConfig" tests="1" assertions="1" failures="0" errors="0" time="0.004262">
-        <testcase name="testNgNotFoundRotateSizeConfig with data set #0" assertions="1" time="0.004262"/>
-      </testsuite>
-      <testsuite name="LoggerTest::testNgInvalidRotateSizeConfig" tests="1" assertions="2" failures="0" errors="0" time="0.002162">
-        <testcase name="testNgInvalidRotateSizeConfig with data set #0" assertions="2" time="0.002162"/>
+      <testsuite name="WebStream\Test\CacheTest::testNgTimeOverCache" tests="1" assertions="3" failures="0" errors="0" time="2.004789">
+        <testcase name="testNgTimeOverCache with data set #0" assertions="3" time="2.004789"/>
       </testsuite>
     </testsuite>
-    <testsuite name="RouterTest" file="/Users/stay/workspace2/WebStream/core/test/RouterTest.php" tests="92" assertions="131" failures="0" errors="0" time="1.742959">
-      <testsuite name="RouterTest::testOkResolveRootPath" tests="1" assertions="1" failures="0" errors="0" time="0.016662">
-        <testcase name="testOkResolveRootPath with data set #0" assertions="1" time="0.016662"/>
+    <testsuite name="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="13" assertions="441" failures="0" errors="0" time="1.147356">
+      <testsuite name="WebStream\Test\CoreModelTest::testOkExecuteSQL" tests="2" assertions="2" failures="0" errors="0" time="0.056246">
+        <testcase name="testOkExecuteSQL with data set #0" assertions="1" time="0.039000"/>
+        <testcase name="testOkExecuteSQL with data set #1" assertions="1" time="0.017246"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkResolveWithoutPlaceHolder" tests="1" assertions="1" failures="0" errors="0" time="0.017052">
-        <testcase name="testOkResolveWithoutPlaceHolder with data set #0" assertions="1" time="0.017052"/>
+      <testcase name="testOkExecuteMapping" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="91" assertions="427" time="0.023595"/>
+      <testcase name="testOkExecuteMappingWithMerge" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="104" assertions="2" time="0.022244"/>
+      <testcase name="testOkChangeDatabase" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="133" assertions="1" time="0.023006"/>
+      <testcase name="testOkInjectedSQL" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="143" assertions="1" time="0.018983"/>
+      <testcase name="testOkInjectedSQLWithBind" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="153" assertions="2" time="0.018173"/>
+      <testcase name="testOkInjectedSQLWithBindByJoin" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="164" assertions="1" time="0.904917"/>
+      <testcase name="testNgExecuteMapping" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="175" assertions="1" time="0.016645"/>
+      <testcase name="testNgNotFoundPropertiesAnnotation" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="185" assertions="1" time="0.015362"/>
+      <testcase name="testNgNotFoundTableAnnotation" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="194" assertions="1" time="0.015517"/>
+      <testcase name="testNgNotFoundDatabaseAnnotation" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="203" assertions="1" time="0.014551"/>
+      <testcase name="testNgDuplicatePropertiesKey" class="WebStream\Test\CoreModelTest" file="/Users/stay/workspace2/WebStream/core/test/CoreModelTest.php" line="212" assertions="1" time="0.018117"/>
+    </testsuite>
+    <testsuite name="WebStream\Test\DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="4" assertions="4" failures="0" errors="0" time="0.107632">
+      <testcase name="testOkInsert" class="WebStream\Test\DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="34" assertions="1" time="0.048135"/>
+      <testcase name="testOkSelect" class="WebStream\Test\DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="45" assertions="1" time="0.026208"/>
+      <testcase name="testOkUpdate" class="WebStream\Test\DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="60" assertions="1" time="0.018225"/>
+      <testcase name="testOnDelete" class="WebStream\Test\DatabaseTest" file="/Users/stay/workspace2/WebStream/core/test/DatabaseTest.php" line="79" assertions="1" time="0.015064"/>
+    </testsuite>
+    <testsuite name="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="10" assertions="20" failures="0" errors="0" time="2.027316">
+      <testcase name="testOkGet" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="26" assertions="2" time="0.554540"/>
+      <testcase name="testOkGetRss" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="38" assertions="2" time="0.558547"/>
+      <testcase name="testOkGetJson" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="51" assertions="2" time="0.128882"/>
+      <testcase name="testOkGetBasicAuth" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="64" assertions="2" time="0.162348"/>
+      <testcase name="testOkPost" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="80" assertions="2" time="0.149441"/>
+      <testcase name="testNgGetTimeout" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="92" assertions="2" time="0.129830"/>
+      <testcase name="testNgPostTimeout" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="107" assertions="2" time="0.131203"/>
+      <testcase name="testNgGetNotFound" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="122" assertions="2" time="0.054536"/>
+      <testcase name="testNgPostNotFound" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="135" assertions="2" time="0.005572"/>
+      <testcase name="testNgGetBasicAuth" class="WebStream\Test\HttpAgentTest" file="/Users/stay/workspace2/WebStream/core/test/HttpAgentTest.php" line="149" assertions="2" time="0.152417"/>
+    </testsuite>
+    <testsuite name="WebStream\Test\LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="78" assertions="83" failures="0" errors="0" time="0.260213">
+      <testsuite name="WebStream\Test\LoggerTest::testOkWriteDebug" tests="10" assertions="10" failures="0" errors="0" time="0.032070">
+        <testcase name="testOkWriteDebug with data set #0" assertions="1" time="0.005593"/>
+        <testcase name="testOkWriteDebug with data set #1" assertions="1" time="0.003442"/>
+        <testcase name="testOkWriteDebug with data set #2" assertions="1" time="0.003136"/>
+        <testcase name="testOkWriteDebug with data set #3" assertions="1" time="0.002640"/>
+        <testcase name="testOkWriteDebug with data set #4" assertions="1" time="0.003041"/>
+        <testcase name="testOkWriteDebug with data set #5" assertions="1" time="0.002757"/>
+        <testcase name="testOkWriteDebug with data set #6" assertions="1" time="0.002801"/>
+        <testcase name="testOkWriteDebug with data set #7" assertions="1" time="0.002634"/>
+        <testcase name="testOkWriteDebug with data set #8" assertions="1" time="0.003316"/>
+        <testcase name="testOkWriteDebug with data set #9" assertions="1" time="0.002710"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkResolveWithPlaceHolder" tests="1" assertions="1" failures="0" errors="0" time="0.017415">
-        <testcase name="testOkResolveWithPlaceHolder with data set #0" assertions="1" time="0.017415"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkWriteInfo" tests="10" assertions="10" failures="0" errors="0" time="0.027166">
+        <testcase name="testOkWriteInfo with data set #0" assertions="1" time="0.002282"/>
+        <testcase name="testOkWriteInfo with data set #1" assertions="1" time="0.002191"/>
+        <testcase name="testOkWriteInfo with data set #2" assertions="1" time="0.003156"/>
+        <testcase name="testOkWriteInfo with data set #3" assertions="1" time="0.002675"/>
+        <testcase name="testOkWriteInfo with data set #4" assertions="1" time="0.002853"/>
+        <testcase name="testOkWriteInfo with data set #5" assertions="1" time="0.002571"/>
+        <testcase name="testOkWriteInfo with data set #6" assertions="1" time="0.002940"/>
+        <testcase name="testOkWriteInfo with data set #7" assertions="1" time="0.002746"/>
+        <testcase name="testOkWriteInfo with data set #8" assertions="1" time="0.002781"/>
+        <testcase name="testOkWriteInfo with data set #9" assertions="1" time="0.002971"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkResolveCamelAction" tests="2" assertions="2" failures="0" errors="0" time="0.034370">
-        <testcase name="testOkResolveCamelAction with data set #0" assertions="1" time="0.017134"/>
-        <testcase name="testOkResolveCamelAction with data set #1" assertions="1" time="0.017236"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkWriteWarn" tests="10" assertions="10" failures="0" errors="0" time="0.027173">
+        <testcase name="testOkWriteWarn with data set #0" assertions="1" time="0.002675"/>
+        <testcase name="testOkWriteWarn with data set #1" assertions="1" time="0.002479"/>
+        <testcase name="testOkWriteWarn with data set #2" assertions="1" time="0.002278"/>
+        <testcase name="testOkWriteWarn with data set #3" assertions="1" time="0.002184"/>
+        <testcase name="testOkWriteWarn with data set #4" assertions="1" time="0.003193"/>
+        <testcase name="testOkWriteWarn with data set #5" assertions="1" time="0.002704"/>
+        <testcase name="testOkWriteWarn with data set #6" assertions="1" time="0.002843"/>
+        <testcase name="testOkWriteWarn with data set #7" assertions="1" time="0.002833"/>
+        <testcase name="testOkWriteWarn with data set #8" assertions="1" time="0.003212"/>
+        <testcase name="testOkWriteWarn with data set #9" assertions="1" time="0.002772"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkResolveWithPlaceHolderFormat" tests="1" assertions="1" failures="0" errors="0" time="0.017029">
-        <testcase name="testOkResolveWithPlaceHolderFormat with data set #0" assertions="1" time="0.017029"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkWriteError" tests="10" assertions="10" failures="0" errors="0" time="0.025666">
+        <testcase name="testOkWriteError with data set #0" assertions="1" time="0.002417"/>
+        <testcase name="testOkWriteError with data set #1" assertions="1" time="0.002251"/>
+        <testcase name="testOkWriteError with data set #2" assertions="1" time="0.002447"/>
+        <testcase name="testOkWriteError with data set #3" assertions="1" time="0.002300"/>
+        <testcase name="testOkWriteError with data set #4" assertions="1" time="0.002273"/>
+        <testcase name="testOkWriteError with data set #5" assertions="1" time="0.002227"/>
+        <testcase name="testOkWriteError with data set #6" assertions="1" time="0.003112"/>
+        <testcase name="testOkWriteError with data set #7" assertions="1" time="0.002730"/>
+        <testcase name="testOkWriteError with data set #8" assertions="1" time="0.002958"/>
+        <testcase name="testOkWriteError with data set #9" assertions="1" time="0.002952"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkSnakeController" tests="2" assertions="2" failures="0" errors="0" time="0.033100">
-        <testcase name="testOkSnakeController with data set #0" assertions="1" time="0.016599"/>
-        <testcase name="testOkSnakeController with data set #1" assertions="1" time="0.016501"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkWriteFatal" tests="10" assertions="10" failures="0" errors="0" time="0.026108">
+        <testcase name="testOkWriteFatal with data set #0" assertions="1" time="0.002544"/>
+        <testcase name="testOkWriteFatal with data set #1" assertions="1" time="0.002389"/>
+        <testcase name="testOkWriteFatal with data set #2" assertions="1" time="0.002332"/>
+        <testcase name="testOkWriteFatal with data set #3" assertions="1" time="0.002584"/>
+        <testcase name="testOkWriteFatal with data set #4" assertions="1" time="0.002592"/>
+        <testcase name="testOkWriteFatal with data set #5" assertions="1" time="0.002878"/>
+        <testcase name="testOkWriteFatal with data set #6" assertions="1" time="0.002364"/>
+        <testcase name="testOkWriteFatal with data set #7" assertions="1" time="0.002502"/>
+        <testcase name="testOkWriteFatal with data set #8" assertions="1" time="0.003044"/>
+        <testcase name="testOkWriteFatal with data set #9" assertions="1" time="0.002879"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkUriWithEncodedString" tests="1" assertions="2" failures="0" errors="0" time="0.018263">
-        <testcase name="testOkUriWithEncodedString with data set #0" assertions="2" time="0.018263"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleWithinDay" tests="2" assertions="2" failures="0" errors="0" time="0.007871">
+        <testcase name="testOkRotateCycleWithinDay with data set #0" assertions="1" time="0.004302"/>
+        <testcase name="testOkRotateCycleWithinDay with data set #1" assertions="1" time="0.003569"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkResolveSimilarUrl" tests="2" assertions="4" failures="0" errors="0" time="0.035334">
-        <testcase name="testOkResolveSimilarUrl with data set #0" assertions="2" time="0.017615"/>
-        <testcase name="testOkResolveSimilarUrl with data set #1" assertions="2" time="0.017719"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleDay" tests="2" assertions="2" failures="0" errors="0" time="0.008568">
+        <testcase name="testOkRotateCycleDay with data set #0" assertions="1" time="0.004259"/>
+        <testcase name="testOkRotateCycleDay with data set #1" assertions="1" time="0.004309"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkNoServiceClass" tests="1" assertions="2" failures="0" errors="0" time="0.018170">
-        <testcase name="testOkNoServiceClass with data set #0" assertions="2" time="0.018170"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleWithinWeek" tests="2" assertions="2" failures="0" errors="0" time="0.006619">
+        <testcase name="testOkRotateCycleWithinWeek with data set #0" assertions="1" time="0.003347"/>
+        <testcase name="testOkRotateCycleWithinWeek with data set #1" assertions="1" time="0.003272"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkNoServiceMethod" tests="1" assertions="2" failures="0" errors="0" time="0.020110">
-        <testcase name="testOkNoServiceMethod with data set #0" assertions="2" time="0.020110"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleWeek" tests="2" assertions="2" failures="0" errors="0" time="0.009102">
+        <testcase name="testOkRotateCycleWeek with data set #0" assertions="1" time="0.005305"/>
+        <testcase name="testOkRotateCycleWeek with data set #1" assertions="1" time="0.003797"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkSendParamFromControllerToModel" tests="2" assertions="4" failures="0" errors="0" time="0.035985">
-        <testcase name="testOkSendParamFromControllerToModel with data set #0" assertions="2" time="0.018297"/>
-        <testcase name="testOkSendParamFromControllerToModel with data set #1" assertions="2" time="0.017688"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleWithinMonth" tests="2" assertions="2" failures="0" errors="0" time="0.007154">
+        <testcase name="testOkRotateCycleWithinMonth with data set #0" assertions="1" time="0.003742"/>
+        <testcase name="testOkRotateCycleWithinMonth with data set #1" assertions="1" time="0.003412"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkRenderTemplate" tests="5" assertions="10" failures="0" errors="0" time="0.085731">
-        <testcase name="testOkRenderTemplate with data set #0" assertions="2" time="0.016688"/>
-        <testcase name="testOkRenderTemplate with data set #1" assertions="2" time="0.016826"/>
-        <testcase name="testOkRenderTemplate with data set #2" assertions="2" time="0.016840"/>
-        <testcase name="testOkRenderTemplate with data set #3" assertions="2" time="0.017874"/>
-        <testcase name="testOkRenderTemplate with data set #4" assertions="2" time="0.017503"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleMonth" tests="2" assertions="2" failures="0" errors="0" time="0.008314">
+        <testcase name="testOkRotateCycleMonth with data set #0" assertions="1" time="0.003962"/>
+        <testcase name="testOkRotateCycleMonth with data set #1" assertions="1" time="0.004352"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkRenderLayoutTemplate" tests="2" assertions="4" failures="0" errors="0" time="0.033235">
-        <testcase name="testOkRenderLayoutTemplate with data set #0" assertions="2" time="0.016497"/>
-        <testcase name="testOkRenderLayoutTemplate with data set #1" assertions="2" time="0.016738"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleWithinYear" tests="2" assertions="2" failures="0" errors="0" time="0.007582">
+        <testcase name="testOkRotateCycleWithinYear with data set #0" assertions="1" time="0.004211"/>
+        <testcase name="testOkRotateCycleWithinYear with data set #1" assertions="1" time="0.003371"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkGetResource" tests="6" assertions="12" failures="0" errors="0" time="0.091872">
-        <testcase name="testOkGetResource with data set #0" assertions="2" time="0.015076"/>
-        <testcase name="testOkGetResource with data set #1" assertions="2" time="0.015708"/>
-        <testcase name="testOkGetResource with data set #2" assertions="2" time="0.015115"/>
-        <testcase name="testOkGetResource with data set #3" assertions="2" time="0.015085"/>
-        <testcase name="testOkGetResource with data set #4" assertions="2" time="0.016020"/>
-        <testcase name="testOkGetResource with data set #5" assertions="2" time="0.014868"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateCycleYear" tests="2" assertions="2" failures="0" errors="0" time="0.008041">
+        <testcase name="testOkRotateCycleYear with data set #0" assertions="1" time="0.004259"/>
+        <testcase name="testOkRotateCycleYear with data set #1" assertions="1" time="0.003782"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkGetFile" tests="9" assertions="18" failures="0" errors="0" time="0.143124">
-        <testcase name="testOkGetFile with data set #0" assertions="2" time="0.016104"/>
-        <testcase name="testOkGetFile with data set #1" assertions="2" time="0.014908"/>
-        <testcase name="testOkGetFile with data set #2" assertions="2" time="0.015209"/>
-        <testcase name="testOkGetFile with data set #3" assertions="2" time="0.017854"/>
-        <testcase name="testOkGetFile with data set #4" assertions="2" time="0.015626"/>
-        <testcase name="testOkGetFile with data set #5" assertions="2" time="0.015510"/>
-        <testcase name="testOkGetFile with data set #6" assertions="2" time="0.015862"/>
-        <testcase name="testOkGetFile with data set #7" assertions="2" time="0.016252"/>
-        <testcase name="testOkGetFile with data set #8" assertions="2" time="0.015799"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateSize" tests="2" assertions="2" failures="0" errors="0" time="0.023852">
+        <testcase name="testOkRotateSize with data set #0" assertions="1" time="0.012697"/>
+        <testcase name="testOkRotateSize with data set #1" assertions="1" time="0.011155"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkRenderMethod" tests="5" assertions="10" failures="0" errors="0" time="0.084925">
-        <testcase name="testOkRenderMethod with data set #0" assertions="2" time="0.016490"/>
-        <testcase name="testOkRenderMethod with data set #1" assertions="2" time="0.017298"/>
-        <testcase name="testOkRenderMethod with data set #2" assertions="2" time="0.017379"/>
-        <testcase name="testOkRenderMethod with data set #3" assertions="2" time="0.016509"/>
-        <testcase name="testOkRenderMethod with data set #4" assertions="2" time="0.017249"/>
+      <testsuite name="WebStream\Test\LoggerTest::testOkRotateSizeWithin" tests="2" assertions="2" failures="0" errors="0" time="0.014096">
+        <testcase name="testOkRotateSizeWithin with data set #0" assertions="1" time="0.010979"/>
+        <testcase name="testOkRotateSizeWithin with data set #1" assertions="1" time="0.003117"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkGetRequest" tests="1" assertions="2" failures="0" errors="0" time="0.016481">
-        <testcase name="testOkGetRequest with data set #0" assertions="2" time="0.016481"/>
+      <testcase name="testNgConfigFileNotFound" class="WebStream\Test\LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="521" assertions="2" time="0.003029"/>
+      <testcase name="testNgInvalidConfigPath" class="WebStream\Test\LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="533" assertions="2" time="0.002332"/>
+      <testcase name="testNgInvalidLogLevel" class="WebStream\Test\LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="545" assertions="2" time="0.002162"/>
+      <testcase name="testNgNotPermittedWriteLog" class="WebStream\Test\LoggerTest" file="/Users/stay/workspace2/WebStream/core/test/LoggerTest.php" line="556" assertions="1" time="0.003387"/>
+      <testsuite name="WebStream\Test\LoggerTest::testNgNotFoundRotateCycleConfig" tests="1" assertions="1" failures="0" errors="0" time="0.002455">
+        <testcase name="testNgNotFoundRotateCycleConfig with data set #0" assertions="1" time="0.002455"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkPostRequest" tests="1" assertions="2" failures="0" errors="0" time="0.020106">
-        <testcase name="testOkPostRequest with data set #0" assertions="2" time="0.020106"/>
+      <testsuite name="WebStream\Test\LoggerTest::testNgInvalidRotateCycleConfig" tests="1" assertions="2" failures="0" errors="0" time="0.002503">
+        <testcase name="testNgInvalidRotateCycleConfig with data set #0" assertions="2" time="0.002503"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkSetSession" tests="1" assertions="2" failures="0" errors="0" time="0.031629">
-        <testcase name="testOkSetSession with data set #0" assertions="2" time="0.031629"/>
+      <testsuite name="WebStream\Test\LoggerTest::testNgNotFoundRotateSizeConfig" tests="1" assertions="1" failures="0" errors="0" time="0.002493">
+        <testcase name="testNgNotFoundRotateSizeConfig with data set #0" assertions="1" time="0.002493"/>
       </testsuite>
-      <testsuite name="RouterTest::testOkReturnStatusCode" tests="6" assertions="6" failures="0" errors="0" time="0.420153">
-        <testcase name="testOkReturnStatusCode with data set #0" assertions="1" time="0.323612"/>
-        <testcase name="testOkReturnStatusCode with data set #1" assertions="1" time="0.019761"/>
-        <testcase name="testOkReturnStatusCode with data set #2" assertions="1" time="0.019008"/>
-        <testcase name="testOkReturnStatusCode with data set #3" assertions="1" time="0.019034"/>
-        <testcase name="testOkReturnStatusCode with data set #4" assertions="1" time="0.019709"/>
-        <testcase name="testOkReturnStatusCode with data set #5" assertions="1" time="0.019029"/>
-      </testsuite>
-      <testsuite name="RouterTest::testOkUseHelper" tests="3" assertions="3" failures="0" errors="0" time="0.061527">
-        <testcase name="testOkUseHelper with data set #0" assertions="1" time="0.019299"/>
-        <testcase name="testOkUseHelper with data set #1" assertions="1" time="0.021442"/>
-        <testcase name="testOkUseHelper with data set #2" assertions="1" time="0.020786"/>
-      </testsuite>
-      <testsuite name="RouterTest::testOkHelperFunctionName" tests="2" assertions="2" failures="0" errors="0" time="0.041139">
-        <testcase name="testOkHelperFunctionName with data set #0" assertions="1" time="0.020927"/>
-        <testcase name="testOkHelperFunctionName with data set #1" assertions="1" time="0.020212"/>
-      </testsuite>
-      <testsuite name="RouterTest::testOkNotEntryReferenceInForm" tests="1" assertions="1" failures="0" errors="0" time="0.021916">
-        <testcase name="testOkNotEntryReferenceInForm with data set #0" assertions="1" time="0.021916"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveUnknown" tests="2" assertions="2" failures="0" errors="0" time="0.035571">
-        <testcase name="testNgResolveUnknown with data set #0" assertions="1" time="0.017550"/>
-        <testcase name="testNgResolveUnknown with data set #1" assertions="1" time="0.018021"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveNotDefinePath" tests="1" assertions="1" failures="0" errors="0" time="0.017215">
-        <testcase name="testNgResolveNotDefinePath with data set #0" assertions="1" time="0.017215"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveRender" tests="1" assertions="1" failures="0" errors="0" time="0.015306">
-        <testcase name="testNgResolveRender with data set #0" assertions="1" time="0.015306"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveLayout" tests="1" assertions="1" failures="0" errors="0" time="0.015332">
-        <testcase name="testNgResolveLayout with data set #0" assertions="1" time="0.015332"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveRedirect" tests="1" assertions="1" failures="0" errors="0" time="0.017016">
-        <testcase name="testNgResolveRedirect with data set #0" assertions="1" time="0.017016"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveLoad" tests="1" assertions="1" failures="0" errors="0" time="0.017963">
-        <testcase name="testNgResolveLoad with data set #0" assertions="1" time="0.017963"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveBefore" tests="1" assertions="1" failures="0" errors="0" time="0.019864">
-        <testcase name="testNgResolveBefore with data set #0" assertions="1" time="0.019864"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveAfter" tests="1" assertions="1" failures="0" errors="0" time="0.031736">
-        <testcase name="testNgResolveAfter with data set #0" assertions="1" time="0.031736"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveCamelController" tests="3" assertions="3" failures="0" errors="0" time="0.046955">
-        <testcase name="testNgResolveCamelController with data set #0" assertions="1" time="0.015194"/>
-        <testcase name="testNgResolveCamelController with data set #1" assertions="1" time="0.015802"/>
-        <testcase name="testNgResolveCamelController with data set #2" assertions="1" time="0.015959"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgResolveInvalidPath" tests="3" assertions="3" failures="0" errors="0" time="0.007557">
-        <testcase name="testNgResolveInvalidPath with data set #0" assertions="1" time="0.002798"/>
-        <testcase name="testNgResolveInvalidPath with data set #1" assertions="1" time="0.002246"/>
-        <testcase name="testNgResolveInvalidPath with data set #2" assertions="1" time="0.002513"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgProhibitPath" tests="9" assertions="9" failures="0" errors="0" time="0.020130">
-        <testcase name="testNgProhibitPath with data set #0" assertions="1" time="0.002456"/>
-        <testcase name="testNgProhibitPath with data set #1" assertions="1" time="0.002152"/>
-        <testcase name="testNgProhibitPath with data set #2" assertions="1" time="0.002382"/>
-        <testcase name="testNgProhibitPath with data set #3" assertions="1" time="0.002941"/>
-        <testcase name="testNgProhibitPath with data set #4" assertions="1" time="0.002056"/>
-        <testcase name="testNgProhibitPath with data set #5" assertions="1" time="0.001973"/>
-        <testcase name="testNgProhibitPath with data set #6" assertions="1" time="0.002008"/>
-        <testcase name="testNgProhibitPath with data set #7" assertions="1" time="0.001991"/>
-        <testcase name="testNgProhibitPath with data set #8" assertions="1" time="0.002171"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgMultipleSnakeController" tests="2" assertions="2" failures="0" errors="0" time="0.031445">
-        <testcase name="testNgMultipleSnakeController with data set #0" assertions="1" time="0.016680"/>
-        <testcase name="testNgMultipleSnakeController with data set #1" assertions="1" time="0.014765"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgUriWithoutUtf8EncodedString" tests="2" assertions="4" failures="0" errors="0" time="0.036117">
-        <testcase name="testNgUriWithoutUtf8EncodedString with data set #0" assertions="2" time="0.018684"/>
-        <testcase name="testNgUriWithoutUtf8EncodedString with data set #1" assertions="2" time="0.017433"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgUriWithNullByte" tests="1" assertions="1" failures="0" errors="0" time="0.003135">
-        <testcase name="testNgUriWithNullByte with data set #0" assertions="1" time="0.003135"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgNoServiceNoModel" tests="1" assertions="1" failures="0" errors="0" time="0.019807">
-        <testcase name="testNgNoServiceNoModel with data set #0" assertions="1" time="0.019807"/>
-      </testsuite>
-      <testsuite name="RouterTest::testExistServiceExistModelNoMethod" tests="1" assertions="1" failures="0" errors="0" time="0.018326">
-        <testcase name="testExistServiceExistModelNoMethod with data set #0" assertions="1" time="0.018326"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgNoServiceExistModelNoMethod" tests="1" assertions="1" failures="0" errors="0" time="0.018319">
-        <testcase name="testNgNoServiceExistModelNoMethod with data set #0" assertions="1" time="0.018319"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgExistServiceNoModelNoMethod" tests="1" assertions="1" failures="0" errors="0" time="0.017291">
-        <testcase name="testNgExistServiceNoModelNoMethod with data set #0" assertions="1" time="0.017291"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgNotFoundRenderMethodProvider" tests="1" assertions="1" failures="0" errors="0" time="0.019084">
-        <testcase name="testNgNotFoundRenderMethodProvider with data set #0" assertions="1" time="0.019084"/>
-      </testsuite>
-      <testsuite name="RouterTest::testNgNotFoundHelperMethod" tests="1" assertions="1" failures="0" errors="0" time="0.019461">
-        <testcase name="testNgNotFoundHelperMethod with data set #0" assertions="1" time="0.019461"/>
+      <testsuite name="WebStream\Test\LoggerTest::testNgInvalidRotateSizeConfig" tests="1" assertions="2" failures="0" errors="0" time="0.002471">
+        <testcase name="testNgInvalidRotateSizeConfig with data set #0" assertions="2" time="0.002471"/>
       </testsuite>
     </testsuite>
-    <testsuite name="SecurityTest" file="/Users/stay/workspace2/WebStream/core/test/SecurityTest.php" tests="6" assertions="5" failures="0" errors="0" time="0.066306">
-      <testsuite name="SecurityTest::testOkDeleteInvisibleCharacter" tests="1" assertions="1" failures="0" errors="0" time="0.002036">
-        <testcase name="testOkDeleteInvisibleCharacter with data set #0" assertions="1" time="0.002036"/>
+    <testsuite name="WebStream\Test\RouterTest" file="/Users/stay/workspace2/WebStream/core/test/RouterTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="92" assertions="131" failures="0" errors="0" time="1.734102">
+      <testsuite name="WebStream\Test\RouterTest::testOkResolveRootPath" tests="1" assertions="1" failures="0" errors="0" time="0.021374">
+        <testcase name="testOkResolveRootPath with data set #0" assertions="1" time="0.021374"/>
       </testsuite>
-      <testsuite name="SecurityTest::testOkReplaceXSSStrings" tests="1" assertions="1" failures="0" errors="0" time="0.002898">
-        <testcase name="testOkReplaceXSSStrings with data set #0" assertions="1" time="0.002898"/>
+      <testsuite name="WebStream\Test\RouterTest::testOkResolveWithoutPlaceHolder" tests="1" assertions="1" failures="0" errors="0" time="0.018485">
+        <testcase name="testOkResolveWithoutPlaceHolder with data set #0" assertions="1" time="0.018485"/>
       </testsuite>
-      <testcase name="testOkCreateCsrfToken" class="SecurityTest" file="/Users/stay/workspace2/WebStream/core/test/SecurityTest.php" line="40" assertions="1" time="0.019500"/>
-      <testcase name="testOkCsrfCheckByPostRequest" class="SecurityTest" file="/Users/stay/workspace2/WebStream/core/test/SecurityTest.php" line="55" assertions="0" time="0.001906"/>
-      <testsuite name="SecurityTest::testOkCsrfCheckRequest" tests="2" assertions="2" failures="0" errors="0" time="0.039966">
-        <testcase name="testOkCsrfCheckRequest with data set #0" assertions="1" time="0.020023"/>
-        <testcase name="testOkCsrfCheckRequest with data set #1" assertions="1" time="0.019943"/>
+      <testsuite name="WebStream\Test\RouterTest::testOkResolveWithPlaceHolder" tests="1" assertions="1" failures="0" errors="0" time="0.019093">
+        <testcase name="testOkResolveWithPlaceHolder with data set #0" assertions="1" time="0.019093"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkResolveCamelAction" tests="2" assertions="2" failures="0" errors="0" time="0.038426">
+        <testcase name="testOkResolveCamelAction with data set #0" assertions="1" time="0.019967"/>
+        <testcase name="testOkResolveCamelAction with data set #1" assertions="1" time="0.018459"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkResolveWithPlaceHolderFormat" tests="1" assertions="1" failures="0" errors="0" time="0.018588">
+        <testcase name="testOkResolveWithPlaceHolderFormat with data set #0" assertions="1" time="0.018588"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkSnakeController" tests="2" assertions="2" failures="0" errors="0" time="0.036049">
+        <testcase name="testOkSnakeController with data set #0" assertions="1" time="0.017549"/>
+        <testcase name="testOkSnakeController with data set #1" assertions="1" time="0.018500"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkUriWithEncodedString" tests="1" assertions="2" failures="0" errors="0" time="0.019102">
+        <testcase name="testOkUriWithEncodedString with data set #0" assertions="2" time="0.019102"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkResolveSimilarUrl" tests="2" assertions="4" failures="0" errors="0" time="0.038084">
+        <testcase name="testOkResolveSimilarUrl with data set #0" assertions="2" time="0.019193"/>
+        <testcase name="testOkResolveSimilarUrl with data set #1" assertions="2" time="0.018891"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkNoServiceClass" tests="1" assertions="2" failures="0" errors="0" time="0.018473">
+        <testcase name="testOkNoServiceClass with data set #0" assertions="2" time="0.018473"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkNoServiceMethod" tests="1" assertions="2" failures="0" errors="0" time="0.019069">
+        <testcase name="testOkNoServiceMethod with data set #0" assertions="2" time="0.019069"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkSendParamFromControllerToModel" tests="2" assertions="4" failures="0" errors="0" time="0.037510">
+        <testcase name="testOkSendParamFromControllerToModel with data set #0" assertions="2" time="0.018444"/>
+        <testcase name="testOkSendParamFromControllerToModel with data set #1" assertions="2" time="0.019066"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkRenderTemplate" tests="5" assertions="10" failures="0" errors="0" time="0.093058">
+        <testcase name="testOkRenderTemplate with data set #0" assertions="2" time="0.018189"/>
+        <testcase name="testOkRenderTemplate with data set #1" assertions="2" time="0.017823"/>
+        <testcase name="testOkRenderTemplate with data set #2" assertions="2" time="0.018608"/>
+        <testcase name="testOkRenderTemplate with data set #3" assertions="2" time="0.020298"/>
+        <testcase name="testOkRenderTemplate with data set #4" assertions="2" time="0.018140"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkRenderLayoutTemplate" tests="2" assertions="4" failures="0" errors="0" time="0.037051">
+        <testcase name="testOkRenderLayoutTemplate with data set #0" assertions="2" time="0.018188"/>
+        <testcase name="testOkRenderLayoutTemplate with data set #1" assertions="2" time="0.018863"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkGetResource" tests="6" assertions="12" failures="0" errors="0" time="0.098988">
+        <testcase name="testOkGetResource with data set #0" assertions="2" time="0.016203"/>
+        <testcase name="testOkGetResource with data set #1" assertions="2" time="0.016161"/>
+        <testcase name="testOkGetResource with data set #2" assertions="2" time="0.016902"/>
+        <testcase name="testOkGetResource with data set #3" assertions="2" time="0.016726"/>
+        <testcase name="testOkGetResource with data set #4" assertions="2" time="0.016329"/>
+        <testcase name="testOkGetResource with data set #5" assertions="2" time="0.016667"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkGetFile" tests="9" assertions="18" failures="0" errors="0" time="0.162781">
+        <testcase name="testOkGetFile with data set #0" assertions="2" time="0.022710"/>
+        <testcase name="testOkGetFile with data set #1" assertions="2" time="0.021838"/>
+        <testcase name="testOkGetFile with data set #2" assertions="2" time="0.017099"/>
+        <testcase name="testOkGetFile with data set #3" assertions="2" time="0.019250"/>
+        <testcase name="testOkGetFile with data set #4" assertions="2" time="0.016253"/>
+        <testcase name="testOkGetFile with data set #5" assertions="2" time="0.017502"/>
+        <testcase name="testOkGetFile with data set #6" assertions="2" time="0.016321"/>
+        <testcase name="testOkGetFile with data set #7" assertions="2" time="0.016125"/>
+        <testcase name="testOkGetFile with data set #8" assertions="2" time="0.015683"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkRenderMethod" tests="5" assertions="10" failures="0" errors="0" time="0.091249">
+        <testcase name="testOkRenderMethod with data set #0" assertions="2" time="0.017952"/>
+        <testcase name="testOkRenderMethod with data set #1" assertions="2" time="0.018383"/>
+        <testcase name="testOkRenderMethod with data set #2" assertions="2" time="0.018406"/>
+        <testcase name="testOkRenderMethod with data set #3" assertions="2" time="0.018011"/>
+        <testcase name="testOkRenderMethod with data set #4" assertions="2" time="0.018497"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkGetRequest" tests="1" assertions="2" failures="0" errors="0" time="0.017737">
+        <testcase name="testOkGetRequest with data set #0" assertions="2" time="0.017737"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkPostRequest" tests="1" assertions="2" failures="0" errors="0" time="0.019177">
+        <testcase name="testOkPostRequest with data set #0" assertions="2" time="0.019177"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkSetSession" tests="1" assertions="2" failures="0" errors="0" time="0.035029">
+        <testcase name="testOkSetSession with data set #0" assertions="2" time="0.035029"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkReturnStatusCode" tests="6" assertions="6" failures="0" errors="0" time="0.279167">
+        <testcase name="testOkReturnStatusCode with data set #0" assertions="1" time="0.176401"/>
+        <testcase name="testOkReturnStatusCode with data set #1" assertions="1" time="0.021048"/>
+        <testcase name="testOkReturnStatusCode with data set #2" assertions="1" time="0.020255"/>
+        <testcase name="testOkReturnStatusCode with data set #3" assertions="1" time="0.020254"/>
+        <testcase name="testOkReturnStatusCode with data set #4" assertions="1" time="0.019665"/>
+        <testcase name="testOkReturnStatusCode with data set #5" assertions="1" time="0.021544"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkUseHelper" tests="3" assertions="3" failures="0" errors="0" time="0.063525">
+        <testcase name="testOkUseHelper with data set #0" assertions="1" time="0.021377"/>
+        <testcase name="testOkUseHelper with data set #1" assertions="1" time="0.020922"/>
+        <testcase name="testOkUseHelper with data set #2" assertions="1" time="0.021226"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkHelperFunctionName" tests="2" assertions="2" failures="0" errors="0" time="0.041310">
+        <testcase name="testOkHelperFunctionName with data set #0" assertions="1" time="0.020889"/>
+        <testcase name="testOkHelperFunctionName with data set #1" assertions="1" time="0.020421"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testOkNotEntryReferenceInForm" tests="1" assertions="1" failures="0" errors="0" time="0.021739">
+        <testcase name="testOkNotEntryReferenceInForm with data set #0" assertions="1" time="0.021739"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveUnknown" tests="2" assertions="2" failures="0" errors="0" time="0.038628">
+        <testcase name="testNgResolveUnknown with data set #0" assertions="1" time="0.019606"/>
+        <testcase name="testNgResolveUnknown with data set #1" assertions="1" time="0.019022"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveNotDefinePath" tests="1" assertions="1" failures="0" errors="0" time="0.017733">
+        <testcase name="testNgResolveNotDefinePath with data set #0" assertions="1" time="0.017733"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveRender" tests="1" assertions="1" failures="0" errors="0" time="0.016939">
+        <testcase name="testNgResolveRender with data set #0" assertions="1" time="0.016939"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveLayout" tests="1" assertions="1" failures="0" errors="0" time="0.016371">
+        <testcase name="testNgResolveLayout with data set #0" assertions="1" time="0.016371"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveRedirect" tests="1" assertions="1" failures="0" errors="0" time="0.016328">
+        <testcase name="testNgResolveRedirect with data set #0" assertions="1" time="0.016328"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveLoad" tests="1" assertions="1" failures="0" errors="0" time="0.015706">
+        <testcase name="testNgResolveLoad with data set #0" assertions="1" time="0.015706"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveBefore" tests="1" assertions="1" failures="0" errors="0" time="0.015680">
+        <testcase name="testNgResolveBefore with data set #0" assertions="1" time="0.015680"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveAfter" tests="1" assertions="1" failures="0" errors="0" time="0.018251">
+        <testcase name="testNgResolveAfter with data set #0" assertions="1" time="0.018251"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveCamelController" tests="3" assertions="3" failures="0" errors="0" time="0.048226">
+        <testcase name="testNgResolveCamelController with data set #0" assertions="1" time="0.016568"/>
+        <testcase name="testNgResolveCamelController with data set #1" assertions="1" time="0.015712"/>
+        <testcase name="testNgResolveCamelController with data set #2" assertions="1" time="0.015946"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgResolveInvalidPath" tests="3" assertions="3" failures="0" errors="0" time="0.011846">
+        <testcase name="testNgResolveInvalidPath with data set #0" assertions="1" time="0.002945"/>
+        <testcase name="testNgResolveInvalidPath with data set #1" assertions="1" time="0.006056"/>
+        <testcase name="testNgResolveInvalidPath with data set #2" assertions="1" time="0.002845"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgProhibitPath" tests="9" assertions="9" failures="0" errors="0" time="0.069611">
+        <testcase name="testNgProhibitPath with data set #0" assertions="1" time="0.044158"/>
+        <testcase name="testNgProhibitPath with data set #1" assertions="1" time="0.004246"/>
+        <testcase name="testNgProhibitPath with data set #2" assertions="1" time="0.002601"/>
+        <testcase name="testNgProhibitPath with data set #3" assertions="1" time="0.002844"/>
+        <testcase name="testNgProhibitPath with data set #4" assertions="1" time="0.002944"/>
+        <testcase name="testNgProhibitPath with data set #5" assertions="1" time="0.002550"/>
+        <testcase name="testNgProhibitPath with data set #6" assertions="1" time="0.003924"/>
+        <testcase name="testNgProhibitPath with data set #7" assertions="1" time="0.003235"/>
+        <testcase name="testNgProhibitPath with data set #8" assertions="1" time="0.003109"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgMultipleSnakeController" tests="2" assertions="2" failures="0" errors="0" time="0.038433">
+        <testcase name="testNgMultipleSnakeController with data set #0" assertions="1" time="0.020729"/>
+        <testcase name="testNgMultipleSnakeController with data set #1" assertions="1" time="0.017704"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgUriWithoutUtf8EncodedString" tests="2" assertions="4" failures="0" errors="0" time="0.039277">
+        <testcase name="testNgUriWithoutUtf8EncodedString with data set #0" assertions="2" time="0.019797"/>
+        <testcase name="testNgUriWithoutUtf8EncodedString with data set #1" assertions="2" time="0.019480"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgUriWithNullByte" tests="1" assertions="1" failures="0" errors="0" time="0.003107">
+        <testcase name="testNgUriWithNullByte with data set #0" assertions="1" time="0.003107"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgNoServiceNoModel" tests="1" assertions="1" failures="0" errors="0" time="0.018763">
+        <testcase name="testNgNoServiceNoModel with data set #0" assertions="1" time="0.018763"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testExistServiceExistModelNoMethod" tests="1" assertions="1" failures="0" errors="0" time="0.019346">
+        <testcase name="testExistServiceExistModelNoMethod with data set #0" assertions="1" time="0.019346"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgNoServiceExistModelNoMethod" tests="1" assertions="1" failures="0" errors="0" time="0.019680">
+        <testcase name="testNgNoServiceExistModelNoMethod with data set #0" assertions="1" time="0.019680"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgExistServiceNoModelNoMethod" tests="1" assertions="1" failures="0" errors="0" time="0.021955">
+        <testcase name="testNgExistServiceNoModelNoMethod with data set #0" assertions="1" time="0.021955"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgNotFoundRenderMethodProvider" tests="1" assertions="1" failures="0" errors="0" time="0.021653">
+        <testcase name="testNgNotFoundRenderMethodProvider with data set #0" assertions="1" time="0.021653"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\RouterTest::testNgNotFoundHelperMethod" tests="1" assertions="1" failures="0" errors="0" time="0.021505">
+        <testcase name="testNgNotFoundHelperMethod with data set #0" assertions="1" time="0.021505"/>
       </testsuite>
     </testsuite>
-    <testsuite name="UtilityTest" file="/Users/stay/workspace2/WebStream/core/test/UtilityTest.php" tests="10" assertions="11" failures="0" errors="0" time="0.614164">
-      <testsuite name="UtilityTest::testCamel2Snake" tests="5" assertions="5" failures="0" errors="0" time="0.010509">
-        <testcase name="testCamel2Snake with data set #0" assertions="1" time="0.002123"/>
-        <testcase name="testCamel2Snake with data set #1" assertions="1" time="0.002120"/>
-        <testcase name="testCamel2Snake with data set #2" assertions="1" time="0.002179"/>
-        <testcase name="testCamel2Snake with data set #3" assertions="1" time="0.002011"/>
-        <testcase name="testCamel2Snake with data set #4" assertions="1" time="0.002076"/>
+    <testsuite name="WebStream\Test\SecurityTest" file="/Users/stay/workspace2/WebStream/core/test/SecurityTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="6" assertions="5" failures="0" errors="0" time="0.070970">
+      <testsuite name="WebStream\Test\SecurityTest::testOkDeleteInvisibleCharacter" tests="1" assertions="1" failures="0" errors="0" time="0.002298">
+        <testcase name="testOkDeleteInvisibleCharacter with data set #0" assertions="1" time="0.002298"/>
       </testsuite>
-      <testsuite name="UtilityTest::testXml2Array" tests="1" assertions="2" failures="0" errors="0" time="0.588770">
-        <testcase name="testXml2Array with data set #0" assertions="2" time="0.588770"/>
+      <testsuite name="WebStream\Test\SecurityTest::testOkReplaceXSSStrings" tests="1" assertions="1" failures="0" errors="0" time="0.002592">
+        <testcase name="testOkReplaceXSSStrings with data set #0" assertions="1" time="0.002592"/>
       </testsuite>
-      <testsuite name="UtilityTest::testEncodeAndDecode" tests="4" assertions="4" failures="0" errors="0" time="0.014885">
-        <testcase name="testEncodeAndDecode with data set #0" assertions="1" time="0.002249"/>
-        <testcase name="testEncodeAndDecode with data set #1" assertions="1" time="0.002099"/>
-        <testcase name="testEncodeAndDecode with data set #2" assertions="1" time="0.004383"/>
-        <testcase name="testEncodeAndDecode with data set #3" assertions="1" time="0.006154"/>
+      <testcase name="testOkCreateCsrfToken" class="WebStream\Test\SecurityTest" file="/Users/stay/workspace2/WebStream/core/test/SecurityTest.php" line="43" assertions="1" time="0.020412"/>
+      <testcase name="testOkCsrfCheckByPostRequest" class="WebStream\Test\SecurityTest" file="/Users/stay/workspace2/WebStream/core/test/SecurityTest.php" line="58" assertions="0" time="0.002274"/>
+      <testsuite name="WebStream\Test\SecurityTest::testOkCsrfCheckRequest" tests="2" assertions="2" failures="0" errors="0" time="0.043394">
+        <testcase name="testOkCsrfCheckRequest with data set #0" assertions="1" time="0.021548"/>
+        <testcase name="testOkCsrfCheckRequest with data set #1" assertions="1" time="0.021846"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="WebStream\Test\UtilityTest" file="/Users/stay/workspace2/WebStream/core/test/UtilityTest.php" namespace="WebStream\Test" fullPackage="WebStream.Test" tests="10" assertions="11" failures="0" errors="0" time="0.550892">
+      <testsuite name="WebStream\Test\UtilityTest::testCamel2Snake" tests="5" assertions="5" failures="0" errors="0" time="0.012269">
+        <testcase name="testCamel2Snake with data set #0" assertions="1" time="0.002432"/>
+        <testcase name="testCamel2Snake with data set #1" assertions="1" time="0.002872"/>
+        <testcase name="testCamel2Snake with data set #2" assertions="1" time="0.002425"/>
+        <testcase name="testCamel2Snake with data set #3" assertions="1" time="0.002292"/>
+        <testcase name="testCamel2Snake with data set #4" assertions="1" time="0.002248"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\UtilityTest::testXml2Array" tests="1" assertions="2" failures="0" errors="0" time="0.523152">
+        <testcase name="testXml2Array with data set #0" assertions="2" time="0.523152"/>
+      </testsuite>
+      <testsuite name="WebStream\Test\UtilityTest::testEncodeAndDecode" tests="4" assertions="4" failures="0" errors="0" time="0.015471">
+        <testcase name="testEncodeAndDecode with data set #0" assertions="1" time="0.003002"/>
+        <testcase name="testEncodeAndDecode with data set #1" assertions="1" time="0.003089"/>
+        <testcase name="testEncodeAndDecode with data set #2" assertions="1" time="0.002707"/>
+        <testcase name="testEncodeAndDecode with data set #3" assertions="1" time="0.006673"/>
       </testsuite>
     </testsuite>
   </testsuite>

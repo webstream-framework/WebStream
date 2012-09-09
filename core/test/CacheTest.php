@@ -1,4 +1,7 @@
 <?php
+namespace WebStream\Test;
+use WebStream\Cache;
+use WebStream\Logger;
 /**
  * Cacheクラスのテストクラス
  * @author Ryuichi TANAKA.
