@@ -29,7 +29,7 @@ class Validator {
             $ca = preg_split('/#/', $ca);
             // インポートが失敗した場合、または、クラスの呼び出しに失敗した場合エラー
             $controller = Utility::snake2ucamel($ca[0]);
-            echo $controller;
+            //echo $controller;
             //if (import(STREAM_APP_DIR . "/controllers/" . $this->controller())) {
                 
             //}

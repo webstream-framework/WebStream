@@ -21,15 +21,17 @@ class Logger {
     
     /**
      * コンストラクタ
+     * @param String ログファイルパス
+     * @param String ローテートサイクル
+     * @param String ローテートサイズ
      */
     private function __construct($path, $rotate_cycle, $rotate_size) {
         $this->_path = $path;
         $this->_rotate_cycle = $rotate_cycle;
         $this->_rotate_size = $rotate_size;
-        $this->_status_file = preg_replace_callback('/(.*)\..+/', create_function(
-            '$matches',
-            'return "$matches[1].status";'
-        ), $this->_path);
+        $this->_status_file = preg_replace_callback('/(.*)\..+/', function($matches) {
+            return "$matches[1].status";
+        }, $this->_path);
     }
     
     /**

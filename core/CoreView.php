@@ -92,10 +92,9 @@ HTML;
         $params[self::HELPER_RECEIVER] = new CoreHelper($this->page_name);
 
         // キャッシュファイルがなければ生成する
-        $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', create_function(
-            '$matches',
-            'return $matches[1] . \'.cache\';'
-        ), $template_path);
+        $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', function($matches) {
+            return $matches[1] . '.cache';
+        }, $template_path);
         $cache_file = STREAM_ROOT . '/' . STREAM_APP_DIR . '/views/' . STREAM_VIEW_CACHE . "/" . md5($filename);
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要

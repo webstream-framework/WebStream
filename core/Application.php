@@ -134,10 +134,9 @@ class Application {
         $controller = null;
         if ($this->route->controller() !== null) {
             // _[a-z]を[A-Z]に置換する
-            $controller = preg_replace_callback('/_(?=[a-z])(.+?)/', create_function(
-                '$matches',
-                'return ucfirst($matches[1]);'
-            ), $this->route->controller());
+            $controller = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
+                return ucfirst($matches[1]);
+            }, $this->route->controller());
             $controller = ucfirst($controller) . "Controller";
         }
         return $controller;
@@ -151,10 +150,9 @@ class Application {
         $action = null;
         if ($this->route->action() !== null) {
             // _[a-z]を[A-Z]に置換する
-            $action = preg_replace_callback('/_(?=[a-z])(.+?)/', create_function(
-                '$matches',
-                'return ucfirst($matches[1]);'
-            ), $this->route->action());
+            $action = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
+                return ucfirst($matches[1]);
+            }, $this->route->action());
         }
         return $action;
     }
