@@ -521,6 +521,21 @@ SQL;
             array("test_hoge_hoge", "testHogeHoge")
         );
     }
+
+    public function snake2UpperCamelProvider() {
+        return array(
+            array("Test", "test"),
+            array("TestHoge", "test_hoge"),
+            array("TestHogeHoge", "test_hoge_hoge")
+        );
+    }
+
+    public function snake2LowerCamelProvider() {
+        return array(
+            array("testHoge", "test_hoge"),
+            array("testHogeHoge", "test_hoge_hoge")
+        );
+    }
     
     public function renderTemplateProvider() {
         return array(

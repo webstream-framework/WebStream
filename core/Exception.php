@@ -9,6 +9,8 @@ namespace WebStream;
 class CsrfException extends \Exception {}
 /** ルーティング失敗例外 */
 class RouterException extends \Exception {}
+/** バリデーション例外 */
+class ValidatorException extends \Exception {}
 /** リソース取得失敗例外 */
 class ResourceNotFoundException extends \Exception {}
 /** クラスロード失敗例外 */

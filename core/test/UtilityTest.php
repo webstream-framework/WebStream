@@ -47,4 +47,22 @@ class UtilityTest extends UnitTestBase {
         $dec_data = Utility::decode($enc_data);
         $this->assertEquals($data, $dec_data);
     }
+    
+    /**
+     * 正常系
+     * 文字列をすケークケースからアッパーキャメルケースに置換できること
+     * @dataProvider snake2UpperCamelProvider
+     */
+    public function testSnake2UpperCamel($to, $from) {
+        $this->assertEquals(Utility::snake2ucamel($from), $to);
+    }
+
+    /**
+     * 正常系
+     * 文字列をすケークケースからローワーキャメルケースに置換できること
+     * @dataProvider snake2LowerCamelProvider
+     */
+    public function testSnake2LowerCamel($to, $from) {
+        $this->assertEquals(Utility::snake2lcamel($from), $to);
+    }
 }

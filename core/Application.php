@@ -10,6 +10,8 @@ class Application {
     private $app_dir = "app";
     /** ルーティング解決後のパラメータ */
     private $route;
+    /** バリデーション解決後のパラメータ */
+    private $validate;
     
     /**
      * アプリケーション共通で使用するクラスを初期化する
@@ -47,6 +49,9 @@ class Application {
         try {
             // ルーティングを解決する
             $this->route = new Router();
+            // バリデーションルールを解決する
+            $this->validate = new Validator();
+            
             // ルーティングの解決に成功した場合、コントローラを呼び出す
             if ($this->controller() && $this->action()) {
                 $this->runContoller();
@@ -101,6 +106,9 @@ class Application {
         // before_filter
         $before_filter = $class->getMethod("before");
         $before_filter->invoke($instance);
+        // validate
+        
+        
         // action
         $action = $class->getMethod($this->action());
         $action->invoke($instance, safetyIn($this->params()));
@@ -149,6 +157,10 @@ class Application {
             ), $this->route->action());
         }
         return $action;
+    }
+    
+    private function validate() {
+        $validator = new Validator();
     }
     
     /**

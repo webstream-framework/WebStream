@@ -85,11 +85,31 @@ class Utility {
      * @return String スネークケース文字列
      */
     public static function camel2snake($str) {
-        $str = preg_replace_callback('/([A-Z])/', create_function(
-            '$matches',
-            'return \'_\' . lcfirst($matches[1]);'
-        ), $str);
+        $str = preg_replace_callback('/([A-Z])/', function($matches) {
+            return '_' . lcfirst($matches[1]);
+        }, $str);
         return preg_replace('/^_/', '', $str);
+    }
+    
+    /**
+     * スネークケース文字列をアッパーキャメルケースに置換する
+     * @param String スネークケース文字列
+     * @return String アッパーキャメルケース文字列
+     */
+    public static function snake2ucamel($str) {
+        $str = ucfirst(preg_replace_callback('/_([a-zA-Z])/', function($matches) {
+            return ucfirst($matches[1]);
+        }, $str));
+        return $str;
+    }
+    
+    /**
+     * スネークケース文字列をローワーキャメルケースに置換する
+     * @param String スネークケース文字列
+     * @return String ローワーキャメルケース文字列
+     */
+    public static function snake2lcamel($str) {
+        return lcfirst(self::snake2ucamel($str));
     }
     
     /**

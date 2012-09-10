@@ -10,9 +10,10 @@ function __autoload($class_name) {
     import("core/test/testdata/config/" . $class_name);
 }
 
-// core以下のファイル、ルーティングルールをロード
+// core以下のファイル、ルーティングルール、バリデーションルールをロード
 importAll("core");
 import("core/test/testdata/config/routes");
+import("core/test/testdata/config/validates");
 
 // ログ出力ディレクトリ、ログレベルをテスト用に変更
 Logger::init("core/test/testdata/config/log.ini");

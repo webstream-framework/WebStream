@@ -74,6 +74,7 @@ Router::setRule(
         '/helper4' => "test#test_helper_snake",
         '/helper5' => "test#test_helper_camel",
         '/helper6' => "test#test_helper_notfound_method",
-        '/attr' => "test#test_attribute_value"
+        '/attr' => "test#test_attribute_value",
+        '/validate1' => "test_validate#validate1"
     )
 );

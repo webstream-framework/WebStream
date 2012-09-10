@@ -15,7 +15,6 @@ class Router {
     
     /**
      * コンストラクタ
-     * @param Array ルーティングルール
      */
     public function __construct() {
         $request = new Request();
@@ -33,7 +32,7 @@ class Router {
     }
     
     /**
-     * 禁止されたルーティングルールをチェックする
+     * ルーティングルールを検証する
      */
     private function validate() {
         // パス定義部分('/xxx')は禁止の定義がされた時点でエラーとする
