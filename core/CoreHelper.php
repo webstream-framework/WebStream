@@ -1,7 +1,7 @@
 <?php
 namespace WebStream;
 /**
- * CoreControllerクラス
+ * CoreHelperクラス
  * @author Ryuichi TANAKA.
  * @since 2012/04/28
  */
@@ -27,10 +27,9 @@ class CoreHelper {
      */
     public function __call($method, $arguments) {
         // _[a-z]を[A-Z]に置換する
-        $method = preg_replace_callback('/_(?=[a-z])(.+?)/', create_function(
-            '$matches',
-            'return ucfirst($matches[1]);'
-        ), $method);
+        $method = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
+            return ucfirst($matches[1]);
+        }, $method);
         // Helperクラスにメソッドが存在しない場合、例外が派生
         if (method_exists($this->instance, $method) === false) {
             $helper_class = $this->page_name . "Helper";

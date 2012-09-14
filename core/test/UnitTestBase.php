@@ -695,4 +695,16 @@ SQL;
             array("select * from users where user_name = :name", array("name" => "yui"))
         );
     }
+
+    public function invalidController() {
+        return array(
+            array("validates.ng1")
+        );
+    }
+
+    public function invalidAction() {
+        return array(
+            array("validates.ng2")
+        );
+    }
 }
