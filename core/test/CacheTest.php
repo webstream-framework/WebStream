@@ -12,8 +12,10 @@ require_once 'UnitTestBase.php';
 class CacheTest extends UnitTestBase {
     private $cache_id = "cache_test";
     private $save_data_str = "abcde";
+    private $cache_dir;
     
     public function setUp() {
+        $this->cache_dir = PHP_OS === "WIN32" || PHP_OS === "WINNT" ? "C:\\tmp\\" : "/tmp/";
         Logger::init($this->config_path_log . "log.test.debug.ok.ini");
     }
     
@@ -24,7 +26,7 @@ class CacheTest extends UnitTestBase {
     public function testOkCreateCache() {
         $cache = new Cache();
         $cache->save($this->cache_id, $this->save_data_str);
-        $this->assertFileExists("/tmp/" . $this->cache_id . ".cache");
+        $this->assertFileExists($this->cache_dir . $this->cache_id . ".cache");
     }
     
     /**
@@ -70,9 +72,9 @@ class CacheTest extends UnitTestBase {
     public function testOkDeleteCache($cache_id) {
         $cache = new Cache();
         $cache->save($cache_id, $this->save_data_str);
-        $this->assertFileExists("/tmp/" . $cache_id . ".cache");
+        $this->assertFileExists($this->cache_dir . $cache_id . ".cache");
         $this->assertTrue($cache->delete($cache_id));
-        $this->assertFileNotExists("/tmp/" . $cache_id . ".cache");
+        $this->assertFileNotExists($this->cache_dir . $cache_id . ".cache");
     }
     
     /**
@@ -139,10 +141,9 @@ class CacheTest extends UnitTestBase {
     public function testNgTimeOverCache($cache_id, $ttl) {
         $cache = new Cache();
         $cache->save($cache_id, $this->save_data_str, $ttl);
-        $this->assertFileExists("/tmp/" . $cache_id . ".cache");
+        $this->assertFileExists($this->cache_dir . $cache_id . ".cache");
         sleep($ttl + 1);
         $this->assertNull($cache->get($cache_id));
-        $this->assertFileNotExists("/tmp/" . $cache_id . ".cache");
+        $this->assertFileNotExists($this->cache_dir . $cache_id . ".cache");
     }
 }
-    
