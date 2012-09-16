@@ -6,6 +6,8 @@ require 'core/Functions.php';
 function __autoload($class_name) {
     import("core/" . $class_name);
 }
+// シャットダウン時のハンドリング関数を登録
+register_shutdown_function('WebStream\shutdownHandler');
 // コアクラスをインポート
 importAll("core");
 // ルーティングルールをロード

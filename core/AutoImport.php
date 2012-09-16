@@ -16,7 +16,6 @@ class AutoImport {
     public static function import($filepath) {
         // プロジェクトルートパス
         $path = self::getRoot();
-
         // 正規化した絶対パス
         $realpath = $path . DIRECTORY_SEPARATOR . $filepath . ".php";
         if (realpath($realpath)) {
@@ -36,10 +35,8 @@ class AutoImport {
     public static function importAll($dirpath) {
         // プロジェクトルートパス
         $path = self::getRoot();
-    
         // 正規化した絶対パス
         $realpath = $path . DIRECTORY_SEPARATOR . $dirpath;
-    
         // 絶対パスが存在してディレクトリかどうか
         $includes = array();
         if (file_exists($realpath) && is_dir($realpath) && $dh = opendir($realpath)) {

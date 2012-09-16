@@ -2,13 +2,12 @@
 namespace WebStream;
 require '../../../core/AutoImport.php';
 require '../../../core/Functions.php';
-use WebStream\Application;
-use WebStream\Logger;
-use WebStream\AutoImport;
 
 function __autoload($class_name) {
     import("core/test/testdata/config/" . $class_name);
 }
+
+register_shutdown_function('WebStream\shutdownHandler');
 
 // core以下のファイル、ルーティングルール、バリデーションルールをロード
 importAll("core");
