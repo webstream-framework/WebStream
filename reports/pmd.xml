@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="1.2.0" timestamp="2012-09-16T14:46:46+09:00">
+<pmd version="1.2.0" timestamp="2012-09-17T22:18:13+09:00">
   <file name="/Users/stay/workspace2/WebStream/app/controllers/SampleController.php">
     <violation beginline="10" endline="10" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$title'.
@@ -31,11 +31,11 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Application.php">
-    <violation beginline="160" endline="162" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatemethod" class="Application" method="validate" priority="3">
-      Avoid unused private methods such as 'validate'.
+    <violation beginline="14" endline="14" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$validate'.
     </violation>
-    <violation beginline="161" endline="161" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
-      Avoid unused local variables such as '$validator'.
+    <violation beginline="160" endline="160" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $ca
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/AutoImport.php">
@@ -74,7 +74,7 @@
       This class has too many methods, consider refactoring it.
     </violation>
     <violation beginline="8" endline="220" rule="NumberOfChildren" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren" class="CoreController" priority="2">
-      The class CoreController has 20 children. Consider to rebalance this class hierarchy.
+      The class CoreController has 19 children. Consider to rebalance this class hierarchy.
     </violation>
     <violation beginline="41" endline="41" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$method'.
@@ -227,13 +227,36 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Validator.php">
-    <violation beginline="31" endline="31" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
-      Avoid unused local variables such as '$rules'.
+    <violation beginline="8" endline="365" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Validator" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+    <violation beginline="8" endline="365" rule="ExcessiveClassComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity" class="Validator" priority="3">
+      The class Validator has an overall complexity of 79 which is very high. The configured complexity threshold is 50.
+    </violation>
+    <violation beginline="33" endline="93" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="Validator" method="validateParameter" priority="3">
+      The method validateParameter() has a Cyclomatic Complexity of 15.
+    </violation>
+    <violation beginline="33" endline="93" rule="NPathComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity" class="Validator" method="validateParameter" priority="3">
+      The method validateParameter() has an NPath complexity of 3080.
+    </violation>
+    <violation beginline="33" endline="33" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $ca
+    </violation>
+    <violation beginline="99" endline="139" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="Validator" method="validateRules" priority="3">
+      The method validateRules() has a Cyclomatic Complexity of 17.
+    </violation>
+    <violation beginline="99" endline="139" rule="NPathComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity" class="Validator" method="validateRules" priority="3">
+      The method validateRules() has an NPath complexity of 6163.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/test/testdata/app/controllers/TestController.php">
     <violation beginline="3" endline="127" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="TestController" priority="3">
       This class has too many methods, consider refactoring it.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace2/WebStream/core/test/testdata/app/controllers/TestValidateController.php">
+    <violation beginline="7" endline="7" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$params'.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/test/testdata/app/helpers/TestHelper.php">

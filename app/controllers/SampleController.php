@@ -51,4 +51,16 @@ class SampleController extends AppController {
             )
         ));
     }
+    
+    public function validate() {
+        $this->layout("base", array(
+            "title" => $this->title,
+            "template" => "validate",
+            "content" => null
+        ));
+    }
+    
+    public function validateForm() {
+        echo $this->request->post("name");
+    }
 }

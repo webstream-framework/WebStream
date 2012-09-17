@@ -12,6 +12,8 @@ register_shutdown_function('WebStream\shutdownHandler');
 importAll("core");
 // ルーティングルールをロード
 import("config/routes");
+// バリデーションルールをロード
+import("config/validates");
 // Loggerを初期化
 Logger::init();
 // アプリケーションを起動する

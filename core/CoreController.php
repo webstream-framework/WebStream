@@ -183,6 +183,10 @@ class CoreController {
             header("HTTP/1.1 404 Not Found");
             $this->render_error("404 Not Found");
             break;
+        case 422:
+            header("HTTP/1.1 422 Unprocessable Entity");
+            $this->render_error("422 Unprocessable Entity");
+            break;
         case 500:
             header("HTTP/1.1 500 Internal Server Error");
             $this->render_error("500 Internal Server Error");

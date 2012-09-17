@@ -144,7 +144,7 @@ class Validator {
      * @param Hash リクエストパラメータ
      */
     private function checkRequired($key, $params)  {
-        if (!array_key_exists($key, $params)) {
+        if (!array_key_exists($key, $params) || (array_key_exists($key, $params) && empty($params[$key]))) {
             $errorMsg = "Validation rule error. '${key}' is required.";
             throw new ValidatorException($errorMsg);
         }

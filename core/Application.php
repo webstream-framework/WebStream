@@ -80,6 +80,11 @@ class Application {
             Logger::error($e->getMessage() . ": " . STREAM_ROUTING_PATH);
             $this->error(404);
         }
+        // バリデーションエラーの場合は422
+        catch (ValidatorException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->error(422);
+        }
         // それ以外のエラーは500
         catch (\Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
@@ -153,14 +158,26 @@ class Application {
         return $action;
     }
     
+    /**
+     * バリデーションを実行する
+     */
     private function validate() {
         $validator = new Validator();
         // GET, POSTパラメータ両方を検査する
         $request = new Request();
         $ca = $this->route->controller() . "#" . $this->route->action();
-        $validator->validateParameter($ca, $request->getGET(), "get");
-        $validator->validateParameter($ca, $request->getPOST(), "post");
-        //$validator->validateParameter($ca, $post);
+        try {
+            $validator->validateParameter($ca, $request->getGET(), "get");
+            $validator->validateParameter($ca, $request->getPOST(), "post");
+        }
+        catch (ValidatorException $e) {
+            // Controllerクラスでバリデーションエラーを補足するメソッドが
+            // オーバーライドされていれば例外は出さずにそのメソッドへエラー内容を移譲する
+            // オーバーライドされていなければ例外を出す
+            
+            // TODO とりあえず例外をだしておくわ
+            throw $e;
+        }
     }
     
     /**
