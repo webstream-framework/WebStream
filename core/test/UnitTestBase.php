@@ -695,6 +695,18 @@ SQL;
             array("select * from users where user_name = :name", array("name" => "yui"))
         );
     }
+    
+    public function validRule() {
+        return array(
+            array("validates.ok1")
+        );
+    }
+    
+    public function getParameterValidation() {
+        return array(
+            array("/get_validate1", "?name1=test")
+        );
+    }
 
     public function invalidController() {
         return array(
@@ -707,4 +719,60 @@ SQL;
             array("validates.ng2")
         );
     }
+
+    public function invalidRule() {
+        return array(
+            array("validates.ng3"),
+            array("validates.ng4"),
+            array("validates.ng5"),
+            array("validates.ng6"),
+            array("validates.ng7"),
+            array("validates.ng8")
+        );
+    }
+    
+    public function lessThanMinLengthParameter() {
+        return array(
+            array("aaaaaaaaa"), // 9
+            array("あああああああああ") // 9
+        );
+    }
+
+   public function moreThanMaxLengthParameter() {
+        return array(
+            array("aaaaaaaaaaa"), // 11
+            array("あああああああああああ") // 11
+        );
+    }
+   
+   public function lessThanMinParameter() {
+       return array(
+            array("-100"), // マイナス値
+            array("99"), // 境界値
+            array("99.9999") // 小数値
+        );
+   }
+
+   public function moreThanMaxParameter() {
+       return array(
+            array("201"), // 境界値
+            array("222.222") // 少数
+        );
+   }
+   
+   public function notEqualLengthParameter() {
+       return array(
+            array("aaaaaaaaa"), // 境界値9
+            array("aaaaaaaaaaa"), // 境界値11
+            array("あああああああああ"), // 境界値9
+            array("あああああああああああ") // 境界値11
+        );
+   }
+   
+   public function outOfRangeParameter() {
+       return array(
+           array("9"), // low範囲外
+           array("21"), // high範囲外
+       );
+   }
 }

@@ -4,7 +4,7 @@ namespace WebStream;
 Validator::setRule(
     array(
         "dummy#index" => array(
-            "name" => "required"
+            "get#name" => "required"
         )
     )
 );

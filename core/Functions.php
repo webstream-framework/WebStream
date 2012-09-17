@@ -2,15 +2,6 @@
 namespace WebStream;
 
 /**
- * シャットダウン直前に実行する
- */
-if (!function_exists('shutdownCallback')) {
-    function shutdownCallback($errno, $errstr, $errfile, $errline, $errcontext) {
-        throw new \Exception("${errstr} ${errfile}(${errline})");
-    }
-}
-
-/**
  * ハンドリングできないエラーをハンドリングする
  */
 if (!function_exists('shutdownHandler')) {

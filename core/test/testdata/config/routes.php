@@ -75,6 +75,7 @@ Router::setRule(
         '/helper5' => "test#test_helper_camel",
         '/helper6' => "test#test_helper_notfound_method",
         '/attr' => "test#test_attribute_value",
-        '/validate1' => "test_validate#validate1"
+        '/validate1' => "test_validate#validate1",
+        '/get_validate1' => "test_validate#get_param_validate1"
     )
 );

@@ -3,9 +3,16 @@ namespace WebStream;
 
 Validator::setRule(
     array(
-        "test_validate#validate1" => array(
-            "name" => "required"
+        "test_validate#get_param_validate1" => array(
+            "get#name1" => "required",
+            "get#name2" => "min_length[10]",
+            "get#name3" => "max_length[10]",
+            "get#name4" => "min[100]",
+            "get#name5" => "max[200]",
+            "get#name6" => "equal[kyouko]",
+            "get#name7" => "length[10]",
+            "get#name8" => "range[10..20]",
+            "get#name9" => "regexp[/^\d{1}$/]"
         ) 
-        
     )
 );

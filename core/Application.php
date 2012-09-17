@@ -18,7 +18,7 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.1');
+        define('STREAM_VERSION', '0.3.2');
     }
     
     /**
@@ -49,9 +49,6 @@ class Application {
         try {
             // ルーティングを解決する
             $this->route = new Router();
-            // バリデーションルールを解決する
-            $this->validate = new Validator();
-            
             // ルーティングの解決に成功した場合、コントローラを呼び出す
             if ($this->controller() && $this->action()) {
                 $this->runContoller();
@@ -107,8 +104,7 @@ class Application {
         $before_filter = $class->getMethod("before");
         $before_filter->invoke($instance);
         // validate
-        
-        
+        $this->validate();
         // action
         $action = $class->getMethod($this->action());
         $action->invoke($instance, safetyIn($this->params()));
@@ -159,6 +155,12 @@ class Application {
     
     private function validate() {
         $validator = new Validator();
+        // GET, POSTパラメータ両方を検査する
+        $request = new Request();
+        $ca = $this->route->controller() . "#" . $this->route->action();
+        $validator->validateParameter($ca, $request->getGET(), "get");
+        $validator->validateParameter($ca, $request->getPOST(), "post");
+        //$validator->validateParameter($ca, $post);
     }
     
     /**
@@ -169,6 +171,10 @@ class Application {
         return $this->route->params();
     }
     
+    /**
+     * 静的ファイルを返却する
+     * @return Hash パラメータ
+     */
     private function staticFile() {
         return $this->route->staticFile();
     }
