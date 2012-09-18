@@ -174,9 +174,31 @@ class Application {
             // Controllerクラスでバリデーションエラーを補足するメソッドが
             // オーバーライドされていれば例外は出さずにそのメソッドへエラー内容を移譲する
             // オーバーライドされていなければ例外を出す
-            
-            // TODO とりあえず例外をだしておくわ
-            throw $e;
+            $hasHandlingMethod = false;
+            // アノテーションを利用してAOPを実行
+            $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+            $methodAnnotations = $annotation->methods("@Error");
+            foreach ($methodAnnotations as $methodAnnotation) {
+                // @Error("Validate")のみ抽出
+                // 複数のメソッドに対してアノテーションを定義可能とする
+                if ($methodAnnotation->value === "Validate") {
+                    $class = new \ReflectionClass($methodAnnotation->className);
+                    $instance = $class->newInstance();
+                    if ($class->hasMethod($methodAnnotation->methodName)) {
+                        $hasHandlingMethod = true;
+                        $method = $class->getMethod($methodAnnotation->methodName);
+                        $method->invoke($instance, array(
+                            "class" => $this->controller(),
+                            "method" => $this->action(),
+                            "error" => $validator->getError()
+                        ));
+                    }
+                }
+            }
+            // バリデーションエラーハンドリングメソッドがない場合、例外を出力
+            if (!$hasHandlingMethod) {
+                throw $e;
+            }
         }
     }
     

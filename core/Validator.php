@@ -8,6 +8,8 @@ namespace WebStream;
 class Validator {
     /** バリデーションルール */
     private static $rules;
+    /** エラー内容 */
+    private $error;
     
     /**
      * コンストラクタ
@@ -22,6 +24,18 @@ class Validator {
      */
     public static function setRule($rules) {
         self::$rules = $rules;
+    }
+    
+    public function getError() {
+        return $this->error;
+    }
+    
+    private function setError($rule, $name, $value) {
+        $this->error = array(
+            "rule" => $rule,
+            "name" => $name,
+            "value" => $value
+        );
     }
     
     /**
@@ -145,6 +159,7 @@ class Validator {
      */
     private function checkRequired($key, $params)  {
         if (!array_key_exists($key, $params) || (array_key_exists($key, $params) && empty($params[$key]))) {
+            $this->setError("required", $key, null);
             $errorMsg = "Validation rule error. '${key}' is required.";
             throw new ValidatorException($errorMsg);
         }
@@ -160,6 +175,8 @@ class Validator {
         if (preg_match('/^(min_length)\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
             $length = intval($matches[2]);
             if (array_key_exists($key, $params) && mb_strlen($params[$key], "UTF-8") < $length) {
+                $rule = $matches[1] . "[" . $matches[2] . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be more than ${length}.";
                 throw new ValidatorException($errorMsg);
             }
@@ -176,6 +193,8 @@ class Validator {
         if (preg_match('/^(max_length)\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
             $length = intval($matches[2]);
             if (array_key_exists($key, $params) && mb_strlen($params[$key], "UTF-8") > $length) {
+                $rule = $matches[1] . "[" . $matches[2] . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be less than ${length}.";
                 throw new ValidatorException($errorMsg);
             }
@@ -192,6 +211,8 @@ class Validator {
         if (preg_match('/^(min)\[([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
             $num = intval($matches[2]);
             if (array_key_exists($key, $params) && intval($params[$key]) < $num) {
+                $rule = $matches[1] . "[" . $matches[2] . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be more than ${num}.";
                 throw new ValidatorException($errorMsg);
             }
@@ -208,6 +229,8 @@ class Validator {
         if (preg_match('/^(max)\[([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
             $num = intval($matches[2]);
             if (array_key_exists($key, $params) && intval($params[$key]) > $num) {
+                $rule = $matches[1] . "[" . $matches[2] . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be less than ${num}.";
                 throw new ValidatorException($errorMsg);
             }
@@ -224,6 +247,8 @@ class Validator {
         if (preg_match('/^(equal)\[(.*)\]$/', $rule, $matches)) {
             $val = $matches[2];
             if (array_key_exists($key, $params) && $params[$key] !== $val) {
+                $rule = $matches[1] . "[" . $matches[2] . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be equals ${val}.";
                 throw new ValidatorException($errorMsg);
             }
@@ -240,6 +265,8 @@ class Validator {
         if (preg_match('/^(length)\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
             $num = intval($matches[2]);
             if (array_key_exists($key, $params) && mb_strlen($params[$key], "UTF-8") !== $num) {
+                $rule = $matches[1] . "[" . $matches[2] . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be equals ${num}.";
                 throw new ValidatorException($errorMsg);
             }
@@ -257,6 +284,8 @@ class Validator {
             $low = $matches[2];
             $high = $matches[3];
             if (array_key_exists($key, $params) && (intval($params[$key]) < $low || intval($params[$key]) > $high)) {
+                $rule = $matches[1] . "[" . $low . ".." . $high . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be between ${low} and ${high}.";
                 throw new ValidatorException($errorMsg);
             }
@@ -273,6 +302,8 @@ class Validator {
         if (preg_match('/^(regexp)\[(\/.*?\/[a-z]*)\]$/', $rule, $matches)) {
             $regexp = $matches[2];
             if (array_key_exists($key, $params) && !preg_match($regexp, $params[$key])) {
+                $rule = $matches[1] . "[" . $matches[2] . "]";
+                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' is unmatche regular expression '${regexp}'.";
                 throw new ValidatorException($errorMsg);
             }

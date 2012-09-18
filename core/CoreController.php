@@ -213,6 +213,11 @@ class CoreController {
     }
     
     /**
+     * バリデーションエラーメソッドの空実装
+     */
+    //public function validate_error($errors) {}
+    
+    /**
      * before filterの空実装
      */
     public function before() {}
