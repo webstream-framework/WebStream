@@ -49,11 +49,20 @@ class CoreView {
     /**
      * JSONを描画する
      * @param Hash 出力データ
-     * @param String コールバック関数名
      */
-    final public function json($params, $callback = null) {
+    final public function json($params) {
         $this->outputHeader("application/json");
         echo json_encode($params);
+    }
+    
+    /**
+     * JSONPを描画する
+     * @param Hash 出力データ
+     * @param String コールバック関数名
+     */
+    final public function jsonp($params, $callback) {
+        $this->outputHeader("text/javascript");
+        echo $callback . "(" . json_encode($params) . ");";
     }
     
     /**
