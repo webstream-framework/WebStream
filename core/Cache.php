@@ -137,7 +137,7 @@ class Cache {
             return unlink($cache_path);
         }
         else {
-            Logger::error("Cache delete failure: ${path}");
+            Logger::error("Cache delete failure: ${cache_path}");
             return false;
         }
     }
