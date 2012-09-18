@@ -74,8 +74,6 @@ class Router {
      * @param Array ルーティングルール
      */
     public function resolve() {
-        // ルーティングパラメータ
-        $routes = array();
         // ルーティングルールからController、Actionを取得
         foreach (self::$rules as $path => $ca) {
             $route = array();
