@@ -775,4 +775,13 @@ SQL;
            array("21"), // high範囲外
        );
    }
+   
+   public function validateErrorHandlingMulti() {
+       return array(
+           array("a", "min_length[2]"), // min_length
+           array("yui", "equal[kyouko]") // equal
+       );
+   }
+   
+   
 }

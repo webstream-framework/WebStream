@@ -1,5 +1,6 @@
 <?php
 namespace WebStream\Test;
+use WebStream\HttpAgent;
 use WebStream\Utility;
 use WebStream\Validator;
 /**
@@ -32,6 +33,34 @@ class ValidatorTest extends UnitTestBase {
         \WebStream\import("/core/test/testdata/config/" . $validate_file);
         new Validator();
         $this->assertTrue(true);
+    }
+    
+    /**
+     * 正常系
+     * アノテーション「@Error("Validate")」を付与した場合、422にならず200になること
+     */
+    public function testOkValidateErrorHandling() {
+        $http = new HttpAgent();
+        $response = $http->get($this->root_url . "/validate_handling");
+        $status_code = $http->getStatusCode();
+        $this->assertEquals($status_code, "200");
+        $this->assertEquals($response, "required");
+    }
+    
+    /**
+     * 正常系
+     * アノテーション「@Error("Validate")」を付与しており、バリデーションルールが
+     * 複数設定してある場合、200を返しつつ複数あるルールのうちエラーになった最初のルール
+     * のエラー内容が取得できること
+     * @dataProvider validateErrorHandlingMulti
+     */
+    public function testOkValidateErrorHandlingMulti($str, $rule) {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/validate_handling2";
+        $response = $http->get($url, array("name" => $str));
+        $status_code = $http->getStatusCode();
+        $this->assertEquals($status_code, "200");
+        $this->assertEquals($response, $rule);
     }
     
     /**
@@ -202,7 +231,7 @@ class ValidatorTest extends UnitTestBase {
      * バリデーションルール「required」に指定されているPOSTパラメータが存在しない場合、422が返却されること
      */
     public function testNgNoRequiredParameterByPost() {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("dummy" => "111");
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -214,7 +243,7 @@ class ValidatorTest extends UnitTestBase {
      * バリデーションルール「required」に指定されているPOSTパラメータが存在するが値が空の場合、422が返却されること
      */
     public function testNgNoRequiredEmptyParameterByPost() {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "");
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -242,7 +271,7 @@ class ValidatorTest extends UnitTestBase {
      * @dataProvider moreThanMaxLengthParameter
      */
     public function testNgMoreThanMaxLengthParameterByPost($str) {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "aaa", "name3" => $str);
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -256,7 +285,7 @@ class ValidatorTest extends UnitTestBase {
      * @dataProvider lessThanMinParameter
      */
     public function testNgLessThanMinParameterByPost($str) {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "aaa", "name4" => $str);
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -270,7 +299,7 @@ class ValidatorTest extends UnitTestBase {
      * @dataProvider moreThanMaxParameter
      */
     public function testNgMoreThanMaxParameterByPost($str) {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "aaa", "name5" => $str);
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -282,7 +311,7 @@ class ValidatorTest extends UnitTestBase {
      * バリデーションルール「equal[s]」に指定されているPOSTパラメータと一致しない場合、422が返却されること
      */
     public function testNgNotEqualParameterByPost() {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "aaa", "name6" => "yui");
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -295,7 +324,7 @@ class ValidatorTest extends UnitTestBase {
      * @dataProvider notEqualLengthParameter
      */
     public function testNgNotEqualLengthParameterByPost($str) {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "aaa", "name7" => $str);
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -308,7 +337,7 @@ class ValidatorTest extends UnitTestBase {
      * @dataProvider outOfRangeParameter
      */
     public function testNgOutOfRangeParameterByPost($str) {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "aaa", "name8" => $str);
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();
@@ -320,7 +349,7 @@ class ValidatorTest extends UnitTestBase {
      * バリデーションルール「regexp[/s/]」にマッチしないPOSTパラメータが指定された場合、422が返却されること
      */
     public function testNgUnmatchRegexpParameterByPost() {
-        $http = new \WebStream\HttpAgent();
+        $http = new HttpAgent();
         $params = array("name1" => "aaa", "name9" => "10");
         $http->post($this->root_url . "/get_validate1", $params);
         $status_code = $http->getStatusCode();

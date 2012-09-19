@@ -79,6 +79,7 @@ Router::setRule(
         '/jsonp' => "test#test_jsonp",
         '/validate1' => "test_validate#validate1",
         '/get_validate1' => "test_validate#get_param_validate1",
-        '/validate_handling' => "test_validate_error_handling#validate1"
+        '/validate_handling' => "test_validate_error_handling#validate1",
+        '/validate_handling2' => "test_validate_error_handling2#validate1"
     )
 );

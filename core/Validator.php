@@ -26,10 +26,20 @@ class Validator {
         self::$rules = $rules;
     }
     
+    /**
+     * バリデーションエラー情報を返却する
+     * @return Hash エラー情報
+     */
     public function getError() {
         return $this->error;
     }
     
+    /**
+     * バリデーションエラー情報をセットする
+     * @param String バリデーションルール
+     * @param String リクエストキー
+     * @param String リクエストパラメータ値
+     */
     private function setError($rule, $name, $value) {
         $this->error = array(
             "rule" => $rule,
@@ -49,6 +59,7 @@ class Validator {
             return false;
         }
         $rules = self::$rules[$ca];
+        Logger::info("Request method: ${method}");
         Logger::info("Request parameter validation is execute: ${ca}");
         // リクエストに対するバリデーションルールを展開
         foreach ($rules as $key => $value) {

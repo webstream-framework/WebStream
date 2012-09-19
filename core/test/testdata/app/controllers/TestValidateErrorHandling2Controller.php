@@ -1,6 +1,6 @@
 <?php
 namespace WebStream;
-class TestValidateErrorHandlingController extends CoreController {
+class TestValidateErrorHandling2Controller extends CoreController {
     
     public function validate1() {}
     

@@ -16,6 +16,9 @@ Validator::setRule(
         ),
         "test_validate_error_handling#validate1" => array(
             "get#name" => "required"
+        ),
+        "test_validate_error_handling2#validate1" => array(
+            "get#name" => "min_length[2]|equal[kyouko]"
         )
     )
 );
