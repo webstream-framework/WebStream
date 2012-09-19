@@ -58,20 +58,8 @@ class HttpAgent {
      * @param Hash リクエストヘッダ
      * @return String レスポンス
      */
-    public function get($url, $params = array(), $headers = array()) {
-        // GETの場合、$paramsは任意
-        if (!empty($params)) {
-            $params = http_build_query($params);
-        }
-        
-        $method = strtoupper(__FUNCTION__);
-        $request = array(
-            "method"  => $method,
-            "content" => $params,
-            "timeout" => $this->timeout
-        );
-        
-        return $this->http($url, $headers, $request, $method);
+    public function get($url, $params = "", $headers = array()) {
+        return $this->http($url, $headers, $params, "GET");
     }
     
     /**
@@ -82,24 +70,7 @@ class HttpAgent {
      * @return String レスポンス
      */
     public function post($url, $params, $headers = array()) {
-        // POSTの場合、$paramsは必須
-        $params = http_build_query($params);
-        
-        if (empty($headers)) {
-            $headers = array(
-                "Content-Type: application/x-www-form-urlencoded",
-                "Content-Length: " . strlen($params)
-            );
-        }
-        
-        $method = strtoupper(__FUNCTION__);
-        $request = array(
-            "method"  => $method,
-            "content" => $params,
-            "timeout" => $this->timeout
-        );
-
-        return $this->http($url, $headers, $request, $method);
+        return $this->http($url, $headers, $params, "POST");
     }
     
     /**
@@ -127,28 +98,46 @@ class HttpAgent {
     /**
      * HTTP通信を実行する
      * @param String URL
-     * @param Hash リクエストパラメータ
      * @param Hash リクエストヘッダ
+     * @param Hash リクエストパラメータ
      * @param String 実行するRESTメソッド
      * @return String レスポンス
      */
-    private function http($url, $headers, $request, $method) {
+    private function http($url, $headers, $params, $method) {
+        if (!empty($params)) {
+            $params = http_build_query($params);
+            // GETの場合はstream_context_createでクエリを渡しても有効にならないため
+            // URLにクエリストリングを付けることで対処
+            if ($method === "GET") {
+                $url .= "?" . $params;
+            }
+        }
+        if (empty($headers)) {
+            $headers = array(
+                "Content-Type: application/x-www-form-urlencoded",
+                "Content-Length: " . strlen($params)
+            );
+        }
+        $request = array(
+            "method"  => $method,
+            "content" => $params,
+            "timeout" => $this->timeout
+        );
         // Proxy設定
         if ($this->proxy_host && $this->proxy_port) {
             $this->proxy($request);
         }
-        
         // Basic認証
         if ($this->basic_auth_id && $this->basic_auth_password) {
             $this->basicAuth($headers);
         }
-        
         if (!empty($headers)) {
             $request["header"] = implode("\r\n", $headers);
         }
         
         // レスポンス
-        $response = @file_get_contents($url, false, stream_context_create(array("http" => $request)));
+        $response = @file_get_contents($url, false, 
+            stream_context_create(array("http" => $request)));
 
         if (!isset($http_response_header)) {
             $hasHeader = @get_headers($url);
