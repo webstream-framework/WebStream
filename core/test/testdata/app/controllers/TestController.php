@@ -124,4 +124,12 @@ class TestController extends CoreController {
             "value" => "attr"
         ));
     }
+    
+    public function testJson() {
+        $this->render_json(array("name" => "kyouko"));
+    }
+    
+    public function testJsonp() {
+        $this->render_jsonp(array("name" => "yui"), "yuruyuri");
+    }
 }

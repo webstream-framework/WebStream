@@ -75,6 +75,8 @@ Router::setRule(
         '/helper5' => "test#test_helper_camel",
         '/helper6' => "test#test_helper_notfound_method",
         '/attr' => "test#test_attribute_value",
+        '/json' => "test#test_json",
+        '/jsonp' => "test#test_jsonp",
         '/validate1' => "test_validate#validate1",
         '/get_validate1' => "test_validate#get_param_validate1",
         '/validate_handling' => "test_validate_error_handling#validate1"

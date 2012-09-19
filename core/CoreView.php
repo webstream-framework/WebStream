@@ -51,7 +51,7 @@ class CoreView {
      * @param Hash 出力データ
      */
     final public function json($params) {
-        $this->outputHeader("application/json");
+        $this->outputHeader("json");
         echo json_encode($params);
     }
     
@@ -61,7 +61,7 @@ class CoreView {
      * @param String コールバック関数名
      */
     final public function jsonp($params, $callback) {
-        $this->outputHeader("text/javascript");
+        $this->outputHeader("jsonp");
         echo $callback . "(" . json_encode($params) . ");";
     }
     

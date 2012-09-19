@@ -174,6 +174,9 @@ class Application {
             // Controllerクラスでバリデーションエラーを補足するメソッドが
             // オーバーライドされていれば例外は出さずにそのメソッドへエラー内容を移譲する
             // オーバーライドされていなければ例外を出す
+            
+            // TODO テストを書く
+            
             $hasHandlingMethod = false;
             // アノテーションを利用してAOPを実行
             $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());

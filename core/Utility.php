@@ -167,6 +167,7 @@ class Utility {
         case "css":
             return "text/css";
         case "js":
+        case "jsonp":
             return "text/javascript";
         case "json":
             return "application/json";

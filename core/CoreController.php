@@ -98,11 +98,20 @@ class CoreController {
      * テンプレートファイルでJSONを描画する
      * @param Hash 埋め込みパラメータ
      */
-    final protected function render_json($params, $callback = null) {
-        $this->view->json($params, $callback);
+    final protected function render_json($params) {
+        $this->view->json($params);
+    }
+
+    /**
+     * テンプレートファイルでJSONPを描画する
+     * @param Hash 埋め込みパラメータ
+     * @param String コールバック関数
+     */
+    final protected function render_jsonp($params, $callback) {
+        $this->view->jsonp($params, $callback);
     }
     
-        /**
+    /**
      * テンプレートファイルでXMLを描画する
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
@@ -211,11 +220,6 @@ class CoreController {
         }
         return $page_name;
     }
-    
-    /**
-     * バリデーションエラーメソッドの空実装
-     */
-    //public function validate_error($errors) {}
     
     /**
      * before filterの空実装

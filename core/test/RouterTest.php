@@ -334,6 +334,28 @@ class RouterTest extends UnitTestBase {
     }
     
     /**
+     * 正常系
+     * JSONを描画できること
+     */
+    public function testOkJson() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/json";
+        $http->get($url);
+        $this->assertEquals("Content-Type: application/json; charset=UTF-8", $http->getContentType());
+    }
+    
+    /**
+     * 正常系
+     * JSONPを描画できること
+     */
+    public function testOkJsonp() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/jsonp";
+        $http->get($url);
+        $this->assertEquals("Content-Type: text/javascript; charset=UTF-8", $http->getContentType());
+    }
+    
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider
