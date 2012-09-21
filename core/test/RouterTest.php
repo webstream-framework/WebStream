@@ -356,6 +356,16 @@ class RouterTest extends UnitTestBase {
     }
     
     /**
+     * 正常系
+     * BeforeFilterとAfterFilterがアノテーション付与で実行出来ること
+     */
+    public function testOkFilterByAnnotation() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/filter";
+        $this->assertEquals("beforeactionafter", $http->get($url));
+    }
+    
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider
@@ -421,30 +431,6 @@ class RouterTest extends UnitTestBase {
      * @dataProvider resolveLoadProvider
      */
     public function testNgResolveLoad($path) {
-        $url = $this->root_url . $path;
-        @file_get_contents($url);
-        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
-        $this->assertEquals($status_code, "500");
-    }
-    
-    /**
-     * 異常系
-     * beforeメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider resolveBeforeProvider
-     */
-    public function testNgResolveBefore($path) {
-        $url = $this->root_url . $path;
-        @file_get_contents($url);
-        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
-        $this->assertEquals($status_code, "500");
-    }
-    
-    /**
-     * 異常系
-     * afterメソッドはアクションに指定した場合、500エラーになること
-     * @dataProvider resolveAfterProvider
-     */
-    public function testNgResolveAfter($path) {
         $url = $this->root_url . $path;
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);

@@ -285,3 +285,21 @@
 	#5 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
 	#6 {main}
 [2012-09-17 23:02:07,11] [INFO] HTTP access occured: status code 422
+[2012-09-21 12:11:21, 5] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 12:11:21, 5] [INFO] Bind statement: 
+[2012-09-21 12:11:21, 5] [INFO] Executed SQL: select * from users
+[2012-09-21 12:11:21, 5] [INFO] Bind statement: 
+[2012-09-21 12:11:42, 7] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 12:11:42, 7] [INFO] Bind statement: 
+[2012-09-21 12:11:42, 7] [INFO] Executed SQL: select * from users
+[2012-09-21 12:11:42, 7] [INFO] Bind statement: 
+[2012-09-21 12:12:04,11] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 12:12:04,11] [INFO] Bind statement: 
+[2012-09-21 12:12:04,12] [INFO] Executed SQL: select * from users
+[2012-09-21 12:12:04,12] [INFO] Bind statement: 
+[2012-09-21 12:13:07,96] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 12:13:07,96] [INFO] Bind statement: 
+[2012-09-21 12:27:50,31] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 12:27:50,31] [INFO] Bind statement: 
+[2012-09-21 12:27:50,31] [INFO] Executed SQL: select * from users
+[2012-09-21 12:27:50,31] [INFO] Bind statement: 

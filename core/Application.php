@@ -106,16 +106,14 @@ class Application {
         $initialize = $class->getMethod("initialize");
         $initialize->invoke($instance);
         // before_filter
-        $before_filter = $class->getMethod("before");
-        $before_filter->invoke($instance);
+        $this->before($class, $instance);
         // validate
-        $this->validate();
+        $this->validate($class, $instance);
         // action
         $action = $class->getMethod($this->action());
         $action->invoke($instance, safetyIn($this->params()));
         // after_filter
-        $after_filter = $class->getMethod("after");
-        $after_filter->invoke($instance);
+        $this->after($class, $instance);
     }
     
     /**
@@ -159,9 +157,51 @@ class Application {
     }
     
     /**
-     * バリデーションを実行する
+     * Before Filterを実行する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
      */
-    private function validate() {
+    private function before($class, $instance) {
+        $this->filter($class, $instance, "Before");
+    }
+    
+    /**
+     * After Filterを実行する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function after($class, $instance) {
+        $this->filter($class, $instance, "After");
+    }
+    
+    /**
+     * Filter処理を実行する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     * @param String Filter名
+     */
+    private function filter($class, $instance, $filterName) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Filter");
+        foreach ($methodAnnotations as $methodAnnotation) {
+            // @Filter($filterName)を抽出
+            // 複数のメソッドに対してアノテーションを定義可能とする
+            if ($methodAnnotation->value === $filterName) {
+                if ($class->hasMethod($methodAnnotation->methodName)) {
+                    $hasHandlingMethod = true;
+                    $method = $class->getMethod($methodAnnotation->methodName);
+                    $method->invoke($instance);
+                }
+            }
+        }
+    }
+    
+    /**
+     * バリデーションを実行する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function validate($class, $instance) {
         $validator = new Validator();
         // GET, POSTパラメータ両方を検査する
         $request = new Request();
@@ -182,8 +222,6 @@ class Application {
                 // @Error("Validate")のみ抽出
                 // 複数のメソッドに対してアノテーションを定義可能とする
                 if ($methodAnnotation->value === "Validate") {
-                    $class = new \ReflectionClass($methodAnnotation->className);
-                    $instance = $class->newInstance();
                     if ($class->hasMethod($methodAnnotation->methodName)) {
                         $hasHandlingMethod = true;
                         $method = $class->getMethod($methodAnnotation->methodName);

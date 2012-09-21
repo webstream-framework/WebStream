@@ -6,10 +6,18 @@ namespace WebStream;
 class SampleController extends AppController {
     private $title;
     
+    /**
+     * @Inject
+     * @Filter("Before")
+     */
     public function before() {
-        $title = "stream sample";
+        $this->title = "stream sample";
     }
     
+    /**
+     * @Inject
+     * @Filter("After")
+     */
     public function after() {}
     
     public function model1() {

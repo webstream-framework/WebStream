@@ -220,14 +220,4 @@ class CoreController {
         }
         return $page_name;
     }
-    
-    /**
-     * before filterの空実装
-     */
-    public function before() {}
-    
-    /**
-     * after filterの空実装
-     */
-    public function after() {}
 }
