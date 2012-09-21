@@ -366,6 +366,22 @@ class RouterTest extends UnitTestBase {
     }
     
     /**
+     * 正常系
+     * 基本認証を正常に処理できること
+     */
+    public function testOkBasicAuthByAnnotation() {
+        $http = new HttpAgent(array(
+            "basic_auth_id" => "test",
+            "basic_auth_password" => "test"
+        ));
+        $url = $this->root_url . "/basic_auth";
+        $response = $http->get($url);
+        $status_code = $http->getStatusCode();
+        $this->assertEquals($status_code, "200");
+        $this->assertEquals($response, "basicauth");
+    }
+    
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider
@@ -639,7 +655,29 @@ class RouterTest extends UnitTestBase {
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);
             $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);           
+            $this->assertEquals($target, $result);
         }
+    }
+    
+    /**
+     * 異常系
+     * 「@BasicAuth」アノテーションが正常に付与されていて、認証エラーが発生した場合、401が返却されること
+     */
+    public function testNgBasicAuthByAnnotation() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/basic_auth";
+        $http->get($url);
+        $this->assertEquals($http->getStatusCode(), "401");
+    }
+
+    /**
+     * 異常系
+     * 「@BasicAuth」アノテーションの設定ファイルパスが間違っている場合、404が返却されること
+     */
+    public function testNgBasicAuthConfigFileNotFound() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/basic_auth2";
+        $http->get($url);
+        $this->assertEquals($http->getStatusCode(), "404");
     }
 }

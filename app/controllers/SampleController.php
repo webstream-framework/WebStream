@@ -71,4 +71,12 @@ class SampleController extends AppController {
     public function validateForm() {
         echo $this->request->post("name");
     }
+    
+    /**
+     * @Inject
+     * @BasicAuth("config/basic_auth.ini")
+     */
+    public function basicAuth() {
+        echo "auth ok";
+    }
 }

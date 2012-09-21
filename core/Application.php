@@ -18,7 +18,7 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.3');
+        define('STREAM_VERSION', '0.3.4');
     }
     
     /**
@@ -107,6 +107,8 @@ class Application {
         $initialize->invoke($instance);
         // before_filter
         $this->before($class, $instance);
+        // basic auth
+        $this->basicAuth($class, $instance);
         // validate
         $this->validate($class, $instance);
         // action
@@ -191,6 +193,31 @@ class Application {
                     $hasHandlingMethod = true;
                     $method = $class->getMethod($methodAnnotation->methodName);
                     $method->invoke($instance);
+                }
+            }
+        }
+    }
+    
+    /**
+     * 基本認証を実行する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function basicAuth($class, $instance) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@BasicAuth");
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                $config = Utility::parseConfig($methodAnnotation->value);
+                if ($config === null) {
+                    $errorMsg = "Properties file specified by @BasicAuth annotation is not found: $methodAnnotation->value";
+                    throw new ResourceNotFoundException($errorMsg);
+                }
+                $request = new Request();
+                if ($request->authUser() !==  $config["userid"] ||
+                    $request->authPassword() !== $config["password"]) {
+                    $controller = new CoreController();
+                    $controller->move(401);
                 }
             }
         }

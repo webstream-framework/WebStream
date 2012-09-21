@@ -79,6 +79,8 @@ Router::setRule(
         '/validate1' => "test_validate#validate1",
         '/get_validate1' => "test_validate#get_param_validate1",
         '/validate_handling' => "test_validate_error_handling#validate1",
-        '/validate_handling2' => "test_validate_error_handling2#validate1"
+        '/validate_handling2' => "test_validate_error_handling2#validate1",
+        '/basic_auth' => "test_basic_auth#execute",
+        '/basic_auth2' => "test_basic_auth#execute2"
     )
 );

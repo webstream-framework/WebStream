@@ -303,3 +303,13 @@
 [2012-09-21 12:27:50,31] [INFO] Bind statement: 
 [2012-09-21 12:27:50,31] [INFO] Executed SQL: select * from users
 [2012-09-21 12:27:50,31] [INFO] Bind statement: 
+[2012-09-21 19:36:58,17] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 19:36:58,17] [INFO] Bind statement: 
+[2012-09-21 19:36:58,17] [INFO] HTTP access occured: status code 401
+[2012-09-21 19:36:58,19] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 19:36:58,19] [INFO] Bind statement: 
+[2012-09-21 19:36:58,19] [INFO] HTTP access occured: status code 401
+[2012-09-21 19:37:08,43] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 19:37:08,43] [INFO] Bind statement: 
+[2012-09-21 19:37:13,81] [INFO] Executed SQL: SELECT * FROM users
+[2012-09-21 19:37:13,81] [INFO] Bind statement: 

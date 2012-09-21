@@ -11,6 +11,7 @@ Router::setRule(
         '/index_helper' => "sample#helper",
         '/yuruyuri' => "yuru_yuri#execute",
         '/validate' => "sample#validate",
-        '/validate_form' => "sample#validate_form"
+        '/validate_form' => "sample#validate_form",
+        '/basic_auth' => "sample#basic_auth"
     )
 );

@@ -184,6 +184,11 @@ class CoreController {
             header("HTTP/1.1 400 Bad Request");
             $this->render_error("400 Bad Request");
             break;
+        case 401:
+            header("WWW-Authenticate: Basic realm='Private page'");
+            header("HTTP/1.1 401 Unauthorized");
+            $this->render_error("401 Unauthorized");
+            break;
         case 403:
             header("HTTP/1.1 403 Forbidden");
             $this->render_error("403 Forbidden");
