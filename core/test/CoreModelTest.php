@@ -183,7 +183,7 @@ SQL;
      * @expectedException WebStream\ResourceNotFoundException
      */
     public function testNgNotFoundPropertiesAnnotation() {
-        $model = new \WebStream\TestModel4();
+        new \WebStream\TestModel4();
     }
     
     /**
@@ -192,7 +192,7 @@ SQL;
      * @expectedException WebStream\DatabaseException
      */
     public function testNgNotFoundTableAnnotation() {
-        $model = new \WebStream\TestModel5();
+        new \WebStream\TestModel5();
     }
     
     /**
@@ -201,16 +201,16 @@ SQL;
      * @expectedException WebStream\DatabaseException
      */
     public function testNgNotFoundDatabaseAnnotation() {
-        $model = new \WebStream\TestModel6();
+        new \WebStream\TestModel6();
     }
     
     /**
      * 異常系
-     * @Propertiesファイルが複数指定され、キーが重複した場合、例外が発生すること
-     * @expectedException WebStream\DatabasePropertiesException
+     * @SQLにPrefixキーを付けないで指定した場合、例外が発生すること
+     * @expectedException WebStream\ResourceNotFoundException
      */
-    public function testNgDuplicatePropertiesKey() {
-        $model = new \WebStream\TestModel8();
+    public function testNgNoPrefixSqlKey() {
+        // @SQLに指定したキーは、実行時でなければ検出できない
+        new \WebStream\TestModel8();
     }
 }
-    

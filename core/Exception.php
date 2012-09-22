@@ -21,7 +21,6 @@ class MethodNotFoundException extends \Exception {}
 class TemplateNotFoundException extends \Exception {}
 /** データベース例外 */
 class DatabaseException extends \Exception {}
-class DatabasePropertiesException extends DatabaseException {}
 /** ロガー例外 */
 class LoggerException extends \Exception {}
 /** 通信例外 */

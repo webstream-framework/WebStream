@@ -12,7 +12,7 @@ class HttpAgentTest extends UnitTestBase {
     const URL_OK = "http://www.yahoo.co.jp";
     const URL_RSS = "http://headlines.yahoo.co.jp/rss/itmedia_ait.xml";
     const URL_JSON = "http://tepco-usage-api.appspot.com/latest.json";
-    const URL_BASIC_AUTH = "http://x68000.q-e-d.net/~68user/net/sample/http-auth/secret.html";
+    const URL_BASIC_AUTH = "http://kensakuyoke.web.fc2.com/basic-test/test.html";
     const URL_NG_NOTFOUND = "http://wwww222.google.co.jp";
     
     public function setUp() {
@@ -63,8 +63,8 @@ class HttpAgentTest extends UnitTestBase {
      */
     public function testOkGetBasicAuth() {
         $http = new HttpAgent(array(
-            "basic_auth_id" => "hoge",
-            "basic_auth_password" => "fuga"
+            "basic_auth_id" => "guest",
+            "basic_auth_password" => "1234"
         ));
         $html = $http->get(self::URL_BASIC_AUTH);
         $status_code = $http->getStatusCode();

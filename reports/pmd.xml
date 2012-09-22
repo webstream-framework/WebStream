@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="1.2.0" timestamp="2012-09-22T22:03:23+09:00">
+<pmd version="1.2.0" timestamp="2012-09-23T00:37:05+09:00">
   <file name="/Users/stay/workspace2/WebStream/app/controllers/SampleController.php">
     <violation beginline="43" endline="43" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$params'.
@@ -104,7 +104,7 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreModel.php">
-    <violation beginline="8" endline="176" rule="NumberOfChildren" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren" class="CoreModel" priority="2">
+    <violation beginline="8" endline="206" rule="NumberOfChildren" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren" class="CoreModel" priority="2">
       The class CoreModel has 20 children. Consider to rebalance this class hierarchy.
     </violation>
     <violation beginline="10" endline="10" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
@@ -162,10 +162,10 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Exception.php">
-    <violation beginline="37" endline="37" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="36" endline="36" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$method'.
     </violation>
-    <violation beginline="37" endline="37" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="36" endline="36" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$arguments'.
     </violation>
   </file>

@@ -41,9 +41,9 @@ class CoreModel {
             // Modelクラスからの呼び出し元メソッド名を取得
             $callerMethod = $this->getCallerMethodName();
             // メソッド名から@SQLのインジェクト値を取得する
-            $sqlPropertiesKey = $this->getInjectedValue($callerMethod);
+            $sqlProperties = $this->getInjectedValue($callerMethod);
             // @Propertiesで指定した設定ファイル内のキーに一致するSQLを取得
-            $sql = $this->getDefinedSQL($sqlPropertiesKey);
+            $sql = $this->getDefinedSQL($sqlProperties["prefix"], $sqlProperties["key"]);
             $bind = array();
             if (!empty($arguments)) {
                 foreach ($arguments as $argument) {
@@ -73,12 +73,13 @@ class CoreModel {
         $databaseAnnotation = $annotation->classes("@Database");
         $tableAnnotations = $annotation->classes("@Table");
         $sqlAnnotations = $annotation->classes("@Properties");
-        $this->methodAnnotations = $annotation->methods("@SQL");
+        $sqlKeyAnnotations = $annotation->methods("@SQL");
         $dbname = !empty($databaseAnnotation) ? $databaseAnnotation[0]->value : null;
         $this->setTables($tableAnnotations);
         $this->dbConnection($dbname);
         $this->setColumns();
         $this->sqlProperties($sqlAnnotations);
+        $this->sqlKeys($sqlKeyAnnotations);
         $this->setMapper();
     }
     
@@ -108,28 +109,44 @@ class CoreModel {
     
     /**
      * SQLプロパティ情報を設定する
-     * @param Object SQLプロパティファイルアノテーション
+     * @param Object Propertiesプロパティファイルアノテーション
      */
     private function sqlProperties($sqlAnnotations) {
-        // Propertiesファイルに記述するキーは全体で一意にする必要がある。
-        // 重複のキーが合った場合は例外とする。
+        // Propertiesファイルに記述するキーはファイル内で一意にする必要がある。
         $properties = array();
         foreach ($sqlAnnotations as $annotation) {
             $filepath = $annotation->value;
-            $config = Utility::parseConfig($filepath);
-            if ($config === null) {
-                $errorMsg = "Properties file specified by @SQL annotation is not found: ${filepath}";
+            $properties = Utility::parseConfig($filepath);
+            if ($properties === null) {
+                $errorMsg = "Properties file specified by @Properties annotation is not found: ${filepath}";
                 throw new ResourceNotFoundException($errorMsg);
             }
-            $properties = Utility::parseConfig($filepath);
+            // 拡張子を除いたファイル名をキーとする
+            $prefix = basename($filepath, ".properties");
             foreach ($properties as $key => $sql) {
-                if (array_key_exists($key, $this->sqlProperties)) {
-                    $errorMsg = "Properties key is duplicated: ${key}";
-                    throw new DatabasePropertiesException($errorMsg);
+                if (!array_key_exists($prefix, $this->sqlProperties)) {
+                    $this->sqlProperties[$prefix] = array();
                 }
-                $this->sqlProperties[$key] = $sql;
+                if (!array_key_exists($key, $this->sqlProperties[$prefix])) {
+                    $this->sqlProperties[$prefix][$key] = $sql;
+                }
             }
         }
+    }
+    
+    /**
+     * SQLキーの妥当性を検証する
+     * @param Object SQLキーアノテーション
+     */
+    private function sqlKeys($sqlKeyAnnotations) {
+        foreach ($sqlKeyAnnotations as $sqlKeyAnnotation) {
+            if (!preg_match('/(^[a-zA-Z]{1}[a-zA-Z0-9]+)\.(.*)$/', $sqlKeyAnnotation->value)) {
+                $ca = $sqlKeyAnnotation->className . "#" . $sqlKeyAnnotation->methodName;
+                $errorMsg = "'$sqlKeyAnnotation->value' is invalid @SQL annotation value at $ca";
+                throw new ResourceNotFoundException($errorMsg);
+            }
+        }
+        $this->methodAnnotations = $sqlKeyAnnotations;
     }
 
     /**
@@ -153,24 +170,37 @@ class CoreModel {
     /**
      * @SQLでインジェクトした値を取得する
      * @param String インジェクト対象メソッド名
-     * @return String インジェクト値
+     * @return Hash インジェクト値
      */
     private function getInjectedValue($method) {
         foreach ($this->methodAnnotations as $annotation) {
             if ($annotation->methodName === $method) {
-                return $annotation->value;
+                // [propertiesファイルprefix].[キー]の形式でなければ例外を出す
+                // users.aaa.bbb はOKとする
+                if (preg_match('/(^[a-zA-Z]{1}[a-zA-Z0-9]+)\.(.*)$/', $annotation->value, $matches)) {
+                    return array(
+                        "prefix" => $matches[1],
+                        "key" => $matches[2]
+                    );
+                }
+                else {
+                    $errorMsg = "Invalid @SQL annotation value: $annotation->value";
+                    throw new ResourceNotFoundException($errorMsg);
+                }
             }
         }
     }
     
     /**
      * Propertiesファイルに定義されたSQLを返却する
+     * @param String Propertiesキー
      * @param String SQLキー
      * @return String SQL
      */
-    private function getDefinedSQL($key) {
-        if (array_key_exists($key, $this->sqlProperties)) {
-            return $this->sqlProperties[$key];
+    private function getDefinedSQL($prefix, $key) {
+        if (array_key_exists($prefix, $this->sqlProperties) &&
+            array_key_exists($key, $this->sqlProperties[$prefix])) {
+            return $this->sqlProperties[$prefix][$key];
         }
     }
 }

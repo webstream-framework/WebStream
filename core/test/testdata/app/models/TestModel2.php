@@ -9,7 +9,7 @@ namespace WebStream;
 class TestModel2 extends CoreModel {
     /**
      * @Inject
-     * @SQL("users")
+     * @SQL("users.users")
      */
     public function getUserList() {
         return $this->select();
@@ -17,7 +17,7 @@ class TestModel2 extends CoreModel {
     
     /**
      * @Inject
-     * @SQL("users2")
+     * @SQL("users.users2")
      */
     public function getUserList2($bind) {
         return $this->select($bind);
@@ -68,7 +68,7 @@ class TestModel6 extends CoreModel {}
 class TestModel7 extends CoreModel {
     /**
      * @Inject
-     * @SQL("outer_join")
+     * @SQL("users.outer_join")
      */
     public function outerJoin($bind) {
         return $this->select($bind);
@@ -78,7 +78,15 @@ class TestModel7 extends CoreModel {
 /**
  * @Inject
  * @Database("test")
- * @Table("users", "users2")
- * @Properties("core/test/testdata/sql/users.properties", "core/test/testdata/sql/users2.properties")
+ * @Table("users")
+ * @Properties("core/test/testdata/sql/users.properties")
  */
-class TestModel8 extends CoreModel {}
+class TestModel8 extends CoreModel {
+    /**
+     * @Inject
+     * @SQL("users")
+     */
+    public function noPrefix() {
+        return $this->select();
+    }
+}
