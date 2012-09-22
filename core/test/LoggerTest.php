@@ -19,6 +19,7 @@ class LoggerTest extends UnitTestBase {
         $log_path = Utility::getRoot() . $this->testdata_dir . "/log/stream.log";
         $handle = fopen($log_path, "w+");
         fclose($handle);
+        chmod($log_path, 0777);
     }
     
     private function write($level, $config_path, $msg, $stacktrace = null) {

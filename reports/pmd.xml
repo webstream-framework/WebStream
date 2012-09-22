@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="1.2.0" timestamp="2012-09-21T19:37:57+09:00">
+<pmd version="1.2.0" timestamp="2012-09-22T22:03:23+09:00">
   <file name="/Users/stay/workspace2/WebStream/app/controllers/SampleController.php">
     <violation beginline="43" endline="43" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$params'.
@@ -28,10 +28,10 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Application.php">
-    <violation beginline="8" endline="285" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Application" priority="3">
+    <violation beginline="8" endline="284" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Application" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
-    <violation beginline="8" endline="285" rule="CouplingBetweenObjects" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects" class="Application" priority="2">
+    <violation beginline="8" endline="284" rule="CouplingBetweenObjects" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects" class="Application" priority="2">
       The class Application has a coupling between objects value of 14. Consider to reduce the number of dependencies under 13.
     </violation>
     <violation beginline="14" endline="14" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
@@ -46,7 +46,7 @@
     <violation beginline="206" endline="206" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$instance'.
     </violation>
-    <violation beginline="235" endline="235" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+    <violation beginline="234" endline="234" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
       Avoid variables with short names like $ca
     </violation>
   </file>
@@ -110,6 +110,12 @@
     <violation beginline="10" endline="10" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
       Avoid variables with short names like $db
     </violation>
+    <violation beginline="14" endline="14" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$sql'.
+    </violation>
+    <violation beginline="16" endline="16" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$bind'.
+    </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreService.php">
     <violation beginline="21" endline="21" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
@@ -117,13 +123,13 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreView.php">
-    <violation beginline="8" endline="280" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreView" priority="3">
+    <violation beginline="8" endline="281" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreView" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
-    <violation beginline="228" endline="228" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+    <violation beginline="229" endline="229" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
       Avoid variables with short names like $s
     </violation>
-    <violation beginline="242" endline="242" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="243" endline="243" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$mime'.
     </violation>
   </file>
@@ -172,19 +178,19 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Logger.php">
-    <violation beginline="8" endline="290" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Logger" priority="3">
+    <violation beginline="8" endline="291" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Logger" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
-    <violation beginline="181" endline="191" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatemethod" class="Logger" method="write" priority="3">
+    <violation beginline="181" endline="192" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatemethod" class="Logger" method="write" priority="3">
       Avoid unused private methods such as 'write'.
     </violation>
-    <violation beginline="246" endline="246" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+    <violation beginline="247" endline="247" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
       Avoid variables with short names like $to
     </violation>
-    <violation beginline="247" endline="247" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="248" endline="248" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$from_date'.
     </violation>
-    <violation beginline="248" endline="248" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="249" endline="249" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$to_date'.
     </violation>
   </file>

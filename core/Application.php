@@ -68,27 +68,27 @@ class Application {
         // CSRFエラーの場合は400
         catch (CsrfException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->error(400);
+            $this->move(400);
         }
         // アクセス禁止の場合は403
         catch (ForbiddenAccessException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->error(403);
+            $this->move(403);
         }
         // リソース(URI)が見つからない場合は404
         catch (ResourceNotFoundException $e) {
             Logger::error($e->getMessage() . ": " . STREAM_ROUTING_PATH);
-            $this->error(404);
+            $this->move(404);
         }
         // バリデーションエラーの場合は422
         catch (ValidatorException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->error(422);
+            $this->move(422);
         }
         // それ以外のエラーは500
         catch (\Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->error(500);
+            $this->move(500);
         }
     }
 
@@ -119,12 +119,12 @@ class Application {
     }
     
     /**
-     * エラー画面を表示する
-     * @param int ステータスコード
+     * ステータスコードに合わせた画面に遷移する
+     * @param String ステータスコード
      */
-    private function error($status_code) {
+    private function move($statusCode) {
         $controller = new CoreController();
-        $controller->move($status_code);
+        $controller->move($statusCode);
     }
 
     /**
@@ -216,8 +216,7 @@ class Application {
                 $request = new Request();
                 if ($request->authUser() !==  $config["userid"] ||
                     $request->authPassword() !== $config["password"]) {
-                    $controller = new CoreController();
-                    $controller->move(401);
+                    $this->move(401);
                 }
             }
         }

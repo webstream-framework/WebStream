@@ -21,6 +21,7 @@ class RouterTest extends UnitTestBase {
         $log_path = Utility::getRoot() . $this->testdata_dir . "/log/stream.log";
         $handle = fopen($log_path, "w+");
         fclose($handle);
+        chmod($log_path, 0777);
     }
     
     /**
@@ -650,7 +651,6 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
         $line_tail = $this->logHead($this->config_path_log . "log.test.info.ok.ini");
-
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)$/',
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);

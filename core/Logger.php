@@ -186,6 +186,7 @@ class Logger {
             error_log($msg, 3, $this->_path);
         }
         catch (\Exception $e) {
+            echo "Kooo";
             throw new LoggerException($e->getMessage());
         }
     }

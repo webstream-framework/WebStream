@@ -122,7 +122,7 @@ HTML;
         if (!file_exists($cache_file) || filemtime($cache_file) < filemtime($template_path)) {
             file_put_contents($cache_file, $content, LOCK_EX);
         }
-        Logger::info($content);
+
         $this->outputHeader($type);
         $this->outputHTML($params, $cache_file);
     }

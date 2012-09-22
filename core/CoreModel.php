@@ -7,21 +7,21 @@ namespace WebStream;
  */
 class CoreModel {
     /** DBインスタンス */
-    protected $db;
+    private $db;
     /** テーブル名のリスト */
-    protected $tables = array();
+    private $tables = array();
     /** SQL */
-    protected $sql;
+    private $sql;
     /** BIND */
-    protected $bind = array();
+    private $bind = array();
     /** カラム情報 */
-    protected $columns;
+    private $columns;
     /** SQLプロパティファイル情報 */
-    protected $sqlProperties = array();
+    private $sqlProperties = array();
     /** メソッドアノテーション情報 */
-    protected $methodAnnotations;
+    private $methodAnnotations;
     /** DataMapperインスタンス */
-    protected $mapper;
+    private $mapper;
     
     /**
      * コンストラクタ
