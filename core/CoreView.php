@@ -108,7 +108,7 @@ HTML;
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = $this->convert(file_get_contents($template_path));
-        
+
         // formタグが含まれる場合はCSRFトークンを付与する
         if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
             $this->addToken($params, $content);
@@ -120,9 +120,9 @@ HTML;
 
         // テンプレートに書き出す
         if (!file_exists($cache_file) || filemtime($cache_file) < filemtime($template_path)) {
-            file_put_contents($cache_file, $content);
+            file_put_contents($cache_file, $content, LOCK_EX);
         }
-        
+        Logger::info($content);
         $this->outputHeader($type);
         $this->outputHTML($params, $cache_file);
     }
@@ -196,7 +196,8 @@ HTML;
         $map = array('&gt;' => '>',
                      '&lt;' => '<',
                      '%20'  => ' ',
-                     '%24'  => '$');
+                     '%24'  => '$',
+                     '%5C'  => '\\');
         $content = str_replace(array_keys($map), array_values($map), $content);
     }
 
