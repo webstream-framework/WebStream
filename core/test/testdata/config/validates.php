@@ -12,7 +12,8 @@ Validator::setRule(
             "get#name6" => "equal[kyouko]",
             "get#name7" => "length[10]",
             "get#name8" => "range[10..20]",
-            "get#name9" => "regexp[/^\d{1}$/]"
+            "get#name9" => "regexp[/^\d{1}$/]",
+            "get#name10" => "number"
         ),
         "test_validate_error_handling#validate1" => array(
             "get#name" => "required"

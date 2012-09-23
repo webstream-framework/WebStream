@@ -109,6 +109,10 @@ class Validator {
                 if ($this->ruleRange($rule)) {
                     $this->checkRange($rule, $key, $params);
                 }
+                // number
+                if ($this->ruleNumber($rule)) {
+                    $this->checkNumber($rule, $key, $params);
+                }
                 // regexp
                 if ($this->ruleRegexp($rule)) {
                     $this->checkRegexp($rule, $key, $params);
@@ -156,6 +160,7 @@ class Validator {
                     if ($this->ruleEqual($param)) break;
                     if ($this->ruleLength($param)) break;
                     if ($this->ruleRange($param)) break;
+                    if ($this->ruleNumber($param)) break;
                     if ($this->ruleRegexp($param)) break;
                     throw new ValidatorException("Invalid validation rule: ${param}");
                 }
@@ -304,6 +309,20 @@ class Validator {
     }
     
     /**
+     * 'number'に対する入力値チェック
+     * @param String バリデーションルール
+     * @param String リクエストキー
+     * @param Hash リクエストパラメータ
+     */
+    private function checkNumber($rule, $key, $params) {
+        if (preg_match('/^(number)$/', $rule) && array_key_exists($key, $params) && !preg_match('/^\d$/', $params[$key])) {
+            $this->setError($rule, $key, $params[$key]);
+            $errorMsg = "Validation rule error. '$params[$key]' is not number.";
+            throw new ValidatorException($errorMsg);
+        }
+    }
+    
+    /**
      * 'regexp[s]'に対する入力値チェック
      * @param String バリデーションルール
      * @param String リクエストキー
@@ -394,6 +413,15 @@ class Validator {
             return intval($matches[2]) < intval($matches[3]);
         }
         return false;
+    }
+    
+    /**
+     * 'number'の構文を検証
+     * @param String バリデーションルール
+     * @return Boolean 検証結果
+     */
+    private function ruleNumber($rule) {
+        return preg_match('/^(number)$/', $rule);
     }
 
     /**

@@ -783,5 +783,11 @@ SQL;
        );
    }
    
-   
+   public function notNumberParameter() {
+       return array(
+           array("aaaaa"),
+           array("-10"),
+           array("1.11")
+       );
+   }
 }

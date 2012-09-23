@@ -217,6 +217,18 @@ class ValidatorTest extends UnitTestBase {
 
     /**
      * 異常系
+     * バリデーションルール「number」に指定されているGETパラメータの範囲内でない場合、422が返却されること
+     * @dataProvider notNumberParameter
+     */
+    public function testNgNotNumberParameterByGet($str) {
+        $url = $this->root_url . "/get_validate1?name1=aaa&name10=" . $str;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "422");
+    }
+
+    /**
+     * 異常系
      * バリデーションルール「regexp[/s/]」にマッチしないGETパラメータが指定された場合、422が返却されること
      */
     public function testNgUnmatchRegexpParameterByGet() {
