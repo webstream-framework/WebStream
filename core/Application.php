@@ -189,10 +189,17 @@ class Application {
             // @Filter($filterName)を抽出
             // 複数のメソッドに対してアノテーションを定義可能とする
             if ($methodAnnotation->value === $filterName) {
-                if ($class->hasMethod($methodAnnotation->methodName)) {
-                    $hasHandlingMethod = true;
-                    $method = $class->getMethod($methodAnnotation->methodName);
-                    $method->invoke($instance);
+                // クラス名が一致しない場合、親クラスを辿り一致するまで走査する
+                // それでも一致しなければメソッドを持っていないと判断する
+                $_class = $class;
+                while ($_class) {
+                    if ($_class->getName() === $methodAnnotation->className &&
+                        $_class->hasMethod($methodAnnotation->methodName)) {
+                        $hasHandlingMethod = true;
+                        $method = $_class->getMethod($methodAnnotation->methodName);
+                        $method->invoke($instance);
+                    }
+                    $_class = $_class->getParentClass();
                 }
             }
         }
