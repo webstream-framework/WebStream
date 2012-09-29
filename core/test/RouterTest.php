@@ -368,6 +368,16 @@ class RouterTest extends UnitTestBase {
     
     /**
      * 正常系
+     * Before/AfterFilterがサブクラス->スーパークラスの順に実行されること
+     */
+    public function testOkFilterMulti() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/filter_multi";
+        $this->assertEquals("child beforesuper beforeexecutechild aftersuper after", $http->get($url));
+    }
+    
+    /**
+     * 正常系
      * 基本認証を正常に処理できること
      */
     public function testOkBasicAuthByAnnotation() {

@@ -7,7 +7,7 @@ namespace WebStream;
  */
 class Annotation {
     /** インジェクションポイント */
-    const REGEX_INJECT = '/@Inject\n+/';
+    const REGEX_INJECT = '/@Inject[\n|\r|\r\n]+/';
     /** リフレクションクラスインスタンス */
     private $refClass;
     
