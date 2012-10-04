@@ -34,14 +34,7 @@ class DataMapper {
      * @return mixed 実行結果
      */
     public function __call($method, $arguments) {
-        $result = array();
-        foreach ($this->tables as $table) {
-            if (!array_key_exists($table, $this->data)) {
-                $this->data[$table] = $this->getStoredData($method, $arguments, $table);
-            }
-            $result = array_merge($result, $this->data[$table]);
-        }
-        return $result;
+        return $this->getStoredData($method, $arguments, $this->tables);
     }
     
     /**
@@ -51,27 +44,20 @@ class DataMapper {
      * @param String テーブル名
      * @return Array selectの実行結果
      */
-    private function getStoredData($method, $arguments, $table) {
-        $snakeMethod = Utility::camel2snake($method);
-        $columnName = null;
-        $columns = $this->columns[$table];
-        if ($columns != null) {
-            foreach ($columns as $column) {
-                if ($column["name"] === $snakeMethod) {
-                    $columnName = $snakeMethod;
-                    break;
-                }
+    private function getStoredData($method, $arguments, $tables) {
+        $columnName = Utility::camel2snake($method);
+        $sqlList = array();
+        foreach ($tables as $table) {
+            $columns = $this->columns[$table];
+            if (!in_array($columnName, $columns)) {
+                $className = get_class($this);
+                $errorMsg = "Column '$columnName' is not found in Table '$table.' " .
+                            "$className#$method mapping failed.";
+                throw new MethodNotFoundException($errorMsg);
             }
+            $sqlList[] = sprintf("SELECT %s FROM %s", $columnName, $table);
         }
-        
-        if ($columnName === null) {
-            $className = get_class($this);
-            $errorMsg = "Column '$snakeMethod' is not found in Table '$table.' " .
-                        "$className#$method mapping failed.";
-            throw new MethodNotFoundException($errorMsg);
-        }
-        
-        $sql = sprintf("SELECT %s FROM %s", $columnName, $table);
+        $sql = implode(' UNION ALL ', $sqlList);
         $bind = array();
         $limitSql = "LIMIT :limit OFFSET :offset";
         if (count($arguments) == 1 && is_int($arguments[0])) {

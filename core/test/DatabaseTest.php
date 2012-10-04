@@ -49,8 +49,37 @@ class DatabaseTest extends UnitTestBase {
         ));
         // SELECT
         $result = $this->db->select("SELECT name FROM stream_test");
-        $name = $result[0]["name"];
+        $name = null;
+        foreach ($result as $elem) { $name = $elem["name"]; break; }
         $this->assertEquals("select test", $name);
+    }
+    
+    /**
+     * 正常系
+     * SELECTの結果がPDOIteratorクラスのインスタンスになっていること
+     */
+    public function testOkSelectIterator() {
+        // INSERT
+        $this->db->insert("INSERT INTO stream_test (name) values (:name)", array(
+            "name" => "select test"
+        ));
+        // SELECT
+        $result = $this->db->select("SELECT name FROM stream_test");
+        $this->assertTrue($result instanceof \WebStream\PDOIterator);
+    }
+    
+    /**
+     * 正常系
+     * PDOIterator#toArrayによりSELECTの結果が配列になること
+     */
+    public function testOkSelectArray() {
+        // INSERT
+        $this->db->insert("INSERT INTO stream_test (name) values (:name)", array(
+            "name" => "select test"
+        ));
+        // SELECT
+        $result = $this->db->select("SELECT name FROM stream_test");
+        $this->assertTrue(is_array($result->toArray()));
     }
     
     /**
@@ -68,7 +97,8 @@ class DatabaseTest extends UnitTestBase {
         ));
         // SELECT
         $result = $this->db->select("SELECT name FROM stream_test");
-        $name = $result[0]["name"];
+        $name = null;
+        foreach ($result as $elem) { $name = $elem["name"]; break; }
         $this->assertEquals("update test", $name);
     }
     

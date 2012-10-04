@@ -82,6 +82,7 @@ Router::setRule(
         '/validate_handling2' => "test_validate_error_handling2#validate1",
         '/basic_auth' => "test_basic_auth#execute",
         '/basic_auth2' => "test_basic_auth#execute2",
-        '/filter_multi' => "test_filter_multi#execute"
+        '/filter_multi' => "test_filter_multi#execute",
+        '/cache' => "test_cache_annotation#execute"
     )
 );

@@ -18,7 +18,16 @@ class Application {
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.6');
+        define('STREAM_VERSION', '0.3.7');
+        ob_start();
+    }
+    
+    /**
+     * アプリケーション終了時の処理
+     */
+    public function __destruct() {
+        $buffer = ob_get_clean();
+        echo $buffer;
     }
     
     /**
@@ -35,6 +44,7 @@ class Application {
         $request = new Request();
         define('STREAM_BASE_URI', $request->getBaseURL());
         define('STREAM_ROUTING_PATH', $request->getPathInfo());
+        define('STREAM_QUERY_STRING', $request->getQueryString());
         /** publicディレクトリ */
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
@@ -107,15 +117,27 @@ class Application {
         $initialize->invoke($instance);
         // before_filter
         $this->before($class, $instance);
-        // basic auth
-        $this->basicAuth($class, $instance);
-        // validate
-        $this->validate($class, $instance);
+        // run annotation
+        $this->runAnnotation($class, $instance);
         // action
         $action = $class->getMethod($this->action());
         $action->invoke($instance, safetyIn($this->params()));
         // after_filter
         $this->after($class, $instance);
+    }
+    
+    /**
+     * アノテーションを実行
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function runAnnotation($class, $instance) {
+        // basic auth
+        $this->basicAuth($class, $instance);
+        // validate
+        $this->validate($class, $instance);
+        // cache
+        $this->cache($class, $instance);
     }
     
     /**
@@ -224,6 +246,23 @@ class Application {
                     $request->authPassword() !== $config["password"]) {
                     $this->move(401);
                 }
+            }
+        }
+    }
+    
+    private function cache($class, $instance) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Cache");
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                $cacheKey = md5(STREAM_BASE_URI . STREAM_ROUTING_PATH . STREAM_QUERY_STRING);
+                
+                
+                
+                var_dump($methodAnnotation->value);
+                var_dump(STREAM_BASE_URI);
+                var_dump(STREAM_ROUTING_PATH);
+                var_dump(STREAM_QUERY_STRING);
             }
         }
     }

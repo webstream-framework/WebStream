@@ -9,7 +9,7 @@ namespace WebStream;
 class SampleModel extends CoreModel {
     /**
      * @Inject
-     * @SQL("users")
+     * @SQL("users.users")
      */
     public function model1() {
         return $this->select();

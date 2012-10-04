@@ -104,7 +104,6 @@ SQL;
     public function testOkExecuteMappingWithMerge() {
         $model = new \WebStream\TestModel7();
         $result = $model->userName();
-        $this->assertNotCount(0, $result);
         $isOk1 = false;
         $isOk2 = false;
         $isOk3 = false;
@@ -133,7 +132,12 @@ SQL;
     public function testOkChangeDatabase() {
         $model = new \WebStream\TestModel3();
         $result = $model->userName();
-        $this->assertEquals("kyouko", $result[0]["user_name"]);
+        $userName = null;
+        foreach ($result as $elem) {
+            $userName = $elem["user_name"];
+            break;
+        }
+        $this->assertEquals("kyouko", $userName);
     }
     
     /**
@@ -152,9 +156,13 @@ SQL;
      */
     public function testOkInjectedSQLWithBind() {
         $model = new \WebStream\TestModel2();
+        $mem1 = memory_get_usage();
         $result = $model->getUserList2(array("name" => "yui"));
-        $this->assertNotCount(0, $result);
-        $this->assertEquals("yui", $result[0]["user_name"]);
+        foreach ($result as $elem) {
+            $userName = $elem["user_name"];
+            break;
+        }
+        $this->assertEquals("yui", $userName);
     }
     
     /**

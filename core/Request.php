@@ -76,6 +76,14 @@ class Request {
     }
     
     /**
+     * クエリストリングを返却する
+     * @return String クエリストリング
+     */
+    public function getQueryString() {
+        return $this->server("QUERY_STRING");
+    }
+    
+    /**
      * ヘッダを取得する
      * @param String ヘッダタイプ
      * @return String ヘッダ値

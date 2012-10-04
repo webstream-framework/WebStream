@@ -1,564 +1,1577 @@
-[2012-09-29 11:15:45,48] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_get_view
-[2012-09-29 11:15:45,50] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_post_view
-[2012-09-29 11:15:46, 6] [INFO] HTTP GET success(200): http://rss.dailynews.yahoo.co.jp/fc/rss.xml
-[2012-09-29 11:15:46,12] [INFO] Request method: get
-[2012-09-29 11:15:46,12] [INFO] Request parameter validation is execute: test_validate_error_handling#validate1
-[2012-09-29 11:15:46,12] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling
-[2012-09-29 11:15:46,14] [INFO] Request method: get
-[2012-09-29 11:15:46,14] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
-[2012-09-29 11:15:46,14] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=a
-[2012-09-29 11:15:46,16] [INFO] Request method: get
-[2012-09-29 11:15:46,16] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
-[2012-09-29 11:15:46,16] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=yui
-[2012-09-29 11:15:46,21] [INFO] Request method: get
-[2012-09-29 11:15:46,21] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,21] [ERROR] Validation rule error. 'name1' is required.
+[2012-10-04 19:37:10,71] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_get_view
+[2012-10-04 19:37:10,74] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/csrf_post_view
+[2012-10-04 19:37:11,28] [INFO] HTTP GET success(200): http://rss.dailynews.yahoo.co.jp/fc/rss.xml
+[2012-10-04 19:37:11,33] [INFO] Request method: get
+[2012-10-04 19:37:11,33] [INFO] Request parameter validation is execute: test_validate_error_handling#validate1
+[2012-10-04 19:37:11,34] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling
+[2012-10-04 19:37:11,36] [INFO] Request method: get
+[2012-10-04 19:37:11,36] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-10-04 19:37:11,36] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=a
+[2012-10-04 19:37:11,38] [INFO] Request method: get
+[2012-10-04 19:37:11,38] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-10-04 19:37:11,39] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=yui
+[2012-10-04 19:37:11,43] [INFO] Request method: get
+[2012-10-04 19:37:11,43] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,43] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,21] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,23] [INFO] Request method: get
-[2012-09-29 11:15:46,23] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,23] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,43] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,46] [INFO] Request method: get
+[2012-10-04 19:37:11,46] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,46] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,23] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,25] [INFO] Request method: get
-[2012-09-29 11:15:46,25] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,26] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,46] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,48] [INFO] Request method: get
+[2012-10-04 19:37:11,48] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,48] [ERROR] Validation rule error. 'name2' must be more than 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,26] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,28] [INFO] Request method: get
-[2012-09-29 11:15:46,28] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,28] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,48] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,50] [INFO] Request method: get
+[2012-10-04 19:37:11,50] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,50] [ERROR] Validation rule error. 'name2' must be more than 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,28] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,30] [INFO] Request method: get
-[2012-09-29 11:15:46,30] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,30] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,50] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,52] [INFO] Request method: get
+[2012-10-04 19:37:11,52] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,53] [ERROR] Validation rule error. 'name3' must be less than 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,30] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,32] [INFO] Request method: get
-[2012-09-29 11:15:46,32] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,32] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,53] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,55] [INFO] Request method: get
+[2012-10-04 19:37:11,55] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,55] [ERROR] Validation rule error. 'name3' must be less than 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,32] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,35] [INFO] Request method: get
-[2012-09-29 11:15:46,35] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,35] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,55] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,57] [INFO] Request method: get
+[2012-10-04 19:37:11,57] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,57] [ERROR] Validation rule error. 'name4' must be more than 100.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,35] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,37] [INFO] Request method: get
-[2012-09-29 11:15:46,37] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,37] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,57] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,59] [INFO] Request method: get
+[2012-10-04 19:37:11,59] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,59] [ERROR] Validation rule error. 'name4' must be more than 100.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,37] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,39] [INFO] Request method: get
-[2012-09-29 11:15:46,39] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,39] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,59] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,62] [INFO] Request method: get
+[2012-10-04 19:37:11,62] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,62] [ERROR] Validation rule error. 'name4' must be more than 100.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,39] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,42] [INFO] Request method: get
-[2012-09-29 11:15:46,42] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,42] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,62] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,64] [INFO] Request method: get
+[2012-10-04 19:37:11,64] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,64] [ERROR] Validation rule error. 'name5' must be less than 200.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,42] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,44] [INFO] Request method: get
-[2012-09-29 11:15:46,44] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,44] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,64] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,66] [INFO] Request method: get
+[2012-10-04 19:37:11,66] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,66] [ERROR] Validation rule error. 'name5' must be less than 200.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,44] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,46] [INFO] Request method: get
-[2012-09-29 11:15:46,46] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,46] [ERROR] Validation rule error. 'name6' must be equals kyouko.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,66] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,69] [INFO] Request method: get
+[2012-10-04 19:37:11,69] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,69] [ERROR] Validation rule error. 'name6' must be equals kyouko.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(102): WebStream\Validator->checkEqual('equal[kyouko]', 'name6', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,46] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,48] [INFO] Request method: get
-[2012-09-29 11:15:46,48] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,48] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,69] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,71] [INFO] Request method: get
+[2012-10-04 19:37:11,71] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,71] [ERROR] Validation rule error. 'name7' must be equals 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,48] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,51] [INFO] Request method: get
-[2012-09-29 11:15:46,51] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,51] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,71] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,73] [INFO] Request method: get
+[2012-10-04 19:37:11,73] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,73] [ERROR] Validation rule error. 'name7' must be equals 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,51] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,53] [INFO] Request method: get
-[2012-09-29 11:15:46,53] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,53] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,73] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,76] [INFO] Request method: get
+[2012-10-04 19:37:11,76] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,76] [ERROR] Validation rule error. 'name7' must be equals 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,53] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,55] [INFO] Request method: get
-[2012-09-29 11:15:46,55] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,55] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,76] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,78] [INFO] Request method: get
+[2012-10-04 19:37:11,78] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,78] [ERROR] Validation rule error. 'name7' must be equals 10.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,55] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,57] [INFO] Request method: get
-[2012-09-29 11:15:46,57] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,58] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,78] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,80] [INFO] Request method: get
+[2012-10-04 19:37:11,80] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,80] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,58] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,60] [INFO] Request method: get
-[2012-09-29 11:15:46,60] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,60] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,80] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,83] [INFO] Request method: get
+[2012-10-04 19:37:11,83] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,83] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,60] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,62] [INFO] Request method: get
-[2012-09-29 11:15:46,62] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,62] [ERROR] Validation rule error. 'aaaaa' is not number.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,83] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,85] [INFO] Request method: get
+[2012-10-04 19:37:11,85] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,85] [ERROR] Validation rule error. 'aaaaa' is not number.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,62] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,64] [INFO] Request method: get
-[2012-09-29 11:15:46,64] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,65] [ERROR] Validation rule error. '-10' is not number.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,85] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,87] [INFO] Request method: get
+[2012-10-04 19:37:11,87] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,87] [ERROR] Validation rule error. '-10' is not number.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,65] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,68] [INFO] Request method: get
-[2012-09-29 11:15:46,68] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,68] [ERROR] Validation rule error. '1.11' is not number.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,87] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,90] [INFO] Request method: get
+[2012-10-04 19:37:11,90] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,90] [ERROR] Validation rule error. '1.11' is not number.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,68] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,71] [INFO] Request method: get
-[2012-09-29 11:15:46,71] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,71] [ERROR] Validation rule error. 'name9' is unmatche regular expression '/^\d{1}$/'.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,90] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,92] [INFO] Request method: get
+[2012-10-04 19:37:11,92] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,92] [ERROR] Validation rule error. 'name9' is unmatche regular expression '/^\d{1}$/'.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(118): WebStream\Validator->checkRegexp('regexp[/^\d{1}$...', 'name9', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,71] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,74] [INFO] Request method: get
-[2012-09-29 11:15:46,74] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,74] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,92] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,94] [INFO] Request method: get
+[2012-10-04 19:37:11,94] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,94] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,74] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,74] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:46,77] [INFO] Request method: get
-[2012-09-29 11:15:46,77] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,77] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,94] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,95] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:11,97] [INFO] Request method: get
+[2012-10-04 19:37:11,97] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,97] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,78] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,78] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:46,82] [INFO] Request method: get
-[2012-09-29 11:15:46,82] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,82] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,97] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,97] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:11,99] [INFO] Request method: get
+[2012-10-04 19:37:11,99] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:11,99] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,82] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,83] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:46,85] [INFO] Request method: get
-[2012-09-29 11:15:46,85] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,85] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:11,99] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:11,99] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12, 1] [INFO] Request method: get
+[2012-10-04 19:37:12, 1] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12, 1] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,85] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,85] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:46,88] [INFO] Request method: get
-[2012-09-29 11:15:46,88] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,88] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12, 1] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12, 2] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12, 4] [INFO] Request method: get
+[2012-10-04 19:37:12, 4] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12, 4] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,88] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,88] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:46,91] [INFO] Request method: get
-[2012-09-29 11:15:46,91] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,91] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12, 4] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12, 4] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12, 6] [INFO] Request method: get
+[2012-10-04 19:37:12, 6] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12, 6] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,91] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,91] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:46,96] [INFO] Request method: get
-[2012-09-29 11:15:46,96] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,96] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12, 6] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12, 6] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12, 8] [INFO] Request method: get
+[2012-10-04 19:37:12, 8] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12, 8] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,96] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,96] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:46,99] [INFO] Request method: get
-[2012-09-29 11:15:46,99] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:46,99] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12, 8] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12, 9] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,11] [INFO] Request method: get
+[2012-10-04 19:37:12,11] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,11] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:46,99] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:46,99] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47, 4] [INFO] Request method: get
-[2012-09-29 11:15:47, 5] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47, 6] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,11] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,11] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,13] [INFO] Request method: get
+[2012-10-04 19:37:12,13] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,13] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47, 6] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47, 6] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47, 8] [INFO] Request method: get
-[2012-09-29 11:15:47, 8] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47, 8] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,13] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,13] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,15] [INFO] Request method: get
+[2012-10-04 19:37:12,15] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,15] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47, 8] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47, 9] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,13] [INFO] Request method: get
-[2012-09-29 11:15:47,13] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,13] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,16] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,16] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,18] [INFO] Request method: get
+[2012-10-04 19:37:12,18] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,18] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,13] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,13] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,16] [INFO] Request method: get
-[2012-09-29 11:15:47,16] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,17] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,18] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,18] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,20] [INFO] Request method: get
+[2012-10-04 19:37:12,20] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,20] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,17] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,17] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,22] [INFO] Request method: get
-[2012-09-29 11:15:47,22] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,22] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,20] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,20] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,22] [INFO] Request method: get
+[2012-10-04 19:37:12,22] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,22] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,22] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,22] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,26] [INFO] Request method: get
-[2012-09-29 11:15:47,26] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,26] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,22] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,23] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,25] [INFO] Request method: get
+[2012-10-04 19:37:12,25] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,25] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,26] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,26] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,28] [INFO] Request method: get
-[2012-09-29 11:15:47,28] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,28] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,25] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,25] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,27] [INFO] Request method: get
+[2012-10-04 19:37:12,27] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,27] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,28] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,29] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,31] [INFO] Request method: get
-[2012-09-29 11:15:47,31] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,31] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,27] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,27] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,29] [INFO] Request method: get
+[2012-10-04 19:37:12,29] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,29] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,31] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,31] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,34] [INFO] Request method: get
-[2012-09-29 11:15:47,34] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,34] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,30] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,30] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,32] [INFO] Request method: get
+[2012-10-04 19:37:12,32] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,32] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,34] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,35] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,38] [INFO] Request method: get
-[2012-09-29 11:15:47,38] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,38] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,32] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,32] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,34] [INFO] Request method: get
+[2012-10-04 19:37:12,34] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,34] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,38] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,38] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
-[2012-09-29 11:15:47,40] [INFO] Request method: get
-[2012-09-29 11:15:47,40] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
-[2012-09-29 11:15:47,40] [ERROR] Validation rule error. 'name1' is required.
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,34] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,34] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:12,36] [INFO] Request method: get
+[2012-10-04 19:37:12,36] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-10-04 19:37:12,37] [ERROR] Validation rule error. 'name1' is required.
 	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(242): WebStream\Validator->validateParameter('test_validate
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(281): WebStream\Validator->validateParameter('test_validate
 	#g...', Array, 'get')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(113): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 [internal function]: WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
-	#6 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-29 11:15:47,40] [INFO] HTTP access occured: status code 422
-[2012-09-29 11:15:47,41] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(138): WebStream\Application->validate(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->runAnnotation(Object(ReflectionClass), Object(WebStream\TestValidateController))
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-04 19:37:12,37] [INFO] HTTP access occured: status code 422
+[2012-10-04 19:37:12,37] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-04 19:37:47,97] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:37:47,97] [INFO] Bind statement: 
+[2012-10-04 19:37:47,99] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:37:47,99] [INFO] Bind statement: insert test
+[2012-10-04 19:37:47,99] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:37:47,99] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 0] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:37:48, 0] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 1] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:37:48, 1] [INFO] Bind statement: select test
+[2012-10-04 19:37:48, 1] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:37:48, 1] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 2] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:37:48, 2] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 2] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:37:48, 2] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 3] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:37:48, 3] [INFO] Bind statement: insert test
+[2012-10-04 19:37:48, 3] [INFO] Executed SQL: UPDATE stream_test SET name = :name
+[2012-10-04 19:37:48, 3] [INFO] Bind statement: update test
+[2012-10-04 19:37:48, 4] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:37:48, 4] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 4] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:37:48, 4] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 4] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:37:48, 4] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 5] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:37:48, 5] [INFO] Bind statement: delete test
+[2012-10-04 19:37:48, 5] [INFO] Executed SQL: DELETE FROM stream_test
+[2012-10-04 19:37:48, 5] [INFO] Bind statement: 
+[2012-10-04 19:37:48, 5] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:37:48, 5] [INFO] Bind statement: 
+[2012-10-04 19:41:28,61] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:41:28,61] [INFO] Bind statement: 
+[2012-10-04 19:41:28,63] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:41:28,63] [INFO] Bind statement: insert test
+[2012-10-04 19:41:28,63] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:41:28,63] [INFO] Bind statement: 
+[2012-10-04 19:41:28,65] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:41:28,65] [INFO] Bind statement: 
+[2012-10-04 19:41:28,66] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:41:28,66] [INFO] Bind statement: select test
+[2012-10-04 19:41:28,67] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:41:28,67] [INFO] Bind statement: 
+[2012-10-04 19:41:28,67] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:41:28,67] [INFO] Bind statement: 
+[2012-10-04 19:41:28,68] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:41:28,68] [INFO] Bind statement: 
+[2012-10-04 19:41:28,69] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:41:28,69] [INFO] Bind statement: select test
+[2012-10-04 19:41:28,69] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:41:28,69] [INFO] Bind statement: 
+[2012-10-04 19:41:28,69] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:41:28,69] [INFO] Bind statement: 
+[2012-10-04 19:41:28,69] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:41:28,69] [INFO] Bind statement: 
+[2012-10-04 19:41:28,70] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:41:28,70] [INFO] Bind statement: insert test
+[2012-10-04 19:41:28,71] [INFO] Executed SQL: UPDATE stream_test SET name = :name
+[2012-10-04 19:41:28,71] [INFO] Bind statement: update test
+[2012-10-04 19:41:28,71] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:41:28,71] [INFO] Bind statement: 
+[2012-10-04 19:41:28,71] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:41:28,71] [INFO] Bind statement: 
+[2012-10-04 19:41:28,71] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:41:28,71] [INFO] Bind statement: 
+[2012-10-04 19:41:28,72] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:41:28,72] [INFO] Bind statement: delete test
+[2012-10-04 19:41:28,72] [INFO] Executed SQL: DELETE FROM stream_test
+[2012-10-04 19:41:28,72] [INFO] Bind statement: 
+[2012-10-04 19:41:28,72] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:41:28,72] [INFO] Bind statement: 
+[2012-10-04 19:43:55,22] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:43:55,22] [INFO] Bind statement: 
+[2012-10-04 19:43:55,23] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:43:55,23] [INFO] Bind statement: insert test
+[2012-10-04 19:43:55,23] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:43:55,23] [INFO] Bind statement: 
+[2012-10-04 19:43:55,24] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:43:55,24] [INFO] Bind statement: 
+[2012-10-04 19:43:55,26] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:43:55,26] [INFO] Bind statement: select test
+[2012-10-04 19:43:55,26] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:43:55,26] [INFO] Bind statement: 
+[2012-10-04 19:43:55,26] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:43:55,26] [INFO] Bind statement: 
+[2012-10-04 19:43:55,27] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:43:55,27] [INFO] Bind statement: 
+[2012-10-04 19:43:55,28] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:43:55,28] [INFO] Bind statement: select test
+[2012-10-04 19:43:55,28] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:43:55,28] [INFO] Bind statement: 
+[2012-10-04 19:43:55,28] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:43:55,28] [INFO] Bind statement: 
+[2012-10-04 19:43:55,29] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:43:55,29] [INFO] Bind statement: 
+[2012-10-04 19:43:55,30] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:43:55,30] [INFO] Bind statement: select test
+[2012-10-04 19:43:55,30] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:43:55,30] [INFO] Bind statement: 
+[2012-10-04 19:43:55,30] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:43:55,30] [INFO] Bind statement: 
+[2012-10-04 19:43:55,31] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:43:55,31] [INFO] Bind statement: 
+[2012-10-04 19:43:55,32] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:43:55,32] [INFO] Bind statement: insert test
+[2012-10-04 19:43:55,32] [INFO] Executed SQL: UPDATE stream_test SET name = :name
+[2012-10-04 19:43:55,32] [INFO] Bind statement: update test
+[2012-10-04 19:43:55,32] [INFO] Executed SQL: SELECT name FROM stream_test
+[2012-10-04 19:43:55,32] [INFO] Bind statement: 
+[2012-10-04 19:43:55,32] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:43:55,32] [INFO] Bind statement: 
+[2012-10-04 19:43:55,33] [INFO] Executed SQL: CREATE TABLE stream_test (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+[2012-10-04 19:43:55,33] [INFO] Bind statement: 
+[2012-10-04 19:43:55,33] [INFO] Executed SQL: INSERT INTO stream_test (name) values (:name)
+[2012-10-04 19:43:55,33] [INFO] Bind statement: delete test
+[2012-10-04 19:43:55,34] [INFO] Executed SQL: DELETE FROM stream_test
+[2012-10-04 19:43:55,34] [INFO] Bind statement: 
+[2012-10-04 19:43:55,34] [INFO] Executed SQL: DROP TABLE stream_test
+[2012-10-04 19:43:55,34] [INFO] Bind statement: 
+[2012-10-04 20:08:45,64] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,64] [INFO] Bind statement: 
+[2012-10-04 20:08:45,64] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-04 20:08:45,65] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,65] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,65] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,65] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,65] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,65] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,65] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,65] [INFO] Bind statement: 
+[2012-10-04 20:08:45,65] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-04 20:08:45,65] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,65] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,65] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,65] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,66] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,66] [INFO] Bind statement: 
+[2012-10-04 20:08:45,66] [INFO] Executed SQL: select * from users
+[2012-10-04 20:08:45,66] [INFO] Bind statement: 
+[2012-10-04 20:08:45,67] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,67] [INFO] Bind statement: 
+[2012-10-04 20:08:45,67] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-04 20:08:45,67] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,67] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,67] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,67] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,67] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,67] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,67] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,67] [INFO] Bind statement: 
+[2012-10-04 20:08:45,67] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-04 20:08:45,68] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,68] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,68] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,68] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,68] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,68] [INFO] Bind statement: 
+[2012-10-04 20:08:45,68] [INFO] Executed SQL: select * from users where user_name = :name
+[2012-10-04 20:08:45,68] [INFO] Bind statement: yui
+[2012-10-04 20:08:45,69] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,69] [INFO] Bind statement: 
+[2012-10-04 20:08:45,69] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,69] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,69] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,69] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,69] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,69] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,69] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,69] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,69] [INFO] Bind statement: 
+[2012-10-04 20:08:45,69] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,69] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,69] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,70] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,70] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,70] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,70] [INFO] Bind statement: 
+[2012-10-04 20:08:45,70] [INFO] Executed SQL: SELECT user_name FROM users
+[2012-10-04 20:08:45,70] [INFO] Bind statement: 
+[2012-10-04 20:08:45,71] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,71] [INFO] Bind statement: 
+[2012-10-04 20:08:45,71] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,71] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,71] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,71] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,71] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,71] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,71] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,71] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,71] [INFO] Bind statement: 
+[2012-10-04 20:08:45,71] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,71] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,72] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,72] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,72] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,72] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,72] [INFO] Bind statement: 
+[2012-10-04 20:08:45,72] [INFO] Executed SQL: SELECT * FROM users2 LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,72] [INFO] Bind statement: 
+[2012-10-04 20:08:45,72] [INFO] Executed SQL: SELECT user_name FROM users UNION ALL SELECT user_name FROM users2
+[2012-10-04 20:08:45,72] [INFO] Bind statement: 
+[2012-10-04 20:08:45,73] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,73] [INFO] Bind statement: 
+[2012-10-04 20:08:45,73] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,73] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,73] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,73] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,73] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,74] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,74] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,74] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,74] [INFO] Bind statement: 
+[2012-10-04 20:08:45,74] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,74] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,74] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,74] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,74] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,74] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,74] [INFO] Bind statement: 
+[2012-10-04 20:08:45,75] [INFO] Executed SQL: SELECT user_name FROM users
+[2012-10-04 20:08:45,75] [INFO] Bind statement: 
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,76] [INFO] Bind statement: 
+[2012-10-04 20:08:45,76] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,76] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,76] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,76] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,76] [INFO] Bind statement: 
+[2012-10-04 20:08:45,76] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,76] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,76] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,76] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,76] [INFO] Bind statement: 
+[2012-10-04 20:08:45,77] [INFO] Executed SQL: select * from users
+[2012-10-04 20:08:45,77] [INFO] Bind statement: 
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,78] [INFO] Bind statement: 
+[2012-10-04 20:08:45,78] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,78] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,78] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,78] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,78] [INFO] Bind statement: 
+[2012-10-04 20:08:45,78] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,78] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,78] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,78] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,78] [INFO] Bind statement: 
+[2012-10-04 20:08:45,79] [INFO] Executed SQL: select * from users where user_name = :name
+[2012-10-04 20:08:45,79] [INFO] Bind statement: yui
+[2012-10-04 20:08:45,79] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,79] [INFO] Bind statement: 
+[2012-10-04 20:08:45,79] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,79] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,79] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:45,79] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,79] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:45,79] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,80] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:45,80] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:45,80] [INFO] Bind statement: 
+[2012-10-04 20:08:45,80] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:45,80] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,80] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:45,80] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:45,80] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:45,81] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,81] [INFO] Bind statement: 
+[2012-10-04 20:08:45,81] [INFO] Executed SQL: SELECT * FROM users2 LIMIT 1 OFFSET 0
+[2012-10-04 20:08:45,81] [INFO] Bind statement: 
+[2012-10-04 20:08:45,81] [INFO] Executed SQL: select users.user_name as name1, users2.user_name as name2 from users left outer join users2 on users.user_id = users2.user_id where users.user_id = :id
+[2012-10-04 20:08:45,81] [INFO] Bind statement: KON000001
+[2012-10-04 20:08:47, 8] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47, 8] [INFO] Bind statement: 
+[2012-10-04 20:08:47, 8] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47, 8] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47, 8] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:47, 8] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47, 8] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:47, 9] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47, 9] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:47, 9] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47, 9] [INFO] Bind statement: 
+[2012-10-04 20:08:47, 9] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47, 9] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47, 9] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:47, 9] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47, 9] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:47, 9] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:47, 9] [INFO] Bind statement: 
+[2012-10-04 20:08:47,10] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,10] [INFO] Bind statement: 
+[2012-10-04 20:08:47,10] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,10] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,10] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:47,10] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,10] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:47,10] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,10] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:47,10] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,10] [INFO] Bind statement: 
+[2012-10-04 20:08:47,10] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,10] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,10] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:47,10] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,11] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:47,11] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:47,11] [INFO] Bind statement: 
+[2012-10-04 20:08:47,11] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,11] [INFO] Bind statement: 
+[2012-10-04 20:08:47,11] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,11] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,11] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:47,11] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,11] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:47,12] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,12] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:47,12] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,12] [INFO] Bind statement: 
+[2012-10-04 20:08:47,12] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,12] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,12] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:47,12] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,12] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:47,12] [INFO] Executed SQL: SELECT * FROM dummy LIMIT 1 OFFSET 0
+[2012-10-04 20:08:47,12] [INFO] Bind statement: 
+[2012-10-04 20:08:47,12] [ERROR] Can't create statement. - SELECT * FROM dummy LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM d...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(203): WebStream\CoreModel->__construct()
+	#5 [internal function]: WebStream\Test\CoreModelTest->testNgNotFoundTableAnnotation()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(940): ReflectionMethod->invokeArgs(Object(WebStream\Test\CoreModelTest), Array)
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(802): PHPUnit_Framework_TestCase->runTest()
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#13 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#14 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#15 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#16 {main}
+[2012-10-04 20:08:47,12] [ERROR] Can't create statement. - SELECT * FROM dummy LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM d...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(203): WebStream\CoreModel->__construct()
+	#5 [internal function]: WebStream\Test\CoreModelTest->testNgNotFoundTableAnnotation()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(940): ReflectionMethod->invokeArgs(Object(WebStream\Test\CoreModelTest), Array)
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(802): PHPUnit_Framework_TestCase->runTest()
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#13 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#14 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#15 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#16 {main}
+[2012-10-04 20:08:47,13] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,13] [INFO] Bind statement: 
+[2012-10-04 20:08:47,13] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,13] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,13] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:47,13] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,13] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:47,13] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,13] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:47,13] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,13] [INFO] Bind statement: 
+[2012-10-04 20:08:47,13] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,13] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,13] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:47,14] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,14] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:47,14] [ERROR] SQLSTATE[42000] [1049] Unknown database 'dummy'
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(39): PDO->__construct('mysql:host=loca...', 'mysql', 'mysql', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(113): WebStream\DatabaseCore->getManager(Array)
+	#2 /Users/stay/workspace2/WebStream/core/Database.php(87): WebStream\Database->connect('dummy')
+	#3 /Users/stay/workspace2/WebStream/core/Database.php(99): WebStream\Database->init('dummy')
+	#4 /Users/stay/workspace2/WebStream/core/CoreModel.php(158): WebStream\Database::manager('dummy')
+	#5 /Users/stay/workspace2/WebStream/core/CoreModel.php(79): WebStream\CoreModel->dbConnection('dummy')
+	#6 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#7 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(212): WebStream\CoreModel->__construct()
+	#8 [internal function]: WebStream\Test\CoreModelTest->testNgNotFoundDatabaseAnnotation()
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(940): ReflectionMethod->invokeArgs(Object(WebStream\Test\CoreModelTest), Array)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(802): PHPUnit_Framework_TestCase->runTest()
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#13 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#14 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#15 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#16 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#17 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#18 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#19 {main}
+[2012-10-04 20:08:47,14] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,14] [INFO] Bind statement: 
+[2012-10-04 20:08:47,14] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,14] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,14] [INFO] Bind statement: KON000001,yui
+[2012-10-04 20:08:47,14] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,14] [INFO] Bind statement: KON000002,azusa
+[2012-10-04 20:08:47,14] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,14] [INFO] Bind statement: KON000001,okarin
+[2012-10-04 20:08:47,15] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-04 20:08:47,15] [INFO] Bind statement: 
+[2012-10-04 20:08:47,15] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-04 20:08:47,15] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,15] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-04 20:08:47,15] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-04 20:08:47,15] [INFO] Bind statement: YRYR000002,yui
+[2012-10-04 20:08:47,15] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:08:47,15] [INFO] Bind statement: 

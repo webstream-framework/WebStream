@@ -1,315 +1,795 @@
-[2012-09-07 23:29:42,43] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:29:42,43] [INFO] Bind statement: 
-[2012-09-07 23:29:42,44] [INFO] Executed SQL: select * from users
-[2012-09-07 23:29:42,44] [INFO] Bind statement: 
-[2012-09-07 23:35:47,67] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:35:47,67] [INFO] Bind statement: 
-[2012-09-07 23:35:47,67] [INFO] Executed SQL: select * from users
-[2012-09-07 23:35:47,67] [INFO] Bind statement: 
-[2012-09-07 23:36:09,77] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:36:09,77] [INFO] Bind statement: 
-[2012-09-07 23:36:09,77] [INFO] Executed SQL: select * from users
-[2012-09-07 23:36:09,77] [INFO] Bind statement: 
-[2012-09-07 23:36:33,47] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:36:33,47] [INFO] Bind statement: 
-[2012-09-07 23:36:33,48] [INFO] Executed SQL: select * from users
-[2012-09-07 23:36:33,48] [INFO] Bind statement: 
-[2012-09-07 23:38:58,70] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:38:58,70] [INFO] Bind statement: 
-[2012-09-07 23:38:58,70] [INFO] Executed SQL: SELECT user_name FROM users
-[2012-09-07 23:38:58,71] [INFO] Bind statement: 
-[2012-09-07 23:39:12,21] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:39:12,21] [INFO] Bind statement: 
-[2012-09-07 23:39:12,22] [INFO] Executed SQL: SELECT user_name FROM users
-[2012-09-07 23:39:12,22] [INFO] Bind statement: 
-[2012-09-07 23:39:14,29] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:39:14,29] [INFO] Bind statement: 
-[2012-09-07 23:39:14,30] [INFO] Executed SQL: SELECT user_name FROM users
-[2012-09-07 23:39:14,30] [INFO] Bind statement: 
-[2012-09-07 23:39:16,65] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:39:16,65] [INFO] Bind statement: 
-[2012-09-07 23:39:16,66] [INFO] Executed SQL: select * from users
-[2012-09-07 23:39:16,66] [INFO] Bind statement: 
-[2012-09-07 23:41:35,92] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-07 23:41:35,93] [INFO] Bind statement: 
-[2012-09-07 23:41:35,93] [INFO] Executed SQL: select * from users
-[2012-09-07 23:41:35,93] [INFO] Bind statement: 
-[2012-09-09 18:41:16,83] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:41:16,84] [INFO] Bind statement: 
-[2012-09-09 18:41:21,81] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:41:21,81] [INFO] Bind statement: 
-[2012-09-09 18:42:50,14] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:42:50,14] [INFO] Bind statement: 
-[2012-09-09 18:43:40,41] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:43:40,41] [INFO] Bind statement: 
-[2012-09-09 18:43:44,23] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:43:44,23] [INFO] Bind statement: 
-[2012-09-09 18:43:53, 8] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:43:53, 8] [INFO] Bind statement: 
-[2012-09-09 18:43:55,22] [ERROR] Failed to resolve the routing: /
-[2012-09-09 18:43:55,22] [INFO] HTTP access occured: status code 404
-[2012-09-09 18:44:00,35] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:44:00,35] [INFO] Bind statement: 
-[2012-09-09 18:44:00,36] [INFO] Executed SQL: select * from users
-[2012-09-09 18:44:00,36] [INFO] Bind statement: 
-[2012-09-09 18:44:07,70] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:44:07,71] [INFO] Bind statement: 
-[2012-09-09 18:44:07,71] [INFO] Executed SQL: SELECT user_name FROM users
-[2012-09-09 18:44:07,71] [INFO] Bind statement: 
-[2012-09-09 18:44:16,72] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:44:16,72] [INFO] Bind statement: 
-[2012-09-09 18:44:16,73] [ERROR] SampleHelper#show12 is not defined.
-	#0 /Users/stay/workspace2/WebStream/app/views/_cache/56598b3bbeb6a93bab5e046adf582f57(2): WebStream\CoreHelper->__call('show12', Array)
-	#1 /Users/stay/workspace2/WebStream/app/views/_cache/56598b3bbeb6a93bab5e046adf582f57(2): WebStream\CoreHelper->show12('<script type='t...')
-	#2 /Users/stay/workspace2/WebStream/core/CoreView.php(129): include('/Users/stay/wor...')
-	#3 /Users/stay/workspace2/WebStream/core/CoreView.php(119): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#4 /Users/stay/workspace2/WebStream/core/CoreView.php(46): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#5 /Users/stay/workspace2/WebStream/app/views/_cache/e29bc7e95a0df5da926a5e0d43a0f3dc(12): WebStream\CoreView->render('index.helper', Array)
-	#6 /Users/stay/workspace2/WebStream/core/CoreView.php(129): include('/Users/stay/wor...')
-	#7 /Users/stay/workspace2/WebStream/core/CoreView.php(119): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#8 /Users/stay/workspace2/WebStream/core/CoreView.php(34): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(85): WebStream\CoreView->layout('base', Array)
-	#10 /Users/stay/workspace2/WebStream/app/controllers/SampleController.php(52): WebStream\CoreController->layout('base', Array)
-	#11 [internal function]: WebStream\SampleController->helper(Array)
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(106): ReflectionMethod->invoke(Object(WebStream\SampleController), Array)
-	#13 /Users/stay/workspace2/WebStream/core/Application.php(52): WebStream\Application->runContoller()
-	#14 /Users/stay/workspace2/WebStream/bootstrap.php(17): WebStream\Application->run()
-	#15 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#16 {main}
-[2012-09-09 18:44:16,73] [INFO] HTTP access occured: status code 500
-[2012-09-09 18:44:38, 3] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:44:38, 3] [INFO] Bind statement: 
-[2012-09-09 18:44:38,11] [ERROR] SampleHelper#show12 is not defined.
-	#0 /Users/stay/workspace2/WebStream/app/views/_cache/56598b3bbeb6a93bab5e046adf582f57(2): WebStream\CoreHelper->__call('show12', Array)
-	#1 /Users/stay/workspace2/WebStream/app/views/_cache/56598b3bbeb6a93bab5e046adf582f57(2): WebStream\CoreHelper->show12('<script type='t...')
-	#2 /Users/stay/workspace2/WebStream/core/CoreView.php(129): include('/Users/stay/wor...')
-	#3 /Users/stay/workspace2/WebStream/core/CoreView.php(119): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#4 /Users/stay/workspace2/WebStream/core/CoreView.php(46): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#5 /Users/stay/workspace2/WebStream/app/views/_cache/e29bc7e95a0df5da926a5e0d43a0f3dc(12): WebStream\CoreView->render('index.helper', Array)
-	#6 /Users/stay/workspace2/WebStream/core/CoreView.php(129): include('/Users/stay/wor...')
-	#7 /Users/stay/workspace2/WebStream/core/CoreView.php(119): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#8 /Users/stay/workspace2/WebStream/core/CoreView.php(34): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(85): WebStream\CoreView->layout('base', Array)
-	#10 /Users/stay/workspace2/WebStream/app/controllers/SampleController.php(52): WebStream\CoreController->layout('base', Array)
-	#11 [internal function]: WebStream\SampleController->helper(Array)
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(106): ReflectionMethod->invoke(Object(WebStream\SampleController), Array)
-	#13 /Users/stay/workspace2/WebStream/core/Application.php(52): WebStream\Application->runContoller()
-	#14 /Users/stay/workspace2/WebStream/bootstrap.php(17): WebStream\Application->run()
-	#15 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#16 {main}
-[2012-09-09 18:44:38,11] [INFO] HTTP access occured: status code 500
-[2012-09-09 18:48:22, 0] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 18:48:22, 0] [INFO] Bind statement: 
-[2012-09-09 18:48:22, 2] [ERROR] SampleHelper#show12 is not defined.
-	#0 /Users/stay/workspace2/WebStream/app/views/_cache/56598b3bbeb6a93bab5e046adf582f57(2): WebStream\CoreHelper->__call('show12', Array)
-	#1 /Users/stay/workspace2/WebStream/app/views/_cache/56598b3bbeb6a93bab5e046adf582f57(2): WebStream\CoreHelper->show12('<script type='t...')
-	#2 /Users/stay/workspace2/WebStream/core/CoreView.php(129): include('/Users/stay/wor...')
-	#3 /Users/stay/workspace2/WebStream/core/CoreView.php(119): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#4 /Users/stay/workspace2/WebStream/core/CoreView.php(46): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#5 /Users/stay/workspace2/WebStream/app/views/_cache/e29bc7e95a0df5da926a5e0d43a0f3dc(12): WebStream\CoreView->render('index.helper', Array)
-	#6 /Users/stay/workspace2/WebStream/core/CoreView.php(129): include('/Users/stay/wor...')
-	#7 /Users/stay/workspace2/WebStream/core/CoreView.php(119): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#8 /Users/stay/workspace2/WebStream/core/CoreView.php(34): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(85): WebStream\CoreView->layout('base', Array)
-	#10 /Users/stay/workspace2/WebStream/app/controllers/SampleController.php(52): WebStream\CoreController->layout('base', Array)
-	#11 [internal function]: WebStream\SampleController->helper(Array)
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(106): ReflectionMethod->invoke(Object(WebStream\SampleController), Array)
-	#13 /Users/stay/workspace2/WebStream/core/Application.php(52): WebStream\Application->runContoller()
-	#14 /Users/stay/workspace2/WebStream/bootstrap.php(17): WebStream\Application->run()
-	#15 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#16 {main}
-[2012-09-09 18:48:22, 2] [INFO] HTTP access occured: status code 500
-[2012-09-09 19:19:41,36] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-09 19:19:41,36] [INFO] Bind statement: 
-[2012-09-17 22:26:29,79] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:26:29,79] [INFO] Bind statement: 
-[2012-09-17 22:26:29,79] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/validate.tmpl
-	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(46): WebStream\CoreView->draw('/Users/stay/wor...', NULL, 'html')
-	#1 /Users/stay/workspace2/WebStream/app/views/_cache/e29bc7e95a0df5da926a5e0d43a0f3dc(12): WebStream\CoreView->render('validate', NULL)
-	#2 /Users/stay/workspace2/WebStream/core/CoreView.php(128): include('/Users/stay/wor...')
-	#3 /Users/stay/workspace2/WebStream/core/CoreView.php(118): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#4 /Users/stay/workspace2/WebStream/core/CoreView.php(34): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#5 /Users/stay/workspace2/WebStream/core/CoreController.php(85): WebStream\CoreView->layout('base', Array)
-	#6 /Users/stay/workspace2/WebStream/app/controllers/SampleController.php(59): WebStream\CoreController->layout('base', Array)
-	#7 [internal function]: WebStream\SampleController->validate(Array)
-	#8 /Users/stay/workspace2/WebStream/core/Application.php(110): ReflectionMethod->invoke(Object(WebStream\SampleController), Array)
-	#9 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#10 /Users/stay/workspace2/WebStream/bootstrap.php(19): WebStream\Application->run()
-	#11 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#12 {main}
-[2012-09-17 22:26:29,79] [INFO] HTTP access occured: status code 500
-[2012-09-17 22:27:36,90] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:27:36,90] [INFO] Bind statement: 
-[2012-09-17 22:27:36,90] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/validate.tmpl
-	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(46): WebStream\CoreView->draw('/Users/stay/wor...', NULL, 'html')
-	#1 /Users/stay/workspace2/WebStream/app/views/_cache/e29bc7e95a0df5da926a5e0d43a0f3dc(12): WebStream\CoreView->render('validate', NULL)
-	#2 /Users/stay/workspace2/WebStream/core/CoreView.php(128): include('/Users/stay/wor...')
-	#3 /Users/stay/workspace2/WebStream/core/CoreView.php(118): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
-	#4 /Users/stay/workspace2/WebStream/core/CoreView.php(34): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
-	#5 /Users/stay/workspace2/WebStream/core/CoreController.php(85): WebStream\CoreView->layout('base', Array)
-	#6 /Users/stay/workspace2/WebStream/app/controllers/SampleController.php(59): WebStream\CoreController->layout('base', Array)
-	#7 [internal function]: WebStream\SampleController->validate(Array)
-	#8 /Users/stay/workspace2/WebStream/core/Application.php(110): ReflectionMethod->invoke(Object(WebStream\SampleController), Array)
-	#9 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#10 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#11 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#12 {main}
-[2012-09-17 22:27:36,91] [INFO] HTTP access occured: status code 500
-[2012-09-17 22:28:24,34] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:28:24,34] [INFO] Bind statement: 
-[2012-09-17 22:29:01,99] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:29:01,99] [INFO] Bind statement: 
-[2012-09-17 22:29:19,32] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:29:19,32] [INFO] Bind statement: 
-[2012-09-17 22:29:21,13] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:29:21,13] [INFO] Bind statement: 
-[2012-09-17 22:29:22,47] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:29:22,47] [INFO] Bind statement: 
-[2012-09-17 22:29:22,47] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:29:22,47] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:30:43,89] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:30:43,89] [INFO] Bind statement: 
-[2012-09-17 22:30:46,28] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:30:46,28] [INFO] Bind statement: 
-[2012-09-17 22:30:48,58] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:30:48,58] [INFO] Bind statement: 
-[2012-09-17 22:30:48,58] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:30:48,58] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:30:50,70] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:30:50,70] [INFO] Bind statement: 
-[2012-09-17 22:30:59,15] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:30:59,16] [INFO] Bind statement: 
-[2012-09-17 22:31:00,56] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:31:00,56] [INFO] Bind statement: 
-[2012-09-17 22:31:00,56] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:31:00,56] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:31:19,34] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:31:19,34] [INFO] Bind statement: 
-[2012-09-17 22:31:21,70] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:31:21,70] [INFO] Bind statement: 
-[2012-09-17 22:31:46,30] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:31:46,30] [INFO] Bind statement: 
-[2012-09-17 22:31:46,30] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:31:46,30] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:32:51,29] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:32:51,29] [INFO] Bind statement: 
-[2012-09-17 22:32:51,29] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:32:51,29] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:39:39,11] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:39:39,11] [INFO] Bind statement: 
-[2012-09-17 22:39:39,11] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:39:39,11] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:40:37,79] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:40:37,79] [INFO] Bind statement: 
-[2012-09-17 22:40:37,80] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:40:37,80] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:40:50,14] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:40:50,14] [INFO] Bind statement: 
-[2012-09-17 22:40:50,14] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:40:50,14] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:41:31,62] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:41:31,62] [INFO] Bind statement: 
-[2012-09-17 22:41:31,63] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:41:31,64] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:42:44, 0] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:42:44, 1] [INFO] Bind statement: 
-[2012-09-17 22:42:44, 1] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:42:44, 1] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:42:44, 1] [ERROR] Validation rule error. 'name' is required.
-	#0 /Users/stay/workspace2/WebStream/core/Validator.php(57): WebStream\Validator->checkRequired('name', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(165): WebStream\Validator->validateParameter('sample
-	#validate...', Array, 'post')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(107): WebStream\Application->validate()
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#6 {main}
-[2012-09-17 22:42:44, 1] [INFO] HTTP access occured: status code 500
-[2012-09-17 22:42:58,31] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:42:58,31] [INFO] Bind statement: 
-[2012-09-17 22:43:08,45] [ERROR] Sent invalid CSRF token
-	#0 /Users/stay/workspace2/WebStream/core/CoreController.php(50): WebStream\Security::isCsrfCheck()
-	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(32): WebStream\CoreController->csrf()
-	#2 [internal function]: WebStream\CoreController->initialize()
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(102): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#4 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#7 {main}
-[2012-09-17 22:43:08,45] [INFO] HTTP access occured: status code 400
-[2012-09-17 22:43:12,42] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:43:12,42] [INFO] Bind statement: 
-[2012-09-17 22:43:13,77] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:43:13,77] [INFO] Bind statement: 
-[2012-09-17 22:43:15,81] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:43:15,81] [INFO] Bind statement: 
-[2012-09-17 22:43:15,81] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:43:15,81] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:43:42,32] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:43:42,32] [INFO] Bind statement: 
-[2012-09-17 22:43:44,64] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:43:44,64] [INFO] Bind statement: 
-[2012-09-17 22:43:46,62] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:43:46,62] [INFO] Bind statement: 
-[2012-09-17 22:43:46,62] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:43:46,62] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 22:43:48,31] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 22:43:48,31] [INFO] Bind statement: 
-[2012-09-17 23:01:54,29] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 23:01:54,29] [INFO] Bind statement: 
-[2012-09-17 23:01:57,12] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 23:01:57,12] [INFO] Bind statement: 
-[2012-09-17 23:01:57,13] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 23:01:57,13] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 23:01:57,13] [ERROR] Validation rule error. 'name' is required.
-	#0 /Users/stay/workspace2/WebStream/core/Validator.php(57): WebStream\Validator->checkRequired('name', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(171): WebStream\Validator->validateParameter('sample
-	#validate...', Array, 'post')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(112): WebStream\Application->validate()
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#6 {main}
-[2012-09-17 23:01:57,13] [INFO] HTTP access occured: status code 422
-[2012-09-17 23:02:07,10] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-17 23:02:07,10] [INFO] Bind statement: 
-[2012-09-17 23:02:07,11] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 23:02:07,11] [INFO] Request parameter validation is execute: sample#validate_form
-[2012-09-17 23:02:07,11] [ERROR] Validation rule error. 'name' is required.
-	#0 /Users/stay/workspace2/WebStream/core/Validator.php(57): WebStream\Validator->checkRequired('name', Array)
-	#1 /Users/stay/workspace2/WebStream/core/Application.php(171): WebStream\Validator->validateParameter('sample
-	#validate...', Array, 'post')
-	#2 /Users/stay/workspace2/WebStream/core/Application.php(112): WebStream\Application->validate()
-	#3 /Users/stay/workspace2/WebStream/core/Application.php(54): WebStream\Application->runContoller()
-	#4 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#5 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#6 {main}
-[2012-09-17 23:02:07,11] [INFO] HTTP access occured: status code 422
-[2012-09-21 12:11:21, 5] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 12:11:21, 5] [INFO] Bind statement: 
-[2012-09-21 12:11:21, 5] [INFO] Executed SQL: select * from users
-[2012-09-21 12:11:21, 5] [INFO] Bind statement: 
-[2012-09-21 12:11:42, 7] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 12:11:42, 7] [INFO] Bind statement: 
-[2012-09-21 12:11:42, 7] [INFO] Executed SQL: select * from users
-[2012-09-21 12:11:42, 7] [INFO] Bind statement: 
-[2012-09-21 12:12:04,11] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 12:12:04,11] [INFO] Bind statement: 
-[2012-09-21 12:12:04,12] [INFO] Executed SQL: select * from users
-[2012-09-21 12:12:04,12] [INFO] Bind statement: 
-[2012-09-21 12:13:07,96] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 12:13:07,96] [INFO] Bind statement: 
-[2012-09-21 12:27:50,31] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 12:27:50,31] [INFO] Bind statement: 
-[2012-09-21 12:27:50,31] [INFO] Executed SQL: select * from users
-[2012-09-21 12:27:50,31] [INFO] Bind statement: 
-[2012-09-21 19:36:58,17] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 19:36:58,17] [INFO] Bind statement: 
-[2012-09-21 19:36:58,17] [INFO] HTTP access occured: status code 401
-[2012-09-21 19:36:58,19] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 19:36:58,19] [INFO] Bind statement: 
-[2012-09-21 19:36:58,19] [INFO] HTTP access occured: status code 401
-[2012-09-21 19:37:08,43] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 19:37:08,43] [INFO] Bind statement: 
-[2012-09-21 19:37:13,81] [INFO] Executed SQL: SELECT * FROM users
-[2012-09-21 19:37:13,81] [INFO] Bind statement: 
+[2012-10-04 20:01:32,30] [INFO] Executed SQL: SELECT * FROM users LIMIT 0 OFFSET 1
+[2012-10-04 20:01:32,31] [INFO] Bind statement: 
+[2012-10-04 20:01:32,31] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 0 OFFSET 1
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:01:32,31] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 0 OFFSET 1
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:01:32,31] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 0 OFFSET 1
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:01:32,31] [INFO] HTTP access occured: status code 500
+[2012-10-04 20:03:07,26] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:03:07,26] [INFO] Bind statement: 
+[2012-10-04 20:03:07,26] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:03:07,26] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:03:07,26] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:03:07,26] [INFO] HTTP access occured: status code 500
+[2012-10-04 20:10:13,14] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:10:13,14] [INFO] Bind statement: 
+[2012-10-04 20:10:13,15] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:10:13,15] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:10:13,15] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:10:13,15] [INFO] HTTP access occured: status code 500
+[2012-10-04 20:30:23,72] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:30:23,72] [INFO] Bind statement: 
+[2012-10-04 20:30:23,72] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(190): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:30:23,72] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(190): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:30:23,72] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:30:23,72] [INFO] HTTP access occured: status code 500
+[2012-10-04 20:31:17, 7] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:31:17, 7] [INFO] Bind statement: 
+[2012-10-04 20:31:17, 7] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:31:17, 7] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:31:17, 7] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:31:17, 7] [INFO] HTTP access occured: status code 500
+[2012-10-04 20:31:24, 3] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:31:24, 3] [INFO] Bind statement: 
+[2012-10-04 20:31:24, 3] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:31:24, 3] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:31:24, 4] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:31:24, 4] [INFO] HTTP access occured: status code 500
+[2012-10-04 20:31:43,91] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:31:43,92] [INFO] Bind statement: 
+[2012-10-04 20:31:43,92] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(190): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:31:43,92] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(190): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:31:43,92] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:31:43,92] [INFO] HTTP access occured: status code 500
+[2012-10-04 20:32:18,79] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 20:32:18,80] [INFO] Bind statement: 
+[2012-10-04 20:32:18,80] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:32:18,80] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(189): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 20:32:18,80] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 20:32:18,80] [INFO] HTTP access occured: status code 500
+[2012-10-04 22:56:07,79] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 22:56:07,79] [INFO] Bind statement: 
+[2012-10-04 22:56:07,79] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:07,79] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:07,79] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 22:56:07,79] [INFO] HTTP access occured: status code 500
+[2012-10-04 22:56:16,94] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 22:56:16,94] [INFO] Bind statement: 
+[2012-10-04 22:56:16,94] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:16,94] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:16,94] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 22:56:16,94] [INFO] HTTP access occured: status code 500
+[2012-10-04 22:56:32,73] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 22:56:32,73] [INFO] Bind statement: 
+[2012-10-04 22:56:32,73] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(81): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:32,73] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(81): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:32,73] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(81): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 22:56:32,73] [INFO] HTTP access occured: status code 500
+[2012-10-04 22:56:47,95] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 22:56:47,95] [INFO] Bind statement: 
+[2012-10-04 22:56:47,95] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(109): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(82): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:47,95] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(109): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(82): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:56:47,95] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(109): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(82): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 22:56:47,95] [INFO] HTTP access occured: status code 500
+[2012-10-04 22:58:30,44] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 22:58:30,44] [INFO] Bind statement: 
+[2012-10-04 22:58:30,44] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(81): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:58:30,44] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(81): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:58:30,44] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(81): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 22:58:30,44] [INFO] HTTP access occured: status code 500
+[2012-10-04 22:58:59,15] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 22:58:59,15] [INFO] Bind statement: 
+[2012-10-04 22:58:59,16] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:58:59,16] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:58:59,16] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 22:58:59,16] [INFO] HTTP access occured: status code 500
+[2012-10-04 22:59:07,81] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-04 22:59:07,81] [INFO] Bind statement: 
+[2012-10-04 22:59:07,81] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:59:07,81] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM u...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 [internal function]: WebStream\CoreModel->__construct()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#7 [internal function]: WebStream\CoreService->__construct()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#10 [internal function]: WebStream\CoreController->initialize()
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#12 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#15 {main}
+[2012-10-04 22:59:07,82] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(108): WebStream\Database->columnInfo(Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#3 [internal function]: WebStream\CoreModel->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
+	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
+	#6 [internal function]: WebStream\CoreService->__construct()
+	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
+	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
+	#9 [internal function]: WebStream\CoreController->initialize()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(117): ReflectionMethod->invoke(Object(WebStream\SampleController))
+	#11 /Users/stay/workspace2/WebStream/core/Application.php(64): WebStream\Application->runContoller()
+	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2012-10-04 22:59:07,82] [INFO] HTTP access occured: status code 500

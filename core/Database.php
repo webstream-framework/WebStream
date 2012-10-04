@@ -34,7 +34,8 @@ class DatabaseCore {
                 $manager = new \PDO(
                     "mysql:host=" . $options["host"] . "; dbname=" . $options["dbname"],
                     $options["user"],
-                    $options["password"]
+                    $options["password"],
+                    array(\PDO::ATTR_PERSISTENT => true)
                 );
                 $manager->query("SET NAMES utf8");
             }
@@ -64,9 +65,9 @@ class Database extends DatabaseCore {
     /** 設定ファイルパス */
     private static $config_path = "config/database.ini";
     /** SQL */
-    private $sql = null;
+    //private $sql = null;
     /** バインド変数 */
-    private $bind = null;
+    //private $bind = null;
     /** ステートメント変数 */
     private $stmt = null;
     
@@ -80,8 +81,8 @@ class Database extends DatabaseCore {
      * @param String DB名
      */
     private function init($dbname = null) {
-        $this->sql  = null;
-        $this->bind = null;
+        //$this->sql  = null;
+        //$this->bind = null;
         $this->stmt = null;
         $this->connect($dbname);
     }
@@ -124,6 +125,7 @@ class Database extends DatabaseCore {
      */
     private function execSQL($sql, $bind = array()) {
         $result = false;
+        $this->stmt = null;
         try {
             $stmt = $this->connect->prepare($sql);
             Logger::info("Executed SQL: " . $sql);
@@ -178,14 +180,15 @@ class Database extends DatabaseCore {
      */
     public function columnInfo($tables) {
         $columns = array();
+        var_dump($this->stmt);
         foreach ($tables as $table) {
-            $sql = "SELECT * FROM ${table}";
+            $sql = "SELECT * FROM ${table} LIMIT 1 OFFSET 0";
             $i = 0;
             $columns[$table] = array();
             try {
                 $this->execSQL($sql);
                 while ($column = $this->stmt->getColumnMeta($i++)) {
-                   $columns[$table][] = $column;
+                    $columns[$table][] = $column["name"];
                 }
                 $this->init();
             }
@@ -204,22 +207,8 @@ class Database extends DatabaseCore {
      * @return Object 実行結果
      */
     public function select($sql, $bind = array()) {
-        if ($this->sql  !== $sql  ||
-            $this->bind !== $bind ||
-            $this->stmt === null) {
-            $this->sql  = $sql;
-            $this->bind = $bind;
-            $this->stmt = null;
-            $this->execSQL($sql, $bind);
-        }
-            
-        // 取得結果を連想配列に入れる
-        $result = array();
-        while ($row = $this->stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $result[] = $row;
-        }
-        
-        return $result;  
+        $this->execSQL($sql, $bind);
+        return new PDOIterator($this->stmt);
     }
 
     /**
@@ -270,5 +259,83 @@ class Database extends DatabaseCore {
      */
     public function drop($sql, $bind = array()) {
         return $this->execCRUD($sql, $bind);
+    }
+}
+
+/**
+ * PDO用イテレータクラス
+ * @author Ryuichi TANAKA.
+ * @since 2012/10/02
+ */
+class PDOIterator implements \Iterator {
+    /** ステートメントオブジェクト */
+    private $stmt;
+    private $_stmt;
+    /** 列データ */
+    private $row;
+    /** インデックス位置 */
+    private $position;
+    
+    /**
+     * コンストラクタ
+     * @param Object ステートメントオブジェクト
+     */
+    public function __construct($stmt) {
+        $this->stmt = $stmt;
+        $this->_stmt = clone $stmt;
+        $this->position = 0;
+    }
+    
+    /**
+     * デストラクタ
+     */
+    public function __destruct() {
+        $this->stmt = null;
+    }
+    
+    /**
+     * 検索結果を全て配列として返却する
+     */
+    public function toArray() {
+        return $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    /**
+     * イテレータを巻き戻す
+     */
+    public function rewind() {
+        $this->row = $this->stmt->fetch(\PDO::FETCH_ASSOC);
+        $this->position = 0;
+    }
+    
+    /**
+     * 現在の要素を返却する
+     * @return Hash 列データ
+     */
+    public function current() {
+        return $this->row;
+    }
+    
+    /**
+     * 現在の要素のキーを返却する
+     * @return Integer キー
+     */
+    public function key() {
+        return $this->position;
+    }
+
+    /**
+     * 次の要素に進む
+     */
+    public function next() {
+        $this->row = $this->stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+    
+    /**
+     * 現在位置が有効かどうかを調べる
+     * @return Boolean 有効かどうか
+     */
+    public function valid() {
+        return $this->row !== false;
     }
 }
