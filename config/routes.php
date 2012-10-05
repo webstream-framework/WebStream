@@ -8,6 +8,7 @@ Router::setRule(
         '/index' => "sample#index",
         '/model1' => "sample#model1",
         '/model2' => "sample#model2",
+        '/model3' => "sample#model3",
         '/index_helper' => "sample#helper",
         '/yuruyuri' => "yuru_yuri#execute",
         '/validate' => "sample#validate",

@@ -17,7 +17,7 @@ class Security {
         '-->' => '--&gt;',
         '<![CDATA[' => '&lt;![CDATA['
     );
-    
+
     /**
      * CSRFトークンチェック
      */
@@ -28,7 +28,7 @@ class Security {
         $session_token = $session->get($token);
         $request_token = null;
         $isExistParams = false;
-            
+
         // セッションにCSRFトークンがセットされている場合、チェックを実行する
         if (isset($session_token)) {
             // CSRFトークンはワンタイムなので削除する
@@ -47,7 +47,7 @@ class Security {
             }
         }
     }
-    
+
     /**
      * ブラウザから入力されたデータを安全にDBに保存するためのデータに変換する
      * @param String or Array or Hash ブラウザからの入力データ
@@ -65,17 +65,21 @@ class Security {
         $data = self::removeInvisibleCharacters($data);
         // URLデコード(スペースを+にしない)
         $data = rawurldecode($data);
-        
+
         return $data;
     }
-    
+
     /**
      * ブラウザに出力するデータを安全なデータに変換する
      * @param String or Array or Hash ブラウザへの出力データ
      * @return String or Array or Hash 安全なデータ
      */
     public static function safetyOut($data) {
-         // 渡されたデータが配列の場合、分解して再帰処理
+        // 文字列、配列以外のデータは置換しない
+        if (!is_string($data) || !is_array($data)) {
+            return $data;
+        }
+        // 渡されたデータが配列の場合、分解して再帰処理
         if (is_array($data)) {
             while (list($key) = each($data)) {
                 $data[$key] = self::safetyOut($data[$key]);
@@ -84,14 +88,14 @@ class Security {
         }
         // <, >, &, ", ' をエスケープ(実体参照置換)する
         $data = htmlspecialchars($data, ENT_QUOTES, "UTF-8");
-        
+
         // 強制置換対象の文字を変換する
         foreach (self::$force_replace_str as $key => $val) {
             $data = str_replace($key, $val, $data);
         }
         return $data;
     }
-    
+
     /**
      * 制御文字を削除する
      * @param String 入力文字列
@@ -104,13 +108,13 @@ class Security {
             $removes[] = '/%1[0-9a-f]/';  // 16-31
         }
         $removes[] = '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+/S'; // 00-08, 11, 12, 14-31, 127
-        
+
         // $strが数行にわたっている場合、一度で置換しきれないので繰り返す
         do {
             $str = preg_replace($removes, '', $str, -1, $count);
         }
         while ($count !== 0);
-        
+
         return $str;
     }
 }

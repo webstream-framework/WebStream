@@ -39,6 +39,16 @@ class SampleController extends AppController {
             )
         ));
     }
+
+    public function model3() {
+        $this->layout("base", array(
+            "title" => $this->title,
+            "template" => "model3",
+            "content" => array(
+                "data" => $this->Sample->model1()
+            )
+        ));
+    }
     
     public function index($params) {
         $this->layout("base", array(

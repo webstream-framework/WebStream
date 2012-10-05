@@ -180,7 +180,6 @@ class Database extends DatabaseCore {
      */
     public function columnInfo($tables) {
         $columns = array();
-        var_dump($this->stmt);
         foreach ($tables as $table) {
             $sql = "SELECT * FROM ${table} LIMIT 1 OFFSET 0";
             $i = 0;
