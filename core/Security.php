@@ -54,6 +54,10 @@ class Security {
      * @return String or Array or Hash 安全なデータ
      */
     public static function safetyIn($data) {
+        // 文字列、配列以外のデータは置換しない
+        if (!is_string($data) && !is_array($data)) {
+            return $data;
+        }
         // 渡されたデータが配列の場合、分解して再帰処理
         if (is_array($data)) {
             while (list($key) = each($data)) {
@@ -76,7 +80,7 @@ class Security {
      */
     public static function safetyOut($data) {
         // 文字列、配列以外のデータは置換しない
-        if (!is_string($data) || !is_array($data)) {
+        if (!is_string($data) && !is_array($data)) {
             return $data;
         }
         // 渡されたデータが配列の場合、分解して再帰処理

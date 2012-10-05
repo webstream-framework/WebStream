@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="1.2.0" timestamp="2012-10-04T19:37:01+09:00">
+<pmd version="1.2.0" timestamp="2012-10-05T23:59:09+09:00">
   <file name="/Users/stay/workspace2/WebStream/app/controllers/SampleController.php">
-    <violation beginline="43" endline="43" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="53" endline="53" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$params'.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/app/helpers/SampleHelper.php">
     <violation beginline="10" endline="10" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$name'.
+    </violation>
+    <violation beginline="21" endline="21" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$data'.
+    </violation>
+    <violation beginline="34" endline="34" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$data'.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/app/libraries/Weather.php">
