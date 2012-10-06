@@ -603,3 +603,810 @@
 	#8 {main}
 [2012-10-05 23:59:20,25] [INFO] HTTP access occured: status code 422
 [2012-10-05 23:59:20,25] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-10-06 00:09:37,90] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,90] [INFO] Bind statement: 
+[2012-10-06 00:09:37,90] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-06 00:09:37,90] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,90] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:37,90] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,90] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:37,90] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,90] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:37,90] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,90] [INFO] Bind statement: 
+[2012-10-06 00:09:37,91] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-06 00:09:37,91] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,91] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:37,91] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,91] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:37,91] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:37,91] [INFO] Bind statement: 
+[2012-10-06 00:09:37,91] [INFO] Executed SQL: select * from users
+[2012-10-06 00:09:37,91] [INFO] Bind statement: 
+[2012-10-06 00:09:37,92] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,92] [INFO] Bind statement: 
+[2012-10-06 00:09:37,93] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,93] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,93] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,93] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,93] [INFO] Bind statement: 
+[2012-10-06 00:09:37,93] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(705): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#13 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#14 {main}
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,93] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,93] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:37,93] [INFO] Bind statement: 
+[2012-10-06 00:09:37,93] [INFO] Executed SQL: select * from users where user_name = :name
+[2012-10-06 00:09:37,93] [INFO] Bind statement: yui
+[2012-10-06 00:09:37,94] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,94] [INFO] Bind statement: 
+[2012-10-06 00:09:37,94] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:37,94] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,94] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:37,94] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,94] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:37,95] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,95] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:37,95] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,95] [INFO] Bind statement: 
+[2012-10-06 00:09:37,95] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:37,95] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,95] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:37,95] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,95] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:37,95] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:37,95] [INFO] Bind statement: 
+[2012-10-06 00:09:37,95] [INFO] Executed SQL: SELECT user_name FROM users
+[2012-10-06 00:09:37,95] [INFO] Bind statement: 
+[2012-10-06 00:09:37,96] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,96] [INFO] Bind statement: 
+[2012-10-06 00:09:37,96] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:37,96] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,96] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:37,96] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,96] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:37,97] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,97] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:37,97] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,97] [INFO] Bind statement: 
+[2012-10-06 00:09:37,97] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:37,97] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,97] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:37,97] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,97] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:37,97] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:37,97] [INFO] Bind statement: 
+[2012-10-06 00:09:37,97] [INFO] Executed SQL: SELECT * FROM users2 LIMIT 1 OFFSET 0
+[2012-10-06 00:09:37,97] [INFO] Bind statement: 
+[2012-10-06 00:09:37,97] [INFO] Executed SQL: SELECT user_name FROM users UNION ALL SELECT user_name FROM users2
+[2012-10-06 00:09:37,97] [INFO] Bind statement: 
+[2012-10-06 00:09:37,99] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,99] [INFO] Bind statement: 
+[2012-10-06 00:09:37,99] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:37,99] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,99] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:37,99] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,99] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:37,99] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,99] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:37,99] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:37,99] [INFO] Bind statement: 
+[2012-10-06 00:09:37,99] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:37,99] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,99] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:37,99] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:37,99] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:38, 0] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:38, 0] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 0] [INFO] Executed SQL: SELECT user_name FROM users
+[2012-10-06 00:09:38, 0] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 1] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:38, 1] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 1] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:38, 1] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 1] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:38, 1] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 1] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:38, 1] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 1] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:38, 1] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:38, 1] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 1] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:38, 1] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 1] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:38, 1] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 1] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:38, 2] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:38, 2] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 2] [INFO] Executed SQL: select * from users
+[2012-10-06 00:09:38, 2] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 3] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:38, 3] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 3] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:38, 3] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 3] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:38, 3] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 3] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:38, 3] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 3] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:38, 3] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:38, 3] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 3] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:38, 3] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 3] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:38, 3] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 3] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:38, 4] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:38, 4] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 4] [INFO] Executed SQL: select * from users where user_name = :name
+[2012-10-06 00:09:38, 4] [INFO] Bind statement: yui
+[2012-10-06 00:09:38, 4] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:38, 4] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 4] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:38, 4] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 4] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:38, 4] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:38, 5] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:38, 5] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 5] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:38, 5] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:38, 5] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:38, 5] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 5] [INFO] Executed SQL: SELECT * FROM users2 LIMIT 1 OFFSET 0
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: 
+[2012-10-06 00:09:38, 5] [INFO] Executed SQL: select users.user_name as name1, users2.user_name as name2 from users left outer join users2 on users.user_id = users2.user_id where users.user_id = :id
+[2012-10-06 00:09:38, 5] [INFO] Bind statement: KON000001
+[2012-10-06 00:09:39,65] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,66] [INFO] Bind statement: 
+[2012-10-06 00:09:39,66] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,66] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,66] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:39,66] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,66] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:39,66] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,66] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:39,66] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,66] [INFO] Bind statement: 
+[2012-10-06 00:09:39,66] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,66] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,66] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:39,66] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,66] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:39,67] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:39,67] [INFO] Bind statement: 
+[2012-10-06 00:09:39,67] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,67] [INFO] Bind statement: 
+[2012-10-06 00:09:39,67] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,67] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,67] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:39,67] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,67] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:39,67] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,67] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:39,68] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,68] [INFO] Bind statement: 
+[2012-10-06 00:09:39,68] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,68] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,68] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:39,68] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,68] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:39,68] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:39,68] [INFO] Bind statement: 
+[2012-10-06 00:09:39,68] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,68] [INFO] Bind statement: 
+[2012-10-06 00:09:39,68] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,69] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,69] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:39,69] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,69] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:39,69] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,69] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:39,69] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,69] [INFO] Bind statement: 
+[2012-10-06 00:09:39,69] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,69] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,69] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:39,69] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,69] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:39,69] [INFO] Executed SQL: SELECT * FROM dummy LIMIT 1 OFFSET 0
+[2012-10-06 00:09:39,69] [INFO] Bind statement: 
+[2012-10-06 00:09:39,69] [ERROR] Can't create statement. - SELECT * FROM dummy LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM d...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(203): WebStream\CoreModel->__construct()
+	#5 [internal function]: WebStream\Test\CoreModelTest->testNgNotFoundTableAnnotation()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(940): ReflectionMethod->invokeArgs(Object(WebStream\Test\CoreModelTest), Array)
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(802): PHPUnit_Framework_TestCase->runTest()
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#13 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#14 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#15 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#16 {main}
+[2012-10-06 00:09:39,70] [ERROR] Can't create statement. - SELECT * FROM dummy LIMIT 1 OFFSET 0
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(188): WebStream\Database->execSQL('SELECT * FROM d...')
+	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
+	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
+	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#4 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(203): WebStream\CoreModel->__construct()
+	#5 [internal function]: WebStream\Test\CoreModelTest->testNgNotFoundTableAnnotation()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(940): ReflectionMethod->invokeArgs(Object(WebStream\Test\CoreModelTest), Array)
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(802): PHPUnit_Framework_TestCase->runTest()
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#13 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#14 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#15 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#16 {main}
+[2012-10-06 00:09:39,70] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,70] [INFO] Bind statement: 
+[2012-10-06 00:09:39,70] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,70] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,70] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:39,70] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,70] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:39,70] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,70] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:39,70] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,70] [INFO] Bind statement: 
+[2012-10-06 00:09:39,70] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,70] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,70] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:39,71] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,71] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:39,71] [ERROR] SQLSTATE[42000] [1049] Unknown database 'dummy'
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(39): PDO->__construct('mysql:host=loca...', 'mysql', 'mysql', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(113): WebStream\DatabaseCore->getManager(Array)
+	#2 /Users/stay/workspace2/WebStream/core/Database.php(87): WebStream\Database->connect('dummy')
+	#3 /Users/stay/workspace2/WebStream/core/Database.php(99): WebStream\Database->init('dummy')
+	#4 /Users/stay/workspace2/WebStream/core/CoreModel.php(158): WebStream\Database::manager('dummy')
+	#5 /Users/stay/workspace2/WebStream/core/CoreModel.php(79): WebStream\CoreModel->dbConnection('dummy')
+	#6 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
+	#7 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(212): WebStream\CoreModel->__construct()
+	#8 [internal function]: WebStream\Test\CoreModelTest->testNgNotFoundDatabaseAnnotation()
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(940): ReflectionMethod->invokeArgs(Object(WebStream\Test\CoreModelTest), Array)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(802): PHPUnit_Framework_TestCase->runTest()
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#12 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#13 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#14 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#15 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#16 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#17 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#18 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#19 {main}
+[2012-10-06 00:09:39,71] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,71] [INFO] Bind statement: 
+[2012-10-06 00:09:39,71] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(31): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(16): WebStream\Test\CoreModelTest->setUpTable1()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,71] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,71] [INFO] Bind statement: KON000001,yui
+[2012-10-06 00:09:39,71] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,71] [INFO] Bind statement: KON000002,azusa
+[2012-10-06 00:09:39,71] [INFO] Executed SQL: INSERT INTO users2 (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,72] [INFO] Bind statement: KON000001,okarin
+[2012-10-06 00:09:39,72] [INFO] Executed SQL: CREATE TABLE users (
+    id int(0) not null auto_increment,
+    user_id varchar(32) not null,
+    user_name varchar(128) not null,
+    primary key (id)
+);
+[2012-10-06 00:09:39,72] [INFO] Bind statement: 
+[2012-10-06 00:09:39,72] [ERROR] Table 'users' already exists (SQL STATE: 42S01) (ERROR CODE: 1050)
+	#0 /Users/stay/workspace2/WebStream/core/Database.php(171): WebStream\Database->execSQL('CREATE TABLE us...', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Database.php(250): WebStream\Database->execCRUD('CREATE TABLE us...', Array)
+	#2 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(66): WebStream\Database->create('CREATE TABLE us...')
+	#3 /Users/stay/workspace2/WebStream/core/test/CoreModelTest.php(17): WebStream\Test\CoreModelTest->setUpTable2()
+	#4 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(799): WebStream\Test\CoreModelTest->setUp()
+	#5 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestResult.php(649): PHPUnit_Framework_TestCase->runBare()
+	#6 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestCase.php(749): PHPUnit_Framework_TestResult->run(Object(WebStream\Test\CoreModelTest))
+	#7 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(772): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+	#8 /opt/local/bin/pear/share/pear/PHPUnit/Framework/TestSuite.php(745): PHPUnit_Framework_TestSuite->runTest(Object(WebStream\Test\CoreModelTest), Object(PHPUnit_Framework_TestResult))
+	#9 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/TestRunner.php(325): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+	#10 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(187): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+	#11 /opt/local/bin/pear/share/pear/PHPUnit/TextUI/Command.php(125): PHPUnit_TextUI_Command->run(Array, true)
+	#12 /opt/local/bin/pear/bin/phpunit(46): PHPUnit_TextUI_Command::main()
+	#13 {main}
+[2012-10-06 00:09:39,72] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,72] [INFO] Bind statement: YRYR000001,kyouko
+[2012-10-06 00:09:39,72] [INFO] Executed SQL: INSERT INTO users (user_id, user_name) VALUES (:user_id, :user_name)
+[2012-10-06 00:09:39,72] [INFO] Bind statement: YRYR000002,yui
+[2012-10-06 00:09:39,72] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:09:39,72] [INFO] Bind statement: 

@@ -24,6 +24,13 @@ HELPER;
         $mem2 = memory_get_usage();
         $html = "<div>data num: ${count}</div>";
         $html.= "<div>usage memory: " . ($mem2 - $mem1) / 1024 . "KB</div>";
+        
+        $ttt = 0;
+        foreach ($list as $data) {
+            $ttt++;
+        }
+        var_dump($ttt);
+        
         return $html;
     }
     

@@ -1144,3 +1144,95 @@
 [2012-10-05 23:52:48,96] [INFO] HTTP access occured: status code 404
 [2012-10-05 23:52:48,98] [ERROR] Failed to resolve the routing: /core/test/testdata/get_validate1
 [2012-10-05 23:52:48,98] [INFO] HTTP access occured: status code 404
+[2012-10-06 00:14:04, 9] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:14:04, 9] [INFO] Bind statement: 
+[2012-10-06 00:14:04,10] [INFO] Executed SQL: select * from users
+[2012-10-06 00:14:04,10] [INFO] Bind statement: 
+[2012-10-06 00:14:51, 8] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:14:51, 8] [INFO] Bind statement: 
+[2012-10-06 00:14:51, 8] [INFO] Executed SQL: select * from users
+[2012-10-06 00:14:51, 9] [INFO] Bind statement: 
+[2012-10-06 00:15:35,95] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:15:35,95] [INFO] Bind statement: 
+[2012-10-06 00:15:35,96] [INFO] Executed SQL: select * from users
+[2012-10-06 00:15:35,96] [INFO] Bind statement: 
+[2012-10-06 00:16:22,46] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:16:22,46] [INFO] Bind statement: 
+[2012-10-06 00:16:22,47] [INFO] Executed SQL: select * from users
+[2012-10-06 00:16:22,47] [INFO] Bind statement: 
+[2012-10-06 00:16:45,79] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:16:45,79] [INFO] Bind statement: 
+[2012-10-06 00:16:45,79] [INFO] Executed SQL: select * from users
+[2012-10-06 00:16:45,79] [INFO] Bind statement: 
+[2012-10-06 00:18:03, 1] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:18:03, 1] [INFO] Bind statement: 
+[2012-10-06 00:18:03, 2] [INFO] Executed SQL: select * from users
+[2012-10-06 00:18:03, 2] [INFO] Bind statement: 
+[2012-10-06 00:22:00,22] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:22:00,22] [INFO] Bind statement: 
+[2012-10-06 00:22:00,23] [INFO] Executed SQL: select * from users
+[2012-10-06 00:22:00,23] [INFO] Bind statement: 
+[2012-10-06 00:26:01,57] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:26:01,58] [INFO] Bind statement: 
+[2012-10-06 00:26:01,58] [INFO] Executed SQL: select * from users
+[2012-10-06 00:26:01,58] [INFO] Bind statement: 
+[2012-10-06 00:26:54,83] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:26:54,84] [INFO] Bind statement: 
+[2012-10-06 00:26:54,84] [INFO] Executed SQL: select * from users
+[2012-10-06 00:26:54,84] [INFO] Bind statement: 
+[2012-10-06 00:29:49,99] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:29:49,99] [INFO] Bind statement: 
+[2012-10-06 00:29:50, 0] [INFO] Executed SQL: select * from users
+[2012-10-06 00:29:50, 0] [INFO] Bind statement: 
+[2012-10-06 00:33:03,68] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:33:03,68] [INFO] Bind statement: 
+[2012-10-06 00:33:03,68] [INFO] Executed SQL: select * from users
+[2012-10-06 00:33:03,68] [INFO] Bind statement: 
+[2012-10-06 00:36:42,52] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:36:42,52] [INFO] Bind statement: 
+[2012-10-06 00:36:42,53] [INFO] Executed SQL: select * from users
+[2012-10-06 00:36:42,53] [INFO] Bind statement: 
+[2012-10-06 00:37:59,39] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:37:59,39] [INFO] Bind statement: 
+[2012-10-06 00:37:59,40] [INFO] Executed SQL: select * from users
+[2012-10-06 00:37:59,40] [INFO] Bind statement: 
+[2012-10-06 00:38:33,98] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:38:33,98] [INFO] Bind statement: 
+[2012-10-06 00:38:33,98] [INFO] Executed SQL: select * from users
+[2012-10-06 00:38:33,98] [INFO] Bind statement: 
+[2012-10-06 00:39:05,76] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:39:05,76] [INFO] Bind statement: 
+[2012-10-06 00:39:05,77] [INFO] Executed SQL: select * from users
+[2012-10-06 00:39:05,77] [INFO] Bind statement: 
+[2012-10-06 00:51:49,95] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 00:51:49,95] [INFO] Bind statement: 
+[2012-10-06 00:51:49,95] [INFO] Executed SQL: select * from users
+[2012-10-06 00:51:49,95] [INFO] Bind statement: 
+[2012-10-06 01:08:03, 4] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 01:08:03, 5] [INFO] Bind statement: 
+[2012-10-06 01:08:03, 5] [INFO] Executed SQL: select * from users
+[2012-10-06 01:08:03, 5] [INFO] Bind statement: 
+[2012-10-06 01:11:43,94] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 01:11:43,94] [INFO] Bind statement: 
+[2012-10-06 01:11:43,95] [INFO] Executed SQL: select * from users
+[2012-10-06 01:11:43,95] [INFO] Bind statement: 
+[2012-10-06 01:17:52,33] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 01:17:52,34] [INFO] Bind statement: 
+[2012-10-06 01:17:52,34] [INFO] Executed SQL: select * from users
+[2012-10-06 01:17:52,34] [INFO] Bind statement: 
+[2012-10-06 01:18:20,50] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 01:18:20,51] [INFO] Bind statement: 
+[2012-10-06 01:18:20,51] [INFO] Executed SQL: select * from users
+[2012-10-06 01:18:20,51] [INFO] Bind statement: 
+[2012-10-06 01:18:46,17] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 01:18:46,17] [INFO] Bind statement: 
+[2012-10-06 01:18:46,19] [INFO] Executed SQL: select * from users
+[2012-10-06 01:18:46,19] [INFO] Bind statement: 
+[2012-10-06 01:19:52, 4] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 01:19:52, 4] [INFO] Bind statement: 
+[2012-10-06 01:19:52, 5] [INFO] Executed SQL: select * from users
+[2012-10-06 01:19:52, 5] [INFO] Bind statement: 
+[2012-10-06 01:21:03,21] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-10-06 01:21:03,21] [INFO] Bind statement: 
+[2012-10-06 01:21:03,22] [INFO] Executed SQL: select * from users
+[2012-10-06 01:21:03,22] [INFO] Bind statement: 

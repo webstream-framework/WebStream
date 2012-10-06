@@ -64,10 +64,6 @@ class Database extends DatabaseCore {
     private $connect;
     /** 設定ファイルパス */
     private static $config_path = "config/database.ini";
-    /** SQL */
-    //private $sql = null;
-    /** バインド変数 */
-    //private $bind = null;
     /** ステートメント変数 */
     private $stmt = null;
     
@@ -81,8 +77,6 @@ class Database extends DatabaseCore {
      * @param String DB名
      */
     private function init($dbname = null) {
-        //$this->sql  = null;
-        //$this->bind = null;
         $this->stmt = null;
         $this->connect($dbname);
     }
@@ -269,7 +263,6 @@ class Database extends DatabaseCore {
 class PDOIterator implements \Iterator {
     /** ステートメントオブジェクト */
     private $stmt;
-    private $_stmt;
     /** 列データ */
     private $row;
     /** インデックス位置 */
@@ -281,7 +274,6 @@ class PDOIterator implements \Iterator {
      */
     public function __construct($stmt) {
         $this->stmt = $stmt;
-        $this->_stmt = clone $stmt;
         $this->position = 0;
     }
     
