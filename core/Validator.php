@@ -315,7 +315,7 @@ class Validator {
      * @param Hash リクエストパラメータ
      */
     private function checkNumber($rule, $key, $params) {
-        if (preg_match('/^(number)$/', $rule) && array_key_exists($key, $params) && !preg_match('/^\d$/', $params[$key])) {
+        if (preg_match('/^(number)$/', $rule) && array_key_exists($key, $params) && !preg_match('/^\d+$/', $params[$key])) {
             $this->setError($rule, $key, $params[$key]);
             $errorMsg = "Validation rule error. '$params[$key]' is not number.";
             throw new ValidatorException($errorMsg);

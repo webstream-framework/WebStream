@@ -85,7 +85,7 @@ class Logger {
                 throw new LoggerException("Log directory does not exist: " . $log["path"]);
             }
         }
-        self::$path = $path;
+        self::$path = realpath($path);
         
         if (isset($log["rotate_cycle"])) {
             $rotate_cycle = self::cycle2value($log["rotate_cycle"]);
@@ -186,7 +186,6 @@ class Logger {
             error_log($msg, 3, $this->_path);
         }
         catch (\Exception $e) {
-            echo "Kooo";
             throw new LoggerException($e->getMessage());
         }
     }

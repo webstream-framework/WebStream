@@ -37,3 +37,5 @@ class ServiceModelClassNotFoundException {
         throw new ClassNotFoundException($this->msg);
     }
 }
+/** アノテーション例外 */
+class AnnotationException extends \Exception {}

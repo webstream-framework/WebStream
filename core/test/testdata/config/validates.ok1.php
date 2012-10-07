@@ -19,7 +19,8 @@ Validator::setRule(
             "get#name13" => "regexp[/^¥d{10}$/]|max_length[10]|mix[10]",
             "get#name14" => "max[-10]|min[-100]",
             "get#name15" => "max[-10.0]|min[-100.0]",
-            "get#name16" => "max[0.111111]|min[0.23455]"
+            "get#name16" => "max[0.111111]|min[0.23455]",
+            "get#name17" => "number"
         ) 
     )
 );

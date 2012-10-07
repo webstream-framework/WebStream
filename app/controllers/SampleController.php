@@ -89,4 +89,12 @@ class SampleController extends AppController {
     public function basicAuth() {
         echo "auth ok";
     }
+    
+    /**
+     * @Inject
+     * @Cache("60")
+     */
+    public function responseCache() {
+        echo "response cache";
+    }
 }

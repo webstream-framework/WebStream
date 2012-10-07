@@ -8,18 +8,27 @@ namespace WebStream;
 class Application {
     /** アプリケーションファイルディレクトリ名 */
     private $app_dir = "app";
+    /** Contollerインスタンス */
+    private $controller;
     /** ルーティング解決後のパラメータ */
     private $route;
     /** バリデーション解決後のパラメータ */
     private $validate;
+    /** リソースキャッシュパラメータ */
+    private $cache = array();
     
+    private $start;
+    private $start_m;
     /**
      * アプリケーション共通で使用するクラスを初期化する
      */
     public function __construct() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.7');
+        define('STREAM_VERSION', '0.3.8');
         ob_start();
+        ob_implicit_flush(false);
+        $this->init();
+        $this->getResponseCache();
     }
     
     /**
@@ -27,6 +36,7 @@ class Application {
      */
     public function __destruct() {
         $buffer = ob_get_clean();
+        $this->setResponseCache($buffer);
         echo $buffer;
     }
     
@@ -49,13 +59,17 @@ class Application {
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
         define('STREAM_VIEW_CACHE', "_cache");
+        /** Controller */
+        $this->controller = new CoreController();
+        /** レスポンスキャッシュID */
+        define('STREAM_RESPONSE_CACHE_ID', 
+               md5(STREAM_BASE_URI . STREAM_ROUTING_PATH . STREAM_QUERY_STRING));
     }
     
     /**
      * アプリケーションを起動する
      */
     public function run() {
-        $this->init();
         try {
             // ルーティングを解決する
             $this->route = new Router();
@@ -65,10 +79,9 @@ class Application {
             }
             // 静的ファイルを呼び出す
             else if ($this->staticFile()) {
-                $controller = new CoreController();
                 $file_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                     "/views/" . STREAM_VIEW_PUBLIC . $this->staticFile();
-                $controller->render_file($file_path);
+                $this->controller->render_file($file_path);
             }
             // 存在しないURLにアクセスしたときは404
             else {
@@ -145,8 +158,7 @@ class Application {
      * @param String ステータスコード
      */
     private function move($statusCode) {
-        $controller = new CoreController();
-        $controller->move($statusCode);
+        $this->controller->move($statusCode);
     }
 
     /**
@@ -239,7 +251,7 @@ class Application {
                 $config = Utility::parseConfig($methodAnnotation->value);
                 if ($config === null) {
                     $errorMsg = "Properties file specified by @BasicAuth annotation is not found: $methodAnnotation->value";
-                    throw new ResourceNotFoundException($errorMsg);
+                    throw new AnnotationException($errorMsg);
                 }
                 $request = new Request();
                 if ($request->authUser() !==  $config["userid"] ||
@@ -250,20 +262,47 @@ class Application {
         }
     }
     
+    /**
+     * キャッシュ情報を設定する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
     private function cache($class, $instance) {
         $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
         $methodAnnotations = $annotation->methods("@Cache");
         foreach ($methodAnnotations as $methodAnnotation) {
             if ($methodAnnotation->methodName === $this->action()) {
-                $cacheKey = md5(STREAM_BASE_URI . STREAM_ROUTING_PATH . STREAM_QUERY_STRING);
-                
-                
-                
-                var_dump($methodAnnotation->value);
-                var_dump(STREAM_BASE_URI);
-                var_dump(STREAM_ROUTING_PATH);
-                var_dump(STREAM_QUERY_STRING);
+                if (!preg_match('/^\d+$/', $methodAnnotation->value)) {
+                    $errorMsg = "@Cache value must be positive integer. Found value: $methodAnnotation->value";
+                    throw new AnnotationException($errorMsg);
+                }
+                $this->cache['ttl'] = $methodAnnotation->value;
             }
+        }
+    }
+    
+    /**
+     * レスポンスキャッシュを保存する
+     * @param String キャッシュデータ
+     */
+    private function setResponseCache($data) {
+        $cache = new Cache();
+        if (array_key_exists('ttl', $this->cache) && !$cache->get(STREAM_RESPONSE_CACHE_ID)) {
+            $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->cache['ttl']);
+            Logger::info("Response cache rendered.");
+        }
+    }
+    
+    /**
+     * レスポンスキャッシュを描画する
+     */
+    private function getResponseCache() {
+        $cache = new Cache();
+        $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
+        if ($response) {
+            echo $response;
+            Logger::info("Response cache loaded.");
+            exit;
         }
     }
     

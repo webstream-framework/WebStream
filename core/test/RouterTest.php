@@ -682,12 +682,12 @@ class RouterTest extends UnitTestBase {
 
     /**
      * 異常系
-     * 「@BasicAuth」アノテーションの設定ファイルパスが間違っている場合、404が返却されること
+     * 「@BasicAuth」アノテーションの設定ファイルパスが間違っている場合、500が返却されること
      */
     public function testNgBasicAuthConfigFileNotFound() {
         $http = new HttpAgent();
         $url = $this->root_url . "/basic_auth2";
         $http->get($url);
-        $this->assertEquals($http->getStatusCode(), "404");
+        $this->assertEquals($http->getStatusCode(), "500");
     }
 }

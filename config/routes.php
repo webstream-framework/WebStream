@@ -13,6 +13,7 @@ Router::setRule(
         '/yuruyuri' => "yuru_yuri#execute",
         '/validate' => "sample#validate",
         '/validate_form' => "sample#validate_form",
-        '/basic_auth' => "sample#basic_auth"
+        '/basic_auth' => "sample#basic_auth",
+        '/response_cache' => "sample#response_cache"
     )
 );
