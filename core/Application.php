@@ -17,18 +17,12 @@ class Application {
     /** リソースキャッシュパラメータ */
     private $cache = array();
     
-    private $start;
-    private $start_m;
     /**
      * アプリケーション共通で使用するクラスを初期化する
      */
     public function __construct() {
-        /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.8');
         ob_start();
         ob_implicit_flush(false);
-        $this->init();
-        $this->getResponseCache();
     }
     
     /**
@@ -36,7 +30,7 @@ class Application {
      */
     public function __destruct() {
         $buffer = ob_get_clean();
-        $this->setResponseCache($buffer);
+        $this->responseCache($buffer);
         echo $buffer;
     }
     
@@ -44,6 +38,8 @@ class Application {
      * 内部で使用する定数を定義
      */
     private function init() {
+        /** streamのバージョン定義 */
+        define('STREAM_VERSION', '0.3.8');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -59,8 +55,6 @@ class Application {
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
         define('STREAM_VIEW_CACHE', "_cache");
-        /** Controller */
-        $this->controller = new CoreController();
         /** レスポンスキャッシュID */
         define('STREAM_RESPONSE_CACHE_ID', 
                md5(STREAM_BASE_URI . STREAM_ROUTING_PATH . STREAM_QUERY_STRING));
@@ -70,6 +64,9 @@ class Application {
      * アプリケーションを起動する
      */
     public function run() {
+        $this->init();
+        $this->responseCache();
+        $this->controller = new CoreController();
         try {
             // ルーティングを解決する
             $this->route = new Router();
@@ -282,27 +279,26 @@ class Application {
     }
     
     /**
-     * レスポンスキャッシュを保存する
+     * レスポンスキャッシュを設定する
      * @param String キャッシュデータ
      */
-    private function setResponseCache($data) {
-        $cache = new Cache();
-        if (array_key_exists('ttl', $this->cache) && !$cache->get(STREAM_RESPONSE_CACHE_ID)) {
-            $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->cache['ttl']);
-            Logger::info("Response cache rendered.");
-        }
-    }
-    
-    /**
-     * レスポンスキャッシュを描画する
-     */
-    private function getResponseCache() {
+    private function responseCache($data = null) {
         $cache = new Cache();
         $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
-        if ($response) {
-            echo $response;
-            Logger::info("Response cache loaded.");
-            exit;
+        // キャッシュをセット
+        if ($data) {
+            if (array_key_exists('ttl', $this->cache) && !$response) {
+                $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->cache['ttl']);
+                Logger::info("Response cache rendered.");
+            }
+        }
+        // キャッシュをロード
+        else {
+            if ($response) {
+                echo $response;
+                Logger::info("Response cache loaded.");
+                exit;
+            }
         }
     }
     

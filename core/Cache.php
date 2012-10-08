@@ -77,9 +77,6 @@ class Cache {
             }
             return $data;
         }
-        else {
-            Logger::error("Can't get cache: ${path}");
-        }
         
         return null;
     }

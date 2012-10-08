@@ -83,6 +83,7 @@ Router::setRule(
         '/basic_auth' => "test_basic_auth#execute",
         '/basic_auth2' => "test_basic_auth#execute2",
         '/filter_multi' => "test_filter_multi#execute",
-        '/cache' => "test_cache_annotation#execute"
+        '/cache' => "test_cache_annotation#execute",
+        '/response_cache' => "test_response_cache#execute"
     )
 );
