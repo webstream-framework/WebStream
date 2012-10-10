@@ -4,14 +4,14 @@
 
     <!-- init -->
     <target name="init">
-        <delete dir="./reports" includeemptydirs="true" />
-        <mkdir dir="./reports" />
+        <delete dir="./core/reports" includeemptydirs="true" />
+        <mkdir dir="./core/reports" />
     </target>
 
     <!-- PHPUnit -->
     <target name="test">
         <phpunit haltonfailure="false" printsummary="true">
-            <formatter type="xml" outfile="reports/phpunit.xml"/>
+            <formatter type="xml" outfile="./core/reports/phpunit.xml"/>
             <batchtest>
                 <fileset dir="./core/test">
                     <include name="**/*Test.php" />
@@ -26,7 +26,7 @@
                  <include name="**/*.php" />
                  <exclude name="**/*Test.php" />
              </fileset>
-             <formatter type="xml" outfile="reports/pmd.xml"/>
+             <formatter type="xml" outfile="./core/reports/pmd.xml"/>
          </phpmd>
     </target>
     <!-- PHPCPD -->
@@ -36,7 +36,7 @@
                   <include name="**/*.php" />
                   <exclude name="**/*Test.php" />
               </fileset>
-              <formatter type="pmd" outfile="reports/cpd.xml"/>
+              <formatter type="pmd" outfile="./core/reports/cpd.xml"/>
          </phpcpd>
     </target>
 </project>
