@@ -12,18 +12,18 @@ require_once 'UnitTestBase.php';
 
 class RouterTest extends UnitTestBase {
     private $route;
-    
+
     public function setUp() {
         parent::setUp();
     }
-    
+
     public function tearDown() {
         $log_path = Utility::getRoot() . $this->testdata_dir . "/log/stream.log";
         $handle = fopen($log_path, "w+");
         fclose($handle);
         chmod($log_path, 0777);
     }
-    
+
     /**
      * 正常系
      * ルートパス(/)にアクセスできること
@@ -34,7 +34,7 @@ class RouterTest extends UnitTestBase {
         $response = file_get_contents($url);
         $this->assertEquals($response, "test1");
     }
-    
+
     /**
      * 正常系
      * プレースホルダなしのパス(/top)にアクセスできること
@@ -45,7 +45,7 @@ class RouterTest extends UnitTestBase {
         $response = file_get_contents($url);
         $this->assertEquals($response, "test2");
     }
-    
+
     /**
      * 正常系
      * プレースホルダなしのパス(/top)にアクセスできること
@@ -57,7 +57,7 @@ class RouterTest extends UnitTestBase {
         $response = file_get_contents($url);
         $this->assertEquals($response, "test3");
     }
-    
+
     /**
      * 正常系
      * アクション名がキャメルケースの場合、正常に実行出来ること
@@ -68,7 +68,7 @@ class RouterTest extends UnitTestBase {
         $response = file_get_contents($url);
         $this->assertEquals($response, $str);
     }
-    
+
     /**
      * 正常系
      * 拡張子指定のようなプレースホルダ定義(/feed.:format)にアクセスできること
@@ -79,7 +79,7 @@ class RouterTest extends UnitTestBase {
         $response = file_get_contents($url);
         $this->assertEquals($response, "rss");
     }
-    
+
     /**
      * 正常系
      * コントローラ名の指定にアンダースコアが含まれている場合、キャメルケースに変換された
@@ -91,7 +91,7 @@ class RouterTest extends UnitTestBase {
         $response = file_get_contents($url);
         $this->assertEquals($response, $str);
     }
-    
+
     /**
      * 正常系
      * プレースホルダにURLエンコードされた文字列が指定された場合、
@@ -105,7 +105,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * ルーティング定義の前半部分一致が起きる場合でも正常にパスの解決ができること
@@ -118,7 +118,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * Serviceクラスが存在しない場合、直接Modelクラスを呼び出せること
@@ -131,7 +131,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * Serviceクラスに該当するメソッドがない場合、Modelクラスのメソッドに移譲できること
@@ -144,7 +144,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * Serviceクラスに該当するメソッドがなく、Modelクラスのメソッドに以上する場合、
@@ -158,7 +158,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * テンプレートファイルを使ったViewの描画が正常に実行出来ること
@@ -171,7 +171,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * レイアウトテンプレートファイルを使ったViewの描画が正常に実行出来ること
@@ -184,7 +184,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * 公開している各種リソースファイルにアクセスできること
@@ -204,7 +204,7 @@ class RouterTest extends UnitTestBase {
         $this->assertEquals($status_code, "200");
         $this->assertEquals($mime, $response_mime);
     }
-    
+
     /**
      * 正常系
      * 公開している各種ファイルにアクセスできること
@@ -244,7 +244,7 @@ class RouterTest extends UnitTestBase {
         $this->assertEquals($status_code, "200");
         $this->assertEquals($mime, $response_mime);
     }
-    
+
     /**
      * 正常系
      * GETリクエストが正常に実行出来ること
@@ -257,7 +257,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 正常系
      * POSTリクエストが正常に実行出来ること
@@ -270,7 +270,7 @@ class RouterTest extends UnitTestBase {
         $this->assertEquals($response, $value);
         $this->assertEquals($http->getStatusCode(), "200");
     }
-    
+
     /**
      * 正常系
      * SESSIONに値をセット出来ること
@@ -286,7 +286,7 @@ class RouterTest extends UnitTestBase {
         $this->assertEquals($response, $value);
         $this->assertEquals($http->getStatusCode(), "200");
     }
-    
+
     /**
      * 正常系
      * 意図したステータスコードを返却できること
@@ -298,7 +298,7 @@ class RouterTest extends UnitTestBase {
         $response = $http->get($url);
         $this->assertEquals($http->getStatusCode(), $status_code);
     }
-    
+
     /**
      * 正常系
      * ヘルパメソッドを利用しHTMLを取得できること
@@ -310,7 +310,7 @@ class RouterTest extends UnitTestBase {
         $response = trim($http->get($url));
         $this->assertEquals($response, $html);
     }
-    
+
     /**
      * 正常系
      * ヘルパ名がスネークケースでもキャメルケースでも、正常に結果を取得できること
@@ -322,7 +322,7 @@ class RouterTest extends UnitTestBase {
         $response = trim($http->get($url));
         $this->assertEquals($response, $html);
     }
-    
+
     /**
      * 正常系
      * fromタグの中で定義したHTMLタグの属性に埋め込み値を入れても展開されること
@@ -333,7 +333,7 @@ class RouterTest extends UnitTestBase {
         $url = $this->root_url . $path;
         $this->assertEquals($http->get($url), $html);
     }
-    
+
     /**
      * 正常系
      * JSONを描画できること
@@ -344,7 +344,7 @@ class RouterTest extends UnitTestBase {
         $http->get($url);
         $this->assertEquals("Content-Type: application/json; charset=UTF-8", $http->getContentType());
     }
-    
+
     /**
      * 正常系
      * JSONPを描画できること
@@ -355,7 +355,7 @@ class RouterTest extends UnitTestBase {
         $http->get($url);
         $this->assertEquals("Content-Type: text/javascript; charset=UTF-8", $http->getContentType());
     }
-    
+
     /**
      * 正常系
      * BeforeFilterとAfterFilterがアノテーション付与で実行出来ること
@@ -365,7 +365,7 @@ class RouterTest extends UnitTestBase {
         $url = $this->root_url . "/filter";
         $this->assertEquals("beforeactionafter", $http->get($url));
     }
-    
+
     /**
      * 正常系
      * Before/AfterFilterがサブクラス->スーパークラスの順に実行されること
@@ -375,7 +375,7 @@ class RouterTest extends UnitTestBase {
         $url = $this->root_url . "/filter_multi";
         $this->assertEquals("child beforesuper beforeexecutechild aftersuper after", $http->get($url));
     }
-    
+
     /**
      * 正常系
      * 基本認証を正常に処理できること
@@ -391,7 +391,63 @@ class RouterTest extends UnitTestBase {
         $this->assertEquals($status_code, "200");
         $this->assertEquals($response, "basicauth");
     }
-    
+
+    /**
+     * 正常系
+     * レスポンスキャッシュが有効になっている場合、レスポンスが早くなること
+     */
+    public function testOkResponseCacheByAnnotation() {
+        $url = $this->root_url . "/response_cache";
+        $http = new HttpAgent();
+        // no cache
+        $start = time() + microtime();
+        $http->get($url);
+        $end = time() + microtime();
+        $noCache = $end - $start;
+        // cached
+        $start = time() + microtime();
+        $http->get($url);
+        $end = time() + microtime();
+        $cached = $end - $start;
+        $this->assertTrue($noCache > $cached);
+    }
+
+    /**
+     * 正常系
+     * レスポンスキャッシュの期限が切れた場合、レスポンスが遅くなること
+     */
+    public function testOkResponseCacheExpired() {
+        $url = $this->root_url . "/response_cache";
+        $http = new HttpAgent();
+        // perhaps no cache
+        $http->get($url);
+        // cached
+        $start = time() + microtime();
+        $http->get($url);
+        $end = time() + microtime();
+        $cached = $end - $start;
+        // until the cache is disabled
+        sleep(3);
+        $start = time() + microtime();
+        $http->get($url);
+        $end = time() + microtime();
+        $noCache = $end - $start;
+        $this->assertTrue($noCache > $cached);
+    }
+
+    /**
+     * 正常系
+     * レスポンスキャッシュファイルが生成されること
+     * @dataProvider createCacheFile
+     */
+    public function testOkCreateCacheFile($filename) {
+        $url = $this->root_url . "/response_cache";
+        $http = new HttpAgent();
+        $http->get($url);
+        $cache = new \WebStream\Cache();
+        $this->assertNotNull($cache->get($filename));
+    }
+
     /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
@@ -403,7 +459,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
     }
-    
+
     /**
      * 異常系
      * routes.phpに未定義のパスが指定された場合、404エラーになること
@@ -415,7 +471,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "404");
     }
-    
+
     /**
      * 異常系
      * renderメソッドはアクションに指定した場合、500エラーになること
@@ -427,7 +483,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
     }
-    
+
     /**
      * 異常系
      * layoutメソッドはアクションに指定した場合、500エラーになること
@@ -439,7 +495,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
     }
-    
+
     /**
      * 異常系
      * redirectメソッドはアクションに指定した場合、500エラーになること
@@ -451,7 +507,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
     }
-    
+
     /**
      * 異常系
      * loadメソッドはアクションに指定した場合、500エラーになること
@@ -463,7 +519,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
     }
-    
+
     /**
      * 異常系
      * コントローラ名に半角小文字英字、数字以外が含まれている場合、500エラーになること
@@ -475,7 +531,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
     }
-    
+
     /**
      * 異常系
      * ルーティングルールが指定された文字以外で構成されていた場合、例外が発生すること
@@ -488,7 +544,7 @@ class RouterTest extends UnitTestBase {
         ));
         new Router();
     }
-    
+
     /**
      * 異常系
      * ルーティングルールに静的ファイルへのパスが指定された場合、例外が発生すること
@@ -501,7 +557,7 @@ class RouterTest extends UnitTestBase {
         ));
         new Router();
     }
-    
+
     /**
      * 異常系
      * コントローラ名の指定にアンダースコアの連続が含まれている場合、500エラーになること
@@ -527,7 +583,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-    
+
     /**
      * 異常系
      * NULLバイトが含まれるURLが指定された場合、404エラーになること
@@ -539,7 +595,7 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "404");
     }
-    
+
     /**
      * 異常系
      * ControllerからService、Modelを呼び出したとき、
@@ -553,15 +609,15 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
         $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
-        
+
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);
             $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);           
+            $this->assertEquals($target, $result);
         }
     }
-    
+
     /**
      * 異常系
      * ControllerからService、Modelを呼び出したとき、
@@ -575,15 +631,15 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
         $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
-        
+
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);
             $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);           
+            $this->assertEquals($target, $result);
         }
     }
-    
+
     /**
      * 異常系
      * ControllerからService、Modelを呼び出したとき、
@@ -597,15 +653,15 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
         $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
-        
+
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);
             $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);           
+            $this->assertEquals($target, $result);
         }
     }
-    
+
     /**
      * 異常系
      * ControllerからService、Modelを呼び出したとき、
@@ -619,15 +675,15 @@ class RouterTest extends UnitTestBase {
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
         $line_tail = $this->logTail($this->config_path_log . "log.test.info.ok.ini");
-        
+
         if (preg_match('/^\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{1,2}\]\s\[(.+?)\]\s(.*?)\s-.*$/',
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);
             $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);           
+            $this->assertEquals($target, $result);
         }
     }
-    
+
     /**
      * 異常系
      * 存在しないrenderメソッドにアクセスしたとき、500エラーとなり、
@@ -645,10 +701,10 @@ class RouterTest extends UnitTestBase {
                        $line_tail, $matches)) {
             $target = array("ERROR", $error_msg);
             $result = array($matches[1], $matches[2]);
-            $this->assertEquals($target, $result);           
+            $this->assertEquals($target, $result);
         }
     }
-    
+
     /**
      * 異常系
      * ヘルパメソッドが存在しない場合(クラス自体が存在しない場合含む)、500エラーになり、
@@ -668,7 +724,7 @@ class RouterTest extends UnitTestBase {
             $this->assertEquals($target, $result);
         }
     }
-    
+
     /**
      * 異常系
      * 「@BasicAuth」アノテーションが正常に付与されていて、認証エラーが発生した場合、401が返却されること

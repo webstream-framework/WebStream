@@ -738,56 +738,62 @@ SQL;
         );
     }
 
-   public function moreThanMaxLengthParameter() {
+    public function moreThanMaxLengthParameter() {
         return array(
             array("aaaaaaaaaaa"), // 11
             array("あああああああああああ") // 11
         );
     }
    
-   public function lessThanMinParameter() {
-       return array(
+    public function lessThanMinParameter() {
+        return array(
             array("-100"), // マイナス値
             array("99"), // 境界値
             array("99.9999") // 小数値
         );
-   }
+    }
 
-   public function moreThanMaxParameter() {
-       return array(
+    public function moreThanMaxParameter() {
+        return array(
             array("201"), // 境界値
             array("222.222") // 少数
         );
-   }
+    }
    
-   public function notEqualLengthParameter() {
-       return array(
+    public function notEqualLengthParameter() {
+        return array(
             array("aaaaaaaaa"), // 境界値9
             array("aaaaaaaaaaa"), // 境界値11
             array("あああああああああ"), // 境界値9
             array("あああああああああああ") // 境界値11
         );
-   }
+    }
    
-   public function outOfRangeParameter() {
-       return array(
-           array("9"), // low範囲外
-           array("21"), // high範囲外
-       );
-   }
+    public function outOfRangeParameter() {
+        return array(
+            array("9"), // low範囲外
+            array("21"), // high範囲外
+        );
+    }
    
-   public function validateErrorHandlingMulti() {
-       return array(
-           array("a", "min_length[2]"), // min_length
-           array("yui", "equal[kyouko]") // equal
-       );
-   }
+    public function validateErrorHandlingMulti() {
+        return array(
+            array("a", "min_length[2]"), // min_length
+            array("yui", "equal[kyouko]") // equal
+        );
+    }
    
-   public function notNumberParameter() {
-       return array(
-           array("aaaaa"),
-           array("-10"),
-           array("1.11")
-       );
-   }
+    public function notNumberParameter() {
+        return array(
+            array("aaaaa"),
+            array("-10"),
+            array("1.11")
+        );
+    }
+   
+    public function createCacheFile() {
+        return array(
+            array("1cf8944a894eb91a4580ffd7fcefdc3d")
+        );
+    }
 }
