@@ -35,11 +35,11 @@ class Security {
             $session->delete($token);
             if ($request->isPost()) {
                 $request_token = $request->post($token);
-                $isExistParams = count($request->getPOST()) >= 2;
+                $isExistParams = count($request->getPOST()) >= 1;
             }
             else if ($request->isGet()) {
                 $request_token = $request->get($token);
-                $isExistParams = count($request->getGET()) >= 2;
+                $isExistParams = count($request->getGET()) >= 1;
             }
             // POSTパラメータが存在し、かつ、CSRFトークンが一致しない場合はCSRFエラーとする
             if ($session_token !== $request_token && $isExistParams) {

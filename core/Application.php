@@ -66,8 +66,15 @@ class Application {
     public function run() {
         $this->init();
         $this->responseCache();
-        $this->controller = new CoreController();
         try {
+            $this->controller = new CoreController();
+            // セッションタイムアウトをチェック
+            $session = Session::start();
+            $session->cookie(1000);
+            if ($session->timeout()) {
+                $session->destroy();
+                throw new SessionTimeoutException("Session timeout");
+            }
             // ルーティングを解決する
             $this->route = new Router();
             // ルーティングの解決に成功した場合、コントローラを呼び出す
@@ -89,6 +96,11 @@ class Application {
         catch (CsrfException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
             $this->move(400);
+        }
+        // セッションタイムアウトの場合は500
+        catch (SessionTimeoutException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->move(500);
         }
         // アクセス禁止の場合は403
         catch (ForbiddenAccessException $e) {

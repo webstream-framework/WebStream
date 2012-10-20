@@ -7,6 +7,8 @@ namespace WebStream;
  */
 /** CSRFエラー例外 */
 class CsrfException extends \Exception {}
+/** セッション例外 */
+class SessionTimeoutException extends \Exception {}
 /** ルーティング失敗例外 */
 class RouterException extends \Exception {}
 /** バリデーション例外 */
