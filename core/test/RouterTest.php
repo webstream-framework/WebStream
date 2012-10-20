@@ -280,7 +280,7 @@ class RouterTest extends UnitTestBase {
         $http = new HttpAgent();
         $url = $this->root_url . $path;
         $session_id = $http->get($url);
-        $cookie = "Cookie: PHPSESSID=${session_id}";
+        $cookie = "Cookie: WSSESS=${session_id}";
         $url = $this->root_url . $path2;
         $response = $http->get($url, null, array($cookie));
         $this->assertEquals($response, $value);

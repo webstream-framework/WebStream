@@ -70,7 +70,6 @@ class Application {
             $this->controller = new CoreController();
             // セッションタイムアウトをチェック
             $session = Session::start();
-            $session->cookie(1000);
             if ($session->timeout()) {
                 $session->destroy();
                 throw new SessionTimeoutException("Session timeout");
