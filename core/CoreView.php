@@ -12,6 +12,8 @@ class CoreView {
     private $page_name;
     /** セッション */
     private $session;
+    /** CSRF対策 */
+    public $enableCsrf = false;
 
     /**
      * Viewクラスの初期化
@@ -110,7 +112,7 @@ HTML;
         $content = $this->convert(file_get_contents($template_path));
 
         // formタグが含まれる場合はCSRFトークンを付与する
-        if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
+        if ($this->enableCsrf && preg_match('/<form.*?>.*?<\/form>/is', $content)) {
             $this->addToken($params, $content);
         }
         // formタグがない場合、CSRFトークンセッションは不要なので削除
@@ -135,6 +137,13 @@ HTML;
     final private function outputHTML($__params__, $__template__) {
         extract($__params__);
         include($__template__);
+    }
+    
+    /**
+     * CSRF対策を有効にする
+     */
+    final public function enableCsrf() {
+        $this->enableCsrf = true;
     }
     
     /**

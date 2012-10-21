@@ -39,7 +39,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.8');
+        define('STREAM_VERSION', '0.3.9');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -94,7 +94,9 @@ class Application {
         // CSRFエラーの場合は400
         catch (CsrfException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->move(400);
+            if (!$this->handle($e)) {
+                $this->move(400);
+            }
         }
         // セッションタイムアウトの場合は500
         catch (SessionTimeoutException $e) {
@@ -147,6 +149,24 @@ class Application {
         $this->after($class, $instance);
     }
     
+    private function handle($errorObj) {
+        $classPath = explode('\\', get_class($errorObj));
+        $className = str_replace('Exception', '', end($classPath));
+        $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
+        $instance = $class->newInstance();
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Error");
+        $isHandled = false;
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->value === $className) {
+                $method = $class->getMethod($methodAnnotation->methodName);
+                $method->invoke($instance);
+                $isHandled = true;
+            }
+        }
+        return $isHandled;
+    }
+    
     /**
      * アノテーションを実行
      * @param Object リフレクションクラスオブジェクト
@@ -159,6 +179,8 @@ class Application {
         $this->validate($class, $instance);
         // cache
         $this->cache($class, $instance);
+        // csrf processing
+        $this->csrf($class, $instance);
     }
     
     /**
@@ -219,34 +241,6 @@ class Application {
     }
     
     /**
-     * Filter処理を実行する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
-     * @param String Filter名
-     */
-    private function filter($class, $instance, $filterName) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Filter");
-        foreach ($methodAnnotations as $methodAnnotation) {
-            // @Filter($filterName)を抽出
-            // 複数のメソッドに対してアノテーションを定義可能とする
-            if ($methodAnnotation->value === $filterName) {
-                // クラス名が一致しない場合、親クラスを辿り一致するまで走査する
-                // それでも一致しなければメソッドを持っていないと判断する
-                $_class = $class;
-                do {
-                    if ($_class->getName() === $methodAnnotation->className &&
-                        $_class->hasMethod($methodAnnotation->methodName)) {
-                        $method = $_class->getMethod($methodAnnotation->methodName);
-                        $method->invoke($instance);
-                    }
-                }
-                while ($_class = $_class->getParentClass());
-            }
-        }
-    }
-    
-    /**
      * 基本認証を実行する
      * @param Object リフレクションクラスオブジェクト
      * @param Object リフレクションクラスインスタンスオブジェクト
@@ -269,50 +263,7 @@ class Application {
             }
         }
     }
-    
-    /**
-     * キャッシュ情報を設定する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
-     */
-    private function cache($class, $instance) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Cache");
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                if (!preg_match('/^\d+$/', $methodAnnotation->value)) {
-                    $errorMsg = "@Cache value must be positive integer. Found value: $methodAnnotation->value";
-                    throw new AnnotationException($errorMsg);
-                }
-                $this->cache['ttl'] = $methodAnnotation->value;
-            }
-        }
-    }
-    
-    /**
-     * レスポンスキャッシュを設定する
-     * @param String キャッシュデータ
-     */
-    private function responseCache($data = null) {
-        $cache = new Cache();
-        $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
-        // キャッシュをセット
-        if ($data) {
-            if (array_key_exists('ttl', $this->cache) && !$response) {
-                $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->cache['ttl']);
-                Logger::info("Response cache rendered.");
-            }
-        }
-        // キャッシュをロード
-        else {
-            if ($response) {
-                echo $response;
-                Logger::info("Response cache loaded.");
-                exit;
-            }
-        }
-    }
-    
+
     /**
      * バリデーションを実行する
      * @param Object リフレクションクラスオブジェクト
@@ -353,6 +304,96 @@ class Application {
             // バリデーションエラーハンドリングメソッドがない場合、例外を出力
             if (!$hasHandlingMethod) {
                 throw $e;
+            }
+        }
+    }
+
+    /**
+     * キャッシュ情報を設定する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function cache($class, $instance) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Cache");
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                if (!preg_match('/^\d+$/', $methodAnnotation->value)) {
+                    $errorMsg = "@Cache value must be positive integer. Found value: $methodAnnotation->value";
+                    throw new AnnotationException($errorMsg);
+                }
+                $this->cache['ttl'] = $methodAnnotation->value;
+            }
+        }
+    }
+    
+    /**
+     * CSRF対策を有効にする
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function csrf($class, $instance) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Security");
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                if ($methodAnnotation->value === "CSRF") {
+                    $method = $class->getMethod('enableCsrf');
+                    $method->invoke($instance);
+                    break;
+                }
+            }
+        }
+    }
+    
+    /**
+     * Filter処理を実行する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     * @param String Filter名
+     */
+    private function filter($class, $instance, $filterName) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Filter");
+        foreach ($methodAnnotations as $methodAnnotation) {
+            // @Filter($filterName)を抽出
+            // 複数のメソッドに対してアノテーションを定義可能とする
+            if ($methodAnnotation->value === $filterName) {
+                // クラス名が一致しない場合、親クラスを辿り一致するまで走査する
+                // それでも一致しなければメソッドを持っていないと判断する
+                $_class = $class;
+                do {
+                    if ($_class->getName() === $methodAnnotation->className &&
+                        $_class->hasMethod($methodAnnotation->methodName)) {
+                        $method = $_class->getMethod($methodAnnotation->methodName);
+                        $method->invoke($instance);
+                    }
+                }
+                while ($_class = $_class->getParentClass());
+            }
+        }
+    }
+    
+    /**
+     * レスポンスキャッシュを設定する
+     * @param String キャッシュデータ
+     */
+    private function responseCache($data = null) {
+        $cache = new Cache();
+        $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
+        // キャッシュをセット
+        if ($data) {
+            if (array_key_exists('ttl', $this->cache) && !$response) {
+                $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->cache['ttl']);
+                Logger::info("Response cache rendered.");
+            }
+        }
+        // キャッシュをロード
+        else {
+            if ($response) {
+                echo $response;
+                Logger::info("Response cache loaded.");
+                exit;
             }
         }
     }

@@ -447,6 +447,35 @@ class RouterTest extends UnitTestBase {
         $cache = new \WebStream\Cache();
         $this->assertNotNull($cache->get($filename));
     }
+    
+    /**
+     * 正常系
+     * CSRFエラーが起きた場合、@Error("Csrf")アノテーションでハンドリングできること
+     */
+    public function testOkHandledCsrf() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/handled_csrf_view";
+        $html = $http->get($url);
+        $doc = new \DOMDocument();
+        @$doc->loadHTML($html);
+        $token = null;
+        $nodeList = $doc->getElementsByTagName("input");
+        for ($i = 0; $i < $nodeList->length; $i++) {
+            $node = $nodeList->item($i);
+            $token = $node->getAttribute("value");
+        }
+        // セッションIDを取得
+        $responseHeader = $http->getResponseHeader();
+        $sessionHeader = null;
+        foreach ($responseHeader as $header) {
+            if (preg_match('/Set-Cookie: (.*?);/', $header, $matches)) {
+                $sessionHeader = $matches[1];
+            }
+        }
+        $url = $this->root_url . "/handled_csrf?__CSRF_TOKEN__=dummy";
+        $html = $http->get($url, "", array("Cookie: " . $sessionHeader));
+        $this->assertEquals($html, "handled csrf.");
+    }
 
     /**
      * 異常系

@@ -6,6 +6,8 @@ namespace WebStream;
  * @since 2010/10/01
  */
 class HttpAgent {
+    /** レスポンスヘッダ */
+    private $responseHeader;
     /** ステータスコード */
     private $status_code;
     /** コンテントタイプ */
@@ -49,6 +51,14 @@ class HttpAgent {
      */
     public function getContentType() {
         return $this->content_type;
+    }
+    
+    /**
+     * レスポンスヘッダを返却する
+     * @return Array レスポンスヘッダ
+     */
+    public function getResponseHeader() {
+        return $this->responseHeader;
     }
     
     /**
@@ -138,8 +148,9 @@ class HttpAgent {
         // レスポンス
         $response = @file_get_contents($url, false, 
             stream_context_create(array("http" => $request)));
-
-        if (!isset($http_response_header)) {
+        
+        $this->responseHeader = $http_response_header;
+        if (!isset($this->responseHeader)) {
             $hasHeader = @get_headers($url);
             // ヘッダを持たない場合、存在しないURL
             if ($hasHeader === false) {
@@ -155,13 +166,13 @@ class HttpAgent {
         }
         
         // ヘッダ情報を取得
-        foreach ($http_response_header as $value) {
+        foreach ($this->responseHeader as $value) {
             // Content-Type
             if (preg_match('/^Content-Type:\s.+/', $value)) {
                 $this->content_type = $value;
             }
             // ステータスコード
-            if (preg_match('/^HTTP\/.+\s([0-9]{3})/', $http_response_header[0], $matches)) {
+            if (preg_match('/^HTTP\/.+\s([0-9]{3})/', $this->responseHeader[0], $matches)) {
                 $this->status_code = intval($matches[1]);
             }
         }

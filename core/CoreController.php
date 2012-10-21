@@ -29,7 +29,7 @@ class CoreController {
     final public function initialize() {
         $this->session = Session::start();
         $this->request = new Request();
-        $this->csrf();
+        $this->csrfCheck();
         $this->load();
     }
     
@@ -46,8 +46,15 @@ class CoreController {
     /**
      * CSRFトークンをチェックする
      */
-    final private function csrf() {
+    final private function csrfCheck() {
         Security::isCsrfCheck();
+    }
+    
+    /**
+     * CSRF対策処理を有効にする
+     */
+    final public function enableCsrf() {
+        $this->view->enableCsrf();
     }
     
     /**

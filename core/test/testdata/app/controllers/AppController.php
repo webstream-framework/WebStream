@@ -16,4 +16,12 @@ class AppController extends CoreController {
     public function testParent2() {
         echo "super after";
     }
+    
+    /**
+     * @Inject
+     * @Error("NotFound")
+     */
+    public function cached404() {
+        echo "cache!";
+    }
 }

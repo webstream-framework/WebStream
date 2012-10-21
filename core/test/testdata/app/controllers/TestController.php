@@ -29,10 +29,18 @@ class TestController extends CoreController {
         echo $this->Test instanceof CoreService;
     }
     
+    /**
+     * @Inject
+     * @Security("CSRF")
+     */
     public function testCsrf() {
         $this->render("test");
     }
     
+    /**
+     * @Inject
+     * @Security("CSRF")
+     */
     public function testCsrfGetView() {
         $this->render("csrf_get");
     }
@@ -41,6 +49,10 @@ class TestController extends CoreController {
         echo "csrf get is ok.";
     }
     
+    /**
+     * @Inject
+     * @Security("CSRF")
+     */
     public function testCsrfPostView() {
         $this->render("csrf_post");
     }

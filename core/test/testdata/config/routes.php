@@ -84,6 +84,8 @@ Router::setRule(
         '/basic_auth2' => "test_basic_auth#execute2",
         '/filter_multi' => "test_filter_multi#execute",
         '/cache' => "test_cache_annotation#execute",
-        '/response_cache' => "test_response_cache#execute"
+        '/response_cache' => "test_response_cache#execute",
+        '/handled_csrf_view' => "test_handled_csrf#show_view",
+        '/handled_csrf' => "test_handled_csrf#execute"
     )
 );
