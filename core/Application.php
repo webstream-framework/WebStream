@@ -61,21 +61,28 @@ class Application {
     }
     
     /**
+     * Controllerクラスをロード
+     */
+    private function loadController() {
+        // Controllerクラスをインポート
+        import(STREAM_APP_DIR . "/controllers/AppController");
+        import(STREAM_APP_DIR . "/controllers/" . $this->controller());
+        $this->controller = new CoreController();
+    }
+    
+    /**
      * アプリケーションを起動する
      */
     public function run() {
         $this->init();
         $this->responseCache();
         try {
-            $this->controller = new CoreController();
-            // セッションタイムアウトをチェック
-            $session = Session::start();
-            if ($session->timeout()) {
-                $session->destroy();
-                throw new SessionTimeoutException("Session timeout");
-            }
             // ルーティングを解決する
             $this->route = new Router();
+            // Controllerクラスをロード
+            $this->loadController();
+            // セッションを開始
+            Session::start();
             // ルーティングの解決に成功した場合、コントローラを呼び出す
             if ($this->controller() && $this->action()) {
                 $this->runContoller();
@@ -101,7 +108,9 @@ class Application {
         // セッションタイムアウトの場合は500
         catch (SessionTimeoutException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->move(500);
+            if (!$this->handle($e)) {
+                $this->move(500);
+            }
         }
         // アクセス禁止の場合は403
         catch (ForbiddenAccessException $e) {
@@ -129,9 +138,6 @@ class Application {
      * コントローラを起動する
      */
     private function runContoller() {
-        // Controllerクラスをインポート
-        import(STREAM_APP_DIR . "/controllers/AppController");
-        import(STREAM_APP_DIR . "/controllers/" . $this->controller());
         // Controllerクラスを起動
         $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
         $instance = $class->newInstance();
@@ -149,6 +155,11 @@ class Application {
         $this->after($class, $instance);
     }
     
+    /**
+     * エラー処理のハンドリングチェック
+     * @param Object エラーオブジェクト
+     * @return Boolean ハンドリングするかどうか
+     */
     private function handle($errorObj) {
         $classPath = explode('\\', get_class($errorObj));
         $className = str_replace('Exception', '', end($classPath));

@@ -1,0 +1,717 @@
+[2012-10-21 22:39:27,84] [ERROR] WebStream\TestHandledSessionTimeoutController#destroy is not defined.
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(122): WebStream\CoreController->__call('destroy', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Session.php(122): WebStream\TestHandledSessionTimeoutController->destroy()
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/app/controllers/TestHandledSessionTimeoutController.php(5): WebStream\Session->restart(30)
+	#3 [internal function]: WebStream\TestHandledSessionTimeoutController->showView(Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(149): ReflectionMethod->invoke(Object(WebStream\TestHandledSessionTimeoutController), Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(81): WebStream\Application->runContoller()
+	#6 [internal function]: WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#8 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#9 {main}
+[2012-10-21 22:39:27,84] [INFO] HTTP access occured: status code 500
+[2012-10-21 22:39:39,38] [FATAL] Using $this when not in object context /Users/stay/workspace2/WebStream/core/Session.php(70)
+[2012-10-23 22:04:40,35] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:04:40,36] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Application.php(207)
+[2012-10-23 22:14:00,29] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:14:00,29] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Application.php(207)
+[2012-10-23 22:16:15,90] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:16:15,90] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:162
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(162): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(104): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(162)
+[2012-10-23 22:18:03, 2] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:18:03, 3] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:163
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(163): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(104): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(163)
+[2012-10-23 22:19:38,39] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:19:38,39] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:163
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(163): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(104): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(163)
+[2012-10-23 22:21:39,22] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Application.php(215)
+[2012-10-23 22:22:13,81] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Application.php(215)
+[2012-10-23 22:24:54,57] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Application.php(221)
+[2012-10-23 22:25:24,86] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:27:57,77] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:28:30,22] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:28:34,59] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:28:37,78] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:28:50,74] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:28:54,17] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:29:16,43] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:32:29,91] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:32:40,47] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:33:06,26] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:33:10,77] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:33:54,92] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:34:32,35] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:35:35,63] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:37:13,63] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:37:36,79] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:38:11,64] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:38:21,32] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:39:47,92] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:40:09,75] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:40:41,17] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:40:46,18] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:41:30,38] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-23 22:41:59,78] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:32:49,17] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:33:33,67] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:35:05,51] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:37:30,94] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:37:40,44] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:37:57,88] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:38:41,48] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:40:16,63] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:40:26,79] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:42:04,72] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:42:47,83] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:43:00,71] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:43:13,30] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:43:25, 7] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:43:57,95] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:45:28,78] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:45:36,66] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:52:35,60] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:52:41,29] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:56:07,50] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:59:25,45] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 20:59:36,46] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:01:28,44] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:11:45, 1] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:12:00,23] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:12:57, 3] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:22:41, 7] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:22:51,72] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:24:41,79] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:41:00,55] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:41:03, 5] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:41:06,22] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:42:11,92] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 21:42:15,23] [ERROR] Session timeout
+	#0 [internal function]: WebStream\Application->run()
+	#1 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#3 {main}
+[2012-10-25 22:10:42,72] [FATAL] Call to undefined function WebStream\session_status() /Users/stay/workspace2/WebStream/core/Session.php(41)
+[2012-10-27 17:15:17,47] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 17:15:17,47] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:179
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(179): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(124): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(179)
+[2012-10-27 17:16:38,65] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 17:16:38,66] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:180
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(180): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(124): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(180)
+[2012-10-27 17:17:11,65] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(91): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 17:17:11,65] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:180
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(180): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(125): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(180)
+[2012-10-27 17:17:31,13] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(91): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 17:17:31,13] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:180
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(180): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(125): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(180)
+[2012-10-27 17:25:55,53] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 17:25:55,53] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestResponseCacheController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:179
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(179): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(124): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(179)
+[2012-10-27 17:26:25,59] [INFO] Create cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-10-27 17:26:25,59] [INFO] Response cache rendered.
+[2012-10-27 17:26:34,70] [INFO] Get cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-10-27 17:26:34,70] [INFO] Response cache loaded.
+[2012-10-27 17:26:34,70] [INFO] Get cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-10-27 17:26:37,51] [WARN] Expired cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-10-27 17:26:38,52] [INFO] Create cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-10-27 17:26:38,52] [INFO] Response cache rendered.
+[2012-10-27 17:26:48, 9] [INFO] Get cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-10-27 17:26:48,10] [INFO] Response cache loaded.
+[2012-10-27 17:26:48,10] [INFO] Get cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-10-27 17:54:44,46] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 17:54:44,46] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:179
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(179): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(124): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(179)
+[2012-10-27 23:39:16,53] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:39:16,53] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:179
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(179): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(124): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(179)
+[2012-10-27 23:42:58,98] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(84): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:42:58,99] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:173
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(118): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(173)
+[2012-10-27 23:43:21, 1] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(85): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:43:21, 1] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:174
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(174): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(119): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(174)
+[2012-10-27 23:43:37,29] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(86): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:43:37,29] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:175
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(175): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(120): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(175)
+[2012-10-27 23:44:26,13] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(67): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(85): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:44:26,14] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:174
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(174): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(119): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(174)
+[2012-10-27 23:44:43, 0] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(68): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(86): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:44:43, 0] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:175
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(175): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(120): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(175)
+[2012-10-27 23:45:00,64] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(68): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(87): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:45:00,65] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\TestHandledSessionTimeoutController does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:176
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Application.php(176): ReflectionClass->__construct('\WebStream\Test...')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(121): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 [internal function]: WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#4 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#5 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(176)
+[2012-10-27 23:45:49,38] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(71): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(84): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:45:49,41] [FATAL] Uncaught exception 'WebStream\SessionTimeoutException' with message 'Session timeout' in /Users/stay/workspace2/WebStream/core/Session.php:85
+Stack trace:
+#0 /Users/stay/workspace2/WebStream/core/Session.php(106): WebStream\Session->__construct(0, '/', '')
+#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('TestHandledSess...')
+#3 [internal function]: WebStream\CoreController->__construct()
+#4 /Users/stay/workspace2/WebStream/core/Application.php(174): ReflectionClass->newInstance()
+#5 /Users/stay/workspace2/WebStream/core/Application.php(118): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#6 [internal function]: WebStream\Application->run()
+#7 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+#8 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+#9 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Session.php(85)
+[2012-10-27 23:48:44,78] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(105): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(71): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(84): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:48:52,95] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(105): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(70): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(83): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:49:04,83] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(105): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(70): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(83): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-27 23:54:58, 2] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(77): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(70): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(83): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-28 00:07:11,98] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(83): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(70): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(83): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-28 00:07:28, 3] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(83): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(70): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(83): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-10-28 00:09:47,99] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(83): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(24): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(23): WebStream\CoreView->__construct('Core')
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(70): WebStream\CoreController->__construct()
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(83): WebStream\Application->loadController()
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
