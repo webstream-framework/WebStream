@@ -15,7 +15,7 @@ class TestHandledCsrfController extends CoreController {
     
     /**
      * @Inject
-     * @Error("Csrf")
+     * @Error("CSRF")
      */
     public function handle() {
         echo "handled csrf.";

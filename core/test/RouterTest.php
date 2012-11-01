@@ -504,9 +504,6 @@ class RouterTest extends UnitTestBase {
         $responseHeader = $http->getResponseHeader();
         $cookie = array();
         foreach ($responseHeader as $header) {
-            if (preg_match('/Set-Cookie: (WSSESS=.*)$/', $header, $matches)) {
-                //$cookie[0] = $matches[1];
-            }
             if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
                 $cookie[0] = $matches[1];
             }

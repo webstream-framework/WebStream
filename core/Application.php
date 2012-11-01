@@ -176,7 +176,8 @@ class Application {
         $methodAnnotations = $annotation->methods("@Error");
         $isHandled = false;
         foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->value === $className) {
+            // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
+            if (strcasecmp($methodAnnotation->value, $className) == 0) {
                 $method = $class->getMethod($methodAnnotation->methodName);
                 if (empty($errorParams)) {
                     $method->invoke($instance);
@@ -220,8 +221,6 @@ class Application {
     private function runAnnotation($class, $instance) {
         // basic auth
         $this->basicAuth($class, $instance);
-        // validate
-        //$this->validate($class, $instance);
         // cache
         $this->cache($class, $instance);
         // csrf processing
