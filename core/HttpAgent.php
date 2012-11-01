@@ -148,9 +148,8 @@ class HttpAgent {
         // レスポンス
         $response = @file_get_contents($url, false, 
             stream_context_create(array("http" => $request)));
-        $this->responseHeader = $http_response_header;
 
-        if (!isset($this->responseHeader)) {
+        if (!isset($http_response_header)) {
             $hasHeader = @get_headers($url);
             // ヘッダを持たない場合、存在しないURL
             if ($hasHeader === false) {
@@ -163,6 +162,9 @@ class HttpAgent {
                 Logger::error("Request timeout: " . $url);
             }
             return null;
+        }
+        else {
+            $this->responseHeader = $http_response_header;
         }
         
         // ヘッダ情報を取得
