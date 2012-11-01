@@ -89,7 +89,7 @@ class ValidatorTest extends UnitTestBase {
      * 異常系
      * バリデーションルールの構文が間違っている場合、例外が発生すること
      * @dataProvider invalidRule
-     * @expectedException WebStream\ValidatorException
+     * @expectedException WebStream\ValidateException
      */
     public function testNgInvalidRule($validate_file) {
         \WebStream\import("/core/test/testdata/config/" . $validate_file);
@@ -99,7 +99,7 @@ class ValidatorTest extends UnitTestBase {
     /**
      * 異常系
      * リクエストメソッドが間違っている場合、例外が発生すること
-     * @expectedException WebStream\ValidatorException
+     * @expectedException WebStream\ValidateException
      */
     public function testNgInvalidRequestMethod() {
         \WebStream\import("/core/test/testdata/config/validates.ng9");

@@ -86,6 +86,9 @@ class Application {
             Session::start();
             // ルーティングの解決に成功した場合、コントローラを呼び出す
             if ($this->controller() && $this->action()) {
+                // バリデーションチェック
+                $this->validate();
+                // コントローラを起動
                 $this->runContoller();
             }
             // 静的ファイルを呼び出す
@@ -124,9 +127,11 @@ class Application {
             $this->move(404);
         }
         // バリデーションエラーの場合は422
-        catch (ValidatorException $e) {
+        catch (ValidateException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->move(422);
+            if (!$this->handle($e, $this->validate)) {
+                $this->move(422);
+            }
         }
         // それ以外のエラーは500
         catch (\Exception $e) {
@@ -159,9 +164,10 @@ class Application {
     /**
      * エラー処理のハンドリングチェック
      * @param Object エラーオブジェクト
+     * @param Array エラー内容
      * @return Boolean ハンドリングするかどうか
      */
-    private function handle($errorObj) {
+    private function handle($errorObj, $errorParams = array()) {
         $classPath = explode('\\', get_class($errorObj));
         $className = str_replace('Exception', '', end($classPath));
         $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
@@ -172,11 +178,38 @@ class Application {
         foreach ($methodAnnotations as $methodAnnotation) {
             if ($methodAnnotation->value === $className) {
                 $method = $class->getMethod($methodAnnotation->methodName);
-                $method->invoke($instance);
+                if (empty($errorParams)) {
+                    $method->invoke($instance);
+                }
+                else {
+                    $method->invoke($instance, $errorParams);
+                }
                 $isHandled = true;
             }
         }
         return $isHandled;
+    }
+
+    /**
+     * バリデーションを実行する
+     */
+    private function validate() {
+        $validator = new Validator();
+        // GET, POSTパラメータ両方を検査する
+        $request = new Request();
+        $ca = $this->route->controller() . "#" . $this->route->action();
+        try {
+            $validator->validateParameter($ca, $request->getGET(), "get");
+            $validator->validateParameter($ca, $request->getPOST(), "post");
+        }
+        catch (ValidateException $e) {
+            $this->validate = array(
+                "class" => $this->controller(),
+                "method" => $this->action(),
+                "error" => $validator->getError()
+            );
+            throw $e;
+        }
     }
     
     /**
@@ -188,7 +221,7 @@ class Application {
         // basic auth
         $this->basicAuth($class, $instance);
         // validate
-        $this->validate($class, $instance);
+        //$this->validate($class, $instance);
         // cache
         $this->cache($class, $instance);
         // csrf processing
@@ -272,50 +305,6 @@ class Application {
                     $request->authPassword() !== $config["password"]) {
                     $this->move(401);
                 }
-            }
-        }
-    }
-
-    /**
-     * バリデーションを実行する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
-     */
-    private function validate($class, $instance) {
-        $validator = new Validator();
-        // GET, POSTパラメータ両方を検査する
-        $request = new Request();
-        $ca = $this->route->controller() . "#" . $this->route->action();
-        try {
-            $validator->validateParameter($ca, $request->getGET(), "get");
-            $validator->validateParameter($ca, $request->getPOST(), "post");
-        }
-        catch (ValidatorException $e) {
-            // Controllerクラスでバリデーションエラーを補足するメソッドが
-            // オーバーライドされていれば例外は出さずにそのメソッドへエラー内容を移譲する
-            // オーバーライドされていなければ例外を出す
-            $hasHandlingMethod = false;
-            // アノテーションを利用してAOPを実行
-            $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-            $methodAnnotations = $annotation->methods("@Error");
-            foreach ($methodAnnotations as $methodAnnotation) {
-                // @Error("Validate")のみ抽出
-                // 複数のメソッドに対してアノテーションを定義可能とする
-                if ($methodAnnotation->value === "Validate") {
-                    if ($class->hasMethod($methodAnnotation->methodName)) {
-                        $hasHandlingMethod = true;
-                        $method = $class->getMethod($methodAnnotation->methodName);
-                        $method->invoke($instance, array(
-                            "class" => $this->controller(),
-                            "method" => $this->action(),
-                            "error" => $validator->getError()
-                        ));
-                    }
-                }
-            }
-            // バリデーションエラーハンドリングメソッドがない場合、例外を出力
-            if (!$hasHandlingMethod) {
-                throw $e;
             }
         }
     }
