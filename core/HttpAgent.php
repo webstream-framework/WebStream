@@ -122,7 +122,7 @@ class HttpAgent {
                 $url .= "?" . $params;
             }
         }
-        if (empty($headers)) {
+        if (empty($headers) && $method === "POST") {
             $headers = array(
                 "Content-Type: application/x-www-form-urlencoded",
                 "Content-Length: " . strlen($params)
@@ -144,12 +144,12 @@ class HttpAgent {
         if (!empty($headers)) {
             $request["header"] = implode("\r\n", $headers);
         }
-        
+
         // レスポンス
         $response = @file_get_contents($url, false, 
             stream_context_create(array("http" => $request)));
-        
         $this->responseHeader = $http_response_header;
+
         if (!isset($this->responseHeader)) {
             $hasHeader = @get_headers($url);
             // ヘッダを持たない場合、存在しないURL

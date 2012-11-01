@@ -58,6 +58,8 @@ class Application {
         /** レスポンスキャッシュID */
         define('STREAM_RESPONSE_CACHE_ID', 
                md5(STREAM_BASE_URI . STREAM_ROUTING_PATH . STREAM_QUERY_STRING));
+        // CoreControllerのロード
+        $this->controller = new CoreController();
     }
     
     /**
@@ -67,7 +69,6 @@ class Application {
         // Controllerクラスをインポート
         import(STREAM_APP_DIR . "/controllers/AppController");
         import(STREAM_APP_DIR . "/controllers/" . $this->controller());
-        $this->controller = new CoreController();
     }
     
     /**

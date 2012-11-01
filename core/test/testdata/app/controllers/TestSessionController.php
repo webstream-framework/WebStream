@@ -1,10 +1,6 @@
 <?php
 namespace WebStream;
 class TestSessionController extends CoreController {
-    public function init() {
-        
-    }
-    
     public function set() {
         $this->session->set("name", "test");
         echo $this->session->id();

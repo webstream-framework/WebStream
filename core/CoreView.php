@@ -21,7 +21,6 @@ class CoreView {
      */
     public function __construct($page_name = null) {
         $this->page_name = $page_name;
-        $this->session = Session::start();
     }
 
     /**
@@ -94,6 +93,9 @@ HTML;
      * @param String ファイルタイプ
      */
     final private function draw($template_path, $params, $type) {
+        // セッションを取得
+        $this->session = Session::start();
+
         // テンプレートファイルがない場合エラー
         if (!file_exists(realpath($template_path))) {
             throw new TemplateNotFoundException("Invalid template file path: " . $template_path);

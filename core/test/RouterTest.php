@@ -279,8 +279,19 @@ class RouterTest extends UnitTestBase {
     public function testOkSetSession($path, $key, $value, $path2) {
         $http = new HttpAgent();
         $url = $this->root_url . $path;
-        $session_id = $http->get($url);
-        $cookie = "Cookie: WSSESS=${session_id}";
+        $sessionId = $http->get($url);
+        // セッションIDを取得
+        $responseHeader = $http->getResponseHeader();
+        $cookie = array();
+        foreach ($responseHeader as $header) {
+            if (preg_match('/Set-Cookie: (WSSESS=.*?);/', $header, $matches)) {
+                $cookie[0] = $matches[1];
+            }
+            if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
+                $cookie[1] = $matches[1];
+            }
+        }
+        $cookie = "Cookie: " . $cookie[0] . "; " . $cookie[1];
         $url = $this->root_url . $path2;
         $response = $http->get($url, null, array($cookie));
         $this->assertEquals($response, $value);
@@ -466,15 +477,43 @@ class RouterTest extends UnitTestBase {
         }
         // セッションIDを取得
         $responseHeader = $http->getResponseHeader();
-        $sessionHeader = null;
+        $cookie = array();
         foreach ($responseHeader as $header) {
-            if (preg_match('/Set-Cookie: (.*?);/', $header, $matches)) {
-                $sessionHeader = $matches[1];
+            if (preg_match('/Set-Cookie: (WSSESS=.*?);/', $header, $matches)) {
+                $cookie[0] = $matches[1];
+            }
+            if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
+                $cookie[1] = $matches[1];
             }
         }
+        $cookie = "Cookie: " . $cookie[0] . "; " . $cookie[1];
         $url = $this->root_url . "/handled_csrf?__CSRF_TOKEN__=dummy";
-        $html = $http->get($url, "", array("Cookie: " . $sessionHeader));
+        $html = $http->get($url, "", array($cookie));
         $this->assertEquals($html, "handled csrf.");
+    }
+    
+    /**
+     * 正常系
+     * セッションタイムアウトが起きた場合、@Error("SessionTimeout")アノテーションでハンドリングできること
+     */
+    public function testOkHandledSessionTimeout() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/handled_session_timeout";
+        $http->get($url);
+        // セッションIDを取得
+        $responseHeader = $http->getResponseHeader();
+        $cookie = array();
+        foreach ($responseHeader as $header) {
+            if (preg_match('/Set-Cookie: (WSSESS=.*)$/', $header, $matches)) {
+                //$cookie[0] = $matches[1];
+            }
+            if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
+                $cookie[0] = $matches[1];
+            }
+        }
+        $cookie = "Cookie: " . $cookie[0];
+        $html = $http->get($url, "", array($cookie));
+        $this->assertEquals($html, "handled session timeout.");
     }
 
     /**
