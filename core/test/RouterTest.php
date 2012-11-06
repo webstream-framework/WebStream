@@ -811,4 +811,21 @@ class RouterTest extends UnitTestBase {
         $http->get($url);
         $this->assertEquals($http->getStatusCode(), "500");
     }
+
+    /**
+     * 異常系
+     * 「@Request」アノテーションで許可されていないメソッドが指定された場合、405が返却されること
+     * @dataProvider methodNotAllowed
+     */
+    public function testNgMethodNotAllowed($path, $method) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        if ($method == "get") {
+            $http->post($url, array());
+        }
+        else if ($method == "post") {
+            $http->get($url);
+        }
+        $this->assertEquals($http->getStatusCode(), "405");
+    }
 }

@@ -87,6 +87,9 @@ Router::setRule(
         '/response_cache' => "test_response_cache#execute",
         '/handled_csrf_view' => "test_handled_csrf#show_view",
         '/handled_csrf' => "test_handled_csrf#execute",
-        '/handled_session_timeout' => "test_handled_session_timeout#show_view"
+        '/handled_session_timeout' => "test_handled_session_timeout#show_view",
+        '/get_only' => "test_request_method#get_only",
+        '/post_only' => "test_request_method#post_only",
+        '/get_and_post' => "test_request_method#available_get_post"
     )
 );

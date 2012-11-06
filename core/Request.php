@@ -120,7 +120,7 @@ class Request {
      * SERVERパラメータ取得
      * @param String パラメータキー
      */
-    private function server($key) {
+    public function server($key) {
         if (array_key_exists($key, $_SERVER)) {
             return safetyIn($_SERVER[$key]);
         }

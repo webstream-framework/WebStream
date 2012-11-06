@@ -204,6 +204,10 @@ class CoreController {
             header("HTTP/1.1 404 Not Found");
             $this->render_error("404 Not Found");
             break;
+        case 405:
+            header("HTTP/1.1 405 Method Not Allowed");
+            $this->render_error("405 Method Not Allowed");
+            break;
         case 422:
             header("HTTP/1.1 422 Unprocessable Entity");
             $this->render_error("422 Unprocessable Entity");

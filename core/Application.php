@@ -116,6 +116,11 @@ class Application {
                 $this->move(500);
             }
         }
+        // 許可されないメソッドの場合は405
+        catch (MethodNotAllowedException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->move(405);
+        }
         // アクセス禁止の場合は403
         catch (ForbiddenAccessException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
@@ -219,6 +224,8 @@ class Application {
      * @param Object リフレクションクラスインスタンスオブジェクト
      */
     private function runAnnotation($class, $instance) {
+        // request method
+        $this->requestMethod($class, $instance);
         // basic auth
         $this->basicAuth($class, $instance);
         // cache
@@ -282,6 +289,34 @@ class Application {
      */
     private function after($class, $instance) {
         $this->filter($class, $instance, "After");
+    }
+
+    /**
+     * 有効なリクエストメソッドか検証する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function requestMethod($class, $instance) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Request");
+        $request = new Request();
+        $methods = array();
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                $methods[] = $methodAnnotation->value;
+            }
+        }
+        $method = null;
+        if ($request->isGet()) {
+            $method = "GET";
+        }
+        else if ($request->isPost()) {
+            $method = "POST";
+        }
+        if (!empty($methods) && !in_array($method, $methods)) {
+            $errorMsg = $request->server("REQUEST_METHOD") . " method is not allowed";
+            throw new MethodNotAllowedException($errorMsg);
+        }
     }
     
     /**

@@ -41,3 +41,5 @@ class ServiceModelClassNotFoundException {
 }
 /** アノテーション例外 */
 class AnnotationException extends \Exception {}
+/** メソッド不許可例外 */
+class MethodNotAllowedException extends \Exception {}

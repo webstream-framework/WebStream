@@ -19,7 +19,7 @@ class SampleController extends AppController {
      * @Filter("After")
      */
     public function after() {}
-    
+
     public function model1() {
         $this->layout("base", array(
             "title" => $this->title,

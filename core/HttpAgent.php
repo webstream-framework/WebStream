@@ -123,9 +123,10 @@ class HttpAgent {
             }
         }
         if (empty($headers) && $method === "POST") {
+            $contentLength = !is_string($params) ? 0 : strlen($params);
             $headers = array(
                 "Content-Type: application/x-www-form-urlencoded",
-                "Content-Length: " . strlen($params)
+                "Content-Length: " . $contentLength
             );
         }
         $request = array(

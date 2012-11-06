@@ -796,4 +796,11 @@ SQL;
             array("1cf8944a894eb91a4580ffd7fcefdc3d")
         );
     }
+
+    public function methodNotAllowed() {
+        return array(
+            array("/get_only", "get"),
+            array("/post_only", "post")
+        );
+    }
 }
