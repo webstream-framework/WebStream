@@ -105,6 +105,16 @@ class ValidatorTest extends UnitTestBase {
         \WebStream\import("/core/test/testdata/config/validates.ng9");
         new Validator();
     }
+
+    /**
+     * 異常系
+     * リクエストメソッドが間違っている場合、例外が発生すること
+     * @expectedException WebStream\ValidateException
+     */
+    public function testNgInvalidDecimalPoint() {
+        \WebStream\import("/core/test/testdata/config/validates.ng10");
+        new Validator();
+    }
     
     /**
      * 異常系

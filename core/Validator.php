@@ -410,7 +410,15 @@ class Validator {
      */
     private function ruleRange($rule) {
         if (preg_match('/^(range)\[([-]?\d+\.?\d+?)\.\.([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
-            return intval($matches[2]) < intval($matches[3]);
+            if (!preg_match('/^([-]?0\.\d+|[-]?[1-9][0-9]+\.?\d*)/', $matches[2])) {
+                return false;
+            }
+            if (!preg_match('/^([-]?0\.\d+|[-]?[1-9][0-9]+\.?\d*)/', $matches[3])) {
+                return false;
+            }
+            $low = preg_match('/\./', $matches[2]) ? floatval($matches[2]) : intval($matches[2]);
+            $high = preg_match('/\./', $matches[3]) ? floatval($matches[3]) : intval($matches[3]);
+            return $low < $high;
         }
         return false;
     }
