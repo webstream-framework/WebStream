@@ -373,7 +373,7 @@ class Validator {
      * @return Boolean 検証結果
      */
     private function ruleMin($rule) {
-        return preg_match('/^(min)\[([-]?\d+\.?\d+?)\]$/', $rule);
+        return preg_match('/^(min)\[([-]?(?:0\.\d+?|[1-9][0-9]*\.?\d+?))\]$/', $rule);
     }
     
     /**
@@ -382,7 +382,7 @@ class Validator {
      * @return Boolean 検証結果
      */
     private function ruleMax($rule) {
-        return preg_match('/^(max)\[([-]?\d+\.?\d+?)\]$/', $rule);
+        return preg_match('/^(max)\[([-]?(?:0\.\d+?|[1-9][0-9]*\.?\d+?))\]$/', $rule);
     }
     
     /**

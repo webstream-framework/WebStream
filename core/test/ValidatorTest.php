@@ -108,11 +108,31 @@ class ValidatorTest extends UnitTestBase {
 
     /**
      * 異常系
-     * リクエストメソッドが間違っている場合、例外が発生すること
+     * 'range[n..m]'に00.00形式の指定があった場合、例外が発生すること
      * @expectedException WebStream\ValidateException
      */
-    public function testNgInvalidDecimalPoint() {
+    public function testNgInvalidRangeDecimalPoint() {
         \WebStream\import("/core/test/testdata/config/validates.ng10");
+        new Validator();
+    }
+
+    /**
+     * 異常系
+     * 'max[n]'に00.00形式の指定があった場合、例外が発生すること
+     * @expectedException WebStream\ValidateException
+     */
+    public function testNgInvalidMaxDecimalPoint() {
+        \WebStream\import("/core/test/testdata/config/validates.ng11");
+        new Validator();
+    }
+
+    /**
+     * 異常系
+     * 'min[n]'に00.00形式の指定があった場合、例外が発生すること
+     * @expectedException WebStream\ValidateException
+     */
+    public function testNgInvalidMinDecimalPoint() {
+        \WebStream\import("/core/test/testdata/config/validates.ng12");
         new Validator();
     }
     

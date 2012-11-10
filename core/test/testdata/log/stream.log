@@ -545,3 +545,1635 @@
 	#6 {main}
 [2012-11-10 17:58:07,97] [INFO] HTTP access occured: status code 422
 [2012-11-10 17:58:07,97] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:10,49] [INFO] Request method: get
+[2012-11-10 19:18:10,49] [INFO] Request parameter validation is execute: test_validate_error_handling#validate1
+[2012-11-10 19:18:10,49] [ERROR] Validation rule error. 'name' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,49] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling
+[2012-11-10 19:18:10,52] [INFO] Request method: get
+[2012-11-10 19:18:10,52] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-11-10 19:18:10,52] [ERROR] Validation rule error. 'name' must be more than 2.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[2]', 'name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,52] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=a
+[2012-11-10 19:18:10,55] [INFO] Request method: get
+[2012-11-10 19:18:10,55] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-11-10 19:18:10,55] [ERROR] Validation rule error. 'name' must be equals kyouko.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(102): WebStream\Validator->checkEqual('equal[kyouko]', 'name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,55] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=yui
+[2012-11-10 19:18:10,60] [INFO] Request method: get
+[2012-11-10 19:18:10,60] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,60] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,61] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,63] [INFO] Request method: get
+[2012-11-10 19:18:10,63] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,63] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,63] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,66] [INFO] Request method: get
+[2012-11-10 19:18:10,66] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,66] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,66] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,68] [INFO] Request method: get
+[2012-11-10 19:18:10,68] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,68] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,68] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,70] [INFO] Request method: get
+[2012-11-10 19:18:10,70] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,70] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,71] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,73] [INFO] Request method: get
+[2012-11-10 19:18:10,73] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,73] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,73] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,76] [INFO] Request method: get
+[2012-11-10 19:18:10,76] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,76] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,76] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,78] [INFO] Request method: get
+[2012-11-10 19:18:10,78] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,78] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,78] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,81] [INFO] Request method: get
+[2012-11-10 19:18:10,81] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,81] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,81] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,83] [INFO] Request method: get
+[2012-11-10 19:18:10,83] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,83] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,83] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,86] [INFO] Request method: get
+[2012-11-10 19:18:10,86] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,86] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,86] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,88] [INFO] Request method: get
+[2012-11-10 19:18:10,88] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,88] [ERROR] Validation rule error. 'name6' must be equals kyouko.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(102): WebStream\Validator->checkEqual('equal[kyouko]', 'name6', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,88] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,91] [INFO] Request method: get
+[2012-11-10 19:18:10,91] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,91] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,91] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,93] [INFO] Request method: get
+[2012-11-10 19:18:10,93] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,93] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,93] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,96] [INFO] Request method: get
+[2012-11-10 19:18:10,96] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,96] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,96] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:10,98] [INFO] Request method: get
+[2012-11-10 19:18:10,98] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:10,99] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:10,99] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11, 1] [INFO] Request method: get
+[2012-11-10 19:18:11, 1] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11, 1] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11, 1] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11, 4] [INFO] Request method: get
+[2012-11-10 19:18:11, 4] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11, 4] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11, 4] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11, 6] [INFO] Request method: get
+[2012-11-10 19:18:11, 6] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11, 6] [ERROR] Validation rule error. 'aaaaa' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11, 6] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11, 8] [INFO] Request method: get
+[2012-11-10 19:18:11, 9] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11, 9] [ERROR] Validation rule error. '-10' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11, 9] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,11] [INFO] Request method: get
+[2012-11-10 19:18:11,11] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,11] [ERROR] Validation rule error. '1.11' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,11] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,14] [INFO] Request method: get
+[2012-11-10 19:18:11,14] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,14] [ERROR] Validation rule error. 'name9' is unmatche regular expression '/^\d{1}$/'.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(118): WebStream\Validator->checkRegexp('regexp[/^\d{1}$...', 'name9', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,14] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,16] [INFO] Request method: get
+[2012-11-10 19:18:11,16] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,16] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,16] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,16] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,19] [INFO] Request method: get
+[2012-11-10 19:18:11,19] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,19] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,19] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,19] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,21] [INFO] Request method: get
+[2012-11-10 19:18:11,21] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,21] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,21] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,21] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,24] [INFO] Request method: get
+[2012-11-10 19:18:11,24] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,24] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,24] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,24] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,26] [INFO] Request method: get
+[2012-11-10 19:18:11,26] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,26] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,26] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,26] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,29] [INFO] Request method: get
+[2012-11-10 19:18:11,29] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,29] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,29] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,29] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,31] [INFO] Request method: get
+[2012-11-10 19:18:11,31] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,32] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,32] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,32] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,34] [INFO] Request method: get
+[2012-11-10 19:18:11,34] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,34] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,35] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,35] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,37] [INFO] Request method: get
+[2012-11-10 19:18:11,37] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,37] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,37] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,38] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,40] [INFO] Request method: get
+[2012-11-10 19:18:11,40] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,40] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,40] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,40] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,42] [INFO] Request method: get
+[2012-11-10 19:18:11,42] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,42] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,42] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,43] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,45] [INFO] Request method: get
+[2012-11-10 19:18:11,45] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,45] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,45] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,45] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,48] [INFO] Request method: get
+[2012-11-10 19:18:11,48] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,48] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,48] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,48] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,50] [INFO] Request method: get
+[2012-11-10 19:18:11,50] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,50] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,50] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,50] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,53] [INFO] Request method: get
+[2012-11-10 19:18:11,53] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,53] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,53] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,53] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,55] [INFO] Request method: get
+[2012-11-10 19:18:11,55] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,55] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,55] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,55] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,58] [INFO] Request method: get
+[2012-11-10 19:18:11,58] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,58] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,58] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,58] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,60] [INFO] Request method: get
+[2012-11-10 19:18:11,60] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,60] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,60] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,60] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:18:11,63] [INFO] Request method: get
+[2012-11-10 19:18:11,63] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:18:11,63] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:18:11,63] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:18:11,63] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:52,34] [INFO] Request method: get
+[2012-11-10 19:20:52,34] [INFO] Request parameter validation is execute: test_validate_error_handling#validate1
+[2012-11-10 19:20:52,34] [ERROR] Validation rule error. 'name' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,35] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling
+[2012-11-10 19:20:52,38] [INFO] Request method: get
+[2012-11-10 19:20:52,38] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-11-10 19:20:52,38] [ERROR] Validation rule error. 'name' must be more than 2.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[2]', 'name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,38] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=a
+[2012-11-10 19:20:52,41] [INFO] Request method: get
+[2012-11-10 19:20:52,41] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-11-10 19:20:52,41] [ERROR] Validation rule error. 'name' must be equals kyouko.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(102): WebStream\Validator->checkEqual('equal[kyouko]', 'name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,41] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=yui
+[2012-11-10 19:20:52,49] [INFO] Request method: get
+[2012-11-10 19:20:52,50] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,50] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,50] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,53] [INFO] Request method: get
+[2012-11-10 19:20:52,53] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,53] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,53] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,56] [INFO] Request method: get
+[2012-11-10 19:20:52,56] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,56] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,56] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,58] [INFO] Request method: get
+[2012-11-10 19:20:52,58] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,58] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,59] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,62] [INFO] Request method: get
+[2012-11-10 19:20:52,62] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,62] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,62] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,65] [INFO] Request method: get
+[2012-11-10 19:20:52,65] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,65] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,65] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,68] [INFO] Request method: get
+[2012-11-10 19:20:52,68] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,68] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,68] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,70] [INFO] Request method: get
+[2012-11-10 19:20:52,70] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,70] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,70] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,73] [INFO] Request method: get
+[2012-11-10 19:20:52,73] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,73] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,73] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,76] [INFO] Request method: get
+[2012-11-10 19:20:52,76] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,76] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,76] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,79] [INFO] Request method: get
+[2012-11-10 19:20:52,79] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,79] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,79] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,81] [INFO] Request method: get
+[2012-11-10 19:20:52,81] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,81] [ERROR] Validation rule error. 'name6' must be equals kyouko.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(102): WebStream\Validator->checkEqual('equal[kyouko]', 'name6', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,81] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,84] [INFO] Request method: get
+[2012-11-10 19:20:52,84] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,84] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,84] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,87] [INFO] Request method: get
+[2012-11-10 19:20:52,87] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,87] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,87] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,90] [INFO] Request method: get
+[2012-11-10 19:20:52,90] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,90] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,90] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,93] [INFO] Request method: get
+[2012-11-10 19:20:52,93] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,93] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,94] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,96] [INFO] Request method: get
+[2012-11-10 19:20:52,96] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,96] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,96] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:52,99] [INFO] Request method: get
+[2012-11-10 19:20:52,99] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:52,99] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:52,99] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53, 2] [INFO] Request method: get
+[2012-11-10 19:20:53, 2] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53, 2] [ERROR] Validation rule error. 'aaaaa' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53, 2] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53, 5] [INFO] Request method: get
+[2012-11-10 19:20:53, 5] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53, 5] [ERROR] Validation rule error. '-10' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53, 5] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53, 7] [INFO] Request method: get
+[2012-11-10 19:20:53, 7] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53, 7] [ERROR] Validation rule error. '1.11' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53, 7] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,10] [INFO] Request method: get
+[2012-11-10 19:20:53,10] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,10] [ERROR] Validation rule error. 'name9' is unmatche regular expression '/^\d{1}$/'.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(118): WebStream\Validator->checkRegexp('regexp[/^\d{1}$...', 'name9', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,10] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,12] [INFO] Request method: get
+[2012-11-10 19:20:53,12] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,12] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,12] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,12] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,15] [INFO] Request method: get
+[2012-11-10 19:20:53,15] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,15] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,15] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,15] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,17] [INFO] Request method: get
+[2012-11-10 19:20:53,17] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,17] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,17] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,17] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,20] [INFO] Request method: get
+[2012-11-10 19:20:53,20] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,20] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,20] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,20] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,22] [INFO] Request method: get
+[2012-11-10 19:20:53,22] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,22] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,22] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,22] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,25] [INFO] Request method: get
+[2012-11-10 19:20:53,25] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,25] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,25] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,25] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,27] [INFO] Request method: get
+[2012-11-10 19:20:53,27] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,27] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,27] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,27] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,30] [INFO] Request method: get
+[2012-11-10 19:20:53,30] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,30] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,30] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,30] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,32] [INFO] Request method: get
+[2012-11-10 19:20:53,32] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,32] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,32] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,32] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,35] [INFO] Request method: get
+[2012-11-10 19:20:53,35] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,35] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,35] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,35] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,37] [INFO] Request method: get
+[2012-11-10 19:20:53,37] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,37] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,37] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,37] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,40] [INFO] Request method: get
+[2012-11-10 19:20:53,40] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,40] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,40] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,40] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,42] [INFO] Request method: get
+[2012-11-10 19:20:53,42] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,42] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,42] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,42] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,45] [INFO] Request method: get
+[2012-11-10 19:20:53,45] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,45] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,45] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,45] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,47] [INFO] Request method: get
+[2012-11-10 19:20:53,47] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,47] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,47] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,48] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,50] [INFO] Request method: get
+[2012-11-10 19:20:53,50] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,50] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,50] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,50] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,52] [INFO] Request method: get
+[2012-11-10 19:20:53,52] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,52] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,52] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,52] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,55] [INFO] Request method: get
+[2012-11-10 19:20:53,55] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,55] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,55] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,55] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:53,57] [INFO] Request method: get
+[2012-11-10 19:20:53,57] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:53,57] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:53,57] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:53,57] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:20:59,45] [INFO] Request method: get
+[2012-11-10 19:20:59,45] [INFO] Request parameter validation is execute: test_validate_error_handling#validate1
+[2012-11-10 19:20:59,45] [ERROR] Validation rule error. 'name' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,45] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling
+[2012-11-10 19:20:59,48] [INFO] Request method: get
+[2012-11-10 19:20:59,48] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-11-10 19:20:59,48] [ERROR] Validation rule error. 'name' must be more than 2.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[2]', 'name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,48] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=a
+[2012-11-10 19:20:59,50] [INFO] Request method: get
+[2012-11-10 19:20:59,50] [INFO] Request parameter validation is execute: test_validate_error_handling2#validate1
+[2012-11-10 19:20:59,50] [ERROR] Validation rule error. 'name' must be equals kyouko.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(102): WebStream\Validator->checkEqual('equal[kyouko]', 'name', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate_e...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,50] [INFO] HTTP GET success(200): http://localhost/WebStream/core/test/testdata/validate_handling2?name=yui
+[2012-11-10 19:20:59,56] [INFO] Request method: get
+[2012-11-10 19:20:59,56] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,57] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,57] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,59] [INFO] Request method: get
+[2012-11-10 19:20:59,59] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,59] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,59] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,61] [INFO] Request method: get
+[2012-11-10 19:20:59,61] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,61] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,61] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,64] [INFO] Request method: get
+[2012-11-10 19:20:59,64] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,64] [ERROR] Validation rule error. 'name2' must be more than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(86): WebStream\Validator->checkMinLength('min_length[10]', 'name2', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,64] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,66] [INFO] Request method: get
+[2012-11-10 19:20:59,66] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,66] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,66] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,69] [INFO] Request method: get
+[2012-11-10 19:20:59,69] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,69] [ERROR] Validation rule error. 'name3' must be less than 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(90): WebStream\Validator->checkMaxLength('max_length[10]', 'name3', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,69] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,71] [INFO] Request method: get
+[2012-11-10 19:20:59,71] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,71] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,71] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,74] [INFO] Request method: get
+[2012-11-10 19:20:59,74] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,74] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,74] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,76] [INFO] Request method: get
+[2012-11-10 19:20:59,76] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,76] [ERROR] Validation rule error. 'name4' must be more than 100.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(94): WebStream\Validator->checkMin('min[100]', 'name4', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,76] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,78] [INFO] Request method: get
+[2012-11-10 19:20:59,78] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,78] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,79] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,81] [INFO] Request method: get
+[2012-11-10 19:20:59,81] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,81] [ERROR] Validation rule error. 'name5' must be less than 200.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(98): WebStream\Validator->checkMax('max[200]', 'name5', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,81] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,83] [INFO] Request method: get
+[2012-11-10 19:20:59,83] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,83] [ERROR] Validation rule error. 'name6' must be equals kyouko.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(102): WebStream\Validator->checkEqual('equal[kyouko]', 'name6', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,83] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,86] [INFO] Request method: get
+[2012-11-10 19:20:59,86] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,86] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,86] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,88] [INFO] Request method: get
+[2012-11-10 19:20:59,88] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,88] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,88] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,91] [INFO] Request method: get
+[2012-11-10 19:20:59,91] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,91] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,91] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,93] [INFO] Request method: get
+[2012-11-10 19:20:59,93] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,93] [ERROR] Validation rule error. 'name7' must be equals 10.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(106): WebStream\Validator->checkLength('length[10]', 'name7', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,93] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,96] [INFO] Request method: get
+[2012-11-10 19:20:59,96] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,96] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,96] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:20:59,98] [INFO] Request method: get
+[2012-11-10 19:20:59,98] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:20:59,98] [ERROR] Validation rule error. 'name8' must be between 10 and 20.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(110): WebStream\Validator->checkRange('range[10..20]', 'name8', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:20:59,98] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00, 0] [INFO] Request method: get
+[2012-11-10 19:21:00, 1] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00, 1] [ERROR] Validation rule error. 'aaaaa' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00, 1] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00, 3] [INFO] Request method: get
+[2012-11-10 19:21:00, 3] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00, 3] [ERROR] Validation rule error. '-10' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00, 3] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00, 5] [INFO] Request method: get
+[2012-11-10 19:21:00, 6] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00, 6] [ERROR] Validation rule error. '1.11' is not number.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(114): WebStream\Validator->checkNumber('number', 'name10', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00, 6] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00, 8] [INFO] Request method: get
+[2012-11-10 19:21:00, 8] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00, 8] [ERROR] Validation rule error. 'name9' is unmatche regular expression '/^\d{1}$/'.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(118): WebStream\Validator->checkRegexp('regexp[/^\d{1}$...', 'name9', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00, 8] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,11] [INFO] Request method: get
+[2012-11-10 19:21:00,11] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,11] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,11] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,11] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,13] [INFO] Request method: get
+[2012-11-10 19:21:00,13] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,13] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,13] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,13] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,16] [INFO] Request method: get
+[2012-11-10 19:21:00,16] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,16] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,16] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,16] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,18] [INFO] Request method: get
+[2012-11-10 19:21:00,18] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,18] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,18] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,18] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,20] [INFO] Request method: get
+[2012-11-10 19:21:00,21] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,21] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,21] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,21] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,23] [INFO] Request method: get
+[2012-11-10 19:21:00,23] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,23] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,23] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,23] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,25] [INFO] Request method: get
+[2012-11-10 19:21:00,25] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,25] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,26] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,26] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,28] [INFO] Request method: get
+[2012-11-10 19:21:00,28] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,28] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,28] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,28] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,30] [INFO] Request method: get
+[2012-11-10 19:21:00,30] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,30] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,30] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,31] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,33] [INFO] Request method: get
+[2012-11-10 19:21:00,33] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,33] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,33] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,33] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,35] [INFO] Request method: get
+[2012-11-10 19:21:00,35] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,35] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,35] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,36] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,38] [INFO] Request method: get
+[2012-11-10 19:21:00,38] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,38] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,38] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,38] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,40] [INFO] Request method: get
+[2012-11-10 19:21:00,40] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,40] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,40] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,41] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,43] [INFO] Request method: get
+[2012-11-10 19:21:00,43] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,43] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,43] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,43] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,45] [INFO] Request method: get
+[2012-11-10 19:21:00,45] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,45] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,45] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,46] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,48] [INFO] Request method: get
+[2012-11-10 19:21:00,48] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,48] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,48] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,48] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,50] [INFO] Request method: get
+[2012-11-10 19:21:00,50] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,50] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,50] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,51] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,53] [INFO] Request method: get
+[2012-11-10 19:21:00,53] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,53] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,53] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,53] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2012-11-10 19:21:00,55] [INFO] Request method: get
+[2012-11-10 19:21:00,55] [INFO] Request parameter validation is execute: test_validate#get_param_validate1
+[2012-11-10 19:21:00,55] [ERROR] Validation rule error. 'name1' is required.
+	#0 /Users/stay/workspace2/WebStream/core/Validator.php(82): WebStream\Validator->checkRequired('name1', Array)
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(208): WebStream\Validator->validateParameter('test_validate
+	#g...', Array, 'get')
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(90): WebStream\Application->validate()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-11-10 19:21:00,55] [INFO] HTTP access occured: status code 422
+[2012-11-10 19:21:00,56] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
