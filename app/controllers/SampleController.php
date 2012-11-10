@@ -20,6 +20,14 @@ class SampleController extends AppController {
      */
     public function after() {}
 
+    /**
+     * @Inject
+     * @Render("render.tmpl")
+     */
+    public function annoRender() {
+        return array("name" => "100");
+    }
+
     public function model1() {
         $this->layout("base", array(
             "title" => $this->title,
