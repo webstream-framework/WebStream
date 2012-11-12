@@ -1,0 +1,2 @@
+<h3>new render child!</h3>
+<p><?php echo \WebStream\safetyOut($text); ?></p>

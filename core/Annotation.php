@@ -38,12 +38,14 @@ class Annotation {
         while ($class) {
             $docComment = $class->getDocComment();
             if (preg_match(self::REGEX_INJECT, $docComment)) {
-                if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
-                    $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[1]));
-                    foreach ($values as $value) {
+                if (preg_match("/($annotation)\((.*?)\)/", $docComment, $matches)) {
+                    $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[2]));
+                    for ($i = 0; $i < count($values); $i++) {
                         $cls = new \stdClass();
                         $cls->className = $class->getName();
-                        $cls->value = $value;
+                        $cls->value = $values[$i];
+                        $cls->index = $i;
+                        $cls->name = $matches[1];
                         $classList[] = $cls;
                     }
                 }
@@ -58,7 +60,9 @@ class Annotation {
      * @param String アノテーションマーク
      * @return Array アノテーションリスト
      */
-    public function methods($annotation) {
+    public function methods() {
+        $annotations = func_get_args();
+        $regexp = "(" . implode('|', func_get_args()) . ")";
         $class = $this->refClass;
         $methodList = array();
         while ($class) {
@@ -66,20 +70,26 @@ class Annotation {
                 if ($class->getName() !== $method->getDeclaringClass()->getName()) break;
                 $docComment = $method->getDocComment();
                 if (preg_match(self::REGEX_INJECT, $docComment)) {
-                    if (preg_match("/$annotation\((.*?)\)/", $docComment, $matches)) {
-                        $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $matches[1]));
-                        foreach ($values as $value) {
-                            $cls = new \stdClass();
-                            $cls->methodName = $method->getName();
-                            $cls->className = $method->getDeclaringClass()->getName();
-                            $cls->value = $value;
-                            $methodList[] = $cls;
+                    if (preg_match_all("/$regexp\((.*?)\)/", $docComment, $matches)) {
+                        for ($i = 0; $i < count($matches[2]); $i++) {
+                            $match = $matches[2][$i];
+                            $values = preg_split("/,/", preg_replace("/\"|\'|\s/", '', $match));
+                            for ($j = 0; $j < count($values); $j++) {
+                                $cls = new \stdClass();
+                                $cls->methodName = $method->getName();
+                                $cls->className = $method->getDeclaringClass()->getName();
+                                $cls->value = $values[$j];
+                                $cls->index = $j;
+                                $cls->name = $matches[1][$j];
+                                $methodList[] = $cls;
+                            }
                         }
                     }
                 }
             }
             $class = $class->getParentClass();
         }
+
         return $methodList;
     }
 }

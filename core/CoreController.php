@@ -82,6 +82,20 @@ class CoreController {
             $this->{$this->page_name} = new ServiceModelClassNotFoundException($errorMsg);
         }
     }
+
+    /**
+     * テンプレートファイルを描画する
+     * 
+     */
+    final public function render2($template, $templates, $params = array(), $mime = "html") {
+        $this->view->templates($templates);
+        $this->view->render($template, $params, $mime);
+    }
+
+    final public function layout2($template, $templates, $params = array(), $mime = "html") {
+        $this->view->templates($templates);
+        $this->view->layout($template, $params, $mime);
+    }
     
     /**
      * レイアウトファイルを描画する

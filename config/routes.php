@@ -9,6 +9,7 @@ Router::setRule(
         '/model1' => "sample#model1",
         '/model2' => "sample#model2",
         '/model3' => "sample#model3",
+        '/render' => "sample#anno_render",
         '/index_helper' => "sample#helper",
         '/yuruyuri' => "yuru_yuri#execute",
         '/validate' => "sample#validate",

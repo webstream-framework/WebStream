@@ -39,7 +39,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.9');
+        define('STREAM_VERSION', '0.3.10');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -161,9 +161,11 @@ class Application {
         $this->runAnnotation($class, $instance);
         // action
         $action = $class->getMethod($this->action());
-        $action->invoke($instance, safetyIn($this->params()));
+        $data = $action->invoke($instance, safetyIn($this->params()));
         // after_filter
         $this->after($class, $instance);
+        // render template
+        $this->render($class, $instance);
     }
     
     /**
@@ -289,6 +291,72 @@ class Application {
      */
     private function after($class, $instance) {
         $this->filter($class, $instance, "After");
+    }
+
+    /**
+     * Viewテンプレートを描画する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     */
+    private function render($class, $instance) {
+        $templates = $this->templateInfo($class, $instance);
+        if ($templates !== null) {
+            $render = $class->getMethod($templates['method']);
+            $render->invoke($instance, $templates['base'], $templates['list'], $data);
+        }
+    }
+
+    /**
+     * Viewテンプレート情報を取得する
+     * @param Object リフレクションクラスオブジェクト
+     * @param Object リフレクションクラスインスタンスオブジェクト
+     * @return Hash テンプレート情報
+     */
+    private function templateInfo($class, $instance) {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Render", "@Layout");
+        $renderMethod = null;
+        $templates = array();
+        $argList = array();
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                // 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
+                if ($this->baseRender === null) {
+                    if ($methodAnnotation->name === "@Render") {
+                        $renderMethod = "render2";
+                    }
+                    else if ($methodAnnotation->name === "@Layout") {
+                        $renderMethod = "layout2";
+                    }
+                }
+                if ($methodAnnotation->index === 0) {
+                    if (!empty($argList)) $templates[] = $argList;
+                    $argList = array();
+                }
+                $argList[] = $methodAnnotation->value;
+            }
+        }
+        if ($renderMethod === null || empty($templates) || empty($argList)) {
+            return null;
+        }
+        $templates[] = $argList;
+
+        // Viewでレンダリングするようのハッシュを作成する
+        // key: xxx.tmplに記述した@{yyy}と一致する名前
+        // value: @{yyy}にひもづく実際のテンプレートファイル名
+        $templateList = array();
+        for ($i = 0; $i < count($templates); $i++) {
+            $args = $templates[$i];
+            // @Render/@Layoutの引数が1つの場合、テンプレートリストに登録しない
+            if (count($args) === 1) continue;
+            $templateList[$args[1]] = $args[0];
+        }
+
+        return array(
+            "list" => $templateList,
+            "base" => $templates[0][0],
+            "method" => $renderMethod
+        );
     }
 
     /**

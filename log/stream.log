@@ -1,1055 +1,470 @@
-[2012-10-06 23:38:04,14] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:38:04,14] [INFO] Bind statement: 
-[2012-10-06 23:40:02, 7] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:40:02, 8] [INFO] Bind statement: 
-[2012-10-06 23:40:32,40] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:40:32,41] [INFO] Bind statement: 
-[2012-10-06 23:42:59,74] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:42:59,74] [INFO] Bind statement: 
-[2012-10-06 23:44:25,11] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:44:25,11] [INFO] Bind statement: 
-[2012-10-06 23:57:03,14] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:57:03,14] [INFO] Bind statement: 
-[2012-10-06 23:58:00,97] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:58:00,97] [INFO] Bind statement: 
-[2012-10-06 23:58:47,74] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-06 23:58:47,74] [INFO] Bind statement: 
-[2012-10-07 00:00:03,39] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:00:03,39] [INFO] Bind statement: 
-[2012-10-07 00:04:24,55] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:04:24,56] [INFO] Bind statement: 
-[2012-10-07 00:05:16,15] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:05:16,15] [INFO] Bind statement: 
-[2012-10-07 00:05:29,26] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:05:29,26] [INFO] Bind statement: 
-[2012-10-07 00:06:34,61] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:06:34,61] [INFO] Bind statement: 
-[2012-10-07 00:06:34,62] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:06:34,62] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:28:04, 5] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:28:04, 5] [INFO] Bind statement: 
-[2012-10-07 00:40:08, 3] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:40:08, 3] [INFO] Bind statement: 
-[2012-10-07 00:40:08, 4] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:40:08, 4] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:40:30,76] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:40:30,76] [INFO] Bind statement: 
-[2012-10-07 00:40:30,77] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:50:05,93] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:50:05,93] [INFO] Bind statement: 
-[2012-10-07 00:50:05,94] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:50:05,94] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:54:01,38] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 00:54:01,38] [INFO] Bind statement: 
-[2012-10-07 00:54:01,39] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 00:54:01,39] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:09:21,97] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:09:21,98] [INFO] Bind statement: 
-[2012-10-07 01:09:40,29] [FATAL] Call to a member function load_cache() on a non-object /Users/stay/workspace2/WebStream/core/Application.php(26)
-[2012-10-07 01:10:40,46] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:10:40,46] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:10:40,46] [INFO] Bind statement: 
-[2012-10-07 01:11:49,34] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:11:49,35] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:11:49,35] [INFO] Bind statement: 
-[2012-10-07 01:12:14,76] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:12:14,77] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:12:14,77] [INFO] Bind statement: 
-[2012-10-07 01:12:28,41] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:12:28,42] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:12:28,42] [INFO] Bind statement: 
-[2012-10-07 01:12:50,10] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:12:50,11] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:12:50,11] [INFO] Bind statement: 
-[2012-10-07 01:12:50,11] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:12:50,11] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:12:50,11] [INFO] Response cache rendered.
-[2012-10-07 01:12:58, 0] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:12:58, 0] [INFO] Response cache loaded.
-[2012-10-07 01:13:00,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:13:00,45] [INFO] Response cache loaded.
-[2012-10-07 01:13:57,69] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:13:57,69] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:13:57,69] [INFO] Bind statement: 
-[2012-10-07 01:13:57,70] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:13:57,70] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:13:57,70] [INFO] Response cache rendered.
-[2012-10-07 01:28:36,91] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:36,91] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:28:36,91] [INFO] Bind statement: 
-[2012-10-07 01:28:36,91] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:36,91] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:36,91] [INFO] Response cache rendered.
-[2012-10-07 01:28:41,31] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:41,31] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:41,31] [INFO] Response cache loaded.
-[2012-10-07 01:28:41,31] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:28:42,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:42,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:42,42] [INFO] Response cache loaded.
-[2012-10-07 01:28:42,42] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:28:48,74] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:48,74] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:28:48,74] [INFO] Bind statement: 
-[2012-10-07 01:28:48,75] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:48,75] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:28:48,75] [INFO] Response cache rendered.
-[2012-10-07 01:29:02,59] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:02,59] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:29:02,59] [INFO] Bind statement: 
-[2012-10-07 01:29:02,60] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:02,60] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:02,60] [INFO] Response cache rendered.
-[2012-10-07 01:29:04,83] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:04,83] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:04,83] [INFO] Response cache loaded.
-[2012-10-07 01:29:04,83] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:29:07,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:07,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:07,96] [INFO] Response cache loaded.
-[2012-10-07 01:29:07,96] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:29:49, 0] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:49, 1] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:29:49, 1] [INFO] Bind statement: 
-[2012-10-07 01:29:49, 1] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:49, 1] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:49, 1] [INFO] Response cache rendered.
-[2012-10-07 01:29:53,25] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:53,25] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:53,25] [INFO] Response cache loaded.
-[2012-10-07 01:29:53,25] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:29:59,83] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:59,83] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:29:59,84] [INFO] Response cache loaded.
-[2012-10-07 01:29:59,84] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:30:09,53] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:09,53] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:30:09,53] [INFO] Bind statement: 
-[2012-10-07 01:30:09,53] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:09,53] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:09,53] [INFO] Response cache rendered.
-[2012-10-07 01:30:12,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:12,97] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:12,97] [INFO] Response cache loaded.
-[2012-10-07 01:30:12,97] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:30:24,63] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:24,63] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:30:24,63] [INFO] Bind statement: 
-[2012-10-07 01:30:24,64] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:24,64] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:24,64] [INFO] Response cache rendered.
-[2012-10-07 01:30:42,96] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:42,96] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:30:42,96] [INFO] Bind statement: 
-[2012-10-07 01:30:42,96] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:42,96] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:42,96] [INFO] Response cache rendered.
-[2012-10-07 01:30:51,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:51,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:51,46] [INFO] Response cache loaded.
-[2012-10-07 01:30:51,46] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:30:55,54] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:55,55] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:30:55,55] [INFO] Bind statement: 
-[2012-10-07 01:30:55,55] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:55,56] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:55,56] [INFO] Response cache rendered.
-[2012-10-07 01:30:57,86] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:57,86] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:30:57,87] [INFO] Response cache loaded.
-[2012-10-07 01:30:57,87] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:31:03,44] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:03,44] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:03,45] [INFO] Response cache loaded.
-[2012-10-07 01:31:03,45] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:31:47, 8] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:47, 8] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:31:47, 8] [INFO] Bind statement: 
-[2012-10-07 01:31:47,10] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:47,10] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:47,10] [INFO] Response cache rendered.
-[2012-10-07 01:31:49,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:49,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:49,30] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:49,30] [INFO] Response cache loaded.
-[2012-10-07 01:31:49,30] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:31:51,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:51,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:51,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:31:51,89] [INFO] Response cache loaded.
-[2012-10-07 01:31:51,89] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:32:15,94] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:15,95] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:32:15,95] [INFO] Bind statement: 
-[2012-10-07 01:32:15,96] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:15,96] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:15,96] [INFO] Response cache rendered.
-[2012-10-07 01:32:27,15] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:27,15] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:27,15] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:27,15] [INFO] Response cache loaded.
-[2012-10-07 01:32:27,15] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:32:30, 4] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:30, 4] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:30, 4] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:30, 4] [INFO] Response cache loaded.
-[2012-10-07 01:32:30, 4] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:32:57, 8] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:57, 8] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:57, 8] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:32:57, 8] [INFO] Response cache loaded.
-[2012-10-07 01:32:57, 8] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:33:31,44] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:31,45] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:33:31,45] [INFO] Bind statement: 
-[2012-10-07 01:33:31,45] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:31,45] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:31,45] [INFO] Response cache rendered.
-[2012-10-07 01:33:34,26] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:34,28] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:34,28] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:34,28] [INFO] Response cache loaded.
-[2012-10-07 01:33:34,28] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:33:54,40] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:54,40] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:54,40] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:54,40] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:54,40] [INFO] Response cache loaded.
-[2012-10-07 01:33:54,41] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:33:57,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:57,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:57,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:57,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:33:57,96] [INFO] Response cache loaded.
-[2012-10-07 01:33:57,96] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:34:20,41] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:20,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:20,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:20,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:20,42] [INFO] Response cache loaded.
-[2012-10-07 01:34:20,42] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:34:22, 5] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:22, 6] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:22, 6] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:22, 6] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:22, 6] [INFO] Response cache loaded.
-[2012-10-07 01:34:22, 6] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:34:23,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:23,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:23,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:23,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:34:23,20] [INFO] Response cache loaded.
-[2012-10-07 01:34:23,20] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:35:36,68] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:36,68] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:36,69] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:35:36,69] [INFO] Bind statement: 
-[2012-10-07 01:35:36,69] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:36,69] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:36,69] [INFO] Response cache rendered.
-[2012-10-07 01:35:40,22] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:40,22] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:40,22] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:40,22] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:35:40,22] [INFO] Response cache loaded.
-[2012-10-07 01:35:40,22] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:37:10,26] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:10,27] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:10,27] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 01:37:10,27] [INFO] Bind statement: 
-[2012-10-07 01:37:10,27] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:10,28] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:10,28] [INFO] Response cache rendered.
-[2012-10-07 01:37:12,94] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:12,94] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:12,95] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:12,95] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:12,95] [INFO] Response cache loaded.
-[2012-10-07 01:37:12,95] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:37:35,60] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:35,60] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:35,60] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:35,61] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:35,61] [INFO] Response cache loaded.
-[2012-10-07 01:37:35,61] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:37:57,22] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:57,22] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:57,23] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:57,23] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:57,23] [INFO] Response cache loaded.
-[2012-10-07 01:37:57,23] [INFO] HTTP access occured: status code 304
-[2012-10-07 01:37:59,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:59,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:59,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:59,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 01:37:59,89] [INFO] Response cache loaded.
-[2012-10-07 01:37:59,89] [INFO] HTTP access occured: status code 304
-[2012-10-07 18:37:07, 3] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:37:07, 3] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:37:07, 4] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 18:37:07, 4] [INFO] Bind statement: 
-[2012-10-07 18:37:07, 4] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/Database.php(182): WebStream\Database->execSQL('SELECT * FROM u...')
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#4 [internal function]: WebStream\CoreModel->__construct()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#7 [internal function]: WebStream\CoreService->__construct()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#10 [internal function]: WebStream\CoreController->initialize()
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#15 {main}
-[2012-10-07 18:37:07, 4] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/Database.php(182): WebStream\Database->execSQL('SELECT * FROM u...')
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#4 [internal function]: WebStream\CoreModel->__construct()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#7 [internal function]: WebStream\CoreService->__construct()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#10 [internal function]: WebStream\CoreController->initialize()
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#15 {main}
-[2012-10-07 18:37:07, 4] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#3 [internal function]: WebStream\CoreModel->__construct()
-	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#6 [internal function]: WebStream\CoreService->__construct()
-	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#9 [internal function]: WebStream\CoreController->initialize()
-	#10 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#14 {main}
-[2012-10-07 18:37:07, 4] [INFO] HTTP access occured: status code 500
-[2012-10-07 18:37:35,93] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:37:35,93] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:37:35,93] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 18:37:35,93] [INFO] Bind statement: 
-[2012-10-07 18:37:35,93] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/Database.php(182): WebStream\Database->execSQL('SELECT * FROM u...')
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#4 [internal function]: WebStream\CoreModel->__construct()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#7 [internal function]: WebStream\CoreService->__construct()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#10 [internal function]: WebStream\CoreController->initialize()
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#15 {main}
-[2012-10-07 18:37:35,93] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/Database.php(182): WebStream\Database->execSQL('SELECT * FROM u...')
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#4 [internal function]: WebStream\CoreModel->__construct()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#7 [internal function]: WebStream\CoreService->__construct()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#10 [internal function]: WebStream\CoreController->initialize()
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#15 {main}
-[2012-10-07 18:37:35,93] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#3 [internal function]: WebStream\CoreModel->__construct()
-	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#6 [internal function]: WebStream\CoreService->__construct()
-	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#9 [internal function]: WebStream\CoreController->initialize()
-	#10 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#14 {main}
-[2012-10-07 18:37:35,93] [INFO] HTTP access occured: status code 500
-[2012-10-07 18:40:32,41] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:40:32,41] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:40:32,41] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 18:40:32,41] [INFO] Bind statement: 
-[2012-10-07 18:40:32,41] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/Database.php(182): WebStream\Database->execSQL('SELECT * FROM u...')
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#4 [internal function]: WebStream\CoreModel->__construct()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#7 [internal function]: WebStream\CoreService->__construct()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#10 [internal function]: WebStream\CoreController->initialize()
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#15 {main}
-[2012-10-07 18:40:32,41] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/Database.php(182): WebStream\Database->execSQL('SELECT * FROM u...')
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#3 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#4 [internal function]: WebStream\CoreModel->__construct()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#6 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#7 [internal function]: WebStream\CoreService->__construct()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#9 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#10 [internal function]: WebStream\CoreController->initialize()
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#12 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#13 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#14 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#15 {main}
-[2012-10-07 18:40:32,41] [ERROR] Can't create statement. - SELECT * FROM users LIMIT 1 OFFSET 0
-	#0 /Users/stay/workspace2/WebStream/core/CoreModel.php(107): WebStream\Database->columnInfo(Array)
-	#1 /Users/stay/workspace2/WebStream/core/CoreModel.php(80): WebStream\CoreModel->setColumns()
-	#2 /Users/stay/workspace2/WebStream/core/CoreModel.php(30): WebStream\CoreModel->initialize()
-	#3 [internal function]: WebStream\CoreModel->__construct()
-	#4 /Users/stay/workspace2/WebStream/core/CoreService.php(48): ReflectionClass->newInstance()
-	#5 /Users/stay/workspace2/WebStream/core/CoreService.php(33): WebStream\CoreService->load()
-	#6 [internal function]: WebStream\CoreService->__construct()
-	#7 /Users/stay/workspace2/WebStream/core/CoreController.php(63): ReflectionClass->newInstance()
-	#8 /Users/stay/workspace2/WebStream/core/CoreController.php(33): WebStream\CoreController->load()
-	#9 [internal function]: WebStream\CoreController->initialize()
-	#10 /Users/stay/workspace2/WebStream/core/Application.php(128): ReflectionMethod->invoke(Object(WebStream\SampleController))
-	#11 /Users/stay/workspace2/WebStream/core/Application.php(76): WebStream\Application->runContoller()
-	#12 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
-	#13 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-	#14 {main}
-[2012-10-07 18:40:32,41] [INFO] HTTP access occured: status code 500
-[2012-10-07 18:46:17,55] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:46:17,56] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:46:17,87] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 18:46:17,87] [INFO] Bind statement: 
-[2012-10-07 18:46:17,99] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:46:17,99] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 18:46:17,99] [INFO] Response cache rendered.
-[2012-10-07 19:33:23,50] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:23,50] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:23,51] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:33:23,51] [INFO] Bind statement: 
-[2012-10-07 19:33:23,51] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:23,51] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:23,51] [INFO] Response cache rendered.
-[2012-10-07 19:33:35,14] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:35,14] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:35,15] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:35,15] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:35,15] [INFO] Response cache loaded.
-[2012-10-07 19:33:35,15] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:33:55,69] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:55,69] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:55,69] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:55,69] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:55,69] [INFO] Response cache loaded.
-[2012-10-07 19:33:55,69] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:33:57,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:57,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:57,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:57,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:33:57,45] [INFO] Response cache loaded.
-[2012-10-07 19:33:57,45] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:34:34,46] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:34,46] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:34,47] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:34:34,47] [INFO] Bind statement: 
-[2012-10-07 19:34:34,47] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:34,47] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:34,47] [INFO] Response cache rendered.
-[2012-10-07 19:34:45,54] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:45,55] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:45,55] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:45,55] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:45,55] [INFO] Response cache loaded.
-[2012-10-07 19:34:45,55] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:34:47,26] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:47,26] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:47,27] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:47,27] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:34:47,27] [INFO] Response cache loaded.
-[2012-10-07 19:34:47,27] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:35:06,84] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:06,84] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:06,84] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:06,84] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:06,84] [INFO] Response cache loaded.
-[2012-10-07 19:35:06,84] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:35:11,35] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:11,35] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:11,35] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:11,35] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:11,35] [INFO] Response cache loaded.
-[2012-10-07 19:35:11,35] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:35:16,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:16,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:16,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:16,20] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:16,20] [INFO] Response cache loaded.
-[2012-10-07 19:35:16,20] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:35:21,12] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:21,12] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:21,12] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:21,12] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:21,12] [INFO] Response cache loaded.
-[2012-10-07 19:35:21,12] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:35:32,78] [ERROR] Can't get cache: /tmp/59b357f1ed9b83d6611cf08d0c009461.cache
-[2012-10-07 19:35:32,79] [ERROR] Can't get cache: /tmp/59b357f1ed9b83d6611cf08d0c009461.cache
-[2012-10-07 19:35:32,79] [ERROR] Failed to resolve the routing: /
-[2012-10-07 19:35:32,79] [INFO] HTTP access occured: status code 404
-[2012-10-07 19:35:35,11] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:35,12] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:35,12] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:35:35,12] [INFO] Bind statement: 
-[2012-10-07 19:35:35,13] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:35,13] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:35,13] [INFO] Response cache rendered.
-[2012-10-07 19:35:40,38] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:40,38] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:40,41] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:40,41] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:35:40,41] [INFO] Response cache loaded.
-[2012-10-07 19:35:40,41] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:00, 9] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:00,11] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:00,13] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:00,13] [INFO] Response cache loaded.
-[2012-10-07 19:36:00,13] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:01,74] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:01,74] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:01,74] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:01,74] [INFO] Response cache loaded.
-[2012-10-07 19:36:01,74] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:03,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:03,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:03,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:03,36] [INFO] Response cache loaded.
-[2012-10-07 19:36:03,36] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:17,62] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:17,62] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:17,62] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:17,62] [INFO] Response cache loaded.
-[2012-10-07 19:36:17,62] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:20,26] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:20,27] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:20,27] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:20,27] [INFO] Response cache loaded.
-[2012-10-07 19:36:20,27] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:27,11] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:27,11] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:27,11] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:27,11] [INFO] Response cache loaded.
-[2012-10-07 19:36:27,11] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:29,88] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:29,88] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:29,88] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:29,88] [INFO] Response cache loaded.
-[2012-10-07 19:36:29,88] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:36:39,10] [ERROR] Can't get cache: /tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 19:36:39,10] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:36:39,10] [INFO] Bind statement: 
-[2012-10-07 19:36:39,10] [INFO] Executed SQL: select * from users
-[2012-10-07 19:36:39,10] [INFO] Bind statement: 
-[2012-10-07 19:36:50,75] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:50,76] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:36:50,76] [INFO] Bind statement: 
-[2012-10-07 19:36:50,77] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:50,77] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:36:50,77] [INFO] Response cache rendered.
-[2012-10-07 19:37:41,99] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:37:41,99] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:37:41,99] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:37:41,99] [INFO] Response cache loaded.
-[2012-10-07 19:37:41,99] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:37:44,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:37:44,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:37:44,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:37:44,29] [INFO] Response cache loaded.
-[2012-10-07 19:37:44,29] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:37:54,30] [ERROR] Can't get cache: /tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 19:37:54,31] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:37:54,31] [INFO] Bind statement: 
-[2012-10-07 19:37:54,32] [INFO] Executed SQL: select * from users
-[2012-10-07 19:37:54,32] [INFO] Bind statement: 
-[2012-10-07 19:37:56,52] [ERROR] Can't get cache: /tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 19:37:56,53] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:37:56,53] [INFO] Bind statement: 
-[2012-10-07 19:37:56,53] [INFO] Executed SQL: select * from users
-[2012-10-07 19:37:56,53] [INFO] Bind statement: 
-[2012-10-07 19:38:02,44] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:38:02,45] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:38:02,45] [INFO] Bind statement: 
-[2012-10-07 19:38:02,46] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:38:02,46] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:38:02,46] [INFO] Response cache rendered.
-[2012-10-07 19:39:20,12] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:39:20,13] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:39:20,13] [INFO] Bind statement: 
-[2012-10-07 19:39:20,13] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:39:20,13] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:39:20,13] [INFO] Response cache rendered.
-[2012-10-07 19:40:38,37] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:40:38,38] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:40:38,38] [INFO] Bind statement: 
-[2012-10-07 19:40:38,38] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:40:38,38] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:40:38,38] [INFO] Response cache rendered.
-[2012-10-07 19:41:46,28] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:41:46,29] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:41:46,29] [INFO] Bind statement: 
-[2012-10-07 19:41:46,29] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:41:46,29] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:41:46,29] [INFO] Response cache rendered.
-[2012-10-07 19:41:51,50] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:41:51,50] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:41:51,50] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:41:51,50] [INFO] Response cache loaded.
-[2012-10-07 19:41:51,50] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:42:37,21] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:42:37,21] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:42:37,21] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:42:37,21] [INFO] Response cache loaded.
-[2012-10-07 19:42:37,21] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:43:12,17] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:43:12,17] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:43:12,17] [INFO] Bind statement: 
-[2012-10-07 19:43:12,18] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:43:12,18] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:43:12,18] [INFO] Response cache rendered.
-[2012-10-07 19:44:00,67] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:00,67] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:00,67] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:00,67] [INFO] Response cache loaded.
-[2012-10-07 19:44:00,67] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:44:02,98] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:02,98] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:02,98] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:02,98] [INFO] Response cache loaded.
-[2012-10-07 19:44:02,98] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:44:09,67] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:09,67] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:09,67] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:09,67] [INFO] Response cache loaded.
-[2012-10-07 19:44:09,67] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:44:14,44] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:14,45] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:44:14,45] [INFO] Bind statement: 
-[2012-10-07 19:44:14,46] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:14,46] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:44:14,46] [INFO] Response cache rendered.
-[2012-10-07 19:49:22,66] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:22,66] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:22,66] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:49:22,66] [INFO] Bind statement: 
-[2012-10-07 19:49:22,66] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:22,66] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:22,66] [INFO] Response cache rendered.
-[2012-10-07 19:49:36,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:36,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:36,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:36,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:49:36,43] [INFO] Response cache loaded.
-[2012-10-07 19:49:36,43] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:50:05,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:05,37] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:05,37] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:05,37] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:05,37] [INFO] Response cache loaded.
-[2012-10-07 19:50:05,37] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:50:09,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:09,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:09,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:09,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:09,29] [INFO] Response cache loaded.
-[2012-10-07 19:50:09,29] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:50:19,86] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:19,86] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:19,86] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:19,86] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:19,86] [INFO] Response cache loaded.
-[2012-10-07 19:50:19,86] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:50:35,87] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:35,87] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:35,87] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:50:35,87] [INFO] Bind statement: 
-[2012-10-07 19:50:35,87] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:35,88] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:35,88] [INFO] Response cache rendered.
-[2012-10-07 19:50:42,59] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:42,60] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:42,60] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:42,60] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:42,60] [INFO] Response cache loaded.
-[2012-10-07 19:50:42,60] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:50:53,18] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:53,18] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:53,19] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:53,19] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:50:53,19] [INFO] Response cache loaded.
-[2012-10-07 19:50:53,19] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:51:05,81] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:05,81] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:05,81] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:05,81] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:05,81] [INFO] Response cache loaded.
-[2012-10-07 19:51:05,81] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:51:18,55] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:18,55] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:18,56] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:18,56] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:18,56] [INFO] Response cache loaded.
-[2012-10-07 19:51:18,56] [INFO] HTTP access occured: status code 304
-[2012-10-07 19:51:58,66] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:58,67] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:58,67] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:51:58,67] [INFO] Bind statement: 
-[2012-10-07 19:51:58,67] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:58,67] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:51:58,67] [INFO] Response cache rendered.
-[2012-10-07 19:52:23,70] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:52:23,71] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:52:23,71] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:52:23,71] [INFO] Bind statement: 
-[2012-10-07 19:52:23,71] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:52:28,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:52:28,45] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 19:52:28,46] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 19:52:28,46] [INFO] Bind statement: 
-[2012-10-07 19:52:28,46] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:11:55,83] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:11:55,83] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:11:55,84] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:11:55,84] [INFO] Bind statement: 
-[2012-10-07 20:11:55,84] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:11:55,84] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:11:55,84] [INFO] Response cache rendered.
-[2012-10-07 20:11:57,93] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:11:57,93] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:11:57,93] [FATAL] Uncaught exception 'WebStream\MethodNotFoundException' with message 'WebStream\CoreController#render_cache is not defined.' in /Users/stay/workspace2/WebStream/core/CoreController.php:43
+[2012-11-11 21:33:11,38] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 21:33:11,38] [INFO] Bind statement: 
+[2012-11-11 21:33:11,38] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/Array
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render(Array, Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2(Array, Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2(Array, Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(170): ReflectionMethod->invoke(Object(WebStream\SampleController), Array, Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(92): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 21:33:11,38] [INFO] HTTP access occured: status code 500
+[2012-11-11 21:33:40,97] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 21:33:40,97] [INFO] Bind statement: 
+[2012-11-11 21:33:40,98] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/Array
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render(Array, Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2(Array, Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2(Array, Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(171): ReflectionMethod->invoke(Object(WebStream\SampleController), Array, Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(92): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 21:33:40,98] [INFO] HTTP access occured: status code 500
+[2012-11-11 21:35:39,64] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 21:35:39,64] [INFO] Bind statement: 
+[2012-11-11 21:35:39,65] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2('base2.tmpl', Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(171): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(92): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 21:35:39,65] [INFO] HTTP access occured: status code 500
+[2012-11-11 21:48:41,41] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 21:48:41,41] [INFO] Bind statement: 
+[2012-11-11 21:48:41,41] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2('base2.tmpl', Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(174): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(92): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 21:48:41,41] [INFO] HTTP access occured: status code 500
+[2012-11-11 21:53:18,65] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 21:53:18,65] [INFO] Bind statement: 
+[2012-11-11 21:53:18,69] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2('base2.tmpl', Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(174): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(92): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 21:53:18,69] [INFO] HTTP access occured: status code 500
+[2012-11-11 21:56:28,48] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 21:56:28,48] [INFO] Bind statement: 
+[2012-11-11 21:56:28,49] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2('base2.tmpl', Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(175): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(92): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 21:56:28,49] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:01:39,64] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:01:39,64] [INFO] Bind statement: 
+[2012-11-11 22:01:39,65] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2('base2.tmpl', Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 22:01:39,65] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:01:58, 1] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:01:58, 1] [INFO] Bind statement: 
+[2012-11-11 22:01:58, 1] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(60): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 /Users/stay/workspace2/WebStream/core/CoreController.php(91): WebStream\CoreView->render2('base2.tmpl', Array, Array)
+	#3 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#5 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#6 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#7 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-11-11 22:01:58, 1] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:07:16, 3] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:07:16, 3] [INFO] Bind statement: 
+[2012-11-11 22:07:16, 4] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(49): WebStream\CoreView->draw('/Users/stay/wor...', Array, Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(92): WebStream\CoreView->render('base2.tmpl', Array, Array)
+	#2 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#7 {main}
+[2012-11-11 22:07:16, 4] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:08:18, 1] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:08:18, 1] [INFO] Bind statement: 
+[2012-11-11 22:08:18, 2] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(50): WebStream\CoreView->draw('/Users/stay/wor...', Array, Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(92): WebStream\CoreView->render('base2.tmpl', Array, Array)
+	#2 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#7 {main}
+[2012-11-11 22:08:18, 2] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:09:33, 6] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:09:33, 6] [INFO] Bind statement: 
+[2012-11-11 22:09:33, 6] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(50): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(92): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#7 {main}
+[2012-11-11 22:09:33, 6] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:10:05,16] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:10:05,16] [INFO] Bind statement: 
+[2012-11-11 22:10:05,17] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(50): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(92): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(174): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#7 {main}
+[2012-11-11 22:10:05,17] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:10:22,39] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:10:22,40] [INFO] Bind statement: 
+[2012-11-11 22:10:22,40] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(50): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(92): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(174): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#7 {main}
+[2012-11-11 22:10:22,40] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:10:55,41] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:10:55,41] [INFO] Bind statement: 
+[2012-11-11 22:10:55,43] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(50): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(92): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#7 {main}
+[2012-11-11 22:10:55,43] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:11:13,76] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:11:13,77] [INFO] Bind statement: 
+[2012-11-11 22:11:13,77] [ERROR] Invalid template file path: /Users/stay/workspace2/WebStream/app/views/sample/base2.tmpl
+	#0 /Users/stay/workspace2/WebStream/core/CoreView.php(50): WebStream\CoreView->draw('/Users/stay/wor...', Array, 'html')
+	#1 /Users/stay/workspace2/WebStream/core/CoreController.php(92): WebStream\CoreView->render('base2.tmpl', Array, 'html')
+	#2 [internal function]: WebStream\CoreController->render2('base2.tmpl', Array, Array)
+	#3 /Users/stay/workspace2/WebStream/core/Application.php(173): ReflectionMethod->invoke(Object(WebStream\SampleController), 'base2.tmpl', Array, Array)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(94): WebStream\Application->runContoller()
+	#5 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#7 {main}
+[2012-11-11 22:11:13,77] [INFO] HTTP access occured: status code 500
+[2012-11-11 22:11:58, 7] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:11:58, 7] [INFO] Bind statement: 
+[2012-11-11 22:13:04,98] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:13:04,98] [INFO] Bind statement: 
+[2012-11-11 22:13:58,53] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:13:58,53] [INFO] Bind statement: 
+[2012-11-11 22:14:47,13] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:14:47,13] [INFO] Bind statement: 
+[2012-11-11 22:18:02,21] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:18:02,21] [INFO] Bind statement: 
+[2012-11-11 22:21:16,98] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:21:16,98] [INFO] Bind statement: 
+[2012-11-11 22:22:19,28] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:22:19,28] [INFO] Bind statement: 
+[2012-11-11 22:23:43,83] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:23:43,83] [INFO] Bind statement: 
+[2012-11-11 22:24:23, 7] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:24:23, 7] [INFO] Bind statement: 
+[2012-11-11 22:25:24,78] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:25:24,78] [INFO] Bind statement: 
+[2012-11-11 22:26:26,37] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:26:26,37] [INFO] Bind statement: 
+[2012-11-11 22:26:39,91] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:26:39,91] [INFO] Bind statement: 
+[2012-11-11 22:27:28,54] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:27:28,54] [INFO] Bind statement: 
+[2012-11-11 22:28:50,27] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:28:50,27] [INFO] Bind statement: 
+[2012-11-11 22:31:32, 4] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:31:32, 4] [INFO] Bind statement: 
+[2012-11-11 22:32:24,16] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:32:24,16] [INFO] Bind statement: 
+[2012-11-11 22:33:54,53] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:33:54,53] [INFO] Bind statement: 
+[2012-11-11 22:34:55,76] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:34:55,76] [INFO] Bind statement: 
+[2012-11-11 22:37:01,99] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:37:01,99] [INFO] Bind statement: 
+[2012-11-11 22:37:34,27] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:37:34,27] [INFO] Bind statement: 
+[2012-11-11 22:47:22,74] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:47:22,75] [INFO] Bind statement: 
+[2012-11-11 22:48:04, 0] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:48:04, 0] [INFO] Bind statement: 
+[2012-11-11 22:48:23,68] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:48:23,69] [INFO] Bind statement: 
+[2012-11-11 22:56:24,25] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:56:24,25] [INFO] Bind statement: 
+[2012-11-11 22:56:24,25] [ERROR] '@SQL(users.users)' is invalid @SQL annotation value at WebStream\SampleModel#model1: /render
+[2012-11-11 22:56:24,25] [INFO] HTTP access occured: status code 404
+[2012-11-11 22:57:06,96] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-11 22:57:06,96] [INFO] Bind statement: 
+[2012-11-12 21:02:04,30] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:02:04,30] [INFO] Bind statement: 
+[2012-11-12 21:10:54,69] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:10:54,69] [INFO] Bind statement: 
+[2012-11-12 21:11:32,70] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:11:32,70] [INFO] Bind statement: 
+[2012-11-12 21:11:44,16] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:11:44,16] [INFO] Bind statement: 
+[2012-11-12 21:13:43,11] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:13:43,11] [INFO] Bind statement: 
+[2012-11-12 21:15:58,56] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:15:58,56] [INFO] Bind statement: 
+[2012-11-12 21:16:09,38] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:16:09,38] [INFO] Bind statement: 
+[2012-11-12 21:17:23,21] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:17:23,21] [INFO] Bind statement: 
+[2012-11-12 21:22:42,43] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:22:42,43] [INFO] Bind statement: 
+[2012-11-12 21:23:12,80] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:23:12,80] [INFO] Bind statement: 
+[2012-11-12 21:23:16,96] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-12 21:23:16,96] [INFO] Bind statement: 
+[2012-11-12 21:26:22,88] [ERROR] Failed to resolve the routing: /core/test/testdata/
+[2012-11-12 21:26:22,88] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:22,90] [ERROR] Failed to resolve the routing: /core/test/testdata/top
+[2012-11-12 21:26:22,90] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:22,93] [ERROR] Failed to resolve the routing: /core/test/testdata/top/test3
+[2012-11-12 21:26:22,93] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:22,95] [ERROR] Failed to resolve the routing: /core/test/testdata/action
+[2012-11-12 21:26:22,95] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:22,97] [ERROR] Failed to resolve the routing: /core/test/testdata/action2
+[2012-11-12 21:26:22,97] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:22,99] [ERROR] Failed to resolve the routing: /core/test/testdata/feed.rss
+[2012-11-12 21:26:22,99] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23, 1] [ERROR] Failed to resolve the routing: /core/test/testdata/snake
+[2012-11-12 21:26:23, 1] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23, 3] [ERROR] Failed to resolve the routing: /core/test/testdata/snake2
+[2012-11-12 21:26:23, 3] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23, 6] [ERROR] Failed to resolve the routing: /core/test/testdata/encoded/ã¦ã™ã¨
+[2012-11-12 21:26:23, 6] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23, 8] [ERROR] Failed to resolve the routing: /core/test/testdata/similar/name
+[2012-11-12 21:26:23, 8] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,10] [ERROR] Failed to resolve the routing: /core/test/testdata/similar/name/2
+[2012-11-12 21:26:23,10] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,12] [ERROR] Failed to resolve the routing: /core/test/testdata/no_service
+[2012-11-12 21:26:23,12] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,15] [ERROR] Failed to resolve the routing: /core/test/testdata/no_service2
+[2012-11-12 21:26:23,15] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,17] [ERROR] Failed to resolve the routing: /core/test/testdata/exist_service_exist_model_exist_model_method_param
+[2012-11-12 21:26:23,17] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,19] [ERROR] Failed to resolve the routing: /core/test/testdata/exist_service_exist_model_exist_model_method_params
+[2012-11-12 21:26:23,19] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,21] [ERROR] Failed to resolve the routing: /core/test/testdata/view1
+[2012-11-12 21:26:23,21] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,23] [ERROR] Failed to resolve the routing: /core/test/testdata/view2
+[2012-11-12 21:26:23,23] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,25] [ERROR] Failed to resolve the routing: /core/test/testdata/view3
+[2012-11-12 21:26:23,25] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,27] [ERROR] Failed to resolve the routing: /core/test/testdata/view4
+[2012-11-12 21:26:23,27] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,29] [ERROR] Failed to resolve the routing: /core/test/testdata/view5
+[2012-11-12 21:26:23,29] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,32] [ERROR] Failed to resolve the routing: /core/test/testdata/layout1
+[2012-11-12 21:26:23,32] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,34] [ERROR] Failed to resolve the routing: /core/test/testdata/layout2
+[2012-11-12 21:26:23,34] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,36] [ERROR] Failed to resolve the routing: /core/test/testdata/img/sample.png
+[2012-11-12 21:26:23,36] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,38] [ERROR] Failed to resolve the routing: /core/test/testdata/img/sample2.PNG
+[2012-11-12 21:26:23,38] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,40] [ERROR] Failed to resolve the routing: /core/test/testdata/css/sample.css
+[2012-11-12 21:26:23,40] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,42] [ERROR] Failed to resolve the routing: /core/test/testdata/css/sample2.CSS
+[2012-11-12 21:26:23,42] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,44] [ERROR] Failed to resolve the routing: /core/test/testdata/js/sample.js
+[2012-11-12 21:26:23,44] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,46] [ERROR] Failed to resolve the routing: /core/test/testdata/js/sample2.JS
+[2012-11-12 21:26:23,46] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,48] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.xml
+[2012-11-12 21:26:23,48] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,50] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.rdf
+[2012-11-12 21:26:23,50] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,53] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.atom
+[2012-11-12 21:26:23,53] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,55] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.pdf
+[2012-11-12 21:26:23,55] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,57] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.json
+[2012-11-12 21:26:23,57] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,59] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.txt
+[2012-11-12 21:26:23,59] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,61] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.html
+[2012-11-12 21:26:23,61] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,63] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.htm
+[2012-11-12 21:26:23,63] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,65] [ERROR] Failed to resolve the routing: /core/test/testdata/file/sample.php
+[2012-11-12 21:26:23,65] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,67] [ERROR] Failed to resolve the routing: /core/test/testdata/resource/html
+[2012-11-12 21:26:23,67] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,69] [ERROR] Failed to resolve the routing: /core/test/testdata/resource/rss
+[2012-11-12 21:26:23,69] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,71] [ERROR] Failed to resolve the routing: /core/test/testdata/resource/xml
+[2012-11-12 21:26:23,71] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,73] [ERROR] Failed to resolve the routing: /core/test/testdata/resource/atom
+[2012-11-12 21:26:23,73] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,76] [ERROR] Failed to resolve the routing: /core/test/testdata/resource/rdf
+[2012-11-12 21:26:23,76] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,78] [ERROR] Failed to resolve the routing: /core/test/testdata/get_request
+[2012-11-12 21:26:23,78] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,80] [ERROR] Failed to resolve the routing: /core/test/testdata/post_request
+[2012-11-12 21:26:23,80] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,83] [ERROR] Failed to resolve the routing: /core/test/testdata/set_session
+[2012-11-12 21:26:23,84] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,85] [ERROR] Failed to resolve the routing: /core/test/testdata/get_session
+[2012-11-12 21:26:23,85] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,87] [ERROR] Failed to resolve the routing: /core/test/testdata/status301
+[2012-11-12 21:26:23,87] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,90] [ERROR] Failed to resolve the routing: /core/test/testdata/status400
+[2012-11-12 21:26:23,90] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,92] [ERROR] Failed to resolve the routing: /core/test/testdata/status403
+[2012-11-12 21:26:23,92] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,94] [ERROR] Failed to resolve the routing: /core/test/testdata/status404
+[2012-11-12 21:26:23,94] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,96] [ERROR] Failed to resolve the routing: /core/test/testdata/status500
+[2012-11-12 21:26:23,96] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:23,98] [ERROR] Failed to resolve the routing: /core/test/testdata/status_unknown
+[2012-11-12 21:26:23,98] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24, 0] [ERROR] Failed to resolve the routing: /core/test/testdata/helper1
+[2012-11-12 21:26:24, 0] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24, 3] [ERROR] Failed to resolve the routing: /core/test/testdata/helper2
+[2012-11-12 21:26:24, 3] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24, 5] [ERROR] Failed to resolve the routing: /core/test/testdata/helper3
+[2012-11-12 21:26:24, 5] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24, 7] [ERROR] Failed to resolve the routing: /core/test/testdata/helper4
+[2012-11-12 21:26:24, 7] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24, 9] [ERROR] Failed to resolve the routing: /core/test/testdata/helper5
+[2012-11-12 21:26:24, 9] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,11] [ERROR] Failed to resolve the routing: /core/test/testdata/attr
+[2012-11-12 21:26:24,11] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,13] [ERROR] Failed to resolve the routing: /core/test/testdata/json
+[2012-11-12 21:26:24,13] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,16] [ERROR] Failed to resolve the routing: /core/test/testdata/jsonp
+[2012-11-12 21:26:24,16] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,18] [ERROR] Failed to resolve the routing: /core/test/testdata/filter
+[2012-11-12 21:26:24,18] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,20] [ERROR] Failed to resolve the routing: /core/test/testdata/filter_multi
+[2012-11-12 21:26:24,20] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,22] [ERROR] Failed to resolve the routing: /core/test/testdata/basic_auth
+[2012-11-12 21:26:24,22] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,24] [ERROR] Failed to resolve the routing: /core/test/testdata/response_cache
+[2012-11-12 21:26:24,24] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,26] [ERROR] Failed to resolve the routing: /core/test/testdata/response_cache
+[2012-11-12 21:26:24,26] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,28] [ERROR] Failed to resolve the routing: /core/test/testdata/response_cache
+[2012-11-12 21:26:24,28] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:24,30] [ERROR] Failed to resolve the routing: /core/test/testdata/response_cache
+[2012-11-12 21:26:24,30] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,32] [ERROR] Failed to resolve the routing: /core/test/testdata/response_cache
+[2012-11-12 21:26:27,32] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,34] [ERROR] Failed to resolve the routing: /core/test/testdata/response_cache
+[2012-11-12 21:26:27,34] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,37] [ERROR] Failed to resolve the routing: /core/test/testdata/handled_csrf_view
+[2012-11-12 21:26:27,37] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,39] [ERROR] Failed to resolve the routing: /core/test/testdata/handled_csrf
+[2012-11-12 21:26:27,39] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,41] [ERROR] Failed to resolve the routing: /core/test/testdata/handled_session_timeout
+[2012-11-12 21:26:27,41] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,43] [ERROR] Session timeout
+	#0 /Users/stay/workspace2/WebStream/core/Session.php(83): WebStream\Session->__construct(0, '/', '')
+	#1 /Users/stay/workspace2/WebStream/core/Application.php(88): WebStream\Session::start()
+	#2 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+	#3 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+	#4 {main}
+[2012-11-12 21:26:27,43] [FATAL] Uncaught exception 'ReflectionException' with message 'Class \WebStream\ does not exist' in /Users/stay/workspace2/WebStream/core/Application.php:185
 Stack trace:
-#0 /Users/stay/workspace2/WebStream/core/Application.php(296): WebStream\CoreController->__call('render_cache', Array)
-#1 /Users/stay/workspace2/WebStream/core/Application.php(296): WebStream\CoreController->render_cache()
-#2 /Users/stay/workspace2/WebStream/core/Application.php(29): WebStream\Application->getResponseCache()
-#3 /Users/stay/workspace2/WebStream/bootstrap.php(20): WebStream\Application->__construct()
-#4 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
-#5 {main}
-  thrown /Users/stay/workspace2/WebStream/core/CoreController.php(43)
-[2012-10-07 20:12:23,70] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:23,70] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:23,70] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:23,70] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:23,70] [INFO] Response cache loaded.
-[2012-10-07 20:12:23,70] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:12:23,70] [INFO] Bind statement: 
-[2012-10-07 20:12:23,71] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:25,92] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:25,92] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:25,93] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:25,93] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:25,93] [INFO] Response cache loaded.
-[2012-10-07 20:12:25,93] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:12:25,93] [INFO] Bind statement: 
-[2012-10-07 20:12:25,93] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:34,51] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:34,51] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:34,52] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:34,52] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:34,52] [INFO] Response cache loaded.
-[2012-10-07 20:12:34,52] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:12:34,52] [INFO] Bind statement: 
-[2012-10-07 20:12:34,53] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:40,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:40,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:40,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:40,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:12:40,36] [INFO] Response cache loaded.
-[2012-10-07 20:12:40,37] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:12:40,37] [INFO] Bind statement: 
-[2012-10-07 20:12:40,37] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:06,95] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:06,96] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:06,96] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:13:06,96] [INFO] Bind statement: 
-[2012-10-07 20:13:06,96] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:06,96] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:06,96] [INFO] Response cache rendered.
-[2012-10-07 20:13:09,81] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:09,81] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:09,82] [INFO] Response cache loaded.
-[2012-10-07 20:13:09,82] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:13:31,36] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:31,36] [INFO] Response cache loaded.
-[2012-10-07 20:13:31,36] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:13:44,67] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:13:44,67] [INFO] Response cache loaded.
-[2012-10-07 20:13:44,67] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:14:05,68] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:14:05,68] [INFO] Response cache loaded.
-[2012-10-07 20:14:05,68] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:15:03, 2] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:15:03, 3] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:15:03, 3] [INFO] Bind statement: 
-[2012-10-07 20:15:03, 3] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:15:03, 3] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:15:03, 3] [INFO] Response cache rendered.
-[2012-10-07 20:15:09,69] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:15:09,69] [INFO] Response cache loaded.
-[2012-10-07 20:15:09,70] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:20:09,35] [ERROR] Can't get cache: /tmp/695580fbf68dfabd64dfbddddd4bd7ec.cache
-[2012-10-07 20:20:09,36] [ERROR] Failed to resolve the routing: /render_cavhe
-[2012-10-07 20:20:09,36] [INFO] HTTP access occured: status code 404
-[2012-10-07 20:20:16,84] [ERROR] Can't get cache: /tmp/d8523f2711a164cc6521a8d5f01fe8b3.cache
-[2012-10-07 20:20:16,84] [ERROR] Failed to resolve the routing: /render_cache
-[2012-10-07 20:20:16,84] [INFO] HTTP access occured: status code 404
-[2012-10-07 20:20:35,89] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:20:35,89] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:20:35,89] [INFO] Bind statement: 
-[2012-10-07 20:20:35,90] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:20:35,90] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:20:35,90] [INFO] Response cache rendered.
-[2012-10-07 20:20:41,11] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:20:41,11] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:20:45,11] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:20:45,11] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:20:46,88] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:20:46,89] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:21:03,25] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:03,25] [INFO] Response cache loaded.
-[2012-10-07 20:21:03,25] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:21:04,98] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:04,98] [INFO] Response cache loaded.
-[2012-10-07 20:21:04,98] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:21:25,65] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:25,65] [INFO] Response cache loaded.
-[2012-10-07 20:21:25,65] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:21:27,60] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:27,60] [INFO] Response cache loaded.
-[2012-10-07 20:21:27,60] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:21:36,40] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:36,40] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:21:36,40] [INFO] Bind statement: 
-[2012-10-07 20:21:36,41] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:36,41] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:36,41] [INFO] Response cache rendered.
-[2012-10-07 20:21:39, 8] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:39, 8] [INFO] Response cache loaded.
-[2012-10-07 20:21:39, 9] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:21:40,96] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:21:40,98] [INFO] Response cache loaded.
-[2012-10-07 20:21:40,99] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:22:43, 7] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:22:43, 7] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:22:43, 7] [INFO] Bind statement: 
-[2012-10-07 20:22:43, 7] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:22:43, 7] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:22:43, 7] [INFO] Response cache rendered.
-[2012-10-07 20:22:45,92] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:22:45,93] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:22:45,93] [INFO] Response cache loaded.
-[2012-10-07 20:22:45,93] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:22:47,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:22:47,89] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:22:47,89] [INFO] Response cache loaded.
-[2012-10-07 20:22:47,89] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:23:05,19] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:05,19] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:05,19] [INFO] Response cache loaded.
-[2012-10-07 20:23:05,19] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:23:41,13] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:41,13] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:41,13] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:41,13] [INFO] Response cache loaded.
-[2012-10-07 20:23:41,13] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:23:42,76] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:42,77] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:42,77] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:42,77] [INFO] Response cache loaded.
-[2012-10-07 20:23:42,77] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:23:42,99] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:43, 0] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:43, 0] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:43, 0] [INFO] Response cache loaded.
-[2012-10-07 20:23:43, 0] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:23:56,22] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:56,22] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:23:56,22] [INFO] Bind statement: 
-[2012-10-07 20:23:56,22] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:56,22] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:56,22] [INFO] Response cache rendered.
-[2012-10-07 20:23:59,80] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:59,80] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:59,80] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:23:59,80] [INFO] Response cache loaded.
-[2012-10-07 20:23:59,80] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:23:59,80] [INFO] Bind statement: 
-[2012-10-07 20:23:59,80] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:02,27] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:02,27] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:02,27] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:02,27] [INFO] Response cache loaded.
-[2012-10-07 20:24:02,27] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:24:02,27] [INFO] Bind statement: 
-[2012-10-07 20:24:02,28] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:16,97] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:16,97] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:16,97] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:16,97] [INFO] Response cache loaded.
-[2012-10-07 20:24:16,97] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:24:18,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:18,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:18,42] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:18,43] [INFO] Response cache loaded.
-[2012-10-07 20:24:18,43] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:24:19,26] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:19,26] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:19,26] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:24:19,26] [INFO] Response cache loaded.
-[2012-10-07 20:24:19,26] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:48:32, 0] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:32, 1] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:48:32, 1] [INFO] Bind statement: 
-[2012-10-07 20:48:32, 1] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:32, 1] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:32, 1] [INFO] Response cache rendered.
-[2012-10-07 20:48:33,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:33,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:33,29] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:33,29] [INFO] Response cache loaded.
-[2012-10-07 20:48:33,29] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:48:34,51] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:34,51] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:34,51] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:34,51] [INFO] Response cache loaded.
-[2012-10-07 20:48:34,51] [INFO] HTTP access occured: status code 304
-[2012-10-07 20:48:42,62] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:42,62] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:42,62] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:42,63] [INFO] Response cache loaded.
-[2012-10-07 20:48:42,63] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:48:42,63] [INFO] Bind statement: 
-[2012-10-07 20:48:42,63] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:43,79] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:43,79] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:43,79] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:48:43,79] [INFO] Response cache loaded.
-[2012-10-07 20:48:43,80] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:48:43,80] [INFO] Bind statement: 
-[2012-10-07 20:48:43,80] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:56:41,26] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:56:41,26] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:56:41,26] [INFO] Bind statement: 
-[2012-10-07 20:56:41,26] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:56:41,27] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:56:41,27] [INFO] Response cache rendered.
-[2012-10-07 20:56:44,44] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:56:44,44] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:56:44,44] [INFO] Response cache loaded.
-[2012-10-07 20:57:40,21] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:57:40,21] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:57:40,22] [INFO] Response cache loaded.
-[2012-10-07 20:57:59,18] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:57:59,18] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 20:57:59,18] [INFO] Bind statement: 
-[2012-10-07 20:57:59,19] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:57:59,19] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 20:57:59,19] [INFO] Response cache rendered.
-[2012-10-07 21:01:56,75] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:01:56,75] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 21:01:56,75] [INFO] Bind statement: 
-[2012-10-07 21:01:56,76] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:01:56,76] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:01:56,76] [INFO] Response cache rendered.
-[2012-10-07 21:02:03,75] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:02:03,76] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:02:03,76] [INFO] Response cache loaded.
-[2012-10-07 21:02:26,47] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:02:26,47] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:02:26,48] [INFO] Response cache loaded.
-[2012-10-07 21:02:28,99] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:02:28,99] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:02:28,99] [INFO] Response cache loaded.
-[2012-10-07 21:05:04,46] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:05:04,46] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 21:05:04,46] [INFO] Bind statement: 
-[2012-10-07 21:05:04,47] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:05:04,47] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:05:04,47] [INFO] Response cache rendered.
-[2012-10-07 21:07:21,55] [WARN] Expired cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:07:21,55] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 21:07:21,56] [INFO] Bind statement: 
-[2012-10-07 21:07:21,56] [ERROR] Can't get cache: /tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:07:21,56] [INFO] Create cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:07:21,56] [INFO] Response cache rendered.
-[2012-10-07 21:07:33,63] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:07:33,63] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:07:33,63] [INFO] Response cache loaded.
-[2012-10-07 21:07:47,47] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:07:47,47] [INFO] Get cache: /private/tmp/5c036bf51db326773318d0c960f9b5c5.cache
-[2012-10-07 21:07:47,47] [INFO] Response cache loaded.
-[2012-10-07 21:09:39,65] [ERROR] Can't get cache: /tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:09:39,65] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 21:09:39,65] [INFO] Bind statement: 
-[2012-10-07 21:09:39,66] [INFO] Executed SQL: select * from users
-[2012-10-07 21:09:39,66] [INFO] Bind statement: 
-[2012-10-07 21:09:39,67] [ERROR] Can't get cache: /tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:09:39,67] [INFO] Create cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:09:39,67] [INFO] Response cache rendered.
-[2012-10-07 21:09:49,60] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:09:49,60] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:09:49,60] [INFO] Response cache loaded.
-[2012-10-07 21:11:05,92] [WARN] Expired cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:05,93] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 21:11:05,93] [INFO] Bind statement: 
-[2012-10-07 21:11:05,93] [INFO] Executed SQL: select * from users
-[2012-10-07 21:11:05,93] [INFO] Bind statement: 
-[2012-10-07 21:11:05,94] [ERROR] Can't get cache: /tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:05,94] [INFO] Create cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:05,94] [INFO] Response cache rendered.
-[2012-10-07 21:11:11,94] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:11,94] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:11,94] [INFO] Response cache loaded.
-[2012-10-07 21:11:18,25] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:18,25] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:18,25] [INFO] Response cache loaded.
-[2012-10-07 21:11:20,80] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:20,80] [INFO] Get cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:20,80] [INFO] Response cache loaded.
-[2012-10-07 21:11:29, 8] [WARN] Expired cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:29, 8] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
-[2012-10-07 21:11:29, 8] [INFO] Bind statement: 
-[2012-10-07 21:11:29, 9] [INFO] Executed SQL: select * from users
-[2012-10-07 21:11:29, 9] [INFO] Bind statement: 
-[2012-10-07 21:11:29,10] [ERROR] Can't get cache: /tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:29,10] [INFO] Create cache: /private/tmp/423588d504465cc17bfdccd0117e09e5.cache
-[2012-10-07 21:11:29,10] [INFO] Response cache rendered.
+#0 /Users/stay/workspace2/WebStream/core/Application.php(185): ReflectionClass->__construct('\WebStream\')
+#1 /Users/stay/workspace2/WebStream/core/Application.php(117): WebStream\Application->handle(Object(WebStream\SessionTimeoutException))
+#2 /Users/stay/workspace2/WebStream/bootstrap.php(21): WebStream\Application->run()
+#3 /Users/stay/workspace2/WebStream/index.php(2): require('/Users/stay/wor...')
+#4 {main}
+  thrown /Users/stay/workspace2/WebStream/core/Application.php(185)
+[2012-11-12 21:26:27,45] [ERROR] Failed to resolve the routing: /core/test/testdata/notfound/controller
+[2012-11-12 21:26:27,45] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,47] [ERROR] Failed to resolve the routing: /core/test/testdata/notfound/action
+[2012-11-12 21:26:27,47] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,49] [ERROR] Failed to resolve the routing: /core/test/testdata/notdefine
+[2012-11-12 21:26:27,49] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,51] [ERROR] Failed to resolve the routing: /core/test/testdata/render
+[2012-11-12 21:26:27,51] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,53] [ERROR] Failed to resolve the routing: /core/test/testdata/layout
+[2012-11-12 21:26:27,53] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,55] [ERROR] Failed to resolve the routing: /core/test/testdata/layout
+[2012-11-12 21:26:27,55] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,58] [ERROR] Failed to resolve the routing: /core/test/testdata/load
+[2012-11-12 21:26:27,58] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,60] [ERROR] Failed to resolve the routing: /core/test/testdata/error2
+[2012-11-12 21:26:27,60] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,62] [ERROR] Failed to resolve the routing: /core/test/testdata/error3
+[2012-11-12 21:26:27,62] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,64] [ERROR] Failed to resolve the routing: /core/test/testdata/error3
+[2012-11-12 21:26:27,64] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,70] [ERROR] Failed to resolve the routing: /core/test/testdata/snake_ng1
+[2012-11-12 21:26:27,70] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,72] [ERROR] Failed to resolve the routing: /core/test/testdata/snake_ng2
+[2012-11-12 21:26:27,72] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,74] [ERROR] Failed to resolve the routing: /core/test/testdata/encoded/¤Æ¤¹¤È
+[2012-11-12 21:26:27,74] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,76] [ERROR] Failed to resolve the routing: /core/test/testdata/encoded/‚Ä‚·‚Æ
+[2012-11-12 21:26:27,76] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,78] [ERROR] Failed to resolve the routing: /core/test/testdata/no_service_no_model
+[2012-11-12 21:26:27,78] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,81] [ERROR] Failed to resolve the routing: /core/test/testdata/exist_service_exist_model_no_method
+[2012-11-12 21:26:27,81] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,83] [ERROR] Failed to resolve the routing: /core/test/testdata/no_service_exist_model_no_method
+[2012-11-12 21:26:27,83] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,85] [ERROR] Failed to resolve the routing: /core/test/testdata/exist_service_no_model_no_method
+[2012-11-12 21:26:27,85] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,87] [ERROR] Failed to resolve the routing: /core/test/testdata/notfound_render
+[2012-11-12 21:26:27,87] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,89] [ERROR] Failed to resolve the routing: /core/test/testdata/helper6
+[2012-11-12 21:26:27,89] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,92] [ERROR] Failed to resolve the routing: /core/test/testdata/basic_auth
+[2012-11-12 21:26:27,92] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,94] [ERROR] Failed to resolve the routing: /core/test/testdata/basic_auth2
+[2012-11-12 21:26:27,94] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,96] [ERROR] Failed to resolve the routing: /core/test/testdata/get_only
+[2012-11-12 21:26:27,96] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:26:27,98] [ERROR] Failed to resolve the routing: /core/test/testdata/post_only
+[2012-11-12 21:26:27,98] [INFO] HTTP access occured: status code 404
+[2012-11-12 21:28:01,48] [ERROR] Failed to resolve the routing: /core/test/
+[2012-11-12 21:28:01,48] [INFO] HTTP access occured: status code 404

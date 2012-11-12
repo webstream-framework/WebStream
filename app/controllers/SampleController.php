@@ -22,10 +22,15 @@ class SampleController extends AppController {
 
     /**
      * @Inject
-     * @Render("render.tmpl")
+     * @Layout("base2.tmpl")
+     * @Render("render.tmpl", "render_template")
+     * @Render("render2.tmpl", "child_template")
      */
     public function annoRender() {
-        return array("name" => "100");
+        return array(
+            "title" => "render test",
+            "text" => "新しいRender"
+        );
     }
 
     public function model1() {

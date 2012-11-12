@@ -12,6 +12,8 @@ class CoreView {
     private $page_name;
     /** セッション */
     private $session;
+    /** テンプレートリスト */
+    private $templates;
     /** CSRF対策 */
     public $enableCsrf = false;
 
@@ -31,7 +33,7 @@ class CoreView {
      */
     final public function layout($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views" .
-                         "/" . STREAM_VIEW_SHARED . "/" . $template . ".tmpl";
+                         "/" . STREAM_VIEW_SHARED . "/" . $template;
         $this->draw($template_path, $params, $type);
     }
     
@@ -43,9 +45,25 @@ class CoreView {
      */
     final public function render($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
-                         "/views/" . Utility::camel2snake($this->page_name) . "/" . $template . ".tmpl";
+                         "/views/" . Utility::camel2snake($this->page_name) . "/" . $template;
         $this->draw($template_path, $params, $type);
     }
+
+    /**
+     * テンプレートファイルを描画する準備をする
+     * @param String テンプレートファイル名
+     * @param Hash 埋め込みパラメータ
+     * @param String ファイルタイプ
+     */
+    // final public function render2($template, $templates, $params = array(), $type = "html") {
+    //     $this->templates = $templates;
+    //     $this->render($template, $params, $type);
+    // }
+
+    // final public function layout2($template, $templates, $params = array(), $type = "html") {
+    //     $this->templates = $templates;
+    //     $this->layout($template, $params, $type);
+    // }
     
     /**
      * JSONを描画する
@@ -126,6 +144,10 @@ HTML;
         if (!file_exists($cache_file) || filemtime($cache_file) < filemtime($template_path)) {
             file_put_contents($cache_file, $content, LOCK_EX);
         }
+
+        // 入れ子のテンプレートにパラメータをセットする
+        $params["__params__"] = $params;
+        $params["__templates__"] = $this->templates;
 
         $this->outputHeader($type);
         $this->outputHTML($params, $cache_file);
@@ -243,6 +265,7 @@ HTML;
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
         $s = preg_replace('/!\{(.*?)\}/', '<?php ${self::HELPER_RECEIVER}->$1; ?>', $s);
+        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->render($__templates__["$1"], $__params__); ?>', $s);
         return $s;
     }
     
@@ -288,5 +311,13 @@ HTML;
         ob_clean();
         flush();
         readfile($filename);
+    }
+
+    /**
+     * 描画に使用するテンプレートファイル情報を設定する
+     * @param Hash テンプレートファイル情報        
+     */
+    final public function templates($templates) {
+        $this->templates = $templates;
     }
 }
