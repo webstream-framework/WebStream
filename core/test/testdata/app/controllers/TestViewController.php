@@ -1,15 +1,21 @@
 <?php
 namespace WebStream;
 class TestViewController extends CoreController {
-    public function index() {
-        $this->render("test");
-    }
+	/**
+	 * @Inject
+	 * @Render("test.tmpl")
+	 */
+    public function index() {}
     
-    public function subIndex() {
-        $this->render("sub/test");
-    }
+    /**
+     * @Inject
+     * @Render("sub/test.tmpl")
+     */
+    public function subIndex() {}
     
-    public function index2() {
-        $this->render("sub.test");
-    }
+    /**
+     * @Inject
+     * @Render("sub.test.tmpl")
+     */
+    public function index2() {}
 }

@@ -1,11 +1,15 @@
 <?php
 namespace WebStream;
 class TestLayoutViewController extends CoreController {
-    public function index() {
-        $this->layout("test");
-    }
+	/**
+	 * @Inject
+	 * @Layout("test.tmpl")
+	 */
+    public function index() {}
     
-    public function subIndex() {
-        $this->layout("sub/test");
-    }
+	/**
+	 * @Inject
+	 * @Layout("sub/test.tmpl")
+	 */
+    public function subIndex() {}
 }

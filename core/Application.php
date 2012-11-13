@@ -165,7 +165,7 @@ class Application {
         // after_filter
         $this->after($class, $instance);
         // render template
-        $this->render($class, $instance);
+        $this->render($class, $instance, $data);
     }
     
     /**
@@ -297,8 +297,9 @@ class Application {
      * Viewテンプレートを描画する
      * @param Object リフレクションクラスオブジェクト
      * @param Object リフレクションクラスインスタンスオブジェクト
+     * @param Hash 描画データ
      */
-    private function render($class, $instance) {
+    private function render($class, $instance, $data) {
         $templates = $this->templateInfo($class, $instance);
         if ($templates !== null) {
             $render = $class->getMethod($templates['method']);
@@ -321,7 +322,7 @@ class Application {
         foreach ($methodAnnotations as $methodAnnotation) {
             if ($methodAnnotation->methodName === $this->action()) {
                 // 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
-                if ($this->baseRender === null) {
+                if ($renderMethod === null) {
                     if ($methodAnnotation->name === "@Render") {
                         $renderMethod = "render2";
                     }
@@ -336,10 +337,11 @@ class Application {
                 $argList[] = $methodAnnotation->value;
             }
         }
-        if ($renderMethod === null || empty($templates) || empty($argList)) {
+        $templates[] = $argList;
+
+        if ($renderMethod === null || empty($templates)) {
             return null;
         }
-        $templates[] = $argList;
 
         // Viewでレンダリングするようのハッシュを作成する
         // key: xxx.tmplに記述した@{yyy}と一致する名前

@@ -1,11 +1,15 @@
 <?php
 namespace WebStream;
 class TestAaaBbbViewController extends CoreController {
-    public function index() {
-        $this->render("test");
-    }
+	/**
+	 * @Inject
+	 * @Render("test.tmpl")
+	 */
+    public function index() {}
     
-    public function subIndex() {
-        $this->render("sub/test");
-    }
+	/**
+	 * @Inject
+	 * @Render("sub/test.tmpl")
+	 */
+    public function subIndex() {}
 }
