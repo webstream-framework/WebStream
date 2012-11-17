@@ -82,10 +82,10 @@ class Application {
         try {
             // ルーティングを解決する
             $this->route = new Router();
-            /** アノテーション情報をセットする */
-            $this->injection = new Injection($this->controller(), $this->action());
             // Controllerクラスをロード
             $this->loadController();
+            // アノテーション情報をセットする
+            $this->injection = new Injection($this->controller(), $this->action());
             // セッションを開始
             Session::start();
             // ルーティングの解決に成功した場合、コントローラを呼び出す
@@ -183,8 +183,7 @@ class Application {
         $className = str_replace('Exception', '', end($classPath));
         $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
         $instance = $class->newInstance();
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Error");
+        $methodAnnotations = $this->injection->error();
         $isHandled = false;
         foreach ($methodAnnotations as $methodAnnotation) {
             // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
@@ -231,9 +230,9 @@ class Application {
      */
     private function runAnnotation($class, $instance) {
         // request method
-        $this->requestMethod($class, $instance);
+        $this->requestMethod();
         // basic auth
-        $this->basicAuth($class, $instance);
+        $this->basicAuth();
         // cache
         $this->cache($class, $instance);
         // csrf processing
@@ -321,27 +320,9 @@ class Application {
      * @return Hash レンダリング情報
      */
     private function renderInfo($class, $instance, $params) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Render", "@Layout");
-        $renderMethod = null;
-        $templates = array();
-        $argList = array();
-        $args = null;
-
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                // 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
-                if ($renderMethod === null) {
-                    $renderMethod = $methodAnnotation->name === "@Layout" ? "layout" : "render";
-                }
-                if ($methodAnnotation->index === 0) {
-                    if (!empty($argList)) $templates[] = $argList;
-                    $argList = array();
-                }
-                $argList[] = $methodAnnotation->value;
-            }
-        }
-        if (!empty($argList)) $templates[] = $argList;
+        $renderInfo = $this->injection->render();
+        $templates = $renderInfo['templates'];
+        $renderMethod = $renderInfo['method'];
 
         // Viewでレンダリングするようのハッシュを作成する
         // key: xxx.tmplに記述した@{yyy}と一致する名前
@@ -354,7 +335,7 @@ class Application {
             $templateList[$args[1]] = $args[0];
         }
         // 最初に描画するテンプレートを指定
-        $responseFormat = $this->responseFormat();
+        $responseFormat = $this->injection->format();
         if (empty($templates)) {
             switch ($responseFormat) {
             case 'json':
@@ -365,7 +346,7 @@ class Application {
                 $renderMethod = "render_jsonp";
                 $args = array(
                     $params,
-                    $params[$this->responseCallback()]
+                    $params[$this->injection->callback()]
                 );
                 break;
             default:
@@ -384,44 +365,13 @@ class Application {
         );
     }
 
-    private function responseFormat() {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Format");
-        $type = "html";
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                $type = $methodAnnotation->value;
-            }
-        }
-        return $type;
-    }
-
-    private function responseCallback() {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Callback");
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                return $methodAnnotation->value;
-            }
-        }
-    }
-
     /**
      * 有効なリクエストメソッドか検証する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
      */
-    private function requestMethod($class, $instance) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Request");
+    private function requestMethod() {
         $request = new Request();
-        $methods = array();
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                $methods[] = $methodAnnotation->value;
-            }
-        }
         $method = null;
+        $methods = $this->injection->request();
         if ($request->isGet()) {
             $method = "GET";
         }
@@ -436,44 +386,34 @@ class Application {
     
     /**
      * 基本認証を実行する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
      */
-    private function basicAuth($class, $instance) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@BasicAuth");
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                $config = Utility::parseConfig($methodAnnotation->value);
-                if ($config === null) {
-                    $errorMsg = "Properties file specified by @BasicAuth annotation is not found: $methodAnnotation->value";
-                    throw new AnnotationException($errorMsg);
-                }
-                $request = new Request();
-                if ($request->authUser() !==  $config["userid"] ||
-                    $request->authPassword() !== $config["password"]) {
-                    $this->move(401);
-                }
+    private function basicAuth() {
+        $configPath = $this->injection->basicAuth();
+        if ($configPath !== null) {
+            $config = Utility::parseConfig($configPath);
+            if ($config === null) {
+                $errorMsg = "Properties file specified by @BasicAuth annotation is not found: $methodAnnotation->value";
+                throw new AnnotationException($errorMsg);
+            }
+            $request = new Request();
+            if ($request->authUser() !==  $config["userid"] ||
+                $request->authPassword() !== $config["password"]) {
+                $this->move(401);
             }
         }
     }
 
     /**
      * キャッシュ情報を設定する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
      */
-    private function cache($class, $instance) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Cache");
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                if (!preg_match('/^\d+$/', $methodAnnotation->value)) {
-                    $errorMsg = "@Cache value must be positive integer. Found value: $methodAnnotation->value";
-                    throw new AnnotationException($errorMsg);
-                }
-                $this->cache['ttl'] = $methodAnnotation->value;
+    private function cache() {
+        $ttl = $this->injection->cache();
+        if ($ttl !== null) {
+            if (!preg_match('/^\d+$/', $ttl)) {
+                $errorMsg = "@Cache value must be positive integer. Found value: $methodAnnotation->value";
+                throw new AnnotationException($errorMsg);
             }
+            $this->cache['ttl'] = $ttl;
         }
     }
     
@@ -483,16 +423,9 @@ class Application {
      * @param Object リフレクションクラスインスタンスオブジェクト
      */
     private function csrf($class, $instance) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Security");
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action()) {
-                if ($methodAnnotation->value === "CSRF") {
-                    $method = $class->getMethod('enableCsrf');
-                    $method->invoke($instance);
-                    break;
-                }
-            }
+        if ($this->injection->security() === "CSRF") {
+            $method = $class->getMethod('enableCsrf');
+            $method->invoke($instance);
         }
     }
     
@@ -503,19 +436,17 @@ class Application {
      * @param String Filter名
      */
     private function filter($class, $instance, $filterName) {
-        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $annotation->methods("@Filter");
-        foreach ($methodAnnotations as $methodAnnotation) {
-            // @Filter($filterName)を抽出
+        $filterObjectList = $this->injection->filter();
+        foreach ($filterObjectList as $filterObject) {
             // 複数のメソッドに対してアノテーションを定義可能とする
-            if ($methodAnnotation->value === $filterName) {
+            if ($filterObject->value === $filterName) {
                 // クラス名が一致しない場合、親クラスを辿り一致するまで走査する
                 // それでも一致しなければメソッドを持っていないと判断する
                 $_class = $class;
                 do {
-                    if ($_class->getName() === $methodAnnotation->className &&
-                        $_class->hasMethod($methodAnnotation->methodName)) {
-                        $method = $_class->getMethod($methodAnnotation->methodName);
+                    if ($_class->getName() === $filterObject->className &&
+                        $_class->hasMethod($filterObject->methodName)) {
+                        $method = $_class->getMethod($filterObject->methodName);
                         $method->invoke($instance);
                     }
                 }

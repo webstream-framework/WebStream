@@ -54,22 +54,6 @@ class CoreView {
     }
 
     /**
-     * テンプレートファイルを描画する準備をする
-     * @param String テンプレートファイル名
-     * @param Hash 埋め込みパラメータ
-     * @param String ファイルタイプ
-     */
-    // final public function render2($template, $templates, $params = array(), $type = "html") {
-    //     $this->templates = $templates;
-    //     $this->render($template, $params, $type);
-    // }
-
-    // final public function layout2($template, $templates, $params = array(), $type = "html") {
-    //     $this->templates = $templates;
-    //     $this->layout($template, $params, $type);
-    // }
-    
-    /**
      * JSONを描画する
      * @param Hash 出力データ
      */

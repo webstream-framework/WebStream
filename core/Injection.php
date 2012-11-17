@@ -7,8 +7,16 @@ namespace WebStream;
  */
 class Injection extends Annotation {
 	/** 使用するアノテーション定義 */
-	const FORMAT = "@Format";
-	const CALLBACK = "@Callback";
+	const RENDER     = "@Render";
+	const LAYOUT	 = "@Layout";
+	const REQUEST    = "@Request";
+	const BASIC_AUTH = "@BasicAuth";
+	const CACHE      = "@Cache";
+	const SECURITY   = "@Security";
+	const FILTER     = "@Filter";
+	const FORMAT 	 = "@Format";
+	const CALLBACK 	 = "@Callback";
+	const ERROR      = "@Error";
 
 	/** Annotationクラスインスタンス */
 	private $annotation;
@@ -20,24 +28,116 @@ class Injection extends Annotation {
 	 * @param String 適用するコントローラクラス名		
 	 */
 	public function __construct($controller, $action) {
-		$this->annotation = new Annotation(STREAM_CLASSPATH . $controller);
+		isset($controller) and parent::__construct(STREAM_CLASSPATH . $controller);
 		$this->action = $action;
 	}
+
+	/**
+	 * アノテーション値を返却する	
+	 * @params String アノテーションマーク
+	 * @return String or Array アノテーション値またはリスト
+	 */
+	private function getAnnotationValue($mark) {
+        $methodAnnotations = $this->methods($mark);
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action) {
+                $values[] = $methodAnnotation->value;
+            }
+        }
+        // アノテーションがない場合
+        if (empty($values)) {
+        	return;
+        }
+        // アノテーション値が1つの場合は始めの要素を返却
+        if (count($values) === 1) {
+        	return $values[0];
+        }
+
+        return $values;
+	}
+
+	/**
+	 * @Render, @Layoutアノテーション情報を返却する
+	 * @return Hash レンダリング情報
+	 */
+	public function render() {
+		$annotations = $this->methods(self::RENDER, self::LAYOUT);
+		$method = null;
+		$templates = array();
+		$argList = array();
+		foreach ($annotations as $annotation) {
+			if ($annotation->methodName === $this->action) {
+				// 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
+				if (!isset($method)) {
+					if ($annotation->name === self::LAYOUT) {
+						$method = "layout";
+					}
+					else {
+						$method = "render";
+					}
+				}
+				if ($annotation->index === 0) {
+					if (!empty($argList)) $templates[] = $argList;
+					$argList = array();
+				}
+				$argList[] = $annotation->value;
+			}
+		}
+		if (!empty($argList)) $templates[] = $argList;
+
+		return array(
+			"method" => $method,
+			"templates" => $templates
+		);
+	}
+
+    /**
+     * @Requestアノテーション情報を返却する
+     * @return Array 許可されたリクエストメソッドリスト	
+     */
+    public function request() {
+        return $this->getAnnotationValue(self::REQUEST);
+    }
+
+    /**
+     * @BasicAuthアノテーション情報を返却する	
+     * @return String 基本認証設定ファイルパス
+     */
+    public function basicAuth() {
+    	return $this->getAnnotationValue(self::BASIC_AUTH);
+    }
+
+    /**
+     * @Cacheアノテーション情報を返却する
+     * @return int キャッシュ有効時間
+     */
+    public function cache() {
+    	return $this->getAnnotationValue(self::CACHE);
+    }
+
+    /**
+     * @Securityアノテーション情報を返却する
+     * @return String セキュリティアノテーション値 
+     */
+    public function security() {
+    	return $this->getAnnotationValue(self::SECURITY);
+    }
+
+    /**
+     * @Filterアノテーション情報を返却する
+     * @return Object フィルタアノテーションオブジェクト
+     */
+    public function filter() {
+    	return $this->methods(self::FILTER);
+    }
 
 	/**
 	 * @Formatアノテーション情報を返却する
 	 * @return String 出力形式名
 	 */
     public function format() {
-        //$annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $this->annotation->methods(self::FORMAT);
-        $type = "html";
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action) {
-                $type = $methodAnnotation->value;
-            }
-        }
-        return $type;
+    	$format = $this->getAnnotationValue(self::FORMAT);
+    	return $this->getAnnotationValue(self::FORMAT) ?: 'html';
     }
 
 	/**
@@ -45,12 +145,14 @@ class Injection extends Annotation {
 	 * @return String JSONPコールバック名
 	 */
     public function callback() {
-        //$annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
-        $methodAnnotations = $this->annotation->methods(self::CALLBACK);
-        foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action {
-                return $methodAnnotation->value;
-            }
-        }
+    	return $this->getAnnotationValue(self::CALLBACK);
+    }
+
+    /**
+     * @Errorアノテーション情報を返却する
+     * @return Object エラーアノテーションオブジェクト
+     */
+    public function error() {
+    	return $this->methods(self::ERROR);
     }
 }

@@ -1,9 +1,12 @@
 <?php
 namespace WebStream;
 class TestHandledSessionTimeoutController extends CoreController {
+    /**
+     * @Inject
+     * @Render("session_timeout.tmpl")
+     */
     public function showView() {
         Session::restart(3);
-        $this->render("session_timeout");
     }
     
     /**
