@@ -1,0 +1,2 @@
+[2012-11-17 22:48:38,80] [INFO] Executed SQL: SELECT * FROM users LIMIT 1 OFFSET 0
+[2012-11-17 22:48:38,80] [INFO] Bind statement: 

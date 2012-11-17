@@ -22,7 +22,7 @@ class SampleController extends AppController {
 
     /**
      * @Inject
-     * @Layout("base2")
+     * @Layout("base2.tmpl")
      * @Render("render.tmpl", "render_template")
      * @Render("render2.tmpl", "child_template")
      */
