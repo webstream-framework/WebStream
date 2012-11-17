@@ -22,7 +22,7 @@ class SampleController extends AppController {
 
     /**
      * @Inject
-     * @Layout("base2.tmpl")
+     * @Layout("base2")
      * @Render("render.tmpl", "render_template")
      * @Render("render2.tmpl", "child_template")
      */
@@ -30,6 +30,28 @@ class SampleController extends AppController {
         return array(
             "title" => "render test",
             "text" => "新しいRender"
+        );
+    }
+
+    /**
+     * @Inject
+     * @Format("json")
+     */
+    public function annoRenderJson() {
+        return array(
+            "title" => "render test json"
+        );
+    }
+
+    /**
+     * @Inject
+     * @Format("jsonp")
+     * @Callback("__callback__")
+     */
+    public function annoRenderJsonp() {
+        return array(
+            "title" => "render test json",
+            "__callback__" => "callback"
         );
     }
 

@@ -4,10 +4,9 @@ class TestHandledCsrfController extends CoreController {
     /**
      * @Inject
      * @Security("CSRF")
+     * @Render("csrf.tmpl")
      */
-    public function showView() {
-        $this->render("csrf"); 
-    }
+    public function showView() {}
     
     public function execute() {
         echo "ok.";

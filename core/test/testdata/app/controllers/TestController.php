@@ -32,18 +32,16 @@ class TestController extends CoreController {
     /**
      * @Inject
      * @Security("CSRF")
+     * @Render("test.tmpl")
      */
-    public function testCsrf() {
-        $this->render("test");
-    }
+    public function testCsrf() {}
     
     /**
      * @Inject
      * @Security("CSRF")
+     * @Render("csrf_get.tmpl")
      */
-    public function testCsrfGetView() {
-        $this->render("csrf_get");
-    }
+    public function testCsrfGetView() {}
     
     public function testCsrfGet() {
         echo "csrf get is ok.";
@@ -52,10 +50,9 @@ class TestController extends CoreController {
     /**
      * @Inject
      * @Security("CSRF")
+     * @Render("csrf_post.tmpl")
      */
-    public function testCsrfPostView() {
-        $this->render("csrf_post");
-    }
+    public function testCsrfPostView() {}
     
     public function testCsrfPost() {
         echo "csrf post is ok.";
@@ -101,47 +98,81 @@ class TestController extends CoreController {
         $this->move(1000);
     }
     
+    /**
+     * @Inject
+     * @Render("helper_html1.tmpl")
+     */
     public function testHelperHtml1() {
-        $this->render("helper_html1", array(
+        return array(
             "name" => "html"
-        ));
+        );
     }
     
+    /**
+     * @Inject
+     * @Render("helper_html2.tmpl")
+     */
     public function testHelperHtml2() {
-        $this->render("helper_html2", array(
+        return array(
             "name" => "html"
-        ));
+        );
     }
     
+    /**
+     * @Inject
+     * @Render("helper_string.tmpl")
+     */
     public function testHelperString() {
-        $this->render("helper_string", array(
+        return array(
             "name" => "string"
-        ));
+        );
     }
     
-    public function testHelperSnake() {
-        $this->render("helper_snake");
-    }
+    /**
+     * @Inject
+     * @Render("helper_snake.tmpl")
+     */
+    public function testHelperSnake() {}
     
-    public function testHelperCamel() {
-        $this->render("helper_camel");
-    }
+    /**
+     * @Inject
+     * @Render("helper_camel.tmpl")
+     */
+    public function testHelperCamel() {}
     
-    public function testHelperNotfoundMethod() {
-        $this->render("helper_notfound_method");
-    }
+    /**
+     * @Inject
+     * @Render("helper_notfound_method.tmpl")
+     */
+    public function testHelperNotfoundMethod() {}
     
+    /**
+     * @Inject
+     * @Render("test_attr.tmpl")
+     */
     public function testAttributeValue() {
-        $this->render("test_attr", array(
+        return array(
             "value" => "attr"
-        ));
+        );
     }
     
+    /**
+     * @Inject
+     * @Format("json")
+     */
     public function testJson() {
-        $this->render_json(array("name" => "kyouko"));
+        return array("name" => "kyouko");
     }
     
+    /**
+     * @Inject
+     * @Format("jsonp")
+     * @Callback("__callback__")
+     */
     public function testJsonp() {
-        $this->render_jsonp(array("name" => "yui"), "yuruyuri");
+        return array(
+            "name" => "yui",
+            "__callback__" => "yuruyuri"
+        );
     }
 }

@@ -16,6 +16,8 @@ class Application {
     private $validate;
     /** リソースキャッシュパラメータ */
     private $cache = array();
+    /** アプリケーションに注入されるアノテーション情報 */
+    private $injection;
     
     /**
      * アプリケーション共通で使用するクラスを初期化する
@@ -80,6 +82,8 @@ class Application {
         try {
             // ルーティングを解決する
             $this->route = new Router();
+            /** アノテーション情報をセットする */
+            $this->injection = new Injection($this->controller(), $this->action());
             // Controllerクラスをロード
             $this->loadController();
             // セッションを開始
@@ -300,35 +304,35 @@ class Application {
      * @param Hash 描画データ
      */
     private function render($class, $instance, $data) {
-        $templates = $this->templateInfo($class, $instance);
-        if ($templates !== null) {
-            $render = $class->getMethod($templates['method']);
-            $render->invoke($instance, $templates['base'], $templates['list'], $data);
+        $info = $this->renderInfo($class, $instance, $data);
+        if (isset($info)) {
+            $render = $class->getMethod('__templates');
+            $render->invoke($instance, $info['list']);
+            $render = $class->getMethod($info['method']);
+            $render->invokeArgs($instance, $info['args']);
         }
     }
 
     /**
-     * Viewテンプレート情報を取得する
+     * レンダリング情報を取得する
      * @param Object リフレクションクラスオブジェクト
      * @param Object リフレクションクラスインスタンスオブジェクト
-     * @return Hash テンプレート情報
+     * @param Hash レンダリングデータ
+     * @return Hash レンダリング情報
      */
-    private function templateInfo($class, $instance) {
+    private function renderInfo($class, $instance, $params) {
         $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
         $methodAnnotations = $annotation->methods("@Render", "@Layout");
         $renderMethod = null;
         $templates = array();
         $argList = array();
+        $args = null;
+
         foreach ($methodAnnotations as $methodAnnotation) {
             if ($methodAnnotation->methodName === $this->action()) {
                 // 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
                 if ($renderMethod === null) {
-                    if ($methodAnnotation->name === "@Render") {
-                        $renderMethod = "render2";
-                    }
-                    else if ($methodAnnotation->name === "@Layout") {
-                        $renderMethod = "layout2";
-                    }
+                    $renderMethod = $methodAnnotation->name === "@Layout" ? "layout" : "render";
                 }
                 if ($methodAnnotation->index === 0) {
                     if (!empty($argList)) $templates[] = $argList;
@@ -337,11 +341,7 @@ class Application {
                 $argList[] = $methodAnnotation->value;
             }
         }
-        $templates[] = $argList;
-
-        if ($renderMethod === null || empty($templates)) {
-            return null;
-        }
+        if (!empty($argList)) $templates[] = $argList;
 
         // Viewでレンダリングするようのハッシュを作成する
         // key: xxx.tmplに記述した@{yyy}と一致する名前
@@ -349,16 +349,61 @@ class Application {
         $templateList = array();
         for ($i = 0; $i < count($templates); $i++) {
             $args = $templates[$i];
-            // @Render/@Layoutの引数が1つの場合、テンプレートリストに登録しない
-            if (count($args) === 1) continue;
+            // @Render/@Layoutの引数が0または1つの場合、テンプレートリストに登録しない
+            if (count($args) === 0 || count($args) === 1) continue;
             $templateList[$args[1]] = $args[0];
+        }
+        // 最初に描画するテンプレートを指定
+        $responseFormat = $this->responseFormat();
+        if (empty($templates)) {
+            switch ($responseFormat) {
+            case 'json':
+                $renderMethod = "render_json";
+                $args = array($params);
+                break;
+            case 'jsonp':
+                $renderMethod = "render_jsonp";
+                $args = array(
+                    $params,
+                    $params[$this->responseCallback()]
+                );
+                break;
+            default:
+                return;
+            }
+        }
+        else {
+            // html, xml, atom, rss
+            $args = array($templates[0][0], $params, $responseFormat);
         }
 
         return array(
             "list" => $templateList,
-            "base" => $templates[0][0],
-            "method" => $renderMethod
+            "method" => $renderMethod,
+            "args" => $args
         );
+    }
+
+    private function responseFormat() {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Format");
+        $type = "html";
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                $type = $methodAnnotation->value;
+            }
+        }
+        return $type;
+    }
+
+    private function responseCallback() {
+        $annotation = new Annotation(STREAM_CLASSPATH . $this->controller());
+        $methodAnnotations = $annotation->methods("@Callback");
+        foreach ($methodAnnotations as $methodAnnotation) {
+            if ($methodAnnotation->methodName === $this->action()) {
+                return $methodAnnotation->value;
+            }
+        }
     }
 
     /**

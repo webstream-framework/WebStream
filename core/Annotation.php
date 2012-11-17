@@ -80,7 +80,7 @@ class Annotation {
                                 $cls->className = $method->getDeclaringClass()->getName();
                                 $cls->value = $values[$j];
                                 $cls->index = $j;
-                                $cls->name = $matches[1][$j];
+                                $cls->name = $matches[1][0];
                                 $methodList[] = $cls;
                             }
                         }

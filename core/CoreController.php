@@ -56,6 +56,10 @@ class CoreController {
     final public function enableCsrf() {
         $this->view->enableCsrf();
     }
+
+    final public function __templates($templates) {
+        $this->view->__templates($templates);
+    }
     
     /**
      * Serviceクラスのインスタンスをロードする
@@ -82,27 +86,13 @@ class CoreController {
             $this->{$this->page_name} = new ServiceModelClassNotFoundException($errorMsg);
         }
     }
-
-    /**
-     * テンプレートファイルを描画する
-     * 
-     */
-    final public function render2($template, $templates, $params = array(), $mime = "html") {
-        $this->view->templates($templates);
-        $this->view->render($template, $params, $mime);
-    }
-
-    final public function layout2($template, $templates, $params = array(), $mime = "html") {
-        $this->view->templates($templates);
-        $this->view->layout($template, $params, $mime);
-    }
     
     /**
      * レイアウトファイルを描画する
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
      */
-    final protected function layout($template, $params = array()) {
+    final public function layout($template, $params = array(), $mime = "html") {
         $this->view->layout($template, $params);
     }
 
@@ -111,7 +101,7 @@ class CoreController {
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
      */
-    final protected function render($template, $params = array(), $mime = "html") {
+    final public function render($template, $params = array(), $mime = "html") {
         $this->view->render($template, $params, $mime);
     }
     
@@ -119,7 +109,7 @@ class CoreController {
      * テンプレートファイルでJSONを描画する
      * @param Hash 埋め込みパラメータ
      */
-    final protected function render_json($params) {
+    final public function render_json($params) {
         $this->view->json($params);
     }
 
@@ -128,35 +118,8 @@ class CoreController {
      * @param Hash 埋め込みパラメータ
      * @param String コールバック関数
      */
-    final protected function render_jsonp($params, $callback) {
+    final public function render_jsonp($params, $callback) {
         $this->view->jsonp($params, $callback);
-    }
-    
-    /**
-     * テンプレートファイルでXMLを描画する
-     * @param String テンプレートファイル名
-     * @param Hash 埋め込みパラメータ
-     */
-    final protected function render_xml($template, $params = array()) {
-        $this->render($template, $params, "xml");
-    }
-    
-    /**
-     * テンプレートファイルでRSSを描画する
-     * @param String テンプレートファイル名
-     * @param Hash 埋め込みパラメータ
-     */
-    final protected function render_rss($template, $params = array()) {
-        $this->render($template, $params, "rss");
-    }
-    
-    /**
-     * テンプレートファイルでATOMを描画する
-     * @param String テンプレートファイル名
-     * @param Hash 埋め込みパラメータ
-     */
-    final protected function render_atom($template, $params = array()) {
-        $this->render($template, $params, "atom");
     }
     
     /**

@@ -1,23 +1,37 @@
 <?php
 namespace WebStream;
 class TestResourceController extends CoreController {
-    public function html() {
-        $this->render("html");
-    }
+    /**
+     * @Inject
+     * @Render("html.tmpl")
+     */
+    public function html() {}
     
-    public function rss() {
-        $this->render_rss("rss");
-    }
+    /**
+     * @Inject
+     * @Render("rss.tmpl")
+     * @Format("rss")
+     */
+    public function rss() {}
     
-    public function xml() {
-        $this->render_xml("xml");
-    }
+    /**
+     * @Inject
+     * @Render("xml.tmpl")
+     * @Format("xml")
+     */
+    public function xml() {}
     
-    public function rdf() {
-        $this->render_xml("rdf");
-    }
+    /**
+     * @Inject
+     * @Render("rdf.tmpl")
+     * @Format("rdf")
+     */
+    public function rdf() {}
     
-    public function atom() {
-        $this->render_atom("atom");
-    }
+    /**
+     * @Inject
+     * @Render("atom.tmpl")
+     * @Format("atom")
+     */
+    public function atom() {}
 }

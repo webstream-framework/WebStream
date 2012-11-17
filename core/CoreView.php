@@ -25,6 +25,10 @@ class CoreView {
         $this->page_name = $page_name;
     }
 
+    public function __templates($templates) {
+        $this->templates = $templates;
+    }
+
     /**
      * レイアウトファイルを描画する準備をする
      * @param String テンプレートファイル名

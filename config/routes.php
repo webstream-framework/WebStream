@@ -15,6 +15,8 @@ Router::setRule(
         '/validate' => "sample#validate",
         '/validate_form' => "sample#validate_form",
         '/basic_auth' => "sample#basic_auth",
-        '/response_cache' => "sample#response_cache"
+        '/response_cache' => "sample#response_cache",
+        '/json' => "sample#anno_render_json",
+        '/jsonp' => "sample#anno_render_jsonp"
     )
 );
