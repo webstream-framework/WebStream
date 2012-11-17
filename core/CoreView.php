@@ -25,6 +25,10 @@ class CoreView {
         $this->page_name = $page_name;
     }
 
+    /**
+     * テンプレートリスト情報を設定
+     * @param Hash テンプレートリスト情報
+     */
     public function __templates($templates) {
         $this->templates = $templates;
     }

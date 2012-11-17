@@ -70,10 +70,10 @@ class Injection extends Annotation {
 				// 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
 				if (!isset($method)) {
 					if ($annotation->name === self::LAYOUT) {
-						$method = "layout";
+						$method = "__layout";
 					}
 					else {
-						$method = "render";
+						$method = "__render";
 					}
 				}
 				if ($annotation->index === 0) {

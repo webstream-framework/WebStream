@@ -79,7 +79,7 @@ class TestController extends CoreController {
     }
     
     public function test400() {
-        $this->move(400);
+        $this->__move(400);
     }
     
     public function test403() {
@@ -87,15 +87,15 @@ class TestController extends CoreController {
     }
     
     public function test404() {
-        $this->move(404);
+        $this->__move(404);
     }
      
     public function test500() {
-        $this->move(500);
+        $this->__move(500);
     }
     
     public function testUnknownStatusCode() {
-        $this->move(1000);
+        $this->__move(1000);
     }
     
     /**

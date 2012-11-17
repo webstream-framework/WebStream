@@ -99,7 +99,7 @@ class Application {
             else if ($this->staticFile()) {
                 $file_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                     "/views/" . STREAM_VIEW_PUBLIC . $this->staticFile();
-                $this->controller->render_file($file_path);
+                $this->controller->__render_file($file_path);
             }
             // 存在しないURLにアクセスしたときは404
             else {
@@ -157,7 +157,7 @@ class Application {
         $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
         $instance = $class->newInstance();
         // initialize
-        $initialize = $class->getMethod("initialize");
+        $initialize = $class->getMethod("__initialize");
         $initialize->invoke($instance);
         // before_filter
         $this->before($class, $instance);
@@ -234,7 +234,7 @@ class Application {
         // basic auth
         $this->basicAuth();
         // cache
-        $this->cache($class, $instance);
+        $this->cache();
         // csrf processing
         $this->csrf($class, $instance);
     }
@@ -244,7 +244,7 @@ class Application {
      * @param String ステータスコード
      */
     private function move($statusCode) {
-        $this->controller->move($statusCode);
+        $this->controller->__move($statusCode);
     }
 
     /**
@@ -339,11 +339,11 @@ class Application {
         if (empty($templates)) {
             switch ($responseFormat) {
             case 'json':
-                $renderMethod = "render_json";
+                $renderMethod = "__render_json";
                 $args = array($params);
                 break;
             case 'jsonp':
-                $renderMethod = "render_jsonp";
+                $renderMethod = "__render_jsonp";
                 $args = array(
                     $params,
                     $params[$this->injection->callback()]
@@ -424,7 +424,7 @@ class Application {
      */
     private function csrf($class, $instance) {
         if ($this->injection->security() === "CSRF") {
-            $method = $class->getMethod('enableCsrf');
+            $method = $class->getMethod('__enableCsrf');
             $method->invoke($instance);
         }
     }

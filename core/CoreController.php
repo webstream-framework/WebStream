@@ -24,16 +24,6 @@ class CoreController {
     }
 
     /**
-     * Controllerで使用する処理の初期化
-     */
-    final public function initialize() {
-        $this->session = Session::start();
-        $this->request = new Request();
-        $this->csrfCheck();
-        $this->load();
-    }
-    
-    /**
      * 存在しないメソッドへのアクセスを制御
      * @param String メソッド名
      * @param Array 引数
@@ -42,21 +32,35 @@ class CoreController {
         $class = get_class($this);
         throw new MethodNotFoundException("${class}#${method} is not defined.");
     }
+
+    /**
+     * Controllerで使用する処理の初期化
+     */
+    final public function __initialize() {
+        $this->session = Session::start();
+        $this->request = new Request();
+        $this->__csrfCheck();
+        $this->__load();
+    }
     
     /**
      * CSRFトークンをチェックする
      */
-    final private function csrfCheck() {
+    final private function __csrfCheck() {
         Security::isCsrfCheck();
     }
     
     /**
      * CSRF対策処理を有効にする
      */
-    final public function enableCsrf() {
+    final public function __enableCsrf() {
         $this->view->enableCsrf();
     }
 
+    /**
+     * テンプレートリスト情報をViewに通知
+     * @param Hash テンプレートリスト情報
+     */
     final public function __templates($templates) {
         $this->view->__templates($templates);
     }
@@ -65,7 +69,7 @@ class CoreController {
      * Serviceクラスのインスタンスをロードする
      * @param String Serviceクラス名
      */
-    final private function load() {
+    final private function __load() {
         $service_class = $this->page_name . "Service";
         $model_class = $this->page_name . "Model";
         // Serviceクラスが存在する場合、Serviceクラスをロード
@@ -92,7 +96,7 @@ class CoreController {
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
      */
-    final public function layout($template, $params = array(), $mime = "html") {
+    final public function __layout($template, $params = array(), $mime = "html") {
         $this->view->layout($template, $params);
     }
 
@@ -101,7 +105,7 @@ class CoreController {
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
      */
-    final public function render($template, $params = array(), $mime = "html") {
+    final public function __render($template, $params = array(), $mime = "html") {
         $this->view->render($template, $params, $mime);
     }
     
@@ -109,7 +113,7 @@ class CoreController {
      * テンプレートファイルでJSONを描画する
      * @param Hash 埋め込みパラメータ
      */
-    final public function render_json($params) {
+    final public function __render_json($params) {
         $this->view->json($params);
     }
 
@@ -118,7 +122,7 @@ class CoreController {
      * @param Hash 埋め込みパラメータ
      * @param String コールバック関数
      */
-    final public function render_jsonp($params, $callback) {
+    final public function __render_jsonp($params, $callback) {
         $this->view->jsonp($params, $callback);
     }
     
@@ -126,7 +130,7 @@ class CoreController {
      * エラーページ用HTMLを描画する
      * @param String 表示内容
      */
-    final protected function render_error($content) {
+    final protected function __render_error($content) {
         $this->view->error($content);
     }
     
@@ -135,21 +139,21 @@ class CoreController {
      * @param String ドキュメントルートからの相対パス
      */
     final protected function redirect($path) {
-        $this->move(301, $path);
+        $this->__move(301, $path);
     }
     
     /**
      * アクセス権限のない処理
      */
     final protected function forbidden() {
-        $this->move(403);
+        $this->__move(403);
     }
     
     /**
      * 静的ファイルを描画する
      * @param String ファイルパス
      */
-    final public function render_file($filepath) {
+    final public function __render_file($filepath) {
         $this->view->renderPublicFile($filepath);
     }
     
@@ -158,7 +162,7 @@ class CoreController {
      * @param Integer ステータスコード
      * @param String 遷移パス
      */
-    final public function move($status_code, $path = null) {
+    final public function __move($status_code, $path = null) {
         switch ($status_code) {
         case 301:
             header("HTTP/1.1 301 Moved Permanently");
@@ -166,32 +170,32 @@ class CoreController {
             break;
         case 400:
             header("HTTP/1.1 400 Bad Request");
-            $this->render_error("400 Bad Request");
+            $this->__render_error("400 Bad Request");
             break;
         case 401:
             header("WWW-Authenticate: Basic realm='Private page'");
             header("HTTP/1.1 401 Unauthorized");
-            $this->render_error("401 Unauthorized");
+            $this->__render_error("401 Unauthorized");
             break;
         case 403:
             header("HTTP/1.1 403 Forbidden");
-            $this->render_error("403 Forbidden");
+            $this->__render_error("403 Forbidden");
             break;
         case 404:
             header("HTTP/1.1 404 Not Found");
-            $this->render_error("404 Not Found");
+            $this->__render_error("404 Not Found");
             break;
         case 405:
             header("HTTP/1.1 405 Method Not Allowed");
-            $this->render_error("405 Method Not Allowed");
+            $this->__render_error("405 Method Not Allowed");
             break;
         case 422:
             header("HTTP/1.1 422 Unprocessable Entity");
-            $this->render_error("422 Unprocessable Entity");
+            $this->__render_error("422 Unprocessable Entity");
             break;
         case 500:
             header("HTTP/1.1 500 Internal Server Error");
-            $this->render_error("500 Internal Server Error");
+            $this->__render_error("500 Internal Server Error");
             break;
         default:
             throw new ConnectionException("Unknown status code: " . $status_code);
