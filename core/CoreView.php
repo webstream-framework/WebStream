@@ -304,12 +304,4 @@ HTML;
         flush();
         readfile($filename);
     }
-
-    /**
-     * 描画に使用するテンプレートファイル情報を設定する
-     * @param Hash テンプレートファイル情報        
-     */
-    final public function templates($templates) {
-        $this->templates = $templates;
-    }
 }
