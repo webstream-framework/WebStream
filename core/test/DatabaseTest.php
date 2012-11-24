@@ -15,11 +15,8 @@ class DatabaseTest extends UnitTestBase {
         parent::setUp();
         // ログ出力ディレクトリ、ログレベルをテスト用に変更
         $class = new \ReflectionClass("WebStream\Database");
-        $property = $class->getProperty("config_path");
-        $property->setAccessible(true);
-        $property->setValue($class, $this->config_path_mysql);
         $method = $class->getMethod("manager");
-        $this->db = $method->invoke(null);
+        $this->db = $method->invoke($class, null, $this->config_path_mysql);
         $this->db->create($this->create_sql);
     }
     
@@ -80,6 +77,20 @@ class DatabaseTest extends UnitTestBase {
         // SELECT
         $result = $this->db->select("SELECT name FROM stream_test");
         $this->assertTrue(is_array($result->toArray()));
+    }
+
+    /**
+     * 正常系
+     * DatabaseCrud#select_by_arrayにより結果が配列になること
+     */
+    public function testOkSelectByArray() {
+        // INSERT
+        $this->db->insert("INSERT INTO stream_test (name) values (:name)", array(
+            "name" => "select test"
+        ));
+        // SELECT BY ARRAY
+        $result = $this->db->select_by_array("SELECT name FROM stream_test");
+        $this->assertTrue(is_array($result));
     }
     
     /**

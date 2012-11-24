@@ -1,14 +1,20 @@
 <?php
 namespace WebStream;
 /**
- * DB接続クラス
+ * DBコアクラス
  * @author Ryuichi TANAKA.
  * @since 2010/08/10
  */
 class DatabaseCore {
     /** DBマネージャオブジェクト */
-    private $manager = null;
-    
+    protected $manager = null;
+    /** DBコネクション */
+    protected $connect;
+    /** ステートメント変数 */
+    protected $stmt = null;
+    /** 設定ファイルパス */
+    private static $configPath = "config/database.ini";
+
     /** DBMS識別子 */
     const MYSQL = "mysql";
     const SQLITE = "sqlite";
@@ -17,107 +23,42 @@ class DatabaseCore {
      * インスタンス生成を禁止
      */
     private function __construct() {}
-    
-    /**
-     * DBオブジェクトを返却する
-     * @param String DBMS名
-     * @param String データベース名
-     * @param Map 接続オプション
-     * @return DBオブジェクト
-     */
-    protected function getManager($options) {
-        $manager = null;
-        $dbms = $options["dbms"];
-        try {
-            // MySQL
-            if ($dbms === self::MYSQL) {
-                $manager = new \PDO(
-                    "mysql:host=" . $options["host"] . "; dbname=" . $options["dbname"],
-                    $options["user"],
-                    $options["password"],
-                    array(\PDO::ATTR_PERSISTENT => true)
-                );
-                $manager->query("SET NAMES utf8");
-            }
-            // Sqlite
-            else if ($dbms === self::SQLITE) {
-                $manager = new PDO("sqlite:" . Utility::getRoot() . "/db/" . $options["dbfile"]);
-            }
-        }
-        catch(\PDOException $e) {
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            throw new DatabaseException($e->getMessage());
-        }
-        return $manager;
-    }
-}
 
-/**
- * DBアクセスクラス
- * @author Ryuichi TANAKA.
- * @since 2010/08/10
- */
-class Database extends DatabaseCore {
-    /** DBマネージャ */
-    private static $dbaccessor = null;
-    /** DBコネクション */
-    private $connect;
-    /** 設定ファイルパス */
-    private static $config_path = "config/database.ini";
-    /** ステートメント変数 */
-    private $stmt = null;
-    
-    /**
-     * インスタンス生成を禁止
-     */
-    private function __construct() {}
-        
     /**
      * メンバ変数を初期化
      * @param String DB名
+     * @param String 設定ファイルパス
      */
-    private function init($dbname = null) {
+    protected function init($dbname = null, $configPath = null) {
         $this->stmt = null;
-        $this->connect($dbname);
-    }
-    
-    /**
-     * DBマネージャを返却する
-     * @param String DB名
-     * @return Object DBマネージャ
-     */
-    public static function manager($dbname = null) {
-        if (!is_object(self::$dbaccessor)) {
-            self::$dbaccessor = new Database();
-        }
-        self::$dbaccessor->init($dbname);
-        return self::$dbaccessor;
+        $this->connect($dbname, $configPath);
     }
     
     /**
      * DBに接続する
      * @param String DB名
+     * @param String 設定ファイルパス
      */
-    private function connect($dbname = null) {
+    private function connect($dbname = null, $configPath = null) {
         // DBへの接続は設定ファイルまたは@Databaseアノテーションで行う
         // 両方設定されていた場合は@Databaseアノテーションを優先する
-        $config = Utility::parseConfig(self::$config_path);
+        $config = Utility::parseConfig($configPath ?: self::$configPath);
         if ($dbname !== null) {
             $config["dbname"] = $dbname;
-            $this->connect = parent::getManager($config);
+            $this->connect = self::getManager($config);
         }
         if ($this->connect === null) {
-            $this->connect = parent::getManager($config);
+            $this->connect = self::getManager($config);
         }
     }
-    
+
     /**
      * SQLを実行する
      * @param String SQL
      * @param Array bindする変数
      * @return boolean 実行結果
      */
-    private function execSQL($sql, $bind = array()) {
+    protected function execSQL($sql, $bind = array()) {
         $result = false;
         $this->stmt = null;
         try {
@@ -156,43 +97,54 @@ class Database extends DatabaseCore {
     }
     
     /**
-     * SELECTを除くCRUDを実行する
-     * @param String SQL
-     * @param Array bindする変数
-     * @return boolean 実行結果
+     * DBオブジェクトを返却する
+     * @param String DBMS名
+     * @param String データベース名
+     * @param Map 接続オプション
+     * @return DBオブジェクト
      */
-    private function execCRUD($sql, $bind) {
-        $result = $this->execSQL($sql, $bind);
-        $this->init();
-        return $result;
-    }
-    
-    /**
-     * テーブルのフィールド情報を返却する
-     * @param Array テーブルリスト
-     * @return Array フィールド情報
-     */
-    public function columnInfo($tables) {
-        $columns = array();
-        foreach ($tables as $table) {
-            $sql = "SELECT * FROM ${table} LIMIT 1 OFFSET 0";
-            $i = 0;
-            $columns[$table] = array();
-            try {
-                $this->execSQL($sql);
-                while ($column = $this->stmt->getColumnMeta($i++)) {
-                    $columns[$table][] = $column["name"];
-                }
-                $this->init();
+    protected function getManager($options) {
+        $manager = null;
+        $dbms = $options["dbms"];
+        try {
+            // MySQL
+            if ($dbms === self::MYSQL) {
+                $manager = new \PDO(
+                    "mysql:host=" . $options["host"] . "; dbname=" . $options["dbname"],
+                    $options["user"],
+                    $options["password"],
+                    array(
+                        \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+                        \PDO::ATTR_PERSISTENT => true,
+                        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                        \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
+                    )
+                );
             }
-            catch (\Exception $e) {
-                Logger::error($e->getMessage(), $e->getTraceAsString());
-                throw new DatabaseException($e->getMessage());
+            // Sqlite
+            else if ($dbms === self::SQLITE) {
+                $manager = new PDO("sqlite:" . Utility::getRoot() . "/db/" . $options["dbfile"]);
             }
         }
-        return $columns;
+        catch(\PDOException $e) {
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            throw new DatabaseException($e->getMessage());
+        }
+        return $manager;
     }
-    
+}
+
+/**
+ * DBクラッドクラス
+ * @author Ryuichi TANAKA.
+ * @since 2012/11/24
+ */
+class DatabaseCrud extends DatabaseCore {
+    /**
+     * インスタンス生成を禁止
+     */
+    private function __construct() {}
+
     /**
      * SELECTを実行する
      * @param String SQL
@@ -202,6 +154,16 @@ class Database extends DatabaseCore {
     public function select($sql, $bind = array()) {
         $this->execSQL($sql, $bind);
         return new PDOIterator($this->stmt);
+    }
+
+    /**
+     * SELECTを実行し配列で返却する
+     * @param String SQL
+     * @param Array bindする変数
+     * @return Array 実行結果
+     */
+    public function select_by_array($sql, $bind = array()) {
+        return $this->select($sql, $bind)->toArray();
     }
 
     /**
@@ -252,6 +214,73 @@ class Database extends DatabaseCore {
      */
     public function drop($sql, $bind = array()) {
         return $this->execCRUD($sql, $bind);
+    }
+
+    /**
+     * SELECTを除くCRUDを実行する
+     * @param String SQL
+     * @param Array bindする変数
+     * @return boolean 実行結果
+     */
+    private function execCRUD($sql, $bind) {
+        $result = $this->execSQL($sql, $bind);
+        $this->init();
+        return $result;
+    }
+
+}
+
+/**
+ * DBアクセスクラス
+ * @author Ryuichi TANAKA.
+ * @since 2010/08/10
+ */
+class Database extends DatabaseCrud {
+    // /** DBマネージャ */
+    private static $dbaccessor = null;
+    
+    /**
+     * インスタンス生成を禁止
+     */
+    private function __construct() {}
+        
+    /**
+     * DBマネージャを返却する
+     * @param String DB名
+     * @return Object DBマネージャ
+     */
+    public static function manager($dbname = null, $config = null) {
+        if (!is_object(self::$dbaccessor)) {
+            self::$dbaccessor = new Database();
+        }
+        self::$dbaccessor->init($dbname, $config);
+        return self::$dbaccessor;
+    }
+    
+    /**
+     * テーブルのフィールド情報を返却する
+     * @param Array テーブルリスト
+     * @return Array フィールド情報
+     */
+    public function columnInfo($tables) {
+        $columns = array();
+        foreach ($tables as $table) {
+            $sql = "SELECT * FROM ${table} LIMIT 1 OFFSET 0";
+            $i = 0;
+            $columns[$table] = array();
+            try {
+                $this->execSQL($sql);
+                while ($column = $this->stmt->getColumnMeta($i++)) {
+                    $columns[$table][] = $column["name"];
+                }
+                $this->init();
+            }
+            catch (\Exception $e) {
+                Logger::error($e->getMessage(), $e->getTraceAsString());
+                throw new DatabaseException($e->getMessage());
+            }
+        }
+        return $columns;
     }
 }
 

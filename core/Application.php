@@ -41,7 +41,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.10');
+        define('STREAM_VERSION', '0.3.11');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */

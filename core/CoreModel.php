@@ -37,7 +37,7 @@ class CoreModel {
      * @return Array 実行結果
      */
     public function __call($method, $arguments) {
-        if (preg_match('/(?:(?:inser|selec)t|(?:dele|upda)te)/', $method)) {
+        if (preg_match('/(?:select(?:_by_array)?|(?:dele|upda)te|insert)/', $method)) {
             // Modelクラスからの呼び出し元メソッド名を取得
             $callerMethod = $this->getCallerMethodName();
             // メソッド名から@SQLのインジェクト値を取得する
@@ -55,6 +55,7 @@ class CoreModel {
                     }
                 }
             }
+
             return $this->db->{$method}($sql, $bind);
         }
         else if (preg_match('/(?:create|drop)/', $method)) {
