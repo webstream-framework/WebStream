@@ -514,6 +514,18 @@ class RouterTest extends UnitTestBase {
     }
 
     /**
+     * 正常系
+     * @Layout,@Renderが複数あった場合でも正常にレンダリングできること
+     */
+    public function testOkMultiRenderAndLayout() {
+        $http = new HttpAgent();
+        $url = $this->root_url . "/multi_render_and_layout";
+        $response = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, "multi render and layout");
+    }
+
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider

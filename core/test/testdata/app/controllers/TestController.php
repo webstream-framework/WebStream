@@ -175,4 +175,12 @@ class TestController extends CoreController {
             "__callback__" => "yuruyuri"
         );
     }
+
+    /**
+     * @Inject
+     * @Layout("test_base.tmpl")
+     * @Layout("sub/test_base.tmpl", "test_base")
+     * @Render("test_index.tmpl", "test_index")
+     */
+    public function testMultiRenderAndLayout() {}
 }

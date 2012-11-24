@@ -90,6 +90,7 @@ Router::setRule(
         '/handled_session_timeout' => "test_handled_session_timeout#show_view",
         '/get_only' => "test_request_method#get_only",
         '/post_only' => "test_request_method#post_only",
-        '/get_and_post' => "test_request_method#available_get_post"
+        '/get_and_post' => "test_request_method#available_get_post",
+        '/multi_render_and_layout' => "test#test_multi_render_and_layout"
     )
 );

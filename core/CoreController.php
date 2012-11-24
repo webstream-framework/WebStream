@@ -64,6 +64,14 @@ class CoreController {
     final public function __templates($templates) {
         $this->view->__templates($templates);
     }
+
+    /**
+     * レンダリングメソッドリスト情報を設定
+     * @param Hash レンダリングメソッドリスト情報
+     */
+    final public function __renderMethods($methods) {
+        $this->view->__renderMethods($methods);
+    }
     
     /**
      * Serviceクラスのインスタンスをロードする
@@ -97,7 +105,7 @@ class CoreController {
      * @param Hash 埋め込みパラメータ
      */
     final public function __layout($template, $params = array(), $mime = "html") {
-        $this->view->layout($template, $params);
+        $this->view->__layout($template, $params);
     }
 
     /**
@@ -106,7 +114,7 @@ class CoreController {
      * @param Hash 埋め込みパラメータ
      */
     final public function __render($template, $params = array(), $mime = "html") {
-        $this->view->render($template, $params, $mime);
+        $this->view->__render($template, $params, $mime);
     }
     
     /**
@@ -114,7 +122,7 @@ class CoreController {
      * @param Hash 埋め込みパラメータ
      */
     final public function __render_json($params) {
-        $this->view->json($params);
+        $this->view->__json($params);
     }
 
     /**
@@ -123,7 +131,7 @@ class CoreController {
      * @param String コールバック関数
      */
     final public function __render_jsonp($params, $callback) {
-        $this->view->jsonp($params, $callback);
+        $this->view->__jsonp($params, $callback);
     }
     
     /**
@@ -131,7 +139,7 @@ class CoreController {
      * @param String 表示内容
      */
     final protected function __render_error($content) {
-        $this->view->error($content);
+        $this->view->__error($content);
     }
     
     /**

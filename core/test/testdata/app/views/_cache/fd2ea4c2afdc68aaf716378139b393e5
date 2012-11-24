@@ -1,0 +1,1 @@
+<?php $this->{$__render_methods__[$__templates__["test_index"]]}($__templates__["test_index"], $__params__); ?>

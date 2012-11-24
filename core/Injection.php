@@ -64,19 +64,20 @@ class Injection extends Annotation {
         $annotations = $this->methods(self::RENDER, self::LAYOUT);
         $method = null;
         $templates = array();
+        $methods = array();
         $argList = array();
+
+        $methodName = function($mark) {
+            return $mark === Injection::LAYOUT ? '__layout' : '__render';
+        };
         foreach ($annotations as $annotation) {
             if ($annotation->methodName === $this->action) {
                 // 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
                 if (!isset($method)) {
-                    if ($annotation->name === self::LAYOUT) {
-                        $method = "__layout";
-                    }
-                    else {
-                        $method = "__render";
-                    }
+                    $method = $methodName($annotation->name);
                 }
                 if ($annotation->index === 0) {
+                    $methods[$annotation->value] = $methodName($annotation->name);
                     if (!empty($argList)) $templates[] = $argList;
                     $argList = array();
                 }
@@ -87,6 +88,7 @@ class Injection extends Annotation {
 
         return array(
             "method" => $method,
+            "methods" => $methods,
             "templates" => $templates
         );
     }

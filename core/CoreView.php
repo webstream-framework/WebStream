@@ -14,6 +14,8 @@ class CoreView {
     private $session;
     /** テンプレートリスト */
     private $templates;
+    /** レンダリングメソッドリスト */
+    private $renderMethods;
     /** CSRF対策 */
     public $enableCsrf = false;
 
@@ -34,12 +36,20 @@ class CoreView {
     }
 
     /**
+     * レンダリングメソッドリスト情報を設定
+     * @param Hash レンダリングメソッドリスト情報
+     */
+    public function __renderMethods($methods) {
+        $this->renderMethods = $methods;
+    }
+
+    /**
      * レイアウトファイルを描画する準備をする
      * @param String テンプレートファイル名
      * @param Hash 埋め込みパラメータ
      * @param String ファイルタイプ
      */
-    final public function layout($template, $params = array(), $type = "html") {
+    final public function __layout($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views" .
                          "/" . STREAM_VIEW_SHARED . "/" . $template;
         $this->draw($template_path, $params, $type);
@@ -51,7 +61,7 @@ class CoreView {
      * @param Hash 埋め込みパラメータ
      * @param String ファイルタイプ
      */
-    final public function render($template, $params = array(), $type = "html") {
+    final public function __render($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                          "/views/" . Utility::camel2snake($this->page_name) . "/" . $template;
         $this->draw($template_path, $params, $type);
@@ -61,7 +71,7 @@ class CoreView {
      * JSONを描画する
      * @param Hash 出力データ
      */
-    final public function json($params) {
+    final public function __json($params) {
         $this->outputHeader("json");
         echo json_encode($params);
     }
@@ -71,7 +81,7 @@ class CoreView {
      * @param Hash 出力データ
      * @param String コールバック関数名
      */
-    final public function jsonp($params, $callback) {
+    final public function __jsonp($params, $callback) {
         $this->outputHeader("jsonp");
         echo $callback . "(" . json_encode($params) . ");";
     }
@@ -80,7 +90,7 @@ class CoreView {
      * デフォルトHTMLを出力する
      * @param String エラー内容
      */
-    final public function error($content) {
+    final public function __error($content) {
         echo <<< HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -140,6 +150,7 @@ HTML;
         // 入れ子のテンプレートにパラメータをセットする
         $params["__params__"] = $params;
         $params["__templates__"] = $this->templates;
+        $params["__render_methods__"] = $this->renderMethods;
 
         $this->outputHeader($type);
         $this->outputHTML($params, $cache_file);
@@ -249,7 +260,8 @@ HTML;
     /**
      * テンプレートの内容を置換する
      * @param String テンプレートファイルの内容
-     * @param String 置換後のテンプレートファイルの内容
+     * @param String レンダリングメソッド名
+     * @return String 置換後のテンプレートファイルの内容
      */
     final private function convert($s) {
         $s = preg_replace('/^<\?xml/', '<<?php ?>?xml', $s);
@@ -257,7 +269,7 @@ HTML;
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
         $s = preg_replace('/!\{(.*?)\}/', '<?php ${self::HELPER_RECEIVER}->$1; ?>', $s);
-        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->render($__templates__["$1"], $__params__); ?>', $s);
+        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->{$__render_methods__[$__templates__["$1"]]}($__templates__["$1"], $__params__); ?>', $s);
         return $s;
     }
     

@@ -41,7 +41,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.11');
+        define('STREAM_VERSION', '0.3.12');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -307,6 +307,8 @@ class Application {
         if (isset($info)) {
             $render = $class->getMethod('__templates');
             $render->invoke($instance, $info['list']);
+            $render = $class->getMethod('__renderMethods');
+            $render->invoke($instance, $info['methods']);
             $render = $class->getMethod($info['method']);
             $render->invokeArgs($instance, $info['args']);
         }
@@ -321,6 +323,7 @@ class Application {
      */
     private function renderInfo($class, $instance, $params) {
         $renderInfo = $this->injection->render();
+        $renderMethods = $renderInfo['methods'];
         $templates = $renderInfo['templates'];
         $renderMethod = $renderInfo['method'];
 
@@ -361,6 +364,7 @@ class Application {
         return array(
             "list" => $templateList,
             "method" => $renderMethod,
+            "methods" => $renderMethods,
             "args" => $args
         );
     }
