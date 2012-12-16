@@ -803,4 +803,10 @@ SQL;
             array("/post_only", "post")
         );
     }
+
+    public function sessionTimeoutLinkTo() {
+        return array(
+            array("/session_timeout_linkto", 3)
+        );
+    }
 }

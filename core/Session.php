@@ -8,10 +8,10 @@ namespace WebStream;
 class Session {
     /** セッション名 */
     const SESSION_NAME = 'WSSESS';
-    /** LAST_ACTIVITY */
-    const LAST_ACTIVITY = '__LAST_ACTIVITY__';
     /** 初回起動チェッククッキー名 */
     const INITIAL_STARTED_COOKIE_NAME = 'WSSESS_STARTED';
+    /** セッション有効期限を保存するクッキー名 */
+    const SESSION_EXPIRE_COOKIE_NAME = 'WSSESS_LIFE';
     
     /** セッションアクセサ */
     private static $accessor = null;
@@ -23,8 +23,11 @@ class Session {
      * @param String Cookieを有効にするドメイン
      */
     private function __construct($expire, $path, $domain) {
-        // セッションがすでに開始されている場合は終了
-        if (isset($_SESSION)) return;
+        // 有効期限が設定されている場合のみ、Cookieに値をセットする
+        if ($expire !== 0) {
+            session_set_cookie_params($expire, $path, $domain);
+        }
+
         // セッションIDの予測リスクを低減する
         // /dev/urandomまたは/dev/randomがある場合、
         // session.entropy_fileに設定し、session.entropy_lengthを32に設定する
@@ -43,32 +46,25 @@ class Session {
         ini_set('session.use_cookies', '1');
         ini_set('session.use_only_cookies', '1');
         ini_set('session.save_path', '/tmp');
-        
-        // 有効期限が設定されている場合のみ、Cookieに値をセットする
-        if ($expire !== 0) {
-            session_set_cookie_params($expire, $path, $domain);
-        }
+
         // セッション名を設定
         session_name(self::SESSION_NAME);
         // セッションを開始
         session_start();
+
         // セッション固定化を防止
-        session_regenerate_id(true);
+        // 注意：これをやるとセッション破棄される問題があるため外す。
+        //session_regenerate_id();
+
         // 初回起動処理
-        $this->createInitializeCookie();
-        // 有効期限を設定
-        if (!isset($_SESSION[self::LAST_ACTIVITY])) {
-            // 初回起動でなく、LAST_ACTIVITYがない場合、セッションクッキーが送られてきて
-            // いないのでセッションタイムアウト処理を実行
-            if (!$this->isInitialStart()) {
-                $this->destroy();
-                throw new SessionTimeoutException("Session timeout");
-            }
-            // デフォルトは有効期限なし
-            $_SESSION[self::LAST_ACTIVITY] = 0;
+        if ($this->isInitialStart()) {
+            $this->createInitializeCookie();
         }
-        else if ($expire !== 0) {
-            $_SESSION[self::LAST_ACTIVITY] = time() + $expire;
+
+        // セッションタイムアウトかどうか。初回起動の場合は除く。 
+        if ($this->isSessionTimeout()) {
+            $this->destroy();
+            throw new SessionTimeoutException("Session timeout");
         }
     }
 
@@ -79,10 +75,10 @@ class Session {
      * @param String Cookieを有効にするドメイン
      */
     public static function start($expire = 0, $path = '/', $domain = '') {
-        if (Session::$accessor === null) {
-            Session::$accessor = new Session($expire, $path, $domain);
+        if (self::$accessor === null) {
+            self::$accessor = new Session($expire, $path, $domain);
         }
-        return Session::$accessor;
+        return self::$accessor;
     }
     
     /**
@@ -92,19 +88,30 @@ class Session {
      * @param String Cookieを有効にするドメイン
      */
     public static function restart($expire = 0, $path = '/', $domain = '') {
-        session_regenerate_id(true);
-        setcookie(session_name(), session_id(), time() + $expire, $path, $domain);
-        $_SESSION[self::SESSION_NAME] = time() + $expire;
+        //self::$accessor->destroy();
+        //self::start($expire);
+
+        //session_regenerate_id(true);
+        setcookie(self::SESSION_EXPIRE_COOKIE_NAME, time(), time() + $expire, $path, $domain);
+        $_SESSION[self::SESSION_EXPIRE_COOKIE_NAME] = time() + $expire;
     }
     
     /**
      * 初回起動時に生成するCookieを設定する
      */
     private function createInitializeCookie() {
-        if ($this->isInitialStart()) {
-            $_SESSION = array();
-            setcookie(self::INITIAL_STARTED_COOKIE_NAME, time(), null, '/', null);
-        }
+        $_SESSION = array();
+        setcookie(self::INITIAL_STARTED_COOKIE_NAME, time(), null, '/', null);
+    }
+
+    /**
+     * セッションタイムアウト状態かどうか
+     * WSSESS_LIFEクッキーが送られてこない場合、セッションタイムアウトとする
+     * @return Boolean セッションタイムアウトかどうか 
+     */
+    private function isSessionTimeout() {
+        return isset($_SESSION[self::SESSION_EXPIRE_COOKIE_NAME]) && 
+               !isset($_COOKIE[self::SESSION_EXPIRE_COOKIE_NAME]);
     }
     
     /**
@@ -172,6 +179,6 @@ class Session {
      * @return Boolean セッションタイムアウトしたかどうか
      */
     public function timeout() {
-        return !isset($_SESSION[self::LAST_ACTIVITY]);
+        return $this->isSessionTimeout();
     }
 }

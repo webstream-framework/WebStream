@@ -504,11 +504,14 @@ class RouterTest extends UnitTestBase {
         $responseHeader = $http->getResponseHeader();
         $cookie = array();
         foreach ($responseHeader as $header) {
-            if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
+            if (preg_match('/Set-Cookie: (WSSESS=.*?);/', $header, $matches)) {
                 $cookie[0] = $matches[1];
             }
+            if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
+                $cookie[1] = $matches[1];
+            }
         }
-        $cookie = "Cookie: " . $cookie[0];
+        $cookie = "Cookie: " . $cookie[0] . "; " . $cookie[1];
         $html = $http->get($url, "", array($cookie));
         $this->assertEquals($html, "handled session timeout.");
     }
@@ -839,5 +842,30 @@ class RouterTest extends UnitTestBase {
             $http->get($url);
         }
         $this->assertEquals($http->getStatusCode(), "405");
+    }
+
+    /**
+     * 異常系
+     * セッションタイムアウトが発生したときに存在しない画面に遷移した場合、404ではなく500(タイムアウト)になること 
+     * @dataProvider sessionTimeoutLinkTo
+     */
+    public function testNgSessionTimeoutLinkTo($path) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $http->get($url);
+        // セッションIDを取得
+        $responseHeader = $http->getResponseHeader();
+        $cookie = array();
+        foreach ($responseHeader as $header) {
+            if (preg_match('/Set-Cookie: (WSSESS=.*?);/', $header, $matches)) {
+                $cookie[0] = $matches[1];
+            }
+            if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
+                $cookie[1] = $matches[1];
+            }
+        }
+        $cookie = "Cookie: " . $cookie[0] . "; " . $cookie[1];
+        $http->get($this->root_url . "/dummy_link", "", array($cookie));
+        $this->assertEquals($http->getStatusCode(), "500");
     }
 }

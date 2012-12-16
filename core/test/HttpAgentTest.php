@@ -10,7 +10,7 @@ require_once 'UnitTestBase.php';
  
 class HttpAgentTest extends UnitTestBase {
     const URL_OK = "http://www.yahoo.co.jp";
-    const URL_RSS = "http://headlines.yahoo.co.jp/rss/itmedia_ait.xml";
+    const URL_RSS = "http://rss.dailynews.yahoo.co.jp/fc/rss.xml";
     const URL_JSON = "http://tepco-usage-api.appspot.com/latest.json";
     const URL_BASIC_AUTH = "http://kensakuyoke.web.fc2.com/basic-test/test.html";
     const URL_NG_NOTFOUND = "http://wwww222.google.co.jp";

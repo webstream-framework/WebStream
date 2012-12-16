@@ -41,7 +41,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.12');
+        define('STREAM_VERSION', '0.3.13');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -179,12 +179,16 @@ class Application {
      * @return Boolean ハンドリングするかどうか
      */
     private function handle($errorObj, $errorParams = array()) {
+        $isHandled = false;
+        // セッションタイムアウトしている状態でルーティング解決に失敗した場合、ハンドリングしない
+        if ($this->controller() === null) {
+            return $isHandled;
+        }
         $classPath = explode('\\', get_class($errorObj));
         $className = str_replace('Exception', '', end($classPath));
         $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
         $instance = $class->newInstance();
         $methodAnnotations = $this->injection->error();
-        $isHandled = false;
         foreach ($methodAnnotations as $methodAnnotation) {
             // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
             if (strcasecmp($methodAnnotation->value, $className) == 0) {
