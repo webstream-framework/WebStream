@@ -54,7 +54,7 @@ class Session {
 
         // セッション固定化を防止
         // 注意：これをやるとセッション破棄される問題があるため外す。
-        //session_regenerate_id();
+        //session_regenerate_id(true);
 
         // 初回起動処理
         if ($this->isInitialStart()) {
@@ -88,10 +88,6 @@ class Session {
      * @param String Cookieを有効にするドメイン
      */
     public static function restart($expire = 0, $path = '/', $domain = '') {
-        //self::$accessor->destroy();
-        //self::start($expire);
-
-        //session_regenerate_id(true);
         setcookie(self::SESSION_EXPIRE_COOKIE_NAME, time(), time() + $expire, $path, $domain);
         $_SESSION[self::SESSION_EXPIRE_COOKIE_NAME] = time() + $expire;
     }

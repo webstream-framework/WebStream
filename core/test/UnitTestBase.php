@@ -806,7 +806,7 @@ SQL;
 
     public function sessionTimeoutLinkTo() {
         return array(
-            array("/session_timeout_linkto", 3)
+            array("/session_timeout_linkto")
         );
     }
 }
