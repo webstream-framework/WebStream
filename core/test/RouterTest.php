@@ -846,7 +846,7 @@ class RouterTest extends UnitTestBase {
 
     /**
      * 異常系
-     * セッションタイムアウトが発生したときに存在しない画面に遷移した場合、404ではなく500(タイムアウト)になること 
+     * セッションタイムアウトが発生したときに存在しない画面に遷移した場合、500ではなく404になること
      * @dataProvider sessionTimeoutLinkTo
      */
     public function testNgSessionTimeoutLinkTo($path) {
@@ -866,6 +866,6 @@ class RouterTest extends UnitTestBase {
         }
         $cookie = "Cookie: " . $cookie[0] . "; " . $cookie[1];
         $http->get($this->root_url . "/dummy_link", "", array($cookie));
-        $this->assertEquals($http->getStatusCode(), "500");
+        $this->assertEquals($http->getStatusCode(), "404");
     }
 }

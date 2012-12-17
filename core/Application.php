@@ -41,7 +41,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.13');
+        define('STREAM_VERSION', '0.3.14');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -86,10 +86,10 @@ class Application {
             $this->loadController();
             // アノテーション情報をセットする
             $this->injection = new Injection($this->controller(), $this->action());
-            // セッションを開始
-            Session::start();
             // ルーティングの解決に成功した場合、コントローラを呼び出す
             if ($this->controller() && $this->action()) {
+                // セッションを開始
+                Session::start();
                 // バリデーションチェック
                 $this->validate();
                 // コントローラを起動
@@ -97,6 +97,8 @@ class Application {
             }
             // 静的ファイルを呼び出す
             else if ($this->staticFile()) {
+                // セッションを開始
+                Session::start();
                 $file_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                     "/views/" . STREAM_VIEW_PUBLIC . $this->staticFile();
                 $this->controller->__render_file($file_path);
@@ -180,10 +182,6 @@ class Application {
      */
     private function handle($errorObj, $errorParams = array()) {
         $isHandled = false;
-        // セッションタイムアウトしている状態でルーティング解決に失敗した場合、ハンドリングしない
-        if ($this->controller() === null) {
-            return $isHandled;
-        }
         $classPath = explode('\\', get_class($errorObj));
         $className = str_replace('Exception', '', end($classPath));
         $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
@@ -315,6 +313,9 @@ class Application {
             $render->invoke($instance, $info['methods']);
             $render = $class->getMethod($info['method']);
             $render->invokeArgs($instance, $info['args']);
+        }
+        else {
+            Logger::info("Template is not rendered.");
         }
     }
 
