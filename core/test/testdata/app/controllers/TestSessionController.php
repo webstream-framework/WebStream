@@ -14,8 +14,19 @@ class TestSessionController extends CoreController {
      * @Inject
      * @Render("linkto.tmpl")
      */
+    public function timeout() {
+        Session::restart(1);
+        return array(
+            "link" => "/WebStream/core/test/testdata/dummy_link"
+        );
+    }
+
+    /**
+     * @Inject
+     * @Render("linkto.tmpl")
+     */
     public function timeoutLinkTo() {
-    	Session::restart(3);
+    	Session::restart(1);
     	return array(
     		"link" => "/WebStream/core/test/testdata/dummy_link"
 		);

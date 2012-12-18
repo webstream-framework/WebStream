@@ -115,11 +115,11 @@ class Application {
                 $this->move(400);
             }
         }
-        // セッションタイムアウトの場合は500
+        // セッションタイムアウトの場合は404
         catch (SessionTimeoutException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
             if (!$this->handle($e)) {
-                $this->move(500);
+                $this->move(404);
             }
         }
         // 許可されないメソッドの場合は405

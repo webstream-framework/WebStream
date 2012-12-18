@@ -804,6 +804,12 @@ SQL;
         );
     }
 
+    public function sessionTimeout() {
+        return array(
+            array("/session_timeout")
+        );
+    }
+
     public function sessionTimeoutLinkTo() {
         return array(
             array("/session_timeout_linkto")

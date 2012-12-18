@@ -40,12 +40,16 @@ class Session {
                 ini_set('session.entropy_file', '/dev/random');
                 ini_set('session.entropy_length', '32');
             }
+            ini_set('session.save_path', '/tmp');
         }
+        else {
+            ini_set('session.save_path', 'C:\\tmp');
+        }
+
         // RefererによるセッションID漏洩を防止する
         // セッションIDはCookieにのみ保存する
         ini_set('session.use_cookies', '1');
         ini_set('session.use_only_cookies', '1');
-        ini_set('session.save_path', '/tmp');
 
         // セッション名を設定
         session_name(self::SESSION_NAME);

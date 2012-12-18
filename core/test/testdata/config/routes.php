@@ -92,6 +92,7 @@ Router::setRule(
         '/post_only' => "test_request_method#post_only",
         '/get_and_post' => "test_request_method#available_get_post",
         '/multi_render_and_layout' => "test#test_multi_render_and_layout",
+        '/session_timeout' => "test_session#timeout",
         '/session_timeout_linkto' => "test_session#timeout_link_to"
     )
 );

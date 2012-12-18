@@ -846,6 +846,31 @@ class RouterTest extends UnitTestBase {
 
     /**
      * 異常系
+     * セッションタイムアウトが発生したとき、404になること
+     * @dataProvider sessionTimeout
+     */
+    public function testNgSessionTimeout($path) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $http->get($url);
+        // セッションIDを取得
+        $responseHeader = $http->getResponseHeader();
+        $cookie = array();
+        foreach ($responseHeader as $header) {
+            if (preg_match('/Set-Cookie: (WSSESS=.*?);/', $header, $matches)) {
+                $cookie[0] = $matches[1];
+            }
+            if (preg_match('/Set-Cookie: (WSSESS_STARTED=.*?);/', $header, $matches)) {
+                $cookie[1] = $matches[1];
+            }
+        }
+        $cookie = "Cookie: " . $cookie[0] . "; " . $cookie[1];
+        $http->get($url, "", array($cookie));
+        $this->assertEquals($http->getStatusCode(), "404");
+    }
+
+    /**
+     * 異常系
      * セッションタイムアウトが発生したときに存在しない画面に遷移した場合、500ではなく404になること
      * @dataProvider sessionTimeoutLinkTo
      */
