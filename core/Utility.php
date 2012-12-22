@@ -177,7 +177,16 @@ class Utility {
             return "application/octet-stream";
         }
     }
-  
+
+    /**
+     * データのバイト長を返却する
+     * @param String 文字列
+     * @return String バイト長
+     */
+    public static function bytelen($data) {
+        return strlen(bin2hex($data)) / 2;
+    }
+
     /**
      * データをシリアライズ化してテキストデータにエンコードする
      * @param Object 対象データ

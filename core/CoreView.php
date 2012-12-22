@@ -10,6 +10,8 @@ class CoreView {
     const HELPER_RECEIVER = "helper";
     /** ページ名 */
     private $page_name;
+    /** レスポンス */
+    private $response;
     /** セッション */
     private $session;
     /** テンプレートリスト */
@@ -21,9 +23,11 @@ class CoreView {
 
     /**
      * Viewクラスの初期化
+     * @param Object レスポンスオブジェクト
      * @param String ページ名
      */
-    public function __construct($page_name = null) {
+    public function __construct(&$response, $page_name = null) {
+        $this->response = $response;
         $this->page_name = $page_name;
     }
 
@@ -90,21 +94,21 @@ class CoreView {
      * デフォルトHTMLを出力する
      * @param String エラー内容
      */
-    final public function __error($content) {
-        echo <<< HTML
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <head>
-        <title>$content</title>
-    </head>
-    <body>
-        <h1>$content</h1>
-    </body>
-</html>
-HTML;
-    }
+//     final public function __error($content) {
+//         echo <<< HTML
+// <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+//   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+// <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+//     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+//     <head>
+//         <title>$content</title>
+//     </head>
+//     <body>
+//         <h1>$content</h1>
+//     </body>
+// </html>
+// HTML;
+//     }
     
     /**
      * テンプレートファイルを描画する
@@ -278,9 +282,7 @@ HTML;
      * @param String ファイルタイプ
      */
     final private function outputHeader($type) {
-        $mime = Utility::getMimeType($type);
-        header("Content-Type: ${mime}; charset=UTF-8");
-        header("X-Content-Type-Options: nosniff");
+        $this->response->setType($type);
     }
     
     /**
@@ -288,12 +290,7 @@ HTML;
      * @param String ファイルパス
      */
     final private function display($filename) {
-        $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        $this->outputHeader($type);
-        header("Content-Length: " . filesize($filename));
-        ob_clean();
-        flush();
-        readfile($filename);
+        $this->response->displayFile($filename);
     }
     
     /**
@@ -301,19 +298,6 @@ HTML;
      * @param String ファイルパス
      */
     final private function download($filename) {
-        $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        $this->outputHeader($type);
-        header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
-        header('Expires: 0');
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: ".filesize($filename));
-        header('Pragma: no-cache');
-        if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], "MSIE") !== FALSE) {
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-        }
-        ob_clean();
-        flush();
-        readfile($filename);
+        $this->response->downloadFile($filename);
     }
 }

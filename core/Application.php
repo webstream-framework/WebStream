@@ -8,8 +8,12 @@ namespace WebStream;
 class Application {
     /** アプリケーションファイルディレクトリ名 */
     private $app_dir = "app";
+    /** Request */
+    private $request;
+    /** Response */
+    private $response;
     /** Contollerインスタンス */
-    private $controller;
+    private $controller = array();
     /** ルーティング解決後のパラメータ */
     private $route;
     /** バリデーション解決後のパラメータ */
@@ -23,6 +27,8 @@ class Application {
      * アプリケーション共通で使用するクラスを初期化する
      */
     public function __construct() {
+        $this->request = new Request();
+        $this->response = new Response();
         ob_start();
         ob_implicit_flush(false);
     }
@@ -32,8 +38,10 @@ class Application {
      */
     public function __destruct() {
         $buffer = ob_get_clean();
+        $this->response->setBody($buffer);
+        $this->response->send();
         $this->responseCache($buffer);
-        echo $buffer;
+
     }
     
     /**
@@ -41,7 +49,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.14');
+        define('STREAM_VERSION', '0.3.15');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -49,10 +57,9 @@ class Application {
         /** アプリケーションディレクトリ */
         define('STREAM_APP_DIR', $this->app_dir);
         /** ドキュメントルートからプロジェクトディレクトリへのパスを定義 */
-        $request = new Request();
-        define('STREAM_BASE_URI', $request->getBaseURL());
-        define('STREAM_ROUTING_PATH', $request->getPathInfo());
-        define('STREAM_QUERY_STRING', $request->getQueryString());
+        define('STREAM_BASE_URI', $this->request->getBaseURL());
+        define('STREAM_ROUTING_PATH', $this->request->getPathInfo());
+        define('STREAM_QUERY_STRING', $this->request->getQueryString());
         /** publicディレクトリ */
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
@@ -60,8 +67,9 @@ class Application {
         /** レスポンスキャッシュID */
         define('STREAM_RESPONSE_CACHE_ID', 
                md5(STREAM_BASE_URI . STREAM_ROUTING_PATH . STREAM_QUERY_STRING));
-        // CoreControllerのロード
-        $this->controller = new CoreController();
+        // コントローラを初期化
+        $this->controller['class'] = null;
+        $this->controller['instance'] = new CoreController($this->request, $this->response);
     }
     
     /**
@@ -69,8 +77,15 @@ class Application {
      */
     private function loadController() {
         // Controllerクラスをインポート
-        import(STREAM_APP_DIR . "/controllers/AppController");
-        import(STREAM_APP_DIR . "/controllers/" . $this->controller());
+        if ($this->controller() !== null) {
+            import(STREAM_APP_DIR . "/controllers/AppController");
+            import(STREAM_APP_DIR . "/controllers/" . $this->controller());
+            $this->controller['class'] = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
+            // newInstanceだとcall_user_func()で参照渡しができないバグがあるためcall_user_func_array()
+            // を内部的に呼び出しているnewInstanceArgsを使用する
+            $this->controller['instance'] = 
+                $this->controller['class']->newInstanceArgs(array(&$this->request, &$this->response));
+        }
     }
     
     /**
@@ -101,7 +116,7 @@ class Application {
                 Session::start();
                 $file_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
                     "/views/" . STREAM_VIEW_PUBLIC . $this->staticFile();
-                $this->controller->__render_file($file_path);
+                $this->controller['instance']->__render_file($file_path);
             }
             // 存在しないURLにアクセスしたときは404
             else {
@@ -155,9 +170,8 @@ class Application {
      * コントローラを起動する
      */
     private function runContoller() {
-        // Controllerクラスを起動
-        $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
-        $instance = $class->newInstance();
+        $class = $this->controller['class'];
+        $instance = $this->controller['instance'];
         // initialize
         $initialize = $class->getMethod("__initialize");
         $initialize->invoke($instance);
@@ -184,8 +198,8 @@ class Application {
         $isHandled = false;
         $classPath = explode('\\', get_class($errorObj));
         $className = str_replace('Exception', '', end($classPath));
-        $class = new \ReflectionClass(STREAM_CLASSPATH . $this->controller());
-        $instance = $class->newInstance();
+        $class = $this->controller['class'];
+        $instance = $this->controller['instance'];
         $methodAnnotations = $this->injection->error();
         foreach ($methodAnnotations as $methodAnnotation) {
             // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
@@ -209,11 +223,10 @@ class Application {
     private function validate() {
         $validator = new Validator();
         // GET, POSTパラメータ両方を検査する
-        $request = new Request();
         $ca = $this->route->controller() . "#" . $this->route->action();
         try {
-            $validator->validateParameter($ca, $request->getGET(), "get");
-            $validator->validateParameter($ca, $request->getPOST(), "post");
+            $validator->validateParameter($ca, $this->request->getGET(), "get");
+            $validator->validateParameter($ca, $this->request->getPOST(), "post");
         }
         catch (ValidateException $e) {
             $this->validate = array(
@@ -246,7 +259,7 @@ class Application {
      * @param String ステータスコード
      */
     private function move($statusCode) {
-        $this->controller->__move($statusCode);
+        $this->controller['instance']->__move($statusCode);
     }
 
     /**
@@ -378,17 +391,16 @@ class Application {
      * 有効なリクエストメソッドか検証する
      */
     private function requestMethod() {
-        $request = new Request();
         $method = null;
         $methods = $this->injection->request();
-        if ($request->isGet()) {
+        if ($this->request->isGet()) {
             $method = "GET";
         }
-        else if ($request->isPost()) {
+        else if ($this->request->isPost()) {
             $method = "POST";
         }
         if (!empty($methods) && !in_array($method, $methods)) {
-            $errorMsg = $request->server("REQUEST_METHOD") . " method is not allowed";
+            $errorMsg = $this->request->server("REQUEST_METHOD") . " method is not allowed";
             throw new MethodNotAllowedException($errorMsg);
         }
     }
@@ -404,9 +416,8 @@ class Application {
                 $errorMsg = "Properties file specified by @BasicAuth annotation is not found: $methodAnnotation->value";
                 throw new AnnotationException($errorMsg);
             }
-            $request = new Request();
-            if ($request->authUser() !==  $config["userid"] ||
-                $request->authPassword() !== $config["password"]) {
+            if ($this->request->authUser() !==  $config["userid"] ||
+                $this->request->authPassword() !== $config["password"]) {
                 $this->move(401);
             }
         }

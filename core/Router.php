@@ -53,16 +53,8 @@ class Router {
                 // ルーティング定義(Controller#Action)が正しい場合
                 // _(アンダースコア)は許可するが、２回以上の連続の場合、末尾につく場合は許可しない
                 // NG例：my__blog, my_blog_
-                if (preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
-                    // アクション名にrender, errorが指定された場合
-                    // 正しいルーティング定義のとき、かつ、定義禁止メソッドが指定された場合にエラーとする
-                    if (preg_match('/#(re(?:nder(?:_(?:error|atom|file|json|rss|xml))?|(?:quest_(?:pos|ge)|direc)t)|(?:mov|pag)e|l(?:ayout|oad)|session|csrf)$/',
-                        $ca, $matches)) {
-                        throw new RouterException("Definition of the method is prohibited: " . $matches[1]);
-                    }
-                }
-                // ルーティング定義(Controller#Action)が正しくない場合
-                else {
+                if (!preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
+                    // ルーティング定義(Controller#Action)が正しくない場合
                     throw new RouterException("Invalid controller#action definition: " . $ca);
                 }
             }

@@ -14,13 +14,19 @@ class CoreController {
     protected $session;
     /** リクエスト */
     protected $request;
+    /** レスポンス */
+    private $response;
     
     /**
      * Controllerクラス全体の初期化
+     * @param Object リクエストオブジェクト
+     * @param Object レスポンスオブジェクト
      */
-    final public function __construct() {
+    final public function __construct(&$request, &$response) {
         $this->page_name = $this->page();
-        $this->view = new CoreView($this->page_name);
+        $this->request = $request;
+        $this->response = $response;
+        $this->view = new CoreView($response, $this->page_name);
     }
 
     /**
@@ -38,7 +44,6 @@ class CoreController {
      */
     final public function __initialize() {
         $this->session = Session::start();
-        $this->request = new Request();
         $this->__csrfCheck();
         $this->__load();
     }
@@ -147,14 +152,14 @@ class CoreController {
      * @param String ドキュメントルートからの相対パス
      */
     final protected function redirect($path) {
-        $this->__move(301, $path);
+        $this->response->movePermanently($path);
     }
     
     /**
      * アクセス権限のない処理
      */
     final protected function forbidden() {
-        $this->__move(403);
+        $this->response->forbidden();
     }
     
     /**
@@ -166,51 +171,55 @@ class CoreController {
     }
     
     /**
-     * デフォルト画面を描画する
+     * ステータスコードに応じた画面を描画する
      * @param Integer ステータスコード
-     * @param String 遷移パス
      */
-    final public function __move($status_code, $path = null) {
-        switch ($status_code) {
-        case 301:
-            header("HTTP/1.1 301 Moved Permanently");
-            header("Location: " . $path);
-            break;
-        case 400:
-            header("HTTP/1.1 400 Bad Request");
-            $this->__render_error("400 Bad Request");
-            break;
-        case 401:
-            header("WWW-Authenticate: Basic realm='Private page'");
-            header("HTTP/1.1 401 Unauthorized");
-            $this->__render_error("401 Unauthorized");
-            break;
-        case 403:
-            header("HTTP/1.1 403 Forbidden");
-            $this->__render_error("403 Forbidden");
-            break;
-        case 404:
-            header("HTTP/1.1 404 Not Found");
-            $this->__render_error("404 Not Found");
-            break;
-        case 405:
-            header("HTTP/1.1 405 Method Not Allowed");
-            $this->__render_error("405 Method Not Allowed");
-            break;
-        case 422:
-            header("HTTP/1.1 422 Unprocessable Entity");
-            $this->__render_error("422 Unprocessable Entity");
-            break;
-        case 500:
-            header("HTTP/1.1 500 Internal Server Error");
-            $this->__render_error("500 Internal Server Error");
-            break;
-        default:
-            throw new ConnectionException("Unknown status code: " . $status_code);
-        }
-        Logger::info("HTTP access occured: status code ${status_code}");
-        exit;
+    final public function __move($statusCode) {
+        $this->response->move($statusCode);
     }
+
+
+    // final public function __move($status_code, $path = null) {
+    //     switch ($status_code) {
+    //     case 301:
+    //         header("HTTP/1.1 301 Moved Permanently");
+    //         header("Location: " . $path);
+    //         break;
+    //     case 400:
+    //         header("HTTP/1.1 400 Bad Request");
+    //         $this->__render_error("400 Bad Request");
+    //         break;
+    //     case 401:
+    //         header("WWW-Authenticate: Basic realm='Private page'");
+    //         header("HTTP/1.1 401 Unauthorized");
+    //         $this->__render_error("401 Unauthorized");
+    //         break;
+    //     case 403:
+    //         header("HTTP/1.1 403 Forbidden");
+    //         $this->__render_error("403 Forbidden");
+    //         break;
+    //     case 404:
+    //         header("HTTP/1.1 404 Not Found");
+    //         $this->__render_error("404 Not Found");
+    //         break;
+    //     case 405:
+    //         header("HTTP/1.1 405 Method Not Allowed");
+    //         $this->__render_error("405 Method Not Allowed");
+    //         break;
+    //     case 422:
+    //         header("HTTP/1.1 422 Unprocessable Entity");
+    //         $this->__render_error("422 Unprocessable Entity");
+    //         break;
+    //     case 500:
+    //         header("HTTP/1.1 500 Internal Server Error");
+    //         $this->__render_error("500 Internal Server Error");
+    //         break;
+    //     default:
+    //         throw new ConnectionException("Unknown status code: " . $status_code);
+    //     }
+    //     Logger::info("HTTP access occured: status code ${status_code}");
+    //     exit;
+    // }
     
     /**
      * ページ名を取得する

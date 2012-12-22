@@ -575,8 +575,8 @@ SQL;
     public function getFileProvider() {
         return array(
             array("/file/sample.xml", "application/xml"),
-            array("/file/sample.rdf", "application/xml"),
-            array("/file/sample.atom", "application/xml"),
+            array("/file/sample.rdf", "application/rdf+xml"),
+            array("/file/sample.atom", "application/atom+xml"),
             array("/file/sample.pdf", "application/pdf"),
             array("/file/sample.json", "application/json"),
             array("/file/sample.txt", "text/plain"),
@@ -589,10 +589,10 @@ SQL;
     public function renderMethodProvider() {
         return array(
             array("/resource/html", "text/html"),
-            array("/resource/rss", "application/xml"),
+            array("/resource/rss", "application/rss+xml"),
             array("/resource/xml", "application/xml"),
-            array("/resource/atom", "application/xml"),
-            array("/resource/rdf", "application/xml"),
+            array("/resource/atom", "application/atom+xml"),
+            array("/resource/rdf", "application/rdf+xml"),
         );
     }
     
