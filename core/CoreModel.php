@@ -70,11 +70,12 @@ class CoreModel {
      * モデルの初期処理
      */
     protected function initialize() {
-        $annotation = new Annotation(get_class($this));
-        $databaseAnnotation = $annotation->classes("@Database");
-        $tableAnnotations = $annotation->classes("@Table");
-        $sqlAnnotations = $annotation->classes("@Properties");
-        $sqlKeyAnnotations = $annotation->methods("@SQL");
+        $class = new \ReflectionClass(get_class($this));
+        $injection = new Injection($class);
+        $databaseAnnotation = $injection->classes("@Database");
+        $tableAnnotations = $injection->classes("@Table");
+        $sqlAnnotations = $injection->classes("@Properties");
+        $sqlKeyAnnotations = $injection->methods("@SQL");
         $dbname = !empty($databaseAnnotation) ? $databaseAnnotation[0]->value : null;
         $this->setTables($tableAnnotations);
         $this->dbConnection($dbname);

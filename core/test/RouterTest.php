@@ -438,7 +438,7 @@ class RouterTest extends UnitTestBase {
         $end = time() + microtime();
         $cached = $end - $start;
         // until the cache is disabled
-        sleep(3);
+        sleep(11);
         $start = time() + microtime();
         $http->get($url);
         $end = time() + microtime();

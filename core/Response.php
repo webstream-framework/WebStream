@@ -16,7 +16,7 @@ class ResponseBase {
     /** Pragma */
     private $pragma = 'no-cache';
     /** Mime type */
-    private $mimeType;
+    private $mimeType = 'text/html';
     /** ロケーション */
     private $location;
     /** Access-Control-Allow-Origin */
@@ -43,10 +43,7 @@ class ResponseBase {
     /**
      * コンストラクタ
      */
-    public function __construct() {
-        // デフォルト値を設定    
-        $this->mimeType = $this->mime['html'];
-    }
+    private function __construct() {}
 
     /**
      * 文字コードを設定
@@ -389,6 +386,25 @@ class ResponseBase {
  * @since 2012/12/19
  */
 class Response extends ResponseBase {
+	/** レスポンスオブジェクト */
+	private static $response = null;
+
+    /**
+     * インスタンス生成を禁止
+     */
+	private function __construct() {}
+
+    /**
+     * レスポンスオブジェクトを返却する
+     * @param Object レスポンスオブジェクト
+     */
+	public static function getInstance() {
+		if (!is_object(self::$response)) {
+			self::$response = new Response();
+		}
+		return self::$response;
+	}
+
     /**
      * 301 alias
      * @param String redirect url
@@ -464,7 +480,7 @@ class Response extends ResponseBase {
      * @param String ファイル名
      */
     public function downloadFile($filename) {
-        $request = new Request();
+        $request = Request::getInstance();
         $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $this->setType($type);
         $this->setContentLength(filesize($filename));

@@ -236,7 +236,7 @@ class DatabaseCrud extends DatabaseCore {
  * @since 2010/08/10
  */
 class Database extends DatabaseCrud {
-    // /** DBマネージャ */
+    /** DBマネージャ */
     private static $dbaccessor = null;
     
     /**

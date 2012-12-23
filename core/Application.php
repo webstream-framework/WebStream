@@ -14,15 +14,13 @@ class Application {
     private $response;
     /** Resolver */
     private $resolver;
-    /** リソースキャッシュパラメータ */
-    private $cache = array();
     
     /**
      * アプリケーション共通で使用するクラスを初期化する
      */
     public function __construct() {
-        $this->request = new Request();
-        $this->response = new Response();
+        $this->request  = Request::getInstance();
+        $this->response = Response::getInstance();
         ob_start();
         ob_implicit_flush(false);
     }
@@ -34,7 +32,7 @@ class Application {
         $buffer = ob_get_clean();
         $this->response->setBody($buffer);
         $this->response->send();
-        $this->responseCache($buffer);
+        $this->resolver->responseCache($buffer);
     }
     
     /**
@@ -67,11 +65,11 @@ class Application {
      */
     public function run() {
         $this->init();
-        $this->responseCache();
-        $this->resolver = new Resolver($this->request, $this->response);
+        $this->resolver = new Resolver();
+        $this->resolver->responseCache();
         try {
             // ルーティングを解決する
-            $router = new Router($this->request);
+            $router = new Router();
             // MVCレイヤへのリクエストの振り分けを実行する
             $this->resolver->setRouter($router);
             $this->resolver->run();
@@ -134,31 +132,6 @@ class Application {
      * @param String ステータスコード
      */
     private function move($statusCode) {
-        $this->response->move($statusCode);
-    }
-    
-    /**
-     * レスポンスキャッシュを設定する
-     * @param String キャッシュデータ
-     */
-    private function responseCache($data = null) {
-        var_dump($data);
-        $cache = new Cache();
-        $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
-        // キャッシュをセット
-        if ($data) {
-            if (array_key_exists('ttl', $this->cache) && !$response) {
-                $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->cache['ttl']);
-                Logger::info("Response cache rendered.");
-            }
-        }
-        // キャッシュをロード
-        else {
-            if ($response) {
-                echo $response;
-                Logger::info("Response cache loaded.");
-                exit;
-            }
-        }
+        $this->resolver->move($statusCode);
     }
 }

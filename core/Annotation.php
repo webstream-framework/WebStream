@@ -13,18 +13,10 @@ class Annotation {
     
     /**
      * コンストラクタ
-     * @param String クラス名
+     * @param Object クラス名
      */
-    public function __construct($className) {
-        $this->initClass($className);
-    }
-    
-    /**
-     * リフレクションクラスを初期化
-     * @param String クラス名
-     */
-    private function initClass($className) {
-        $this->refClass = new \ReflectionClass($className);
+    public function __construct(\ReflectionClass $refClass) {
+        $this->refClass = $refClass;
     }
     
     /**

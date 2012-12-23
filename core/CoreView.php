@@ -23,11 +23,10 @@ class CoreView {
 
     /**
      * Viewクラスの初期化
-     * @param Object レスポンスオブジェクト
      * @param String ページ名
      */
-    public function __construct(&$response, $page_name = null) {
-        $this->response = $response;
+    public function __construct($page_name = null) {
+        $this->response = Response::getInstance();
         $this->page_name = $page_name;
     }
 
@@ -89,26 +88,6 @@ class CoreView {
         $this->outputHeader("jsonp");
         echo $callback . "(" . json_encode($params) . ");";
     }
-    
-    /**
-     * デフォルトHTMLを出力する
-     * @param String エラー内容
-     */
-//     final public function __error($content) {
-//         echo <<< HTML
-// <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-//   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-// <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-//     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-//     <head>
-//         <title>$content</title>
-//     </head>
-//     <body>
-//         <h1>$content</h1>
-//     </body>
-// </html>
-// HTML;
-//     }
     
     /**
      * テンプレートファイルを描画する

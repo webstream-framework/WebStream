@@ -23,7 +23,7 @@ class Security {
      */
     public static function isCsrfCheck() {
         $session = Session::start();
-        $request = new Request();
+        $request = Request::getInstance();
         $token = Utility::getCsrfTokenKey();
         $session_token = $session->get($token);
         $request_token = null;

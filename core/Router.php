@@ -6,8 +6,6 @@ namespace WebStream;
  * @since 2011/08/19
  */
 class Router {
-    /** リクエストオブジェクト */
-    private $request;
     /** ルーティングルール */
     private static $rules;
     /** PATH_INFO */
@@ -19,8 +17,8 @@ class Router {
      * コンストラクタ
      * @param Object リクエストオブジェクト
      */
-    public function __construct(Request $request) {
-        $this->request = $request;
+    public function __construct() {
+        $request = Request::getInstance();
         $this->path_info = $request->getPathInfo();
         $this->validate();
         $this->resolve();
@@ -101,7 +99,7 @@ class Router {
                     if (preg_match($path_pattern, $this->path_info, $matches)) {
                         for ($j = 1; $j < count($matches); $j++) {
                             $key = $key_list[$j - 1];
-                            $route["params"][$key] = $matches[$j];
+                            $route["params"][$key] = safetyIn($matches[$j]);
                             // プレースホルダを一時展開する
                             $expantion_path = preg_replace('/:[a-zA-Z0-9]+/', $matches[$j], $expantion_path, 1);
                         }
@@ -129,7 +127,7 @@ class Router {
      */
     public function controller() {
         $controller = null;
-        if ($this->route["controller"] !== null) {
+        if (isset($this->route['controller'])) {
             // _[a-z]を[A-Z]に置換する
             $controller = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
                 return ucfirst($matches[1]);
@@ -145,7 +143,7 @@ class Router {
      */
     public function action() {
         $action = null;
-        if ($this->route["action"] !== null) {
+        if (isset($this->route['action'])) {
             // _[a-z]を[A-Z]に置換する
             $action = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
                 return ucfirst($matches[1]);

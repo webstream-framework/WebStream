@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="1.2.0" timestamp="2012-12-18T23:05:14+09:00">
+<pmd version="1.2.0" timestamp="2012-12-24T00:48:04+09:00">
   <file name="/Users/stay/workspace2/WebStream/app/controllers/SampleController.php">
     <violation beginline="6" endline="135" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="SampleController" priority="3">
       This class has too many methods, consider refactoring it.
@@ -34,40 +34,16 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Annotation.php">
-    <violation beginline="64" endline="64" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="56" endline="56" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$annotations'.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Application.php">
-    <violation beginline="8" endline="506" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Application" priority="3">
-      This class has too many methods, consider refactoring it.
+    <violation beginline="8" endline="137" rule="CouplingBetweenObjects" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects" class="Application" priority="2">
+      The class Application has a coupling between objects value of 13. Consider to reduce the number of dependencies under 13.
     </violation>
-    <violation beginline="8" endline="506" rule="ExcessiveClassComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity" class="Application" priority="3">
-      The class Application has an overall complexity of 70 which is very high. The configured complexity threshold is 50.
-    </violation>
-    <violation beginline="8" endline="506" rule="CouplingBetweenObjects" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects" class="Application" priority="2">
-      The class Application has a coupling between objects value of 19. Consider to reduce the number of dependencies under 13.
-    </violation>
-    <violation beginline="79" endline="152" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="Application" method="run" priority="3">
-      The method run() has a Cyclomatic Complexity of 14.
-    </violation>
-    <violation beginline="213" endline="213" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
-      Avoid variables with short names like $ca
-    </violation>
-    <violation beginline="329" endline="329" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
-      Avoid unused parameters such as '$class'.
-    </violation>
-    <violation beginline="329" endline="329" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
-      Avoid unused parameters such as '$instance'.
-    </violation>
-    <violation beginline="404" endline="404" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
-      Avoid unused local variables such as '$methodAnnotation'.
-    </violation>
-    <violation beginline="422" endline="422" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
-      Avoid unused local variables such as '$methodAnnotation'.
-    </violation>
-    <violation beginline="486" endline="486" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
-      The method responseCache() contains an exit expression.
+    <violation beginline="66" endline="118" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="Application" method="run" priority="3">
+      The method run() has a Cyclomatic Complexity of 11.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/AutoImport.php">
@@ -99,26 +75,23 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreController.php">
-    <violation beginline="8" endline="228" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreController" priority="3">
+    <violation beginline="8" endline="192" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreController" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
-    <violation beginline="8" endline="228" rule="NumberOfChildren" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren" class="CoreController" priority="2">
+    <violation beginline="8" endline="192" rule="NumberOfChildren" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren" class="CoreController" priority="2">
       The class CoreController has 29 children. Consider to rebalance this class hierarchy.
     </violation>
-    <violation beginline="31" endline="31" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="35" endline="35" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$method'.
     </violation>
-    <violation beginline="31" endline="31" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="35" endline="35" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$arguments'.
     </violation>
-    <violation beginline="32" endline="32" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+    <violation beginline="36" endline="36" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
       Avoid unused local variables such as '$class'.
     </violation>
-    <violation beginline="107" endline="107" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+    <violation beginline="110" endline="110" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
       Avoid unused parameters such as '$mime'.
-    </violation>
-    <violation beginline="212" endline="212" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
-      The method __move() contains an exit expression.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreHelper.php">
@@ -127,7 +100,7 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreModel.php">
-    <violation beginline="8" endline="207" rule="NumberOfChildren" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren" class="CoreModel" priority="2">
+    <violation beginline="8" endline="208" rule="NumberOfChildren" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren" class="CoreModel" priority="2">
       The class CoreModel has 20 children. Consider to rebalance this class hierarchy.
     </violation>
     <violation beginline="10" endline="10" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
@@ -146,14 +119,11 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/CoreView.php">
-    <violation beginline="8" endline="319" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreView" priority="3">
+    <violation beginline="8" endline="282" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="CoreView" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
-    <violation beginline="266" endline="266" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+    <violation beginline="249" endline="249" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
       Avoid variables with short names like $s
-    </violation>
-    <violation beginline="281" endline="281" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
-      Avoid unused local variables such as '$mime'.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/DataMapper.php">
@@ -195,11 +165,11 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Injection.php">
-    <violation beginline="22" endline="22" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
-      Avoid unused private fields such as '$annotation'.
+    <violation beginline="8" endline="204" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Injection" priority="3">
+      This class has too many methods, consider refactoring it.
     </violation>
-    <violation beginline="141" endline="141" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
-      Avoid unused local variables such as '$format'.
+    <violation beginline="26" endline="26" rule="UnusedPrivateField" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield" priority="3">
+      Avoid unused private fields such as '$annotation'.
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Logger.php">
@@ -220,12 +190,67 @@
     </violation>
   </file>
   <file name="/Users/stay/workspace2/WebStream/core/Request.php">
-    <violation beginline="8" endline="195" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Request" priority="3">
+    <violation beginline="8" endline="208" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Request" priority="3">
       This class has too many methods, consider refactoring it.
     </violation>
   </file>
+  <file name="/Users/stay/workspace2/WebStream/core/Resolver.php">
+    <violation beginline="8" endline="419" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Resolver" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+    <violation beginline="8" endline="419" rule="ExcessiveClassComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity" class="Resolver" priority="3">
+      The class Resolver has an overall complexity of 60 which is very high. The configured complexity threshold is 50.
+    </violation>
+    <violation beginline="8" endline="419" rule="CouplingBetweenObjects" ruleset="Design Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects" class="Resolver" priority="2">
+      The class Resolver has a coupling between objects value of 18. Consider to reduce the number of dependencies under 13.
+    </violation>
+    <violation beginline="153" endline="153" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
+      The method responseCache() contains an exit expression.
+    </violation>
+    <violation beginline="207" endline="207" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $ca
+    </violation>
+    <violation beginline="310" endline="310" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$class'.
+    </violation>
+    <violation beginline="310" endline="310" rule="UnusedFormalParameter" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter" priority="3">
+      Avoid unused parameters such as '$instance'.
+    </violation>
+    <violation beginline="384" endline="384" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$methodAnnotation'.
+    </violation>
+    <violation beginline="401" endline="401" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$methodAnnotation'.
+    </violation>
+  </file>
+  <file name="/Users/stay/workspace2/WebStream/core/Response.php">
+    <violation beginline="9" endline="381" rule="TooManyFields" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanyfields" class="ResponseBase" priority="3">
+      Too many fields
+    </violation>
+    <violation beginline="160" endline="160" rule="LongVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#longvariable" priority="3">
+      Avoid excessively long variable names like $contentTransferEncoding
+    </violation>
+    <violation beginline="199" endline="264" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="ResponseBase" method="header" priority="3">
+      The method header() has a Cyclomatic Complexity of 10.
+    </violation>
+    <violation beginline="199" endline="264" rule="NPathComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity" class="ResponseBase" method="header" priority="3">
+      The method header() has an NPath complexity of 512.
+    </violation>
+    <violation beginline="388" endline="530" rule="TooManyMethods" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods" class="Response" priority="3">
+      This class has too many methods, consider refactoring it.
+    </violation>
+    <violation beginline="490" endline="490" rule="ShortVariable" ruleset="Naming Rules" externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable" priority="3">
+      Avoid variables with short names like $ua
+    </violation>
+    <violation beginline="507" endline="507" rule="ExitExpression" ruleset="Design Rules" externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression" priority="1">
+      The method move() contains an exit expression.
+    </violation>
+  </file>
   <file name="/Users/stay/workspace2/WebStream/core/Router.php">
-    <violation beginline="76" endline="129" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="Router" method="resolve" priority="3">
+    <violation beginline="57" endline="57" rule="UnusedLocalVariable" ruleset="Unused Code Rules" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable" priority="3">
+      Avoid unused local variables such as '$matches'.
+    </violation>
+    <violation beginline="69" endline="122" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="WebStream" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="Router" method="resolve" priority="3">
       The method resolve() has a Cyclomatic Complexity of 14.
     </violation>
   </file>

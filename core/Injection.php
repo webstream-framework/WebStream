@@ -17,30 +17,36 @@ class Injection extends Annotation {
     const FORMAT     = "@Format";
     const CALLBACK   = "@Callback";
     const ERROR      = "@Error";
+    const DATABASE   = "@Database";
+    const TABLE      = "@Table";
+    const PROPERTIES = "@Properties";
+    const SQL        = "@SQL";
 
     /** Annotationクラスインスタンス */
     private $annotation;
-    /** 適用するアクションメソッド名 */
-    private $action;
 
     /**
      * コンストラクタ
-     * @param String 適用するコントローラクラス名        
+     * @param Object ルーティングオブジェクト
+     * @param Object コントローラクラスオブジェクト
      */
-    public function __construct($controller, $action) {
-        isset($controller) and parent::__construct(STREAM_CLASSPATH . $controller);
-        $this->action = $action;
+    public function __construct(\ReflectionClass $controllerClass) {
+        //isset($controller) and parent::__construct(STREAM_CLASSPATH . $controller);
+        parent::__construct($controllerClass);
+        //$this->action = $router->action();
     }
 
     /**
-     * アノテーション値を返却する    
-     * @params String アノテーションマーク
+     * アノテーション値を返却する
+     * アノテーションマークが複数ある場合、初めに定義した1件のみ取得したい場合に使用する
+     * @param String アノテーションマーク
+     * @param String 対象メソッド名
      * @return String or Array アノテーション値またはリスト
      */
-    private function getAnnotationValue($mark) {
+    private function getAnnotationValue($mark, $action) {
         $methodAnnotations = $this->methods($mark);
         foreach ($methodAnnotations as $methodAnnotation) {
-            if ($methodAnnotation->methodName === $this->action) {
+            if ($methodAnnotation->methodName === $action) {
                 $values[] = $methodAnnotation->value;
             }
         }
@@ -58,9 +64,10 @@ class Injection extends Annotation {
 
     /**
      * @Render, @Layoutアノテーション情報を返却する
+     * @param String 対象メソッド名
      * @return Hash レンダリング情報
      */
-    public function render() {
+    public function render($action) {
         $annotations = $this->methods(self::RENDER, self::LAYOUT);
         $method = null;
         $templates = array();
@@ -71,7 +78,7 @@ class Injection extends Annotation {
             return $mark === Injection::LAYOUT ? '__layout' : '__render';
         };
         foreach ($annotations as $annotation) {
-            if ($annotation->methodName === $this->action) {
+            if ($annotation->methodName === $action) {
                 // 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
                 if (!isset($method)) {
                     $method = $methodName($annotation->name);
@@ -95,34 +102,38 @@ class Injection extends Annotation {
 
     /**
      * @Requestアノテーション情報を返却する
+     * @param String 抽出対象のメソッド名
      * @return Array 許可されたリクエストメソッドリスト    
      */
-    public function request() {
-        return $this->getAnnotationValue(self::REQUEST);
+    public function request($method) {
+        return $this->getAnnotationValue(self::REQUEST, $method);
     }
 
     /**
-     * @BasicAuthアノテーション情報を返却する    
+     * @BasicAuthアノテーション情報を返却する
+     * @param String 抽出対象のメソッド名
      * @return String 基本認証設定ファイルパス
      */
-    public function basicAuth() {
-        return $this->getAnnotationValue(self::BASIC_AUTH);
+    public function basicAuth($method) {
+        return $this->getAnnotationValue(self::BASIC_AUTH, $method);
     }
 
     /**
      * @Cacheアノテーション情報を返却する
+     * @param String 抽出対象のメソッド名
      * @return int キャッシュ有効時間
      */
-    public function cache() {
-        return $this->getAnnotationValue(self::CACHE);
+    public function cache($method) {
+        return $this->getAnnotationValue(self::CACHE, $method);
     }
 
     /**
      * @Securityアノテーション情報を返却する
+     * @param String 抽出対象のメソッド名
      * @return String セキュリティアノテーション値 
      */
-    public function security() {
-        return $this->getAnnotationValue(self::SECURITY);
+    public function security($method) {
+        return $this->getAnnotationValue(self::SECURITY, $method);
     }
 
     /**
@@ -135,19 +146,20 @@ class Injection extends Annotation {
 
     /**
      * @Formatアノテーション情報を返却する
+     * @param String 抽出対象のメソッド名
      * @return String 出力形式名
      */
-    public function format() {
-        $format = $this->getAnnotationValue(self::FORMAT);
-        return $this->getAnnotationValue(self::FORMAT) ?: 'html';
+    public function format($method) {
+        return $this->getAnnotationValue(self::FORMAT, $method) ?: 'html';
     }
 
     /**
      * @Callbackアノテーション情報を返却する
+     * @param String 抽出対象のメソッド名
      * @return String JSONPコールバック名
      */
-    public function callback() {
-        return $this->getAnnotationValue(self::CALLBACK);
+    public function callback($method) {
+        return $this->getAnnotationValue(self::CALLBACK, $method);
     }
 
     /**
@@ -156,5 +168,37 @@ class Injection extends Annotation {
      */
     public function error() {
         return $this->methods(self::ERROR);
+    }
+
+    /**
+     * @Databaseアノテーション情報を返却する
+     * @return Object データベースアノテーションオブジェクト
+     */
+    public function database() {
+        return $this->classes(self::DATABASE);
+    }
+
+    /**
+     * @Tableアノテーション情報を返却する
+     * @return Object テーブルアノテーションオブジェクト
+     */
+    public function table() {
+        return $this->classes(self::TABLE);
+    }
+
+    /**
+     * @Propertiesアノテーション情報を返却する
+     * @return Object プロパティアノテーションオブジェクト
+     */
+    public function properties() {
+        return $this->classes(self::PROPERTIES);
+    }
+
+    /**
+     * @SQLアノテーション情報を返却する
+     * @return Object SQLアノテーションオブジェクト
+     */
+    public function sql() {
+        return $this->methods(self::SQL);
     }
 }

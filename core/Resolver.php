@@ -16,20 +16,21 @@ class Resolver {
     private $class;
     /** Contollerインスタンスオブジェクト */
     private $instance;
-	/** アプリケーションに注入されるアノテーション情報 */
+    /** アプリケーションに注入されるアノテーション情報 */
     private $injection;
-	/** バリデーション解決後のパラメータ */
+    /** バリデーション解決後のパラメータ */
     private $validate;
+    /** レスポンスキャッシュのTTL */
+    private $responseCacheTTL;
 
     /**
      * コンストラクタ
      * @param Object レスポンスオブジェクト
      */    
-    public function __construct(Request $request, Response $response) {
-        $this->request = $request;
-        $this->response = $response;
-        // FIXME ここはControllerオブジェクトそのものを渡したほうがよさそう
-        //$this->injection = new Injection($this->router->controller(), $this->router->action());
+    public function __construct() {
+        $this->request  = Request::getInstance();
+        $this->response = Response::getInstance();
+        $this->instance = new CoreController($this->request, $this->response);
     }
 
     /**
@@ -41,31 +42,34 @@ class Resolver {
     }
 
     /**
-     * Controllerを起動する
+     * Resolverを起動する
      */ 
     public function run() {
-        $this->load();
-        $this->injection = new Injection($this->router->controller(), $this->router->action());
+        $this->controllerLoader();
+        $this->injectionLoader();
         // ルータインスタンスをセットする必要がある
         if ($this->router instanceof WebStream\Router) {
             throw new RouterException("Required router instance to start the Controller");
         }
-    	if ($this->isSuccessRouting()) {
-    		$this->runController();
-    	}
-    	else if ($this->existFile()) {
-    		$this->readFile();
-    	}
-    	// 存在しないURLにアクセスしたときは404
-    	else {
-    		throw new ResourceNotFoundException("Failed to resolve the routing");
-    	}
+        if ($this->isSuccessRouting()) {
+            $this->runController();
+        }
+        else if ($this->existFile()) {
+            $this->readFile();
+        }
+        // 存在しないURLにアクセスしたときは404
+        else {
+            throw new ResourceNotFoundException("Failed to resolve the routing");
+        }
     }
 
+    /**
+     * Controllerを起動する
+     */ 
     private function runController() {
-    	// タイムアウトのチェック
-    	Session::start();
-    	// バリデーションチェック
+        // タイムアウトのチェック
+        Session::start();
+        // バリデーションチェック
         $this->validate();
         // コントローラを起動
         $class = $this->class;
@@ -86,45 +90,85 @@ class Resolver {
         $this->render($class, $instance, $data);
     }
 
+    /**
+     * ファイルを読み込む
+     */ 
     private function readFile() {
-    	// タイムアウトのチェック
+        // タイムアウトのチェック
         Session::start();
         $filePath = STREAM_ROOT . "/" . STREAM_APP_DIR . 
             "/views/" . STREAM_VIEW_PUBLIC . $this->router->staticFile();
         $this->instance->__render_file($filePath);
     }
 
-    private function move($statusCode) {
-    	$this->instance->__move($statusCode);
+    /**
+     * 指定したステータスコードのページに遷移する
+     * @param Integer ステータスコード
+     */ 
+    public function move($statusCode) {
+        $this->instance->__move($statusCode);
     }
 
     /**
-     * クラスをロードする
-     */ 
-    private function load() {
-    	// Controllerクラスをロードする
-    	if ($this->router->controller() !== null) {
+     * Controllerクラスをロードする
+     */
+    private function controllerLoader() {
+        // Controllerクラスをロードする
+        if ($this->router->controller() !== null) {
             import(STREAM_APP_DIR . "/controllers/AppController");
             import(STREAM_APP_DIR . "/controllers/" . $this->router->controller());
             $this->class = new \ReflectionClass(STREAM_CLASSPATH . $this->router->controller());
-            // newInstanceだとcall_user_func()で参照渡しができないバグがあるためcall_user_func_array()
-            // を内部的に呼び出しているnewInstanceArgsを使用する
-            $this->instance = 
-                $this->class->newInstanceArgs(array(&$this->request, &$this->response));
-    	}
-    	// 静的ファイルまたはルーティング解決失敗の場合
-    	else {
-    		$this->instance = new CoreController($this->request, $this->response);
-    	}
+            $this->instance = $this->class->newInstance();
+        }
     }
 
+    /**
+     * Injectionクラスをロードする
+     */
+    private function injectionLoader() {
+        if ($this->class instanceof \ReflectionClass) {
+            $this->injection = new Injection($this->class);
+        }
+    }
 
+    /**
+     * レスポンスオブジェクト処理を実行する
+     * @param String キャッシュデータ
+     */
+    public function responseCache($data = null) {
+        $cache = new Cache();
+        $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
+        // キャッシュをセット
+        if ($data) {
+            if ($this->responseCacheTTL !== null && !$response) {
+                $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->responseCacheTTL);
+                Logger::info("Response cache rendered.");
+            }
+        }
+        // キャッシュをロード
+        else {
+            if ($response) {
+                echo $response;
+                Logger::info("Response cache loaded.");
+                exit;
+            }
+        }
+    }
+
+    /**
+     * ルーティングが成功したかどうか
+     * @return Boolean ルーティング解決結果
+     */
     public function isSuccessRouting() {
-    	return $this->router->controller() && $this->router->action();
+        return $this->router->controller() && $this->router->action();
     }
 
+    /**
+     * ファイルが存在するかどうか
+     * @return Boolean ファイルが存在するかどうか
+     */
     public function existFile() {
-    	return !!$this->router->staticFile();
+        return !!$this->router->staticFile();
     }
 
     /**
@@ -167,9 +211,9 @@ class Resolver {
         }
         catch (ValidateException $e) {
             $this->validate = array(
-                "class" => $this->controller(),
-                "method" => $this->action(),
-                "error" => $validator->getError()
+                "class"  => $this->router->controller(),
+                "method" => $this->router->action(),
+                "error"  => $validator->getError()
             );
             throw $e;
         }
@@ -264,7 +308,7 @@ class Resolver {
      * @return Hash レンダリング情報
      */
     private function renderInfo($class, $instance, $params) {
-        $renderInfo = $this->injection->render();
+        $renderInfo = $this->injection->render($this->router->action());
         $renderMethods = $renderInfo['methods'];
         $templates = $renderInfo['templates'];
         $renderMethod = $renderInfo['method'];
@@ -280,7 +324,7 @@ class Resolver {
             $templateList[$args[1]] = $args[0];
         }
         // 最初に描画するテンプレートを指定
-        $responseFormat = $this->injection->format();
+        $responseFormat = $this->injection->format($this->router->action());
         if (empty($templates)) {
             switch ($responseFormat) {
             case 'json':
@@ -291,7 +335,7 @@ class Resolver {
                 $renderMethod = "__render_jsonp";
                 $args = array(
                     $params,
-                    $params[$this->injection->callback()]
+                    $params[$this->injection->callback($this->router->action())]
                 );
                 break;
             default:
@@ -316,7 +360,7 @@ class Resolver {
      */
     private function requestMethod() {
         $method = null;
-        $methods = $this->injection->request();
+        $methods = $this->injection->request($this->router->action());
         if ($this->request->isGet()) {
             $method = "GET";
         }
@@ -333,7 +377,7 @@ class Resolver {
      * 基本認証を実行する
      */
     private function basicAuth() {
-        $configPath = $this->injection->basicAuth();
+        $configPath = $this->injection->basicAuth($this->router->action());
         if ($configPath !== null) {
             $config = Utility::parseConfig($configPath);
             if ($config === null) {
@@ -351,13 +395,13 @@ class Resolver {
      * キャッシュ情報を設定する
      */
     private function cache() {
-        $ttl = $this->injection->cache();
+        $ttl = $this->injection->cache($this->router->action());
         if ($ttl !== null) {
             if (!preg_match('/^\d+$/', $ttl)) {
                 $errorMsg = "@Cache value must be positive integer. Found value: $methodAnnotation->value";
                 throw new AnnotationException($errorMsg);
             }
-            $this->cache['ttl'] = $ttl;
+            $this->responseCacheTTL = $ttl;
         }
     }
 
@@ -367,7 +411,7 @@ class Resolver {
      * @param Object リフレクションクラスインスタンスオブジェクト
      */
     private function csrf($class, $instance) {
-        if ($this->injection->security() === "CSRF") {
+        if ($this->injection->security($this->router->action()) === "CSRF") {
             $method = $class->getMethod('__enableCsrf');
             $method->invoke($instance);
         }
