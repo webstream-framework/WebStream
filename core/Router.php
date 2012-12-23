@@ -6,6 +6,8 @@ namespace WebStream;
  * @since 2011/08/19
  */
 class Router {
+    /** リクエストオブジェクト */
+    private $request;
     /** ルーティングルール */
     private static $rules;
     /** PATH_INFO */
@@ -15,14 +17,15 @@ class Router {
     
     /**
      * コンストラクタ
+     * @param Object リクエストオブジェクト
      */
-    public function __construct() {
-        $request = new Request();
+    public function __construct(Request $request) {
+        $this->request = $request;
         $this->path_info = $request->getPathInfo();
         $this->validate();
         $this->resolve();
     }
-    
+
     /**
      * ルーティングルールをセットする
      * @param Hash ルーティングルール定義
@@ -119,14 +122,21 @@ class Router {
             }
         }
     }
-    
+
     /**
      * コントローラ名を返却する
      * @return String コントローラ名
      */
     public function controller() {
-        return isset($this->route["controller"]) ? 
-            $this->route["controller"] : null;
+        $controller = null;
+        if ($this->route["controller"] !== null) {
+            // _[a-z]を[A-Z]に置換する
+            $controller = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
+                return ucfirst($matches[1]);
+            }, $this->route["controller"]);
+            $controller = ucfirst($controller) . "Controller";
+        }
+        return $controller;
     }
     
     /**
@@ -134,8 +144,14 @@ class Router {
      * @return String アクション名
      */
     public function action() {
-        return isset($this->route["action"]) ? 
-            $this->route["action"] : null;
+        $action = null;
+        if ($this->route["action"] !== null) {
+            // _[a-z]を[A-Z]に置換する
+            $action = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
+                return ucfirst($matches[1]);
+            }, $this->route["action"]);
+        }
+        return $action;
     }
     
     /**

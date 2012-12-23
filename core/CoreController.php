@@ -174,9 +174,9 @@ class CoreController {
      * ステータスコードに応じた画面を描画する
      * @param Integer ステータスコード
      */
-    final public function __move($statusCode) {
-        $this->response->move($statusCode);
-    }
+    // final public function __move($statusCode) {
+    //     $this->response->move($statusCode);
+    // }
 
 
     // final public function __move($status_code, $path = null) {

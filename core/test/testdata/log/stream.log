@@ -5,3 +5,199 @@
 [2012-12-22 16:31:48,95] [INFO] HTTP access occured: status code 404
 [2012-12-22 16:33:03, 1] [INFO] HTTP access occured: status code 404
 [2012-12-22 16:39:26,50] [INFO] HTTP access occured: status code 404
+[2012-12-22 17:59:39,48] [FATAL] Call to undefined method WebStream\Application::responseCache() /Users/stay/workspace2/WebStream/core/Application.php(95)
+[2012-12-22 18:03:41,61] [ERROR] Class \WebStream\test does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\test')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\test')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\test')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(35): WebStream\Injection->__construct('test', 'test2')
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:03:41,61] [FATAL] Call to a member function __move() on a non-object /Users/stay/workspace2/WebStream/core/Application.php(268)
+[2012-12-22 18:17:13,77] [ERROR] Class \WebStream\test does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\test')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\test')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\test')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(35): WebStream\Injection->__construct('test', 'test2')
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:17:13,77] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:17:13,77] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:19:05,17] [ERROR] Class \WebStream\test does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\test')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\test')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\test')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(36): WebStream\Injection->__construct('test', 'test2')
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:19:05,17] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:19:05,17] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:21:49,76] [ERROR] Class \WebStream\TestController does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\Test...')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\Test...')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\Test...')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(36): WebStream\Injection->__construct('TestController', NULL)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:21:49,76] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:21:49,76] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:23:10,12] [ERROR] Class \WebStream\TestController does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\Test...')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\Test...')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\Test...')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(35): WebStream\Injection->__construct('TestController', NULL)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:23:10,12] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:23:10,12] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:23:31,18] [ERROR] Class \WebStream\TestController does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\Test...')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\Test...')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\Test...')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(35): WebStream\Injection->__construct('TestController', NULL)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:23:31,18] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:23:31,18] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:27:10,42] [ERROR] Class \WebStream\TestController does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\Test...')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\Test...')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\Test...')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(36): WebStream\Injection->__construct('TestController', NULL)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:27:10,42] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:27:10,42] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:27:42, 5] [ERROR] Class \WebStream\TestController does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\Test...')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\Test...')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\Test...')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(35): WebStream\Injection->__construct('TestController', NULL)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:27:42, 5] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:27:42, 5] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:27:58,13] [ERROR] Class \WebStream\TestController does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('\WebStream\Test...')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('\WebStream\Test...')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('\WebStream\Test...')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(35): WebStream\Injection->__construct('TestController', NULL)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:27:58,13] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:27:58,13] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:28:37,40] [ERROR] Class TestController does not exist
+	#0 /Users/stay/workspace2/WebStream/core/Annotation.php(27): ReflectionClass->__construct('TestController')
+	#1 /Users/stay/workspace2/WebStream/core/Annotation.php(19): WebStream\Annotation->initClass('TestController')
+	#2 /Users/stay/workspace2/WebStream/core/Injection.php(31): WebStream\Annotation->__construct('TestController')
+	#3 /Users/stay/workspace2/WebStream/core/Resolver.php(35): WebStream\Injection->__construct('TestController', NULL)
+	#4 /Users/stay/workspace2/WebStream/core/Application.php(100): WebStream\Resolver->__construct(Object(WebStream\Router), Object(WebStream\Response))
+	#5 [internal function]: WebStream\Application->run()
+	#6 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#7 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#8 {main}
+[2012-12-22 18:28:37,40] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:28:37,40] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:29:30,68] [FATAL] Call to a member function newInstanceArgs() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(99)
+[2012-12-22 18:31:39,39] [ERROR] Failed to resolve the routing: /top
+[2012-12-22 18:31:39,39] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:31:39,39] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:34:17,89] [ERROR] Failed to resolve the routing: /top
+[2012-12-22 18:34:17,89] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:34:17,89] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:35:07,10] [ERROR] Failed to resolve the routing: /top
+[2012-12-22 18:35:07,10] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:35:07,10] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:35:34,40] [ERROR] Failed to resolve the routing: /top
+[2012-12-22 18:35:34,40] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:35:34,40] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:35:59,75] [ERROR] Failed to resolve the routing: /top
+[2012-12-22 18:35:59,77] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:35:59,77] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:38:59,59] [ERROR] Failed to resolve the routing: /top
+[2012-12-22 18:38:59,59] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:38:59,60] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:39:11,60] [ERROR] Failed to resolve the routing: /top
+[2012-12-22 18:39:11,61] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:39:11,61] [INFO] HTTP access occured: status code 404
+[2012-12-22 18:39:57,49] [FATAL] Call to a member function getMethod() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(64)
+[2012-12-22 18:41:38,85] [ERROR] Non-object passed to Invoke()
+	#0 /Users/stay/workspace2/WebStream/core/Resolver.php(65): ReflectionMethod->invoke(NULL)
+	#1 /Users/stay/workspace2/WebStream/core/Resolver.php(44): WebStream\Resolver->runController()
+	#2 /Users/stay/workspace2/WebStream/core/Application.php(103): WebStream\Resolver->run()
+	#3 [internal function]: WebStream\Application->run()
+	#4 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#5 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#6 {main}
+[2012-12-22 18:41:38,85] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:41:38,85] [INFO] HTTP access occured: status code 500
+[2012-12-22 18:41:47,71] [FATAL] Call to undefined method WebStream\Resolver::action() /Users/stay/workspace2/WebStream/core/Resolver.php(71)
+[2012-12-22 18:42:25,58] [FATAL] Call to undefined method WebStream\Resolver::action() /Users/stay/workspace2/WebStream/core/Resolver.php(71)
+[2012-12-22 18:43:45, 5] [FATAL] Call to undefined method WebStream\Resolver::params() /Users/stay/workspace2/WebStream/core/Resolver.php(72)
+[2012-12-22 18:43:55,21] [INFO] Template is not rendered.
+[2012-12-22 18:43:55,22] [INFO] HTTP access occured: status code 200
+[2012-12-22 19:39:08,87] [FATAL] Call to a member function getRequest() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(30)
+[2012-12-22 19:45:22,81] [WARN] Expired cache: /private/tmp/1cf8944a894eb91a4580ffd7fcefdc3d.cache
+[2012-12-22 19:45:22,81] [FATAL] Call to a member function getRequest() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(30)
+[2012-12-22 19:45:25,61] [FATAL] Call to a member function getRequest() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(30)
+[2012-12-22 19:47:42,40] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(101)
+[2012-12-23 00:38:22,25] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(105)
+[2012-12-23 00:44:59, 6] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(106)
+[2012-12-23 00:45:28,96] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(105)
+[2012-12-23 00:46:54,31] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(105)
+[2012-12-23 00:47:49,25] [FATAL] Call to a member function controller() on a non-object /Users/stay/workspace2/WebStream/core/Resolver.php(32)
+[2012-12-23 00:50:05,74] [ERROR] Required router instance to start the Controller
+	#0 /Users/stay/workspace2/WebStream/core/Application.php(77): WebStream\Resolver->run()
+	#1 [internal function]: WebStream\Application->run()
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#3 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#4 {main}
+[2012-12-23 00:50:05,74] [INFO] HTTP access occured: status code 500
+[2012-12-23 00:50:05,75] [INFO] HTTP access occured: status code 500
+[2012-12-23 00:50:30,60] [ERROR] Required router instance to start the Controller
+	#0 /Users/stay/workspace2/WebStream/core/Application.php(77): WebStream\Resolver->run()
+	#1 [internal function]: WebStream\Application->run()
+	#2 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#3 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#4 {main}
+[2012-12-23 00:50:30,60] [INFO] HTTP access occured: status code 500
+[2012-12-23 00:50:30,60] [INFO] HTTP access occured: status code 500
+[2012-12-23 00:50:58,78] [INFO] Template is not rendered.
+[2012-12-23 00:50:58,78] [INFO] HTTP access occured: status code 200
+[2012-12-23 00:51:13,14] [INFO] Template is not rendered.
+[2012-12-23 00:51:13,14] [INFO] HTTP access occured: status code 200
+[2012-12-23 00:51:30,86] [INFO] Template is not rendered.
+[2012-12-23 00:51:30,86] [INFO] HTTP access occured: status code 200
+[2012-12-23 00:51:43, 8] [INFO] Template is not rendered.
+[2012-12-23 00:51:43, 8] [INFO] HTTP access occured: status code 200
+[2012-12-23 00:58:17,22] [INFO] Template is not rendered.
+[2012-12-23 00:58:17,23] [INFO] HTTP access occured: status code 200
+[2012-12-23 00:58:48,85] [INFO] Template is not rendered.
+[2012-12-23 00:58:48,85] [INFO] HTTP access occured: status code 200

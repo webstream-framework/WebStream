@@ -3,7 +3,7 @@ namespace WebStream;
 class TestResponseCacheController extends CoreController {
     /**
      * @Inject
-     * @Cache("10")
+     * @Cache("60")
      */
     public function execute() {
         sleep(10);
