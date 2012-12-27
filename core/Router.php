@@ -122,6 +122,14 @@ class Router {
     }
 
     /**
+     * ルーティングパラメータを返球くする
+     * @return String コントローラ名
+     */
+    public function routingParams() {
+        return $this->route;
+    }
+
+    /**
      * コントローラ名を返却する
      * @return String コントローラ名
      */

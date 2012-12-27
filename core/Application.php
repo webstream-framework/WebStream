@@ -106,7 +106,7 @@ class Application {
         // バリデーションエラーの場合は422
         catch (ValidateException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e, $this->validate)) {
+            if (!$this->handle($e, $this->resolver->getValidateErrors())) {
                 $this->move(422);
             }
         }

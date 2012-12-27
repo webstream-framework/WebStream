@@ -386,24 +386,24 @@ class ResponseBase {
  * @since 2012/12/19
  */
 class Response extends ResponseBase {
-	/** レスポンスオブジェクト */
-	private static $response = null;
+    /** レスポンスオブジェクト */
+    private static $response = null;
 
     /**
      * インスタンス生成を禁止
      */
-	private function __construct() {}
+    private function __construct() {}
 
     /**
      * レスポンスオブジェクトを返却する
      * @param Object レスポンスオブジェクト
      */
-	public static function getInstance() {
-		if (!is_object(self::$response)) {
-			self::$response = new Response();
-		}
-		return self::$response;
-	}
+    public static function getInstance() {
+        if (!is_object(self::$response)) {
+            self::$response = new Response();
+        }
+        return self::$response;
+    }
 
     /**
      * 301 alias

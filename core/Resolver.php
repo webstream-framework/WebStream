@@ -172,6 +172,14 @@ class Resolver {
     }
 
     /**
+     * バリデーションエラーパラメータを返却する
+     * @return Hash バリデーションパラメータ
+     */
+    public function getValidateErrors() {
+        return $this->validate;
+    }
+
+    /**
      * エラー処理のハンドリングチェック
      * @param Object エラーオブジェクト
      * @param Array エラー内容
@@ -204,7 +212,8 @@ class Resolver {
     private function validate() {
         $validator = new Validator();
         // GET, POSTパラメータ両方を検査する
-        $ca = $this->router->controller() . "#" . $this->router->action();
+        $route = $this->router->routingParams();
+        $ca = $route['controller'] . "#" . $route['action'];
         try {
             $validator->validateParameter($ca, $this->request->getGET(), "get");
             $validator->validateParameter($ca, $this->request->getPOST(), "post");
