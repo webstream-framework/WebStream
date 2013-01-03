@@ -46,10 +46,6 @@ class CoreController extends CoreBase {
         $method->invokeArgs($this->view, $args);
     }
 
-    final public function __callResponse($methodName, $args = array()) {
-        // TODO
-    }
-
     /**
      * Controllerで使用する処理の初期化
      */
@@ -103,13 +99,5 @@ class CoreController extends CoreBase {
      */
     final protected function forbidden() {
         $this->response->forbidden();
-    }
-    
-    /**
-     * ステータスコードに応じた画面を描画する
-     * @param Integer ステータスコード
-     */
-    final public function __move($statusCode) {
-        $this->response->move($statusCode);
     }
 }

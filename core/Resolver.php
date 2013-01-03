@@ -108,7 +108,7 @@ class Resolver {
      * @param Integer ステータスコード
      */ 
     public function move($statusCode) {
-        $this->instance->__move($statusCode);
+        $this->response->move($statusCode);
     }
 
     /**

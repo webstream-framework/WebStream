@@ -28,16 +28,7 @@ class CoreService extends CoreBase {
      */
     final public function __construct() {
         parent::__construct();
-        $this->load();
-        // ライブラリをロード
-        importAll(STREAM_APP_DIR . "/libraries");
-    }
-    
-    /**
-     * Modelクラスのインスタンスをロードする
-     * @param String Modelクラス名
-     */
-    final private function load() {
         $this->{$this->__pageName} = $this->__getModel();
+        importAll(STREAM_APP_DIR . "/libraries");
     }
 }
