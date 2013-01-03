@@ -30,7 +30,8 @@ class Resolver {
     public function __construct() {
         $this->request  = Request::getInstance();
         $this->response = Response::getInstance();
-        $this->instance = new CoreController($this->request, $this->response);
+        $this->class = new \ReflectionClass(STREAM_CLASSPATH . 'CoreController');
+        $this->instance = $this->class->newInstance();
     }
 
     /**
@@ -87,7 +88,7 @@ class Resolver {
         // after_filter
         $this->after($class, $instance);
         // render template
-        $this->render($class, $instance, $data);
+        $this->renderView($class, $instance, $data);
     }
 
     /**
@@ -98,7 +99,8 @@ class Resolver {
         Session::start();
         $filePath = STREAM_ROOT . "/" . STREAM_APP_DIR . 
             "/views/" . STREAM_VIEW_PUBLIC . $this->router->staticFile();
-        $this->instance->__render_file($filePath);
+        $render = $this->class->getMethod('__callView');
+        $render->invoke($this->instance, '__file', array($filePath));
     }
 
     /**
@@ -294,15 +296,13 @@ class Resolver {
      * @param Object リフレクションクラスインスタンスオブジェクト
      * @param Hash 描画データ
      */
-    private function render($class, $instance, $data) {
+    private function renderView($class, $instance, $data) {
         $info = $this->renderInfo($class, $instance, $data);
         if (isset($info)) {
-            $render = $class->getMethod('__templates');
-            $render->invoke($instance, $info['list']);
-            $render = $class->getMethod('__renderMethods');
-            $render->invoke($instance, $info['methods']);
-            $render = $class->getMethod($info['method']);
-            $render->invokeArgs($instance, $info['args']);
+            $render = $class->getMethod('__callView');
+            $render->invoke($instance, '__templates', array($info['list']));
+            $render->invoke($instance, '__renderMethods', array($info['methods']));
+            $render->invoke($instance, $info['method'], $info['args']);
         }
         else {
             Logger::info("Template is not rendered.");
@@ -317,10 +317,10 @@ class Resolver {
      * @return Hash レンダリング情報
      */
     private function renderInfo($class, $instance, $params) {
-        $renderInfo = $this->injection->render($this->router->action());
+        $renderInfo    = $this->injection->render($this->router->action());
         $renderMethods = $renderInfo['methods'];
-        $templates = $renderInfo['templates'];
-        $renderMethod = $renderInfo['method'];
+        $templates     = $renderInfo['templates'];
+        $renderMethod  = $renderInfo['method'];
 
         // Viewでレンダリングするようのハッシュを作成する
         // key: xxx.tmplに記述した@{yyy}と一致する名前
@@ -337,11 +337,11 @@ class Resolver {
         if (empty($templates)) {
             switch ($responseFormat) {
             case 'json':
-                $renderMethod = "__render_json";
+                $renderMethod = "__json";
                 $args = array($params);
                 break;
             case 'jsonp':
-                $renderMethod = "__render_jsonp";
+                $renderMethod = "__jsonp";
                 $args = array(
                     $params,
                     $params[$this->injection->callback($this->router->action())]
@@ -421,8 +421,8 @@ class Resolver {
      */
     private function csrf($class, $instance) {
         if ($this->injection->security($this->router->action()) === "CSRF") {
-            $method = $class->getMethod('__enableCsrf');
-            $method->invoke($instance);
+            $render = $this->class->getMethod('__callView');
+            $render->invoke($this->instance, '__enableCsrf');
         }
     }
 }

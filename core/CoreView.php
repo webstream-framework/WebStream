@@ -5,11 +5,9 @@ namespace WebStream;
  * @author Ryuichi TANAKA.
  * @since 2011/09/12
  */
-class CoreView {
+class CoreView extends CoreBase {
     /** ヘルパのレシーバ名 */
-    const HELPER_RECEIVER = "helper";
-    /** ページ名 */
-    private $page_name;
+    const HELPER_RECEIVER = "__HELPER__";
     /** レスポンス */
     private $response;
     /** セッション */
@@ -19,15 +17,15 @@ class CoreView {
     /** レンダリングメソッドリスト */
     private $renderMethods;
     /** CSRF対策 */
-    public $enableCsrf = false;
+    private $enableCsrf = false;
 
     /**
      * Viewクラスの初期化
      * @param String ページ名
      */
-    public function __construct($page_name = null) {
+    public function __construct($pageName) {
+        parent::__construct($pageName);
         $this->response = Response::getInstance();
-        $this->page_name = $page_name;
     }
 
     /**
@@ -44,6 +42,13 @@ class CoreView {
      */
     public function __renderMethods($methods) {
         $this->renderMethods = $methods;
+    }
+
+    /**
+     * CSRF対策を有効にする
+     */
+    final public function __enableCsrf() {
+        $this->enableCsrf = true;
     }
 
     /**
@@ -66,8 +71,28 @@ class CoreView {
      */
     final public function __render($template, $params = array(), $type = "html") {
         $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
-                         "/views/" . Utility::camel2snake($this->page_name) . "/" . $template;
+                         "/views/" . Utility::camel2snake($this->__pageName) . "/" . $template;
         $this->draw($template_path, $params, $type);
+    }
+
+    /**
+     * publicディレクトリにある静的ファイルを表示する
+     * @param String ファイルパス
+     */
+    final public function __file($filepath) {
+        if (!file_exists($filepath)) {
+            throw new ResourceNotFoundException("File not found: " . $filepath);
+        }
+        // 画像,css,jsの場合
+        if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
+            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/css\/.+\.css$/i', $filepath) ||
+            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/js\/.+\.js$/i', $filepath)) {
+            $this->display($filepath);
+        }
+        // それ以外のファイル
+        else if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/file\/.+$/i', $filepath)) {
+            $this->download($filepath);
+        }
     }
 
     /**
@@ -105,7 +130,7 @@ class CoreView {
         }
         
         // 埋め込みパラメータにHelperを起動するためのオブジェクトをセット
-        $params[self::HELPER_RECEIVER] = new CoreHelper($this->page_name);
+        $params[self::HELPER_RECEIVER] = $this->__getHelper();
 
         // キャッシュファイルがなければ生成する
         $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', function($matches) {
@@ -147,13 +172,6 @@ class CoreView {
     final private function outputHTML($__params__, $__template__) {
         extract($__params__);
         include($__template__);
-    }
-    
-    /**
-     * CSRF対策を有効にする
-     */
-    final public function enableCsrf() {
-        $this->enableCsrf = true;
     }
     
     /**
@@ -221,26 +239,6 @@ class CoreView {
     }
 
     /**
-     * publicディレクトリにある静的ファイルを表示する
-     * @param String ファイルパス
-     */
-    final public function renderPublicFile($filepath) {
-        if (!file_exists($filepath)) {
-            throw new ResourceNotFoundException("File not found: " . $filepath);
-        }
-        // 画像,css,jsの場合
-        if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/css\/.+\.css$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/js\/.+\.js$/i', $filepath)) {
-            $this->display($filepath);
-        }
-        // それ以外のファイル
-        else if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/file\/.+$/i', $filepath)) {
-            $this->download($filepath);
-        }
-    }
-    
-    /**
      * テンプレートの内容を置換する
      * @param String テンプレートファイルの内容
      * @param String レンダリングメソッド名
@@ -251,7 +249,7 @@ class CoreView {
         $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
-        $s = preg_replace('/!\{(.*?)\}/', '<?php ${self::HELPER_RECEIVER}->$1; ?>', $s);
+        $s = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php ${self::HELPER_RECEIVER}->__initialize("$1", array($2)); ?>', $s);
         $s = preg_replace('/@\{(.*?)\}/', '<?php $this->{$__render_methods__[$__templates__["$1"]]}($__templates__["$1"], $__params__); ?>', $s);
         return $s;
     }

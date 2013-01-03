@@ -1,1 +1,1 @@
-<?php ${self::HELPER_RECEIVER}->show_html1($name); ?>
+<?php ${self::HELPER_RECEIVER}->__initialize("show_html1", array($name)); ?>

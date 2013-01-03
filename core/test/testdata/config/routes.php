@@ -93,6 +93,10 @@ Router::setRule(
         '/get_and_post' => "test_request_method#available_get_post",
         '/multi_render_and_layout' => "test#test_multi_render_and_layout",
         '/session_timeout' => "test_session#timeout",
-        '/session_timeout_linkto' => "test_session#timeout_link_to"
+        '/session_timeout_linkto' => "test_session#timeout_link_to",
+        '/controller_layer' => "test#test_controller_layer_instance",
+        '/service_layer' => "test#test_service_layer_instance",
+        '/model_layer' => "test#test_model_layer_instance",
+        '/helper_layer' => "test#test_helper_layer_instance"
     )
 );

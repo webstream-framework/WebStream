@@ -529,6 +529,19 @@ class RouterTest extends UnitTestBase {
     }
 
     /**
+     * 正常系
+     * Controller層で正しく他層のオブジェクトが取得できること
+     * @dataProvider layerInstance
+     */
+    public function testOkLayerInstance($path) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $response = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, "11111");
+    }
+
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider

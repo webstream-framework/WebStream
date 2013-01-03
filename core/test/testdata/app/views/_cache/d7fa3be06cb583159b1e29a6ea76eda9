@@ -1,1 +1,1 @@
-<?php ${self::HELPER_RECEIVER}->show_string($name); ?>
+<?php ${self::HELPER_RECEIVER}->__initialize("show_string", array($name)); ?>

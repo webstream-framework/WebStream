@@ -183,4 +183,32 @@ class TestController extends CoreController {
      * @Render("test_index.tmpl", "test_index")
      */
     public function testMultiRenderAndLayout() {}
+
+
+    public function testControllerLayerInstance() {
+        $controller = $this->__getController();
+        $service = $this->__getService();
+        $model = $this->__getModel();
+        $view = $this->__getView();
+        $helper = $this->__getHelper();
+        echo is_null($controller);
+        echo is_object($service);
+        echo is_object($model);
+        echo is_object($view);
+        echo is_null($helper);
+    }
+
+    public function testServiceLayerInstance() {
+        $this->Test->testServiceLayerInstance();
+    }
+
+    public function testModelLayerInstance() {
+        $this->Test->testModelLayerInstance();
+    }
+
+    /**
+     * @Inject
+     * @Render("test_layer_instance.tmpl")
+     */
+    public function testHelperLayerInstance() {}
 }

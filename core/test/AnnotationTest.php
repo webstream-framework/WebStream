@@ -19,7 +19,8 @@ class AnnotationTest extends UnitTestBase {
      * @Injectが付いている場合、アノテーション情報が取得できること
      */
     public function testOkGetInjectAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation1");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation1");
+        $annotation = new Annotation($refClass);
         $list = $annotation->classes("@Database");
         $this->assertNotCount(0, $list);
     }
@@ -29,7 +30,8 @@ class AnnotationTest extends UnitTestBase {
      * クラスのアノテーション情報が取得できること
      */
     public function testOkClassAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation1");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation1");
+        $annotation = new Annotation($refClass);
         $classAnnotation = $annotation->classes("@Database");
         $this->assertEquals("diarysys", $classAnnotation[0]->value);
         $this->assertEquals("WebStream\\TestAnnotation1", $classAnnotation[0]->className);
@@ -40,7 +42,8 @@ class AnnotationTest extends UnitTestBase {
      * メソッドのアノテーション情報が取得できること
      */
     public function testOkMethodAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation3");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation3");
+        $annotation = new Annotation($refClass);
         $methodAnnotation = $annotation->methods("@Database");
         $this->assertEquals("diarysys", $methodAnnotation[0]->value);
         $this->assertEquals("testAnnotation", $methodAnnotation[0]->methodName);
@@ -51,7 +54,8 @@ class AnnotationTest extends UnitTestBase {
      * クラスのアノテーションの値が複数指定された場合、複数取得できること
      */
     public function testOkClassAnnotations() {
-        $annotation = new Annotation("WebStream\\TestAnnotation4");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation4");
+        $annotation = new Annotation($refClass);
         $classAnnotations = $annotation->classes("@Hoge");
         $this->assertEquals("users", $classAnnotations[0]->value);
         $this->assertEquals("users2", $classAnnotations[1]->value);
@@ -62,7 +66,8 @@ class AnnotationTest extends UnitTestBase {
      * クラスのアノテーションの値が複数指定された場合、複数取得できること
      */
     public function testOkMethodAnnotations() {
-        $annotation = new Annotation("WebStream\\TestAnnotation4");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation4");
+        $annotation = new Annotation($refClass);
         $methodAnnotations = $annotation->methods("@Fuga");
         $this->assertEquals("foo", $methodAnnotations[0]->value);
         $this->assertEquals("bar", $methodAnnotations[1]->value);
@@ -73,7 +78,8 @@ class AnnotationTest extends UnitTestBase {
      * 親クラスのアノテーションの値が取得できること
      */
     public function testOkSuperClassAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation5");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation5");
+        $annotation = new Annotation($refClass);
         $classAnnotation = $annotation->classes("@Hoge");
         $this->assertEquals("users", $classAnnotation[0]->value);
         $this->assertEquals("users2", $classAnnotation[1]->value);
@@ -84,7 +90,8 @@ class AnnotationTest extends UnitTestBase {
      * 子クラスと親クラスで同じアノテーションが設定された場合、両方取得できること
      */
     public function testOkSuperClassDupulicateAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation6");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation6");
+        $annotation = new Annotation($refClass);
         $classAnnotations = $annotation->classes("@Yuruyuri");
         $this->assertEquals("kyouko", $classAnnotations[2]->value);
         $this->assertEquals("yui", $classAnnotations[3]->value);
@@ -97,7 +104,8 @@ class AnnotationTest extends UnitTestBase {
      * 親クラスのメソッドのアノテーションの値が取得できること
      */
     public function testOkSuperClassMethodAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation8");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation8");
+        $annotation = new Annotation($refClass);
         $methodAnnotation = $annotation->methods("@Yuri");
         $this->assertEquals("toshinou", $methodAnnotation[0]->value);
     }
@@ -107,7 +115,8 @@ class AnnotationTest extends UnitTestBase {
      * 子クラスのメソッドと親クラスのメソッドで同じアノテーションが設定された場合、両方取得できること
      */
     public function testOkSuperClassMethodAnnotations() {
-        $annotation = new Annotation("WebStream\\TestAnnotation9");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation9");
+        $annotation = new Annotation($refClass);
         $methodAnnotations = $annotation->methods("@Yuri");
         $this->assertEquals("sugiura", $methodAnnotations[0]->value);
         $this->assertEquals("toshinou", $methodAnnotations[1]->value);
@@ -118,7 +127,8 @@ class AnnotationTest extends UnitTestBase {
      * 親クラスと同名のメソッドがあった場合、アノテーションの値が取得できること
      */
     public function testOkSuperClassDupulicateMethodAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation11");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation11");
+        $annotation = new Annotation($refClass);
         $methodAnnotations = $annotation->methods("@Yuruyuri");
         $this->assertEquals("sakurako", $methodAnnotations[0]->value);
         $this->assertEquals("himawari", $methodAnnotations[1]->value);
@@ -129,7 +139,8 @@ class AnnotationTest extends UnitTestBase {
      * @Injectが付いていない場合、アノテーション情報が取得できないこと
      */
     public function testNgGetInjectAnnotation() {
-        $annotation = new Annotation("WebStream\\TestAnnotation2");
+        $refClass = new \ReflectionClass("WebStream\\TestAnnotation2");
+        $annotation = new Annotation($refClass);
         $list = $annotation->classes("@Database");
         $this->assertCount(0, $list);
     }

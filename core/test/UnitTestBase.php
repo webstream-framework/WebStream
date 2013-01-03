@@ -676,14 +676,14 @@ SQL;
     
     public function notFoundHelperMethodProvider() {
         return array(
-            array("/helper6", "TestHelper#notfound is not defined.")
+            array("/helper6", "Method WebStream\TestHelper::notfound() does not exist")
         );
     }
     
     public function notEntryReferenceInFormProvider() {
-        $html = "<body><form action=\".\">\n";
-        $html.= "    <input type=\"text\" value=\"attr\">\n";
-        $html.= "</form></body>";
+        $html = "<form action=\".\">\n";
+        $html.= "    <input type=\"text\" value=\"attr\" />\n";
+        $html.= "</form>";
         return array(
             array("/attr", $html)
         );
@@ -813,6 +813,15 @@ SQL;
     public function sessionTimeoutLinkTo() {
         return array(
             array("/session_timeout_linkto")
+        );
+    }
+
+    public function layerInstance() {
+        return array(
+            array('/controller_layer'),
+            array('/service_layer'),
+            array('/model_layer'),
+            array('/helper_layer')            
         );
     }
 }

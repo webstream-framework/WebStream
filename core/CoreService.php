@@ -5,10 +5,7 @@ namespace WebStream;
  * @author Ryuichi TANAKA.
  * @since 2011/09/11
  */
-class CoreService {
-    /** ページ名 */
-    private $page_name;
-    
+class CoreService extends CoreBase {
     /**
      * Controllerから存在しないメソッドが呼ばれたときの処理
      * @param String メソッド名
@@ -17,11 +14,12 @@ class CoreService {
      */
     final public function __call($method, $arguments) {
         // Modelクラス両方にメソッドが存在しなければエラー
-        if ($this->page_name === null || method_exists($this->{$this->page_name}, $method) === false) {
-            $class = get_class($this);
+        if ($this->__pageName === null || 
+            method_exists($this->{$this->__pageName}, $method) === false) {
+            $class = $this->__toString();
             throw new MethodNotFoundException("${class}#${method} is not defined.");
         }
-        return call_user_func_array(array($this->{$this->page_name}, $method), $arguments);
+        return call_user_func_array(array($this->{$this->__pageName}, $method), $arguments);
     }
     
     /**
@@ -29,7 +27,7 @@ class CoreService {
      * @param String ページ名
      */
     final public function __construct() {
-        $this->page_name = $this->page();
+        parent::__construct();
         $this->load();
         // ライブラリをロード
         importAll(STREAM_APP_DIR . "/libraries");
@@ -40,27 +38,6 @@ class CoreService {
      * @param String Modelクラス名
      */
     final private function load() {
-        $model_name = $this->page_name . "Model";
-        // Modelクラスをインポート
-        $model_ins = null;
-        if (import(STREAM_APP_DIR . "/models/" . $model_name)) {
-            $class = new \ReflectionClass(STREAM_CLASSPATH . $model_name);
-            $model_ins = $class->newInstance();
-        }
-        $this->{$this->page_name} = $model_ins;
-    }
-    
-    /**
-     * ページ名を取得する
-     * @return String ページ名
-     */
-    final private function page() {
-        $page_name = null;
-        $class_path = explode('\\', get_class($this));
-        $class_name = end($class_path);
-        if (preg_match('/(.*)Service$/', $class_name, $matches)) {
-            $page_name = $matches[1];
-        }
-        return $page_name;
+        $this->{$this->__pageName} = $this->__getModel();
     }
 }

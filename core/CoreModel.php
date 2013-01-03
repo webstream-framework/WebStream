@@ -5,7 +5,7 @@ namespace WebStream;
  * @author Ryuichi TANAKA.
  * @since 2012/09/01
  */
-class CoreModel {
+class CoreModel extends CoreBase {
     /** DBインスタンス */
     private $db;
     /** テーブル名のリスト */
@@ -70,7 +70,7 @@ class CoreModel {
      * モデルの初期処理
      */
     protected function initialize() {
-        $class = new \ReflectionClass(get_class($this));
+        $class = new \ReflectionClass($this->__toString());
         $injection = new Injection($class);
         $databaseAnnotation = $injection->classes("@Database");
         $tableAnnotations = $injection->classes("@Table");

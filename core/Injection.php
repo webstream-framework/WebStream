@@ -31,9 +31,7 @@ class Injection extends Annotation {
      * @param Object コントローラクラスオブジェクト
      */
     public function __construct(\ReflectionClass $controllerClass) {
-        //isset($controller) and parent::__construct(STREAM_CLASSPATH . $controller);
         parent::__construct($controllerClass);
-        //$this->action = $router->action();
     }
 
     /**

@@ -1,1 +1,1 @@
-<?php ${self::HELPER_RECEIVER}->notfound(); ?>
+<?php ${self::HELPER_RECEIVER}->__initialize("notfound", array()); ?>
