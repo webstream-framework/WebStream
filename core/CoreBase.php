@@ -18,7 +18,7 @@ class CoreBase {
         'Model'      => null,
         'View'       => array('Helper'),
         'Helper'     => null
-	);
+    );
 
     /**
      * コンストラクタ
