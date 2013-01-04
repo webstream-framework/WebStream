@@ -97,6 +97,7 @@ Router::setRule(
         '/controller_layer' => "test#test_controller_layer_instance",
         '/service_layer' => "test#test_service_layer_instance",
         '/model_layer' => "test#test_model_layer_instance",
-        '/helper_layer' => "test#test_helper_layer_instance"
+        '/helper_layer' => "test#test_helper_layer_instance",
+        '/in_helper' => "test#test_include_template_in_helper"
     )
 );

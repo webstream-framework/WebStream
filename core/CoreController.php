@@ -31,8 +31,24 @@ class CoreController extends CoreBase {
      * @param Array 引数
      */
     final public function __call($method, $arguments) {
-        $class = $this->__toString();
-        throw new MethodNotFoundException("${class}#${method} is not defined.");
+        if (!$this->__callResponse($method, $arguments)) {
+            $class = $this->__toString();
+            throw new MethodNotFoundException("${class}#${method} is not defined.");
+        }
+    }
+
+    /**
+     * レスポンスを送出する
+     * @param String メソッド名
+     * @param Array 引数
+     * @return Boolean レスポンス送出結果
+     */
+    final public function __callResponse($methodName, $args) {
+        if (method_exists($this->response, $methodName)) {
+            call_user_func_array(array($this->response, $methodName), $args);
+            return true;
+        }
+        return false;
     }
 
     /**

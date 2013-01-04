@@ -28,7 +28,11 @@ HELPER;
         echo is_null($controller);
         echo is_null($service);
         echo is_null($model);
-        echo is_null($view);
+        echo is_object($view);
         echo is_null($helper);
+    }
+
+    public function templateInHelper($name) {
+        return "@{test_template}";
     }
 }

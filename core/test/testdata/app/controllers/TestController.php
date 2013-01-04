@@ -79,7 +79,7 @@ class TestController extends CoreController {
     }
     
     public function test400() {
-        $this->__move(400);
+        $this->badRequest(400);
     }
     
     public function test403() {
@@ -87,15 +87,16 @@ class TestController extends CoreController {
     }
     
     public function test404() {
-        $this->__move(404);
+        $this->notFound(404);
     }
      
     public function test500() {
-        $this->__move(500);
+        $this->internalServerError(500);
     }
     
     public function testUnknownStatusCode() {
-        $this->__move(1000);
+        $response = Response::getInstance();
+        $response->move(1000);
     }
     
     /**
@@ -211,4 +212,13 @@ class TestController extends CoreController {
      * @Render("test_layer_instance.tmpl")
      */
     public function testHelperLayerInstance() {}
+
+    /**
+     * @Inject
+     * @Render("test_include_template_in_helper.tmpl")
+     * @Render("test_include_template_in_helper2.tmpl", "test_template")
+     */
+    public function testIncludeTemplateInHelper() {
+        return array("name" => "kyoukorin");
+    }
 }

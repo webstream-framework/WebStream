@@ -267,16 +267,15 @@ class ResponseBase {
      * レスポンスボディを送出する
      */
     public function body() {
-        $type = array_search($this->mimeType, $this->mime);
-        // テキスト系は画面に表示する
-        if (in_array($type, $this->textType)) {
-            echo $this->body;
-        }
         // バイナリ系、その他のファイルはダウンロードする
-        else {
+        if ($this->file !== null) {
             ob_clean();
             flush();
             readfile($this->file);
+        }
+        // テキスト系は画面に表示する
+        else {
+            echo $this->body;
         }
     }
 
@@ -309,15 +308,6 @@ class ResponseBase {
         'json'  => 'application/json',
         'pdf'   => 'application/pdf',
         'file'  => 'application/octet-stream'
-    );
-
-    /**
-     * Mime-Type(text)
-     */
-    private $textType = array(
-        'txt','svg','xml','xsl','rss',
-        'rdf','atom','html','htm','css',
-        'csv','js','jsonp'
     );
 
     /**

@@ -17,7 +17,7 @@ class CoreBase {
         'Service'    => array('Model'),
         'Model'      => null,
         'View'       => array('Helper'),
-        'Helper'     => null
+        'Helper'     => array('View')
     );
 
     /**
@@ -123,8 +123,8 @@ class CoreBase {
      */
     protected function __getHelper() {
         $className = $this->__pageName . 'Helper';
-        if ($this->__isPermitLayer('Helper')
-            && import(STREAM_APP_DIR . "/helpers/" . $className)) {
+        if ($this->__isPermitLayer('Helper') &&
+            import(STREAM_APP_DIR . "/helpers/" . $className)) {
             $class = new \ReflectionClass(STREAM_CLASSPATH . $className);
             return $class->newInstance();
         }

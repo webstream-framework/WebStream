@@ -130,7 +130,11 @@ class CoreView extends CoreBase {
         }
         
         // 埋め込みパラメータにHelperを起動するためのオブジェクトをセット
-        $params[self::HELPER_RECEIVER] = $this->__getHelper();
+        $helper = $this->__getHelper();
+        if ($helper !== null) {
+            $helper->__setViewParams($this->templates, $this->renderMethods, $params);
+            $params[self::HELPER_RECEIVER] = $helper;
+        }
 
         // キャッシュファイルがなければ生成する
         $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', function($matches) {

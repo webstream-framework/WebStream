@@ -542,6 +542,19 @@ class RouterTest extends UnitTestBase {
     }
 
     /**
+     * 正常系
+     * Helperメソッド内で@{xxx}によるテンプレート呼び出しが出来、埋め込みパラメータも引き継げること
+     * @dataProvider templateInHelper
+     */
+    public function testOkTemplateInHelper($path, $html) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $response = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, $html);
+    }
+
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider

@@ -824,4 +824,12 @@ SQL;
             array('/helper_layer')            
         );
     }
+
+    public function templateInHelper() {
+        $html = "<h2>in helper</h2>\n";
+        $html.= "kyoukorin";
+        return array(
+            array("/in_helper", $html)
+        );
+    }
 }
