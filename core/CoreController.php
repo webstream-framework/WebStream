@@ -57,9 +57,7 @@ class CoreController extends CoreBase {
      * @param Array 引数
      */
     final public function __callView($methodName, $args = array()) {
-        $classpath = STREAM_CLASSPATH . 'CoreView';
-        $method = new \ReflectionMethod($classpath, $methodName);
-        $method->invokeArgs($this->view, $args);
+        call_user_func_array(array($this->view, $methodName), $args);
     }
 
     /**
@@ -100,20 +98,5 @@ class CoreController extends CoreBase {
             $errorMsg = "$serviceClass and $modelClass is not defined.";
             $this->{$this->__pageName} = new ServiceModelClassNotFoundException($errorMsg);
         }
-    }
-    
-    /**
-     * リダイレクトする
-     * @param String ドキュメントルートからの相対パス
-     */
-    final protected function redirect($path) {
-        $this->response->movePermanently($path);
-    }
-    
-    /**
-     * アクセス権限のない処理
-     */
-    final protected function forbidden() {
-        $this->response->forbidden();
     }
 }

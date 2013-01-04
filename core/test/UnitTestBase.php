@@ -676,7 +676,7 @@ SQL;
     
     public function notFoundHelperMethodProvider() {
         return array(
-            array("/helper6", "Method WebStream\TestHelper::notfound() does not exist")
+            array("/helper6", "WebStream\TestHelper#notfound is not defined.")
         );
     }
     

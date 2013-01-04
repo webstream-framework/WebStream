@@ -75,7 +75,7 @@ class TestController extends CoreController {
     }
 
     public function test301() {
-        $this->redirect("http://www.yahoo.co.jp");
+        $this->movePermanently("http://www.yahoo.co.jp");
     }
     
     public function test400() {

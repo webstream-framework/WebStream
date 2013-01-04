@@ -45,9 +45,15 @@ class CoreHelper extends CoreBase {
         for ($i = 0; $i < count($args); $i++) {
             $args[$i] = safetyOut($args[$i]);
         }
-        $method = new \ReflectionMethod($this->__toString(), $methodName);
-        $content = $method->invokeArgs($this, $args);
-        echo $this->__callTemplate($content);
+        // Helperメソッドを呼び出す
+        if (method_exists($this, $methodName)) {
+            $content = call_user_func_array(array($this, $methodName), $args);
+            echo $this->__callTemplate($content);
+        }
+        else {
+            $className = $this->__toString();
+            throw new MethodNotFoundException("${className}#${methodName} is not defined.");
+        }
     }
 
     /**
