@@ -74,8 +74,9 @@ class CoreBase {
     protected function __getController() {
         $className = $this->__pageName . 'Controller';
         if ($this->__isPermitLayer('Controller')  &&
-            import(STREAM_APP_DIR . "/controllers/AppController") &&
             import(STREAM_APP_DIR . "/controllers/" . $className)) {
+            // AppControllerは任意で使用可能
+            import(STREAM_APP_DIR . "/controllers/AppController");
             $class = new \ReflectionClass(STREAM_CLASSPATH . $className);
             return $class->newInstance();
         }
@@ -125,6 +126,8 @@ class CoreBase {
         $className = $this->__pageName . 'Helper';
         if ($this->__isPermitLayer('Helper') &&
             import(STREAM_APP_DIR . "/helpers/" . $className)) {
+            // AppHelperは任意で使用可能
+            import(STREAM_APP_DIR . "/helpers/AppHelper");
             $class = new \ReflectionClass(STREAM_CLASSPATH . $className);
             return $class->newInstance();
         }

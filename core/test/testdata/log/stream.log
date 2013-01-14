@@ -680,3 +680,22 @@
 [2013-01-04 22:58:06,79] [INFO] HTTP access occured: status code 422
 [2013-01-04 22:58:06,79] [INFO] HTTP access occured: status code 422
 [2013-01-04 22:58:06,79] [ERROR] HTTP POST failure(422): http://localhost/WebStream/core/test/testdata/get_validate1
+[2013-01-05 10:14:39, 2] [ERROR] WebStream\TestHelper#notfound is not defined.
+	#0 /Users/stay/workspace2/WebStream/core/test/testdata/app/views/_cache/1ad71bf1fa3ae08c86dc0d7944d7a67b(1): WebStream\CoreHelper->__initialize('notfound', Array)
+	#1 /Users/stay/workspace2/WebStream/core/CoreView.php(178): include('/Users/stay/wor...')
+	#2 /Users/stay/workspace2/WebStream/core/CoreView.php(168): WebStream\CoreView->outputHTML(Array, '/Users/stay/wor...')
+	#3 /Users/stay/workspace2/WebStream/core/CoreView.php(75): WebStream\CoreView->draw('/Users/stay/wor...', NULL, 'html')
+	#4 [internal function]: WebStream\CoreView->__render('helper_notfound...', NULL, 'html')
+	#5 /Users/stay/workspace2/WebStream/core/CoreController.php(60): call_user_func_array(Array, Array)
+	#6 [internal function]: WebStream\CoreController->__callView('__render', Array)
+	#7 /Users/stay/workspace2/WebStream/core/Resolver.php(305): ReflectionMethod->invoke(Object(WebStream\TestController), '__render', Array)
+	#8 /Users/stay/workspace2/WebStream/core/Resolver.php(91): WebStream\Resolver->renderView(Object(ReflectionClass), Object(WebStream\TestController), NULL)
+	#9 /Users/stay/workspace2/WebStream/core/Resolver.php(56): WebStream\Resolver->runController()
+	#10 /Users/stay/workspace2/WebStream/core/Application.php(75): WebStream\Resolver->run()
+	#11 [internal function]: WebStream\Application->run()
+	#12 /Users/stay/workspace2/WebStream/core/test/testdata/bootstrap.php(27): ReflectionMethod->invoke(Object(WebStream\Application))
+	#13 /Users/stay/workspace2/WebStream/core/test/testdata/index.php(2): require('/Users/stay/wor...')
+	#14 {main}
+[2013-01-05 10:14:39, 2] [INFO] HTTP access occured: status code 500
+[2013-01-05 10:14:39, 2] [INFO] HTTP access occured: status code 500
+[2013-01-13 00:10:14,58] [INFO] Create cache: /private/tmp/test_id.cache

@@ -832,4 +832,20 @@ SQL;
             array("/in_helper", $html)
         );
     }
+
+    public function setPrimitive() {
+        return array(
+            array("string", "azunyan"),
+            array("integer", 16),
+            array("boolean", true),
+            array("array", array("kyouko")),
+            array("hashmap", array("yuruyuri" => "is my life."))
+        );
+    }
+
+    public function setClosure() {
+        return array(
+            array("koukyo", "yui")
+        );
+    }
 }
