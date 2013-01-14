@@ -22,6 +22,18 @@ class SampleController extends AppController {
 
     /**
      * @Inject
+     * @Layout("base.tmpl")
+     * @Render("index.tmpl", "index")
+     */
+    public function index($params) {
+        return array(
+            "title" => $this->title,
+            "name" => "WebStream!"
+        );
+    }
+
+    /**
+     * @Inject
      * @Layout("base2.tmpl")
      * @Render("render.tmpl", "render_template")
      * @Render("render2.tmpl", "child_template")
@@ -55,62 +67,63 @@ class SampleController extends AppController {
         );
     }
 
+    /**
+     * @Inject
+     * @Layout("base.tmpl")
+     * @Render("model1.tmpl", "index")
+     */
     public function model1() {
-        $this->layout("base", array(
+        return array(
             "title" => $this->title,
-            "template" => "model1",
-            "content" => array(
-                "data" => $this->Sample->model1()
-            )
-        ));
+            "data" => $this->Sample->model1()
+        );
     }
     
+    /**
+     * @Inject
+     * @Layout("base.tmpl")
+     * @Render("model2.tmpl", "index")
+     */
     public function model2() {
-        $this->layout("base", array(
+        return array(
             "title" => $this->title,
-            "template" => "model2",
-            "content" => array(
-                "data" => $this->Sample->model2()
-            )
-        ));
+            "data" => $this->Sample->model2()
+        );
     }
 
+    /**
+     * @Inject
+     * @Layout("base.tmpl")
+     * @Render("model3.tmpl", "index")
+     */
     public function model3() {
-        $this->layout("base", array(
+        return array(
             "title" => $this->title,
-            "template" => "model3",
-            "content" => array(
-                "data" => $this->Sample->model1()
-            )
-        ));
+            "data" => $this->Sample->model1()
+        );
     }
     
-    public function index($params) {
-        $this->layout("base", array(
-            "title" => $this->title,
-            "template" => "index",
-            "content" => array(
-                "name" => "WebStream!"
-            )
-        ));
-    }
-    
+    /**
+     * @Inject
+     * @Layout("base.tmpl")
+     * @Render("index.helper.tmpl", "index")
+     */
     public function helper() {
-        $this->layout("base", array(
+        return array(
             "title" => $this->title,
-            "template" => "index.helper",
-            "content" => array(
-                "name" => "<script type='text/javascript'>alert('xss');</script>"
-            )
-        ));
+            "name" => "<script type='text/javascript'>alert('xss');</script>"
+        );
     }
     
+    /**
+     * @Inject
+     * @Layout("base.tmpl")
+     * @Render("validate.tmpl", "index")
+     */
     public function validate() {
-        $this->layout("base", array(
-            "title" => $this->title,
-            "template" => "validate",
-            "content" => null
-        ));
+        return array(
+            "title" => $this->title
+        );
     }
     
     public function validateForm() {

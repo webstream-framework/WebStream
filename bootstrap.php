@@ -16,6 +16,9 @@ import("config/routes");
 import("config/validates");
 // Loggerを初期化
 Logger::init();
+// サービスロケータをロード
+$container = ServiceLocator::getDiContainer();
+
 // アプリケーションを起動する
-$app = new Application();
+$app = new Application($container);
 $app->run();

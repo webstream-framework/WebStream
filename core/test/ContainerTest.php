@@ -137,6 +137,22 @@ class ContainerTest extends UnitTestBase {
     }
 
     /**
+     * 正常系
+     * registerAsLazyのエイリアス構文で登録できること
+     * registerAsLazyをプロパティとして実行
+     * 引数をuse句で渡すことが必須
+     * @dataProvider setClosure
+     */
+    public function testOkRegisterAsLazyAlias3($arg1, $arg2) {
+        $container = new Container();
+        $container->yuruyuri = function($arg1, $arg2) use ($arg1, $arg2) {
+            return new Sample($arg1, $arg2);
+        };
+        $this->assertEquals($container->yuruyuri->getArg1(), $arg1);
+        $this->assertEquals($container->yuruyuri->getArg2(), $arg2);
+    }
+
+    /**
      * 異常系
      * registerAsLazyで存在しないキーを取得したとき、例外が発生すること
      * @expectedException InvalidArgumentException

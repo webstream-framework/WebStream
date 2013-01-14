@@ -9,7 +9,7 @@
     </head>
     <body>
         <div>
-            <?php $this->render($__templates__["render_template"], $__params__); ?>
+            <?php $this->{$__render_methods__[$__templates__["render_template"]]}($__templates__["render_template"], $__params__); ?>
         </div>
     </body>
 </html>

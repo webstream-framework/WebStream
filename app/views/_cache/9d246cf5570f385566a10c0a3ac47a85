@@ -1,2 +1,2 @@
 <h1>new render!</h1>
-<?php $this->render($__templates__["child_template"], $__params__); ?>
+<?php $this->{$__render_methods__[$__templates__["child_template"]]}($__templates__["child_template"], $__params__); ?>

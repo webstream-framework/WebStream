@@ -18,9 +18,10 @@ class Application {
     /**
      * アプリケーション共通で使用するクラスを初期化する
      */
-    public function __construct() {
-        $this->request  = Request::getInstance();
-        $this->response = Response::getInstance();
+    public function __construct(Container $container) {
+        // TODO Container化したらSingletonは解除する
+        $this->request  = $container->request;
+        $this->response = $container->response;
         ob_start();
         ob_implicit_flush(false);
     }
@@ -40,7 +41,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.15');
+        define('STREAM_VERSION', '0.3.16');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */

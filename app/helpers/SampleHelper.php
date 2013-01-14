@@ -1,6 +1,6 @@
 <?php
 namespace WebStream;
-class SampleHelper extends AppHelper {
+class SampleHelper extends CoreHelper {
     public function show1($name) {
         return <<< HELPER
         <div class="test">$name</div>

@@ -1,3 +1,3 @@
 <?php
 namespace WebStream;
-class AppHelper {}
+class AppHelper extends CoreHelper {}

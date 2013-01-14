@@ -1,2 +1,2 @@
 <h1>Model Test</h1>
-<?php ${self::HELPER_RECEIVER}->by_iterator($data); ?>
+<?php ${self::HELPER_RECEIVER}->__initialize("by_iterator", array($data)); ?>

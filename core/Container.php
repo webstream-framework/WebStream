@@ -16,7 +16,12 @@ class Container {
      * @return void
      */
     public function __set($key, $value) {
-        $this->set($key, $value);
+        if (is_callable($value)) {
+            call_user_func_array(array($this, 'registerAsLazy'), array($key, $value));
+        }
+        else {
+            $this->set($key, $value);
+        }
     }
 
     /**
