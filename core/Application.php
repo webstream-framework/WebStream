@@ -14,14 +14,17 @@ class Application {
     private $response;
     /** Resolver */
     private $resolver;
+    /** Container */
+    private $container;
     
     /**
      * アプリケーション共通で使用するクラスを初期化する
+     * @param Object DIコンテナ
      */
     public function __construct(Container $container) {
-        // TODO Container化したらSingletonは解除する
-        $this->request  = $container->request;
-        $this->response = $container->response;
+        $this->container = $container;
+        $this->request   = $container->request;
+        $this->response  = $container->response;
         ob_start();
         ob_implicit_flush(false);
     }
@@ -41,7 +44,7 @@ class Application {
      */
     private function init() {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.3.16');
+        define('STREAM_VERSION', '0.3.17');
         /** クラスパス */
         define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
@@ -66,13 +69,10 @@ class Application {
      */
     public function run() {
         $this->init();
-        $this->resolver = new Resolver();
+        $this->resolver = new Resolver($this->container);
         $this->resolver->responseCache();
         try {
-            // ルーティングを解決する
-            $router = new Router();
             // MVCレイヤへのリクエストの振り分けを実行する
-            $this->resolver->setRouter($router);
             $this->resolver->run();
         }
         // CSRFエラーの場合は400

@@ -17,9 +17,11 @@ import("core/test/testdata/config/validates");
 // ログ出力ディレクトリ、ログレベルをテスト用に変更
 Logger::init("core/test/testdata/config/log.ini");
 
+// サービスロケータをロード
+$container = ServiceLocator::getContainer();
 $controller_test_dir = "core/test/testdata/app";
 $class = new \ReflectionClass("WebStream\Application");
-$instance = $class->newInstance();
+$instance = $class->newInstance($container);
 $property = $class->getProperty("app_dir");
 $property->setAccessible(true);
 $property->setValue($instance, $controller_test_dir);

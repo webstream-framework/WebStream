@@ -22,24 +22,20 @@ class Resolver {
     private $validate;
     /** レスポンスキャッシュのTTL */
     private $responseCacheTTL;
+    /** DIコンテナ */
+    private $container;
 
     /**
      * コンストラクタ
-     * @param Object レスポンスオブジェクト
+     * @param Object DIコンテナ
      */    
-    public function __construct() {
-        $this->request  = Request::getInstance();
-        $this->response = Response::getInstance();
-        $this->class = new \ReflectionClass(STREAM_CLASSPATH . 'CoreController');
-        $this->instance = $this->class->newInstance();
-    }
-
-    /**
-     * コンストラクタ
-     * @param Object ルータオブジェクト
-     */   
-    public function setRouter(Router $router) {
-        $this->router = $router;
+    public function __construct(Container $container) {
+        $this->container = $container;
+        $this->request   = $container->request;
+        $this->response  = $container->response;
+        $this->router    = $container->router;
+        $this->class     = new \ReflectionClass(STREAM_CLASSPATH . 'CoreController');
+        $this->instance  = $this->class->newInstance($container);
     }
 
     /**
@@ -120,7 +116,7 @@ class Resolver {
             import(STREAM_APP_DIR . "/controllers/AppController");
             import(STREAM_APP_DIR . "/controllers/" . $this->router->controller());
             $this->class = new \ReflectionClass(STREAM_CLASSPATH . $this->router->controller());
-            $this->instance = $this->class->newInstance();
+            $this->instance = $this->class->newInstance($this->container);
         }
     }
 

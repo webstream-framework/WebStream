@@ -95,7 +95,8 @@ class TestController extends CoreController {
     }
     
     public function testUnknownStatusCode() {
-        $response = Response::getInstance();
+        $locator = ServiceLocator::getContainer();
+        $response = $locator->response;
         $response->move(1000);
     }
     

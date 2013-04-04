@@ -8,6 +8,8 @@ namespace WebStream;
 class CoreView extends CoreBase {
     /** ヘルパのレシーバ名 */
     const HELPER_RECEIVER = "__HELPER__";
+    /** リクエスト */
+    private $request;
     /** レスポンス */
     private $response;
     /** セッション */
@@ -21,11 +23,12 @@ class CoreView extends CoreBase {
 
     /**
      * Viewクラスの初期化
-     * @param String ページ名
+     * @param Object DIコンテナ
      */
-    public function __construct($pageName) {
-        parent::__construct($pageName);
-        $this->response = Response::getInstance();
+    public function __construct(Container $container) {
+        parent::__construct($container);
+        $this->request  = $container->request;
+        $this->response = $container->response;
     }
 
     /**
@@ -279,6 +282,7 @@ class CoreView extends CoreBase {
      * @param String ファイルパス
      */
     final private function download($filename) {
-        $this->response->downloadFile($filename);
+        $userAgent = $this->request->userAgent();
+        $this->response->downloadFile($filename, $userAgent);
     }
 }

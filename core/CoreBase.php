@@ -10,6 +10,8 @@ class CoreBase {
     protected $__pageName;
     /** レイヤ名 */
     protected $__layerName;
+    /** DIコンテナ */
+    private $container;
 
     /**  各レイヤが呼び出し可能なレイヤルールを定義 */
     protected $__getClassRule = array(
@@ -22,9 +24,18 @@ class CoreBase {
 
     /**
      * コンストラクタ
+     * @param Object DIコンテナ
+     */
+    public function __construct(Container $container) {
+        $this->container = $container;
+        $this->__pageName();
+    }
+
+    /**
+     * ページ名をセットする
      * @param String ページ名
      */
-    public function __construct($pageName = null) {
+    public function __pageName($pageName = null) {
         $this->__pageName = $this->__page() ?: $pageName;
     }
 
@@ -51,7 +62,6 @@ class CoreBase {
                 $pageName = $matches[1];
             }
         }
-
         return $pageName;
     }
 
@@ -91,7 +101,7 @@ class CoreBase {
         if ($this->__isPermitLayer('Service') &&
             import(STREAM_APP_DIR . "/services/" . $className)) {
             $class = new \ReflectionClass(STREAM_CLASSPATH . $className);
-            return $class->newInstance();
+            return $class->newInstance($this->container);
         }
     }
 
@@ -114,7 +124,9 @@ class CoreBase {
      */
     protected function __getView() {
         if ($this->__isPermitLayer('View')) {
-            return new CoreView($this->__pageName);
+            $view = new CoreView($this->container);
+            $view->__pageName($this->__pageName);
+            return $view;
         }
     }
 
@@ -129,7 +141,7 @@ class CoreBase {
             // AppHelperは任意で使用可能
             import(STREAM_APP_DIR . "/helpers/AppHelper");
             $class = new \ReflectionClass(STREAM_CLASSPATH . $className);
-            return $class->newInstance();
+            return $class->newInstance($this->container);
         }
     }
 }

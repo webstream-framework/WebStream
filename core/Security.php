@@ -19,36 +19,6 @@ class Security {
     );
 
     /**
-     * CSRFトークンチェック
-     */
-    public static function isCsrfCheck() {
-        $session = Session::start();
-        $request = Request::getInstance();
-        $token = Utility::getCsrfTokenKey();
-        $session_token = $session->get($token);
-        $request_token = null;
-        $isExistParams = false;
-
-        // セッションにCSRFトークンがセットされている場合、チェックを実行する
-        if (isset($session_token)) {
-            // CSRFトークンはワンタイムなので削除する
-            $session->delete($token);
-            if ($request->isPost()) {
-                $request_token = $request->post($token);
-                $isExistParams = count($request->getPOST()) >= 1;
-            }
-            else if ($request->isGet()) {
-                $request_token = $request->get($token);
-                $isExistParams = count($request->getGET()) >= 1;
-            }
-            // POSTパラメータが存在し、かつ、CSRFトークンが一致しない場合はCSRFエラーとする
-            if ($session_token !== $request_token && $isExistParams) {
-                throw new CsrfException("Sent invalid CSRF token");
-            }
-        }
-    }
-
-    /**
      * ブラウザから入力されたデータを安全にDBに保存するためのデータに変換する
      * @param String or Array or Hash ブラウザからの入力データ
      * @return String or Array or Hash 安全なデータ

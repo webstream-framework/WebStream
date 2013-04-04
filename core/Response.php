@@ -41,11 +41,6 @@ class ResponseBase {
     private $expires;
 
     /**
-     * コンストラクタ
-     */
-    private function __construct() {}
-
-    /**
      * 文字コードを設定
      * @param String 文字コード
      */
@@ -376,25 +371,6 @@ class ResponseBase {
  * @since 2012/12/19
  */
 class Response extends ResponseBase {
-    /** レスポンスオブジェクト */
-    private static $response = null;
-
-    /**
-     * インスタンス生成を禁止
-     */
-    private function __construct() {}
-
-    /**
-     * レスポンスオブジェクトを返却する
-     * @param Object レスポンスオブジェクト
-     */
-    public static function getInstance() {
-        if (!is_object(self::$response)) {
-            self::$response = new Response();
-        }
-        return self::$response;
-    }
-
     /**
      * 301 alias
      * @param String redirect url
@@ -468,16 +444,15 @@ class Response extends ResponseBase {
     /**
      * ファイルをダウンロード
      * @param String ファイル名
+     * @param String ユーザエージェント   
      */
-    public function downloadFile($filename) {
-        $request = Request::getInstance();
+    public function downloadFile($filename, $ua) {
         $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $this->setType($type);
         $this->setContentLength(filesize($filename));
         $this->setContentDisposition($filename);
         $this->setExpires(0);
         $this->setContentTransferEncoding('binary');
-        $ua = $request->userAgent();
         if (isset($ua) && strpos($ua, 'MSIE')) {
             $this->setCacheControl('must-revalidate, post-check=0, pre-check=0');
             $this->setPragma('public');
@@ -490,6 +465,7 @@ class Response extends ResponseBase {
      * @param Integer ステータスコード
      */
     public function move($statusCode) {
+        $statusCode = array_key_exists($statusCode, $this->status) ? $statusCode : 500;
         $this->setStatusCode($statusCode);
         $bodyMessage = $statusCode . ' ' . $this->status[$statusCode];
         $this->setBody($this->bodyTemplate($bodyMessage));

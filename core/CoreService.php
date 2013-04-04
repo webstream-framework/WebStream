@@ -26,8 +26,8 @@ class CoreService extends CoreBase {
      * Serviceクラス全体の初期化
      * @param String ページ名
      */
-    final public function __construct() {
-        parent::__construct();
+    final public function __construct(Container $container) {
+        parent::__construct($container);
         $this->{$this->__pageName} = $this->__getModel();
         importAll(STREAM_APP_DIR . "/libraries");
     }

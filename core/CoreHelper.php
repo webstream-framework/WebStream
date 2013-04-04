@@ -15,10 +15,10 @@ class CoreHelper extends CoreBase {
 
     /**
      * コンストラクタ
-     * @param String ページ名
+     * @param Object DIコンテナ
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct(Container $container) {
+        parent::__construct($container);
     }
 
     /**

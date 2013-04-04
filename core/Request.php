@@ -10,26 +10,13 @@ class Request {
     private $get;
     /** POSTパラメータ */
     private $post;
-    /** リクエストオブジェクト */
-    private static $request;
     
     /**
      * コンストラクタ
      */
-    private function __construct() {
+    public function __construct() {
         $this->get = safetyIn($_GET);
         $this->post = safetyIn($_POST);
-    }
-
-    /**
-     * リクエストオブジェクトを返却する
-     * @param Object リクエストオブジェクト
-     */
-    public static function getInstance() {
-        if (!is_object(self::$request)) {
-            self::$request = new Request();
-        }
-        return self::$request;
     }
     
     /**

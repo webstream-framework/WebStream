@@ -17,12 +17,13 @@ class CoreController extends CoreBase {
     
     /**
      * Controllerクラス全体の初期化
+     * @param Object DIコンテナ
      */
-    final public function __construct() {
-        parent::__construct();
-        $this->request = Request::getInstance();
-        $this->response = Response::getInstance();
-        $this->view = $this->__getView($this->__pageName);
+    final public function __construct(Container $container) {
+        parent::__construct($container);
+        $this->request  = $container->request;
+        $this->response = $container->response;
+        $this->view = $this->__getView();
     }
 
     /**
@@ -73,7 +74,28 @@ class CoreController extends CoreBase {
      * CSRFトークンをチェックする
      */
     final private function __csrfCheck() {
-        Security::isCsrfCheck();
+        $token = Utility::getCsrfTokenKey();
+        $session_token = $this->session->get($token);
+        $request_token = null;
+        $isExistParams = false;
+
+        // セッションにCSRFトークンがセットされている場合、チェックを実行する
+        if (isset($session_token)) {
+            // CSRFトークンはワンタイムなので削除する
+            $this->session->delete($token);
+            if ($this->request->isPost()) {
+                $request_token = $this->request->post($token);
+                $isExistParams = count($this->request->getPOST()) >= 1;
+            }
+            else if ($request->isGet()) {
+                $request_token = $this->request->get($token);
+                $isExistParams = count($this->request->getGET()) >= 1;
+            }
+            // POSTパラメータが存在し、かつ、CSRFトークンが一致しない場合はCSRFエラーとする
+            if ($session_token !== $request_token && $isExistParams) {
+                throw new CsrfException("Sent invalid CSRF token");
+            }
+        }
     }
     
     /**

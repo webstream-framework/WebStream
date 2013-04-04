@@ -17,8 +17,7 @@ class Router {
      * コンストラクタ
      * @param Object リクエストオブジェクト
      */
-    public function __construct() {
-        $request = Request::getInstance();
+    public function __construct($request) {
         $this->path_info = $request->getPathInfo();
         $this->validate();
         $this->resolve();
