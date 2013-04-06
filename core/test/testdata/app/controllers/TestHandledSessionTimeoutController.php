@@ -6,7 +6,7 @@ class TestHandledSessionTimeoutController extends CoreController {
      * @Render("session_timeout.tmpl")
      */
     public function showView() {
-        Session::restart(3);
+        $this->session->restart(3);
     }
     
     /**

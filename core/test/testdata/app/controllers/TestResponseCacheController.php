@@ -6,7 +6,7 @@ class TestResponseCacheController extends CoreController {
      * @Cache("10")
      */
     public function execute() {
-        sleep(10);
+        sleep(1);
         echo "cache!";
     }
 }

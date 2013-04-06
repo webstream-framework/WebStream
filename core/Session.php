@@ -13,16 +13,23 @@ class Session {
     /** セッション有効期限を保存するクッキー名 */
     const SESSION_EXPIRE_COOKIE_NAME = 'WSSESS_LIFE';
     
-    /** セッションアクセサ */
-    private static $accessor = null;
-    
     /**
      * コンストラクタ
      * @param Integer セッションの有効期限(秒)
      * @param String Cookieを有効にするパス
      * @param String Cookieを有効にするドメイン
      */
-    private function __construct($expire, $path, $domain) {
+    public function __construct($expire = 0, $path = '/', $domain = "") {
+        $this->initialize($expire, $path, $domain);
+    }
+
+    /**
+     * 初期設定
+     * @param Integer セッションの有効期限(秒)
+     * @param String Cookieを有効にするパス
+     * @param String Cookieを有効にするドメイン
+     */
+    private function initialize($expire, $path, $domain) {
         // 有効期限が設定されている場合のみ、Cookieに値をセットする
         if ($expire !== 0) {
             session_set_cookie_params($expire, $path, $domain);
@@ -50,7 +57,13 @@ class Session {
         // セッションIDはCookieにのみ保存する
         ini_set('session.use_cookies', '1');
         ini_set('session.use_only_cookies', '1');
+    }
 
+    /**
+     * セッションを開始する
+     */
+
+    public function start() {
         // セッション名を設定
         session_name(self::SESSION_NAME);
         // セッションを開始
@@ -73,25 +86,12 @@ class Session {
     }
 
     /**
-     * セッションを開始する
-     * @param Integer セッションの有効期限(秒)
-     * @param String Cookieを有効にするパス
-     * @param String Cookieを有効にするドメイン
-     */
-    public static function start($expire = 0, $path = '/', $domain = '') {
-        if (self::$accessor === null) {
-            self::$accessor = new Session($expire, $path, $domain);
-        }
-        return self::$accessor;
-    }
-    
-    /**
      * セッションを再始動する
      * @param Integer セッションの有効期限(秒)
      * @param String Cookieを有効にするパス
      * @param String Cookieを有効にするドメイン
      */
-    public static function restart($expire = 0, $path = '/', $domain = '') {
+    public function restart($expire = 0, $path = '/', $domain = '') {
         setcookie(self::SESSION_EXPIRE_COOKIE_NAME, time(), time() + $expire, $path, $domain);
         $_SESSION[self::SESSION_EXPIRE_COOKIE_NAME] = time() + $expire;
     }
@@ -134,8 +134,6 @@ class Session {
         setcookie(self::INITIAL_STARTED_COOKIE_NAME, '', time() - 3600, '/');
         // セッションファイルを破棄
         session_destroy();
-        // スタティック変数を初期化
-        Session::$accessor = null;
     }
     
     /**

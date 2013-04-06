@@ -12,6 +12,8 @@ class Resolver {
     private $request;
     /** レスポンスオブジェクト */
     private $response;
+    /** セッションオブジェクト */
+    private $session;
     /** Contollerクラスオブジェクト */
     private $class;
     /** Contollerインスタンスオブジェクト */
@@ -33,6 +35,7 @@ class Resolver {
         $this->container = $container;
         $this->request   = $container->request;
         $this->response  = $container->response;
+        $this->session   = $container->session;
         $this->router    = $container->router;
         $this->class     = new \ReflectionClass(STREAM_CLASSPATH . 'CoreController');
         $this->instance  = $this->class->newInstance($container);
@@ -68,7 +71,7 @@ class Resolver {
      */ 
     private function runController() {
         // タイムアウトのチェック
-        Session::start();
+        $this->session->start();
         // バリデーションチェック
         $this->validate();
         // コントローラを起動
@@ -95,7 +98,7 @@ class Resolver {
      */ 
     private function readFile() {
         // タイムアウトのチェック
-        Session::start();
+        $this->session->start();
         $filePath = STREAM_ROOT . "/" . STREAM_APP_DIR . 
             "/views/" . STREAM_VIEW_PUBLIC . $this->router->staticFile();
         $render = $this->class->getMethod('__callView');

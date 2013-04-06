@@ -421,6 +421,8 @@ class RouterTest extends UnitTestBase {
         $http->get($url);
         $end = time() + microtime();
         $cached = $end - $start;
+        // キャッシュを消すため待つ
+        sleep(10);
         $this->assertTrue($noCache > $cached);
     }
 

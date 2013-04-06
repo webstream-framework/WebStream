@@ -40,6 +40,10 @@ class ServiceLocator {
         $container->response = function() {
             return new Response();
         };
+        // Session
+        $container->session = function() {
+            return new Session();
+        };
         // Router
         $container->router(function($request) {
             return new Router($request);

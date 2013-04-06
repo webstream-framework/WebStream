@@ -7,6 +7,6 @@
     </head>
     <body>
         <h2>3秒でタイムアウトします。</h2>
-        <a href="<?php echo $link; ?>">タイムアウト後にクリックすると500</a>
+        <a href="<?php echo $link; ?>">タイムアウト後にクリックすると404</a>
     </body>
 </html>

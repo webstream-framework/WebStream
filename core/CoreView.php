@@ -29,6 +29,7 @@ class CoreView extends CoreBase {
         parent::__construct($container);
         $this->request  = $container->request;
         $this->response = $container->response;
+        $this->session  = $container->session;
     }
 
     /**
@@ -124,9 +125,6 @@ class CoreView extends CoreBase {
      * @param String ファイルタイプ
      */
     final private function draw($template_path, $params, $type) {
-        // セッションを取得
-        $this->session = Session::start();
-
         // テンプレートファイルがない場合エラー
         if (!file_exists(realpath($template_path))) {
             throw new TemplateNotFoundException("Invalid template file path: " . $template_path);

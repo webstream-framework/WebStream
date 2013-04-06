@@ -23,6 +23,7 @@ class CoreController extends CoreBase {
         parent::__construct($container);
         $this->request  = $container->request;
         $this->response = $container->response;
+        $this->session  = $container->session;
         $this->view = $this->__getView();
     }
 
@@ -65,7 +66,6 @@ class CoreController extends CoreBase {
      * Controllerで使用する処理の初期化
      */
     final public function __initialize() {
-        $this->session = Session::start();
         $this->__csrfCheck();
         $this->__load();
     }
