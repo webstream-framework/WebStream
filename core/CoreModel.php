@@ -73,9 +73,9 @@ class CoreModel extends CoreBase {
         $class = new \ReflectionClass($this->__toString());
         $injection = new Injection($class);
         $databaseAnnotation = $injection->classes("@Database");
-        $tableAnnotations = $injection->classes("@Table");
-        $sqlAnnotations = $injection->classes("@Properties");
-        $sqlKeyAnnotations = $injection->methods("@SQL");
+        $tableAnnotations   = $injection->classes("@Table");
+        $sqlAnnotations     = $injection->classes("@Properties");
+        $sqlKeyAnnotations  = $injection->methods("@SQL");
         $dbname = !empty($databaseAnnotation) ? $databaseAnnotation[0]->value : null;
         $this->setTables($tableAnnotations);
         $this->dbConnection($dbname);

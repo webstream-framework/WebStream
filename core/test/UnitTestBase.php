@@ -613,6 +613,12 @@ SQL;
             array("/post_request", "name", "test")
         );
     }
+
+    public function putRequestProvider() {
+        return array(
+            array("/put_request", "name", "test")
+        );
+    }
     
     public function setSessionProvider() {
         return array(

@@ -82,6 +82,10 @@ class HttpAgent {
     public function post($url, $params, $headers = array()) {
         return $this->http($url, $headers, $params, "POST");
     }
+
+    public function put($url, $params, $headers = array()) {
+        return $this->http($url, $headers, $params, "PUT");
+    }
     
     /**
      * PROXY設定をする
@@ -122,7 +126,7 @@ class HttpAgent {
                 $url .= "?" . $params;
             }
         }
-        if (empty($headers) && $method === "POST") {
+        if (empty($headers) && ($method === "POST" || $method === "PUT")) {
             $contentLength = !is_string($params) ? 0 : strlen($params);
             $headers = array(
                 "Content-Type: application/x-www-form-urlencoded",
@@ -145,9 +149,8 @@ class HttpAgent {
         if (!empty($headers)) {
             $request["header"] = implode("\r\n", $headers);
         }
-
         // レスポンス
-        $response = @file_get_contents($url, false, 
+        $response = file_get_contents($url, false, 
             stream_context_create(array("http" => $request)));
 
         if (!isset($http_response_header)) {

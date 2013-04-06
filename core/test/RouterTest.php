@@ -274,6 +274,19 @@ class RouterTest extends UnitTestBase {
 
     /**
      * 正常系
+     * PUTリクエストが正常に実行出来ること
+     * @dataProvider putRequestProvider
+     */
+    public function testOkPutRequest($path, $key, $value) {
+        $url = $url = $this->root_url . $path;
+        $http = new HttpAgent();
+        $response = $http->put($url, array($key => $value));
+        $this->assertEquals($response, $value);
+        $this->assertEquals($http->getStatusCode(), "200");
+    }
+
+    /**
+     * 正常系
      * SESSIONに値をセット出来ること
      * @dataProvider setSessionProvider
      */
@@ -561,7 +574,7 @@ class RouterTest extends UnitTestBase {
      * 正常系
      * 指定したステータスコードのレスポンスを返すこと
      */
-    public function testResponseAnnotation() {
+    public function testOkResponseAnnotation() {
         $http = new HttpAgent();
         $url = $this->root_url . '/response_201';
         $http->get($url);
@@ -941,7 +954,7 @@ class RouterTest extends UnitTestBase {
      * レスポンスアノテーションの形式が間違っている場合、500を返すこと
      * @dataProvider sessionTimeoutLinkTo
      */
-    public function testResponseAnnotationInvalid() {
+    public function testNgResponseAnnotationInvalid() {
         $http = new HttpAgent();
         $url = $this->root_url . '/response_invalid';
         $http->get($url);
@@ -953,7 +966,7 @@ class RouterTest extends UnitTestBase {
      * 指定したステータスコードが存在しない場合、500を返すこと
      * @dataProvider sessionTimeoutLinkTo
      */
-    public function testResponseAnnotationUnknown() {
+    public function testNgResponseAnnotationUnknown() {
         $http = new HttpAgent();
         $url = $this->root_url . '/response_unknown';
         $http->get($url);

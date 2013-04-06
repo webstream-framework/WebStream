@@ -1,40 +1,40 @@
 <?php
 namespace WebStream;
+
 /**
- * リクエストクラス
+ * リクエスト基底クラス
  * @author Ryuichi TANAKA.
- * @since 2011/08/21
+ * @since 2013/04/06
  */
-class Request {
+class RequestBase {
     /** GETパラメータ */
-    private $get;
+    protected $get;
     /** POSTパラメータ */
-    private $post;
-    
+    protected $post;
+    /** PUTパラメータ */
+    protected $put;
+
     /**
-     * コンストラクタ
+     * リクエストパラメータを振り分ける
      */
-    public function __construct() {
-        $this->get = safetyIn($_GET);
-        $this->post = safetyIn($_POST);
+    protected function dispatcher() {
+        $method = $this->server("REQUEST_METHOD");
+        switch ($method) {
+        case 'GET':
+            $this->get = safetyIn($_GET);
+            break;
+        case 'POST':
+            $this->post = safetyIn($_POST);
+            break;
+        case 'PUT':
+            parse_str(file_get_contents('php://input'), $putdata);
+            $this->put = safetyIn($putdata);
+            break;
+        case 'DELETE':
+            break;
+        }
     }
-    
-    /**
-     * 安全な値に変換済みの全てのGETパラメータを返却する
-     * @return Hash 安全なGETパラメータ
-     */
-    public function getGET() {
-        return $this->get;
-    }
-    
-    /**
-     * 安全な値に変換済みの全てのPOSTパラメータを返却する
-     * @return Hash 安全なPOSTパラメータ
-     */
-    public function getPOST() {
-        return $this->post;
-    }
-    
+
     /**
      * ベースURLを取得する
      * @return String ベースURL
@@ -96,25 +96,6 @@ class Request {
             }
         }
     }
-    
-    /**
-     * POSTかどうかチェックする
-     * @return boolean POSTならtrue
-     */
-    public function isPost() {
-        return $this->server("REQUEST_METHOD") === "POST" && (
-            $this->getHeader("Content-Type") === "application/x-www-form-urlencoded" ||
-            $this->getHeader("Content-Type") === "multipart/form-data"
-        );
-    }
-    
-    /**
-     * GETかどうかチェックする
-     * @return boolean GETならtrue
-     */
-    public function isGet() {
-        return $this->server("REQUEST_METHOD") === "GET";
-    }
 
     /**
      * SERVERパラメータ取得
@@ -135,6 +116,14 @@ class Request {
      */
     public function referer() {
         return $this->server("HTTP_REFERER");
+    }
+
+    /**
+     * リクエストメソッドを取得する
+     * @return String リクエストメソッド   
+     */
+    public function requestMethod() {
+        return $this->server("REQUEST_METHOD");
     }
     
     /**
@@ -160,19 +149,79 @@ class Request {
     public function authPassword() {
         return $this->server("PHP_AUTH_PW");
     }
+}
+
+/**
+ * リクエストクラス
+ * @author Ryuichi TANAKA.
+ * @since 2011/08/21
+ */
+class Request extends RequestBase {
+    /**
+     * コンストラクタ
+     */
+    public function __construct() {
+        $this->dispatcher();
+    }
     
+    /**
+     * 安全な値に変換済みの全てのGETパラメータを返却する
+     * @return Hash 安全なGETパラメータ
+     */
+    public function getGET() {
+        return $this->get;
+    }
+    
+    /**
+     * 安全な値に変換済みの全てのPOSTパラメータを返却する
+     * @return Hash 安全なPOSTパラメータ
+     */
+    public function getPOST() {
+        return $this->post;
+    }
+
+    /**
+     * 安全な値に変換済みの全てのPUTパラメータを返却する
+     * @return Hash 安全なPUTパラメータ
+     */
+    public function getPUT() {
+        return $this->put;
+    }
+
+    /**
+     * GETかどうかチェックする
+     * @return boolean GETならtrue
+     */
+    public function isGet() {
+        return $this->requestMethod() === "GET";
+    }
+    
+    /**
+     * POSTかどうかチェックする
+     * @return boolean POSTならtrue
+     */
+    public function isPost() {
+        return $this->requestMethod() === "POST" && (
+            $this->getHeader("Content-Type") === "application/x-www-form-urlencoded" ||
+            $this->getHeader("Content-Type") === "multipart/form-data"
+        );
+    }
+
+    /**
+     * PUTかどうかチェックする
+     * @return boolean PUTならtrue
+     */    
+    public function isPut() {
+        return $this->requestMethod() === "PUT";
+    }
+
     /**
      * GETパラメータ取得
      * @param String パラメータキー
      * @return String GETパラメータ
      */
     public function get($key) {
-        if (array_key_exists($key, $this->get)) {
-            return $this->get[$key];
-        }
-        else {
-            return null;
-        }
+        return array_key_exists($key, $this->get) ? $this->get[$key] : null;
     }
 
     /**
@@ -181,15 +230,18 @@ class Request {
      * @return String POSTパラメータ
      */
     public function post($key) {
-        if (array_key_exists($key, $this->post)) {
-            return $this->post[$key];
-        }
-        else {
-            return null;
-        }
+        return array_key_exists($key, $this->post) ? $this->post[$key] : null;
     }
 
-    public function put() {}
+    /**
+     * PUTパラメータ取得
+     * @param String パラメータキー
+     * @return String PUTパラメータ
+     */
+    public function put($key) {
+        return array_key_exists($key, $this->put) ? $this->put[$key] : null;
+    }
 
     public function delete() {}
+
 }

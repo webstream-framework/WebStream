@@ -84,7 +84,7 @@ class HttpAgentTest extends UnitTestBase {
         $this->assertTrue(!empty($html));
         $this->assertEquals($status_code, 200);
     }
-    
+
     /**
      * 異常系
      * GETで外部サイトがタイムアウトになった場合、コンテンツ取得に失敗しステータスコード408が取得できること
@@ -157,5 +157,4 @@ class HttpAgentTest extends UnitTestBase {
         $this->assertTrue(empty($html));
         $this->assertEquals($status_code, 401);
     }
-    
 }

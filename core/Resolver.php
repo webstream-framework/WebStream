@@ -372,16 +372,13 @@ class Resolver {
      * 有効なリクエストメソッドか検証する
      */
     private function requestMethod() {
-        $method = null;
+        $method = $this->request->requestMethod();
         $methods = $this->injection->request($this->router->action());
-        if ($this->request->isGet()) {
-            $method = "GET";
-        }
-        else if ($this->request->isPost()) {
-            $method = "POST";
+        if (!empty($methods) && !is_array($methods)) {
+            $methods = array($methods);
         }
         if (!empty($methods) && !in_array($method, $methods)) {
-            $errorMsg = $this->request->server("REQUEST_METHOD") . " method is not allowed";
+            $errorMsg = $method. " method is not allowed";
             throw new MethodNotAllowedException($errorMsg);
         }
     }
