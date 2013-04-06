@@ -24,4 +24,12 @@ class TestRequestController extends CoreController {
     public function put() {
         echo $this->request->put("name");
     }
+
+    /**
+     * @Inject
+     * @Request("DELETE")
+     */
+    public function delete() {
+        echo $this->request->delete("name");
+    }
 }

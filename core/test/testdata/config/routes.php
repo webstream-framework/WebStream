@@ -58,6 +58,7 @@ Router::setRule(
         '/get_request' => "test_request#get",
         '/post_request' => "test_request#post",
         '/put_request' => "test_request#put",
+        '/delete_request' => "test_request#delete",
         '/post_receiver' => "test_request#post_receiver",
         '/prohibit_override' => "test_prohibit_override#render",
         '/set_session' => "test_session#set",

@@ -13,6 +13,8 @@ class RequestBase {
     protected $post;
     /** PUTパラメータ */
     protected $put;
+    /** DELETEパラメータ */
+    protected $delete;
 
     /**
      * リクエストパラメータを振り分ける
@@ -31,8 +33,37 @@ class RequestBase {
             $this->put = safetyIn($putdata);
             break;
         case 'DELETE':
+            $this->delete = safetyIn($_GET);
+            $_GET = null;
             break;
         }
+    }
+
+    /**
+     * GETかどうかチェックする
+     * @return boolean GETならtrue
+     */
+    public function isGet() {
+        return $this->requestMethod() === "GET";
+    }
+    
+    /**
+     * POSTかどうかチェックする
+     * @return boolean POSTならtrue
+     */
+    public function isPost() {
+        return $this->requestMethod() === "POST" && (
+            $this->getHeader("Content-Type") === "application/x-www-form-urlencoded" ||
+            $this->getHeader("Content-Type") === "multipart/form-data"
+        );
+    }
+
+    /**
+     * PUTかどうかチェックする
+     * @return boolean PUTならtrue
+     */    
+    public function isPut() {
+        return $this->requestMethod() === "PUT";
     }
 
     /**
@@ -165,83 +196,43 @@ class Request extends RequestBase {
     }
     
     /**
-     * 安全な値に変換済みの全てのGETパラメータを返却する
-     * @return Hash 安全なGETパラメータ
-     */
-    public function getGET() {
-        return $this->get;
-    }
-    
-    /**
-     * 安全な値に変換済みの全てのPOSTパラメータを返却する
-     * @return Hash 安全なPOSTパラメータ
-     */
-    public function getPOST() {
-        return $this->post;
-    }
-
-    /**
-     * 安全な値に変換済みの全てのPUTパラメータを返却する
-     * @return Hash 安全なPUTパラメータ
-     */
-    public function getPUT() {
-        return $this->put;
-    }
-
-    /**
-     * GETかどうかチェックする
-     * @return boolean GETならtrue
-     */
-    public function isGet() {
-        return $this->requestMethod() === "GET";
-    }
-    
-    /**
-     * POSTかどうかチェックする
-     * @return boolean POSTならtrue
-     */
-    public function isPost() {
-        return $this->requestMethod() === "POST" && (
-            $this->getHeader("Content-Type") === "application/x-www-form-urlencoded" ||
-            $this->getHeader("Content-Type") === "multipart/form-data"
-        );
-    }
-
-    /**
-     * PUTかどうかチェックする
-     * @return boolean PUTならtrue
-     */    
-    public function isPut() {
-        return $this->requestMethod() === "PUT";
-    }
-
-    /**
      * GETパラメータ取得
      * @param String パラメータキー
-     * @return String GETパラメータ
+     * @return String|Hash GETパラメータ
      */
-    public function get($key) {
+    public function get($key = null) {
+        if ($key === null) return $this->get;
         return array_key_exists($key, $this->get) ? $this->get[$key] : null;
     }
 
     /**
      * POSTパラメータ取得
      * @param String パラメータキー
-     * @return String POSTパラメータ
+     * @return String|Hash POSTパラメータ
      */
-    public function post($key) {
+    public function post($key = null) {
+        if ($key === null) return $this->post;
         return array_key_exists($key, $this->post) ? $this->post[$key] : null;
     }
 
     /**
      * PUTパラメータ取得
      * @param String パラメータキー
-     * @return String PUTパラメータ
+     * @return String|Hash PUTパラメータ
      */
-    public function put($key) {
+    public function put($key = null) {
+        if ($key === null) return $this->put;
         return array_key_exists($key, $this->put) ? $this->put[$key] : null;
     }
 
-    public function delete() {}
+    /**
+     * DELETEパラメータ取得
+     * @param String パラメータキー
+     * @return String|Hash DELETEパラメータ
+     */
+    public function delete($key = null) {
+        if ($key === null) return $this->delete;
+        return array_key_exists($key, $this->delete) ? $this->delete[$key] : null;
+    }
 
 }

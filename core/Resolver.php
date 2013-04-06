@@ -219,8 +219,9 @@ class Resolver {
         $route = $this->router->routingParams();
         $ca = $route['controller'] . "#" . $route['action'];
         try {
-            $validator->validateParameter($ca, $this->request->getGET(), "get");
-            $validator->validateParameter($ca, $this->request->getPOST(), "post");
+            $validator->validateParameter($ca, $this->request->get(), "get");
+            $validator->validateParameter($ca, $this->request->post(), "post");
+            $validator->validateParameter($ca, $this->request->put(), "put");
         }
         catch (ValidateException $e) {
             $this->validate = array(

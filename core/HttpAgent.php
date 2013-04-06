@@ -150,7 +150,7 @@ class HttpAgent {
             $request["header"] = implode("\r\n", $headers);
         }
         // レスポンス
-        $response = file_get_contents($url, false, 
+        $response = @file_get_contents($url, false, 
             stream_context_create(array("http" => $request)));
 
         if (!isset($http_response_header)) {
