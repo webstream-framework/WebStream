@@ -10,6 +10,7 @@ class Injection extends Annotation {
     const RENDER     = "@Render";
     const LAYOUT     = "@Layout";
     const REQUEST    = "@Request";
+    const RESPONSE   = "@Response";
     const BASIC_AUTH = "@BasicAuth";
     const CACHE      = "@Cache";
     const SECURITY   = "@Security";
@@ -39,7 +40,7 @@ class Injection extends Annotation {
      * アノテーションマークが複数ある場合、初めに定義した1件のみ取得したい場合に使用する
      * @param String アノテーションマーク
      * @param String 対象メソッド名
-     * @return String or Array アノテーション値またはリスト
+     * @return String|Array アノテーション値またはリスト
      */
     private function getAnnotationValue($mark, $action) {
         $methodAnnotations = $this->methods($mark);
@@ -105,6 +106,15 @@ class Injection extends Annotation {
      */
     public function request($method) {
         return $this->getAnnotationValue(self::REQUEST, $method);
+    }
+
+    /**
+     * @Responseアノテーション情報を返却する
+     * @param String 抽出対象のメソッド名
+     * @return String 許可されたリクエストメソッドリスト    
+     */
+    public function response($method) {
+        return $this->getAnnotationValue(self::RESPONSE, $method);
     }
 
     /**

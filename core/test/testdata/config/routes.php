@@ -98,6 +98,9 @@ Router::setRule(
         '/service_layer' => "test#test_service_layer_instance",
         '/model_layer' => "test#test_model_layer_instance",
         '/helper_layer' => "test#test_helper_layer_instance",
-        '/in_helper' => "test#test_include_template_in_helper"
+        '/in_helper' => "test#test_include_template_in_helper",
+        '/response_201' => "test_response#created",
+        '/response_invalid' => "test_response#invalid",
+        '/response_unknown' => "test_response#unknown"
     )
 );

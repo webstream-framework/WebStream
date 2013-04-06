@@ -284,6 +284,8 @@ class Resolver {
     private function runAnnotation($class, $instance) {
         // request method
         $this->requestMethod();
+        // response status code
+        $this->responseStatusCode();
         // basic auth
         $this->basicAuth();
         // cache
@@ -381,6 +383,16 @@ class Resolver {
         if (!empty($methods) && !in_array($method, $methods)) {
             $errorMsg = $this->request->server("REQUEST_METHOD") . " method is not allowed";
             throw new MethodNotAllowedException($errorMsg);
+        }
+    }
+
+    /**
+     * 指定したステータスコードで出力する
+     */
+    private function responseStatusCode() {
+        $statusCode = $this->injection->response($this->router->action());
+        if (!empty($statusCode)) {
+            $this->response->setStatusCode($statusCode);
         }
     }
 

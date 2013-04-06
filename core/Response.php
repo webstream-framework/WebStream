@@ -127,6 +127,13 @@ class ResponseBase {
      * @param Integer ステータスコード    
      */
     public function setStatusCode($statusCode) {
+        if (!is_string($statusCode) && !is_int($statusCode)) {
+            throw new ConnectionException("Invalid status code format: " . strval($statusCode));
+        }
+
+        if (!array_key_exists($statusCode, $this->status)) {
+            throw new ConnectionException("Unknown status code: " . $statusCode);
+        }
         $this->statusCode = $statusCode;
     }
 
@@ -192,10 +199,6 @@ class ResponseBase {
      * レスポンスヘッダを送出する
      */
     public function header() {
-        if (!array_key_exists($this->statusCode, $this->status)) {
-            throw new ConnectionException("Unknown status code: " . $this->statusCode);
-        }
-
         // StatusCode
         $headerMessage = 'HTTP/' . self::HTTP_VERSION . ' ' .
                          $this->statusCode . ' ' . $this->status[$this->statusCode];

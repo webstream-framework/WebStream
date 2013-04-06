@@ -558,6 +558,17 @@ class RouterTest extends UnitTestBase {
     }
 
     /**
+     * 正常系
+     * 指定したステータスコードのレスポンスを返すこと
+     */
+    public function testResponseAnnotation() {
+        $http = new HttpAgent();
+        $url = $this->root_url . '/response_201';
+        $http->get($url);
+        $this->assertEquals($http->getStatusCode(), "201");
+    }
+
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider
@@ -923,5 +934,29 @@ class RouterTest extends UnitTestBase {
         $cookie = "Cookie: " . $cookie[0] . "; " . $cookie[1];
         $http->get($this->root_url . "/dummy_link", "", array($cookie));
         $this->assertEquals($http->getStatusCode(), "404");
+    }
+
+    /**
+     * 異常系
+     * レスポンスアノテーションの形式が間違っている場合、500を返すこと
+     * @dataProvider sessionTimeoutLinkTo
+     */
+    public function testResponseAnnotationInvalid() {
+        $http = new HttpAgent();
+        $url = $this->root_url . '/response_invalid';
+        $http->get($url);
+        $this->assertEquals($http->getStatusCode(), "500");
+    }
+
+    /**
+     * 異常系
+     * 指定したステータスコードが存在しない場合、500を返すこと
+     * @dataProvider sessionTimeoutLinkTo
+     */
+    public function testResponseAnnotationUnknown() {
+        $http = new HttpAgent();
+        $url = $this->root_url . '/response_unknown';
+        $http->get($url);
+        $this->assertEquals($http->getStatusCode(), "500");
     }
 }
