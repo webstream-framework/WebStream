@@ -357,7 +357,7 @@ SQL;
         return array(
             array('/0aaa'),  // 先頭が数字
             array('/,aaa'),  // 先頭が半角英数ハイフンドットアンスコ以外
-            array('/aaa,a'), // 途中にカンマ
+            array('/aaa,a')  // 途中にカンマ
         );
     }
 

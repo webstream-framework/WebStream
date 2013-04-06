@@ -42,12 +42,15 @@ class Resolver {
      * Resolverを起動する
      */ 
     public function run() {
-        $this->controllerLoader();
-        $this->injectionLoader();
         // ルータインスタンスをセットする必要がある
         if ($this->router instanceof WebStream\Router) {
             throw new RouterException("Required router instance to start the Controller");
         }
+        // ルーティング解決を実行
+        $this->router->resolve();
+        $this->controllerLoader();
+        $this->injectionLoader();
+
         if ($this->isSuccessRouting()) {
             $this->runController();
         }

@@ -87,7 +87,7 @@ class CoreController extends CoreBase {
                 $request_token = $this->request->post($token);
                 $isExistParams = count($this->request->getPOST()) >= 1;
             }
-            else if ($request->isGet()) {
+            else if ($this->request->isGet()) {
                 $request_token = $this->request->get($token);
                 $isExistParams = count($this->request->getGET()) >= 1;
             }

@@ -19,8 +19,6 @@ class Router {
      */
     public function __construct($request) {
         $this->path_info = $request->getPathInfo();
-        $this->validate();
-        $this->resolve();
     }
 
     /**
@@ -66,6 +64,8 @@ class Router {
      * @param Array ルーティングルール
      */
     public function resolve() {
+        // ルーティングルールの検証
+        $this->validate();
         // ルーティングルールからController、Actionを取得
         foreach (self::$rules as $path => $ca) {
             $route = array();

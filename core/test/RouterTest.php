@@ -1,5 +1,6 @@
 <?php
 namespace WebStream\Test;
+use WebStream\Request;
 use WebStream\Router;
 use WebStream\Utility;
 use WebStream\HttpAgent;
@@ -648,7 +649,8 @@ class RouterTest extends UnitTestBase {
         Router::setRule(array(
             $path => "dummy#dummy",
         ));
-        new Router();
+        $router = new Router(new Request());
+        $router->resolve();
     }
 
     /**
@@ -661,7 +663,8 @@ class RouterTest extends UnitTestBase {
         Router::setRule(array(
             $path => "dummy#dummy",
         ));
-        new Router();
+        $router = new Router(new Request());
+        $router->resolve();
     }
 
     /**
