@@ -103,6 +103,13 @@ Router::setRule(
         '/in_helper' => "test#test_include_template_in_helper",
         '/response_201' => "test_response#created",
         '/response_invalid' => "test_response#invalid",
-        '/response_unknown' => "test_response#unknown"
+        '/response_unknown' => "test_response#unknown",
+        '/error_csrf' => "test_error#csrf_error",
+        '/error_validate' => "test_error#validate_error",
+        '/error_session_timeout' => "test_error#session_timeout_error",
+        '/error_method_not_allowed' => "test_error#method_not_allowed_error",
+        '/error_forbidden_access' => "test_error#forbidden_access_error",
+        '/error_resource_not_found' => "test_error#resource_not_found_error",
+        '/error_other' => "test_error#other_error"
     )
 );

@@ -92,17 +92,23 @@ class Application {
         // 許可されないメソッドの場合は405
         catch (MethodNotAllowedException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->move(405);
+            if (!$this->handle($e)) {
+                $this->move(405);
+            }
         }
         // アクセス禁止の場合は403
         catch (ForbiddenAccessException $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->move(403);
+            if (!$this->handle($e)) {
+                $this->move(403);
+            }
         }
         // リソース(URI)が見つからない場合は404
         catch (ResourceNotFoundException $e) {
             Logger::error($e->getMessage() . ": " . STREAM_ROUTING_PATH);
-            $this->move(404);
+            if (!$this->handle($e)) {
+                $this->move(404);
+            }
         }
         // バリデーションエラーの場合は422
         catch (ValidateException $e) {
@@ -114,7 +120,9 @@ class Application {
         // それ以外のエラーは500
         catch (\Exception $e) {
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->move(500);
+            if (!$this->handle($e)) {
+                $this->move(500);
+            }
         }
     }
     

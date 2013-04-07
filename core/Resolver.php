@@ -193,18 +193,17 @@ class Resolver {
         $isHandled = false;
         $classPath = explode('\\', get_class($errorObj));
         $className = str_replace('Exception', '', end($classPath));
-        $methodAnnotations = $this->injection->error();
-        foreach ($methodAnnotations as $methodAnnotation) {
-            // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
-            if (strcasecmp($methodAnnotation->value, $className) == 0) {
-                $method = $this->class->getMethod($methodAnnotation->methodName);
-                if (empty($errorParams)) {
-                    $method->invoke($this->instance);
+        if ($this->injection !== null) {
+            $methodAnnotations = $this->injection->error();
+            $errorArgs = array($errorObj, $errorParams);
+            foreach ($methodAnnotations as $methodAnnotation) {
+                // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
+                if (strcasecmp($methodAnnotation->value, $className) == 0 ||
+                    $methodAnnotation->value === null) {
+                    $method = $this->class->getMethod($methodAnnotation->methodName);
+                    $method->invokeArgs($this->instance, $errorArgs);
+                    $isHandled = true;
                 }
-                else {
-                    $method->invoke($this->instance, $errorParams);
-                }
-                $isHandled = true;
             }
         }
         return $isHandled;

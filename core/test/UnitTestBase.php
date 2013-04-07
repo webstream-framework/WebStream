@@ -854,4 +854,17 @@ SQL;
             array("koukyo", "yui")
         );
     }
+
+    public function handledCommonError() {
+        return array(
+            array("/error_csrf", "csrf error!"),
+            array("/error_validate", "validate error!"),
+            array("/error_session_timeout", "session timeout!"),
+            array("/error_method_not_allowed", "method not allowed!"),
+            array("/error_forbidden_access", "forbidden access!"),
+            array("/error_resource_not_found", "resource not found!"),
+            array("/error_other", "!"),
+
+        );
+    }
 }

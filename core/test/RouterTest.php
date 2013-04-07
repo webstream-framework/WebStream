@@ -582,6 +582,17 @@ class RouterTest extends UnitTestBase {
     }
 
     /**
+     * 正常系
+     * @Errorアノテーションに引数を指定しない場合、全てのエラーを補足できること
+     * @dataProvider handledCommonError
+     */
+    public function testOkHandledCommonError($path, $message) {
+        $http = new HttpAgent();
+        $url = $this->root_url . $path;
+        $this->assertEquals($http->get($url), $message);
+    }
+
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @dataProvider resolveUnknownProvider

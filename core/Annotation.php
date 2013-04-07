@@ -62,6 +62,7 @@ class Annotation {
                 if ($class->getName() !== $method->getDeclaringClass()->getName()) break;
                 $docComment = $method->getDocComment();
                 if (preg_match(self::REGEX_INJECT, $docComment)) {
+                    // 引数あり
                     if (preg_match_all("/$regexp\((.*?)\)/", $docComment, $matches)) {
                         for ($i = 0; $i < count($matches[2]); $i++) {
                             $match = $matches[2][$i];
@@ -76,6 +77,15 @@ class Annotation {
                                 $methodList[] = $cls;
                             }
                         }
+                    }
+                    // 引数なし
+                    else if (preg_match_all("/$regexp/", $docComment, $matches)) {
+                        $cls = new \stdClass();
+                        $cls->methodName = $method->getName();
+                        $cls->className = $method->getDeclaringClass()->getName();
+                        $cls->name = $matches[1][0];
+                        $cls->value = null;
+                        $methodList[] = $cls;
                     }
                 }
             }

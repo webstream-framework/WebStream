@@ -85,11 +85,11 @@ class CoreController extends CoreBase {
             $this->session->delete($token);
             if ($this->request->isPost()) {
                 $request_token = $this->request->post($token);
-                $isExistParams = count($this->request->getPOST()) >= 1;
+                $isExistParams = count($this->request->post()) >= 1;
             }
             else if ($this->request->isGet()) {
                 $request_token = $this->request->get($token);
-                $isExistParams = count($this->request->getGET()) >= 1;
+                $isExistParams = count($this->request->get()) >= 1;
             }
             // POSTパラメータが存在し、かつ、CSRFトークンが一致しない場合はCSRFエラーとする
             if ($session_token !== $request_token && $isExistParams) {

@@ -83,6 +83,13 @@ class HttpAgent {
         return $this->http($url, $headers, $params, "POST");
     }
 
+    /**
+     * PUTリクエストを発行する
+     * @param String URL
+     * @param Hash リクエストパラメータ
+     * @param Hash リクエストヘッダ
+     * @return String レスポンス
+     */
     public function put($url, $params, $headers = array()) {
         return $this->http($url, $headers, $params, "PUT");
     }
