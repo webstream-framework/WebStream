@@ -3,6 +3,7 @@ namespace WebStream\Test;
 use WebStream\HttpAgent;
 use WebStream\Utility;
 use WebStream\Validator;
+use WebStream\ServiceLocator;
 /**
  * Validatorクラスのテストクラス
  * @author Ryuichi TANAKA.
@@ -20,9 +21,16 @@ class ValidatorTest extends UnitTestBase {
             define('STREAM_APP_DIR', "core/test/testdata/app");
             self::$init = true;
         }
+
     }
     
     public function tearDown() {}
+
+    private function getValidateObject() {
+        $request = new \WebStream\Request();
+        $router  = new \WebStream\Router($request);
+        return new \WebStream\Validator($request, $router);
+    }
     
     /**
      * 正常系
@@ -31,7 +39,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testOkValidation($validate_file) {
         \WebStream\import("/core/test/testdata/config/" . $validate_file);
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
         $this->assertTrue(true);
     }
     
@@ -71,7 +80,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testNgInvalidController($validate_file) {
         \WebStream\import("/core/test/testdata/config/" . $validate_file);
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
     }
     
     /**
@@ -82,7 +92,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testNgInvalidAction($validate_file) {
         \WebStream\import("/core/test/testdata/config/" . $validate_file);
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
     }
     
     /**
@@ -93,7 +104,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testNgInvalidRule($validate_file) {
         \WebStream\import("/core/test/testdata/config/" . $validate_file);
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
     }
     
     /**
@@ -103,7 +115,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testNgInvalidRequestMethod() {
         \WebStream\import("/core/test/testdata/config/validates.ng9");
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
     }
 
     /**
@@ -113,7 +126,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testNgInvalidRangeDecimalPoint() {
         \WebStream\import("/core/test/testdata/config/validates.ng10");
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
     }
 
     /**
@@ -123,7 +137,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testNgInvalidMaxDecimalPoint() {
         \WebStream\import("/core/test/testdata/config/validates.ng11");
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
     }
 
     /**
@@ -133,7 +148,8 @@ class ValidatorTest extends UnitTestBase {
      */
     public function testNgInvalidMinDecimalPoint() {
         \WebStream\import("/core/test/testdata/config/validates.ng12");
-        new Validator();
+        $validate = $this->getValidateObject();
+        $validate->resolve();
     }
     
     /**

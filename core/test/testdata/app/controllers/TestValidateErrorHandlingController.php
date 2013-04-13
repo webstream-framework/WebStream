@@ -8,7 +8,7 @@ class TestValidateErrorHandlingController extends CoreController {
      * @Inject
      * @Error("Validate")
      */
-    public function validate_error($params) {
+    public function validateError($e, $params) {
         echo $params["error"]["rule"];
     }
 }

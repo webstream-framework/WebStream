@@ -45,9 +45,13 @@ class ServiceLocator {
             return new Session();
         };
         // Router
-        $container->router(function($request) {
-            return new Router($request);
-        }, $container->request);
+        $container->router = function() use (&$container) {
+            return new Router($container->request);
+        };
+        // Validator
+        $container->validate = function() use (&$container) {
+            return new Validator($container->request, $container->router);
+        };
 
         return $container;
     }

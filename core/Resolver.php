@@ -21,7 +21,7 @@ class Resolver {
     /** アプリケーションに注入されるアノテーション情報 */
     private $injection;
     /** バリデーション解決後のパラメータ */
-    private $validate;
+    private $validateError;
     /** レスポンスキャッシュのTTL */
     private $responseCacheTTL;
     /** DIコンテナ */
@@ -180,7 +180,7 @@ class Resolver {
      * @return Hash バリデーションパラメータ
      */
     public function getValidateErrors() {
-        return $this->validate;
+        return $this->validateError;
     }
 
     /**
@@ -213,20 +213,15 @@ class Resolver {
      * バリデーションを実行する
      */
     private function validate() {
-        $validator = new Validator();
-        // GET, POSTパラメータ両方を検査する
-        $route = $this->router->routingParams();
-        $ca = $route['controller'] . "#" . $route['action'];
+        $validate = $this->container->validate;
         try {
-            $validator->validateParameter($ca, $this->request->get(), "get");
-            $validator->validateParameter($ca, $this->request->post(), "post");
-            $validator->validateParameter($ca, $this->request->put(), "put");
+            $validate->resolve();
         }
         catch (ValidateException $e) {
-            $this->validate = array(
+            $this->validateError = array(
                 "class"  => $this->router->controller(),
                 "method" => $this->router->action(),
-                "error"  => $validator->getError()
+                "error"  => $validate->getError()
             );
             throw $e;
         }

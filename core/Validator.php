@@ -8,13 +8,28 @@ namespace WebStream;
 class Validator {
     /** バリデーションルール */
     private static $rules;
+    /** リクエスト */
+    private $request;
+    /** コントローラアクション定義 */
+    private $ca;
     /** エラー内容 */
     private $error;
     
     /**
      * コンストラクタ
+     * @param Object リクエストオブジェクト
+     * @param Object ルータオブジェクト
      */
-    public function __construct() {
+    public function __construct($request, $router) {
+        $this->request = array(
+            'get'    => $request->get(),
+            'post'   => $request->post(),
+            'put'    => $request->put(),
+            'delete' => $request->delete()
+        );
+        $rparams = $router->routingParams();
+        $ca = $rparams['controller'] . "#" . $rparams['action'];
+        $this->ca = $ca;
         $this->validateRules();
     }
     
@@ -47,6 +62,12 @@ class Validator {
             "value" => $value
         );
     }
+
+    public function resolve() {
+        foreach ($this->request as $method => $request) {
+            $this->validateParameter($this->ca, $method, $request);
+        }
+    }
     
     /**
      * 入力値が妥当かどうか検証する
@@ -54,7 +75,7 @@ class Validator {
      * @param Hash リクエストパラメータ
      * @param String リクエストメソッド
      */
-    public function validateParameter($ca, $params, $method) {
+    public function validateParameter($ca, $method, $params) {
         if (!array_key_exists($ca, self::$rules)) {
             return false;
         }
