@@ -1,1 +1,1 @@
-<?php $this->{$__render_methods__[$__templates__["test_base"]]}($__templates__["test_base"], $__params__); ?>
+<?php $this->__draw($test_base, $__params__); ?>

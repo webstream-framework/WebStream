@@ -33,6 +33,6 @@ HELPER;
     }
 
     public function templateInHelper($name) {
-        return "@{test_template}";
+        return '@{$test_template}';
     }
 }

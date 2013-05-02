@@ -299,8 +299,7 @@ class Resolver {
         $info = $this->renderInfo($class, $instance, $data);
         if (isset($info)) {
             $render = $class->getMethod('__callView');
-            $render->invoke($instance, '__templates', array($info['list']));
-            $render->invoke($instance, '__renderMethods', array($info['methods']));
+            $render->invoke($instance, '__templates', array($info['templates']));
             $render->invoke($instance, $info['method'], $info['args']);
         }
         else {
@@ -316,23 +315,23 @@ class Resolver {
      * @return Hash レンダリング情報
      */
     private function renderInfo($class, $instance, $params) {
-        $renderInfo    = $this->injection->render($this->router->action());
-        $renderMethods = $renderInfo['methods'];
-        $templates     = $renderInfo['templates'];
-        $renderMethod  = $renderInfo['method'];
+        $renderInfo      = $this->injection->render($this->router->action());
+        $templates       = $renderInfo['templates'];
+        $templateMethods = $renderInfo['templateMethods'];
 
         // Viewでレンダリングするようのハッシュを作成する
         // key: xxx.tmplに記述した@{yyy}と一致する名前
         // value: @{yyy}にひもづく実際のテンプレートファイル名
-        $templateList = array();
-        for ($i = 0; $i < count($templates); $i++) {
-            $args = $templates[$i];
-            // @Render/@Layoutの引数が0または1つの場合、テンプレートリストに登録しない
-            if (count($args) === 0 || count($args) === 1) continue;
-            $templateList[$args[1]] = $args[0];
-        }
+        // $templateList = array();
+        // for ($i = 0; $i < count($templates); $i++) {
+        //     $args = $templates[$i];
+        //     // @Render/@Layoutの引数が0または1つの場合、テンプレートリストに登録しない
+        //     if (count($args) === 0 || count($args) === 1) continue;
+        //     $templateList[$args[1]] = $args[0];
+        // }
         // 最初に描画するテンプレートを指定
         $responseFormat = $this->injection->format($this->router->action());
+        $renderMethod = '__initialDraw';
         if (empty($templates)) {
             switch ($responseFormat) {
             case 'json':
@@ -352,13 +351,12 @@ class Resolver {
         }
         else {
             // html, xml, atom, rss
-            $args = array($templates[0][0], $params, $responseFormat);
+            $args = array($templates[0][0], $renderInfo['method'], $params, $responseFormat);
         }
 
         return array(
-            "list" => $templateList,
             "method" => $renderMethod,
-            "methods" => $renderMethods,
+            "templates" => $templateMethods,
             "args" => $args
         );
     }

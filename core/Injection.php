@@ -70,32 +70,48 @@ class Injection extends Annotation {
         $annotations = $this->methods(self::RENDER, self::LAYOUT);
         $method = null;
         $templates = array();
-        $methods = array();
         $argList = array();
+        $templatePath = "";
+        $templateValues = array();
 
         $methodName = function($mark) {
             return $mark === Injection::LAYOUT ? '__layout' : '__render';
         };
+
+        $templateMethods = array(
+            '__layout' => array(), '__render' => array()
+        );
+
         foreach ($annotations as $annotation) {
             if ($annotation->methodName === $action) {
+                if ($annotation->index === 0) {
+                    $templatePath = $annotation->value;
+                }
+                else {
+                    $templateMethods[$methodName($annotation->name)][$annotation->value] = $templatePath;
+                }
+
                 // 一番初めに定義されたレンダリングアノテーションに合わせて実行するメソッドを決定
                 if (!isset($method)) {
                     $method = $methodName($annotation->name);
                 }
                 if ($annotation->index === 0) {
-                    $methods[$annotation->value] = $methodName($annotation->name);
                     if (!empty($argList)) $templates[] = $argList;
                     $argList = array();
                 }
                 $argList[] = $annotation->value;
             }
+
         }
-        if (!empty($argList)) $templates[] = $argList;
+
+        if (!empty($argList)) {
+            $templates[] = $argList;
+        }
 
         return array(
             "method" => $method,
-            "methods" => $methods,
-            "templates" => $templates
+            "templates" => $templates,
+            "templateMethods" => $templateMethods
         );
     }
 

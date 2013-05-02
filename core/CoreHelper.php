@@ -24,12 +24,10 @@ class CoreHelper extends CoreBase {
     /**
      * View呼び出し時に使用する変数をセット
      * @param Hash テンプレートリスト
-     * @param Hash レンダリングメソッドリスト
      * @param Hash レンダリングパラメータ
      */
-    final public function __setViewParams($templates, $renderMethods, $params) {
+    final public function __setViewParams($templates, $params) {
         $this->templates = $templates;
-        $this->renderMethods = $renderMethods;
         $this->params = $params;
     }
 
@@ -62,7 +60,7 @@ class CoreHelper extends CoreBase {
      * @return String 置換後のテンプレートファイルの内容
      */
     final private function __callTemplate($s) {
-        return preg_replace_callback('/@\{(.*?)\}/', array($this, '__callTemplateCallback'), $s);
+        return preg_replace_callback('/@\{\$(.*?)\}/', array($this, '__callTemplateCallback'), $s);
     }
 
     /**
@@ -73,7 +71,6 @@ class CoreHelper extends CoreBase {
     final private function __callTemplateCallback($matches) {
         $view = $this->__getView();
         $template = $this->templates[$matches[1]];
-        $method = $this->renderMethods[$template];
-        return $view->{$method}($template, $this->params);
+        return $view->__draw($template, $this->params);
     }
 }

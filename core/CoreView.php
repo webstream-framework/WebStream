@@ -16,8 +16,6 @@ class CoreView extends CoreBase {
     private $session;
     /** テンプレートリスト */
     private $templates;
-    /** レンダリングメソッドリスト */
-    private $renderMethods;
     /** CSRF対策 */
     private $enableCsrf = false;
 
@@ -33,19 +31,26 @@ class CoreView extends CoreBase {
     }
 
     /**
-     * テンプレートリスト情報を設定
-     * @param Hash テンプレートリスト情報
+     * ディレクトリパス付きのテンプレートパスを設定する
+     * @param Hash テンプレート名ハッシュ
      */
-    public function __templates($templates) {
+    public function __templates($templateMethods) {
+        $templates = array();
+        foreach ($templateMethods as $method => $list) {
+            foreach ($list as $key => $value) {
+                $templates[$key] = $this->templateDir($method) . "/" . $value;
+            }
+        }
         $this->templates = $templates;
     }
 
     /**
-     * レンダリングメソッドリスト情報を設定
-     * @param Hash レンダリングメソッドリスト情報
+     * テンプレートのディレクトリを取得する
+     * @param String レンダリングメソッド
+     * @return String テンプレートディレクトリ名
      */
-    public function __renderMethods($methods) {
-        $this->renderMethods = $methods;
+    private function templateDir($method) {
+        return $method === '__layout' ? STREAM_VIEW_SHARED : Utility::camel2snake($this->__pageName);
     }
 
     /**
@@ -56,27 +61,26 @@ class CoreView extends CoreBase {
     }
 
     /**
-     * レイアウトファイルを描画する準備をする
-     * @param String テンプレートファイル名
-     * @param Hash 埋め込みパラメータ
-     * @param String ファイルタイプ
+     * テンプレート描画の初期処理
+     * @param String テンプレート名
+     * @param String テンプレートメソッド
+     * @param Hash テンプレート埋め込みパラメータ
+     * @param String 出力形式
      */
-    final public function __layout($template, $params = array(), $type = "html") {
-        $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views" .
-                         "/" . STREAM_VIEW_SHARED . "/" . $template;
-        $this->draw($template_path, $params, $type);
+    final public function __initialDraw($template, $method, $params = array(), $type = "html") {
+        $template = $this->templateDir($method) . '/' . $template;
+        $this->__draw($template, $params, $type);
     }
-    
+
     /**
-     * テンプレートファイルを描画する準備をする
-     * @param String テンプレートファイル名
-     * @param Hash 埋め込みパラメータ
-     * @param String ファイルタイプ
+     * テンプレート描画の初期処理
+     * @param String テンプレート名
+     * @param Hash テンプレート埋め込みパラメータ
+     * @param String 出力形式
      */
-    final public function __render($template, $params = array(), $type = "html") {
-        $template_path = STREAM_ROOT . "/" . STREAM_APP_DIR . 
-                         "/views/" . Utility::camel2snake($this->__pageName) . "/" . $template;
-        $this->draw($template_path, $params, $type);
+    final public function __draw($template, $params = array(), $type = "html") {
+        $templatePath = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . $template;
+        $this->draw($templatePath, $params, $type);
     }
 
     /**
@@ -133,7 +137,7 @@ class CoreView extends CoreBase {
         // 埋め込みパラメータにHelperを起動するためのオブジェクトをセット
         $helper = $this->__getHelper();
         if ($helper !== null) {
-            $helper->__setViewParams($this->templates, $this->renderMethods, $params);
+            $helper->__setViewParams($this->templates, $params);
             $params[self::HELPER_RECEIVER] = $helper;
         }
 
@@ -161,10 +165,11 @@ class CoreView extends CoreBase {
         }
 
         // 入れ子のテンプレートにパラメータをセットする
-        $params["__params__"] = $params;
-        $params["__templates__"] = $this->templates;
-        $params["__render_methods__"] = $this->renderMethods;
+        if (!empty($this->templates)) {
+            $params = array_merge($params, $this->templates);
+        }
 
+        $params["__params__"] = $params;
         $this->outputHeader($type);
         $this->outputHTML($params, $cache_file);
     }
@@ -255,7 +260,7 @@ class CoreView extends CoreBase {
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
         $s = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php ${self::HELPER_RECEIVER}->__initialize("$1", array($2)); ?>', $s);
-        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->{$__render_methods__[$__templates__["$1"]]}($__templates__["$1"], $__params__); ?>', $s);
+        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->__draw($1, $__params__); ?>', $s);
         return $s;
     }
     
