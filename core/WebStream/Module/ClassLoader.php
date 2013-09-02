@@ -5,6 +5,7 @@ namespace WebStream\Module;
  * クラスローダ
  * @author Ryuichi TANAKA.
  * @since 2013/09/02
+ * @version 0.4
  */
 class ClassLoader
 {
