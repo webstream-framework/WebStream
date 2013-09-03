@@ -59,6 +59,7 @@ class ClassLoader
      * モジュールが存在するかどうかチェックする
      * @param string ディレクトリパス
      * @param string クラス名
+     * @return モジュールパス
      */
     private function existModule($currentDir, $className)
     {
