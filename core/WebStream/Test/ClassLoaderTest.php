@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Test;
 
-use \WebStream\Module\ClassLoader;
+use WebStream\Module\ClassLoader;
 
 require_once 'TestBase.php';
 

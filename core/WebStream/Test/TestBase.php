@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Test;
 
-require_once '../Module/ClassLoader.php';
+require_once dirname(__FILE__) . '/../Module/ClassLoader.php';
 
 /**
  * ユニットテスト基底クラス
