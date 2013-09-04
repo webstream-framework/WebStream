@@ -5,6 +5,7 @@ namespace WebStream\Test\DataProvider;
  * SecurityProvider
  * @author Ryuichi TANAKA.
  * @since 2013/09/03
+ * @version 0.4
  */
 trait SecurityProvider
 {
@@ -18,6 +19,14 @@ trait SecurityProvider
         return [
             ['<div>\\a\t\n\r\r\n<!-- --><![CDATA[</div>',
              '&lt;div&gt;\\\\a&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/>&lt;!-- --&gt;&lt;![CDATA[&lt;/div&gt;']
+        ];
+    }
+
+    public function csrfCheckRequestProvider()
+    {
+        return [
+            ["/csrf_get_view"],
+            ["/csrf_post_view"]
         ];
     }
 }
