@@ -12,6 +12,7 @@ require_once 'DataProvider/SecurityProvider.php';
  * Securityクラスのテストクラス
  * @author Ryuichi TANAKA.
  * @since 2011/09/17
+ * @version 0.4
  */
 class SecurityTest extends TestBase
 {
