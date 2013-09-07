@@ -14,7 +14,7 @@ class TestBase extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $classLoader = new \WebStream\Module\ClassLoader();
-        spl_autoload_register(array($classLoader, "load"));
+        spl_autoload_register([$classLoader, "load"]);
     }
 
     public function tearDown()
