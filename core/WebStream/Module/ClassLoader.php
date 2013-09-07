@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Module;
 
+require_once dirname(__FILE__) . '/Utility.php';
+
 /**
  * クラスローダ
  * @author Ryuichi TANAKA.
@@ -9,8 +11,7 @@ namespace WebStream\Module;
  */
 class ClassLoader
 {
-    /** プロジェクトルートファイル名 */
-    const PROJECT_ROOT_FILENAME = ".projectroot";
+    use Utility;
 
     /** 検索除外ファイルリスト */
     private $ignoreFileList;
@@ -37,14 +38,17 @@ class ClassLoader
         }
 
         // まずcoreディレクトリを検索
-        // coreディレクトリは名前空間とディレクトリパスが紐づいているのでそのまま連結して読ませる
+        // coreディレクトリは名前空間とディレクトリパスが
+        // 紐づいているのでそのまま連結して読ませる
         $includeFile = $rootDir . DIRECTORY_SEPARATOR . "core" . DIRECTORY_SEPARATOR . $className . ".php";
         if (file_exists($includeFile) && is_file($includeFile)) {
             include_once($includeFile);
+            return;
         }
 
         // それでも見つからなかったらappディレクトリを検索
-        // appディレクトリは名前空間とディレクトリパスが紐づいているとは限らないため検索する
+        // appディレクトリは名前空間とディレクトリパスが
+        // 紐づいているとは限らないため検索する
         // 名前空間パスは排除してクラス名で検索する
         $list = preg_split("/\//", $className);
         $className = end($list);
@@ -52,6 +56,7 @@ class ClassLoader
         $includeFile = $this->existModule($rootDir, $className);
         if ($includeFile !== null) {
             include_once($includeFile);
+            return;
         }
     }
 
@@ -83,31 +88,5 @@ class ClassLoader
         }
 
         return null;
-    }
-
-    /**
-     * プロジェクトディレクトリの絶対パスを返す
-     * @return String プロジェクトディレクトリの絶対パス
-     */
-    private function getRoot()
-    {
-        // 上位階層を辿り、.projectrootファイルを見つける
-        $targetPath = realpath(dirname(__FILE__));
-        $isProjectRoot = false;
-
-        while (!$isProjectRoot) {
-            if (file_exists($targetPath . DIRECTORY_SEPARATOR . self::PROJECT_ROOT_FILENAME)) {
-                $isProjectRoot = true;
-            } else {
-                if (preg_match("/(.*)\//", $targetPath, $matches)) {
-                    $targetPath = $matches[1];
-                    if (!is_dir($targetPath)) {
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $isProjectRoot ? $targetPath : null;
     }
 }

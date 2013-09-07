@@ -23,10 +23,21 @@ class ClassLoaderTest extends TestBase
      * coreディレクトリクラスがロード出来ること
      * @test
      */
-    public function okLoadModule()
+    public function okLoadClass()
     {
-        new \WebStream\Test\TestData\ClassLoaderTestData();
-        $this->assertTrue(true);
+        $instance = new \WebStream\Test\TestData\ClassLoaderTestClass();
+        $this->assertEquals($instance->getName(), "hoge");
+    }
+
+    /**
+     * 正常系
+     * coreディレクトリトレイトがロード出来ること
+     * @test
+     */
+    public function okLoadTrait()
+    {
+        $instance = new \WebStream\Test\TestData\ClassLoaderTestTraitClass();
+        $this->assertEquals($instance->getName(), "hoge");
     }
 
     /**
