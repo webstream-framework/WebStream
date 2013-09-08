@@ -40,30 +40,9 @@ if (!function_exists('shutdownHandler')) {
                     break;
             }
         }
-    }
-}
 
-/**
- * ファイルのインポートをする
- * @param filepath インポートするファイルパス
- * @return boolean インポート結果
- */
-if (!function_exists('import')) {
-    function import($filepath)
-    {
-        return AutoImport::import($filepath);
-    }
-}
-
-/**
- * フォルダ内のすべてのファイルをインポートする
- * @param dirpath インポート対象のフォルダ
- * @return インクルードしたファイルの絶対パス
- */
-if (!function_exists('importAll')) {
-    function importAll($dirpath)
-    {
-        return AutoImport::importAll($dirpath);
+        // オブジェクトを解放
+        Logger::finalize();
     }
 }
 
