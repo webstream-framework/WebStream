@@ -48,12 +48,25 @@ class Logger
     }
 
     /**
+     * Loggerを終了する
+     */
+    public static function finalize() {
+        if (self::$logger->toLogLevelValue('debug') >= self::$logger->getLogLevel()) {
+            self::$logger->write("DEBUG", "Logger finalized.");
+        }
+        self::$logger = null;
+    }
+
+    /**
      * Loggerメソッドの呼び出しを受ける
      * @param string メソッド名(ログレベル文字列)
      * @param array 引数
      */
     public static function __callStatic($level, $arguments)
     {
+        if (self::$logger === null) {
+            throw new LoggerException("Logger is not initialized.");
+        }
         if (self::$logger->toLogLevelValue($level) >= self::$logger->getLogLevel()) {
             $logArgument = [strtoupper($level)];
             call_user_func_array(array(self::$logger, "write"), array_merge($logArgument, $arguments));

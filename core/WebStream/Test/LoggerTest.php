@@ -56,11 +56,6 @@ class LoggerTest extends TestBase
         }
     }
 
-    public function testRun() {
-        Logger::init("core/WebStream/Test/Sample/config/log_config/log.test.ok1.rotate.ini");
-        Logger::debug("test");
-    }
-
     /**
      * 正常系
      * ログレベルが「debug」のとき、
@@ -550,6 +545,18 @@ class LoggerTest extends TestBase
         $rotatedLogPath = $this->getRoot() . $this->getSampleAppPath() . "/log/webstream.test.${created_at_date}-${now_date}.log";
         // ローテートされたかチェック
         $this->assertFalse(file_exists($rotatedLogPath));
+    }
+
+    /**
+     * 異常系
+     * Loggerを初期化していない場合、例外が発生すること
+     * @test
+     * @expectedException WebStream\Exception\LoggerException
+     * @expectedExceptionMessage Logger is not initialized.
+     */
+    public function ngNotInitialized()
+    {
+        Logger::info("test");
     }
 
     /**
