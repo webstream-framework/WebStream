@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Test;
 
+require_once dirname(__FILE__) . '/../Module/Functions.php';
 require_once dirname(__FILE__) . '/../Module/ClassLoader.php';
 
 /**
@@ -15,6 +16,7 @@ class TestBase extends \PHPUnit_Framework_TestCase
     {
         $classLoader = new \WebStream\Module\ClassLoader();
         spl_autoload_register([$classLoader, "load"]);
+        register_shutdown_function('WebStream\Module\shutdownHandler');
     }
 
     public function tearDown()
