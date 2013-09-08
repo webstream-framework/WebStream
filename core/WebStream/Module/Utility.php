@@ -70,16 +70,13 @@ trait Utility
     /**
      * 設定ファイルをパースする
      * @param string プロジェクトルートからの相対パス
-     * @return Hash 設定情報
+     * @return hash 設定情報
      */
     public function parseConfig($filepath)
     {
-        // プロジェクトルートパス
-        $root_path = self::getRoot();
-
         // 正規化した絶対パス
-        $realpath = $root_path . DIRECTORY_SEPARATOR . $filepath;
-        if (realpath($realpath)) {
+        $realpath = $this->getRoot() . DIRECTORY_SEPARATOR . $filepath;
+        if (file_exists($realpath)) {
             return parse_ini_file($realpath);
         }
     }
