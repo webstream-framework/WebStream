@@ -51,6 +51,9 @@ class Logger
      * Loggerを終了する
      */
     public static function finalize() {
+        if (self::$logger === null) {
+            return;
+        }
         if (self::$logger->toLogLevelValue('debug') >= self::$logger->getLogLevel()) {
             self::$logger->write("DEBUG", "Logger finalized.");
         }
@@ -137,7 +140,7 @@ class Logger
      * @param string ログレベル文字列
      * @return integer ログレベル数値
      */
-    private function toLogLevelValue($level)
+    public function toLogLevelValue($level)
     {
         switch (strtolower($level)) {
             case 'debug':

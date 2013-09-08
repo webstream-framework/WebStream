@@ -556,6 +556,7 @@ class LoggerTest extends TestBase
      */
     public function ngNotInitialized()
     {
+        Logger::finalize();
         Logger::info("test");
     }
 
