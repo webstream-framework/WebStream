@@ -32,4 +32,9 @@ trait TestConstant
     {
         return $this->getSampleAppPath() . "/cache777";
     }
+
+    private function getCacheDir000()
+    {
+        return $this->getSampleAppPath() . "/cache000";
+    }
 }
