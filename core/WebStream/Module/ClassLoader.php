@@ -69,11 +69,11 @@ class ClassLoader
     private function existModule($currentDir, $className)
     {
         $includeFile  = $currentDir . DIRECTORY_SEPARATOR . $className . ".php";
-        if (file_exists($includeFile) && is_file($includeFile)) {
+        if (file_exists($includeFile) && is_file($includeFile) && is_readable($includeFile)) {
             return $includeFile;
         } else {
             // カレントディレクトリを検索
-            if (is_dir($currentDir) && $dh = opendir($currentDir)) {
+            if (is_dir($currentDir) && is_readable($currentDir) && $dh = opendir($currentDir)) {
                 while (false !== ($filename = readdir($dh))) {
                     if (in_array($filename, $this->ignoreFileList)) {
                         continue;
