@@ -1,5 +1,6 @@
 <?php
 namespace WebStream\Module;
+
 /**
  * Cacheクラス
  * @author Ryuichi Tanaka
