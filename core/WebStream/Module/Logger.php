@@ -50,7 +50,8 @@ class Logger
     /**
      * Loggerを終了する
      */
-    public static function finalize() {
+    public static function finalize()
+    {
         if (self::$logger === null) {
             return;
         }
