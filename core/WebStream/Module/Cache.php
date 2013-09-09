@@ -61,10 +61,10 @@ class Cache
         $cache = $this->cache($id);
         $meta = null;
         if ($cache !== null) {
-            $meta = array(
+            $meta = [
                 "time" => $cache["time"],
                 "ttl" => $cache["ttl"]
-            );
+            ];
         }
 
         return $meta;
@@ -103,11 +103,11 @@ class Cache
      */
     public function save($id, $data, $ttl = 60, $overwrite = false)
     {
-        $content = array(
+        $content = [
             "time" => time(),
             "ttl" => intval($ttl),
             "data" => $data
-        );
+        ];
 
         // キャッシュディレクトリが存在するか
         if (is_dir($this->savePath)) {
