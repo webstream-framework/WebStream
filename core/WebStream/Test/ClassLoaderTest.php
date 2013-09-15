@@ -20,10 +20,10 @@ class ClassLoaderTest extends TestBase
 
     /**
      * 正常系
-     * coreディレクトリクラスがロード出来ること
+     * coreディレクトリクラスがオートロード出来ること
      * @test
      */
-    public function okLoadClass()
+    public function okAutoLoadClass()
     {
         $instance = new \WebStream\Test\TestData\ClassLoaderTestClass();
         $this->assertEquals($instance->getName(), "hoge");
@@ -31,10 +31,10 @@ class ClassLoaderTest extends TestBase
 
     /**
      * 正常系
-     * coreディレクトリトレイトがロード出来ること
+     * coreディレクトリトレイトがオートロード出来ること
      * @test
      */
-    public function okLoadTrait()
+    public function okAutoLoadTrait()
     {
         $instance = new \WebStream\Test\TestData\ClassLoaderTestTraitClass();
         $this->assertEquals($instance->getName(), "hoge");
@@ -42,12 +42,68 @@ class ClassLoaderTest extends TestBase
 
     /**
      * 正常系
-     * appディレクトリクラスがロード出来ること
+     * appディレクトリクラスがオートロード出来ること
      * @test
      */
-    public function okLoadModuleWithoutNamespace()
+    public function okAutoLoadModuleWithoutNamespace()
     {
         new \WebStream\SampleLibrary();
         $this->assertTrue(true);
+    }
+
+    /**
+     * 正常系
+     * クラスを静的にロード出来ること
+     * @test
+     */
+    public function okLoadClass()
+    {
+        $classLoader = new \WebStream\Module\ClassLoader();
+        $isLoad = $classLoader->load("ClassLoaderTestClassStaticLoad");
+        $this->assertTrue($isLoad);
+        $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoad();
+        $this->assertTrue($instance instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoad);
+    }
+
+    /**
+     * 正常系
+     * クラスを静的に複数ロード出来ること
+     * @test
+     */
+    public function okLoadMultipleClass()
+    {
+        $classLoader = new \WebStream\Module\ClassLoader();
+        $isLoad = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple1", "ClassLoaderTestClassStaticLoadMultiple2"]);
+        $this->assertTrue($isLoad);
+        $instance1 = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple1();
+        $instance2 = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple2();
+        $this->assertTrue($instance1 instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple1);
+        $this->assertTrue($instance2 instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple2);
+    }
+
+    /**
+     * 異常系
+     * 存在しないクラスはロードできないこと
+     * @test
+     */
+    public function ngLoadClass()
+    {
+        $classLoader = new \WebStream\Module\ClassLoader();
+        $isLoad = $classLoader->load("DummyClass");
+        $this->assertFalse($isLoad);
+    }
+
+    /**
+     * 異常系
+     * 複数のクラスロード時に存在しないクラスが指定された場合、
+     * 存在するクラスもロードされないこと
+     * @test
+     */
+    public function ngLoadMultipleClass()
+    {
+        $classLoader = new \WebStream\Module\ClassLoader();
+        $isLoad = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple3", "DummyClass"]);
+        $this->assertFalse($isLoad);
+        $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple3();
     }
 }
