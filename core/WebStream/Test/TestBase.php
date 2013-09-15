@@ -14,12 +14,16 @@ class TestBase extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $classLoader = new \WebStream\Module\ClassLoader();
-        spl_autoload_register([$classLoader, "load"]);
-        register_shutdown_function('WebStream\Module\shutdownHandler');
+        $this->autoLoad();
     }
 
     public function tearDown()
     {
+    }
+
+    protected function autoLoad() {
+        $classLoader = new \WebStream\Module\ClassLoader();
+        spl_autoload_register([$classLoader, "load"]);
+        register_shutdown_function('WebStream\Module\shutdownHandler');
     }
 }
