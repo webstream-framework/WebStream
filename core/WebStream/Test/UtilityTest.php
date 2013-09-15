@@ -2,7 +2,6 @@
 namespace WebStream\Test;
 
 use WebStream\Module\Utility;
-use WebStream\Test\TestConstant;
 
 require_once 'TestBase.php';
 require_once 'TestConstant.php';
