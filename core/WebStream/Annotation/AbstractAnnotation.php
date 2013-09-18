@@ -9,7 +9,7 @@ namespace WebStream\Annotation;
  */
 abstract class AbstractAnnotation
 {
-    /**  */
+    /** annotation */
     protected $annotations;
 
     /**
