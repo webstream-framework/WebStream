@@ -9,7 +9,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
  * @since 2013/09/18
  * @version 0.4
  */
-class AutowiredFactory extends ReflectionClassFactory
+class AutowiredFactory extends AnnotationFactory
 {
     /**
      * @Override
