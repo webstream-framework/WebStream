@@ -19,6 +19,6 @@ class Autowired extends AbstractAnnotation
      */
     public function onInject()
     {
-        Logger::debug("Autowired");
+        Logger::debug("Autowired.");
     }
 }
