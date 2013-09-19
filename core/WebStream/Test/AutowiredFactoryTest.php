@@ -29,28 +29,18 @@ class AutowiredFactoryTest extends TestBase
 
     /**
      * 正常系
-     * @Typeで指定した型のインスタンスを注入できること
+     * @Type,@Valueで指定した値が注入できること
      * @test
+     * @dataProvider autowiredProvider
      */
-    public function okAutowiredForType()
+    public function okAutowired($instance, $mail, $age)
     {
         $factory = new AutowiredFactory();
-        $instances = $factory->create("\WebStream\Test\TestData\AutowiredTest1");
-        $this->assertInstanceOf("\WebStream\Annotation\Type", $instances["name"]);
-        $this->assertInstanceOf("\WebStream\Test\TestData\AutowiredTestType", $instances["name"]->getInstance());
-    }
-
-    /**
-     * 正常系
-     * @Valueで指定した値(プリミティブ型)を注入できること
-     * @test
-     * @dataProvider autowiredForValueProvider
-     */
-    public function okAutowiredForValue($propertyName, $value)
-    {
-        $factory = new AutowiredFactory();
-        $instances = $factory->create("\WebStream\Test\TestData\AutowiredTest1");
-        $this->assertEquals($value, $instances[$propertyName]->getValue());
+        $object = $factory->create("\WebStream\Test\TestData\AutowiredTest1");
+        $this->assertInstanceOf("\WebStream\Test\TestData\AutowiredTest1", $object);
+        $this->assertInstanceOf($instance, $object->getInstance());
+        $this->assertEquals($mail, $object->getMail());
+        $this->assertEquals($age, $object->getAge());
     }
 
     /**
@@ -59,37 +49,29 @@ class AutowiredFactoryTest extends TestBase
      * @test
      * @dataProvider autowiredForConstantValueProvider
      */
-    public function okAutowiredForConstantValueProvider($propertyName, $value)
+    public function okAutowiredForConstantValueProvider($name, $num)
     {
         $factory = new AutowiredFactory();
-        $instances = $factory->create("\WebStream\Test\TestData\AutowiredTest3");
-        $this->assertEquals($value, $instances[$propertyName]->getValue());
+        $object = $factory->create("\WebStream\Test\TestData\AutowiredTest3");
+        $this->assertInstanceOf("\WebStream\Test\TestData\AutowiredTest3", $object);
+        $this->assertEquals($name, $object->getName());
+        $this->assertEquals($num, $object->getMemberNum());
     }
 
     /**
      * 正常系
-     * @Autowiredと@Typeの順序が逆でもインスタンスを注入できること
+     * @Autowiredと@Type,@Valueの順序が逆でもインスタンスを注入できること
      * @test
+     * @dataProvider autowiredProvider
      */
-    public function okAutowiredForTypeReverse()
+    public function okAutowiredReverse($instance, $mail, $age)
     {
         $factory = new AutowiredFactory();
-        $instances = $factory->create("\WebStream\Test\TestData\AutowiredTest4");
-        $this->assertInstanceOf("\WebStream\Annotation\Type", $instances["name"]);
-        $this->assertInstanceOf("\WebStream\Test\TestData\AutowiredTestType", $instances["name"]->getInstance());
-    }
-
-    /**
-     * 正常系
-     * @Valueで指定した値(プリミティブ型)を注入できること
-     * @test
-     * @dataProvider autowiredForValueProvider
-     */
-    public function okAutowiredForValueReverse($propertyName, $value)
-    {
-        $factory = new AutowiredFactory();
-        $instances = $factory->create("\WebStream\Test\TestData\AutowiredTest4");
-        $this->assertEquals($value, $instances[$propertyName]->getValue());
+        $object = $factory->create("\WebStream\Test\TestData\AutowiredTest4");
+        $this->assertInstanceOf("\WebStream\Test\TestData\AutowiredTest4", $object);
+        $this->assertInstanceOf($instance, $object->getInstance());
+        $this->assertEquals($mail, $object->getMail());
+        $this->assertEquals($age, $object->getAge());
     }
 
     /**
@@ -97,12 +79,11 @@ class AutowiredFactoryTest extends TestBase
      * @Typeで指定したクラスが存在しないまたはrequireされていない場合、
      * 例外が発生すること
      * @test
-     * @dataProvider autowiredInvalidTypeProvider
      * @expectedException WebStream\Exception\AnnotationException
      */
-    public function ngAutowiredInvalidType($classpath)
+    public function ngAutowiredInvalidType()
     {
         $factory = new AutowiredFactory();
-        $factory->create($classpath);
+        $factory->create("\WebStream\Test\TestData\AutowiredTest2");
     }
 }

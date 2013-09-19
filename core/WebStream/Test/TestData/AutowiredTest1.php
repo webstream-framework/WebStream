@@ -11,7 +11,7 @@ class AutowiredTest1
      * @Autowired
      * @Type("\WebStream\Test\TestData\AutowiredTestType")
      */
-    private $name;
+    private $instance;
 
     /**
      * @Autowired
@@ -24,4 +24,19 @@ class AutowiredTest1
      * @Value(17)
      */
     private $age;
+
+    public function getInstance()
+    {
+        return $this->instance;
+    }
+
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    public function getAge()
+    {
+        return $this->age;
+    }
 }

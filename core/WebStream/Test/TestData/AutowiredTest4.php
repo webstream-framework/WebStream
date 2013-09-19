@@ -11,7 +11,7 @@ class AutowiredTest4
      * @Type("\WebStream\Test\TestData\AutowiredTestType")
      * @Autowired
      */
-    private $name;
+    private $instance;
 
     /**
      * @Value("kotori@lovelive.com")
@@ -24,4 +24,19 @@ class AutowiredTest4
      * @Autowired
      */
     private $age;
+
+    public function getInstance()
+    {
+        return $this->instance;
+    }
+
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    public function getAge()
+    {
+        return $this->age;
+    }
 }

@@ -22,12 +22,12 @@ class AutowiredFactory extends AnnotationFactory
     /**
      * @Override
      */
-    public function createReflectionClassInstance($classpath)
+    public function createInstance($classpath)
     {
         $reader = new AnnotationReader();
         $refClass = new \ReflectionClass($classpath);
+        $refInstance = $refClass->newInstance();
         $properties = $refClass->getProperties();
-        $instances = [];
 
         foreach ($properties as $property) {
             $annotations = $reader->getPropertyAnnotations($property);
@@ -38,16 +38,19 @@ class AutowiredFactory extends AnnotationFactory
                     $isAutowired = true;
                 }
             }
+
             if ($isAutowired) {
                 foreach ($annotations as $annotation) {
-                    // @Type,@Valueが同時に指定された場合は@Typeだけ見る
                     if ($annotation instanceof Type || $annotation instanceof Value) {
-                        $instances[$property->getName()] = $annotation;
+                        if ($property->isPrivate() || $property->isProtected()) {
+                            $property->setAccessible(true);
+                        }
+                        $property->setValue($refInstance, $annotation->getValue());
                     }
                 }
             }
         }
 
-        return $instances;
+        return $refInstance;
     }
 }

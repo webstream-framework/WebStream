@@ -2,7 +2,6 @@
 namespace WebStream\Test\TestData;
 
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Type;
 use WebStream\Annotation\Value;
 
 class AutowiredTest3
@@ -18,4 +17,14 @@ class AutowiredTest3
      * @Value(AutowiredConstant::MEMBER_NUM)
      */
     private $memberNum;
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getMemberNum()
+    {
+        return $this->memberNum;
+    }
 }
