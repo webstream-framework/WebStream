@@ -26,7 +26,7 @@ class AutowiredFactory extends AnnotationFactory
     {
         $reader = new AnnotationReader();
         $refClass = new \ReflectionClass($classpath);
-        $refInstance = $refClass->newInstance();
+        $refInstance = $refClass->newInstanceWithoutConstructor();
         $properties = $refClass->getProperties();
 
         foreach ($properties as $property) {
@@ -49,6 +49,11 @@ class AutowiredFactory extends AnnotationFactory
                     }
                 }
             }
+        }
+
+        $constructor = $refClass->getConstructor();
+        if ($constructor !== null) {
+            $constructor->invoke($refInstance);
         }
 
         return $refInstance;
