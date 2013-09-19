@@ -28,20 +28,6 @@ trait Utility
     }
 
     /**
-     * プロジェクトディレクトリ名を返却する
-     * @return string プロジェクトディレクトリ名
-     */
-    // public function getProjectName()
-    // {
-    //     $pjname = null;
-    //     if (preg_match('/.*\/(.*)/', self::getRoot(), $matches)) {
-    //         $pjname = $matches[1];
-    //     }
-
-    //     return $pjname;
-    // }
-
-    /**
      * プロジェクトディレクトリの絶対パスを返す
      * @return string プロジェクトディレクトリの絶対パス
      */
