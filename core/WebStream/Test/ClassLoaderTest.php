@@ -82,6 +82,19 @@ class ClassLoaderTest extends TestBase
     }
 
     /**
+     * 正常系
+     * クラス以外のファイルをインポートできること
+     * @test
+     */
+    public function okImportFile()
+    {
+        $classLoader = new \WebStream\Module\ClassLoader();
+        $isLoad = $classLoader->import("core/WebStream/Test/TestData/ClassLoaderTestImport.php");
+        $this->assertTrue($isLoad);
+        $this->assertTrue(function_exists("testImport"));
+    }
+
+    /**
      * 異常系
      * 存在しないクラスはロードできないこと
      * @test

@@ -53,6 +53,22 @@ class ClassLoader
     }
 
     /**
+     * ファイルをインポートする
+     * @param string ファイルパス
+     * @return boolean インポート結果
+     */
+    public function import($filePath)
+    {
+        $includeFile = $this->getRoot() . DIRECTORY_SEPARATOR . $filePath;
+        if (file_exists($includeFile)) {
+            include_once $includeFile;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * ロード可能なクラスを返却する
      * @param string クラス名
      * @return string ロード可能クラス
