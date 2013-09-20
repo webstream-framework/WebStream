@@ -9,26 +9,17 @@ namespace WebStream\Test\DataProvider;
  */
 trait AutowiredFactoryProvider
 {
-    public function autowiredForValueProvider()
+    public function autowiredProvider()
     {
         return [
-            ["mail", "kotori@lovelive.com"],
-            ["age", 17]
+            ["\WebStream\Test\TestData\AutowiredTestType", "kotori@lovelive.com", 17]
         ];
     }
 
     public function autowiredForConstantValueProvider()
     {
         return [
-            ["name", "honoka"],
-            ["memberNum", 9]
-        ];
-    }
-
-    public function autowiredInvalidTypeProvider()
-    {
-        return [
-            ["\WebStream\Test\TestData\AutowiredTest2"]
+            ["honoka", 9]
         ];
     }
 }
