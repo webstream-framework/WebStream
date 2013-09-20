@@ -15,6 +15,8 @@ class Logger
 
     /** インスタンス */
     private static $logger;
+    /** 設定ファイル */
+    private static $configPath;
 
     /** ログパス */
     private $logPath;
@@ -44,6 +46,7 @@ class Logger
      */
     public static function init($configPath = "config/log.ini")
     {
+        self::$configPath = $configPath;
         self::$logger = new Logger($configPath);
     }
 
@@ -69,7 +72,11 @@ class Logger
     public static function __callStatic($level, $arguments)
     {
         if (self::$logger === null) {
-            throw new LoggerException("Logger is not initialized.");
+            if (self::$configPath !== null) {
+                self::init(self::$configPath);
+            } else {
+                throw new LoggerException("Logger is not initialized.");
+            }
         }
         if (self::$logger->toLogLevelValue($level) >= self::$logger->getLogLevel()) {
             $logArgument = [strtoupper($level)];
