@@ -86,4 +86,32 @@ class FilterFactoryTest extends TestBase
         $result = ob_get_clean();
         $this->assertEquals($result, "ia1a2");
     }
+
+    /**
+     * 正常系
+     * @Filter("Initialize")が実行されること
+     * Before filterより前に実行されること
+     * @test
+     */
+    public function okInitializeFilter()
+    {
+        ob_start();
+        $factory = new FilterFactory();
+        $object = $factory->create("\WebStream\Test\TestData\InitializeFilterTest1");
+        $object->executeAction("index");
+        $result = ob_get_clean();
+        $this->assertEquals($result, "Iai");
+    }
+
+    /**
+     * 異常系
+     * @Filter("Initialize")が複数定義された場合、例外が発生すること
+     * @test
+     * @expectedException WebStream\Exception\AnnotationException
+     */
+    public function ngInitializeFilterMulti()
+    {
+        $factory = new FilterFactory();
+        $object = $factory->create("\WebStream\Test\TestData\InitializeFilterTest2");
+    }
 }
