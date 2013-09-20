@@ -7,7 +7,7 @@ require_once dirname(__FILE__) . '/Utility.php';
  * クラスローダ
  * @author Ryuichi TANAKA.
  * @since 2013/09/02
- * @version 0.4.1
+ * @version 0.4.2
  */
 class ClassLoader
 {
@@ -21,7 +21,7 @@ class ClassLoader
      */
     public function __construct()
     {
-        $this->ignoreFileList = ['.', '..', '.git', '.svn'];
+        $this->ignoreFileList = ['.', '..', '.git', '.svn', ".DS_Store"];
     }
 
     /**
@@ -74,6 +74,13 @@ class ClassLoader
             return $includeFile;
         }
 
+        // 名前空間とディレクトリパスが紐づいていない場合、検索する
+        $regexp = "/" . preg_replace("/\//", "\\\/", $className . ".php$") . "/";
+        $includeFile = $this->searchClass($rootDir . DIRECTORY_SEPARATOR . "core", $regexp);
+        if ($includeFile !== null) {
+            return $includeFile;
+        }
+
         // それでも見つからなかったらappディレクトリを検索
         // appディレクトリは名前空間とディレクトリパスが
         // 紐づいているとは限らないため検索する
@@ -107,6 +114,29 @@ class ClassLoader
         }
 
         return $includeList;
+    }
+
+    /**
+     * ロード可能なクラスを検索する
+     * @param string 検索ディレクトリ
+     * @param string 検索正規表現
+     * @return string モジュールパス
+     */
+    private function searchClass($dir, $regexp)
+    {
+        if (is_dir($dir) && is_readable($dir)) {
+            foreach (glob($dir . '*/', GLOB_ONLYDIR) as $c) {
+                $ttt = $this->searchClass($c, $regexp);
+                if ($ttt !== null) {
+                    return $ttt;
+                }
+            }
+            foreach (glob($dir . '*', GLOB_BRACE) as $filepath) {
+                if (preg_match($regexp, $filepath)) {
+                    return $filepath;
+                }
+            }
+        }
     }
 
     /**
