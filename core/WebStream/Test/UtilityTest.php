@@ -82,4 +82,39 @@ class UtilityTest extends TestBase
         $this->assertEquals($classpath1, $list[0]);
         $this->assertEquals($classpath2, $list[1]);
     }
+
+    /**
+     * 正常系
+     * ファイルから名前空間を取得できること
+     * @test
+     * @dataProvider readNamespaceProvider
+     */
+    public function okReadNamespace($filepath, $namespace)
+    {
+        $path = $this->getNamespace($filepath);
+        $this->assertEquals($path, $namespace);
+    }
+
+    /**
+     * 正常系
+     * 名前空間がないファイルの場合、名前空間が取得できないこと
+     * @test
+     * @dataProvider readNoNamespaceProvider
+     */
+    public function okReadNoNamespace($filepath)
+    {
+        $path = $this->getNamespace($filepath);
+        $this->assertNull($path);
+    }
+
+    /**
+     * 異常系
+     * ファイルが存在しない場合例外が発生すること
+     * @test
+     * @expectedException WebStream\Exception\ResourceNotFoundException
+     */
+    public function ngReadNamespace()
+    {
+        $this->getNamespace("/dummy/Test.php");
+    }
 }
