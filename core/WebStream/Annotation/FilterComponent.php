@@ -105,7 +105,7 @@ class FilterComponent
         $method = $this->refClass->getMethod($methodName);
         $instance = $this->refClass->newInstanceWithoutConstructor();
 
-        return $method->invokeArgs($instance, $arguments);
+        return $method->invokeArgs($instance, [$arguments]);
     }
 
     /**
