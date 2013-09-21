@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\Exception\ResourceNotFoundException;
+
 /**
  * Utility
  * @author Ryuichi Tanaka
@@ -116,6 +118,31 @@ trait Utility
     }
 
     /**
+     * 指定したファイルの名前空間を取得する
+     * @param string ファイルパス
+     * @return string 名前空間
+     */
+    public function getNamespace($filepath)
+    {
+        if (file_exists($filepath)) {
+            $resource = fopen($filepath, "r");
+            while (false !== ($line = fgets($resource))) {
+                if (preg_match("/^namespace\s(.*);$/", $line, $matches)) {
+                    $namespace = $matches[1];
+                    if (substr($namespace, 0) !== '\\') {
+                        $namespace = '\\' . $namespace;
+                    }
+                    return $namespace;
+                }
+            }
+        } else {
+            throw new ResourceNotFoundException("File not found: " . $filepath);
+        }
+
+        return null;
+    }
+
+    /**
      * 設定ファイルをパースする
      * @param string プロジェクトルートからの相対パス
      * @return hash 設定情報
@@ -208,7 +235,7 @@ trait Utility
         return $result;
     }
 
-   /**
+    /**
      * ファイルからmimeタイプを返却する
      * @param string ファイルタイプ
      * @return string mimeタイプ

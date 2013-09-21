@@ -50,4 +50,23 @@ trait UtilityProvider
             ]
         ];
     }
+
+    public function readNamespaceProvider()
+    {
+        return [
+            [
+                '/Users/stay/workspace2/WebStream/core/WebStream/Test/TestData/UtilityReadNamespace.php',
+                '\WebStream\Test\TestData'
+            ]
+        ];
+    }
+
+    public function readNoNamespaceProvider()
+    {
+        return [
+            [
+                '/Users/stay/workspace2/WebStream/core/WebStream/Test/TestData/UtilityReadNoNamespace.php'
+            ]
+        ];
+    }
 }
