@@ -2,9 +2,11 @@
 namespace WebStream\Test;
 
 use WebStream\Module\Utility;
+use WebStream\Test\DataProvider\UtilityProvider;
 
 require_once 'TestBase.php';
 require_once 'TestConstant.php';
+require_once 'DataProvider/UtilityProvider.php';
 
 /**
  * UtilityTest
@@ -14,7 +16,7 @@ require_once 'TestConstant.php';
  */
 class UtilityTest extends TestBase
 {
-    use Utility, TestConstant;
+    use Utility, UtilityProvider, TestConstant;
 
     public function setUp()
     {
@@ -29,5 +31,55 @@ class UtilityTest extends TestBase
     public function okGetProjectRoot()
     {
         $this->assertEquals($this->getProjectRootPath(), $this->getRoot());
+    }
+
+    /**
+     * 正常系
+     * ファイル検索できること
+     * @test
+     * @dataProvider fileSearchProvider
+     */
+    public function okFileSearch($word, $classpath)
+    {
+        $list = $this->fileSearch($word);
+        $this->assertEquals($classpath, $list[0]);
+    }
+
+    /**
+     * 正常系
+     * 複数ファイル検索できること
+     * @test
+     * @dataProvider multipleFileSearchProvider
+     */
+    public function okMultipleFileSearch($word, $classpath1, $classpath2)
+    {
+        $list = $this->fileSearch($word);
+        $this->assertEquals($classpath1, $list[0]);
+        $this->assertEquals($classpath2, $list[1]);
+    }
+
+    /**
+     * 正常系
+     * 正規表現でファイル検索できること
+     * @test
+     * @dataProvider regexpFileSearchProvider
+     */
+    public function okRegexpFileSearch($regexp, $classpath)
+    {
+        $list = $this->fileSearchRegexp($regexp);
+        $this->assertEquals($classpath, $list[0]);
+    }
+
+    /**
+     * 正常系
+     * 複数ファイル検索できること
+     * @test
+     * @dataProvider regexpMultipleFileSearchProvider
+     */
+    public function okRegexpMultipleFileSearch($regexp, $classpath1, $classpath2)
+    {
+        $list = $this->fileSearchRegexp($regexp);
+        $this->assertEquals($classpath1, $list[0]);
+        $this->assertEquals($classpath2, $list[1]);
     }
 }

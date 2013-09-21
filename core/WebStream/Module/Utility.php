@@ -54,6 +54,68 @@ trait Utility
     }
 
     /**
+     * ファイル検索する
+     * @param string ファイル名
+     * @param string 検索起点のディレクトリパス
+     * @param integer 深さ(指定しない)
+     * @param array ファイルパスリスト(指定しない)
+     * @return array 検索結果
+     */
+    public function fileSearch($className, $dir = null, &$depth = 0, &$filepathList = [])
+    {
+        if ($dir === null) {
+            $dir = $this->getRoot();
+        }
+        if (is_dir($dir) && is_readable($dir)) {
+            foreach (glob($dir . '*/', GLOB_ONLYDIR) as $c) {
+                ++$depth;
+                $this->fileSearch($className, $c, $depth, $filepathList);
+            }
+            foreach (glob($dir . '*', GLOB_BRACE) as $filepath) {
+                if (strpos($filepath, $className) !== false) {
+                    --$depth;
+                    $filepathList[] = $filepath;
+                }
+            }
+        }
+        if ($depth === 0) {
+            return $filepathList;
+        }
+        --$depth;
+    }
+
+    /**
+     * ファイル検索する
+     * @param string 正規表現
+     * @param string 検索起点のディレクトリパス
+     * @param integer 深さ(指定しない)
+     * @param array ファイルパスリスト(指定しない)
+     * @return array 検索結果
+     */
+    public function fileSearchRegexp($regexp, $dir = null, &$depth = 0, &$filepathList = [])
+    {
+        if ($dir === null) {
+            $dir = $this->getRoot();
+        }
+        if (is_dir($dir) && is_readable($dir)) {
+            foreach (glob($dir . '*/', GLOB_ONLYDIR) as $c) {
+                ++$depth;
+                $this->fileSearchRegexp($regexp, $c, $depth, $filepathList);
+            }
+            foreach (glob($dir . '*', GLOB_BRACE) as $filepath) {
+                if (preg_match($regexp, $filepath)) {
+                    --$depth;
+                    $filepathList[] = $filepath;
+                }
+            }
+        }
+        if ($depth === 0) {
+            return $filepathList;
+        }
+        --$depth;
+    }
+
+    /**
      * 設定ファイルをパースする
      * @param string プロジェクトルートからの相対パス
      * @return hash 設定情報
