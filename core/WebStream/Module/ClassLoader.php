@@ -43,7 +43,13 @@ class ClassLoader
         } else {
             $includeFile = $this->loadClass($className);
             if ($includeFile !== null) {
-                include_once $includeFile;
+                if (is_array($includeFile)) {
+                    foreach ($includeFile as $filepath) {
+                        include_once $filepath;
+                    }
+                } else {
+                    include_once $includeFile;
+                }
             } else {
                 return false;
             }
@@ -71,7 +77,7 @@ class ClassLoader
     /**
      * ロード可能なクラスを返却する
      * @param string クラス名
-     * @return string ロード可能クラス
+     * @return string|array ロード可能クラス
      */
     private function loadClass($className)
     {
@@ -90,23 +96,28 @@ class ClassLoader
             return $includeFile;
         }
 
-        // 名前空間とディレクトリパスが紐づいていない場合、検索する
-        $regexp = "/" . preg_replace("/\//", "\\\/", $className . ".php$") . "/";
-        $includeFile = $this->searchClass($rootDir . DIRECTORY_SEPARATOR . "core", $regexp);
-        if ($includeFile !== null) {
-            return $includeFile;
-        }
-
         // それでも見つからなかったらappディレクトリを検索
         // appディレクトリは名前空間とディレクトリパスが
         // 紐づいているとは限らないため検索する
         // 名前空間パスは排除してクラス名で検索する
         $list = preg_split("/\//", $className);
         $className = end($list);
-
         $includeFile = $this->existModule($rootDir, $className);
         if ($includeFile !== null) {
             return $includeFile;
+        }
+
+        // さらに見つからない場合は、coreディレクトリを全検索する
+        $regexp = "/" . preg_replace("/\//", "\\\/", $className) . "/";
+        $includeList = $this->fileSearchRegexp($regexp, $rootDir . DIRECTORY_SEPARATOR . "core/WebStream");
+        if (count($includeList) > 0) {
+            return $includeList;
+        }
+
+        // なおも見つからない場合は、appディレクトリを全検索する
+        $includeList = $this->fileSearchRegexp($regexp, $rootDir . DIRECTORY_SEPARATOR . "app");
+        if (count($includeList) > 0) {
+            return $includeList;
         }
 
         return null;
@@ -130,29 +141,6 @@ class ClassLoader
         }
 
         return $includeList;
-    }
-
-    /**
-     * ロード可能なクラスを検索する
-     * @param string 検索ディレクトリ
-     * @param string 検索正規表現
-     * @return string モジュールパス
-     */
-    private function searchClass($dir, $regexp)
-    {
-        if (is_dir($dir) && is_readable($dir)) {
-            foreach (glob($dir . '*/', GLOB_ONLYDIR) as $c) {
-                $ttt = $this->searchClass($c, $regexp);
-                if ($ttt !== null) {
-                    return $ttt;
-                }
-            }
-            foreach (glob($dir . '*', GLOB_BRACE) as $filepath) {
-                if (preg_match($regexp, $filepath)) {
-                    return $filepath;
-                }
-            }
-        }
     }
 
     /**

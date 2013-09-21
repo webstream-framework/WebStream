@@ -95,6 +95,22 @@ class ClassLoaderTest extends TestBase
     }
 
     /**
+     * 正常系
+     * 検索結果で複数のファイルが該当した場合、全てロードされること
+     * @test
+     */
+    public function okSearchMultipleFile()
+    {
+        $classLoader = new \WebStream\Module\ClassLoader();
+        $isLoad = $classLoader->load("UtilityFileSearch");
+        $this->assertTrue($isLoad);
+        $instance1 = new \WebStream\Test\TestData\UtilityFileSearch1();
+        $instance2 = new \WebStream\Test\TestData\UtilityFileSearch2();
+        $this->assertTrue($instance1 instanceof \WebStream\Test\TestData\UtilityFileSearch1);
+        $this->assertTrue($instance2 instanceof \WebStream\Test\TestData\UtilityFileSearch2);
+    }
+
+    /**
      * 異常系
      * 存在しないクラスはロードできないこと
      * @test
