@@ -8,20 +8,20 @@ use WebStream\Utility;
  * @since 2011/08/25
  */
 require_once 'UnitTestBase.php';
- 
+
 class LoggerTest extends UnitTestBase {
-    
+
     public function setUp() {
         $this->loadModule();
     }
-    
+
     public function tearDown() {
         $log_path = Utility::getRoot() . $this->testdata_dir . "/log/stream.log";
         $handle = fopen($log_path, "w+");
         fclose($handle);
         chmod($log_path, 0777);
     }
-    
+
     private function write($level, $config_path, $msg, $stacktrace = null) {
         Logger::init($config_path);
         if ($level === "DEBUG") {
@@ -40,7 +40,7 @@ class LoggerTest extends UnitTestBase {
             Logger::fatal($msg, $stacktrace);
         }
     }
-    
+
     /**
      * 正常系
      * ログレベルが「debug」のとき、
@@ -82,7 +82,7 @@ class LoggerTest extends UnitTestBase {
         $config_path = $this->config_path_log . $config_path;
         $this->write($level, $config_path, $msg, $stacktrace);
         $line_tail = $this->logTail($config_path);
-        
+
         if ($level === "DEBUG") {
             $this->assertNull($line_tail);
         }
@@ -119,7 +119,7 @@ class LoggerTest extends UnitTestBase {
         $config_path = $this->config_path_log . $config_path;
         $this->write($level, $config_path, $msg, $stacktrace);
         $line_tail = $this->logTail($config_path);
-        
+
         if ($level === "DEBUG" || $level === "INFO") {
             $this->assertNull($line_tail);
         }
@@ -156,7 +156,7 @@ class LoggerTest extends UnitTestBase {
         $config_path = $this->config_path_log . $config_path;
         $this->write($level, $config_path, $msg, $stacktrace);
         $line_tail = $this->logTail($config_path);
-        
+
         if ($level === "DEBUG" || $level === "INFO" || $level === "WARN") {
             $this->assertNull($line_tail);
         }
@@ -193,7 +193,7 @@ class LoggerTest extends UnitTestBase {
         $config_path = $this->config_path_log . $config_path;
         $this->write($level, $config_path, $msg, $stacktrace);
         $line_tail = $this->logTail($config_path);
-        
+
         if ($level === "DEBUG" || $level === "INFO" || $level === "WARN" || $level === "ERROR") {
             $this->assertNull($line_tail);
         }
@@ -219,7 +219,7 @@ class LoggerTest extends UnitTestBase {
             }
         }
     }
-    
+
     /**
      * 正常系
      * ログ設定ファイルにローテート設定が日単位かつログファイル作成日が24時間以内の場合、
@@ -240,7 +240,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -267,7 +267,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -298,7 +298,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -325,7 +325,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -356,7 +356,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -383,7 +383,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -414,7 +414,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -441,7 +441,7 @@ class LoggerTest extends UnitTestBase {
              . "/log/stream.${created_at_date}-${now_date}.log";
         // テスト用のステータスファイルを作成
         file_put_contents($status_path, $created_at);
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
         // ローテートされたかチェック
@@ -451,7 +451,7 @@ class LoggerTest extends UnitTestBase {
             unlink($rotated_log_path);
         }
     }
-    
+
     /**
      * 正常系
      * ログ設定ファイルにローテート設定(サイズ単位)されていて、現在のログサイズが
@@ -467,16 +467,16 @@ class LoggerTest extends UnitTestBase {
         }
         fclose($handle);
 
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
-        
+
         $now = intval(preg_replace('/^.*\s/', '', microtime()));
         $now_date = $created_at_date = date("YmdHis", $now);
         // ローテートファイル名
         $rotated_log_path = Utility::getRoot() . $this->testdata_dir
              . "/log/stream.${created_at_date}-${now_date}.log";
-        
+
         // ローテートされていればローテートしたログファイルが存在する
         $this->assertFileExists($rotated_log_path);
         // ローテートしたログファイルを削除
@@ -484,7 +484,7 @@ class LoggerTest extends UnitTestBase {
             unlink($rotated_log_path);
         }
     }
-    
+
     /**
      * 正常系
      * ログ設定ファイルにローテート設定(サイズ単位)されていて、現在のログサイズが
@@ -500,10 +500,10 @@ class LoggerTest extends UnitTestBase {
         }
         fclose($handle);
 
-        // ログ書き出し        
+        // ログ書き出し
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
-        
+
         $now = intval(preg_replace('/^.*\s/', '', microtime()));
         $now_date = $created_at_date = date("YmdHis", $now);
         // ローテートファイル名
@@ -524,7 +524,7 @@ class LoggerTest extends UnitTestBase {
         Logger::init("dummy.ini");
         $this->assertTrue(false);
     }
-    
+
     /**
      * 異常系
      * ログ設定ファイルのログファイルパスが存在しない場合、例外が発生すること
@@ -536,7 +536,7 @@ class LoggerTest extends UnitTestBase {
         Logger::init($comfig_path);
         $this->assertTrue(false);
     }
-    
+
     /**
      * 異常系
      * ログ設定ファイルのログレベルが不正な場合、例外が発生すること
@@ -548,7 +548,7 @@ class LoggerTest extends UnitTestBase {
         Logger::init($comfig_path);
         $this->assertTrue(false);
     }
-    
+
     /**
      * 異常系
      * ログの書き込み権限がない場合、例外が発生すること
@@ -560,7 +560,7 @@ class LoggerTest extends UnitTestBase {
         Logger::info("test");
         $this->assertTrue(false);
     }
-    
+
     /**
      * 異常系
      * ログ設定ファイルにローテート設定(時間単位)が指定されない場合、
@@ -574,7 +574,7 @@ class LoggerTest extends UnitTestBase {
         $this->write("INFO", $config_path, "test");
         $this->assertFalse(file_exists($status_path));
     }
-    
+
     /**
      * 異常系
      * ログ設定ファイルのローテート設定(時間単位)が間違っている場合、例外が発生すること
@@ -586,7 +586,7 @@ class LoggerTest extends UnitTestBase {
         $config_path = $this->config_path_log . $config_path;
         $this->write("INFO", $config_path, "test");
     }
-    
+
     /**
      * 異常系
      * ログ設定ファイルにローテート設定(サイズ単位)が指定されない場合、
@@ -600,7 +600,7 @@ class LoggerTest extends UnitTestBase {
         $this->write("INFO", $config_path, "test");
         $this->assertFalse(file_exists($status_path));
     }
-    
+
     /**
      * 異常系
      * ログ設定ファイルのローテート設定(サイズ単位)が間違っている場合、例外が発生すること
