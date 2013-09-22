@@ -14,6 +14,9 @@ class FilterComponent
     /** 実行対象のリフレクションクラス */
     private $refClass;
 
+    /** refClassのインスタンス */
+    private $instance;
+
     /** initialize filter method */
     private $initializeMethod;
 
@@ -57,13 +60,15 @@ class FilterComponent
     public function setInstance(\ReflectionClass $refClass)
     {
         $this->refClass = $refClass;
+        $this->instance = $refClass->newInstanceWithoutConstructor();
     }
 
     /**
      * constructor
      */
-    public function __construct()
+    public function __construct($arguments)
     {
+        $this->executeConstructor($arguments);
         $this->executeInitializeFilter();
         $this->executeBeforeFilter();
     }
@@ -76,13 +81,18 @@ class FilterComponent
         $this->executeAfterFilter();
     }
 
+    private function executeConstructor($arguments) {
+        $constructor = $this->refClass->getConstructor();
+        $constructor->invokeArgs($this->instance, $arguments);
+    }
+
     /**
      * initialize filterを実行する
      */
     private function executeInitializeFilter()
     {
         if ($this->initializeMethod !== null) {
-            $this->initializeMethod->invoke($this->refClass->newInstance());
+            $this->initializeMethod->invoke($this->instance);
         }
     }
 
@@ -92,7 +102,7 @@ class FilterComponent
     private function executeBeforeFilter()
     {
         foreach ($this->beforeQueue as $method) {
-            $method->invoke($this->refClass->newInstance());
+            $method->invoke($this->instance);
         }
     }
 
@@ -121,7 +131,7 @@ class FilterComponent
     private function executeAfterFilter()
     {
         foreach ($this->afterQueue as $method) {
-            $method->invoke($this->refClass->newInstance());
+            $method->invoke($this->instance);
         }
     }
 }

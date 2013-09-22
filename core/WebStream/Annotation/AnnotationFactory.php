@@ -26,18 +26,20 @@ abstract class AnnotationFactory
     /**
      * インスタンスを返却する
      * @param string クラスパス
+     * @param array 引数リスト
      * @return object インスタンス
      */
-    public function create($classpath)
+    public function create($classpath, $arguments = [])
     {
-        return $this->createInstance($classpath);
+        return $this->createInstance($classpath, $arguments);
     }
 
     /**
      * インスタンスを返却する抽象メソッド
      * @param string クラスパス
+     * @param array 引数リスト
      */
-    abstract protected function createInstance($classpath);
+    abstract protected function createInstance($classpath, $arguments);
 
     /**
      * クラスローダを実行する抽象メソッド

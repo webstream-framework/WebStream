@@ -108,7 +108,8 @@ class FilterFactoryTest extends TestBase
      * 親クラスのフィルタを実行出来ること
      * @test
      */
-    public function okOverrideMethodFilter() {
+    public function okOverrideMethodFilter()
+    {
         ob_start();
         $factory = new FilterFactory();
         $object = $factory->create("\WebStream\Test\TestData\FilterOverrideTest1");

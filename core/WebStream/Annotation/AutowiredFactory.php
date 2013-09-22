@@ -22,7 +22,7 @@ class AutowiredFactory extends AnnotationFactory
     /**
      * @Override
      */
-    public function createInstance($classpath)
+    public function createInstance($classpath, $arguments)
     {
         $reader = new AnnotationReader();
         $refClass = new \ReflectionClass($classpath);

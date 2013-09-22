@@ -24,7 +24,7 @@ class FilterFactory extends AnnotationFactory
     /**
      * @Override
      */
-    public function createInstance($classpath)
+    public function createInstance($classpath, $arguments)
     {
         $reader = new AnnotationReader();
         try {
@@ -81,11 +81,12 @@ class FilterFactory extends AnnotationFactory
             }
 
             $constructor = $componentClass->getConstructor();
-            $constructor->invoke($componentInstance);
+            $constructor->invokeArgs($componentInstance, [$arguments]);
 
             return $componentInstance;
 
         } catch (\ReflectionException $e) {
+            var_dump($e->getTraceAsString());
             throw new ClassNotFoundException("Class not found: " . $classpath);
         }
     }
