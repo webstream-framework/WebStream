@@ -104,6 +104,20 @@ class FilterFactoryTest extends TestBase
     }
 
     /**
+     * 正常系
+     * 親クラスのフィルタを実行出来ること
+     * @test
+     */
+    public function okOverrideMethodFilter() {
+        ob_start();
+        $factory = new FilterFactory();
+        $object = $factory->create("\WebStream\Test\TestData\FilterOverrideTest1");
+        $object->executeAction("index");
+        $result = ob_get_clean();
+        $this->assertEquals($result, "a1a2i");
+    }
+
+    /**
      * 異常系
      * @Filter("Initialize")が複数定義された場合、例外が発生すること
      * @test
