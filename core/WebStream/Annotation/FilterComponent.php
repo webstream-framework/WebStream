@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Annotation;
 
+use WebStream\Exception\MethodNotFoundException;
+
 /**
  * FilterComponent
  * @author Ryuichi TANAKA.
@@ -102,10 +104,15 @@ class FilterComponent
      */
     public function executeAction($methodName, $arguments = [])
     {
-        $method = $this->refClass->getMethod($methodName);
-        $instance = $this->refClass->newInstanceWithoutConstructor();
+        try {
+            $method = $this->refClass->getMethod($methodName);
+            $instance = $this->refClass->newInstanceWithoutConstructor();
 
-        return $method->invokeArgs($instance, [$arguments]);
+            return $method->invokeArgs($instance, [$arguments]);
+        } catch (\ReflectionException $e) {
+            $className = $this->refClass->getName();
+            throw new MethodNotFoundException("Method not found at $className: $methodName");
+        }
     }
 
     /**
