@@ -135,8 +135,6 @@ trait Utility
                     return $namespace;
                 }
             }
-        } else {
-            throw new ResourceNotFoundException("File not found: " . $filepath);
         }
 
         return null;

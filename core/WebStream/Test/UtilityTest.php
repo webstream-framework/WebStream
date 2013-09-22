@@ -106,15 +106,4 @@ class UtilityTest extends TestBase
         $path = $this->getNamespace($filepath);
         $this->assertNull($path);
     }
-
-    /**
-     * 異常系
-     * ファイルが存在しない場合例外が発生すること
-     * @test
-     * @expectedException WebStream\Exception\ResourceNotFoundException
-     */
-    public function ngReadNamespace()
-    {
-        $this->getNamespace("/dummy/Test.php");
-    }
 }
