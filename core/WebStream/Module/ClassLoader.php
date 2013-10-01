@@ -82,7 +82,6 @@ class ClassLoader
     private function loadClass($className)
     {
         $rootDir = $this->getRoot();
-
         // 名前空間セパレータをパスセパレータに置換
         if (DIRECTORY_SEPARATOR === '/') {
             $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);
@@ -96,25 +95,30 @@ class ClassLoader
             return $includeFile;
         }
 
-        // それでも見つからなかったらappディレクトリを検索
-        // appディレクトリは名前空間とディレクトリパスが
-        // 紐づいているとは限らないため検索する
-        // 名前空間パスは排除してクラス名で検索する
-        $list = preg_split("/\//", $className);
-        $className = end($list);
-        $includeFile = $this->existModule($rootDir, $className);
+        // 次にcoreディレクトリを名前空間付きで全検索する
+        $includeFile = $this->existModule($rootDir . "/core", $className);
         if ($includeFile !== null) {
             return $includeFile;
         }
 
-        // さらに見つからない場合は、coreディレクトリを全検索する
+        // それでも見つからなかったらappディレクトリを名前空間付きで全検索
+        $includeFile = $this->existModule($rootDir . "/app", $className);
+        if ($includeFile !== null) {
+            return $includeFile;
+        }
+
+        // 名前空間を除去し、クラス名を抽出する
+        $list = preg_split("/\//", $className);
+        $className = end($list);
+
+        // さらに見つからない場合は、coreディレクトリをファイル名で全検索する
         $regexp = "/" . preg_replace("/\//", "\\\/", $className) . "/";
         $includeList = $this->fileSearchRegexp($regexp, $rootDir . DIRECTORY_SEPARATOR . "core/WebStream");
         if (count($includeList) > 0) {
             return $includeList;
         }
 
-        // なおも見つからない場合は、appディレクトリを全検索する
+        // なおも見つからない場合は、appディレクトリをファイル名で全検索する
         $includeList = $this->fileSearchRegexp($regexp, $rootDir . DIRECTORY_SEPARATOR . "app");
         if (count($includeList) > 0) {
             return $includeList;
