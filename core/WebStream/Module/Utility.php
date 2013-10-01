@@ -135,6 +135,7 @@ trait Utility
                     return $namespace;
                 }
             }
+            fclose($resource);
         }
 
         return null;
