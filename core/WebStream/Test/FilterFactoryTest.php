@@ -129,4 +129,16 @@ class FilterFactoryTest extends TestBase
         $factory = new FilterFactory();
         $object = $factory->create("\WebStream\Test\TestData\InitializeFilterTest2");
     }
+
+    /**
+     * 異常系
+     * 間違ったアノテーション定義をした場合、例外が発生すること
+     * @test
+     * @expectedException WebStream\Exception\AnnotationException
+     */
+    public function ngFilterAnnotationDefinition()
+    {
+        $factory = new FilterFactory();
+        $factory->create("\WebStream\Test\TestData\FilterExceptionTest1");
+    }
 }
