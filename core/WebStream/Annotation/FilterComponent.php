@@ -81,9 +81,12 @@ class FilterComponent
         $this->executeAfterFilter();
     }
 
-    private function executeConstructor($arguments) {
+    private function executeConstructor($arguments)
+    {
         $constructor = $this->refClass->getConstructor();
-        $constructor->invokeArgs($this->instance, $arguments);
+        if ($constructor !== null) {
+            $constructor->invokeArgs($this->instance, $arguments);
+        }
     }
 
     /**
@@ -116,9 +119,7 @@ class FilterComponent
     {
         try {
             $method = $this->refClass->getMethod($methodName);
-            $instance = $this->refClass->newInstanceWithoutConstructor();
-
-            return $method->invokeArgs($instance, [$arguments]);
+            return $method->invokeArgs($this->instance, [$arguments]);
         } catch (\ReflectionException $e) {
             $className = $this->refClass->getName();
             throw new MethodNotFoundException("Method not found at $className: $methodName");

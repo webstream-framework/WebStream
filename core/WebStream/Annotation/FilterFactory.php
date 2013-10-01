@@ -1,9 +1,10 @@
 <?php
 namespace WebStream\Annotation;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use WebStream\Exception\AnnotationException;
 use WebStream\Exception\ClassNotFoundException;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * AutowiredFactory
@@ -19,6 +20,7 @@ class FilterFactory extends AnnotationFactory
     public function classLoad()
     {
         $this->classLoader->load(["AbstractAnnotation", "Inject", "Filter"]);
+        $this->classLoader->load("Doctrine/Common/Annotations/AnnotationException");
     }
 
     /**
@@ -85,8 +87,9 @@ class FilterFactory extends AnnotationFactory
 
             return $componentInstance;
 
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e->getMessage());
         } catch (\ReflectionException $e) {
-            var_dump($e->getTraceAsString());
             throw new ClassNotFoundException("Class not found: " . $classpath);
         }
     }
