@@ -86,4 +86,16 @@ class AutowiredFactoryTest extends TestBase
         $factory = new AutowiredFactory();
         $factory->create("\WebStream\Test\TestData\AutowiredTest2");
     }
+
+    /**
+     * 異常系
+     * 間違ったアノテーション定義をした場合、例外が発生すること
+     * @test
+     * @expectedException WebStream\Exception\AnnotationException
+     */
+    public function ngAutowiredAnnotationDefinition()
+    {
+        $factory = new AutowiredFactory();
+        $factory->create("\WebStream\Test\TestData\AutowiredTest6");
+    }
 }

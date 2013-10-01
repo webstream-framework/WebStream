@@ -1,7 +1,9 @@
 <?php
 namespace WebStream\Annotation;
 
+use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * AutowiredFactory
@@ -17,6 +19,7 @@ class AutowiredFactory extends AnnotationFactory
     public function classLoad()
     {
         $this->classLoader->load(["AbstractAnnotation", "Autowired", "Type", "Value"]);
+        $this->classLoader->load("Doctrine/Common/Annotations/AnnotationException");
     }
 
     /**
@@ -25,37 +28,46 @@ class AutowiredFactory extends AnnotationFactory
     public function createInstance($classpath, $arguments)
     {
         $reader = new AnnotationReader();
-        $refClass = new \ReflectionClass($classpath);
-        $refInstance = $refClass->newInstanceWithoutConstructor();
-        $properties = $refClass->getProperties();
+        try {
+            $refClass = new \ReflectionClass($classpath);
+            $refInstance = $refClass->newInstanceWithoutConstructor();
+            $constructor = $refClass->getConstructor();
 
-        foreach ($properties as $property) {
-            $annotations = $reader->getPropertyAnnotations($property);
+            while ($refClass !== false) {
+                $properties = $refClass->getProperties();
+                foreach ($properties as $property) {
+                    $annotations = $reader->getPropertyAnnotations($property);
 
-            $isAutowired = false;
-            foreach ($annotations as $annotation) {
-                if ($annotation instanceof Autowired) {
-                    $isAutowired = true;
-                }
-            }
-
-            if ($isAutowired) {
-                foreach ($annotations as $annotation) {
-                    if ($annotation instanceof Type || $annotation instanceof Value) {
-                        if ($property->isPrivate() || $property->isProtected()) {
-                            $property->setAccessible(true);
+                    $isAutowired = false;
+                    foreach ($annotations as $annotation) {
+                        if ($annotation instanceof Autowired) {
+                            $isAutowired = true;
                         }
-                        $property->setValue($refInstance, $annotation->getValue());
+                    }
+
+                    if ($isAutowired) {
+                        foreach ($annotations as $annotation) {
+                            if ($annotation instanceof Type || $annotation instanceof Value) {
+                                if ($property->isPrivate() || $property->isProtected()) {
+                                    $property->setAccessible(true);
+                                }
+                                $property->setValue($refInstance, $annotation->getValue());
+                            }
+                        }
                     }
                 }
+
+                $refClass = $refClass->getParentClass();
             }
-        }
 
-        $constructor = $refClass->getConstructor();
-        if ($constructor !== null) {
-            $constructor->invoke($refInstance);
-        }
+            if ($constructor !== null) {
+                $constructor->invoke($refInstance);
+            }
 
-        return $refInstance;
+            return $refInstance;
+
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e->getMessage());
+        }
     }
 }
