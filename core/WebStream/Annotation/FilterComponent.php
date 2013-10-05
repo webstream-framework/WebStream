@@ -1,138 +1,87 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Exception\MethodNotFoundException;
+use WebStream\Module\Container;
 
 /**
  * FilterComponent
  * @author Ryuichi TANAKA.
- * @since 2013/09/19
+ * @since 2013/10/06
  * @version 0.4
  */
 class FilterComponent
 {
-    /** 実行対象のリフレクションクラス */
-    private $refClass;
+    /** initialize filter container */
+    private $initializeContainer;
 
-    /** refClassのインスタンス */
-    private $instance;
+    /** before filter container */
+    private $beforeContainer;
 
-    /** initialize filter method */
-    private $initializeMethod;
-
-    /** before filter queue */
-    private $beforeQueue = [];
-
-    /** after filter queue */
-    private $afterQueue = [];
+    /** after filter container */
+    private $afterContainer;
 
     /**
-     * initialize filter methodに実行するメソッドを設定する
-     * @param object メソッドオブジェクト
+     * initialize filterコンテナを設定する
+     * @return Container コンテナ
      */
-    public function setInitializeMethod(\ReflectionMethod $method)
+    public function setInitializeContainer(Container $container)
     {
-        $this->initializeMethod = $method;
+        $this->initializeContainer = $container;
     }
 
     /**
-     * before filter queueに実行するメソッドを設定する
-     * @param object メソッドオブジェクト
+     * before filterコンテナを設定する
+     * @return Container コンテナ
      */
-    public function setBeforeQueue(\ReflectionMethod $method)
+    public function setBeforeContainer(Container $container)
     {
-        $this->beforeQueue[] = $method;
+        $this->beforeContainer = $container;
     }
 
     /**
-     * after filter queueに実行するメソッドを設定する
-     * @param object メソッドオブジェクト
+     * after filterコンテナを設定する
+     * @return Container コンテナ
      */
-    public function setAfterQueue(\ReflectionMethod $method)
+    public function setAfterContainer(Container $container)
     {
-        $this->afterQueue[] = $method;
-    }
-
-    /**
-     * 実行対象のインスタンスを設定する
-     * @param object インスタンス
-     */
-    public function setInstance(\ReflectionClass $refClass)
-    {
-        $this->refClass = $refClass;
-        $this->instance = $refClass->newInstanceWithoutConstructor();
-    }
-
-    /**
-     * constructor
-     */
-    public function __construct($arguments)
-    {
-        $this->executeConstructor($arguments);
-        $this->executeInitializeFilter();
-        $this->executeBeforeFilter();
-    }
-
-    /**
-     * destructor
-     */
-    public function __destruct()
-    {
-        $this->executeAfterFilter();
-    }
-
-    private function executeConstructor($arguments)
-    {
-        $constructor = $this->refClass->getConstructor();
-        if ($constructor !== null) {
-            $constructor->invokeArgs($this->instance, $arguments);
-        }
+        $this->afterContainer = $container;
     }
 
     /**
      * initialize filterを実行する
+     * @return Container コンテナ
      */
-    private function executeInitializeFilter()
+    public function initialize()
     {
-        if ($this->initializeMethod !== null) {
-            $this->initializeMethod->invoke($this->instance);
-        }
+        $this->execute($this->initializeContainer);
     }
 
     /**
      * before filterを実行する
+     * @return Container コンテナ
      */
-    private function executeBeforeFilter()
+    public function before()
     {
-        foreach ($this->beforeQueue as $method) {
-            $method->invoke($this->instance);
-        }
-    }
-
-    /**
-     * 対象インスタンスのメソッドを実行する
-     * @param string メソッド名
-     * @param array 引数のリスト
-     * @return mixed 戻り値
-     */
-    public function executeAction($methodName, $arguments = [])
-    {
-        try {
-            $method = $this->refClass->getMethod($methodName);
-            return $method->invokeArgs($this->instance, [$arguments]);
-        } catch (\ReflectionException $e) {
-            $className = $this->refClass->getName();
-            throw new MethodNotFoundException("Method not found at $className: $methodName");
-        }
+        $this->execute($this->beforeContainer);
     }
 
     /**
      * after filterを実行する
+     * @return Container コンテナ
      */
-    private function executeAfterFilter()
+    public function after()
     {
-        foreach ($this->afterQueue as $method) {
-            $method->invoke($this->instance);
+        $this->execute($this->afterContainer);
+    }
+
+    /**
+     * filterを実行する
+     * @return Container コンテナ
+     */
+    private function execute($containerList)
+    {
+        for ($i = 0; $i < $containerList->length(); $i++) {
+            $containerList->get($i);
         }
     }
 }
