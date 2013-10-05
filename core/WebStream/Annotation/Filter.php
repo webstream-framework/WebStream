@@ -23,7 +23,7 @@ class Filter extends AbstractAnnotation
     /** after filter */
     private $isAfter;
 
-    /** Annotation value contants */
+    /** Annotation value constants */
     const VALUE_INITIALIZE = "Initialize";
     const VALUE_BEFORE = "Before";
     const VALUE_AFTER = "After";

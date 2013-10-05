@@ -15,7 +15,7 @@ abstract class AbstractAnnotation
     /**
      * Constructor
      */
-    public function __construct($annotations = array())
+    public function __construct($annotations = [])
     {
         $this->annotations = $annotations;
         $this->onInject();
