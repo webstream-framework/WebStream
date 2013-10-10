@@ -18,20 +18,10 @@ class FilterReader extends AnnotationReader
     /**
      * @Override
      */
-    public function classLoad()
-    {
-        $this->classLoader->load(["AbstractAnnotation", "Inject", "Filter", "Render"]);
-        $this->classLoader->load("Doctrine/Common/Annotations/AnnotationException");
-    }
-
-    /**
-     * @Override
-     */
-    public function readAnnotation($classpath, $method)
+    public function readAnnotation($refClass, $method)
     {
         $reader = new DoctrineAnnotationReader();
         try {
-            $refClass = new \ReflectionClass($classpath);
             $component = new FilterComponent();
 
             $isInitializeDefined = false;
@@ -64,7 +54,6 @@ class FilterReader extends AnnotationReader
                                     if ($isInitializeDefined) {
                                         throw new AnnotationException("Can not multiple define @Filter(\"Initialize\") at method.");
                                     }
-
                                     $initializeContainer->registerAsLazy(0, function() use ($method) {
                                         $refClass = new \ReflectionClass($method->class);
                                         $instance = $refClass->newInstanceWithoutConstructor();
@@ -74,7 +63,6 @@ class FilterReader extends AnnotationReader
                                     $isInitializeDefined = true;
                                 }
                                 if ($annotation->enableBefore()) {
-                                    // }
                                     $beforeContainer->registerAsLazy($i++, function() use ($method) {
                                         $refClass = new \ReflectionClass($method->class);
                                         $instance = $refClass->newInstanceWithoutConstructor();
@@ -83,7 +71,6 @@ class FilterReader extends AnnotationReader
                                     });
                                 }
                                 if ($annotation->enableAfter()) {
-
                                     $afterContainer->registerAsLazy($j++, function() use ($method) {
                                         $refClass = new \ReflectionClass($method->class);
                                         $instance = $refClass->newInstanceWithoutConstructor();
@@ -102,7 +89,6 @@ class FilterReader extends AnnotationReader
             $component->setInitializeContainer($initializeContainer);
             $component->setBeforeContainer($beforeContainer);
             $component->setAfterContainer($afterContainer);
-
 
             return $component;
 

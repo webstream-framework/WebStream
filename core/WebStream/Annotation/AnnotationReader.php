@@ -18,23 +18,14 @@ abstract class AnnotationReader
     protected $refClass;
 
     /**
-     * constructor
-     */
-    public function __construct()
-    {
-        $this->classLoader = new ClassLoader();
-        $this->classLoad();
-    }
-
-    /**
      * インスタンスを返却する
-     * @param string クラスパス
-     * @param array 引数リスト
+     * @param object リフレクションクラスオブジェクト
+     * @param string 実行対象のメソッド名(指定無しの場合全てのメソッドが対象)
      * @return object インスタンス
      */
-    public function read($classpath, $method = null)
+    public function read(\ReflectionClass $refClass, $method = null)
     {
-        return $this->readAnnotation($classpath, $method);
+        return $this->readAnnotation($refClass, $method);
     }
 
     /**
@@ -42,10 +33,5 @@ abstract class AnnotationReader
      * @param string クラスパス
      * @param array 引数リスト
      */
-    abstract protected function readAnnotation($classpath, $arguments);
-
-    /**
-     * クラスローダを実行する抽象メソッド
-     */
-    abstract protected function classLoad();
+    abstract protected function readAnnotation($refClass, $method);
 }
