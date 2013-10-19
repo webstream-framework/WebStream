@@ -9,4 +9,7 @@ namespace WebStream\Exception;
  */
 class ClassNotFoundException extends \Exception
 {
+    public function __call($name, $arguments) {
+        throw $this;
+    }
 }
