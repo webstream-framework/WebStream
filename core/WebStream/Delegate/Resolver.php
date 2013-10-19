@@ -89,11 +89,16 @@ class Resolver
         $namespace = $this->getNamespace($filepath);
         // クラスパス生成
         $classpath = $namespace . '\\' . $this->router->controller();
-        // Controller起動
-        $refClass = new \ReflectionClass($classpath);
-        $instance = $refClass->newInstance($this->container);
-        $method = $refClass->getMethod("__callInitialize");
-        $method->invokeArgs($instance, [$this->router->action(), $this->router->params(), $this->container]);
+
+        try {
+            // Controller起動
+            $refClass = new \ReflectionClass($classpath);
+            $instance = $refClass->newInstance($this->container);
+            $method = $refClass->getMethod("__callInitialize");
+            $method->invokeArgs($instance, [$this->router->action(), $this->router->params(), $this->container]);
+        } catch (\ReflectionException $e) {
+            throw new ClassNotFoundException($e);
+        }
     }
 
     /**
@@ -116,6 +121,34 @@ class Resolver
     public function move($statusCode)
     {
         $this->response->move($statusCode);
+    }
+
+    /**
+     * エラー処理のハンドリングチェック
+     * @param object エラーオブジェクト
+     * @param array エラー内容
+     * @return boolean ハンドリングするかどうか
+     */
+    public function handle($errorObj, $errorParams)
+    {
+        $isHandled = false;
+        $classPath = explode('\\', get_class($errorObj));
+        $className = str_replace('Exception', '', end($classPath));
+        if ($this->injection !== null) {
+            $methodAnnotations = $this->injection->error();
+            $errorArgs = array($errorObj, $errorParams);
+            foreach ($methodAnnotations as $methodAnnotation) {
+                // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
+                if (strcasecmp($methodAnnotation->value, $className) == 0 ||
+                    $methodAnnotation->value === null) {
+                    $method = $this->class->getMethod($methodAnnotation->methodName);
+                    $method->invokeArgs($this->instance, $errorArgs);
+                    $isHandled = true;
+                }
+            }
+        }
+
+        return $isHandled;
     }
 
     // /**
@@ -192,34 +225,6 @@ class Resolver
     public function getValidateErrors()
     {
         return $this->validateError;
-    }
-
-    /**
-     * エラー処理のハンドリングチェック
-     * @param Object エラーオブジェクト
-     * @param Array エラー内容
-     * @return Boolean ハンドリングするかどうか
-     */
-    public function handle($errorObj, $errorParams)
-    {
-        $isHandled = false;
-        $classPath = explode('\\', get_class($errorObj));
-        $className = str_replace('Exception', '', end($classPath));
-        if ($this->injection !== null) {
-            $methodAnnotations = $this->injection->error();
-            $errorArgs = array($errorObj, $errorParams);
-            foreach ($methodAnnotations as $methodAnnotation) {
-                // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
-                if (strcasecmp($methodAnnotation->value, $className) == 0 ||
-                    $methodAnnotation->value === null) {
-                    $method = $this->class->getMethod($methodAnnotation->methodName);
-                    $method->invokeArgs($this->instance, $errorArgs);
-                    $isHandled = true;
-                }
-            }
-        }
-
-        return $isHandled;
     }
 
     /**
