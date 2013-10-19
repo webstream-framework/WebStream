@@ -224,11 +224,6 @@ class Response
      */
     public function header()
     {
-        // 既にHeaderが出力されている場合、終了する
-        if (count(headers_list()) > 1) {
-            return;
-        }
-
         // StatusCode
         $headerMessage = 'HTTP/' . self::HTTP_VERSION . ' ' .
                          $this->statusCode . ' ' . $this->status[$this->statusCode];
@@ -501,6 +496,7 @@ class Response
      */
     public function move($statusCode)
     {
+        ob_clean(); // これまでの出力バッファをクリア
         $statusCode = array_key_exists($statusCode, $this->status) ? $statusCode : 500;
         $this->setStatusCode($statusCode);
         $bodyMessage = $statusCode . ' ' . $this->status[$statusCode];
