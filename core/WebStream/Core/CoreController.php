@@ -65,15 +65,20 @@ class CoreController extends CoreBase
         // autowired
         $autowired = new AutowiredReader();
         $self = $autowired->read($refClass, null, $container);
+
         // filter
         $reader = new FilterReader();
         $reader->setReceiver($self);
         $filterComponent = $reader->read($refClass);
+
         // action
-        $data = $self->{$action}($params);
         $template = new TemplateReader();
         $template->setTemplateDir($self->__pageName);
         $templateInfo = $template->read($refClass, $action);
+        $data = $self->{$action}($params);
+        if ($data === null) {
+            $data = [];
+        }
         if (!empty($templateInfo["embed"])) {
             $data = array_merge($data, $templateInfo["embed"]);
         }
@@ -105,26 +110,26 @@ class CoreController extends CoreBase
      * @param Array 引数
      * @return Boolean レスポンス送出結果
      */
-    final public function __callResponse($methodName, $args)
-    {
-        if (method_exists($this->response, $methodName)) {
-            call_user_func_array([$this->response, $methodName], $args);
+    // final public function __callResponse($methodName, $args)
+    // {
+    //     if (method_exists($this->response, $methodName)) {
+    //         call_user_func_array([$this->response, $methodName], $args);
 
-            return true;
-        }
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    /**
-     * Viewのメソッドを呼び出す
-     * @param String メソッド名
-     * @param Array 引数
-     */
-    final public function __callView($methodName, $args = [])
-    {
-        call_user_func_array(array($this->view, $methodName), $args);
-    }
+    // /**
+    //  * Viewのメソッドを呼び出す
+    //  * @param String メソッド名
+    //  * @param Array 引数
+    //  */
+    // final public function __callView($methodName, $args = [])
+    // {
+    //     call_user_func_array(array($this->view, $methodName), $args);
+    // }
 
     /**
      * Controllerで使用する処理の初期化
