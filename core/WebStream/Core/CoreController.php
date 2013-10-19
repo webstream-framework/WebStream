@@ -9,12 +9,13 @@ use WebStream\Annotation\TemplateReader;
 use WebStream\Module\Container;
 
 use WebStream\Exception\ClassNotFoundException;
+use WebStream\Exception\MethodNotFoundException;
 
 /**
  * CoreControllerクラス
  * @author Ryuichi TANAKA.
  * @since 2011/09/11
- * @version 0.4
+ * @version 0.4.1
  */
 class CoreController extends CoreBase
 {
@@ -41,19 +42,6 @@ class CoreController extends CoreBase
     }
 
     /**
-     * 存在しないメソッドへのアクセスを制御
-     * @param String メソッド名
-     * @param Array 引数
-     */
-    final public function __call($method, $arguments)
-    {
-        if (!$this->__callResponse($method, $arguments)) {
-            $class = $this->__toString();
-            throw new MethodNotFoundException("${class}#${method} is not defined.");
-        }
-    }
-
-    /**
      * Controller起動時の初期処理
      * @param string メソッド名
      * @param array 引数
@@ -71,10 +59,21 @@ class CoreController extends CoreBase
         $reader->setReceiver($self);
         $filterComponent = $reader->read($refClass);
 
+        // initialize filter
+        $filterComponent->initialize();
+        // before filter
+        $filterComponent->before();
+
         // action
         $template = new TemplateReader();
         $template->setTemplateDir($self->__pageName);
         $templateInfo = $template->read($refClass, $action);
+
+        if (!method_exists($self, $action)) {
+            $class = $this->__toString($self);
+            throw new MethodNotFoundException("${class}#${action} is not defined.");
+        }
+
         $data = $self->{$action}($params);
         if ($data === null) {
             $data = [];
@@ -83,53 +82,15 @@ class CoreController extends CoreBase
             $data = array_merge($data, $templateInfo["embed"]);
         }
 
-        // initialize filter
-        $filterComponent->initialize();
-        // before filter
-        $filterComponent->before();
         // draw template
         $self->view->draw($templateInfo["base"], $data);
         // after filter
         $filterComponent->after();
 
         $cachefile = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_CACHE . "/" .
-                     STREAM_CACHE_PREFIX . $this->camel2snake($this->__pageName) . "_" . $action;
+                     STREAM_CACHE_PREFIX . $this->camel2snake($this->__pageName) . "-" . $this->camel2snake($action);
         $self->view->cache($cachefile);
-
     }
-
-    // final public function __callCache($path) {
-    //     $filename = STREAM_CACHE_PREFIX . $this->camel2snake($this->__pageName) . "_" . $path;
-    //     $cache = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_CACHE . "/" . $filename;
-    //     $this->view->output($cache);
-    // }
-
-    /**
-     * レスポンスを送出する
-     * @param String メソッド名
-     * @param Array 引数
-     * @return Boolean レスポンス送出結果
-     */
-    // final public function __callResponse($methodName, $args)
-    // {
-    //     if (method_exists($this->response, $methodName)) {
-    //         call_user_func_array([$this->response, $methodName], $args);
-
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
-
-    // /**
-    //  * Viewのメソッドを呼び出す
-    //  * @param String メソッド名
-    //  * @param Array 引数
-    //  */
-    // final public function __callView($methodName, $args = [])
-    // {
-    //     call_user_func_array(array($this->view, $methodName), $args);
-    // }
 
     /**
      * Controllerで使用する処理の初期化
@@ -139,7 +100,7 @@ class CoreController extends CoreBase
     final public function __initialize()
     {
         $this->__csrfCheck();
-        // $this->__load();
+        $this->__load();
     }
 
     /**
