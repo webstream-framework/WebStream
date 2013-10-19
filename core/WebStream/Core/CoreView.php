@@ -28,11 +28,6 @@ class CoreView extends CoreBase
     /** テンプレートのタイムスタンプ */
     private $timestamp;
 
-    /** テンプレートリスト */
-    // private $templates;
-    /** CSRF対策 */
-    private $enableCsrf = true;
-
     /**
      * コンストラクタ
      * @param object DIコンテナ
@@ -90,7 +85,7 @@ class CoreView extends CoreBase
         $content = $this->convert(file_get_contents($templatePath));
 
         // formタグが含まれる場合はCSRFトークンを付与する
-        if ($this->enableCsrf && preg_match('/<form.*?>.*?<\/form>/is', $content)) {
+        if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
             $this->addToken($params, $content);
         } else {
             // formタグがない場合、CSRFトークンセッションは不要なので削除
@@ -248,35 +243,35 @@ class CoreView extends CoreBase
     /**
      * CSRF対策を有効にする
      */
-    final public function __enableCsrf()
-    {
-        $this->enableCsrf = true;
-    }
+    // final public function __enableCsrf()
+    // {
+    //     $this->enableCsrf = true;
+    // }
 
-    /**
-     * テンプレート描画の初期処理
-     * @param String テンプレート名
-     * @param String テンプレートメソッド
-     * @param Hash テンプレート埋め込みパラメータ
-     * @param String 出力形式
-     */
-    final public function __initialDraw($template, $method, $params = [], $type = "html")
-    {
-        $template = $this->templateDir($method) . '/' . $template;
-        $this->__draw($template, $params, $type);
-    }
+    // /**
+    //  * テンプレート描画の初期処理
+    //  * @param String テンプレート名
+    //  * @param String テンプレートメソッド
+    //  * @param Hash テンプレート埋め込みパラメータ
+    //  * @param String 出力形式
+    //  */
+    // final public function __initialDraw($template, $method, $params = [], $type = "html")
+    // {
+    //     $template = $this->templateDir($method) . '/' . $template;
+    //     $this->__draw($template, $params, $type);
+    // }
 
-    /**
-     * テンプレート描画の初期処理
-     * @param String テンプレート名
-     * @param Hash テンプレート埋め込みパラメータ
-     * @param String 出力形式
-     */
-    final public function __draw_org($template, $params = [], $type = "html")
-    {
-        $templatePath = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . $template;
-        $this->draw($templatePath, $params, $type);
-    }
+    // /**
+    //  * テンプレート描画の初期処理
+    //  * @param String テンプレート名
+    //  * @param Hash テンプレート埋め込みパラメータ
+    //  * @param String 出力形式
+    //  */
+    // final public function __draw_org($template, $params = [], $type = "html")
+    // {
+    //     $templatePath = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . $template;
+    //     $this->draw($templatePath, $params, $type);
+    // }
 
     /**
      * publicディレクトリにある静的ファイルを表示する
