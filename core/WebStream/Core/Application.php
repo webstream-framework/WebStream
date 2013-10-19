@@ -51,14 +51,10 @@ class Application
      */
     public function __destruct()
     {
-        // TODO
-        // before filterとかでvar_dumpすると500とかでエラー画面表示する以外の
-        // レスポンスを送出してしまう。なおす。
-
         $buffer = ob_get_clean();
         $this->response->setBody($buffer);
         $this->response->send();
-        $this->resolver->responseCache($buffer);
+        //$this->resolver->responseCache($buffer);
     }
 
     /**
@@ -96,7 +92,7 @@ class Application
     {
         $this->init();
         $this->resolver = new Resolver($this->container);
-        $this->resolver->responseCache();
+        //$this->resolver->responseCache();
         try {
             // MVCレイヤへのリクエストの振り分けを実行する
             $this->resolver->run();
@@ -138,7 +134,7 @@ class Application
             }
         } catch (ResourceNotFoundException $e) {
             // リソース(URI)が見つからない場合は404
-            Logger::error($e->getMessage() . ": " . STREAM_ROUTING_PATH);
+            Logger::error($e->getMessage(), $e->getTraceAsString());
             if (!$this->handle($e)) {
                 $this->move(404);
             }
@@ -169,7 +165,7 @@ class Application
      * @param Array エラー内容
      * @return Boolean ハンドリングするかどうか
      */
-    private function handle($errorObj, $errorParams = array())
+    private function handle($errorObj, $errorParams = [])
     {
         return $this->resolver->handle($errorObj, $errorParams);
     }
