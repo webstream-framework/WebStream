@@ -25,12 +25,23 @@ Router::setRule([
     '/no_service_no_model' => "test_no_service_and_model#execute",
     '/exist_service_exist_model_exist_model_method_param' => "test_exist_service_exist_model_exist_model_method#send_param",
     '/exist_service_exist_model_exist_model_method_params' => "test_exist_service_exist_model_exist_model_method#send_params",
-
-
     '/test_template/index1' => "test_template#index1",
+    '/test_template/index2' => "test_template#index2",
+    '/test_template/index3' => "test_template#index3",
+    '/test_template/index4' => "test_template#index4",
+    '/test_template/index5' => "test_template#index5",
+    '/test_template/error1' => "test_template#error1",
+    '/test_template/error2' => "test_template#error2",
+    '/test_template/error3' => "test_template#error3",
+    '/test_template/error4' => "test_template#error4",
+    '/test_template/error5' => "test_template#error5",
 
-    // sample
-    '/test_render/cachetest' => "test_render#index",
+    '/csrf' => "test#test_csrf",
+    '/csrf_get_view' => "test#test_csrf_get_view",
+    '/csrf_get' => "test#test_csrf_get",
+    '/csrf_post_view' => "test#test_csrf_post_view",
+    '/csrf_post' => "test#test_csrf_post",
+
 
 
     // 以下未確認
@@ -42,11 +53,7 @@ Router::setRule([
     '/error2' => "Test#test1",
     '/error3' => "teSt#test1",
     '/core_controller' => "test#test_core_controller1",
-    '/csrf' => "test#test_csrf",
-    '/csrf_get_view' => "test#test_csrf_get_view",
-    '/csrf_get' => "test#test_csrf_get",
-    '/csrf_post_view' => "test#test_csrf_post_view",
-    '/csrf_post' => "test#test_csrf_post",
+
     '/exist_service_exist_model_no_method' => "test_exist_service_exist_model_no_method#execute",
     '/no_exist_service_exist_model_no_method' => "test_exist_service_no_model_no_method#execute",
     '/no_service_exist_model_no_method' => "test_no_service_exist_model_no_method#execute",
