@@ -52,7 +52,7 @@ class CoreView extends CoreBase
      */
     final public function cache($filepath)
     {
-        if ($this->timestamp > filemtime($filepath)) {
+        if (!file_exists($filepath) || $this->timestamp > filemtime($filepath)) {
             $cacheSize = file_put_contents($filepath, ob_get_contents(), LOCK_EX);
             if ($cacheSize === false) {
                 throw new IOException("File write failure: " . $filepath);
@@ -318,59 +318,6 @@ class CoreView extends CoreBase
     {
         $this->outputHeader("jsonp");
         echo $callback . "(" . json_encode($params) . ");";
-    }
-
-    /**
-     * テンプレートファイルを描画する
-     * @param String テンプレートファイルパス
-     * @param Hash 埋め込みパラメータ
-     * @param String ファイルタイプ
-     */
-    final private function draw2($template_path, $params, $type)
-    {
-        // テンプレートファイルがない場合エラー
-        if (!file_exists(realpath($template_path))) {
-            throw new TemplateNotFoundException("Invalid template file path: " . $template_path);
-        }
-
-        // 埋め込みパラメータにHelperを起動するためのオブジェクトをセット
-        $helper = $this->__getHelper();
-        if ($helper !== null) {
-            $helper->__setViewParams($this->templates, $params);
-            $params[self::HELPER_RECEIVER] = $helper;
-        }
-
-        // キャッシュファイルがなければ生成する
-        $filename = preg_replace_callback('/.*views\/(.*)\.tmpl$/', function($matches) {
-            return $matches[1] . '.cache';
-        }, $template_path);
-        $cache_file = STREAM_ROOT . '/' . STREAM_APP_DIR . '/views/' . STREAM_VIEW_CACHE . "/" . md5($filename);
-
-        // テンプレートが見つからない場合は500になるのでエラー処理は不要
-        $content = $this->convert(file_get_contents($template_path));
-
-        // formタグが含まれる場合はCSRFトークンを付与する
-        if ($this->enableCsrf && preg_match('/<form.*?>.*?<\/form>/is', $content)) {
-            $this->addToken($params, $content);
-        }
-        // formタグがない場合、CSRFトークンセッションは不要なので削除
-        else {
-            $this->session->delete(Utility::getCsrfTokenKey());
-        }
-
-        // テンプレートに書き出す
-        if (!file_exists($cache_file) || filemtime($cache_file) < filemtime($template_path)) {
-            file_put_contents($cache_file, $content, LOCK_EX);
-        }
-
-        // 入れ子のテンプレートにパラメータをセットする
-        if (!empty($this->templates)) {
-            $params = array_merge($params, $this->templates);
-        }
-
-        $params["__params__"] = $params;
-        $this->outputHeader($type);
-        $this->outputHTML($params, $cache_file);
     }
 
     /**
