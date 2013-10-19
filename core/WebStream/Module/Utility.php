@@ -1,8 +1,6 @@
 <?php
 namespace WebStream\Module;
 
-use WebStream\Exception\ResourceNotFoundException;
-
 /**
  * Utility
  * @author Ryuichi Tanaka
@@ -132,6 +130,7 @@ trait Utility
                     if (substr($namespace, 0) !== '\\') {
                         $namespace = '\\' . $namespace;
                     }
+
                     return $namespace;
                 }
             }
@@ -170,6 +169,15 @@ trait Utility
         }
 
         return $random_str;
+    }
+
+    /**
+     * 一時ディレクトリパスを返却する
+     * @return string 一時ディレクトリパス
+     */
+    public function getTemporaryDirectory()
+    {
+        return PHP_OS === "WIN32" || PHP_OS === "WINNT" ? "C:\\Windows\\Temp" : "/tmp";
     }
 
     /**
