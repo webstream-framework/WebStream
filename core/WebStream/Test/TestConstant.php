@@ -37,4 +37,29 @@ trait TestConstant
     {
         return $this->getSampleAppPath() . "/cache000";
     }
+
+    private function getHtmlUrl()
+    {
+        return "http://www.yahoo.co.jp";
+    }
+
+    private function getJsonUrl()
+    {
+        return "http://tepco-usage-api.appspot.com/latest.json";
+    }
+
+    private function getRssUrl()
+    {
+        return "http://rss.dailynews.yahoo.co.jp/fc/rss.xml";
+    }
+
+    private function getBasicAuthUrl()
+    {
+        return "http://kensakuyoke.web.fc2.com/basic-test/test.html";
+    }
+
+    private function getNotFoundUrl()
+    {
+        return "http://wwww222.google.co.jp";
+    }
 }
