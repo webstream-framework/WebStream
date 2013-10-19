@@ -16,7 +16,7 @@ class AutowiredReader extends AnnotationReader
     /**
      * @Override
      */
-    public function readAnnotation($refClass, $method)
+    public function readAnnotation($refClass, $method, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
         try {
@@ -51,7 +51,7 @@ class AutowiredReader extends AnnotationReader
             }
 
             if ($constructor !== null) {
-                $constructor->invoke($refInstance);
+                $constructor->invokeArgs($refInstance, [$arguments]);
             }
 
             return $refInstance;

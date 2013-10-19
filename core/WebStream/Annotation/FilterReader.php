@@ -2,6 +2,7 @@
 namespace WebStream\Annotation;
 
 use WebStream\Module\Container;
+use WebStream\Core\CoreController;
 use WebStream\Exception\AnnotationException;
 use WebStream\Exception\ClassNotFoundException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
@@ -15,14 +16,18 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class FilterReader extends AnnotationReader
 {
+    /** reveiver */
+    private $receiver;
+
     /**
      * @Override
      */
-    public function readAnnotation($refClass, $method)
+    public function readAnnotation($refClass, $method, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
         try {
             $component = new FilterComponent();
+            $receiver = $this->receiver;
 
             $isInitializeDefined = false;
             $initializeContainer = new Container();
@@ -54,28 +59,19 @@ class FilterReader extends AnnotationReader
                                     if ($isInitializeDefined) {
                                         throw new AnnotationException("Can not multiple define @Filter(\"Initialize\") at method.");
                                     }
-                                    $initializeContainer->registerAsLazy(0, function() use ($method) {
-                                        $refClass = new \ReflectionClass($method->class);
-                                        $instance = $refClass->newInstanceWithoutConstructor();
-                                        $refMethod = $refClass->getMethod($method->name);
-                                        $refMethod->invoke($instance);
+                                    $initializeContainer->registerAsLazy(0, function() use ($receiver, $method) {
+                                        $receiver->{$method->name}();
                                     });
                                     $isInitializeDefined = true;
                                 }
                                 if ($annotation->enableBefore()) {
-                                    $beforeContainer->registerAsLazy($i++, function() use ($method) {
-                                        $refClass = new \ReflectionClass($method->class);
-                                        $instance = $refClass->newInstanceWithoutConstructor();
-                                        $refMethod = $refClass->getMethod($method->name);
-                                        $refMethod->invoke($instance);
+                                    $beforeContainer->registerAsLazy($i++, function() use ($receiver, $method) {
+                                        $receiver->{$method->name}();
                                     });
                                 }
                                 if ($annotation->enableAfter()) {
-                                    $afterContainer->registerAsLazy($j++, function() use ($method) {
-                                        $refClass = new \ReflectionClass($method->class);
-                                        $instance = $refClass->newInstanceWithoutConstructor();
-                                        $refMethod = $refClass->getMethod($method->name);
-                                        $refMethod->invoke($instance);
+                                    $afterContainer->registerAsLazy($j++, function() use ($receiver, $method) {
+                                        $receiver->{$method->name}();
                                     });
                                 }
                             }
@@ -97,5 +93,14 @@ class FilterReader extends AnnotationReader
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException("Class not found: " . $classpath);
         }
+    }
+
+    /**
+     * 実行するControllerのレシーバを設定する
+     * @param object レシーバ
+     */
+    public function setReceiver(CoreController $receiver)
+    {
+        $this->receiver = $receiver;
     }
 }

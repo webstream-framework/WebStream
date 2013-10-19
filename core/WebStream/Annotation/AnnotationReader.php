@@ -21,11 +21,12 @@ abstract class AnnotationReader
      * インスタンスを返却する
      * @param object リフレクションクラスオブジェクト
      * @param string 実行対象のメソッド名(指定無しの場合全てのメソッドが対象)
+     * @param array コンストラクタ引数のリスト
      * @return object インスタンス
      */
-    public function read(\ReflectionClass $refClass, $method = null)
+    public function read(\ReflectionClass $refClass, $method = null, $arguments = [])
     {
-        return $this->readAnnotation($refClass, $method);
+        return $this->readAnnotation($refClass, $method, $arguments);
     }
 
     /**
@@ -33,5 +34,5 @@ abstract class AnnotationReader
      * @param string クラスパス
      * @param array 引数リスト
      */
-    abstract protected function readAnnotation($refClass, $method);
+    abstract protected function readAnnotation($refClass, $method, $arguments);
 }

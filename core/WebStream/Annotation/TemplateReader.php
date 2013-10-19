@@ -22,19 +22,19 @@ class TemplateReader extends AnnotationReader
     /**
      * @Override
      */
-    public function readAnnotation($refClass, $method)
+    public function readAnnotation($refClass, $methodName, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
 
         $baseTemplate = null;
         $embedTemplates = [];
-        $isAlreadyDefinitionBaseTemplate = false;
+        $isAlreadyBaseRead = false;
 
         try {
             while ($refClass !== false) {
                 $methods = $refClass->getMethods();
                 foreach ($methods as $method) {
-                    if ($refClass->getName() !== $method->class) {
+                    if ($refClass->getName() !== $method->class || $methodName !== $method->name) {
                         continue;
                     }
                     $annotations = $reader->getMethodAnnotations($method);
@@ -54,24 +54,22 @@ class TemplateReader extends AnnotationReader
                                 $template = $annotation->getTemplate();
                                 $name = $annotation->getName();
 
-                                if ($name === null) {
-                                    if ($isAlreadyDefinitionBaseTemplate) {
-                                        $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
-                                        $errorMsg.= "Please add attribute 'name'.";
+                                if ($annotation->isBase()) {
+                                    if ($isAlreadyBaseRead) {
+                                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
+                                        $errorMsg.= "Type of 'base' must be a only definition.";
                                         throw new AnnotationException($errorMsg);
                                     }
-                                    if ($annotation->isShared()) {
-                                        $baseTemplate = STREAM_VIEW_SHARED . "/" . $template;
-                                    } else {
-                                        $baseTemplate = $this->templateDir . "/" . $template;
-                                    }
-                                    $isAlreadyDefinitionBaseTemplate = true;
+                                    $baseTemplate = $this->templateDir . "/" . $template;
+                                    $isAlreadyBaseRead = true;
+                                } elseif ($annotation->isShared() && $name !== null) {
+                                    $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
+                                } elseif ($annotation->isParts() && $name !== null) {
+                                    $embedTemplates[$name] = $this->templateDir . "/" . $template;
                                 } else {
-                                    if ($annotation->isShared()) {
-                                        $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
-                                    } else {
-                                        $embedTemplates[$name] = $this->templateDir . "/" . $template;
-                                    }
+                                    $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
+                                    $errorMsg.= "Please check attribute 'name' or 'type'.";
+                                    throw new AnnotationException($errorMsg);
                                 }
                             }
                         }
