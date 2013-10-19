@@ -150,6 +150,36 @@ class Request
     }
 
     /**
+     * GETかどうかチェックする
+     * @return boolean GETならtrue
+     */
+    public function isGet()
+    {
+        return $this->requestMethod() === "GET";
+    }
+
+    /**
+     * POSTかどうかチェックする
+     * @return boolean POSTならtrue
+     */
+    public function isPost()
+    {
+        return $this->requestMethod() === "POST" && (
+            $this->getHeader("Content-Type") === "application/x-www-form-urlencoded" ||
+            $this->getHeader("Content-Type") === "multipart/form-data"
+        );
+    }
+
+    /**
+     * PUTかどうかチェックする
+     * @return boolean PUTならtrue
+     */
+    public function isPut()
+    {
+        return $this->requestMethod() === "PUT";
+    }
+
+    /**
      * GETパラメータ取得
      * @param String パラメータキー
      * @return String|Hash GETパラメータ
@@ -159,6 +189,7 @@ class Request
         if ($key === null) {
             return $this->methodmap['get'];
         }
+
         return array_key_exists($key, $this->methodmap['get']) ? $this->methodmap['get'][$key] : null;
     }
 
