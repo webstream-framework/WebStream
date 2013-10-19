@@ -21,12 +21,4 @@ trait SecurityProvider
              '&lt;div&gt;\\\\a&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/>&lt;!-- --&gt;&lt;![CDATA[&lt;/div&gt;']
         ];
     }
-
-    public function csrfCheckRequestProvider()
-    {
-        return [
-            ["/csrf_get_view"],
-            ["/csrf_post_view"]
-        ];
-    }
 }
