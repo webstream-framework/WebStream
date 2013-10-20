@@ -13,6 +13,12 @@ class Request
      */
     private $get;
 
+    /**
+     * @Autowired
+     * @Type("\WebStream\Http\Method\Post")
+     */
+    private $post;
+
     /** 各メソッドパラメータを保持 */
     private $methodMap;
 
@@ -22,7 +28,8 @@ class Request
     public function __construct()
     {
         $this->methodmap = [
-            'get' => $this->get->params()
+            'get' => $this->get->params(),
+            'post' => $this->post->params()
         ];
     }
 
@@ -181,20 +188,22 @@ class Request
 
     /**
      * GETパラメータ取得
-     * @param String パラメータキー
-     * @return String|Hash GETパラメータ
+     * @param string パラメータキー
+     * @return string|array<string> GETパラメータ
      */
     public function get($key = null)
     {
-        if ($key === null) {
-            return $this->methodmap['get'];
-        }
-
-        return array_key_exists($key, $this->methodmap['get']) ? $this->methodmap['get'][$key] : null;
+        return $this->getRequestParameter("get", $key);
     }
 
-    public function post()
+    /**
+     * POSTパラメータ取得
+     * @param string パラメータキー
+     * @return string|array<string> POSTパラメータ
+     */
+    public function post($key = null)
     {
+        return $this->getRequestParameter("post", $key);
     }
 
     public function put()
@@ -203,5 +212,20 @@ class Request
 
     public function delete()
     {
+    }
+
+    /**
+     * リクエストパラメータ取得
+     * @param string リクエストメソッド
+     * @param string パラメータキー
+     * @return string|array<string> パラメータ
+     */
+    private function getRequestParameter($method, $key = null)
+    {
+        if ($key === null) {
+            return $this->methodmap[$method];
+        }
+
+        return array_key_exists($key, $this->methodmap[$method]) ? $this->methodmap[$method][$key] : null;
     }
 }
