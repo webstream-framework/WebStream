@@ -153,14 +153,10 @@ class CoreView extends CoreBase
      */
     final private function addToken(&$params, &$content)
     {
-        // CSRFの設定が有効の場合
-        $security = $this->parseConfig("config/security.ini");
-        if (intval($security["csrf_check"]) === 1) {
-            $token = sha1($this->session->id() . microtime());
-            $this->session->set($this->getCsrfTokenKey(), $token);
-            $params["__csrf_token__"] = $token;
-            $this->addToeknHTML($content);
-        }
+        $token = sha1($this->session->id() . microtime());
+        $this->session->set($this->getCsrfTokenKey(), $token);
+        $params["__csrf_token__"] = $token;
+        $this->addToeknHTML($content);
     }
 
     /**

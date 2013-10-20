@@ -2,6 +2,8 @@
 namespace WebStream\Test;
 
 use WebStream\Module\Security;
+use WebStream\Module\HttpClient;
+use WebStream\Module\Logger;
 use WebStream\Test\DataProvider\SecurityProvider;
 
 require_once 'TestBase.php';
@@ -21,6 +23,7 @@ class SecurityTest extends TestBase
     public function setUp()
     {
         parent::setUp();
+        Logger::init($this->getLogConfigPath() . "/log.test.debug.ok.ini");
     }
 
     /**
@@ -71,7 +74,7 @@ class SecurityTest extends TestBase
      * CSRFトークンとセッション値が一致すること
      * @test
      */
-    public function okCsrfCheckRequest()
+    public function okCsrfTokenMatch()
     {
         $html = file_get_contents($this->getDocumentRootURL() . "/csrf_get");
         $doc = new \DOMDocument();
@@ -87,5 +90,88 @@ class SecurityTest extends TestBase
         $session_id = $nodeList->item(0)->nodeValue;
 
         $this->assertEquals($token, $session_id);
+    }
+
+    /**
+     * 正常系
+     * CSRFチェックに問題がない場合200になること
+     * @test
+     */
+    public function okCsrfRequest()
+    {
+        $http = new HttpClient();
+        $response = $http->get($this->getDocumentRootURL() . "/csrf_post");
+        $headers = $http->getResponseHeader();
+        $cookieHeaderList = [];
+        if (preg_match("/(WSSESS\=.+?;)/", $headers[4], $matches)) {
+            $cookieHeaderList[] .= $matches[1] . " ";
+        }
+        if (preg_match("/(WSSESS_STARTED\=.+?;)/", $headers[8], $matches)) {
+            $cookieHeaderList[] .= $matches[1] . " ";
+        }
+
+        $cookieHeader = "Cookie: " . implode(" ", $cookieHeaderList);
+
+        $requestHeaders = [
+            $cookieHeader
+        ];
+
+        $doc = new \DOMDocument();
+        @$doc->loadHTML($response);
+        $token = null;
+        $nodeList = $doc->getElementsByTagName("input");
+        for ($i = 0; $i < $nodeList->length; $i++) {
+            $node = $nodeList->item($i);
+            $token = $node->getAttribute("value");
+        }
+
+        $response = $http->post($this->getDocumentRootURL() . "/csrf_post_view", [
+            "__CSRF_TOKEN__" => $token, // invalid
+            "name" => "hoge"
+        ], $requestHeaders);
+
+        $this->assertEquals($response, "ok");
+        $this->assertEquals($http->getStatusCode(), 200);
+    }
+
+    /**
+     * 異常系
+     * CSRFトークンが不正な場合、400エラーになること
+     * @test
+     */
+    public function ngCsrfRequest()
+    {
+        $http = new HttpClient();
+        $response = $http->get($this->getDocumentRootURL() . "/csrf_post");
+        $headers = $http->getResponseHeader();
+        $cookieHeaderList = [];
+        if (preg_match("/(WSSESS\=.+?;)/", $headers[4], $matches)) {
+            $cookieHeaderList[] .= $matches[1] . " ";
+        }
+        if (preg_match("/(WSSESS_STARTED\=.+?;)/", $headers[8], $matches)) {
+            $cookieHeaderList[] .= $matches[1] . " ";
+        }
+
+        $cookieHeader = "Cookie: " . implode(" ", $cookieHeaderList);
+
+        $requestHeaders = [
+            $cookieHeader
+        ];
+
+        $doc = new \DOMDocument();
+        @$doc->loadHTML($response);
+        $token = null;
+        $nodeList = $doc->getElementsByTagName("input");
+        for ($i = 0; $i < $nodeList->length; $i++) {
+            $node = $nodeList->item($i);
+            $token = $node->getAttribute("value");
+        }
+
+        $response = $http->post($this->getDocumentRootURL() . "/csrf_post_view", [
+            "__CSRF_TOKEN__" => "xxxxxxxxxxxxxxxxxxxxxxxx", // invalid
+            "name" => "hoge"
+        ], $requestHeaders);
+
+        $this->assertEquals($http->getStatusCode(), 400);
     }
 }

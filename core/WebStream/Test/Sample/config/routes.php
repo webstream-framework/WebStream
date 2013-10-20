@@ -35,12 +35,13 @@ Router::setRule([
     '/test_template/error3' => "test_template#error3",
     '/test_template/error4' => "test_template#error4",
     '/test_template/error5' => "test_template#error5",
+    '/csrf' => "test_security#test_csrf",
+    '/csrf_get' => "test_security#test_csrf_get",
+    '/csrf_post' => "test_security#test_csrf_post",
+    '/csrf_post_view' => "test_security#test_csrf_post_view",
 
-    '/csrf' => "test#test_csrf",
-    '/csrf_get_view' => "test#test_csrf_get_view",
-    '/csrf_get' => "test#test_csrf_get",
-    '/csrf_post_view' => "test#test_csrf_post_view",
-    '/csrf_post' => "test#test_csrf_post",
+
+
 
 
 

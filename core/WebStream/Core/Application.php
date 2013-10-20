@@ -11,6 +11,7 @@ use WebStream\Exception\ResourceNotFoundException;
 use WebStream\Exception\ClassNotFoundException;
 use WebStream\Exception\MethodNotFoundException;
 use WebStream\Exception\AnnotationException;
+use WebStream\Exception\CsrfException;
 
 /**
  * Applicationクラス
