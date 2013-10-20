@@ -21,8 +21,8 @@ class Value extends AbstractAnnotation
      */
     public function onInject()
     {
-        if (array_key_exists("value", $this->annotations)) {
-            $this->value = $this->annotations["value"];
+        if (array_key_exists($this->VALUE_ATTR_VALUE, $this->annotations)) {
+            $this->value = $this->annotations[$this->VALUE_ATTR_VALUE];
         }
     }
 

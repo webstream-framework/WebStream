@@ -9,6 +9,8 @@ namespace WebStream\Annotation;
  */
 abstract class AbstractAnnotation
 {
+    use AnnotationConstants;
+
     /** annotation */
     protected $annotations;
 

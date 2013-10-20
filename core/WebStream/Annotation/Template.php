@@ -14,11 +14,6 @@ use WebStream\Module\Logger;
  */
 class Template extends AbstractAnnotation
 {
-    /** template type */
-    const TYPE_BASE   = "base";
-    const TYPE_SHARED = "shared";
-    const TYPE_PARTS  = "parts";
-
     /** template */
     private $template;
 
@@ -39,22 +34,22 @@ class Template extends AbstractAnnotation
      */
     public function onInject()
     {
-        $this->template = $this->annotations["value"];
-        if (array_key_exists("name", $this->annotations)) {
-            $this->name = $this->annotations["name"];
+        $this->template = $this->annotations[$this->TEMPLATE_ATTR_VALUE];
+        if (array_key_exists($this->TEMPLATE_ATTR_NAME, $this->annotations)) {
+            $this->name = $this->annotations[$this->TEMPLATE_ATTR_NAME];
         }
         $type = "";
-        if (array_key_exists("type", $this->annotations)) {
-            $type = $this->annotations["type"];
-            if ($type === self::TYPE_BASE) {
+        if (array_key_exists($this->TEMPLATE_ATTR_TYPE, $this->annotations)) {
+            $type = $this->annotations[$this->TEMPLATE_ATTR_TYPE];
+            if ($type === $this->TEMPLATE_VALUE_BASE) {
                 $this->isBase = true;
-            } elseif ($type === self::TYPE_SHARED) {
+            } elseif ($type === $this->TEMPLATE_VALUE_SHARED) {
                 $this->isShared = true;
-            } elseif ($type === self::TYPE_PARTS) {
+            } elseif ($type === $this->TEMPLATE_VALUE_PARTS) {
                 $this->isParts = true;
             }
         } else {
-            $type = "base";
+            $type = $this->TEMPLATE_VALUE_BASE;
             $this->isBase = true;
         }
 

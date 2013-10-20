@@ -22,8 +22,8 @@ class Type extends AbstractAnnotation
      */
     public function onInject()
     {
-        if (array_key_exists("value", $this->annotations)) {
-            $type = $this->annotations["value"];
+        if (array_key_exists($this->TYPE_ATTR_VALUE, $this->annotations)) {
+            $type = $this->annotations[$this->TYPE_ATTR_VALUE];
             if (!class_exists($type)) {
                 throw new AnnotationException("Undefined class found in @Autowired: " . $type);
             }
