@@ -65,7 +65,7 @@ class CoreView extends CoreBase
      * @param string テンプレートファイルパス
      * @param mixed 埋め込みパラメータ
      */
-    final public function draw($template, $params)
+    final public function draw($template, $params, $mime = "html")
     {
         $viewDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views";
         $templatePath = $viewDir . "/" . $template;
@@ -103,7 +103,7 @@ class CoreView extends CoreBase
         }
 
         $params["__params__"] = $params;
-        $this->outputHeader("html");
+        $this->outputHeader($mime);
         $this->outputHTML($temp, $params);
 
         unlink($temp);
