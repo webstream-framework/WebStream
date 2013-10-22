@@ -23,6 +23,8 @@ trait AnnotationConstants {
     protected $TYPE_ATTR_VALUE = "value";
     // @Value
     protected $VALUE_ATTR_VALUE = "value";
-
+    // @Header
+    protected $HEADER_ATTR_CONTENTTYPE = "contentType";
+    protected $HEADER_ATTR_ALLOWMETHOD = "allowMethod";
 
 }
