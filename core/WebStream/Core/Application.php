@@ -12,6 +12,7 @@ use WebStream\Exception\ClassNotFoundException;
 use WebStream\Exception\MethodNotFoundException;
 use WebStream\Exception\AnnotationException;
 use WebStream\Exception\CsrfException;
+use WebStream\Exception\InvalidRequestException;
 
 /**
  * Applicationクラス
@@ -121,7 +122,7 @@ class Application
             if (!$this->handle($e)) {
                 $this->move(500);
             }
-        } catch (MethodNotAllowedException $e) {
+        } catch (InvalidRequestException $e) {
             // 許可されないメソッドの場合は405
             Logger::error($e->getMessage(), $e->getTraceAsString());
             if (!$this->handle($e)) {
