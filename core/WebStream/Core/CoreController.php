@@ -6,6 +6,7 @@ use WebStream\Annotation\Filter;
 use WebStream\Annotation\FilterReader;
 use WebStream\Annotation\AutowiredReader;
 use WebStream\Annotation\TemplateReader;
+use WebStream\Annotation\HeaderReader;
 use WebStream\Module\Container;
 
 use WebStream\Exception\ClassNotFoundException;
@@ -55,6 +56,11 @@ class CoreController extends CoreBase
         $autowired = new AutowiredReader();
         $self = $autowired->read($refClass, null, $container);
 
+        // header
+        $header = new HeaderReader();
+        $header->read($refClass, $action, $container);
+        $mime = $header->getMimeType();
+
         // filter
         $reader = new FilterReader();
         $reader->setReceiver($self);
@@ -84,7 +90,7 @@ class CoreController extends CoreBase
         }
 
         // draw template
-        $self->view->draw($templateInfo["base"], $data);
+        $self->view->draw($templateInfo["base"], $data, $mime);
         // after filter
         $filterComponent->after();
 
@@ -109,26 +115,25 @@ class CoreController extends CoreBase
      */
     final private function __csrfCheck()
     {
-        $token = $this->getCsrfTokenKey();
-        $session_token = $this->session->get($token);
-        $request_token = null;
-        $isExistParams = false;
+        $csrfKey = $this->getCsrfTokenKey();
+        $sessionToken = $this->session->get($csrfKey);
+        $requestToken = null;
 
-        // セッションにCSRFトークンがセットされている場合、チェックを実行する
-        if (isset($session_token)) {
+        if (isset($sessionToken)) {
             // CSRFトークンはワンタイムなので削除する
-            $this->session->delete($token);
-            if ($this->request->isPost()) {
-                $request_token = $this->request->post($token);
-                $isExistParams = count($this->request->post()) >= 1;
-            } elseif ($this->request->isGet()) {
-                $request_token = $this->request->get($token);
-                $isExistParams = count($this->request->get()) >= 1;
-            }
-            // POSTパラメータが存在し、かつ、CSRFトークンが一致しない場合はCSRFエラーとする
-            if ($session_token !== $request_token && $isExistParams) {
-                throw new CsrfException("Sent invalid CSRF token");
-            }
+            $this->session->delete($csrfKey);
+        }
+
+        if ($this->request->isPost()) {
+            $requestToken = $this->request->post($csrfKey);
+        } elseif ($this->request->isGet()) {
+            $requestToken = $this->request->get($csrfKey);
+        }
+
+        // CSRFトークンが送信されているかつサーバのトークンが一致
+        // しない場合はエラーとする。
+        if ($requestToken !== $sessionToken) {
+            throw new CsrfException("Sent invalid CSRF token");
         }
     }
 
