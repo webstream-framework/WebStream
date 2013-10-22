@@ -39,15 +39,22 @@ Router::setRule([
     '/csrf_get' => "test_security#test_csrf_get",
     '/csrf_post' => "test_security#test_csrf_post",
     '/csrf_post_view' => "test_security#test_csrf_post_view",
+    '/test_header/html' => "test_header#test1",
+    '/test_header/xml' => "test_header#test2",
+    '/test_header/atom' => "test_header#test3",
+    '/test_header/rss' => "test_header#test4",
+    '/test_header/rdf' => "test_header#test5",
 
-
-
+    '/test_header/get1' => "test_header#test6",
+    '/test_header/get2' => "test_header#test7",
+    '/test_header/post1' => "test_header#test8",
+    '/test_header/post2' => "test_header#test9",
 
 
 
     // 以下未確認
-    '/render' => "test#render",
-    '/layout' => "test#layout",
+    //'/render' => "test#render",
+    //'/layout' => "test#layout",
     '/redirect' => "test#redirect",
     '/load' => "test#load",
     '/filter' => "test_filter_annotation#execute",
@@ -66,11 +73,7 @@ Router::setRule([
     '/view5' => "test_view#index2",
     '/layout1' => "test_layout_view#index",
     '/layout2' => "test_layout_view#sub_index",
-    '/resource/html' => "test_resource#html",
-    '/resource/rss' => "test_resource#rss",
-    '/resource/xml' => "test_resource#xml",
-    '/resource/rdf' => "test_resource#rdf",
-    '/resource/atom' => "test_resource#atom",
+
     '/notfound_render' => "test#test_not_found_render",
     '/get_request' => "test_request#get",
     '/post_request' => "test_request#post",
