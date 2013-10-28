@@ -52,7 +52,7 @@ class HeaderReader extends AnnotationReader
     /**
      * @Override
      */
-    public function readAnnotation($refClass, $methodName, $container)
+    public function readAnnotation($refClass, $methodName, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
 
@@ -105,8 +105,6 @@ class HeaderReader extends AnnotationReader
 
                 $refClass = $refClass->getParentClass();
             }
-
-            return [];
 
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());

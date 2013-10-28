@@ -13,6 +13,9 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class AutowiredReader extends AnnotationReader
 {
+    /** reveiver */
+    private $reveiver;
+
     /**
      * @Override
      */
@@ -20,7 +23,7 @@ class AutowiredReader extends AnnotationReader
     {
         $reader = new DoctrineAnnotationReader();
         try {
-            $refInstance = $refClass->newInstanceWithoutConstructor();
+            $receiver = $refClass->newInstanceWithoutConstructor();
             $constructor = $refClass->getConstructor();
 
             while ($refClass !== false) {
@@ -41,7 +44,7 @@ class AutowiredReader extends AnnotationReader
                                 if ($property->isPrivate() || $property->isProtected()) {
                                     $property->setAccessible(true);
                                 }
-                                $property->setValue($refInstance, $annotation->getValue());
+                                $property->setValue($receiver, $annotation->getValue());
                             }
                         }
                     }
@@ -51,13 +54,22 @@ class AutowiredReader extends AnnotationReader
             }
 
             if ($constructor !== null) {
-                $constructor->invokeArgs($refInstance, [$arguments]);
+                $constructor->invokeArgs($receiver, [$arguments]);
             }
 
-            return $refInstance;
+            $this->receiver = $receiver;
 
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
         }
+    }
+
+    /**
+     * Autowiredしたレシーバを返却する
+     * @return object レシーバ
+     */
+    public function getReceiver()
+    {
+        return $this->receiver;
     }
 }

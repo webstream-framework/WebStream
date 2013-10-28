@@ -19,6 +19,9 @@ class FilterReader extends AnnotationReader
     /** reveiver */
     private $receiver;
 
+    /** component instance */
+    private $component;
+
     /**
      * @Override
      */
@@ -86,7 +89,7 @@ class FilterReader extends AnnotationReader
             $component->setBeforeContainer($beforeContainer);
             $component->setAfterContainer($afterContainer);
 
-            return $component;
+            $this->component = $component;
 
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
@@ -102,5 +105,14 @@ class FilterReader extends AnnotationReader
     public function setReceiver(CoreController $receiver)
     {
         $this->receiver = $receiver;
+    }
+
+    /**
+     * コンポーネントインスタンスを返却する
+     * @return object コンポーネントインスタンス
+     */
+    public function getComponent()
+    {
+        return $this->component;
     }
 }

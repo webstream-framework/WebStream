@@ -19,14 +19,18 @@ class TemplateReader extends AnnotationReader
     /** template directory */
     private $templateDir;
 
+    /** template component */
+    private $component;
+
     /**
      * @Override
      */
     public function readAnnotation($refClass, $methodName, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
+        $component = new TemplateComponent();
 
-        $baseTemplate = null;
+        //$baseTemplate = null;
         $embedTemplates = [];
         $isAlreadyBaseRead = false;
 
@@ -49,8 +53,6 @@ class TemplateReader extends AnnotationReader
                     if ($isInject) {
                         foreach ($annotations as $annotation) {
                             if ($annotation instanceof Template) {
-                                $renderComponent = new TemplateComponent();
-
                                 $template = $annotation->getTemplate();
                                 $name = $annotation->getName();
 
@@ -60,7 +62,7 @@ class TemplateReader extends AnnotationReader
                                         $errorMsg.= "Type of 'base' must be a only definition.";
                                         throw new AnnotationException($errorMsg);
                                     }
-                                    $baseTemplate = $this->templateDir . "/" . $template;
+                                    $component->setBase($this->templateDir . "/" . $template);
                                     $isAlreadyBaseRead = true;
                                 } elseif ($annotation->isShared() && $name !== null) {
                                     $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
@@ -79,9 +81,8 @@ class TemplateReader extends AnnotationReader
                 $refClass = $refClass->getParentClass();
             }
 
-            $templateInfo = ["base" => $baseTemplate, "embed" => $embedTemplates];
-
-            return $templateInfo;
+            $component->setEmbed($embedTemplates);
+            $this->component = $component;
 
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
@@ -90,7 +91,6 @@ class TemplateReader extends AnnotationReader
         }
     }
 
-
     /**
      * テンプレートディレクトリ名を設定する
      * @param string テンプレートディレクトリ名
@@ -98,5 +98,14 @@ class TemplateReader extends AnnotationReader
     public function setTemplateDir($templateDir)
     {
         $this->templateDir = $this->camel2snake($templateDir);
+    }
+
+    /**
+     * テンプレートコンポーネントを返却する
+     * @return object テンプレートコンポーネント
+     */
+    public function getComponent()
+    {
+        return $this->component;
     }
 }
