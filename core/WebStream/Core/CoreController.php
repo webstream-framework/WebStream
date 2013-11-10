@@ -7,6 +7,7 @@ use WebStream\Annotation\FilterReader;
 use WebStream\Annotation\AutowiredReader;
 use WebStream\Annotation\TemplateReader;
 use WebStream\Annotation\HeaderReader;
+use WebStream\Annotation\TemplateCacheReader;
 use WebStream\Module\Container;
 
 use WebStream\Exception\ClassNotFoundException;
@@ -17,7 +18,7 @@ use WebStream\Exception\CsrfException;
  * CoreControllerクラス
  * @author Ryuichi TANAKA.
  * @since 2011/09/11
- * @version 0.4.1
+ * @version 0.4.2
  */
 class CoreController extends CoreBase
 {
@@ -52,9 +53,11 @@ class CoreController extends CoreBase
     final public function __callInitialize($action, $params, Container $container)
     {
         $refClass = new \ReflectionClass($this);
+
         // autowired
         $autowired = new AutowiredReader();
-        $self = $autowired->read($refClass, null, $container);
+        $autowired->read($refClass, null, $container);
+        $self = $autowired->getReceiver();
 
         // header
         $header = new HeaderReader();
@@ -64,17 +67,19 @@ class CoreController extends CoreBase
         // filter
         $reader = new FilterReader();
         $reader->setReceiver($self);
-        $filterComponent = $reader->read($refClass);
+        $reader->read($refClass);
+        $filter = $reader->getComponent();
 
         // initialize filter
-        $filterComponent->initialize();
+        $filter->initialize();
         // before filter
-        $filterComponent->before();
+        $filter->before();
 
         // action
         $template = new TemplateReader();
         $template->setTemplateDir($self->__pageName);
-        $templateInfo = $template->read($refClass, $action);
+        $template->read($refClass, $action);
+        $templateComponent = $template->getComponent();
 
         if (!method_exists($self, $action)) {
             $class = $this->__toString($self);
@@ -85,18 +90,27 @@ class CoreController extends CoreBase
         if ($data === null) {
             $data = [];
         }
-        if (!empty($templateInfo["embed"])) {
-            $data = array_merge($data, $templateInfo["embed"]);
+
+        $embed = $templateComponent->getEmbed();
+        if (!empty($embed)) {
+            $data = array_merge($data, $embed);
         }
 
         // draw template
-        $self->view->draw($templateInfo["base"], $data, $mime);
-        // after filter
-        $filterComponent->after();
+        $self->view->draw($templateComponent->getBase(), $data, $mime);
 
-        $cachefile = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_CACHE . "/" .
-                     STREAM_CACHE_PREFIX . $this->camel2snake($this->__pageName) . "-" . $this->camel2snake($action);
-        $self->view->cache($cachefile);
+        $templateCache = new TemplateCacheReader();
+        $templateCache->read($refClass, $action);
+        $expire = $templateCache->getExpire();
+
+        if ($expire !== null) {
+            // create cache
+            $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($this->__pageName) . "-" . $this->camel2snake($action);
+            $self->view->cache($cacheFile, ob_get_contents(), $expire);
+        }
+
+        // after filter
+        $filter->after();
     }
 
     /**

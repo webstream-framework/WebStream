@@ -2,6 +2,7 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Logger;
+use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Exception\IOException;
@@ -27,6 +28,8 @@ class CoreView extends CoreBase
     private $session;
     /** テンプレートのタイムスタンプ */
     private $timestamp;
+    /** キャッシュ保存ディレクトリ */
+    private $cacheDir;
 
     /**
      * コンストラクタ
@@ -38,25 +41,34 @@ class CoreView extends CoreBase
         $this->request  = $container->request;
         $this->response = $container->response;
         $this->session  = $container->session;
-        $this->timestamp = 0;
+        $this->initialize();
     }
 
     /**
-     * コンパイルしたテンプレートをキャッシュする
-     * @param string 保存先ファイルパス
+     * 初期化処理
      */
-    final public function cache($filepath)
+    private function initialize()
     {
+        $this->timestamp = 0;
+        $this->cacheDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_CACHE;
+    }
+
+    /**
+     * テンプレートキャッシュを作成する
+     * @param string テンプレートファイルパス
+     * @param string 保存データ
+     * @param integer 有効期限
+     */
+    final public function cache($filename, $data, $expire)
+    {
+        $cache = new Cache($this->cacheDir);
+        $filepath = $this->cacheDir . "/" . $filename . ".cache";
         if (!file_exists($filepath) || $this->timestamp > filemtime($filepath)) {
-            $cacheSize = file_put_contents($filepath, ob_get_contents(), LOCK_EX);
-            if ($cacheSize === false) {
-                throw new IOException("File write failure: " . $filepath);
-            } else {
+            if ($cache->save($filename, $data, $expire)) {
                 Logger::debug("Write template cache file: " . $filepath);
-                Logger::debug("Compiled cache file size: " . $cacheSize);
+            } else {
+                throw new IOException("File write failure: " . $filepath);
             }
-        } else {
-            Logger::debug("Cached file read: " . $filepath);
         }
     }
 
@@ -114,7 +126,7 @@ class CoreView extends CoreBase
      * @param string テンプレートファイル
      * @param mixed 展開するパラメータ
      */
-    final private function outputHTML($template, $params)
+    private function outputHTML($template, $params)
     {
         extract($params);
         include($template);
@@ -124,7 +136,7 @@ class CoreView extends CoreBase
      * 共通ヘッダを出力する
      * @param String ファイルタイプ
      */
-    final private function outputHeader($type)
+    private function outputHeader($type)
     {
         $this->response->setType($type);
     }
@@ -134,7 +146,7 @@ class CoreView extends CoreBase
      * @param String テンプレートファイルの内容
      * @return String 置換後のテンプレートファイルの内容
      */
-    final private function convert($s)
+    private function convert($s)
     {
         $s = preg_replace('/^<\?xml/', '<<?php ?>?xml', $s);
         $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
@@ -151,7 +163,7 @@ class CoreView extends CoreBase
      * @param Hash Viewに描画するパラメータの参照
      * @param String HTML文字列の参照
      */
-    final private function addToken(&$params, &$content)
+    private function addToken(&$params, &$content)
     {
         $token = sha1($this->session->id() . microtime());
         $this->session->set($this->getCsrfTokenKey(), $token);
@@ -163,7 +175,7 @@ class CoreView extends CoreBase
      * すべてのformタグにCSRF対策トークンを追加する
      * @param String HTML文字列の参照
      */
-    final private function addToeknHTML(&$content)
+    private function addToeknHTML(&$content)
     {
         // <meta>タグによるcharsetが指定されない場合は文字化けするのでその対策を行う
         $content = mb_convert_encoding($content, 'html-entities', "UTF-8");
