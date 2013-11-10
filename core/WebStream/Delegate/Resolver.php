@@ -8,6 +8,7 @@ use WebStream\Exception\RouterException;
 use WebStream\Exception\ResourceNotFoundException;
 use WebStream\Exception\ClassNotFoundException;
 use WebStream\Exception\MethodNotFoundException;
+use WebStream\Module\Logger;
 
 /**
  * Resolver
@@ -69,7 +70,9 @@ class Resolver
         $this->session->start();
 
         if ($this->isSuccessRouting()) {
+            $this->response->start();
             $this->runController();
+            $this->response->end();
         } elseif ($this->existFile()) {
             //$this->readFile();
         } else {
@@ -89,6 +92,16 @@ class Resolver
         $namespace = $this->getNamespace($filepath);
         // クラスパス生成
         $classpath = $namespace . '\\' . $this->router->controller();
+        // テンプレートキャッシュチェック
+        $pageName = preg_replace("/Controller/", "", $this->router->controller());
+        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($this->router->action());
+        $cache = new Cache(STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_CACHE);
+        $data = $cache->get($cacheFile);
+
+        if ($data !== null) {
+            echo $data;
+            return;
+        }
 
         try {
             // Controller起動
