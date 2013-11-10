@@ -50,7 +50,8 @@ class ServiceLocator
         $container->request = function() {
             $refClass = new \ReflectionClass("\WebStream\Http\Request");
             $autowired = new AutowiredReader();
-            return $autowired->read($refClass);
+            $autowired->read($refClass);
+            return $autowired->getReceiver();
         };
         // Response
         $container->response = function() {
