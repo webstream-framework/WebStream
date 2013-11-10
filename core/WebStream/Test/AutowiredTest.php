@@ -39,17 +39,10 @@ class AutowiredTest extends TestBase
         $reader = new AutowiredReader();
         $container = ServiceLocator::getContainer();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest1");
-        $object = $reader->read($refClass, null, $container);
-        $this->assertEquals($mail, $object->getMail());
-        $this->assertEquals($age, $object->getAge());
-
-
-        // $reader = new AutowiredReader();
-        // $object = $reader->read("\WebStream\Test\TestData\AutowiredTest1");
-        // $this->assertInstanceOf("\WebStream\Test\TestData\AutowiredTest1", $object);
-        // $this->assertInstanceOf($instance, $object->getInstance());
-        // $this->assertEquals($mail, $object->getMail());
-        // $this->assertEquals($age, $object->getAge());
+        $reader->read($refClass, null, $container);
+        $receiver = $reader->getReceiver();
+        $this->assertEquals($mail, $receiver->getMail());
+        $this->assertEquals($age, $receiver->getAge());
     }
 
     /**
@@ -63,9 +56,10 @@ class AutowiredTest extends TestBase
         $reader = new AutowiredReader();
         $container = ServiceLocator::getContainer();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest3");
-        $object = $reader->read($refClass, null, $container);
-        $this->assertEquals($name, $object->getName());
-        $this->assertEquals($num, $object->getMemberNum());
+        $reader->read($refClass, null, $container);
+        $receiver = $reader->getReceiver();
+        $this->assertEquals($name, $receiver->getName());
+        $this->assertEquals($num, $receiver->getMemberNum());
     }
 
     /**
@@ -79,9 +73,10 @@ class AutowiredTest extends TestBase
         $reader = new AutowiredReader();
         $container = ServiceLocator::getContainer();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest4");
-        $object = $reader->read($refClass, null, $container);
-        $this->assertEquals($mail, $object->getMail());
-        $this->assertEquals($age, $object->getAge());
+        $reader->read($refClass, null, $container);
+        $receiver = $reader->getReceiver();
+        $this->assertEquals($mail, $receiver->getMail());
+        $this->assertEquals($age, $receiver->getAge());
     }
 
     /**
