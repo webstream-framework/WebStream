@@ -28,8 +28,6 @@ class Application
     private $app_dir = "app";
     /** Request */
     private $request;
-    /** Response */
-    private $response;
     /** Resolver */
     private $resolver;
     /** Container */
@@ -41,11 +39,9 @@ class Application
      */
     public function __construct(Container $container)
     {
+        Logger::debug("Application start");
         $this->container = $container;
         $this->request   = $container->request;
-        $this->response  = $container->response;
-        ob_start();
-        ob_implicit_flush(false);
     }
 
     /**
@@ -53,10 +49,7 @@ class Application
      */
     public function __destruct()
     {
-        $buffer = ob_get_clean();
-        $this->response->setBody($buffer);
-        $this->response->send();
-        //$this->resolver->responseCache($buffer);
+        Logger::debug("Application end");
     }
 
     /**
@@ -66,8 +59,6 @@ class Application
     {
         /** streamのバージョン定義 */
         define('STREAM_VERSION', '0.4.0');
-        /** クラスパス */
-        //define('STREAM_CLASSPATH', '\\WebStream\\');
         /** プロジェクトディレクトリの絶対パスを定義 */
         define('STREAM_ROOT', $this->getRoot());
         /** アプリケーションディレクトリ */
@@ -94,7 +85,6 @@ class Application
     {
         $this->init();
         $this->resolver = new Resolver($this->container);
-        //$this->resolver->responseCache();
         try {
             // MVCレイヤへのリクエストの振り分けを実行する
             $this->resolver->run();

@@ -27,7 +27,7 @@ class Response
     /** ロケーション */
     private $location;
     /** Access-Control-Allow-Origin */
-    private $accessControlAllowOrigin = array();
+    private $accessControlAllowOrigin = [];
     /** X-Frame-Options */
     private $xframeOptions = 'SAMEORIGIN';
     /** X-XSS-Protection */
@@ -304,7 +304,7 @@ class Response
     /**
      * Mime-Type
      */
-    private $mime = array(
+    private $mime = [
         'txt'   => 'text/plain',
         'jpeg'  => 'image/jpeg',
         'jpg'   => 'image/jpeg',
@@ -330,12 +330,12 @@ class Response
         'json'  => 'application/json',
         'pdf'   => 'application/pdf',
         'file'  => 'application/octet-stream'
-    );
+    ];
 
     /**
      * Status
      */
-    protected $status = array(
+    protected $status = [
         '100' => 'Continue',
         '101' => 'Switching Protocols',
         '102' => 'Processing',
@@ -389,7 +389,7 @@ class Response
         '507' => 'Insufficient Storage',
         '508' => 'Loop Detected',
         '510' => 'Not Extended',
-    );
+    ];
 
     /**
      * 301 alias
@@ -503,6 +503,24 @@ class Response
         $this->setBody($this->bodyTemplate($bodyMessage));
         $this->send();
         exit;
+    }
+
+    /**
+     * レスポンス送出を開始する
+     */
+    public function start()
+    {
+        ob_start();
+        ob_implicit_flush(false);
+    }
+
+    /**
+     * レスポンス送出を終了する
+     */
+    public function end()
+    {
+        $this->setBody(ob_get_clean());
+        $this->send();
     }
 
     /**
