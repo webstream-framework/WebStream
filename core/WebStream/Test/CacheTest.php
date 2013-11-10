@@ -143,8 +143,10 @@ class CacheTest extends TestBase
 
     /**
      * 異常系
-     * 書き込み権限のないディレクトリにキャッシュファイルを保存できないこと
+     * 書き込み権限のないディレクトリにキャッシュファイルを保存できない場合、
+     * 例外が発生すること
      * @test
+     * @expectedException WebStream\Exception\IOException
      */
     public function ngCreateCacheCustomDir()
     {

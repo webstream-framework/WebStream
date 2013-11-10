@@ -115,7 +115,7 @@ class Cache
             // キャッシュファイルがない場合またはキャッシュファイルが存在するが、
             // 上書きする場合はキャッシュを新規作成する
             if (!is_file($cachePath) || (is_file($cachePath) && $overwrite === true)) {
-                $result = file_put_contents($cachePath, $this->encode($content), LOCK_EX);
+                $result = @file_put_contents($cachePath, $this->encode($content), LOCK_EX);
                 if ($result !== false) { // ファイルが書き込めた場合
                     Logger::info("Create cache: ${cachePath}");
                     // キャッシュファイルのパーミッションを777にする
@@ -139,7 +139,7 @@ class Cache
      */
     public function delete($id)
     {
-        $cachePath = realpath($this->savePath . $id . '.cache');
+        $cachePath = realpath($this->savePath . "/" . $id . '.cache');
         if ($cachePath) {
             Logger::debug("Cache delete success: ${cachePath}");
 
