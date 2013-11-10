@@ -62,6 +62,7 @@ class Logger
             self::$logger->write("DEBUG", "Logger finalized.");
         }
         self::$logger = null;
+        self::$configPath = null;
     }
 
     /**
