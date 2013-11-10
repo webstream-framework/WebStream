@@ -26,5 +26,7 @@ trait AnnotationConstants {
     // @Header
     protected $HEADER_ATTR_CONTENTTYPE = "contentType";
     protected $HEADER_ATTR_ALLOWMETHOD = "allowMethod";
+    // @TemplateCache
+    protected $TEMPLATECACHE_ATTR_EXPIRE = "expire";
 
 }
