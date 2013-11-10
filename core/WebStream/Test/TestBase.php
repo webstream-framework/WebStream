@@ -40,6 +40,7 @@ class TestBase extends \PHPUnit_Framework_TestCase
             "Inject",
             "Filter",
             "Template",
+            "TemplateCache",
             "Header",
             "Doctrine/Common/Annotations/AnnotationException"
         ]);

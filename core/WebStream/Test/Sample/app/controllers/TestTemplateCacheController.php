@@ -15,6 +15,5 @@ class TestTemplateCacheController extends CoreController
      */
     public function index1()
     {
-        echo "test";
     }
 }
