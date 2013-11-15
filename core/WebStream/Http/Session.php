@@ -106,7 +106,7 @@ class Session
      */
     private function createInitializeCookie()
     {
-        $_SESSION = array();
+        $_SESSION = [];
         setcookie(self::INITIAL_STARTED_COOKIE_NAME, time(), null, '/', null);
     }
 
