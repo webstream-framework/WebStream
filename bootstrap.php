@@ -20,4 +20,5 @@ Logger::init();
 $container = ServiceLocator::getContainer();
 // アプリケーションを起動する
 $app = new Application($container);
+$app->documentRoot("/WebStream"); // アプリケーション固有設定
 $app->run();
