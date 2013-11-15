@@ -4,7 +4,14 @@ namespace WebStream\Http;
 use WebStream\Annotation\Autowired;
 use WebStream\Annotation\Type;
 use WebStream\Module\Security;
+use WebStream\Exception\ApplicationException;
 
+/**
+ * Request
+ * @author Ryuichi TANAKA.
+ * @since 2013/11/12
+ * @version 0.4
+ */
 class Request
 {
     /**
@@ -21,6 +28,9 @@ class Request
 
     /** 各メソッドパラメータを保持 */
     private $methodMap;
+
+    /** ドキュメントルートパス */
+    private $documentRoot;
 
     /**
      * コンストラクタ
@@ -56,7 +66,7 @@ class Request
 
     /**
      * PATH情報を取得する
-     * @return String PATH情報
+     * @return string PATH情報
      */
     public function getPathInfo()
     {
@@ -69,9 +79,9 @@ class Request
         }
 
         // PATH情報から取得する文字列を安全にする
-        $path_info = Security::safetyIn(substr($request_uri, strlen($base_url)));
+        $pathInfo = Security::safetyIn(substr($request_uri, strlen($base_url)));
 
-        return $path_info;
+        return $pathInfo;
     }
 
     /**
@@ -96,6 +106,16 @@ class Request
                 return $value;
             }
         }
+    }
+
+    public function setDocumentRoot($path)
+    {
+        $this->documentRoot = $path;
+    }
+
+    public function getDocumentRoot()
+    {
+        return $this->documentRoot;
     }
 
     /**

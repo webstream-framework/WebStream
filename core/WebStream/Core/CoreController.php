@@ -114,6 +114,15 @@ class CoreController extends CoreBase
     }
 
     /**
+     * 静的ファイルを読み込む
+     * @param string 静的ファイルパス
+     */
+    final public function __callStaticFile($filepath)
+    {
+        $this->view->__file($filepath);
+    }
+
+    /**
      * Controllerで使用する処理の初期化
      * @Inject
      * @Filter("Initialize")

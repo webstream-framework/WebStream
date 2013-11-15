@@ -15,7 +15,11 @@ class Router
     /** ルーティングルール */
     private static $rules;
     /** PATH_INFO */
-    private $path_info;
+    private $pathInfo;
+    /** RequestURI */
+    private $requestUri;
+    /** DocumentRoot */
+    private $documentRoot;
     /** ルーティング解決後の各パラメータ */
     private $route;
 
@@ -25,7 +29,9 @@ class Router
      */
     public function __construct($request)
     {
-        $this->path_info = $request->getPathInfo();
+        $this->pathInfo = $request->getPathInfo();
+        $this->requestUri = $request->server("REQUEST_URI");
+        $this->documentRoot = $request->getDocumentRoot();
     }
 
     /**
@@ -56,7 +62,7 @@ class Router
             }
             // ルールとURLがマッチした場合に動的にチェックを掛ける
             // パスがマッチしたときにアクション名をチェックし、その時点で弾く
-            if ($this->path_info === $path) {
+            if ($this->pathInfo === $path) {
                 // ルーティング定義(Controller#Action)が正しい場合
                 // _(アンダースコア)は許可するが、２回以上の連続の場合、末尾につく場合は許可しない
                 // NG例：my__blog, my_blog_
@@ -76,6 +82,18 @@ class Router
     {
         // ルーティングルールの検証
         $this->validate();
+        // 静的ファイルへのパスを取得するための正規表現
+        $regexp = preg_replace("/\//", "\\\/", $this->documentRoot);
+        $staticFile = "";
+        if (preg_match("/^" . $regexp . "(.+)/", $this->requestUri, $matches)) {
+            $staticFile = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_PUBLIC . $matches[1];
+            \WebStream\Module\Logger::debug("path: " . $staticFile);
+            if (file_exists($staticFile)) {
+                $this->route["staticFile"] = $staticFile;
+                return;
+            }
+        }
+
         // ルーティングルールからController、Actionを取得
         foreach (self::$rules as $path => $ca) {
             $route = [];
@@ -83,43 +101,38 @@ class Router
             $route["params"] = [];
             $key_list = [];
 
-            // URLに静的ファイルへのパスが指定された場合
-            if (preg_match('/^\/(?:img|js|css|file)(?:$|\/)/', $this->path_info)) {
-                $route["staticFile"] = $this->path_info;
+            // img,js,css,fileディレクトリはデフォルトで静的ファイルを読みに行く。
+            // どうしても別ディレクトリで読ませたい場合は個別にroutes.phpに記述する。
+            for ($i = 0; $i < count($tokens); $i++) {
+                $token = $tokens[$i];
+                // PATH定義にプレースホルダがある場合は正規表現に置き換える
+                if (preg_match('/:(.*?)(?:\/|$)/', $token, $matches)) {
+                    $key_list[] = $matches[1];
+                    $token = preg_replace('/(:.*?)(?:\/|$)/', '(.+)', $token);
+                }
+                $tokens[$i] = $token;
             }
-            // それ以外
-            else {
-                for ($i = 0; $i < count($tokens); $i++) {
-                    $token = $tokens[$i];
-                    // PATH定義にプレースホルダがある場合は正規表現に置き換える
-                    if (preg_match('/:(.*?)(?:\/|$)/', $token, $matches)) {
-                        $key_list[] = $matches[1];
-                        $token = preg_replace('/(:.*?)(?:\/|$)/', '(.+)', $token);
-                    }
-                    $tokens[$i] = $token;
-                }
-                // プレースホルダのパラメータをセット
-                $expantion_path = $path;
-                // PATH_INFOの階層数とルーティング定義の階層数が一致すればルーティングがマッチ
-                if (($this->path_info !== $path) &&
-                     count(explode('/', $path)) === count(explode('/', $this->path_info))) {
-                    // プレースホルダと実URLをひもづける
-                    $path_pattern = "/^\/" . implode("\/", $tokens) . "$/";
-                    if (preg_match($path_pattern, $this->path_info, $matches)) {
-                        for ($j = 1; $j < count($matches); $j++) {
-                            $key = $key_list[$j - 1];
-                            $route["params"][$key] = Security::safetyIn($matches[$j]);
-                            // プレースホルダを一時展開する
-                            $expantion_path = preg_replace('/:[a-zA-Z0-9]+/', $matches[$j], $expantion_path, 1);
-                        }
+            // プレースホルダのパラメータをセット
+            $expantion_path = $path;
+            // PATH_INFOの階層数とルーティング定義の階層数が一致すればルーティングがマッチ
+            if (($this->pathInfo !== $path) &&
+                 count(explode('/', $path)) === count(explode('/', $this->pathInfo))) {
+                // プレースホルダと実URLをひもづける
+                $path_pattern = "/^\/" . implode("\/", $tokens) . "$/";
+                if (preg_match($path_pattern, $this->pathInfo, $matches)) {
+                    for ($j = 1; $j < count($matches); $j++) {
+                        $key = $key_list[$j - 1];
+                        $route["params"][$key] = Security::safetyIn($matches[$j]);
+                        // プレースホルダを一時展開する
+                        $expantion_path = preg_replace('/:[a-zA-Z0-9]+/', $matches[$j], $expantion_path, 1);
                     }
                 }
-                // プレースホルダを展開済みのパス定義が完全一致したときはController、Actionを展開する
-                if ($this->path_info === $expantion_path &&
-                    preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
-                    $route["controller"] = $matches[1];
-                    $route["action"] = $matches[2];
-                }
+            }
+            // プレースホルダを展開済みのパス定義が完全一致したときはController、Actionを展開する
+            if ($this->pathInfo === $expantion_path &&
+                preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
+                $route["controller"] = $matches[1];
+                $route["action"] = $matches[2];
             }
 
             // ルーティングルールがマッチした場合は抜ける

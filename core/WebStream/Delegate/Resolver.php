@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Delegate;
 
+use WebStream\Core\CoreController;
 use WebStream\Module\Container;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
@@ -68,16 +69,19 @@ class Resolver
         $this->router->resolve();
         // セッションスタート
         $this->session->start();
+        // バッファリング開始
+        $this->response->start();
 
-        if ($this->isSuccessRouting()) {
-            $this->response->start();
+        if ($this->router->controller() !== null && $this->router->action() !== null) {
             $this->runController();
-            $this->response->end();
-        } elseif ($this->existFile()) {
-            //$this->readFile();
+        } elseif ($this->router->staticFile() !== null) {
+            $this->readFile();
         } else {
-            throw new ResourceNotFoundException("Failed to resolve the routing");
+            $errorMsg = "Failed to resolve the routing: " . $this->request->server("REQUEST_URI");
+            throw new ResourceNotFoundException($errorMsg);
         }
+
+        $this->response->end();
     }
 
     /**
@@ -92,6 +96,7 @@ class Resolver
         $namespace = $this->getNamespace($filepath);
         // クラスパス生成
         $classpath = $namespace . '\\' . $this->router->controller();
+
         // テンプレートキャッシュチェック
         $pageName = preg_replace("/Controller/", "", $this->router->controller());
         $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($this->router->action());
@@ -119,12 +124,8 @@ class Resolver
      */
     private function readFile()
     {
-        // タイムアウトのチェック
-        $this->session->start();
-        $filePath = STREAM_ROOT . "/" . STREAM_APP_DIR .
-            "/views/" . STREAM_VIEW_PUBLIC . $this->router->staticFile();
-        $render = $this->class->getMethod('__callView');
-        $render->invoke($this->instance, '__file', array($filePath));
+        $controller = new CoreController($this->container);
+        $controller->__callStaticFile($this->router->staticFile());
     }
 
     /**
@@ -188,48 +189,48 @@ class Resolver
     //     }
     // }
 
-    /**
-     * レスポンスオブジェクト処理を実行する
-     * @param String キャッシュデータ
-     */
-    public function responseCache($data = null)
-    {
-        $cache = new Cache();
-        $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
-        // キャッシュをセット
-        if ($data) {
-            if ($this->responseCacheTTL !== null && !$response) {
-                $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->responseCacheTTL);
-                Logger::info("Response cache rendered.");
-            }
-        }
-        // キャッシュをロード
-        else {
-            if ($response) {
-                echo $response;
-                Logger::info("Response cache loaded.");
-                exit;
-            }
-        }
-    }
+    // /**
+    //  * レスポンスオブジェクト処理を実行する
+    //  * @param String キャッシュデータ
+    //  */
+    // public function responseCache($data = null)
+    // {
+    //     $cache = new Cache();
+    //     $response = $cache->get(STREAM_RESPONSE_CACHE_ID);
+    //     // キャッシュをセット
+    //     if ($data) {
+    //         if ($this->responseCacheTTL !== null && !$response) {
+    //             $cache->save(STREAM_RESPONSE_CACHE_ID, $data, $this->responseCacheTTL);
+    //             Logger::info("Response cache rendered.");
+    //         }
+    //     }
+    //     // キャッシュをロード
+    //     else {
+    //         if ($response) {
+    //             echo $response;
+    //             Logger::info("Response cache loaded.");
+    //             exit;
+    //         }
+    //     }
+    // }
 
-    /**
-     * ルーティングが成功したかどうか
-     * @return Boolean ルーティング解決結果
-     */
-    public function isSuccessRouting()
-    {
-        return $this->router->controller() && $this->router->action();
-    }
+    // /**
+    //  * ルーティングが成功したかどうか
+    //  * @return Boolean ルーティング解決結果
+    //  */
+    // public function isSuccessRouting()
+    // {
+    //     return $this->router->controller() && $this->router->action();
+    // }
 
-    /**
-     * ファイルが存在するかどうか
-     * @return Boolean ファイルが存在するかどうか
-     */
-    public function existFile()
-    {
-        return !!$this->router->staticFile();
-    }
+    // /**
+    //  * ファイルが存在するかどうか
+    //  * @return Boolean ファイルが存在するかどうか
+    //  */
+    // public function existFile()
+    // {
+    //     return $this->router->staticFile() !== null
+    // }
 
     /**
      * バリデーションエラーパラメータを返却する
@@ -258,70 +259,70 @@ class Resolver
         }
     }
 
-    /**
-     * Before Filterを実行する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
-     */
-    private function before($class, $instance)
-    {
-        $this->filter($class, $instance, "Before");
-    }
+    // /**
+    //  * Before Filterを実行する
+    //  * @param Object リフレクションクラスオブジェクト
+    //  * @param Object リフレクションクラスインスタンスオブジェクト
+    //  */
+    // private function before($class, $instance)
+    // {
+    //     $this->filter($class, $instance, "Before");
+    // }
 
-    /**
-     * After Filterを実行する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
-     */
-    private function after($class, $instance)
-    {
-        $this->filter($class, $instance, "After");
-    }
+    // /**
+    //  * After Filterを実行する
+    //  * @param Object リフレクションクラスオブジェクト
+    //  * @param Object リフレクションクラスインスタンスオブジェクト
+    //  */
+    // private function after($class, $instance)
+    // {
+    //     $this->filter($class, $instance, "After");
+    // }
 
-    /**
-     * Filter処理を実行する
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
-     * @param String Filter名
-     */
-    private function filter($class, $instance, $filterName)
-    {
-        $filterObjectList = $this->injection->filter();
-        foreach ($filterObjectList as $filterObject) {
-            // 複数のメソッドに対してアノテーションを定義可能とする
-            if ($filterObject->value === $filterName) {
-                // クラス名が一致しない場合、親クラスを辿り一致するまで走査する
-                // それでも一致しなければメソッドを持っていないと判断する
-                $_class = $class;
-                do {
-                    if ($_class->getName() === $filterObject->className &&
-                        $_class->hasMethod($filterObject->methodName)) {
-                        $method = $_class->getMethod($filterObject->methodName);
-                        $method->invoke($instance);
-                    }
-                } while ($_class = $_class->getParentClass());
-            }
-        }
-    }
+    // /**
+    //  * Filter処理を実行する
+    //  * @param Object リフレクションクラスオブジェクト
+    //  * @param Object リフレクションクラスインスタンスオブジェクト
+    //  * @param String Filter名
+    //  */
+    // private function filter($class, $instance, $filterName)
+    // {
+    //     $filterObjectList = $this->injection->filter();
+    //     foreach ($filterObjectList as $filterObject) {
+    //         // 複数のメソッドに対してアノテーションを定義可能とする
+    //         if ($filterObject->value === $filterName) {
+    //             // クラス名が一致しない場合、親クラスを辿り一致するまで走査する
+    //             // それでも一致しなければメソッドを持っていないと判断する
+    //             $_class = $class;
+    //             do {
+    //                 if ($_class->getName() === $filterObject->className &&
+    //                     $_class->hasMethod($filterObject->methodName)) {
+    //                     $method = $_class->getMethod($filterObject->methodName);
+    //                     $method->invoke($instance);
+    //                 }
+    //             } while ($_class = $_class->getParentClass());
+    //         }
+    //     }
+    // }
 
-    /**
-     * アノテーションを実行
-     * @param Object リフレクションクラスオブジェクト
-     * @param Object リフレクションクラスインスタンスオブジェクト
-     */
-    private function runAnnotation($class, $instance)
-    {
-        // request method
-        $this->requestMethod();
-        // response status code
-        $this->responseStatusCode();
-        // basic auth
-        $this->basicAuth();
-        // cache
-        $this->cache();
-        // csrf processing
-        $this->csrf($class, $instance);
-    }
+    // /**
+    //  * アノテーションを実行
+    //  * @param Object リフレクションクラスオブジェクト
+    //  * @param Object リフレクションクラスインスタンスオブジェクト
+    //  */
+    // private function runAnnotation($class, $instance)
+    // {
+    //     // request method
+    //     $this->requestMethod();
+    //     // response status code
+    //     $this->responseStatusCode();
+    //     // basic auth
+    //     $this->basicAuth();
+    //     // cache
+    //     $this->cache();
+    //     // csrf processing
+    //     $this->csrf($class, $instance);
+    // }
 
     /**
      * Viewテンプレートを描画する

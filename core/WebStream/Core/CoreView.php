@@ -221,6 +221,43 @@ class CoreView extends CoreBase
         $content = str_replace(array_keys($map), array_values($map), $content);
     }
 
+    /**
+     * publicディレクトリにある静的ファイルを表示する
+     * @param String ファイルパス
+     */
+    final public function __file($filepath)
+    {
+        if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
+            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/css\/.+\.css$/i', $filepath) ||
+            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/js\/.+\.js$/i', $filepath)) { // 画像,css,jsの場合
+            $this->display($filepath);
+        } elseif (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/file\/.+$/i', $filepath)) { // それ以外のファイル
+            $this->download($filepath);
+        } else { // 全てのファイル
+            $this->display($filepath);
+        }
+    }
+
+    /**
+     * 画像、CSS、JavaScriptファイルを表示する
+     * @param string ファイルパス
+     */
+    final private function display($filename)
+    {
+        $this->response->displayFile($filename);
+    }
+
+    /**
+     * ファイルをダウンロードする
+     * @param string ファイルパス
+     */
+    final private function download($filename)
+    {
+        $userAgent = $this->request->userAgent();
+        $this->response->downloadFile($filename, $userAgent);
+    }
+
+
     // 以下のメソッドは削除予定
 
     /**
@@ -282,27 +319,6 @@ class CoreView extends CoreBase
     // }
 
     /**
-     * publicディレクトリにある静的ファイルを表示する
-     * @param String ファイルパス
-     */
-    final public function __file($filepath)
-    {
-        if (!file_exists($filepath)) {
-            throw new ResourceNotFoundException("File not found: " . $filepath);
-        }
-        // 画像,css,jsの場合
-        if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/css\/.+\.css$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/js\/.+\.js$/i', $filepath)) {
-            $this->display($filepath);
-        }
-        // それ以外のファイル
-        else if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/file\/.+$/i', $filepath)) {
-            $this->download($filepath);
-        }
-    }
-
-    /**
      * JSONを描画する
      * @param Hash 出力データ
      */
@@ -321,24 +337,5 @@ class CoreView extends CoreBase
     {
         $this->outputHeader("jsonp");
         echo $callback . "(" . json_encode($params) . ");";
-    }
-
-    /**
-     * 画像、CSS、JavaScriptファイルを表示する
-     * @param String ファイルパス
-     */
-    final private function display($filename)
-    {
-        $this->response->displayFile($filename);
-    }
-
-    /**
-     * ファイルをダウンロードする
-     * @param String ファイルパス
-     */
-    final private function download($filename)
-    {
-        $userAgent = $this->request->userAgent();
-        $this->response->downloadFile($filename, $userAgent);
     }
 }
