@@ -2,6 +2,7 @@
 namespace WebStream\Test;
 
 use WebStream\Module\Logger;
+use WebStream\Module\HttpClient;
 use WebStream\Test\DataProvider\RouterProvider;
 
 require_once 'TestBase.php';
@@ -164,12 +165,74 @@ class RouterTest extends TestBase
      * @test
      * @dataProvider sendParamFromControllerToModelProvider
      */
-    public function okSendParamFromControllerToModel($path, $str) {
+    public function okSendParamFromControllerToModel($path, $str)
+    {
         $url = $this->getDocumentRootURL() . $path;
         $response = file_get_contents($url);
         $this->assertEquals($response, $str);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
+    }
+
+    /**
+     * 正常系
+     * 指定ディレクトリに配置した静的ファイルを読み込めること
+     * @test
+     * @dataProvider readStaticFileProvider
+     */
+    public function okReadStaticFile($path, $contentType)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $http->get($url);
+        $header = $http->getResponseHeader();
+        $responseContentType = null;
+        if (preg_match("/^Content-Type:\s(.+?);/", $header[13], $matches)) {
+            $responseContentType = $matches[1];
+        }
+
+        $this->assertEquals($contentType, $responseContentType);
+    }
+
+    /**
+     * 正常系
+     * 指定ディレクトリに配置した静的ファイルをダウンロードできること
+     * @test
+     * @dataProvider downloadStaticFile
+     */
+    public function okDownloadStaticFile($path, $contentType)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $http->get($url);
+        $header = $http->getResponseHeader();
+        $responseContentType = null;
+        if (preg_match("/^Content-Type:\s(.+?);/", $header[15], $matches)) {
+            $responseContentType = $matches[1];
+        }
+
+        $this->assertEquals($contentType, $responseContentType);
+        $this->assertRegExp("/^Content-Disposition: attachement;/", $header[10]);
+    }
+
+    /**
+     * 正常系
+     * ユーザ指定ディレクトリに配置した静的ファイルを表示できること
+     * @test
+     * @dataProvider readCustomStaticFile
+     */
+    public function okReadCustomStaticFile($path, $contentType)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $http->get($url);
+        $header = $http->getResponseHeader();
+        $responseContentType = null;
+        if (preg_match("/^Content-Type:\s(.+?);/", $header[13], $matches)) {
+            $responseContentType = $matches[1];
+        }
+
+        $this->assertEquals($contentType, $responseContentType);
     }
 
     /**
@@ -200,5 +263,4 @@ class RouterTest extends TestBase
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
     }
-
 }

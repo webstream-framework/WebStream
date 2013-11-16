@@ -85,6 +85,41 @@ trait RouterProvider
         ];
     }
 
+    public function readStaticFileProvider()
+    {
+        return [
+            ['/css/sample.css', "text/css"],
+            ['/css/sample2.CSS', "text/css"],
+            ['/js/sample.js', "text/javascript"],
+            ['/js/sample2.JS', "text/javascript"],
+            ['/img/sample.png', "image/png"],
+            ['/img/sample2.PNG', "image/png"]
+        ];
+    }
+
+    public function downloadStaticFile()
+    {
+        return [
+            ['/file/sample.atom', "application/atom+xml"],
+            ['/file/sample.htm', "text/html"],
+            ['/file/sample.html', "text/html"],
+            ['/file/sample.json', "application/json"],
+            ['/file/sample.pdf', "application/pdf"],
+            ['/file/sample.php', "application/octet-stream"],
+            ['/file/sample.rdf', "application/rdf+xml"],
+            ['/file/sample.txt', "text/plain"],
+            ['/file/sample.xml', "application/xml"],
+        ];
+    }
+
+    public function readCustomStaticFile()
+    {
+        return [
+            ['/custom/sample.txt', "text/plain"]
+        ];
+    }
+
+
     // 異常系
     public function resolveUnknownProvider()
     {

@@ -86,8 +86,7 @@ class Router
         $regexp = preg_replace("/\//", "\\\/", $this->documentRoot);
         $staticFile = "";
         if (preg_match("/^" . $regexp . "(.+)/", $this->requestUri, $matches)) {
-            $staticFile = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_PUBLIC . $matches[1];
-            \WebStream\Module\Logger::debug("path: " . $staticFile);
+            $staticFile = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_PUBLIC . "/" . $matches[1];
             if (file_exists($staticFile)) {
                 $this->route["staticFile"] = $staticFile;
                 return;
@@ -101,8 +100,6 @@ class Router
             $route["params"] = [];
             $key_list = [];
 
-            // img,js,css,fileディレクトリはデフォルトで静的ファイルを読みに行く。
-            // どうしても別ディレクトリで読ませたい場合は個別にroutes.phpに記述する。
             for ($i = 0; $i < count($tokens); $i++) {
                 $token = $tokens[$i];
                 // PATH定義にプレースホルダがある場合は正規表現に置き換える
@@ -116,7 +113,7 @@ class Router
             $expantion_path = $path;
             // PATH_INFOの階層数とルーティング定義の階層数が一致すればルーティングがマッチ
             if (($this->pathInfo !== $path) &&
-                 count(explode('/', $path)) === count(explode('/', $this->pathInfo))) {
+                count(explode('/', $path)) === count(explode('/', $this->pathInfo))) {
                 // プレースホルダと実URLをひもづける
                 $path_pattern = "/^\/" . implode("\/", $tokens) . "$/";
                 if (preg_match($path_pattern, $this->pathInfo, $matches)) {
@@ -136,7 +133,7 @@ class Router
             }
 
             // ルーティングルールがマッチした場合は抜ける
-            if ((isset($route["controller"]) && isset($route["action"])) || isset($route["staticFile"])) {
+            if (isset($route["controller"]) && isset($route["action"])) {
                 $this->route = $route;
                 break;
             }
