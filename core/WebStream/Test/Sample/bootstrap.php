@@ -40,6 +40,6 @@ $property = $class->getProperty("app_dir");
 $property->setAccessible(true);
 $property->setValue($instance, $controllerTestDir);
 $method = $class->getMethod("documentRoot");
-$method->invoke($instance, "/WebStream/core/WebStream");
+$method->invoke($instance, "/WebStream/core/WebStream/Test/Sample/");
 $method = $class->getMethod("run");
 $method->invoke($instance);
