@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../../../../css/rss/feedRss1.xsl" media="screen" type="text/xsl"?>
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:syn="http://purl.org/rss/1.0/modules/syndication/">  
+  <channel rdf:about="http://www3.asahi.com/"> 
+    <title>社会 - 朝日新聞デジタル</title>  
+    <link>http://www.asahi.com/</link>  
+    <description>朝日新聞のニュースサイト、朝日新聞デジタルの一般社会ニュース、事件・事故、災害・交通情報、裁判、環境などのページです。</description>  
+    <dc:language>ja</dc:language>  
+    <dc:rights>Copyright 2012 Asahi Shimbun. All rights reserved. No reproduction or republication without written permission.</dc:rights>  
+    <dc:date>2012-02-05T18:40:19+09:00</dc:date>  
+    <dc:publisher>朝日新聞社</dc:publisher>  
+    <dc:creator>朝日新聞社</dc:creator>  
+    <syn:updatePeriod>hourly</syn:updatePeriod>  
+    <syn:updateFrequency>1</syn:updateFrequency>  
+    <syn:updateBase>2012-02-05T18:40:19+09:00</syn:updateBase>  
+    <items> 
+      <rdf:Seq> 
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/OSK201202050005.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/SEB201202050006.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0203/OSK201202030082.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/TKY201202050102.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/TKY201202050098.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040312.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/HOK201202040002.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/TKY201202050077.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/TKY201202050076.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/OSK201202040061.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/TKY201202040565.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040317.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0205/OSK201202040178.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0203/TKY201202030470.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/NGY201202040018.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/NGY201202040004.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040380.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/OSK201202030212.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040294.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0203/TKY201202030704.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040147.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040277.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/OSK201202040036.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040144.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/HOK201202040001.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040230.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040179.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040177.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040138.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/SEB201202040002.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/SEB201202040001.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/OSK201202040026.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040127.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040132.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202040123.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202030789.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202030786.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/TKY201202030785.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0204/SEB201202030087.html?ref=rss"/>  
+        <rdf:li rdf:resource="http://www.asahi.com/national/update/0203/OSK201202030204.html?ref=rss"/> 
+      </rdf:Seq> 
+    </items>  
+    <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://rss.asahi.com/rss/asahi/national.rdf" type="application/rss+xml"/>
+  </channel>  
+  <item rdf:about="http://www.asahi.com/national/update/0205/OSK201202050005.html?ref=rss"> 
+    <title>住宅２棟全焼、２人の遺体　大阪・摂津</title>  
+    <link>http://www.asahi.com/national/update/0205/OSK201202050005.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T18:19:05+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/ZRRjHC2dyxHa?type=2&amp;ent=253c6ca9ea28b4b4fc3029d170613d1e">
+    <title><![CDATA[PR: 【三井の賃貸】礼金０・フリーレント等、お得物件を特集]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/ZRRjHC2dyxHa?type=2&amp;ent=253c6ca9ea28b4b4fc3029d170613d1e</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/ZRRjHC2dyxHa?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/ZRRjHC2dyxHa?type=2&ent=253c6ca9ea28b4b4fc3029d170613d1e"/></a></td></tr><tr><td align="left" valign="top" > “お得な住み替えキャンペーン”を実施している都心の人気賃貸マンションをご紹介！ </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-05T18:19:05+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0205/SEB201202050006.html?ref=rss"> 
+    <title>女子大生脅しバッグ奪った疑い　西日本シティ銀行員逮捕</title>  
+    <link>http://www.asahi.com/national/update/0205/SEB201202050006.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T17:27:32+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0203/OSK201202030082.html?ref=rss"> 
+    <title>カレイに回る防犯標語　香川・高松の回転ずし店</title>  
+    <link>http://www.asahi.com/national/update/0203/OSK201202030082.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T13:50:45+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0205/TKY201202050102.html?ref=rss"> 
+    <title>ケンタロウさん、首都高で重傷事故　６メートル下に転落</title>  
+    <link>http://www.asahi.com/national/update/0205/TKY201202050102.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T13:05:31+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/c56L5zf6GUow?type=2&amp;ent=a13458ab21b5b8b4a9d2d1799792b135">
+    <title><![CDATA[PR: クリエイティブ関連の求人・転職支援はマスメディアン]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/c56L5zf6GUow?type=2&amp;ent=a13458ab21b5b8b4a9d2d1799792b135</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/c56L5zf6GUow?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/c56L5zf6GUow?type=2&ent=a13458ab21b5b8b4a9d2d1799792b135"/></a></td></tr><tr><td align="left" valign="top" > クリエイターの求人数・転職支援実績NO.1クラス。求人情報毎日更新中 </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-05T13:05:31+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0205/TKY201202050098.html?ref=rss"> 
+    <title>どこでもドア？　開けるワクワク　山梨・清里の道沿い</title>  
+    <link>http://www.asahi.com/national/update/0205/TKY201202050098.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T12:50:28+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040312.html?ref=rss"> 
+    <title>久々の制服、避難の高校生に笑顔　福島でＮＰＯ贈る</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040312.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T09:22:15+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/eh9X_sIif9r4?type=2&amp;ent=446e1f265d3dcad972ee1abe1c28c1c0">
+    <title><![CDATA[PR: クリエイティブ関連の求人・転職支援はマスメディアン]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/eh9X_sIif9r4?type=2&amp;ent=446e1f265d3dcad972ee1abe1c28c1c0</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/eh9X_sIif9r4?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/eh9X_sIif9r4?type=2&ent=446e1f265d3dcad972ee1abe1c28c1c0"/></a></td></tr><tr><td align="left" valign="top" > クリエイターの求人数・転職支援実績NO.1クラス。求人情報毎日更新中 </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-05T09:22:15+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0204/HOK201202040002.html?ref=rss"> 
+    <title>幻想タンチョウ、厳冬の儀式</title>  
+    <link>http://www.asahi.com/national/update/0204/HOK201202040002.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T09:11:21+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0205/TKY201202050077.html?ref=rss"> 
+    <title>住宅全焼、焼け跡から２遺体　３人と連絡とれず　京都</title>  
+    <link>http://www.asahi.com/national/update/0205/TKY201202050077.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T07:54:53+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0205/TKY201202050076.html?ref=rss"> 
+    <title>長野新幹線で車両故障　一本が運休</title>  
+    <link>http://www.asahi.com/national/update/0205/TKY201202050076.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T07:17:34+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/OSK201202040061.html?ref=rss"> 
+    <title>天橋立、カチンコチン　今年は寒波で氷も厚め　京都</title>  
+    <link>http://www.asahi.com/national/update/0204/OSK201202040061.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T05:47:50+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/f2wSI_le9vif?type=2&amp;ent=22b4eb1f7fb236cfd7622b6809d28144">
+    <title><![CDATA[PR: 正社員の転職情報ならマイナビ転職]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/f2wSI_le9vif?type=2&amp;ent=22b4eb1f7fb236cfd7622b6809d28144</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/f2wSI_le9vif?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/f2wSI_le9vif?type=3&ent=22b4eb1f7fb236cfd7622b6809d28144"/></a></td></tr><tr><td align="left" valign="top" > 最新求人が続々更新≪火・金2回更新≫様々な職種・条件で検索可能。今すぐ検索⇒ </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-05T05:47:50+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0205/TKY201202040565.html?ref=rss"> 
+    <title>生涯学習に「人生の締めくくり方も」　文科省有識者会議</title>  
+    <link>http://www.asahi.com/national/update/0205/TKY201202040565.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T03:19:33+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040317.html?ref=rss"> 
+    <title>１２０メートルの滝、全部凍った　茨城でライトアップ</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040317.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T00:59:42+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0205/OSK201202040178.html?ref=rss"> 
+    <title>名神高速で３台絡む事故、１人死亡　大阪・高槻</title>  
+    <link>http://www.asahi.com/national/update/0205/OSK201202040178.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-05T00:43:00+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/MKs.rmR5SWnF?type=2&amp;ent=3836b049b2c58491ce762b2f4a4e6bd6">
+    <title><![CDATA[PR: 【三井の賃貸】地図検索を使って便利にお部屋探し!!]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/MKs.rmR5SWnF?type=2&amp;ent=3836b049b2c58491ce762b2f4a4e6bd6</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/MKs.rmR5SWnF?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/MKs.rmR5SWnF?type=2&ent=3836b049b2c58491ce762b2f4a4e6bd6"/></a></td></tr><tr><td align="left" valign="top" > 新築や当社限定募集物件も盛りだくさん！希望条件に合った上質な物件をラクラク検索！ </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-05T00:43:00+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0203/TKY201202030470.html?ref=rss"> 
+    <title>留学・研修も「トモダチ作戦」　被災地の子ら米国に招待</title>  
+    <link>http://www.asahi.com/national/update/0203/TKY201202030470.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T22:44:05+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/NGY201202040018.html?ref=rss"> 
+    <title>「国境なき楽団」に大賞　眠っている楽器提供活動評価</title>  
+    <link>http://www.asahi.com/national/update/0204/NGY201202040018.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T22:42:04+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/NGY201202040004.html?ref=rss"> 
+    <title>神男に触れ厄落とし　愛知・稲沢で国府宮はだか祭</title>  
+    <link>http://www.asahi.com/national/update/0204/NGY201202040004.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T22:16:55+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040380.html?ref=rss"> 
+    <title>サバンナの八木さん結婚へ　相手は元百貨店勤務の２６歳</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040380.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T21:15:48+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/OSK201202030212.html?ref=rss"> 
+    <title>あいりん地区の結核撃退せよ　橋下・大阪市長が対策指示</title>  
+    <link>http://www.asahi.com/national/update/0204/OSK201202030212.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T20:57:40+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040294.html?ref=rss"> 
+    <title>「巨大顕微鏡」で東北に復興の光を　国立７大学が構想</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040294.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T20:57:18+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0203/TKY201202030704.html?ref=rss"> 
+    <title>妻が「３号被保険者」、年収９００万円超世帯の７割以上</title>  
+    <link>http://www.asahi.com/national/update/0203/TKY201202030704.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T19:54:43+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040147.html?ref=rss"> 
+    <title>「震災に負けない」小学生がスポーツ雪合戦　福島</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040147.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T19:03:02+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040277.html?ref=rss"> 
+    <title>子育て支援、高台に移転し再起　陸前高田、センター完成</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040277.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T18:30:17+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/OSK201202040036.html?ref=rss"> 
+    <title>地検「不満残るが…」　ＪＲ脱線控訴断念で遺族説明会</title>  
+    <link>http://www.asahi.com/national/update/0204/OSK201202040036.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T16:37:59+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040144.html?ref=rss"> 
+    <title>御神渡り４年ぶりに出現　長野・諏訪湖</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040144.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T16:37:37+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/HOK201202040001.html?ref=rss"> 
+    <title>インフルエンザ、小２が死亡　北海道</title>  
+    <link>http://www.asahi.com/national/update/0204/HOK201202040001.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T16:34:22+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040230.html?ref=rss"> 
+    <title>東北新幹線、東京―仙台間で一時運転見合わせ</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040230.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T16:15:12+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040179.html?ref=rss"> 
+    <title>白バイ転倒、レインボーブリッジ一般道一時通行止め</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040179.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T15:50:22+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/MLHLkR0mqq8S?type=2&amp;ent=f47c59d2a602ae9fe6a769f60b8d753c">
+    <title><![CDATA[PR: 【三井の賃貸】当社のみご紹介できる限定住戸があります]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/MLHLkR0mqq8S?type=2&amp;ent=f47c59d2a602ae9fe6a769f60b8d753c</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/MLHLkR0mqq8S?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/MLHLkR0mqq8S?type=2&ent=f47c59d2a602ae9fe6a769f60b8d753c"/></a></td></tr><tr><td align="left" valign="top" > 都心の新築タワーから話題のマンションまで他社にはない当社限定のお部屋情報が満載！ </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-04T15:50:22+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040177.html?ref=rss"> 
+    <title>電車痛勤よりバス　郊外から都心の直行便</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040177.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T15:01:34+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/qL_Vn2tDHraU?type=2&amp;ent=65a996634726b9b30fdc7c7773cf289f">
+    <title><![CDATA[PR: 正社員の転職情報ならマイナビ転職]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/qL_Vn2tDHraU?type=2&amp;ent=65a996634726b9b30fdc7c7773cf289f</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/qL_Vn2tDHraU?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/qL_Vn2tDHraU?type=3&ent=65a996634726b9b30fdc7c7773cf289f"/></a></td></tr><tr><td align="left" valign="top" > 転職サイト最大級の求人数！営業・エンジニアなど、全国の最新求人を今すぐチェック！ </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-04T15:01:34+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040138.html?ref=rss"> 
+    <title>ひと足お先に渡り初め　東京ゲートブリッジでイベント</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040138.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T13:46:53+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/SEB201202040002.html?ref=rss"> 
+    <title>郵便物隠した疑い、集配社員逮捕　山口、未配達３千通</title>  
+    <link>http://www.asahi.com/national/update/0204/SEB201202040002.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T12:43:16+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/SEB201202040001.html?ref=rss"> 
+    <title>福岡で殺人関与？中国人の男、帰国後に死刑判決</title>  
+    <link>http://www.asahi.com/national/update/0204/SEB201202040001.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T12:40:37+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/CD0K8v3vsRaP?type=2&amp;ent=d26777c0f317ebfbc7a4ccc5f5c7cc1c">
+    <title><![CDATA[PR: 大手・注目の広告・Web会社の転職はマスメディアン]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/CD0K8v3vsRaP?type=2&amp;ent=d26777c0f317ebfbc7a4ccc5f5c7cc1c</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/CD0K8v3vsRaP?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/CD0K8v3vsRaP?type=2&ent=d26777c0f317ebfbc7a4ccc5f5c7cc1c"/></a></td></tr><tr><td align="left" valign="top" > Web・IT・広告会社・制作会社の求人数・転職支援実績NO.1クラス </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-04T12:40:37+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0204/OSK201202040026.html?ref=rss"> 
+    <title>ＪＲ特急、子ジカはねる　大阪・茨木の住宅街</title>  
+    <link>http://www.asahi.com/national/update/0204/OSK201202040026.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T12:40:18+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040127.html?ref=rss"> 
+    <title>春なのに…吐く息まだ白い　立春の朝、東京都心など零下</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040127.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T11:49:56+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/ZPCaSMMf1x5E?type=2&amp;ent=e0f6e0e3f823c996a78bdf7251504ecf">
+    <title><![CDATA[PR: 正社員の転職情報ならマイナビ転職]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/ZPCaSMMf1x5E?type=2&amp;ent=e0f6e0e3f823c996a78bdf7251504ecf</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/ZPCaSMMf1x5E?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/ZPCaSMMf1x5E?type=3&ent=e0f6e0e3f823c996a78bdf7251504ecf"/></a></td></tr><tr><td align="left" valign="top" > 最新求人が続々更新≪火・金2回更新≫様々な職種・条件で検索可能。今すぐ検索⇒ </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-04T11:49:56+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040132.html?ref=rss"> 
+    <title>住宅全焼、夫婦？２人の遺体　長野・喬木村</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040132.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T11:00:45+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202040123.html?ref=rss"> 
+    <title>クレーン車にひかれ自転車の男性死亡　千葉の国道１４号</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202040123.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T09:51:37+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/hr76_.hukwAy?type=2&amp;ent=4d584fe6dc753f2f10b48411bb5a10ff">
+    <title><![CDATA[PR: 【三井の賃貸】最新値下げ物件が集結！賃料改定物件特集]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/hr76_.hukwAy?type=2&amp;ent=4d584fe6dc753f2f10b48411bb5a10ff</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/hr76_.hukwAy?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/hr76_.hukwAy?type=2&ent=4d584fe6dc753f2f10b48411bb5a10ff"/></a></td></tr><tr><td align="left" valign="top" > ＜平日毎日更新＞直近２週間以内に賃料が下がった物件情報をおすすめ順にご紹介!! </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-04T09:51:37+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202030789.html?ref=rss"> 
+    <title>揺れ大きい高層階、「まず火の始末」はけがの元？</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202030789.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T05:00:29+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202030786.html?ref=rss"> 
+    <title>玉川温泉の事故、表層雪崩と断定　防災科学技術研</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202030786.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T02:43:08+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0204/TKY201202030785.html?ref=rss"> 
+    <title>栃木産シイタケに基準超すセシウム　都内スーパーで販売</title>  
+    <link>http://www.asahi.com/national/update/0204/TKY201202030785.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T02:42:53+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/wBt1NJcuN_wO?type=2&amp;ent=9535a4bce1372ffc871cd184fc76ad0f">
+    <title><![CDATA[PR: 【三井の賃貸】当社のみご紹介できる限定住戸があります]]></title>
+    <link>http://rss.rssad.jp/rss/ad/IThDihblG6Jz/wBt1NJcuN_wO?type=2&amp;ent=9535a4bce1372ffc871cd184fc76ad0f</link>
+    <description><![CDATA[<table cellspacing="0" cellpadding="0"><tbody><tr><td align="left" valign="center"><a href="http://rss.rssad.jp/rss/ad/IThDihblG6Jz/wBt1NJcuN_wO?type=2" target="_blank"><img alt="" style="border: 0;" border="0" src="http://rss.rssad.jp/rss/img/IThDihblG6Jz/wBt1NJcuN_wO?type=2&ent=9535a4bce1372ffc871cd184fc76ad0f"/></a></td></tr><tr><td align="left" valign="top" > 都心の新築タワーから話題のマンションまで他社にはない当社限定のお部屋情報が満載！ </td></tr></tbody></table><div style="font-size:10px;"><span style="padding-top:5px;"><br style="display:none"/><a href="http://www.rssad.jp/trendmatch/trendmatch.html">Ads by Trend Match</a></span><br/></div>]]></description>
+    <dc:date>2012-02-04T02:42:53+09:00</dc:date>
+  </item>
+  <item rdf:about="http://www.asahi.com/national/update/0204/SEB201202030087.html?ref=rss"> 
+    <title>福岡拘置所、診察せず薬与える　医師法違反の恐れ</title>  
+    <link>http://www.asahi.com/national/update/0204/SEB201202030087.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T01:52:32+09:00</dc:date> 
+  </item>  
+  <item rdf:about="http://www.asahi.com/national/update/0203/OSK201202030204.html?ref=rss"> 
+    <title>竜とともに仮装１５０人練り歩き　北新地のお水汲み祭り</title>  
+    <link>http://www.asahi.com/national/update/0203/OSK201202030204.html?ref=rss</link>  
+    <description><![CDATA[<p>　</p>]]></description>  
+    <dc:subject>社会</dc:subject>  
+    <dc:date>2012-02-04T01:51:51+09:00</dc:date> 
+  </item> 
+</rdf:RDF>
