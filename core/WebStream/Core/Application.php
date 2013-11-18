@@ -14,6 +14,7 @@ use WebStream\Exception\MethodNotFoundException;
 use WebStream\Exception\AnnotationException;
 use WebStream\Exception\CsrfException;
 use WebStream\Exception\InvalidRequestException;
+use WebStream\Exception\ValidateException;
 
 /**
  * Applicationクラス
@@ -83,13 +84,6 @@ class Application
         define('STREAM_VIEW_CACHE', "_cache");
         /** キャッシュprefix */
         define('STREAM_CACHE_PREFIX', "webstream-cache-");
-
-        
-
-
-        // /** レスポンスキャッシュID */
-        // define('STREAM_RESPONSE_CACHE_ID',
-        //        md5(STREAM_BASE_URI . STREAM_ROUTING_PATH . STREAM_QUERY_STRING));
     }
 
     /**
@@ -99,20 +93,6 @@ class Application
     public function documentRoot($path)
     {
         $this->request->setDocumentRoot($path);
-        // アプリケーション設定のチェック
-        // $publicDir = $this->getRoot() . "/" . $this->app_dir . "/views";
-
-        // $regexp = preg_replace("/\//", "\\\/", $path);
-        // if (preg_match("/^" . $regexp . "(.+)/", $this->request->server("REQUEST_URI"), $matches)) {
-        //     $publicDir .= $matches[1];
-        // }
-
-
-        // Logger::debug($publicDir);
-        // Logger::debug($this->request->getPathInfo());
-
-        //Logger::debug($this->request->getBaseURL());
-        //Logger::debug("approot:" . $this->applicationRoot);
     }
 
     /**
