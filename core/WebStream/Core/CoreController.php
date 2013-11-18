@@ -33,7 +33,7 @@ class CoreController extends CoreBase
 
     /**
      * Controllerクラス全体の初期化
-     * @param Object DIコンテナ
+     * @param object DIコンテナ
      */
     final public function __construct(Container $container)
     {
@@ -46,14 +46,13 @@ class CoreController extends CoreBase
 
     /**
      * Controller起動時の初期処理
+     * @param object リフレクションクラスインスタンス
      * @param string メソッド名
      * @param array 引数
      * @param object コンテナオブジェクト
      */
-    final public function __callInitialize($action, $params, Container $container)
+    final public function __callInitialize($refClass, $action, $params, Container $container)
     {
-        $refClass = new \ReflectionClass($this);
-
         // autowired
         $autowired = new AutowiredReader();
         $autowired->read($refClass, null, $container);
