@@ -4,7 +4,6 @@ namespace WebStream\Http;
 use WebStream\Annotation\Autowired;
 use WebStream\Annotation\Type;
 use WebStream\Module\Security;
-use WebStream\Exception\ApplicationException;
 
 /**
  * Request
@@ -65,6 +64,15 @@ class Request
     }
 
     /**
+     * REQUEST_URI情報を取得する
+     * @return string REQUEST_URI情報
+     */
+    public function getRequestUri()
+    {
+        return $this->server("REQUEST_URI");
+    }
+
+    /**
      * PATH情報を取得する
      * @return string PATH情報
      */
@@ -108,11 +116,19 @@ class Request
         }
     }
 
+    /**
+     * ドキュメントルートを設定する
+     * @param string ドキュメントルート
+     */
     public function setDocumentRoot($path)
     {
         $this->documentRoot = $path;
     }
 
+    /**
+     * ドキュメントルートを返却する
+     * @return string ドキュメントルート
+     */
     public function getDocumentRoot()
     {
         return $this->documentRoot;
@@ -120,7 +136,7 @@ class Request
 
     /**
      * SERVERパラメータ取得
-     * @param String パラメータキー
+     * @param string パラメータキー
      */
     public function server($key)
     {
