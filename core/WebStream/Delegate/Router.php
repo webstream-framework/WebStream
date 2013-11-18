@@ -2,6 +2,7 @@
 namespace WebStream\Delegate;
 
 use WebStream\Module\Security;
+use WebStream\Module\Logger;
 use WebStream\Exception\RouterException;
 
 /**
@@ -30,8 +31,9 @@ class Router
     public function __construct($request)
     {
         $this->pathInfo = $request->getPathInfo();
-        $this->requestUri = $request->server("REQUEST_URI");
+        $this->requestUri = $request->getRequestUri();
         $this->documentRoot = $request->getDocumentRoot();
+        Logger::info("Request URI: " . $this->requestUri);
     }
 
     /**
@@ -134,6 +136,7 @@ class Router
 
             // ルーティングルールがマッチした場合は抜ける
             if (isset($route["controller"]) && isset($route["action"])) {
+                Logger::info("Routed path: " . $route["controller"] . "#" . $route["action"]);
                 $this->route = $route;
                 break;
             }
