@@ -44,11 +44,25 @@ Router::setRule([
     '/test_header/atom' => "test_header#test3",
     '/test_header/rss' => "test_header#test4",
     '/test_header/rdf' => "test_header#test5",
-
     '/test_header/get1' => "test_header#test6",
     '/test_header/get2' => "test_header#test7",
     '/test_header/post1' => "test_header#test8",
     '/test_header/post2' => "test_header#test9",
+    '/test_template_cache/index1' => "test_template_cache#index1",
+
+
+
+    '/get_ok_validate1' => "test_validator#get_required",
+    '/get_ok_validate2' => "test_validator#get_min_length",
+    '/get_ok_validate3' => "test_validator#get_max_length",
+    '/get_ok_validate4' => "test_validator#get_min",
+    '/get_ok_validate5' => "test_validator#get_max",
+    '/get_ok_validate6' => "test_validator#get_equal",
+    '/get_ok_validate7' => "test_validator#get_length",
+    '/get_ok_validate8' => "test_validator#get_range",
+    '/get_ok_validate9' => "test_validator#get_regexp",
+    '/get_ok_validate10' => "test_validator#get_number",
+    '/get_ok_validate11' => "test_validator#get_double",
 
 
 
@@ -99,7 +113,6 @@ Router::setRule([
     '/json' => "test#test_json",
     '/jsonp' => "test#test_jsonp",
     '/validate1' => "test_validate#validate1",
-    '/get_validate1' => "test_validate#get_param_validate1",
     '/validate_handling' => "test_validate_error_handling#validate1",
     '/validate_handling2' => "test_validate_error_handling2#validate1",
     '/basic_auth' => "test_basic_auth#execute",

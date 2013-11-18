@@ -97,6 +97,10 @@ class Resolver
         // クラスパス生成
         $classpath = $namespace . '\\' . $this->router->controller();
 
+        // バリデーションチェック
+        $validator = $this->container->validator;
+        $validator->check();
+
         // テンプレートキャッシュチェック
         $pageName = preg_replace("/Controller/", "", $this->router->controller());
         $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($this->router->action());
@@ -113,7 +117,7 @@ class Resolver
             $refClass = new \ReflectionClass($classpath);
             $instance = $refClass->newInstance($this->container);
             $method = $refClass->getMethod("__callInitialize");
-            $method->invokeArgs($instance, [$this->router->action(), $this->router->params(), $this->container]);
+            $method->invokeArgs($instance, [$refClass, $this->router->action(), $this->router->params(), $this->container]);
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
         }
@@ -164,6 +168,25 @@ class Resolver
 
         return $isHandled;
     }
+
+    /**
+     * バリデーションを実行する
+     */
+    private function validate($controller, $action)
+    {
+        $validate = $this->container->validate;
+        try {
+            $validate->resolve();
+        } catch (ValidateException $e) {
+            $this->validateError = array(
+                "class"  => $this->router->controller(),
+                "method" => $this->router->action(),
+                "error"  => $validate->getError()
+            );
+            throw $e;
+        }
+    }
+
 
     // /**
     //  * Controllerクラスをロードする
@@ -241,23 +264,7 @@ class Resolver
         return $this->validateError;
     }
 
-    /**
-     * バリデーションを実行する
-     */
-    private function validate()
-    {
-        $validate = $this->container->validate;
-        try {
-            $validate->resolve();
-        } catch (ValidateException $e) {
-            $this->validateError = array(
-                "class"  => $this->router->controller(),
-                "method" => $this->router->action(),
-                "error"  => $validate->getError()
-            );
-            throw $e;
-        }
-    }
+
 
     // /**
     //  * Before Filterを実行する

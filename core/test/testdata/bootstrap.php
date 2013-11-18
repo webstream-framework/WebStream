@@ -1,7 +1,9 @@
 <?php
 namespace WebStream;
-require '../../../core/AutoImport.php';
-require '../../../core/Functions.php';
+
+require_once '../../../core/WebStream/Module/ClassLoader.php';
+//require '../../../core/AutoImport.php';
+require_once '../../../core/Functions.php';
 
 function __autoload($class_name) {
     import("core/test/testdata/config/" . $class_name);

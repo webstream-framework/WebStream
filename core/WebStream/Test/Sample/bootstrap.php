@@ -2,15 +2,17 @@
 namespace WebStream\Test\Sample;
 
 use WebStream\Module\Logger;
+use WebStream\Module\ClassLoader;
 use WebStream\DI\ServiceLocator;
 
 require_once '../../Module/ClassLoader.php';
 require_once '../../Module/Functions.php';
 
-$classLoader = new \WebStream\Module\ClassLoader();
+$classLoader = new ClassLoader();
 spl_autoload_register([$classLoader, "load"]);
 register_shutdown_function('WebStream\Module\shutdownHandler');
 $classLoader->import("core/WebStream/Test/Sample/config/routes.php");
+$classLoader->import("core/WebStream/Test/Sample/config/validates.php");
 
 // Annotations
 $classLoader->load([

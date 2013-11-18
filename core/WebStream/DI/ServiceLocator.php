@@ -3,6 +3,7 @@ namespace WebStream\DI;
 
 use WebStream\Module\Container;
 use WebStream\Delegate\Router;
+use WebStream\Delegate\Validator;
 use WebStream\Annotation\AutowiredReader;
 use WebStream\Http\Response;
 use WebStream\Http\Session;
@@ -65,10 +66,10 @@ class ServiceLocator
         $container->router = function() use (&$container) {
             return new Router($container->request);
         };
-        // // Validator
-        // $container->validate = function() use (&$container) {
-        //     return new Validator($container->request, $container->router);
-        // };
+        // Validator
+        $container->validator = function() use (&$container) {
+            return new Validator($container->request, $container->router);
+        };
 
         return $container;
     }
