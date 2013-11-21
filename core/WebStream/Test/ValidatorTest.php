@@ -36,16 +36,74 @@ class ValidatorTest extends TestBase
 
     /**
      * 正常系
-     * バリデーション定義ファイルにエラーがない場合、例外が発生しないこと
+     * GETでバリデーションチェックが通ること
      * @test
-     * @dataProvider validatorProvider
+     * @dataProvider validatorGetProvider
      */
-    public function okValidatorInitialize($path, $params)
+    public function okGetValidator($path, $params)
     {
         $http = new HttpClient();
         $url = $this->getDocumentRootURL() . $path;
         $html = $http->get($url, $params);
         $this->assertEquals($http->getStatusCode(), 200);
         $this->assertEquals($html, current($params));
+    }
+
+    /**
+     * 正常系
+     * POSTでバリデーションチェックが通ること
+     * @test
+     * @dataProvider validatorPostProvider
+     */
+    public function okPostValidator($path, $params)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->post($url, $params);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, current($params));
+    }
+
+    /**
+     * 正常系
+     * PUTでバリデーションチェックが通ること
+     * @test
+     * @dataProvider validatorPutProvider
+     */
+    public function okPutValidator($path, $params)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->put($url, $params);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, current($params));
+    }
+
+    /**
+     * 異常系
+     * GETでバリデーションエラーが発生したとき、422が返ること
+     * @test
+     * @dataProvider validatorGetErrorProvider
+     */
+    public function ngGetValidator($path, $params)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url, $params);
+        $this->assertEquals($http->getStatusCode(), 422);
+    }
+
+    /**
+     * 異常系
+     * POSTでバリデーションエラーが発生したとき、422が返ること
+     * @test
+     * @dataProvider validatorPostErrorProvider
+     */
+    public function ngPostValidator($path, $params)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->post($url, $params);
+        $this->assertEquals($http->getStatusCode(), 422);
     }
 }
