@@ -9,7 +9,7 @@ use WebStream\Module\Security;
  * Request
  * @author Ryuichi TANAKA.
  * @since 2013/11/12
- * @version 0.4
+ * @version 0.4.1
  */
 class Request
 {
@@ -25,8 +25,19 @@ class Request
      */
     private $post;
 
-    /** 各メソッドパラメータを保持 */
-    private $methodMap;
+    /**
+     * @Autowired
+     * @Type("\WebStream\Http\Method\Put")
+     */
+    private $put;
+
+    private $delete;
+    private $head;
+    private $options;
+    private $trace;
+
+    /** リクエスト */
+    private $request;
 
     /** ドキュメントルートパス */
     private $documentRoot;
@@ -36,9 +47,11 @@ class Request
      */
     public function __construct()
     {
-        $this->methodmap = [
-            'get' => $this->get->params(),
-            'post' => $this->post->params()
+        $this->request = [
+            'get'    => $this->get->params(),
+            'post'   => $this->post->params(),
+            'put'    => $this->put->params(),
+            'delete' => null
         ];
     }
 
@@ -229,7 +242,7 @@ class Request
      */
     public function get($key = null)
     {
-        return $this->getRequestParameter("get", $key);
+        return $this->getRequest("get", $key);
     }
 
     /**
@@ -239,15 +252,33 @@ class Request
      */
     public function post($key = null)
     {
-        return $this->getRequestParameter("post", $key);
+        return $this->getRequest("post", $key);
     }
 
-    public function put()
+
+    /**
+     * PUTパラメータ取得
+     * PUTを使用してレスポンスを返す場合、
+　　　* リソース新規作成：201
+     * リソース更新：200または204
+     * を返却しなければならない
+     * @param string パラメータキー
+     * @return string|array<string> PUTパラメータ
+     */
+    public function put($key = null)
     {
+        return $this->getRequest("put", $key);
     }
 
+    /**
+     * DELETEパラメータ取得
+     * DELETEを使用してレスポンスを返す場合、
+　　　* 200、202、204のいずれかを返却しなければならない
+     */
     public function delete()
     {
+        // TODO implementation
+        return null;
     }
 
     /**
@@ -256,12 +287,9 @@ class Request
      * @param string パラメータキー
      * @return string|array<string> パラメータ
      */
-    private function getRequestParameter($method, $key = null)
+    private function getRequest($method, $key = null)
     {
-        if ($key === null) {
-            return $this->methodmap[$method];
-        }
-
-        return array_key_exists($key, $this->methodmap[$method]) ? $this->methodmap[$method][$key] : null;
+        $params = $this->request[$method];
+        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
 }
