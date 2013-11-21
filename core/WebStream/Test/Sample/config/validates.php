@@ -95,30 +95,6 @@ Validator::setRule(
         ],
         "test_validator#put_number" => [
             "put#num" => "number"
-        ],
-
-
-
-
-
-
-        "test_validator#get_param_validate1" => [
-            "get#name1" => "required",
-            "get#name2" => "min_length[10]",
-            "get#name3" => "max_length[10]",
-            "get#name4" => "min[100]",
-            "get#name5" => "max[200]",
-            "get#name6" => "equal[kyouko]",
-            "get#name7" => "length[10]",
-            "get#name8" => "range[10..20]",
-            "get#name9" => "regexp[/^\d{1}$/]",
-            "get#name10" => "number"
-        ],
-        "test_validator_error_handling#validate1" => [
-            "get#name" => "required"
-        ],
-        "test_validator_error_handling2#validate1" => [
-            "get#name" => "min_length[2]|equal[kyouko]"
         ]
     ]
 );
