@@ -3,10 +3,8 @@ namespace WebStream\Delegate;
 
 use WebStream\Http\Request;
 use WebStream\Delegate\Router;
-use WebStream\Module\Utility;
-use WebStream\Module\ClassLoader;
-use WebStream\Module\Logger;
 use WebStream\Exception\ValidateException;
+use WebStream\Module\Logger;
 
 /**
  * Validator
@@ -16,8 +14,6 @@ use WebStream\Exception\ValidateException;
  */
 class Validator
 {
-    use Utility;
-
     /** バリデーションルール */
     private static $rules;
     /** リクエスト */
@@ -26,8 +22,6 @@ class Validator
     private $router;
     /** エラー内容 */
     // private $error;
-    /** クラスローダ */
-    private $classLoader;
 
     /**
      * コンストラクタ
@@ -37,7 +31,6 @@ class Validator
     {
         $this->request = $request;
         $this->router = $router;
-        $this->classLoader = new ClassLoader();
     }
 
     /**
@@ -101,6 +94,7 @@ class Validator
         // ルールが存在しない場合は終了
         if (!array_key_exists($controller . "#" . $action, self::$rules)) {
             Logger::debug("Validation rule is not found: " . $controller . "#" . $action);
+
             return;
         }
         $rules = self::$rules[$controller . "#" . $action];
@@ -137,8 +131,6 @@ class Validator
                     $this->checkRange($rule, $key, $params);
                 } elseif ($this->ruleNumber($rule)) { // number
                     $this->checkNumber($rule, $key, $params);
-                } elseif ($this->ruleDouble($rule)) { // double
-                    $this->checkDouble($rule, $key, $params);
                 } elseif ($this->ruleRegexp($rule)) { // regexp
                     $this->checkRegexp($rule, $key, $params);
                 } else {
@@ -209,8 +201,8 @@ class Validator
     private function checkMin($rule, $key, $params)
     {
         if (preg_match('/^(min)\[([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
-            $num = intval($matches[2]);
-            if (array_key_exists($key, $params) && intval($params[$key]) < $num) {
+            $num = $matches[2];
+            if (array_key_exists($key, $params) && $params[$key] < $num) {
                 $rule = $matches[1] . "[" . $matches[2] . "]";
                 $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be more than ${num}.";
@@ -228,8 +220,8 @@ class Validator
     private function checkMax($rule, $key, $params)
     {
         if (preg_match('/^(max)\[([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
-            $num = intval($matches[2]);
-            if (array_key_exists($key, $params) && intval($params[$key]) > $num) {
+            $num = $matches[2];
+            if (array_key_exists($key, $params) && $params[$key] > $num) {
                 $rule = $matches[1] . "[" . $matches[2] . "]";
                 $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be less than ${num}.";
@@ -287,7 +279,7 @@ class Validator
         if (preg_match('/^(range)\[([-]?\d+\.?\d+?)\.\.([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
             $low = $matches[2];
             $high = $matches[3];
-            if (array_key_exists($key, $params) && (intval($params[$key]) < $low || intval($params[$key]) > $high)) {
+            if (array_key_exists($key, $params) && ($params[$key] < $low || $params[$key] > $high)) {
                 $rule = $matches[1] . "[" . $low . ".." . $high . "]";
                 $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be between ${low} and ${high}.";
@@ -304,24 +296,9 @@ class Validator
      */
     private function checkNumber($rule, $key, $params)
     {
-        if (preg_match('/^(number)$/', $rule) && array_key_exists($key, $params) && !is_long(intval($params[$key]))) {
+        if (preg_match('/^(number)$/', $rule) && array_key_exists($key, $params) && !is_numeric($params[$key])) {
             $this->setError($rule, $key, $params[$key]);
             $errorMsg = "Validation rule error. '$params[$key]' is not number type.";
-            throw new ValidateException($errorMsg);
-        }
-    }
-
-    /**
-     * 'double'に対する入力値チェック
-     * @param string バリデーションルール
-     * @param string リクエストキー
-     * @param Hash リクエストパラメータ
-     */
-    private function checkDouble($rule, $key, $params)
-    {
-        if (preg_match('/^(int)$/', $rule) && array_key_exists($key, $params) && !is_double($params[$key])) {
-            $this->setError($rule, $key, $params[$key]);
-            $errorMsg = "Validation rule error. '$params[$key]' is not double type.";
             throw new ValidateException($errorMsg);
         }
     }
