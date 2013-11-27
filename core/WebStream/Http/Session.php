@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Http;
 
+use WebStream\Exception\SessionTimeoutException;
+
 /**
  * セッションクラス
  * @author Ryuichi TANAKA.
@@ -22,7 +24,7 @@ class Session
      * @param String Cookieを有効にするパス
      * @param String Cookieを有効にするドメイン
      */
-    public function __construct($expire = 0, $path = '/', $domain = "")
+    public function __construct($expire = null, $path = '/', $domain = "")
     {
         $this->initialize($expire, $path, $domain);
     }
@@ -36,7 +38,7 @@ class Session
     private function initialize($expire, $path, $domain)
     {
         // 有効期限が設定されている場合のみ、Cookieに値をセットする
-        if ($expire !== 0) {
+        if ($expire !== null) {
             session_set_cookie_params($expire, $path, $domain);
         }
 
@@ -95,10 +97,16 @@ class Session
      * @param String Cookieを有効にするパス
      * @param String Cookieを有効にするドメイン
      */
-    public function restart($expire = 0, $path = '/', $domain = '')
+    public function restart($expire = null, $path = '/', $domain = '')
     {
-        setcookie(self::SESSION_EXPIRE_COOKIE_NAME, time(), time() + $expire, $path, $domain);
-        $_SESSION[self::SESSION_EXPIRE_COOKIE_NAME] = time() + $expire;
+        if ($expire === null) {
+            // 初期化する
+            $this->createInitializeCookie();
+        } else {
+            // 再設定する
+            setcookie(self::SESSION_EXPIRE_COOKIE_NAME, time(), time() + $expire, $path, $domain);
+            $_SESSION[self::SESSION_EXPIRE_COOKIE_NAME] = time() + $expire;
+        }
     }
 
     /**
