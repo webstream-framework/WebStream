@@ -3,7 +3,6 @@ namespace WebStream\Annotation;
 
 use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
-use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * TemplateCacheReader
@@ -22,44 +21,39 @@ class TemplateCacheReader extends AnnotationReader
     public function readAnnotation($refClass, $methodName, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
-        try {
-            while ($refClass !== false) {
-                $methods = $refClass->getMethods();
-                foreach ($methods as $method) {
-                    if ($refClass->getName() !== $method->class || $methodName !== $method->name) {
-                        continue;
-                    }
-                    $annotations = $reader->getMethodAnnotations($method);
+        while ($refClass !== false) {
+            $methods = $refClass->getMethods();
+            foreach ($methods as $method) {
+                if ($refClass->getName() !== $method->class || $methodName !== $method->name) {
+                    continue;
+                }
+                $annotations = $reader->getMethodAnnotations($method);
 
-                    $isInject = false;
-                    foreach ($annotations as $annotation) {
-                        if ($annotation instanceof Inject) {
-                            $isInject = true;
-                        }
-                    }
-
-                    if ($isInject) {
-                        foreach ($annotations as $annotation) {
-                            if ($annotation instanceof TemplateCache) {
-                                $expire = $annotation->getExpire();
-                                if (!is_int($expire)) {
-                                    $errorMsg = "Expire value is not integer: @TemplateCache(expire=\"" . strval($expire) . "\")";
-                                } elseif ($expire <= 0 || $expire > PHP_INT_MAX) {
-                                    $errorMsg = "Expire value is out of integer range: @TemplateCache(expire=" . strval($expire) . ")";
-                                    throw new AnnotationException($errorMsg);
-                                }
-                                $this->expire = $expire;
-                                break;
-                            }
-                        }
+                $isInject = false;
+                foreach ($annotations as $annotation) {
+                    if ($annotation instanceof Inject) {
+                        $isInject = true;
                     }
                 }
 
-                $refClass = $refClass->getParentClass();
+                if ($isInject) {
+                    foreach ($annotations as $annotation) {
+                        if ($annotation instanceof TemplateCache) {
+                            $expire = $annotation->getExpire();
+                            if (!is_int($expire)) {
+                                $errorMsg = "Expire value is not integer: @TemplateCache(expire=\"" . strval($expire) . "\")";
+                            } elseif ($expire <= 0 || $expire > PHP_INT_MAX) {
+                                $errorMsg = "Expire value is out of integer range: @TemplateCache(expire=" . strval($expire) . ")";
+                                throw new AnnotationException($errorMsg);
+                            }
+                            $this->expire = $expire;
+                            break;
+                        }
+                    }
+                }
             }
 
-        } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            $refClass = $refClass->getParentClass();
         }
     }
 

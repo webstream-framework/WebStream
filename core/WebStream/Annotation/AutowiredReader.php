@@ -1,9 +1,7 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
-use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * AutowiredReader
@@ -22,46 +20,41 @@ class AutowiredReader extends AnnotationReader
     public function readAnnotation($refClass, $method, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
-        try {
-            $receiver = $refClass->newInstanceWithoutConstructor();
-            $constructor = $refClass->getConstructor();
+        $receiver = $refClass->newInstanceWithoutConstructor();
+        $constructor = $refClass->getConstructor();
 
-            while ($refClass !== false) {
-                $properties = $refClass->getProperties();
-                foreach ($properties as $property) {
-                    $annotations = $reader->getPropertyAnnotations($property);
+        while ($refClass !== false) {
+            $properties = $refClass->getProperties();
+            foreach ($properties as $property) {
+                $annotations = $reader->getPropertyAnnotations($property);
 
-                    $isAutowired = false;
-                    foreach ($annotations as $annotation) {
-                        if ($annotation instanceof Autowired) {
-                            $isAutowired = true;
-                        }
-                    }
-
-                    if ($isAutowired) {
-                        foreach ($annotations as $annotation) {
-                            if ($annotation instanceof Type || $annotation instanceof Value) {
-                                if ($property->isPrivate() || $property->isProtected()) {
-                                    $property->setAccessible(true);
-                                }
-                                $property->setValue($receiver, $annotation->getValue());
-                            }
-                        }
+                $isAutowired = false;
+                foreach ($annotations as $annotation) {
+                    if ($annotation instanceof Autowired) {
+                        $isAutowired = true;
                     }
                 }
 
-                $refClass = $refClass->getParentClass();
+                if ($isAutowired) {
+                    foreach ($annotations as $annotation) {
+                        if ($annotation instanceof Type || $annotation instanceof Value) {
+                            if ($property->isPrivate() || $property->isProtected()) {
+                                $property->setAccessible(true);
+                            }
+                            $property->setValue($receiver, $annotation->getValue());
+                        }
+                    }
+                }
             }
 
-            if ($constructor !== null) {
-                $constructor->invokeArgs($receiver, [$arguments]);
-            }
-
-            $this->receiver = $receiver;
-
-        } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            $refClass = $refClass->getParentClass();
         }
+
+        if ($constructor !== null) {
+            $constructor->invokeArgs($receiver, [$arguments]);
+        }
+
+        $this->receiver = $receiver;
     }
 
     /**

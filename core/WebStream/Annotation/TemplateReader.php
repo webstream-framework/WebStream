@@ -4,7 +4,6 @@ namespace WebStream\Annotation;
 use WebStream\Module\Utility;
 use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
-use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * TemplateReader
@@ -30,65 +29,57 @@ class TemplateReader extends AnnotationReader
         $reader = new DoctrineAnnotationReader();
         $component = new TemplateComponent();
 
-        //$baseTemplate = null;
         $embedTemplates = [];
         $isAlreadyBaseRead = false;
 
-        try {
-            while ($refClass !== false) {
-                $methods = $refClass->getMethods();
-                foreach ($methods as $method) {
-                    if ($refClass->getName() !== $method->class || $methodName !== $method->name) {
-                        continue;
-                    }
-                    $annotations = $reader->getMethodAnnotations($method);
+        while ($refClass !== false) {
+            $methods = $refClass->getMethods();
+            foreach ($methods as $method) {
+                if ($refClass->getName() !== $method->class || $methodName !== $method->name) {
+                    continue;
+                }
+                $annotations = $reader->getMethodAnnotations($method);
 
-                    $isInject = false;
+                $isInject = false;
+                foreach ($annotations as $annotation) {
+                    if ($annotation instanceof Inject) {
+                        $isInject = true;
+                    }
+                }
+
+                if ($isInject) {
                     foreach ($annotations as $annotation) {
-                        if ($annotation instanceof Inject) {
-                            $isInject = true;
-                        }
-                    }
+                        if ($annotation instanceof Template) {
+                            $template = $annotation->getTemplate();
+                            $name = $annotation->getName();
 
-                    if ($isInject) {
-                        foreach ($annotations as $annotation) {
-                            if ($annotation instanceof Template) {
-                                $template = $annotation->getTemplate();
-                                $name = $annotation->getName();
-
-                                if ($annotation->isBase()) {
-                                    if ($isAlreadyBaseRead) {
-                                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
-                                        $errorMsg.= "Type of 'base' must be a only definition.";
-                                        throw new AnnotationException($errorMsg);
-                                    }
-                                    $component->setBase($this->templateDir . "/" . $template);
-                                    $isAlreadyBaseRead = true;
-                                } elseif ($annotation->isShared() && $name !== null) {
-                                    $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
-                                } elseif ($annotation->isParts() && $name !== null) {
-                                    $embedTemplates[$name] = $this->templateDir . "/" . $template;
-                                } else {
-                                    $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
-                                    $errorMsg.= "Please check attribute 'name' or 'type'.";
+                            if ($annotation->isBase()) {
+                                if ($isAlreadyBaseRead) {
+                                    $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
+                                    $errorMsg.= "Type of 'base' must be a only definition.";
                                     throw new AnnotationException($errorMsg);
                                 }
+                                $component->setBase($this->templateDir . "/" . $template);
+                                $isAlreadyBaseRead = true;
+                            } elseif ($annotation->isShared() && $name !== null) {
+                                $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
+                            } elseif ($annotation->isParts() && $name !== null) {
+                                $embedTemplates[$name] = $this->templateDir . "/" . $template;
+                            } else {
+                                $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
+                                $errorMsg.= "Please check attribute 'name' or 'type'.";
+                                throw new AnnotationException($errorMsg);
                             }
                         }
                     }
                 }
-
-                $refClass = $refClass->getParentClass();
             }
 
-            $component->setEmbed($embedTemplates);
-            $this->component = $component;
-
-        } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
-        } catch (\ReflectionException $e) {
-            throw new ClassNotFoundException("Class not found: " . $classpath);
+            $refClass = $refClass->getParentClass();
         }
+
+        $component->setEmbed($embedTemplates);
+        $this->component = $component;
     }
 
     /**
