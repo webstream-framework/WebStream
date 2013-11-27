@@ -7,7 +7,8 @@ namespace WebStream\Test\DataProvider;
  * @since 2013/11/10
  * @version 0.4
  */
-trait TemplateCacheProvider {
+trait TemplateCacheProvider
+{
     public function templateCacheProvider()
     {
         return [
