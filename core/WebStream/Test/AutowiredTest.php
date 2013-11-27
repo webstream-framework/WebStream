@@ -98,7 +98,7 @@ class AutowiredTest extends TestBase
      * 異常系
      * 間違ったアノテーション定義をした場合、例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\AnnotationException
+     * @expectedException Doctrine\Common\Annotations\AnnotationException
      */
     public function ngAutowiredAnnotationDefinition()
     {
