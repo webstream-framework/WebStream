@@ -7,7 +7,8 @@ namespace WebStream\Test\DataProvider;
  * @since 2013/09/08
  * @version 0.4
  */
-trait CacheProvider {
+trait CacheProvider
+{
     public function saveProvider()
     {
         return [
