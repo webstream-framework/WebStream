@@ -31,13 +31,10 @@ class Request
      */
     private $put;
 
-    private $delete;
-    private $head;
-    private $options;
-    private $trace;
-
-    /** リクエスト */
-    private $request;
+    // private $delete;
+    // private $head;
+    // private $options;
+    // private $trace;
 
     /** ドキュメントルートパス */
     private $documentRoot;
@@ -47,12 +44,6 @@ class Request
      */
     public function __construct()
     {
-        $this->request = [
-            'get'    => $this->get->params(),
-            'post'   => $this->post->params(),
-            'put'    => $this->put->params(),
-            'delete' => null
-        ];
     }
 
     /**
@@ -242,7 +233,8 @@ class Request
      */
     public function get($key = null)
     {
-        return $this->getRequest("get", $key);
+        $params = $this->get->params();
+        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
 
     /**
@@ -252,14 +244,15 @@ class Request
      */
     public function post($key = null)
     {
-        return $this->getRequest("post", $key);
+        $params = $this->post->params();
+        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
 
 
     /**
      * PUTパラメータ取得
      * PUTを使用してレスポンスを返す場合、
-　　　* リソース新規作成：201
+     * リソース新規作成：201
      * リソース更新：200または204
      * を返却しなければならない
      * @param string パラメータキー
@@ -267,29 +260,18 @@ class Request
      */
     public function put($key = null)
     {
-        return $this->getRequest("put", $key);
+        $params = $this->put->params();
+        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
 
     /**
      * DELETEパラメータ取得
      * DELETEを使用してレスポンスを返す場合、
-　　　* 200、202、204のいずれかを返却しなければならない
+     * 200、202、204のいずれかを返却しなければならない
      */
     public function delete()
     {
         // TODO implementation
         return null;
-    }
-
-    /**
-     * リクエストパラメータ取得
-     * @param string リクエストメソッド
-     * @param string パラメータキー
-     * @return string|array<string> パラメータ
-     */
-    private function getRequest($method, $key = null)
-    {
-        $params = $this->request[$method];
-        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
 }

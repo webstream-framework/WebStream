@@ -11,12 +11,23 @@ use WebStream\Module\Security;
  */
 class Put implements MethodInterface
 {
+    /** リクエストパラメータ */
+    private $params;
+
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        parse_str(file_get_contents('php://input'), $putdata);
+        $this->params = Security::safetyIn($putdata);
+    }
+
     /**
      * @Override
      */
     public function params()
     {
-        parse_str(file_get_contents('php://input'), $putdata);
-        return Security::safetyIn($putdata);
+        return $this->params;
     }
 }
