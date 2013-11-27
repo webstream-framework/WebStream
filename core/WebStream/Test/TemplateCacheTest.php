@@ -65,13 +65,25 @@ class TemplateCacheTest extends TestBase
      * 異常系
      * @TemplateCacheのexpire属性に不正な値が指定されていた場合、値が取得できないこと
      * @test
-     * @dataProvider templateCacheErrorProvider
      * @expectedException WebStream\Exception\AnnotationException
      */
-    public function ngTemplateCacheExpire($action)
+    public function ngTemplateCacheExpire()
     {
         $reader = new TemplateCacheReader();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
-        $reader->read($refClass, $action);
+        $reader->read($refClass, "error1");
+    }
+
+    /**
+     * 異常系
+     * @TemplateCacheのexpire属性に不正な値が指定されていた場合、値が取得できないこと
+     * @test
+     * @expectedException Doctrine\Common\Annotations\AnnotationException
+     */
+    public function ngTemplateCacheExpire2()
+    {
+        $reader = new TemplateCacheReader();
+        $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
+        $reader->read($refClass, "error2");
     }
 }

@@ -14,12 +14,4 @@ trait TemplateCacheProvider {
             ["index", 100]
         ];
     }
-
-    public function templateCacheErrorProvider()
-    {
-        return [
-            ["error1"],
-            ["error2"]
-        ];
-    }
 }
