@@ -9,7 +9,9 @@ use WebStream\Exception\RouterException;
 use WebStream\Exception\ResourceNotFoundException;
 use WebStream\Exception\ClassNotFoundException;
 use WebStream\Exception\MethodNotFoundException;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 use WebStream\Module\Logger;
+use WebStream\Annotation\ExceptionHandlerReader;
 
 /**
  * Resolver
@@ -118,6 +120,8 @@ class Resolver
             $instance = $refClass->newInstance($this->container);
             $method = $refClass->getMethod("__callInitialize");
             $method->invokeArgs($instance, [$refClass, $this->router->action(), $this->router->params(), $this->container]);
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e->getMessage());
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
         }
@@ -147,45 +151,97 @@ class Resolver
      * @param array エラー内容
      * @return boolean ハンドリングするかどうか
      */
-    public function handle($errorObj, $errorParams)
-    {
-        $isHandled = false;
-        $classPath = explode('\\', get_class($errorObj));
-        $className = str_replace('Exception', '', end($classPath));
-        if ($this->injection !== null) {
-            $methodAnnotations = $this->injection->error();
-            $errorArgs = array($errorObj, $errorParams);
-            foreach ($methodAnnotations as $methodAnnotation) {
-                // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
-                if (strcasecmp($methodAnnotation->value, $className) == 0 ||
-                    $methodAnnotation->value === null) {
-                    $method = $this->class->getMethod($methodAnnotation->methodName);
-                    $method->invokeArgs($this->instance, $errorArgs);
-                    $isHandled = true;
-                }
+    public function handle(\Exception $e) {
+        $filepathList = $this->fileSearch($this->router->controller());
+        $filepath = array_shift($filepathList);
+        $namespace = $this->getNamespace($filepath);
+        $classpath = $namespace . '\\' . $this->router->controller();
+        $ca = $classpath;
+        $validator = $this->container->validator;
+        $errorInfo = [
+            "class" => $classpath,
+            "method" => $this->router->action()
+        ];
+
+        try {
+            // Controller起動
+            $refClass = new \ReflectionClass($classpath);
+            // @ExceptionHandlerを起動
+            $reader = new ExceptionHandlerReader();
+            $reader->setHandledException($e);
+            $reader->read($refClass, null, $this->container);
+            $handleMethods = $reader->getHandleMethods();
+
+            if (count($handleMethods) === 0) {
+                return false;
             }
+
+            for ($i = 0; $i < count($handleMethods); $i++) {
+                $handleMethod = $handleMethods[$i];
+                $ca = $classpath . "#" . $handleMethod;
+                $instance = $refClass->newInstance($this->container);
+                $method = $refClass->getMethod($handleMethod);
+                $method->invokeArgs($instance, [$errorInfo]);
+                Logger::debug("Execution of handling is success: " . $ca);
+            }
+
+            return true;
+        } catch (DoctrineAnnotationException $e) {
+            Logger::error("Error occued in handled method: " . $ca);
+            throw new AnnotationException($e);
+        } catch (\ReflectionException $e) {
+            Logger::error("Error occued in handled method: " . $ca);
+            throw new ApplicationException($e);
         }
 
-        return $isHandled;
+        return false;
     }
+
+    /**
+     * エラー処理のハンドリングチェック
+     * @param object エラーオブジェクト
+     * @param array エラー内容
+     * @return boolean ハンドリングするかどうか
+     */
+    // public function handle($errorObj, $errorParams)
+    // {
+    //     $isHandled = false;
+    //     $classPath = explode('\\', get_class($errorObj));
+    //     $className = str_replace('Exception', '', end($classPath));
+    //     if ($this->injection !== null) {
+    //         $methodAnnotations = $this->injection->error();
+    //         $errorArgs = array($errorObj, $errorParams);
+    //         foreach ($methodAnnotations as $methodAnnotation) {
+    //             // 大文字小文字を区別しない。CsrfでもCSRFでも通る。
+    //             if (strcasecmp($methodAnnotation->value, $className) == 0 ||
+    //                 $methodAnnotation->value === null) {
+    //                 $method = $this->class->getMethod($methodAnnotation->methodName);
+    //                 $method->invokeArgs($this->instance, $errorArgs);
+    //                 $isHandled = true;
+    //             }
+    //         }
+    //     }
+
+    //     return $isHandled;
+    // }
 
     /**
      * バリデーションを実行する
      */
-    private function validate($controller, $action)
-    {
-        $validate = $this->container->validate;
-        try {
-            $validate->resolve();
-        } catch (ValidateException $e) {
-            $this->validateError = array(
-                "class"  => $this->router->controller(),
-                "method" => $this->router->action(),
-                "error"  => $validate->getError()
-            );
-            throw $e;
-        }
-    }
+    // private function validate($controller, $action)
+    // {
+    //     $validate = $this->container->validate;
+    //     try {
+    //         $validate->resolve();
+    //     } catch (ValidateException $e) {
+    //         $this->validateError = array(
+    //             "class"  => $this->router->controller(),
+    //             "method" => $this->router->action(),
+    //             "error"  => $validate->getError()
+    //         );
+    //         throw $e;
+    //     }
+    // }
 
 
     // /**

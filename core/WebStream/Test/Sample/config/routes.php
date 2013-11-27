@@ -79,6 +79,19 @@ Router::setRule([
     '/put_validate8' => "test_validator#put_range",
     '/put_validate9' => "test_validator#put_regexp",
     '/put_validate10' => "test_validator#put_number",
+    '/exception_handler1' => "test_exception_handler#index1",
+    '/exception_handler2' => "test_exception_handler#index2",
+    '/exception_handler3' => "test_exception_handler#index3",
+    '/exception_handler4' => "test_exception_handler#index4",
+    '/exception_handler5' => "test_exception_handler#index5",
+    '/exception_handler6' => "test_exception_handler#index6",
+    '/exception_handler7' => "test_exception_handler#error1",
+    '/exception_handler8' => "test_exception_handler#error2",
+    '/exception_handler9' => "test_exception_handler#error3",
+    '/exception_handler10' => "test_exception_handler#error4",
+    '/exception_handler11' => "test_exception_handler#error5",
+    '/multiple_exception_handler11' => "test_multiple_exception_handler#index1",
+
 
     // 以下未確認
     //'/render' => "test#render",

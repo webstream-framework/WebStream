@@ -28,5 +28,6 @@ trait AnnotationConstants {
     protected $HEADER_ATTR_ALLOWMETHOD = "allowMethod";
     // @TemplateCache
     protected $TEMPLATECACHE_ATTR_EXPIRE = "expire";
-
+    // @ExceptionHandler
+    protected $EXCEPTIONHANDLER_ATTR_VALUE = "value";
 }

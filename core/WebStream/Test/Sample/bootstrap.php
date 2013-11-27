@@ -25,6 +25,7 @@ $classLoader->load([
     "Template",
     "TemplateCache",
     "Header",
+    "ExceptionHandler",
     "Doctrine/Common/Annotations/AnnotationException"
 ]);
 

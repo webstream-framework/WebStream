@@ -15,6 +15,8 @@ use WebStream\Exception\AnnotationException;
 use WebStream\Exception\CsrfException;
 use WebStream\Exception\InvalidRequestException;
 use WebStream\Exception\ValidateException;
+use WebStream\Exception\ForbiddenAccessException;
+use WebStream\Exception\SessionTimeoutException;
 
 /**
  * Applicationクラス
@@ -72,13 +74,7 @@ class Application
         define('STREAM_ROOT', $this->getRoot());
         /** アプリケーションディレクトリ */
         define('STREAM_APP_DIR', $this->app_dir);
-        /** ドキュメントルートからプロジェクトディレクトリへのパスを定義 */
-        // TODO ↓クエリストリングとか普通に必要だと思うので確認してから不要なら消す
-        // define('STREAM_BASE_URI', $this->request->getBaseURL());
-        // define('STREAM_ROUTING_PATH', $this->request->getPathInfo());
-        // define('STREAM_QUERY_STRING', $this->request->getQueryString());
         /** publicディレクトリ */
-
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
         define('STREAM_VIEW_CACHE', "_cache");
@@ -153,7 +149,7 @@ class Application
         } catch (ValidateException $e) {
             // バリデーションエラーの場合は422
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e, $this->resolver->getValidateErrors())) {
+            if (!$this->handle($e)) {
                 $this->response->move(422);
             }
         } catch (RouterException $e) {
@@ -165,12 +161,25 @@ class Application
 
     /**
      * エラー処理のハンドリングチェック
-     * @param object エラーオブジェクト
-     * @param array エラー内容
-     * @return boolean ハンドリングするかどうか
+     * @param object 例外オブジェクト
+     * @return boolean 例外ハンドリング可否
      */
-    private function handle($errorObj, $errorParams = [])
+    private function handle(\Exception $e)
     {
-        return $this->resolver->handle($errorObj, $errorParams);
+        try {
+            return $this->resolver->handle($e);
+        } catch (AnnotationException $e) {
+            // アノテーションエラーの場合は500
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->response->move(500);
+        } catch (ApplicationException $e) {
+            // アプリケーション内部エラーの場合は500
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->response->move(500);
+        } catch (\Exception $e) {
+            // 開発者由来の例外は全て500
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->response->move(500);
+        }
     }
 }

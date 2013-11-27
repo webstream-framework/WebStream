@@ -20,8 +20,6 @@ class Validator
     private $request;
     /** ルーティング */
     private $router;
-    /** エラー内容 */
-    // private $error;
 
     /**
      * コンストラクタ
@@ -40,30 +38,6 @@ class Validator
     public static function setRule($rules)
     {
         self::$rules = $rules;
-    }
-
-    /**
-     * バリデーションエラー情報を返却する
-     * @return Hash エラー情報
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    /**
-     * バリデーションエラー情報をセットする
-     * @param string バリデーションルール
-     * @param string リクエストキー
-     * @param string リクエストパラメータ値
-     */
-    private function setError($rule, $name, $value)
-    {
-        $this->error = [
-            "rule" => $rule,
-            "name" => $name,
-            "value" => $value
-        ];
     }
 
     /**
@@ -103,7 +77,7 @@ class Validator
         $key = null;
         foreach ($rules as $methodKey => $value) {
             if (preg_match('/^((?:p(?:os|u)|ge)t|delete)#([A-Za-z0-9_-]+)$/', $methodKey, $matches)) {
-                if ($method === $matches[1] && array_key_exists($matches[2], $params)) {
+                if ($method === $matches[1]) {
                     $key = $matches[2];
                 } else {
                     throw new ValidateException("Validate rule is invalid: " . $methodKey);
@@ -148,7 +122,6 @@ class Validator
     private function checkRequired($key, $params)
     {
         if (!array_key_exists($key, $params) || (array_key_exists($key, $params) && empty($params[$key]))) {
-            $this->setError("required", $key, null);
             $errorMsg = "Validation rule error. '${key}' is required.";
             throw new ValidateException($errorMsg);
         }
@@ -165,8 +138,6 @@ class Validator
         if (preg_match('/^(min_length)\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
             $length = intval($matches[2]);
             if (array_key_exists($key, $params) && mb_strlen($params[$key], "UTF-8") < $length) {
-                $rule = $matches[1] . "[" . $matches[2] . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be more than ${length}.";
                 throw new ValidateException($errorMsg);
             }
@@ -184,8 +155,6 @@ class Validator
         if (preg_match('/^(max_length)\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
             $length = intval($matches[2]);
             if (array_key_exists($key, $params) && mb_strlen($params[$key], "UTF-8") > $length) {
-                $rule = $matches[1] . "[" . $matches[2] . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be less than ${length}.";
                 throw new ValidateException($errorMsg);
             }
@@ -203,8 +172,6 @@ class Validator
         if (preg_match('/^(min)\[([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
             $num = $matches[2];
             if (array_key_exists($key, $params) && $params[$key] < $num) {
-                $rule = $matches[1] . "[" . $matches[2] . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be more than ${num}.";
                 throw new ValidateException($errorMsg);
             }
@@ -222,8 +189,6 @@ class Validator
         if (preg_match('/^(max)\[([-]?\d+\.?\d+?)\]$/', $rule, $matches)) {
             $num = $matches[2];
             if (array_key_exists($key, $params) && $params[$key] > $num) {
-                $rule = $matches[1] . "[" . $matches[2] . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be less than ${num}.";
                 throw new ValidateException($errorMsg);
             }
@@ -241,8 +206,6 @@ class Validator
         if (preg_match('/^(equal)\[(.*)\]$/', $rule, $matches)) {
             $val = $matches[2];
             if (array_key_exists($key, $params) && $params[$key] !== $val) {
-                $rule = $matches[1] . "[" . $matches[2] . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be equals ${val}.";
                 throw new ValidateException($errorMsg);
             }
@@ -260,8 +223,6 @@ class Validator
         if (preg_match('/^(length)\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
             $num = intval($matches[2]);
             if (array_key_exists($key, $params) && mb_strlen($params[$key], "UTF-8") !== $num) {
-                $rule = $matches[1] . "[" . $matches[2] . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be equals ${num}.";
                 throw new ValidateException($errorMsg);
             }
@@ -280,8 +241,6 @@ class Validator
             $low = $matches[2];
             $high = $matches[3];
             if (array_key_exists($key, $params) && ($params[$key] < $low || $params[$key] > $high)) {
-                $rule = $matches[1] . "[" . $low . ".." . $high . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' must be between ${low} and ${high}.";
                 throw new ValidateException($errorMsg);
             }
@@ -297,7 +256,6 @@ class Validator
     private function checkNumber($rule, $key, $params)
     {
         if (preg_match('/^(number)$/', $rule) && array_key_exists($key, $params) && !is_numeric($params[$key])) {
-            $this->setError($rule, $key, $params[$key]);
             $errorMsg = "Validation rule error. '$params[$key]' is not number type.";
             throw new ValidateException($errorMsg);
         }
@@ -315,7 +273,6 @@ class Validator
             $regexp = $matches[2];
             if (array_key_exists($key, $params) && !preg_match($regexp, $params[$key])) {
                 $rule = $matches[1] . "[" . $matches[2] . "]";
-                $this->setError($rule, $key, $params[$key]);
                 $errorMsg = "Validation rule error. '${key}' is unmatche regular expression '${regexp}'.";
                 throw new ValidateException($errorMsg);
             }
