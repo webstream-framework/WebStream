@@ -1,23 +1,39 @@
 <?php
 namespace WebStream;
-require 'core/AutoImport.php';
-require 'core/Functions.php';
-// クラスをオートロード
-function __autoload($class_name) {
-    import("core/" . $class_name);
-}
-// シャットダウン時のハンドリング関数を登録
-register_shutdown_function('WebStream\shutdownHandler');
-// コアクラスをインポート
-importAll("core");
-// ルーティングルールをロード
-import("config/routes");
-// バリデーションルールをロード
-import("config/validates");
+
+use WebStream\Module\Logger;
+use WebStream\DI\ServiceLocator;
+
+require_once '../../Module/ClassLoader.php';
+require_once '../../Module/Functions.php';
+
+$classLoader = new ClassLoader();
+spl_autoload_register([$classLoader, "load"]);
+register_shutdown_function('WebStream\Module\shutdownHandler');
+$classLoader->import("config/routes.php");
+$classLoader->import("config/validates.php");
+
+// Annotations
+$classLoader->load([
+    "AbstractAnnotation",
+    "Autowired",
+    "Value",
+    "Type",
+    "Inject",
+    "Filter",
+    "Template",
+    "TemplateCache",
+    "Header",
+    "ExceptionHandler",
+    "Doctrine/Common/Annotations/AnnotationException"
+]);
+
 // Loggerを初期化
 Logger::init();
+
 // サービスロケータをロード
 $container = ServiceLocator::getContainer();
+
 // アプリケーションを起動する
 $app = new Application($container);
 $app->documentRoot("/WebStream"); // アプリケーション固有設定
