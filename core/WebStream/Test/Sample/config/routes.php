@@ -91,6 +91,14 @@ Router::setRule([
     '/exception_handler10' => "test_exception_handler#error4",
     '/exception_handler11' => "test_exception_handler#error5",
     '/multiple_exception_handler11' => "test_multiple_exception_handler#index1",
+    '/session_limit' => "test_session#set_session_limit_expire",
+    '/session_no_limit' => "test_session#set_session_no_limit_expire",
+    '/session_index' => "test_session#index1",
+    '/before_after_filter' => "test_filter#index",
+    '/before_after_multiple_filter' => "test_multiple_filter#index",
+    '/before_after_override_filter' => "test_override_filter#index",
+    '/initialize_filter_error' => "test_initialize_filter#index",
+    '/invalid_filter_error' => "test_invalid_filter#index",
 
 
     // 以下未確認

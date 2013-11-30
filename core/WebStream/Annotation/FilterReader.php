@@ -14,9 +14,6 @@ use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
  */
 class FilterReader extends AnnotationReader
 {
-    /** reveiver */
-    private $receiver;
-
     /** component instance */
     private $component;
 
@@ -27,7 +24,7 @@ class FilterReader extends AnnotationReader
     {
         $reader = new DoctrineAnnotationReader();
         $component = new FilterComponent();
-        $receiver = $this->receiver;
+        $instance = $this->instance;
 
         $isInitializeDefined = false;
         $initializeContainer = new Container();
@@ -59,19 +56,19 @@ class FilterReader extends AnnotationReader
                                 if ($isInitializeDefined) {
                                     throw new AnnotationException("Can not multiple define @Filter(\"Initialize\") at method.");
                                 }
-                                $initializeContainer->registerAsLazy(0, function() use ($receiver, $method) {
-                                    $receiver->{$method->name}();
+                                $initializeContainer->registerAsLazy(0, function() use ($instance, $method) {
+                                    $method->invoke($instance);
                                 });
                                 $isInitializeDefined = true;
                             }
                             if ($annotation->enableBefore()) {
-                                $beforeContainer->registerAsLazy($i++, function() use ($receiver, $method) {
-                                    $receiver->{$method->name}();
+                                $beforeContainer->registerAsLazy($i++, function() use ($instance, $method) {
+                                    $method->invoke($instance);
                                 });
                             }
                             if ($annotation->enableAfter()) {
-                                $afterContainer->registerAsLazy($j++, function() use ($receiver, $method) {
-                                    $receiver->{$method->name}();
+                                $afterContainer->registerAsLazy($j++, function() use ($instance, $method) {
+                                    $method->invoke($instance);
                                 });
                             }
                         }
@@ -87,15 +84,6 @@ class FilterReader extends AnnotationReader
         $component->setAfterContainer($afterContainer);
 
         $this->component = $component;
-    }
-
-    /**
-     * 実行するControllerのレシーバを設定する
-     * @param object レシーバ
-     */
-    public function setReceiver(CoreController $receiver)
-    {
-        $this->receiver = $receiver;
     }
 
     /**
