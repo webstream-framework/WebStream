@@ -12,7 +12,7 @@ trait AutowiredProvider
     public function autowiredProvider()
     {
         return [
-            ["\WebStream\Test\TestData\AutowiredTestType", "kotori@lovelive.com", 17]
+            ["kotori@lovelive.com", 17]
         ];
     }
 

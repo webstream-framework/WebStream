@@ -34,7 +34,7 @@ class AutowiredTest extends TestBase
      * @test
      * @dataProvider autowiredProvider
      */
-    public function okAutowired($instance, $mail, $age)
+    public function okAutowired($mail, $age)
     {
         $reader = new AutowiredReader();
         $container = ServiceLocator::getContainer();
@@ -68,7 +68,7 @@ class AutowiredTest extends TestBase
      * @test
      * @dataProvider autowiredProvider
      */
-    public function okAutowiredReverse($instance, $mail, $age)
+    public function okAutowiredReverse($mail, $age)
     {
         $reader = new AutowiredReader();
         $container = ServiceLocator::getContainer();
@@ -77,6 +77,30 @@ class AutowiredTest extends TestBase
         $receiver = $reader->getReceiver();
         $this->assertEquals($mail, $receiver->getMail());
         $this->assertEquals($age, $receiver->getAge());
+    }
+
+    /**
+     * 正常系
+     * オーバライドしているメソッドに対してもAutowiredできること
+     * @test
+     */
+    public function okAutowiredSuperClass()
+    {
+        $reader = new AutowiredReader();
+        $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest7");
+        $instance = $refClass->newInstance();
+        $default1 = $instance->getName();
+        $default2 = $instance->getName2();
+        $this->assertEquals($default1, "default1");
+        $this->assertEquals($default2, "default2");
+
+        $container = ServiceLocator::getContainer();
+        $reader->read($refClass, null, $container);
+        $receiver = $reader->getReceiver();
+        $autowired1 = $receiver->getName();
+        $autowired2 = $receiver->getName2();
+        $this->assertEquals($autowired1, "name1");
+        $this->assertEquals($autowired2, "name2");
     }
 
     /**
