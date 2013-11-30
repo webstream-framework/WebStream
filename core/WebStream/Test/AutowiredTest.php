@@ -40,9 +40,9 @@ class AutowiredTest extends TestBase
         $container = ServiceLocator::getContainer();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest1");
         $reader->read($refClass, null, $container);
-        $receiver = $reader->getReceiver();
-        $this->assertEquals($mail, $receiver->getMail());
-        $this->assertEquals($age, $receiver->getAge());
+        $instance = $reader->getInstance();
+        $this->assertEquals($mail, $instance->getMail());
+        $this->assertEquals($age, $instance->getAge());
     }
 
     /**
@@ -57,9 +57,9 @@ class AutowiredTest extends TestBase
         $container = ServiceLocator::getContainer();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest3");
         $reader->read($refClass, null, $container);
-        $receiver = $reader->getReceiver();
-        $this->assertEquals($name, $receiver->getName());
-        $this->assertEquals($num, $receiver->getMemberNum());
+        $instance = $reader->getInstance();
+        $this->assertEquals($name, $instance->getName());
+        $this->assertEquals($num, $instance->getMemberNum());
     }
 
     /**
@@ -74,9 +74,9 @@ class AutowiredTest extends TestBase
         $container = ServiceLocator::getContainer();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest4");
         $reader->read($refClass, null, $container);
-        $receiver = $reader->getReceiver();
-        $this->assertEquals($mail, $receiver->getMail());
-        $this->assertEquals($age, $receiver->getAge());
+        $instance = $reader->getInstance();
+        $this->assertEquals($mail, $instance->getMail());
+        $this->assertEquals($age, $instance->getAge());
     }
 
     /**
@@ -96,9 +96,9 @@ class AutowiredTest extends TestBase
 
         $container = ServiceLocator::getContainer();
         $reader->read($refClass, null, $container);
-        $receiver = $reader->getReceiver();
-        $autowired1 = $receiver->getName();
-        $autowired2 = $receiver->getName2();
+        $instance = $reader->getInstance();
+        $autowired1 = $instance->getName();
+        $autowired2 = $instance->getName2();
         $this->assertEquals($autowired1, "name1");
         $this->assertEquals($autowired2, "name2");
     }

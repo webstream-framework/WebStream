@@ -11,16 +11,12 @@ use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
  */
 class AutowiredReader extends AnnotationReader
 {
-    /** reveiver */
-    private $reveiver;
-
     /**
      * @Override
      */
     public function readAnnotation($refClass, $method, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
-        $receiver = $refClass->newInstanceWithoutConstructor();
         $constructor = $refClass->getConstructor();
 
         while ($refClass !== false) {
@@ -41,7 +37,7 @@ class AutowiredReader extends AnnotationReader
                             if ($property->isPrivate() || $property->isProtected()) {
                                 $property->setAccessible(true);
                             }
-                            $property->setValue($receiver, $annotation->getValue());
+                            $property->setValue($this->instance, $annotation->getValue());
                         }
                     }
                 }
@@ -51,18 +47,7 @@ class AutowiredReader extends AnnotationReader
         }
 
         if ($constructor !== null) {
-            $constructor->invokeArgs($receiver, [$arguments]);
+            $constructor->invokeArgs($this->instance, [$arguments]);
         }
-
-        $this->receiver = $receiver;
-    }
-
-    /**
-     * Autowiredしたレシーバを返却する
-     * @return object レシーバ
-     */
-    public function getReceiver()
-    {
-        return $this->receiver;
     }
 }

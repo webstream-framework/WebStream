@@ -56,7 +56,7 @@ class CoreController extends CoreBase
         // autowired
         $autowired = new AutowiredReader();
         $autowired->read($refClass, null, $container);
-        $self = $autowired->getReceiver();
+        $self = $autowired->getInstance();
 
         // header
         $header = new HeaderReader();
@@ -64,8 +64,7 @@ class CoreController extends CoreBase
         $mime = $header->getMimeType();
 
         // filter
-        $reader = new FilterReader();
-        $reader->setReceiver($self);
+        $reader = new FilterReader($self);
         $reader->read($refClass);
         $filter = $reader->getComponent();
 

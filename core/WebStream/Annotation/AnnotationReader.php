@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Annotation;
 
+use WebStream\Core\CoreController;
 use WebStream\Module\ClassLoader;
 
 /**
@@ -17,8 +18,20 @@ abstract class AnnotationReader
     /** ReflectionClass */
     protected $refClass;
 
+    /** Controllerインスタンス */
+    protected $instance;
+
     /**
-     * インスタンスを返却する
+     * コンストラクタ
+     * @param object Controllerインスタンス
+     */
+    public function __construct(CoreController $instance = null)
+    {
+        $this->instance = $instance;
+    }
+
+    /**
+     * アノテーションを実行する
      * @param object リフレクションクラスオブジェクト
      * @param string 実行対象のメソッド名(指定無しの場合全てのメソッドが対象)
      * @param array コンストラクタ引数のリスト
@@ -26,7 +39,20 @@ abstract class AnnotationReader
      */
     public function read(\ReflectionClass $refClass, $method = null, $arguments = [])
     {
+        if ($this->instance === null) {
+            $this->instance = $refClass->newInstanceWithoutConstructor();
+        }
+
         return $this->readAnnotation($refClass, $method, $arguments);
+    }
+
+    /**
+     * インスタンスを返却する
+     * @return object Controllerインスタンス
+     */
+    public function getInstance()
+    {
+        return $this->instance;
     }
 
     /**
