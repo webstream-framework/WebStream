@@ -9,6 +9,7 @@ use WebStream\Exception\RouterException;
 use WebStream\Exception\ResourceNotFoundException;
 use WebStream\Exception\ClassNotFoundException;
 use WebStream\Exception\AnnotationException;
+use WebStream\Exception\ApplicationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 use WebStream\Module\Logger;
 use WebStream\Annotation\ExceptionHandlerReader;
@@ -81,13 +82,10 @@ class Resolver
      */
     private function runController()
     {
-        // ファイルパスを取得
-        $filepathList = $this->fileSearch($this->router->controller());
-        $filepath = array_shift($filepathList);
-        // 名前空間を取得
-        $namespace = $this->getNamespace($filepath);
-        // クラスパス生成
-        $classpath = $namespace . '\\' . $this->router->controller();
+        // クラスパスを取得
+        $coreDelegator = $this->container->coreDelegator;
+        $namespace = $coreDelegator->getNamespace($this->router->controller());
+        $classpath = $namespace . "\\" . $this->router->controller();
 
         // バリデーションチェック
         $validator = $this->container->validator;

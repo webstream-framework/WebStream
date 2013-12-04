@@ -15,7 +15,8 @@ trait TemplateProvider {
             ["/test_template/index2", "hoge"],
             ["/test_template/index3", "honoka"],
             ["/test_template/index4", "kotori"],
-            ["/test_template/index5", "nicomaki"]
+            ["/test_template/index5", "nicomaki"],
+            ["/test_template/index6", "printemps"]
         ];
     }
 

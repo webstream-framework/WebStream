@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Core;
 
+use WebStream\Module\Utility;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\FilterReader;
@@ -9,7 +10,6 @@ use WebStream\Annotation\TemplateReader;
 use WebStream\Annotation\HeaderReader;
 use WebStream\Annotation\TemplateCacheReader;
 use WebStream\Module\Container;
-
 use WebStream\Exception\ClassNotFoundException;
 use WebStream\Exception\MethodNotFoundException;
 use WebStream\Exception\CsrfException;
@@ -20,16 +20,18 @@ use WebStream\Exception\CsrfException;
  * @since 2011/09/11
  * @version 0.4.2
  */
-class CoreController extends CoreBase
+class CoreController
 {
-    /** view */
-    private $view;
+    use Utility;
+
     /** セッション */
     protected $session;
     /** リクエスト */
     protected $request;
     /** レスポンス */
     private $response;
+    /** CoreDelegator */
+    private $container;
 
     /**
      * Controllerクラス全体の初期化
@@ -37,11 +39,10 @@ class CoreController extends CoreBase
      */
     final public function __construct(Container $container)
     {
-        parent::__construct($container);
-        $this->request  = $container->request;
-        $this->response = $container->response;
-        $this->session  = $container->session;
-        $this->view = $this->__getView();
+        $this->request   = $container->request;
+        $this->response  = $container->response;
+        $this->session   = $container->session;
+        $this->coreDelegator = $container->coreDelegator;
     }
 
     /**
@@ -75,12 +76,11 @@ class CoreController extends CoreBase
 
         // action
         $template = new TemplateReader();
-        $template->setTemplateDir($self->__pageName);
-        $template->read($refClass, $action);
+        $template->read($refClass, $action, $container);
         $templateComponent = $template->getComponent();
 
         if (!method_exists($self, $action)) {
-            $class = $this->__toString($self);
+            $class = get_class($self);
             throw new MethodNotFoundException("${class}#${action} is not defined.");
         }
 
@@ -95,7 +95,9 @@ class CoreController extends CoreBase
         }
 
         // draw template
-        $self->view->draw($templateComponent->getBase(), $data, $mime);
+        $viewDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views";
+        $view = $this->coreDelegator->getView();
+        $view->draw($viewDir . "/" . $templateComponent->getBase(), $data, $mime);
 
         $templateCache = new TemplateCacheReader();
         $templateCache->read($refClass, $action);
@@ -103,8 +105,9 @@ class CoreController extends CoreBase
 
         if ($expire !== null) {
             // create cache
-            $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($this->__pageName) . "-" . $this->camel2snake($action);
-            $self->view->cache($cacheFile, ob_get_contents(), $expire);
+            $pageName = $this->coreDelegator->getPageName();
+            $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($action);
+            $view->cache($cacheFile, ob_get_contents(), $expire);
         }
 
         // after filter
@@ -117,7 +120,8 @@ class CoreController extends CoreBase
      */
     final public function __callStaticFile($filepath)
     {
-        $this->view->__file($filepath);
+        $view = $this->coreDelegator->getView();
+        $view->__file($filepath);
     }
 
     /**
@@ -159,25 +163,24 @@ class CoreController extends CoreBase
     }
 
     /**
-     * Serviceクラスのインスタンスをロードする
-     * @param String Serviceクラス名
+     * Service/Modelクラスのインスタンスをロードする
      */
     final private function __load()
     {
+        $pageName = $this->coreDelegator->getPageName();
+
         // Serviceクラスインスタンスを取得
-        $service = $this->__getService();
+        $service = $this->coreDelegator->getService();
         // Modelクラスインスタンスを取得
-        $model = $this->__getModel();
+        $model = $this->coreDelegator->getModel();
 
         if ($service) {
-            $this->{$this->__pageName} = $service;
+            $this->{$pageName} = $service;
         } elseif ($model) {
-            $this->{$this->__pageName} = $model;
+            $this->{$pageName} = $model;
         } else {
-            $serviceClass = $this->__page() . 'Service';
-            $modelClass = $this->__page() . 'Model';
-            $errorMsg = "$serviceClass and $modelClass is not defined.";
-            $this->{$this->__pageName} = new ClassNotFoundException($errorMsg);
+            $errorMsg = $pageName . "Service and " . $pageName . "Model is not defined.";
+            $this->{$pageName} = new ClassNotFoundException($errorMsg);
         }
     }
 }

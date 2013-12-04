@@ -15,22 +15,21 @@ class TemplateReader extends AnnotationReader
 {
     use Utility;
 
-    /** template directory */
-    private $templateDir;
-
     /** template component */
     private $component;
 
     /**
      * @Override
      */
-    public function readAnnotation($refClass, $methodName, $arguments)
+    public function readAnnotation($refClass, $methodName, $container)
     {
         $reader = new DoctrineAnnotationReader();
         $component = new TemplateComponent();
 
         $embedTemplates = [];
         $isAlreadyBaseRead = false;
+        $coreDelegator = $container->coreDelegator;
+        $templateDir = $this->camel2snake($coreDelegator->getPageName());
 
         while ($refClass !== false) {
             $methods = $refClass->getMethods();
@@ -59,12 +58,12 @@ class TemplateReader extends AnnotationReader
                                     $errorMsg.= "Type of 'base' must be a only definition.";
                                     throw new AnnotationException($errorMsg);
                                 }
-                                $component->setBase($this->templateDir . "/" . $template);
+                                $component->setBase($templateDir . "/" . $template);
                                 $isAlreadyBaseRead = true;
                             } elseif ($annotation->isShared() && $name !== null) {
                                 $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
                             } elseif ($annotation->isParts() && $name !== null) {
-                                $embedTemplates[$name] = $this->templateDir . "/" . $template;
+                                $embedTemplates[$name] = $templateDir . "/" . $template;
                             } else {
                                 $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
                                 $errorMsg.= "Please check attribute 'name' or 'type'.";
@@ -80,15 +79,6 @@ class TemplateReader extends AnnotationReader
 
         $component->setEmbed($embedTemplates);
         $this->component = $component;
-    }
-
-    /**
-     * テンプレートディレクトリ名を設定する
-     * @param string テンプレートディレクトリ名
-     */
-    public function setTemplateDir($templateDir)
-    {
-        $this->templateDir = $this->camel2snake($templateDir);
     }
 
     /**

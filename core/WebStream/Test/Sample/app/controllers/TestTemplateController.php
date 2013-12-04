@@ -72,6 +72,15 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
+     * @Template("base6.tmpl")
+     */
+    public function index6()
+    {
+        return ["name" => "printemps"];
+    }
+
+    /**
+     * @Inject
      * @Template("notfound.tmpl")
      */
     public function error1()

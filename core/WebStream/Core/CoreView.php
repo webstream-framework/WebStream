@@ -14,7 +14,7 @@ use WebStream\Exception\ResourceNotFoundException;
  * @since 2011/09/12
  * @version 0.4
  */
-class CoreView extends CoreBase
+class CoreView
 {
     use Utility;
 
@@ -26,6 +26,8 @@ class CoreView extends CoreBase
     private $response;
     /** セッション */
     private $session;
+    /** CoreDelegator */
+    private $coreDelegator;
     /** テンプレートのタイムスタンプ */
     private $timestamp;
     /** キャッシュ保存ディレクトリ */
@@ -37,10 +39,10 @@ class CoreView extends CoreBase
      */
     public function __construct(Container $container)
     {
-        parent::__construct($container);
         $this->request  = $container->request;
         $this->response = $container->response;
         $this->session  = $container->session;
+        $this->coreDelegator = $container->coreDelegator;
         $this->initialize();
     }
 
@@ -79,22 +81,19 @@ class CoreView extends CoreBase
      */
     final public function draw($template, $params, $mime = "html")
     {
-        $viewDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views";
-        $templatePath = $viewDir . "/" . $template;
-
         // テンプレートファイルがない場合エラー
-        if (!file_exists($templatePath)) {
-            throw new ResourceNotFoundException("Invalid template file path: " . $templatePath);
+        if (!file_exists($template)) {
+            throw new ResourceNotFoundException("Invalid template file path: " . $template);
         }
 
         // テンプレートファイルの最新の変更日時を取得
-        $timestamp = filemtime($templatePath);
+        $timestamp = filemtime($template);
         if ($timestamp > $this->timestamp) {
             $this->timestamp = $timestamp;
         }
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
-        $content = $this->convert(file_get_contents($templatePath));
+        $content = $this->convert(file_get_contents($template));
 
         // formタグが含まれる場合はCSRFトークンを付与する
         if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
@@ -129,6 +128,7 @@ class CoreView extends CoreBase
     private function outputHTML($template, $params)
     {
         extract($params);
+        $params = null;
         include($template);
     }
 
@@ -152,8 +152,8 @@ class CoreView extends CoreBase
         $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
-        $s = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php ${self::HELPER_RECEIVER}->__initialize("$1", [$2]); ?>', $s);
-        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->draw($1, $__params__); ?>', $s);
+        $s = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php $this->coreDelegator->getHelper()->__initialize("$1", $__params__, [$2]); ?>', $s);
+        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->draw(STREAM_ROOT."/".STREAM_APP_DIR."/views/$1", $__params__); ?>', $s);
 
         return $s;
     }
@@ -260,63 +260,6 @@ class CoreView extends CoreBase
 
     // 以下のメソッドは削除予定
 
-    /**
-     * ディレクトリパス付きのテンプレートパスを設定する
-     * @param Hash テンプレート名ハッシュ
-     */
-    // public function __templates($templateMethods)
-    // {
-    //     $templates = [];
-    //     foreach ($templateMethods as $method => $list) {
-    //         foreach ($list as $key => $value) {
-    //             $templates[$key] = $this->templateDir($method) . "/" . $value;
-    //         }
-    //     }
-    //     $this->templates = $templates;
-    // }
-
-    /**
-     * テンプレートのディレクトリを取得する
-     * @param String レンダリングメソッド
-     * @return String テンプレートディレクトリ名
-     */
-    // private function templateDir($method)
-    // {
-    //     return $method === '__layout' ? STREAM_VIEW_SHARED : Utility::camel2snake($this->__pageName);
-    // }
-
-    /**
-     * CSRF対策を有効にする
-     */
-    // final public function __enableCsrf()
-    // {
-    //     $this->enableCsrf = true;
-    // }
-
-    // /**
-    //  * テンプレート描画の初期処理
-    //  * @param String テンプレート名
-    //  * @param String テンプレートメソッド
-    //  * @param Hash テンプレート埋め込みパラメータ
-    //  * @param String 出力形式
-    //  */
-    // final public function __initialDraw($template, $method, $params = [], $type = "html")
-    // {
-    //     $template = $this->templateDir($method) . '/' . $template;
-    //     $this->__draw($template, $params, $type);
-    // }
-
-    // /**
-    //  * テンプレート描画の初期処理
-    //  * @param String テンプレート名
-    //  * @param Hash テンプレート埋め込みパラメータ
-    //  * @param String 出力形式
-    //  */
-    // final public function __draw_org($template, $params = [], $type = "html")
-    // {
-    //     $templatePath = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . $template;
-    //     $this->draw($templatePath, $params, $type);
-    // }
 
     /**
      * JSONを描画する
