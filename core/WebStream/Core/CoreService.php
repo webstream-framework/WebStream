@@ -29,8 +29,6 @@ class CoreService
         $this->{$this->coreDelegator->getPageName()} = $this->coreDelegator->getModel();
         $classLoader = new ClassLoader();
         $classLoader->importAll(STREAM_APP_DIR . "/libraries");
-
-        //importAll(STREAM_APP_DIR . "/libraries");
     }
 
     /**
@@ -48,8 +46,5 @@ class CoreService
         }
 
         return call_user_func_array([$this->{$pageName}, $method], $arguments);
-    }
-
-    private function loadLibrary() {
     }
 }
