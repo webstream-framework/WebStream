@@ -49,4 +49,14 @@ class TestController extends CoreController
     {
         echo "similar". $params["page"];
     }
+
+    public function service1()
+    {
+        echo $this->Test->service1();
+    }
+
+    public function service2()
+    {
+        echo $this->Test->service2();
+    }
 }

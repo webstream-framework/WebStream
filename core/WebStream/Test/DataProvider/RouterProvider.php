@@ -63,28 +63,6 @@ trait RouterProvider
         ];
     }
 
-    public function noServiceClass()
-    {
-        return [
-            ["/no_service", "no service class"]
-        ];
-    }
-
-    public function noServiceMethod()
-    {
-        return [
-            ["/no_service2", "no service method"]
-        ];
-    }
-
-    public function sendParamFromControllerToModelProvider()
-    {
-        return [
-            ['/exist_service_exist_model_exist_model_method_param', "abc"],
-            ['/exist_service_exist_model_exist_model_method_params', "abcdef"]
-        ];
-    }
-
     public function readStaticFileProvider()
     {
         return [

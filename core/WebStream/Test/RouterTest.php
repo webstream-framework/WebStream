@@ -129,53 +129,6 @@ class RouterTest extends TestBase
 
     /**
      * 正常系
-     * Serviceクラスが存在しない場合、直接Modelクラスを呼び出せること
-     * @test
-     * @dataProvider noServiceClass
-     */
-    public function okNoServiceClass($path, $str)
-    {
-        $url = $this->getDocumentRootURL() . $path;
-        $response = file_get_contents($url);
-        $this->assertEquals($response, $str);
-        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
-        $this->assertEquals($status_code, "200");
-    }
-
-    /**
-     * 正常系
-     * Serviceクラスに該当するメソッドがない場合、
-     * Modelクラスのメソッドに移譲できること
-     * @test
-     * @dataProvider noServiceMethod
-     */
-    public function okNoServiceMethod($path, $str)
-    {
-        $url = $this->getDocumentRootURL() . $path;
-        $response = file_get_contents($url);
-        $this->assertEquals($response, $str);
-        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
-        $this->assertEquals($status_code, "200");
-    }
-
-    /**
-     * 正常系
-     * Serviceクラスに該当するメソッドがなく、Modelクラスのメソッドに以上する場合、
-     * 引数を正常に渡すことができること
-     * @test
-     * @dataProvider sendParamFromControllerToModelProvider
-     */
-    public function okSendParamFromControllerToModel($path, $str)
-    {
-        $url = $this->getDocumentRootURL() . $path;
-        $response = file_get_contents($url);
-        $this->assertEquals($response, $str);
-        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
-        $this->assertEquals($status_code, "200");
-    }
-
-    /**
-     * 正常系
      * 指定ディレクトリに配置した静的ファイルを読み込めること
      * @test
      * @dataProvider readStaticFileProvider
