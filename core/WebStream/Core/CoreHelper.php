@@ -48,9 +48,9 @@ class CoreHelper
 
         // Helperメソッドを呼び出す
         if (method_exists($this, $method)) {
-            $content = call_user_func_array([$this, $method], $args);
+            $content = Security::safetyOut(call_user_func_array([$this, $method], $args));
             $cacheId = $this->getRandomstring(30);
-            $temp = $this->getTemporaryDirectory() . "/" . $cacheId . ".cache";
+            $temp = $this->getTemporaryDirectory() . "/" . $cacheId;
             $fileSize = file_put_contents($temp, $content, LOCK_EX);
             if ($fileSize === false) {
                 throw new IOException("File write failure: " . $temp);

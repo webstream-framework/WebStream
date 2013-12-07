@@ -5,13 +5,37 @@ use WebStream\Core\CoreHelper;
 
 class TestHelperHelper extends CoreHelper
 {
-    public function test1($name)
+    public function help1()
     {
-        return '!{test2($name)}';
+        echo "erichika";
     }
 
-    public function test2($name)
+    public function help2($name)
     {
         echo $name;
+    }
+
+    public function help3($name)
+    {
+        return '!{help2($name)}';
+    }
+
+    public function help4($name)
+    {
+        return <<< HELPER
+$name
+HELPER;
+    }
+
+    public function help5()
+    {
+        return <<< HELPER
+<script>alert("xss");</script>
+HELPER;
+    }
+
+    public function help6($name, $age)
+    {
+        echo $name . $age;
     }
 }
