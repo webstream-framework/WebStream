@@ -47,7 +47,7 @@ class ClassLoaderTest extends TestBase
      */
     public function okAutoLoadModuleWithoutNamespace()
     {
-        new \WebStream\SampleLibrary();
+        new \WebStream\Test\TestData\Sample\App\Library\SampleLibrary();
         $this->assertTrue(true);
     }
 
@@ -58,7 +58,7 @@ class ClassLoaderTest extends TestBase
      */
     public function okLoadClass()
     {
-        $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader = new ClassLoader();
         $isLoad = $classLoader->load("ClassLoaderTestClassStaticLoad");
         $this->assertTrue($isLoad);
         $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoad();
@@ -72,7 +72,7 @@ class ClassLoaderTest extends TestBase
      */
     public function okLoadMultipleClass()
     {
-        $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader = new ClassLoader();
         $isLoad = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple1", "ClassLoaderTestClassStaticLoadMultiple2"]);
         $this->assertTrue($isLoad);
         $instance1 = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple1();
@@ -88,10 +88,24 @@ class ClassLoaderTest extends TestBase
      */
     public function okImportFile()
     {
-        $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader = new ClassLoader();
         $isLoad = $classLoader->import("core/WebStream/Test/TestData/ClassLoaderTestImport.php");
         $this->assertTrue($isLoad);
         $this->assertTrue(function_exists("testImport"));
+    }
+
+    /**
+     * 正常系
+     * クラス以外のファイルを全てインポートできること
+     * @test
+     */
+    public function okImportAllFile()
+    {
+        $classLoader = new ClassLoader();
+        $isLoad = $classLoader->importAll("core/WebStream/Test/TestData/ClassLoaderTest");
+        $this->assertTrue($isLoad);
+        $this->assertTrue(function_exists("testImportAll1"));
+        $this->assertTrue(function_exists("testImportAll2"));
     }
 
     /**
@@ -101,7 +115,7 @@ class ClassLoaderTest extends TestBase
      */
     public function okSearchMultipleFile()
     {
-        $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader = new ClassLoader();
         $isLoad = $classLoader->load("UtilityFileSearch");
         $this->assertTrue($isLoad);
         $instance1 = new \WebStream\Test\TestData\UtilityFileSearch1();
@@ -117,7 +131,7 @@ class ClassLoaderTest extends TestBase
      */
     public function ngLoadClass()
     {
-        $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader = new ClassLoader();
         $isLoad = $classLoader->load("DummyClass");
         $this->assertFalse($isLoad);
     }
@@ -130,7 +144,7 @@ class ClassLoaderTest extends TestBase
      */
     public function ngLoadMultipleClass()
     {
-        $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader = new ClassLoader();
         $isLoad = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple3", "DummyClass"]);
         $this->assertFalse($isLoad);
         $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple3();

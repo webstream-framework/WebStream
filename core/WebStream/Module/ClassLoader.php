@@ -68,6 +68,31 @@ class ClassLoader
         $includeFile = $this->getRoot() . DIRECTORY_SEPARATOR . $filePath;
         if (file_exists($includeFile)) {
             include_once $includeFile;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 指定ディレクトリのファイルをインポートする
+     * @param string ディレクトリパス
+     * @return boolean インポート結果
+     */
+    public function importAll($dirPath)
+    {
+        $includeDir = realpath($this->getRoot() . DIRECTORY_SEPARATOR . $dirPath);
+        if (is_dir($includeDir)) {
+            $classList = $this->fileSearchRegexp("/.+\.php$/", $includeDir . "/");
+            foreach ($classList as $includeFile) {
+                if (file_exists($includeFile)) {
+                    include_once $includeFile;
+                } else {
+                    return false;
+                }
+            }
+
             return true;
         }
 

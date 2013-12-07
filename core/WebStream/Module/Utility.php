@@ -109,7 +109,7 @@ trait Utility
                 }
             }
         }
-        if ($depth === 0) {
+        if ($depth <= 0) {
             return $filepathList;
         }
         --$depth;
