@@ -23,6 +23,8 @@ Router::setRule([
     '/no_service' => "test_no_service_class#execute",
     '/no_service2' => "test_no_service_method#execute",
     '/no_service_no_model' => "test_no_service_and_model#execute",
+    '/test_service1' => "test#service1",
+    '/test_service2' => "test#service2",
     '/exist_service_exist_model_exist_model_method_param' => "test_exist_service_exist_model_exist_model_method#send_param",
     '/exist_service_exist_model_exist_model_method_params' => "test_exist_service_exist_model_exist_model_method#send_params",
     '/test_template/index1' => "test_template#index1",
@@ -30,6 +32,7 @@ Router::setRule([
     '/test_template/index3' => "test_template#index3",
     '/test_template/index4' => "test_template#index4",
     '/test_template/index5' => "test_template#index5",
+    '/test_template/index6' => "test_template#index6",
     '/test_template/error1' => "test_template#error1",
     '/test_template/error2' => "test_template#error2",
     '/test_template/error3' => "test_template#error3",
@@ -99,6 +102,14 @@ Router::setRule([
     '/before_after_override_filter' => "test_override_filter#index",
     '/initialize_filter_error' => "test_initialize_filter#index",
     '/invalid_filter_error' => "test_invalid_filter#index",
+    '/test_helper1' => "test_helper#help1",
+    '/test_helper2' => "test_helper#help2",
+    '/test_helper3' => "test_helper#help3",
+    '/test_helper4' => "test_helper#help4",
+    '/test_helper5' => "test_helper#help5",
+    '/test_helper6' => "test_helper#help6",
+
+
 
 
     // 以下未確認
