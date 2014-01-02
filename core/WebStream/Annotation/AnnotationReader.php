@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Core\CoreController;
+use WebStream\Core\CoreInterface;
 use WebStream\Module\ClassLoader;
 
 /**
@@ -23,9 +23,9 @@ abstract class AnnotationReader
 
     /**
      * コンストラクタ
-     * @param object Controllerインスタンス
+     * @param CoreInterface Controller/Service/Modelインスタンス
      */
-    public function __construct(CoreController $instance = null)
+    public function __construct(CoreInterface $instance = null)
     {
         $this->instance = $instance;
     }

@@ -10,7 +10,7 @@ use WebStream\Module\Logger;
  * @version 0.4
  *
  * @Annotation
- * @Target("METHOD")
+ * @Target({"CLASS","METHOD"})
  */
 class Inject extends AbstractAnnotation
 {

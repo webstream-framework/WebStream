@@ -7,7 +7,8 @@ namespace WebStream\Annotation;
  * @since 2013/10/20
  * @version 0.4.1
  */
-trait AnnotationConstants {
+trait AnnotationConstants
+{
     // @Template
     protected $TEMPLATE_VALUE_BASE = "base";
     protected $TEMPLATE_VALUE_SHARED = "shared";
@@ -30,4 +31,9 @@ trait AnnotationConstants {
     protected $TEMPLATECACHE_ATTR_EXPIRE = "expire";
     // @ExceptionHandler
     protected $EXCEPTIONHANDLER_ATTR_VALUE = "value";
+    // @Database
+    protected $DATABASE_ATTR_DRIVER = "driver";
+    protected $DATABASE_ATTR_CONFIG = "config";
+    // Query
+    protected $QUERY_ATTR_FILE = "file";
 }
