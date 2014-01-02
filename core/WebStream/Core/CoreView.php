@@ -14,7 +14,7 @@ use WebStream\Exception\ResourceNotFoundException;
  * @since 2011/09/12
  * @version 0.4
  */
-class CoreView
+class CoreView implements CoreInterface
 {
     use Utility;
 
@@ -34,16 +34,24 @@ class CoreView
     private $cacheDir;
 
     /**
-     * コンストラクタ
-     * @param object DIコンテナ
+     * Override
      */
     public function __construct(Container $container)
     {
+        Logger::debug("View start.");
         $this->request  = $container->request;
         $this->response = $container->response;
         $this->session  = $container->session;
         $this->coreDelegator = $container->coreDelegator;
         $this->initialize();
+    }
+
+    /**
+     * Override
+     */
+    public function __destruct()
+    {
+        Logger::debug("View end.");
     }
 
     /**

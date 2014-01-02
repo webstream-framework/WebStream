@@ -4,6 +4,7 @@ namespace WebStream\Core;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Module\ClassLoader;
+use WebStream\Module\Logger;
 use WebStream\Exception\MethodNotFoundException;
 
 /**
@@ -12,7 +13,7 @@ use WebStream\Exception\MethodNotFoundException;
  * @since 2011/09/11
  * @version 0.4.1
  */
-class CoreService
+class CoreService implements CoreInterface
 {
     use Utility;
 
@@ -20,15 +21,23 @@ class CoreService
     private $coreDelegator;
 
     /**
-     * コンストラクタ
-     * @param String ページ名
+     * Override
      */
-    public function __construct(Container $container)
+    final public function __construct(Container $container)
     {
+        Logger::debug("Service start.");
         $this->coreDelegator = $container->coreDelegator;
         $this->{$this->coreDelegator->getPageName()} = $this->coreDelegator->getModel();
         $classLoader = new ClassLoader();
         $classLoader->importAll(STREAM_APP_DIR . "/libraries");
+    }
+
+    /**
+     * Override
+     */
+    public function __destruct()
+    {
+        Logger::debug("Service end.");
     }
 
     /**

@@ -14,7 +14,7 @@ use WebStream\Exception\IOException;
  * @since 2011/11/30
  * @version 0.4
  */
-class CoreHelper
+class CoreHelper implements CoreInterface
 {
     use Utility;
 
@@ -22,12 +22,20 @@ class CoreHelper
     private $view;
 
     /**
-     * コンストラクタ
-     * @param object DIコンテナ
+     * Override
      */
     public function __construct(Container $container)
     {
+        Logger::debug("Helper start.");
         $this->view = $container->coreDelegator->getView();
+    }
+
+    /**
+     * Override
+     */
+    public function __destruct()
+    {
+        Logger::debug("Helper end.");
     }
 
     /**
