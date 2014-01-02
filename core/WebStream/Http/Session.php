@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Http;
 
+use WebStream\Module\Logger;
 use WebStream\Exception\SessionTimeoutException;
 
 /**
@@ -27,6 +28,14 @@ class Session
     public function __construct($expire = null, $path = '/', $domain = "")
     {
         $this->initialize($expire, $path, $domain);
+    }
+
+    /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        Logger::debug("Session is clear.");
     }
 
     /**

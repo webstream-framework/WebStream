@@ -4,6 +4,7 @@ namespace WebStream\Http;
 use WebStream\Annotation\Autowired;
 use WebStream\Annotation\Type;
 use WebStream\Module\Security;
+use WebStream\Module\Logger;
 
 /**
  * Request
@@ -44,6 +45,14 @@ class Request
      */
     public function __construct()
     {
+    }
+
+    /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        Logger::debug("Request is clear.");
     }
 
     /**

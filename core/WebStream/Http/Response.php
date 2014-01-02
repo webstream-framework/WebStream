@@ -48,6 +48,14 @@ class Response
     private $expires;
 
     /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        Logger::debug("Reponse is clear.");
+    }
+
+    /**
      * 文字コードを設定
      * @param String 文字コード
      */
