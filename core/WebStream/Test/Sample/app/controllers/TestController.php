@@ -59,4 +59,20 @@ class TestController extends CoreController
     {
         echo $this->Test->service2();
     }
+
+    public function model1()
+    {
+        $result = $this->Test->model1();
+        foreach ($result as $value) {
+            echo $value["id"];
+        }
+    }
+
+    public function model2()
+    {
+        $result = $this->Test->model2();
+        foreach ($result as $value) {
+            echo $value["id"];
+        }
+    }
 }
