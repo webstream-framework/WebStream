@@ -5,14 +5,21 @@ use WebStream\Core\CoreController;
 use WebStream\Module\Container;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
+use WebStream\Module\Logger;
 use WebStream\Exception\RouterException;
 use WebStream\Exception\ResourceNotFoundException;
 use WebStream\Exception\ClassNotFoundException;
 use WebStream\Exception\AnnotationException;
 use WebStream\Exception\ApplicationException;
+use WebStream\Exception\MethodNotFoundException;
+use WebStream\Exception\CollectionException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
-use WebStream\Module\Logger;
 use WebStream\Annotation\ExceptionHandlerReader;
+use WebStream\Annotation\FilterReader;
+use WebStream\Annotation\AutowiredReader;
+use WebStream\Annotation\TemplateReader;
+use WebStream\Annotation\HeaderReader;
+use WebStream\Annotation\TemplateCacheReader;
 
 /**
  * Resolver
@@ -103,14 +110,75 @@ class Resolver
             return;
         }
 
+        $action = $this->router->action();
+        $params = $this->router->params();
+
         try {
             // Controller起動
             $refClass = new \ReflectionClass($classpath);
-            $instance = $refClass->newInstance($this->container);
-            $method = $refClass->getMethod("__callInitialize");
-            $method->invokeArgs($instance, [$refClass, $this->router->action(), $this->router->params(), $this->container]);
+
+            // autowired
+            $autowired = new AutowiredReader();
+            $autowired->read($refClass, null, $this->container);
+            $self = $autowired->getInstance();
+
+            // header
+            $header = new HeaderReader();
+            $header->read($refClass, $action, $this->container);
+            $mime = $header->getMimeType();
+
+            // filter
+            $reader = new FilterReader($self);
+            $reader->read($refClass);
+            $filter = $reader->getComponent();
+
+            // initialize filter
+            $filter->initialize();
+            // before filter
+            $filter->before();
+
+            // action
+            $template = new TemplateReader();
+            $template->read($refClass, $action, $this->container);
+            $templateComponent = $template->getComponent();
+
+            if (!method_exists($self, $action)) {
+                $class = get_class($self);
+                throw new MethodNotFoundException("${class}#${action} is not defined.");
+            }
+
+            $data = $self->{$action}($params);
+            if ($data === null) {
+                $data = [];
+            }
+
+            $embed = $templateComponent->getEmbed();
+            if (!empty($embed)) {
+                $data = array_merge($data, $embed);
+            }
+
+            // draw template
+            $viewDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views";
+            $view = $coreDelegator->getView();
+            $view->draw($viewDir . "/" . $templateComponent->getBase(), $data, $mime);
+
+            $templateCache = new TemplateCacheReader();
+            $templateCache->read($refClass, $action);
+            $expire = $templateCache->getExpire();
+
+            if ($expire !== null) {
+                // create cache
+                $pageName = $coreDelegator->getPageName();
+                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($action);
+                $view->cache($cacheFile, ob_get_contents(), $expire);
+            }
+
+            // after filter
+            $filter->after();
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
+        } catch (CollectionException $e) {
+            throw new ApplicationException($e);
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
         }
@@ -142,9 +210,15 @@ class Resolver
      */
     public function handle(\Exception $e)
     {
+        if ($this->router->controller() === null) {
+            Logger::debug("Execution of handling is failure for static file.");
+
+            return false;
+        }
+
         $filepathList = $this->fileSearch($this->router->controller());
         $filepath = array_shift($filepathList);
-        $namespace = $this->getNamespace($filepath);
+        $namespace = $this->getNamespace($filepath); // FIXME
         $classpath = $namespace . '\\' . $this->router->controller();
         $ca = $classpath;
         $validator = $this->container->validator;
