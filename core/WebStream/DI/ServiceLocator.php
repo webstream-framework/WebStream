@@ -28,7 +28,7 @@ class ServiceLocator
 
     /**
      * コンテナを返却する
-     * @return Object コンテナ
+     * @return object コンテナ
      */
     public static function getContainer()
     {
@@ -41,8 +41,16 @@ class ServiceLocator
     }
 
     /**
+     * コンテナを削除する
+     */
+    public static function removeContainer()
+    {
+        self::$container = null;
+    }
+
+    /**
      * コンテナを作成する
-     * @return Object コンテナ
+     * @return object コンテナ
      */
     private function createContainer()
     {
@@ -53,6 +61,7 @@ class ServiceLocator
             $refClass = new \ReflectionClass("\WebStream\Http\Request");
             $autowired = new AutowiredReader();
             $autowired->read($refClass);
+
             return $autowired->getInstance();
         };
         // Response
