@@ -3,8 +3,10 @@ namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
 use WebStream\Module\Utility;
+use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
+use WebStream\Annotation\DatabaseReader;
 
 /**
  * CoreDelegator
@@ -22,17 +24,83 @@ class CoreDelegator
     /** DIコンテナ */
     private $container;
 
+    /** CoreContainer */
+    private $coreContainer;
+
     /** Routerオブジェクト */
     private $router;
 
     /**
-     * コンストラクタ
-     * @param Router Routerオブジェクト
+     * Constructor
+     * @param object DIContainer
      */
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->coreContainer = new Container();
         $this->router = $container->router;
+        $this->initialize();
+    }
+
+    /**
+     * Destructor
+     */
+    public function __destruct()
+    {
+        $this->coreContainer->remove("view");
+        $this->coreContainer->remove("service");
+        $this->coreContainer->remove("model");
+        $this->coreContainer->remove("helper");
+        Logger::debug("CoreDelegator container is clear.");
+    }
+
+    /**
+     * 各レイヤのオブジェクトをコンテナに設定する
+     */
+    private function initialize()
+    {
+        $classLoader = new ClassLoader();
+        $container = $this->container;
+        $pageName = $this->getPageName();
+
+        $serviceClassName = $pageName . "Service";
+        $serviceClassPath = $this->getNamespace($serviceClassName) . "\\" . $serviceClassName;
+        $modelClassName   = $pageName . "Model";
+        $modelClassPath   = $this->getNamespace($modelClassName) . "\\" . $modelClassName;
+        $helperClassName  = $pageName . "Helper";
+        $helperClassPath  = $this->getNamespace($helperClassName) . "\\" . $helperClassName;
+
+        // View
+        $this->coreContainer->view = function() use (&$container) {
+            return new CoreView($container);
+        };
+        // Service
+        $this->coreContainer->service = function() use (&$container, &$classLoader, &$serviceClassPath, &$serviceClassName) {
+            if ($classLoader->import(STREAM_APP_DIR . "/services/" . $serviceClassName . ".php")) {
+                \WebStream\Module\Logger::debug($serviceClassPath);
+
+                return new $serviceClassPath($container);
+            }
+        };
+        // Model
+        $this->coreContainer->model = function() use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
+            if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
+                \WebStream\Module\Logger::debug($modelClassPath);
+                $refClass = new \ReflectionClass($modelClassPath);
+                $reader = new DatabaseReader();
+                $reader->read($refClass, null, $container);
+
+                return $reader->getInstance();
+            }
+        };
+        // Helper
+        $this->coreContainer->helper = function() use (&$container, &$classLoader, &$helperClassPath, &$helperClassName) {
+            if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $helperClassName . ".php")) {
+                \WebStream\Module\Logger::debug($helperClassPath);
+
+                return new $helperClassPath($container);
+            }
+        };
     }
 
     /**
@@ -42,6 +110,7 @@ class CoreDelegator
      */
     public function getNamespace($className)
     {
+        // TODO ファイル検索がクソ重いので直す
         $filepathList = $this->fileSearch($className);
         $filepath = array_shift($filepathList);
 
@@ -65,7 +134,7 @@ class CoreDelegator
      */
     public function getView()
     {
-        return new CoreView($this->container);
+        return $this->coreContainer->view;
     }
 
     /**
@@ -74,15 +143,7 @@ class CoreDelegator
      */
     public function getService()
     {
-        $className = $this->getPageName() . "Service";
-        $classpath = $this->getNamespace($className) . "\\" . $className;
-        $classLoader = new ClassLoader();
-        if ($classLoader->import(STREAM_APP_DIR . "/services/" . $className . ".php")) {
-            \WebStream\Module\Logger::debug($classpath);
-            $class = new \ReflectionClass($classpath);
-
-            return $class->newInstance($this->container);
-        }
+        return $this->coreContainer->service;
     }
 
     /**
@@ -91,14 +152,7 @@ class CoreDelegator
      */
     public function getModel()
     {
-        $className = $this->getPageName() . "Model";
-        $classpath = $this->getNamespace($className) . "\\" . $className;
-        $classLoader = new ClassLoader();
-        if ($classLoader->import(STREAM_APP_DIR . "/models/" . $className . ".php")) {
-            $class = new \ReflectionClass($classpath);
-
-            return $class->newInstance($this->container);
-        }
+        return $this->coreContainer->model;
     }
 
     /**
@@ -107,13 +161,6 @@ class CoreDelegator
      */
     public function getHelper()
     {
-        $className = $this->getPageName() . "Helper";
-        $classpath = $this->getNamespace($className) . "\\" . $className;
-        $classLoader = new ClassLoader();
-        if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $className . ".php")) {
-            $class = new \ReflectionClass($classpath);
-
-            return $class->newInstance($this->container);
-        }
+        return $this->coreContainer->helper;
     }
 }
