@@ -32,6 +32,14 @@ class Validator
     }
 
     /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        Logger::debug("Validator is clear.");
+    }
+
+    /**
      * バリデーションルールを設定する
      * @param Hash バリデーションルール定義
      */
