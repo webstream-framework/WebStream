@@ -5,7 +5,7 @@ use WebStream\Core\CoreController;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 
-class TestParentFilterController extends CoreController
+class TestOverrideParentFilterController extends CoreController
 {
     /**
      * @Inject
@@ -26,7 +26,7 @@ class TestParentFilterController extends CoreController
     }
 }
 
-class TestOverrideFilterController extends TestParentFilterController
+class TestOverrideFilterController extends TestOverrideParentFilterController
 {
     /**
      * @Inject
