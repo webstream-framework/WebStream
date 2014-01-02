@@ -108,7 +108,7 @@ class AutowiredTest extends TestBase
      * @Typeで指定したクラスが存在しないまたはrequireされていない場合、
      * 例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\AnnotationException
+     * @expectedException Doctrine\Common\Annotations\AnnotationException
      */
     public function ngAutowiredInvalidType()
     {
