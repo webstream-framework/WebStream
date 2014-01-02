@@ -17,6 +17,7 @@ use WebStream\Exception\InvalidRequestException;
 use WebStream\Exception\ValidateException;
 use WebStream\Exception\ForbiddenAccessException;
 use WebStream\Exception\SessionTimeoutException;
+use WebStream\Exception\DatabaseException;
 
 /**
  * Applicationクラス
@@ -28,12 +29,12 @@ class Application
 {
     use Utility;
 
-    /** アプリケーションファイルディレクトリ名 */
+    /** アプリケーションファイルディレクトリ */
     private $app_dir = "app";
+    /** アプリケーションルートディレクトリ */
+    private $app_root = "";
     /** DocumentRoot */
     private $documentRoot;
-    /** ApplicationRoot */
-    private $applicationRoot;
     /** Request */
     private $request;
     /** Response */
@@ -74,6 +75,8 @@ class Application
         define('STREAM_ROOT', $this->getRoot());
         /** アプリケーションディレクトリ */
         define('STREAM_APP_DIR', $this->app_dir);
+        /** アプリケーションルートパス */
+        define('STREAM_APP_ROOT', $this->app_root);
         /** publicディレクトリ */
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
@@ -156,6 +159,16 @@ class Application
             // ルーティング解決失敗の場合は500
             Logger::error($e->getMessage(), $e->getTraceAsString());
             $this->response->move(500);
+        } catch (DatabaseException $e) {
+            // データベースエラーの場合は500
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            $this->response->move(500);
+        } catch (\RuntimeException $e) {
+            // OutOfBoundsException, CollectionExceptionは500だが復帰可能
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            if (!$this->handle($e)) {
+                $this->response->move(500);
+            }
         }
     }
 
