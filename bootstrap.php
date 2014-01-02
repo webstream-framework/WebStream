@@ -25,6 +25,8 @@ $classLoader->load([
     "TemplateCache",
     "Header",
     "ExceptionHandler",
+    "Database",
+    "Query",
     "Doctrine/Common/Annotations/AnnotationException"
 ]);
 
@@ -38,3 +40,6 @@ $container = ServiceLocator::getContainer();
 $app = new Application($container);
 $app->documentRoot("/WebStream"); // アプリケーション固有設定
 $app->run();
+
+// サービスロケータをクリア
+ServiceLocator::removeContainer();
