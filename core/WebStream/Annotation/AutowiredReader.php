@@ -12,7 +12,7 @@ use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 class AutowiredReader extends AnnotationReader
 {
     /**
-     * @Override
+     * Override
      */
     public function readAnnotation($refClass, $method, $arguments)
     {

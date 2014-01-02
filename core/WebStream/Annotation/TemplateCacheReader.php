@@ -21,6 +21,7 @@ class TemplateCacheReader extends AnnotationReader
     public function readAnnotation($refClass, $methodName, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
+
         while ($refClass !== false) {
             $methods = $refClass->getMethods();
             foreach ($methods as $method) {
