@@ -3,7 +3,7 @@ namespace WebStream\Annotation;
 
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use WebStream\Module\Logger;
-use WebStream\Exception\ResourceNotFoundException;
+use WebStream\Exception\DatabaseException;
 
 /**
  * QueryReader
@@ -19,6 +19,17 @@ class QueryReader extends AnnotationReader
     /** query */
     private $query;
 
+    /** XML */
+    private $xml;
+
+    /**
+     * destructor
+     */
+    public function __destruct() {
+        $this->xml = null;
+        Logger::debug("Query xml object is clear.");
+    }
+
     /**
      * Override
      */
@@ -28,16 +39,22 @@ class QueryReader extends AnnotationReader
         $refMethod = $refClass->getMethod($method);
         $namespace = $refClass->getNamespaceName();
 
-        $methodAnnotation = $reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Query");
-        $filepath = STREAM_ROOT . "/" . STREAM_APP_ROOT . "/" . $methodAnnotation->getValue();
-        Logger::debug("Query xml file: " . $filepath);
-
-        if (file_exists($filepath)) {
-            $xml = simplexml_load_file($filepath);
-            $elems = $xml->xpath("//mapper[@namespace='$namespace']/*[@id='$this->id']");
+        if ($this->xml !== null) {
+            Logger::debug("Query xml file read from cache.");
+            $elems = $this->xml->xpath("//mapper[@namespace='$namespace']/*[@id='$this->id']");
             $this->query = trim($elems[0]);
         } else {
-            throw new ResourceNotFoundException("Query file is not found: " . $filepath);
+            $methodAnnotation = $reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Query");
+            $filepath = STREAM_ROOT . "/" . STREAM_APP_ROOT . "/" . $methodAnnotation->getValue();
+            Logger::debug("Query xml file: " . $filepath);
+
+            if (file_exists($filepath)) {
+                $this->xml = simplexml_load_file($filepath);
+                $elems = $this->xml->xpath("//mapper[@namespace='$namespace']/*[@id='$this->id']");
+                $this->query = trim($elems[0]);
+            } else {
+                throw new DatabaseException("Query file is not found: " . $filepath);
+            }
         }
     }
 
