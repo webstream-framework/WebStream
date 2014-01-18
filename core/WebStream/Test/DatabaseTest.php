@@ -136,4 +136,16 @@ class DatabaseTest extends TestBase
         $this->assertEquals($html, "\WebStream\Test\TestData\Sample\App\Controller\TestMysqlController#model5");
     }
 
+    /**
+     * 異常系
+     * QueryXMLファイル内のmapperタグの名前空間とModelクラスの名前空間が一致しない場合、例外が発生すること
+     * @test
+     */
+    public function ngInvalidNamespaceQueryXmlFile()
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . "/test_model11";
+        $html = $http->get($url);
+        $this->assertEquals($html, "\WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError3Controller#model1");
+    }
 }
