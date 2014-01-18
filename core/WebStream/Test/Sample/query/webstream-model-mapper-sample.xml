@@ -3,12 +3,38 @@
   "-//github.com/mapserver2007//DTD Mapper 3.0//EN"
   "http://localhost/WebStream/core/WebStream/Test/Sample/custom/webstream-model-mapper.dtd">
 <mapper namespace="WebStream\Test\TestData\Sample\App\Model">
-  <select id="selectSample">
+  <select id="getTestData">
     SELECT
         *
     FROM
-        users
-    WHERE
-        id = :id
+        T_WebStream
+    LIMIT
+        :limit, :offset
   </select>
+
+  <select id="getTestDataNum">
+    SELECT
+        count(*) AS count
+    FROM
+        T_WebStream
+  </select>
+
+  <delete id="deleteTestData">
+    DELETE FROM
+        T_WebStream
+  </delete>
+
+  <insert id="setTestData">
+    INSERT
+    INTO
+        T_WebStream
+    (
+        name
+    )
+    VALUES
+    (
+        :name
+    )
+  </insert>
+
 </mapper>
