@@ -20,6 +20,9 @@ class CoreModel implements CoreInterface
     /** container */
     private $container;
 
+    /** query reqder */
+    private $queryReader;
+
     /**
      * Override
      */
@@ -29,6 +32,8 @@ class CoreModel implements CoreInterface
         $this->container = $container;
         $this->manager = $container->manager;
         $this->manager->connect();
+        $this->manager->beginTransaction();
+        $this->queryReader = new QueryReader();
     }
 
     /**
@@ -39,35 +44,23 @@ class CoreModel implements CoreInterface
         Logger::debug("Model end.");
     }
 
+    /**
+     * method missing
+     * @param string メソッド名
+     * @param array sql/bindパラメータ
+     */
     public function __call($method, $arguments)
     {
         $sql = null;
         $bind = null;
         $result = null;
 
-        if (count($arguments) === 1) {
-            $bind = $arguments[0];
-            $refClass = new \ReflectionClass($this);
-            $methodName = $this->container->router->routingParams()["action"];
-
-            $reader = new QueryReader();
-            $reader->setId($method);
-            $reader->read($refClass, $methodName, $this->container);
-            $sql = $reader->getQuery();
-
-            if ($sql === null) {
-                throw new DatabaseException("SQL statement can't getting from xml file.");
-            }
-
-            if (is_array($bind)) {
-                $result = $this->manager->query($sql, $bind)->select();
-            } else {
-                $result = $this->manager->query($sql)->select();
-            }
-        } else {
-            $sql = $arguments[0];
-            $bind = $arguments[1];
-            if (preg_match('/(?:select|(?:dele|upda)te|insert)/', $method)) {
+        try {
+            if (preg_match('/^(?:select|(?:dele|upda)te|insert)$/', $method)) {
+                $sql = $arguments[0];
+                if (array_key_exists(1, $arguments)) {
+                    $bind = $arguments[1];
+                }
                 switch ($method) {
                     case "select":
                         if (is_string($sql)) {
@@ -92,7 +85,6 @@ class CoreModel implements CoreInterface
                     case "update":
                         if (is_string($sql) && is_array($bind)) {
                             $result = $this->manager->query($sql, $bind)->update();
-                        } else {
                             throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
                         }
 
@@ -106,11 +98,34 @@ class CoreModel implements CoreInterface
 
                         break;
                 }
-            } elseif (preg_match('/(?:create|drop)/', $method)) {
-                // $sql = $arguments[0];
-                // return $this->db->{$method}($sql);
+            } elseif (preg_match('/^(?:beginTransaction|rollback|commit)$/', $method)) {
+                $this->manager->{$method}();
+            } else {
+                if (array_key_exists(0, $arguments)) {
+                    $bind = $arguments[0];
+                }
+
+                $refClass = new \ReflectionClass($this);
+                $methodName = $this->container->router->routingParams()["action"];
+
+                $this->queryReader->setId($method);
+                $this->queryReader->read($refClass, $methodName, $this->container);
+                $sql = $this->queryReader->getQuery();
+
+                if ($sql === null) {
+                    throw new DatabaseException("SQL statement can't getting from xml file.");
+                }
+
+                if (is_array($bind)) {
+                    $result = $this->manager->query($sql, $bind)->select();
+                } else {
+                    $result = $this->manager->query($sql)->select();
+                }
             }
 
+        } catch (DatabaseException $e) {
+            $this->manager->rollback();
+            throw $e;
         }
 
         return $result;
