@@ -4,8 +4,7 @@ namespace WebStream\Annotation;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use WebStream\Module\Logger;
 use WebStream\Database\DatabaseManager;
-use WebStream\Exception\ClassNotFoundException;
-use WebStream\Exception\ResourceNotFoundException;
+use WebStream\Exception\DatabaseException;
 
 /**
  * DatabaseReader
@@ -29,15 +28,16 @@ class DatabaseReader extends AnnotationReader
 
         $driverClassPath = $class->getDriver();
         if (!class_exists($driverClassPath)) {
-            throw new ClassNotFoundException("Database driver is undefined：" . $driverClassPath);
+            throw new DatabaseException("Database driver is undefined：" . $driverClassPath);
         }
 
-        $configPath = realpath(STREAM_ROOT . "/" . STREAM_APP_DIR . "/../" . $class->getConfig());
-        if (!file_exists($configPath)) {
-            throw new ResourceNotFoundException("Database config file is not found: " . $configPath);
+        $configPath = STREAM_ROOT . "/" . STREAM_APP_DIR . "/../" . $class->getConfig();
+        $configRealPath = realpath($configPath);
+        if (!file_exists($configRealPath)) {
+            throw new DatabaseException("Database config file is not found: " . $configPath);
         }
 
-        $config = parse_ini_file($configPath);
+        $config = parse_ini_file($configRealPath);
         $driver = new $driverClassPath();
         $container->manager = new DatabaseManager($driver, $config);
         $constructor = $refClass->getConstructor();
