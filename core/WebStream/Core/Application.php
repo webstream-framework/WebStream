@@ -122,11 +122,15 @@ class Application
         } catch (ClassNotFoundException $e) {
             // 存在しないクラスアクセスの場合は500
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
+            if (!$this->handle($e)) {
+                $this->response->move(500);
+            }
         } catch (MethodNotFoundException $e) {
             // 存在しないメソッドアクセスの場合は500
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
+            if (!$this->handle($e)) {
+                $this->response->move(500);
+            }
         } catch (InvalidRequestException $e) {
             // 許可されないメソッドの場合は405
             Logger::error($e->getMessage(), $e->getTraceAsString());
@@ -148,7 +152,9 @@ class Application
         } catch (AnnotationException $e) {
             // アノテーションエラーの場合は500
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
+            if (!$this->handle($e)) {
+                $this->response->move(500);
+            }
         } catch (ValidateException $e) {
             // バリデーションエラーの場合は422
             Logger::error($e->getMessage(), $e->getTraceAsString());
@@ -158,11 +164,15 @@ class Application
         } catch (RouterException $e) {
             // ルーティング解決失敗の場合は500
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
+            if (!$this->handle($e)) {
+                $this->response->move(500);
+            }
         } catch (DatabaseException $e) {
             // データベースエラーの場合は500
             Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
+            if (!$this->handle($e)) {
+                $this->response->move(500);
+            }
         } catch (\RuntimeException $e) {
             // OutOfBoundsException, CollectionExceptionは500だが復帰可能
             Logger::error($e->getMessage(), $e->getTraceAsString());
