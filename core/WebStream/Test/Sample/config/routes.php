@@ -118,6 +118,7 @@ Router::setRule([
     '/test_model8' => "test_database_error1#model1",
     '/test_model9' => "test_database_error2#model1",
     '/test_model10' => "test_mysql#model6",
+    '/test_model11' => "test_database_error3#model1",
     '/test_model_prepare' => "test_mysql#prepare",
     '/test_model_clear' => "test_mysql#clear"
 ]);
