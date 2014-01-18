@@ -37,6 +37,14 @@ class Router
     }
 
     /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        Logger::debug("Router is clear.");
+    }
+
+    /**
      * ルーティングルールをセットする
      * @param Hash ルーティングルール定義
      */
