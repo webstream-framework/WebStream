@@ -25,7 +25,8 @@ class QueryReader extends AnnotationReader
     /**
      * destructor
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->xml = null;
         Logger::debug("Query xml object is clear.");
     }
@@ -51,6 +52,9 @@ class QueryReader extends AnnotationReader
             if (file_exists($filepath)) {
                 $this->xml = simplexml_load_file($filepath);
                 $elems = $this->xml->xpath("//mapper[@namespace='$namespace']/*[@id='$this->id']");
+                if (empty($elems)) {
+                    throw new DatabaseException("Unmatch namespace mapper attribute in query xml and model class: " . $namespace);
+                }
                 $this->query = trim($elems[0]);
             } else {
                 throw new DatabaseException("Query file is not found: " . $filepath);
