@@ -29,6 +29,9 @@ abstract class DatabaseDriver
     /** password */
     protected $password;
 
+    /** dbfile */
+    protected $dbfile;
+
     /**
      * constructor
      */
@@ -42,7 +45,6 @@ abstract class DatabaseDriver
      */
     public function __destruct()
     {
-        $this->disconnect();
     }
 
     /**
@@ -59,6 +61,39 @@ abstract class DatabaseDriver
             Logger::debug("Database disconnect.");
             $this->connection = null;
         }
+    }
+
+    /**
+     * トランザクションを開始する
+     */
+    public function beginTransaction()
+    {
+        return $this->connection->beginTransaction();
+    }
+
+    /**
+     * コミットする
+     */
+    public function commit()
+    {
+        $this->connection->commit();
+    }
+
+    /**
+     * ロールバックする
+     */
+    public function rollback()
+    {
+        $this->connection->rollback();
+    }
+
+    /**
+     * トランザクション内かどうか
+     * @return boolean トランザクション内かどうか
+     */
+    public function inTransaction()
+    {
+        return $this->connection->inTransaction();
     }
 
     /**
@@ -114,5 +149,14 @@ abstract class DatabaseDriver
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    /**
+     * DBファイルを設定する
+     * @param string DBファイル
+     */
+    public function setDbfile($dbfile)
+    {
+        $this->dbfile = $dbfile;
     }
 }

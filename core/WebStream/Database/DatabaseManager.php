@@ -3,6 +3,7 @@ namespace WebStream\Database;
 
 use WebStream\Database\Driver\DatabaseDriver;
 use WebStream\Database\Query;
+use WebStream\Module\Logger;
 use WebStream\Exception\DatabaseException;
 
 /**
@@ -22,6 +23,9 @@ class DatabaseManager
     /** database config */
     private $config;
 
+    /** error flg */
+    private $isError;
+
     /**
      * constructor
      * @param object データベースドライバ
@@ -31,6 +35,7 @@ class DatabaseManager
     {
         $this->driver = $driver;
         $this->config = $config;
+        $this->isError = false;
     }
 
     /**
@@ -41,6 +46,9 @@ class DatabaseManager
         $this->disconnect();
     }
 
+    /**
+     * データベース接続する
+     */
     public function connect()
     {
         if (array_key_exists("host", $this->config)) {
@@ -58,6 +66,9 @@ class DatabaseManager
         if (array_key_exists("password", $this->config)) {
             $this->driver->setPassword($this->config["password"]);
         }
+        if (array_key_exists("dbfile", $this->config)) {
+            $this->driver->setDbfile($this->config["dbfile"]);
+        }
 
         try {
             $this->driver->connect();
@@ -68,11 +79,74 @@ class DatabaseManager
         }
     }
 
+    /**
+     * データベース切断する
+     */
     public function disconnect()
     {
+        if (!$this->isError) {
+            $this->driver->commit();
+        }
         $this->driver->disconnect();
     }
 
+    /**
+     * トランザクションを開始する
+     */
+    public function beginTransaction()
+    {
+        // 既にトランザクションが開始されている場合、以前の処理を破棄して新たに開始
+        if ($this->inTransaction()) {
+            Logger::debug("Transaction destruction.");
+            $this->rollback();
+        }
+
+        $trans = $this->driver->beginTransaction();
+        Logger::debug("Transaction start.");
+    }
+
+    /**
+     * コミットする
+     */
+    public function commit()
+    {
+        $this->driver->commit();
+        Logger::debug("Execute commit.");
+    }
+
+    /**
+     * ロールバックする
+     */
+    public function rollback()
+    {
+        $this->driver->rollback();
+        $this->isError = true;
+        Logger::debug("Execute rollback.");
+    }
+
+    /**
+     * ロールバックが発生したかどうか
+     * @return boolean ロールバックが発生したかどうか
+     */
+    public function isRollback()
+    {
+        return $this->isRollback;
+    }
+
+    /**
+     * トランザクション内かどうか
+     * @return boolean トランザクション内かどうか
+     */
+    public function inTransaction()
+    {
+        return $this->driver->inTransaction();
+    }
+
+    /**
+     * クエリを設定する
+     * @param string SQL
+     * @param array<string> パラメータ
+     */
     public function query($sql, array $bind = [])
     {
         if ($this->query === null) {
@@ -83,5 +157,4 @@ class DatabaseManager
 
         return $this->query;
     }
-
 }
