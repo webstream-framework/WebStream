@@ -35,11 +35,13 @@ class DatabaseTest extends TestBase
      * @test
      * @dataProvider selectProvider
      */
-    public function okSelect($path, $response)
+    public function okSelect($path, $response, $preparePath)
     {
         $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . "/test_model_prepare";
-        $http->get($url);
+        if ($preparePath !== null) {
+            $url = $this->getDocumentRootURL() . $preparePath;
+            $http->get($url);
+        }
         $url = $this->getDocumentRootURL() . $path;
         $html = $http->get($url);
         $this->assertEquals($http->getStatusCode(), 200);
@@ -48,14 +50,14 @@ class DatabaseTest extends TestBase
 
     /**
      * 正常系
-     * Commitを実行したとき、コミットされること(MySQL only)
+     * Commitを実行したとき、コミットされること(MySQL/PostgreSQL)
      * @test
      * @dataProvider commitProvider
      */
-    public function okCommit($path, $response)
+    public function okCommit($path, $response, $pareparePath)
     {
         $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . "/test_model_clear";
+        $url = $this->getDocumentRootURL() . $pareparePath;
         $http->get($url);
         $url = $this->getDocumentRootURL() . $path;
         $html = $http->get($url);
@@ -65,14 +67,14 @@ class DatabaseTest extends TestBase
 
     /**
      * 正常系
-     * Rollbackを実行したとき、コミットされないこと(MySQL only)
+     * Rollbackを実行したとき、コミットされないこと(MySQL/PostgreSQL)
      * @test
      * @dataProvider commitProvider
      */
-    public function okRollback($path, $response)
+    public function okRollback($path, $response, $pareparePath)
     {
         $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . "/test_model_clear";
+        $url = $this->getDocumentRootURL() . $pareparePath;
         $http->get($url);
         $url = $this->getDocumentRootURL() . $path;
         $html = $http->get($url);
@@ -82,14 +84,14 @@ class DatabaseTest extends TestBase
 
     /**
      * 正常系
-     * 明示的なbeginTransactionなしで更新処理を実行したとき、自動コミットされること(MySQL only)
+     * 明示的なbeginTransactionなしで更新処理を実行したとき、自動コミットされること(MySQL/PostgreSQL)
      * @test
      * @dataProvider nonTransactionProvider
      */
-    public function okNonTransaction($path, $response)
+    public function okNonTransaction($path, $response, $preparePath)
     {
         $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . "/test_model_clear";
+        $url = $this->getDocumentRootURL() . $preparePath;
         $http->get($url);
         $url = $this->getDocumentRootURL() . $path;
         $html = $http->get($url);
