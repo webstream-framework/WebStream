@@ -12,6 +12,17 @@
         :limit, :offset
   </select>
 
+  <select id="getTestData2">
+    SELECT
+        *
+    FROM
+        T_WebStream
+    LIMIT
+        :limit
+    OFFSET
+        :offset
+  </select>
+
   <select id="getTestDataNum">
     SELECT
         count(*) AS count

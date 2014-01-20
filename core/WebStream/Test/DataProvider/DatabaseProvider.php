@@ -12,31 +12,36 @@ trait DatabaseProvider
     public function selectProvider()
     {
         return [
-            ["/test_model1", "honoka"],
-            ["/test_model2", "honoka"],
-            ["/test_model4", "honoka"],
-            ["/test_model5", "honoka"]
+            ["/test_model1", "honoka", "/test_model_prepare"],
+            ["/test_model2", "honoka", "/test_model_prepare"],
+            ["/test_model4", "honoka", null],
+            ["/test_model5", "honoka", null],
+            ["/test_model12", "honoka", "/test_model_prepare2"],
+            ["/test_model13", "honoka", "/test_model_prepare2"]
         ];
     }
 
     public function commitProvider()
     {
         return [
-            ["/test_model3", "kotori"]
+            ["/test_model3", "kotori", "/test_model_clear"],
+            ["/test_model14", "kotori", "/test_model_clear2"]
         ];
     }
 
     public function rollbackProvider()
     {
         return [
-            ["/test_model7", "0"]
+            ["/test_model7", "0", "/test_model_clear"],
+            ["/test_model15", "0", "/test_model_clear2"]
         ];
     }
 
     public function nonTransactionProvider()
     {
         return [
-            ["/test_model10", "1"]
+            ["/test_model10", "1", "/test_model_clear"],
+            ["/test_model17", "1", "/test_model_clear2"]
         ];
     }
 

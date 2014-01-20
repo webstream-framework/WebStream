@@ -119,6 +119,14 @@ Router::setRule([
     '/test_model9' => "test_database_error2#model1",
     '/test_model10' => "test_mysql#model6",
     '/test_model11' => "test_database_error3#model1",
+    '/test_model12' => "test_postgres#model1",
+    '/test_model13' => "test_postgres#model2",
+    '/test_model14' => "test_postgres#model3",
+    '/test_model15' => "test_postgres#model4",
+    '/test_model16' => "test_postgres#model5",
+    '/test_model17' => "test_postgres#model6",
     '/test_model_prepare' => "test_mysql#prepare",
-    '/test_model_clear' => "test_mysql#clear"
+    '/test_model_clear' => "test_mysql#clear",
+    '/test_model_prepare2' => "test_postgres#prepare",
+    '/test_model_clear2' => "test_postgres#clear"
 ]);

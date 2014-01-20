@@ -16,6 +16,12 @@ class Postgresql extends DatabaseDriver
      */
     public function connect()
     {
-        // TODO
+        $dsn = "pgsql:host=" . $this->host . ";dbname=" . $this->dbname;
+        $dsn.= $this->port !== null ? ";port=" . $this->port : "";
+        $username = $this->username;
+        $password = $this->password;
+        $options = [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION];
+        $this->connection = new \PDO($dsn, $username, $password, $options);
+        Logger::debug("Database connect.");
     }
 }
