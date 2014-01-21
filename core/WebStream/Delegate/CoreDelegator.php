@@ -111,7 +111,8 @@ class CoreDelegator
     public function getNamespace($className)
     {
         // TODO ファイル検索がクソ重いので直す
-        $filepathList = $this->fileSearch($className);
+        $baseDir = STREAM_ROOT . "/" . STREAM_APP_ROOT;
+        $filepathList = $this->fileSearch($className, $baseDir);
         $filepath = array_shift($filepathList);
 
         return $this->getDefinedNamespace($filepath);

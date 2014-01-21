@@ -63,6 +63,8 @@ trait Utility
      */
     public function fileSearch($className, $dir = null, &$depth = 0, &$filepathList = [])
     {
+        // TODO RecursiveDirectoryIterator
+
         if ($dir === null) {
             $dir = $this->getRoot();
         }
@@ -118,9 +120,10 @@ trait Utility
     /**
      * 指定したファイルの名前空間を取得する
      * @param string ファイルパス
+     * @param string 起点ディレクトリパス
      * @return string 名前空間
      */
-    public function getNamespace($filepath)
+    public function getNamespace($filepath, $baseDir = null)
     {
         if (file_exists($filepath)) {
             $resource = fopen($filepath, "r");
