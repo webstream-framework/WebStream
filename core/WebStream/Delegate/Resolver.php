@@ -6,6 +6,7 @@ use WebStream\Module\Container;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Module\FileSearchIterator;
 use WebStream\Exception\RouterException;
 use WebStream\Exception\ResourceNotFoundException;
 use WebStream\Exception\ClassNotFoundException;
@@ -216,9 +217,13 @@ class Resolver
             return false;
         }
 
-        $filepathList = $this->fileSearch($this->router->controller());
-        $filepath = array_shift($filepathList);
-        $namespace = $this->getNamespace($filepath); // FIXME
+        $namespace = "";
+        $baseDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/controllers";
+        $iterator = new FileSearchIterator($baseDir, "/" . $this->router->controller() . "\.php$/");
+        foreach ($iterator as $filepath => $object) {
+            $namespace = $this->getNamespace($filepath);
+            break;
+        }
         $classpath = $namespace . '\\' . $this->router->controller();
         $ca = $classpath;
         $validator = $this->container->validator;
