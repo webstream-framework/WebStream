@@ -18,6 +18,7 @@ use WebStream\Exception\ValidateException;
 use WebStream\Exception\ForbiddenAccessException;
 use WebStream\Exception\SessionTimeoutException;
 use WebStream\Exception\DatabaseException;
+use WebStream\Exception\IOException;
 
 /**
  * Applicationクラス
@@ -169,6 +170,12 @@ class Application
             }
         } catch (DatabaseException $e) {
             // データベースエラーの場合は500
+            Logger::error($e->getMessage(), $e->getTraceAsString());
+            if (!$this->handle($e)) {
+                $this->response->move(500);
+            }
+        } catch (IOException $e) {
+            // 入出力エラーの場合は500
             Logger::error($e->getMessage(), $e->getTraceAsString());
             if (!$this->handle($e)) {
                 $this->response->move(500);
