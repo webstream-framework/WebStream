@@ -7,7 +7,17 @@ use WebStream\DI\ServiceLocator;
 
 require_once '../../Module/ClassLoader.php';
 require_once '../../Module/Functions.php';
+require_once '../../Module/Logger.php';
 
+// ログ出力ディレクトリ、ログレベルをテスト用に変更
+Logger::init("core/WebStream/Test/Sample/config/log.ini");
+
+$isXhprof = true;
+
+// xhprof
+if ($isXhprof) {
+    xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
+}
 $classLoader = new ClassLoader();
 spl_autoload_register([$classLoader, "load"]);
 register_shutdown_function('WebStream\Module\shutdownHandler');
@@ -31,9 +41,6 @@ $classLoader->load([
     "Doctrine/Common/Annotations/AnnotationException"
 ]);
 
-// // ログ出力ディレクトリ、ログレベルをテスト用に変更
-Logger::init("core/WebStream/Test/Sample/config/log.ini");
-
 // サービスロケータをロード
 $container = ServiceLocator::getContainer();
 
@@ -55,3 +62,13 @@ $method->invoke($instance);
 
 // サービスロケータをクリア
 ServiceLocator::removeContainer();
+
+if ($isXhprof) {
+    $xhprofData = xhprof_disable();
+    $xhprofRoot = '/Users/stay/workspace2/github-project-sample/';
+    $projectName = 'WebStream';
+    include_once $xhprofRoot . '/xhprof_lib/utils/xhprof_lib.php';
+    include_once $xhprofRoot . '/xhprof_lib/utils/xhprof_runs.php';
+    $xhprof_runs = new \XHProfRuns_Default();
+    $xhprof_runs->save_run($xhprofData, $projectName);
+}
