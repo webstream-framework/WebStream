@@ -6,6 +6,7 @@ use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
+use WebStream\Module\FileSearchIterator;
 use WebStream\Annotation\DatabaseReader;
 
 /**
@@ -62,45 +63,61 @@ class CoreDelegator
         $classLoader = new ClassLoader();
         $container = $this->container;
         $pageName = $this->getPageName();
-
         $serviceClassName = $pageName . "Service";
-        $serviceClassPath = $this->getNamespace($serviceClassName) . "\\" . $serviceClassName;
         $modelClassName   = $pageName . "Model";
-        $modelClassPath   = $this->getNamespace($modelClassName) . "\\" . $modelClassName;
         $helperClassName  = $pageName . "Helper";
-        $helperClassPath  = $this->getNamespace($helperClassName) . "\\" . $helperClassName;
+        $serviceNamespace = $this->getNamespace($serviceClassName);
+        $modelNamespace   = $this->getNamespace($modelClassName);
+        $helperNamespace  = $this->getNamespace($helperClassName);
 
         // View
         $this->coreContainer->view = function() use (&$container) {
             return new CoreView($container);
         };
         // Service
-        $this->coreContainer->service = function() use (&$container, &$classLoader, &$serviceClassPath, &$serviceClassName) {
-            if ($classLoader->import(STREAM_APP_DIR . "/services/" . $serviceClassName . ".php")) {
-                \WebStream\Module\Logger::debug($serviceClassPath);
+        if ($serviceNamespace !== null) {
+            $serviceClassPath = $serviceNamespace . "\\" . $serviceClassName;
+            $this->coreContainer->service = function() use (&$container, &$classLoader, &$serviceClassPath, &$serviceClassName) {
+                if ($classLoader->import(STREAM_APP_DIR . "/services/" . $serviceClassName . ".php")) {
+                    \WebStream\Module\Logger::debug($serviceClassPath);
 
-                return new $serviceClassPath($container);
-            }
-        };
+                    return new $serviceClassPath($container);
+                }
+            };
+        } else {
+            $this->coreContainer->service = function() {};
+        }
+
         // Model
-        $this->coreContainer->model = function() use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
-            if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
-                \WebStream\Module\Logger::debug($modelClassPath);
-                $refClass = new \ReflectionClass($modelClassPath);
-                $reader = new DatabaseReader();
-                $reader->read($refClass, null, $container);
+        if ($modelNamespace !== null) {
+            $modelClassPath = $modelNamespace . "\\" . $modelClassName;
+            $this->coreContainer->model = function() use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
+                if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
+                    \WebStream\Module\Logger::debug($modelClassPath);
+                    $refClass = new \ReflectionClass($modelClassPath);
+                    $reader = new DatabaseReader();
+                    $reader->read($refClass, null, $container);
 
-                return $reader->getInstance();
-            }
-        };
+                    return $reader->getInstance();
+                }
+            };
+        } else {
+            $this->coreContainer->model = function() {};
+        }
+
         // Helper
-        $this->coreContainer->helper = function() use (&$container, &$classLoader, &$helperClassPath, &$helperClassName) {
-            if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $helperClassName . ".php")) {
-                \WebStream\Module\Logger::debug($helperClassPath);
+        if ($helperNamespace !== null) {
+            $helperClassPath = $helperNamespace . "\\" . $helperClassName;
+            $this->coreContainer->helper = function() use (&$container, &$classLoader, &$helperClassPath, &$helperClassName) {
+                if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $helperClassName . ".php")) {
+                    \WebStream\Module\Logger::debug($helperClassPath);
 
-                return new $helperClassPath($container);
-            }
-        };
+                    return new $helperClassPath($container);
+                }
+            };
+        } else {
+            $this->coreContainer->helper = function() {};
+        }
     }
 
     /**
@@ -110,12 +127,13 @@ class CoreDelegator
      */
     public function getNamespace($className)
     {
-        // TODO ファイル検索がクソ重いので直す
-        $baseDir = STREAM_ROOT . "/" . STREAM_APP_ROOT;
-        $filepathList = $this->fileSearch($className, $baseDir);
-        $filepath = array_shift($filepathList);
+        $baseDir = STREAM_ROOT . "/" . STREAM_APP_DIR;
+        $iterator = new FileSearchIterator($baseDir, "/$className\.php$/");
+        foreach ($iterator as $filepath => $object) {
+            return $this->getDefinedNamespace($filepath);
+        }
 
-        return $this->getDefinedNamespace($filepath);
+        return null;
     }
 
     /**
