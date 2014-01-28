@@ -75,9 +75,9 @@ class Application
         /** プロジェクトディレクトリの絶対パスを定義 */
         define('STREAM_ROOT', $this->getRoot());
         /** アプリケーションディレクトリ */
-        define('STREAM_APP_DIR', $this->app_dir);
+        define('STREAM_APP_DIR', $this->app_dir); // 削除？予定
         /** アプリケーションルートパス */
-        define('STREAM_APP_ROOT', $this->app_root);
+        define('STREAM_APP_ROOT', $this->container->applicationRoot);
         /** publicディレクトリ */
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
