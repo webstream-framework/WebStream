@@ -46,7 +46,7 @@ class QueryReader extends AnnotationReader
             $this->query = trim($elems[0]);
         } else {
             $methodAnnotation = $reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Query");
-            $filepath = STREAM_ROOT . "/" . STREAM_APP_ROOT . "/" . $methodAnnotation->getValue();
+            $filepath = STREAM_APP_ROOT . "/" . $methodAnnotation->getValue();
             Logger::debug("Query xml file: " . $filepath);
 
             if (file_exists($filepath)) {
