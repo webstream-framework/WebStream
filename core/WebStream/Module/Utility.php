@@ -54,68 +54,27 @@ trait Utility
     }
 
     /**
-     * ファイル検索する
-     * @param string ファイル名
-     * @param string 検索起点のディレクトリパス
-     * @param integer 深さ(指定しない)
-     * @param array ファイルパスリスト(指定しない)
-     * @return array 検索結果
+     * テスト環境でのアプリケーションルートパスを返却する(本番では使用しない)
+     * @return string アプリケーションルートパス
      */
-    // public function fileSearch($className, $dir = null, &$depth = 0, &$filepathList = [])
-    // {
-    //     // TODO RecursiveDirectoryIterator
-
-    //     if ($dir === null) {
-    //         $dir = $this->getRoot();
-    //     }
-    //     if (is_dir($dir) && is_readable($dir)) {
-    //         foreach (glob($dir . '*/', GLOB_ONLYDIR) as $c) {
-    //             ++$depth;
-    //             $this->fileSearch($className, $c, $depth, $filepathList);
-    //         }
-    //         foreach (glob($dir . '*', GLOB_BRACE) as $filepath) {
-    //             if (strpos($filepath, $className) !== false) {
-    //                 --$depth;
-    //                 $filepathList[] = $filepath;
-    //             }
-    //         }
-    //     }
-    //     if ($depth === 0) {
-    //         return $filepathList;
-    //     }
-    //     --$depth;
-    // }
+    public function getTestApplicationRoot()
+    {
+        return $this->getRoot() . "/core/WebStream/Test/Sample";
+    }
 
     /**
-     * ファイル検索する
-     * @param string 正規表現
-     * @param string 検索起点のディレクトリパス
-     * @param integer 深さ(指定しない)
-     * @param array ファイルパスリスト(指定しない)
-     * @return array 検索結果
+     * ファイル検索イテレータを返却する
+     * @param string ディレクトリパス
+     * @return object イテレータ
      */
-    // public function fileSearchRegexp($regexp, $dir = null, &$depth = 0, &$filepathList = [])
-    // {
-    //     if ($dir === null) {
-    //         $dir = $this->getRoot();
-    //     }
-    //     if (is_dir($dir) && is_readable($dir)) {
-    //         foreach (glob($dir . '*/', GLOB_ONLYDIR) as $c) {
-    //             ++$depth;
-    //             $this->fileSearchRegexp($regexp, $c, $depth, $filepathList);
-    //         }
-    //         foreach (glob($dir . '*', GLOB_BRACE) as $filepath) {
-    //             if (preg_match($regexp, $filepath)) {
-    //                 --$depth;
-    //                 $filepathList[] = $filepath;
-    //             }
-    //         }
-    //     }
-    //     if ($depth <= 0) {
-    //         return $filepathList;
-    //     }
-    //     --$depth;
-    // }
+    public function getFileSearchIterator($path)
+    {
+        return new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($path),
+            \RecursiveIteratorIterator::LEAVES_ONLY,
+            \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
+        );
+    }
 
     /**
      * 指定したファイルの名前空間を取得する

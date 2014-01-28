@@ -127,10 +127,15 @@ class CoreDelegator
      */
     public function getNamespace($className)
     {
-        $baseDir = STREAM_ROOT . "/" . STREAM_APP_DIR;
-        $iterator = new FileSearchIterator($baseDir, "/$className\.php$/");
-        foreach ($iterator as $filepath => $object) {
-            return $this->getDefinedNamespace($filepath);
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(STREAM_APP_ROOT . "/app"),
+            \RecursiveIteratorIterator::LEAVES_ONLY,
+            \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
+        );
+        foreach ($iterator as $filepath => $fileObject) {
+            if (strpos($filepath, $className . ".php") !== false) {
+                return $this->getDefinedNamespace($filepath);
+            }
         }
 
         return null;

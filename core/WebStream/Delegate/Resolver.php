@@ -6,7 +6,6 @@ use WebStream\Module\Container;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
-use WebStream\Module\FileSearchIterator;
 use WebStream\Exception\RouterException;
 use WebStream\Exception\ResourceNotFoundException;
 use WebStream\Exception\ClassNotFoundException;
@@ -115,8 +114,16 @@ class Resolver
         $params = $this->router->params();
 
         try {
+            $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
+            foreach ($iterator as $filepath => $fileObject) {
+                if (strpos($filepath, $this->router->controller() . ".php") !== false) {
+                    Logger::debug("include:".$filepath);
+                    include_once $filepath;
+                }
+            }
+
             // Controller起動
-            $refClass = new \ReflectionClass($classpath);
+            $refClass = new \ReflectionClass(new $classpath($this->container));
 
             // autowired
             $autowired = new AutowiredReader();
@@ -218,11 +225,13 @@ class Resolver
         }
 
         $namespace = "";
-        $baseDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/controllers";
-        $iterator = new FileSearchIterator($baseDir, "/" . $this->router->controller() . "\.php$/");
-        foreach ($iterator as $filepath => $object) {
-            $namespace = $this->getNamespace($filepath);
-            break;
+        $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
+        foreach ($iterator as $filepath => $fileObject) {
+            if (strpos($filepath, $this->router->controller() . ".php") !== false) {
+                include_once $filepath;
+                $namespace = $this->getNamespace($filepath);
+                break;
+            }
         }
         $classpath = $namespace . '\\' . $this->router->controller();
         $ca = $classpath;
@@ -234,7 +243,7 @@ class Resolver
 
         try {
             // Controller起動
-            $refClass = new \ReflectionClass($classpath);
+            $refClass = new \ReflectionClass(new $classpath($this->container));
             // @ExceptionHandlerを起動
             $reader = new ExceptionHandlerReader();
             $reader->setHandledException($e);
