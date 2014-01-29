@@ -31,7 +31,7 @@ class DatabaseReader extends AnnotationReader
             throw new DatabaseException("Database driver is undefined：" . $driverClassPath);
         }
 
-        $configPath = STREAM_ROOT . "/" . STREAM_APP_DIR . "/../" . $class->getConfig();
+        $configPath = STREAM_APP_ROOT . "/" . $class->getConfig();
         $configRealPath = realpath($configPath);
         if (!file_exists($configRealPath)) {
             throw new DatabaseException("Database config file is not found: " . $configPath);

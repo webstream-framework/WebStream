@@ -101,7 +101,7 @@ class Resolver
         // テンプレートキャッシュチェック
         $pageName = preg_replace("/Controller/", "", $this->router->controller());
         $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($this->router->action());
-        $cache = new Cache(STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_CACHE);
+        $cache = new Cache(STREAM_APP_ROOT . "/views/" . STREAM_VIEW_CACHE);
         $data = $cache->get($cacheFile);
 
         if ($data !== null) {

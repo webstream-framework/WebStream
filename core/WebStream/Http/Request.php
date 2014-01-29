@@ -130,24 +130,6 @@ class Request
     }
 
     /**
-     * ドキュメントルートを設定する
-     * @param string ドキュメントルート
-     */
-    public function setDocumentRoot($path)
-    {
-        $this->documentRoot = $path;
-    }
-
-    /**
-     * ドキュメントルートを返却する
-     * @return string ドキュメントルート
-     */
-    public function getDocumentRoot()
-    {
-        return $this->documentRoot;
-    }
-
-    /**
      * SERVERパラメータ取得
      * @param string パラメータキー
      */

@@ -103,18 +103,8 @@ ServiceLocator::test();
 $container = ServiceLocator::getContainer();
 
 // アプリケーションを起動
-$controllerTestDir = "core/WebStream/Test/Sample/app";
-// $appRootDir = "core/WebStream/Test/Sample";
 $class = new \ReflectionClass("WebStream\Core\Application");
 $instance = $class->newInstance($container);
-$property = $class->getProperty("app_dir");
-$property->setAccessible(true);
-$property->setValue($instance, $controllerTestDir);
-// $property = $class->getProperty("app_root");
-// $property->setAccessible(true);
-// $property->setValue($instance, $appRootDir);
-$method = $class->getMethod("documentRoot");
-$method->invoke($instance, "/WebStream/core/WebStream/Test/Sample/");
 $method = $class->getMethod("run");
 $method->invoke($instance);
 

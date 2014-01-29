@@ -60,7 +60,7 @@ class CoreView implements CoreInterface
     private function initialize()
     {
         $this->timestamp = 0;
-        $this->cacheDir = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_CACHE;
+        $this->cacheDir = STREAM_APP_ROOT . "/views/" . STREAM_VIEW_CACHE;
     }
 
     /**
@@ -161,7 +161,7 @@ class CoreView implements CoreInterface
         $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOut($1); ?>', $s);
         $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
         $s = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php $this->coreDelegator->getHelper()->__initialize("$1", $__params__, [$2]); ?>', $s);
-        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->draw(STREAM_ROOT."/".STREAM_APP_DIR."/views/$1", $__params__); ?>', $s);
+        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $s);
 
         return $s;
     }

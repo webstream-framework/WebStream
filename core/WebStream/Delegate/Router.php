@@ -19,8 +19,6 @@ class Router
     private $pathInfo;
     /** RequestURI */
     private $requestUri;
-    /** DocumentRoot */
-    private $documentRoot;
     /** ルーティング解決後の各パラメータ */
     private $route;
 
@@ -32,7 +30,6 @@ class Router
     {
         $this->pathInfo = $request->getPathInfo();
         $this->requestUri = $request->getRequestUri();
-        $this->documentRoot = $request->getDocumentRoot();
         Logger::info("Request URI: " . $this->requestUri);
     }
 
@@ -92,17 +89,12 @@ class Router
     {
         // ルーティングルールの検証
         $this->validate();
-        // 静的ファイルへのパスを取得するための正規表現
-        $regexp = preg_replace("/\//", "\\\/", $this->documentRoot);
-        $staticFile = "";
-        if (preg_match("/^" . $regexp . "(.+)/", $this->requestUri, $matches)) {
-            $staticFile = STREAM_ROOT . "/" . STREAM_APP_DIR . "/views/" . STREAM_VIEW_PUBLIC . "/" . $matches[1];
-            if (file_exists($staticFile)) {
-                $this->route["staticFile"] = $staticFile;
-                return;
-            }
+        // 静的ファイルの存在チェック
+        $staticFile = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_PUBLIC . $this->pathInfo;
+        if (is_file($staticFile)) {
+            $this->route["staticFile"] = $staticFile;
+            return;
         }
-
         // ルーティングルールからController、Actionを取得
         foreach (self::$rules as $path => $ca) {
             $route = [];

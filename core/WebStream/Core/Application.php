@@ -2,10 +2,9 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Delegate\Resolver;
 use WebStream\Module\Logger;
 use WebStream\Module\Utility;
-
+use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\RouterException;
 use WebStream\Exception\ResourceNotFoundException;
@@ -30,12 +29,6 @@ class Application
 {
     use Utility;
 
-    /** アプリケーションファイルディレクトリ */
-    private $app_dir = "app";
-    /** アプリケーションルートディレクトリ */
-    private $app_root = "";
-    /** DocumentRoot */
-    private $documentRoot;
     /** Request */
     private $request;
     /** Response */
@@ -75,7 +68,7 @@ class Application
         /** プロジェクトディレクトリの絶対パスを定義 */
         define('STREAM_ROOT', $this->getRoot());
         /** アプリケーションディレクトリ */
-        define('STREAM_APP_DIR', $this->app_dir); // 削除？予定
+        define('STREAM_APP_DIR', $this->container->applicationDir);
         /** アプリケーションルートパス */
         define('STREAM_APP_ROOT', $this->container->applicationRoot);
         /** publicディレクトリ */
@@ -84,15 +77,6 @@ class Application
         define('STREAM_VIEW_CACHE', "_cache");
         /** キャッシュprefix */
         define('STREAM_CACHE_PREFIX', "webstream-cache-");
-    }
-
-    /**
-     * ドキュメントルートパスを設定する
-     * @param string ドキュメントルートパス
-     */
-    public function documentRoot($path)
-    {
-        $this->request->setDocumentRoot($path);
     }
 
     /**
