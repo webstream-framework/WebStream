@@ -1,12 +1,11 @@
 <?php
 namespace WebStream\Module;
 
-use WebStream\Module\FileSearchIterator;
+use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 
 require_once dirname(__FILE__) . '/Utility.php';
 require_once dirname(__FILE__) . '/Logger.php';
-require_once dirname(__FILE__) . '/FileSearchIterator.php';
 
 /**
  * クラスローダ
@@ -18,15 +17,23 @@ class ClassLoader
 {
     use Utility;
 
-    /** 検索除外ファイルリスト */
-    private $ignoreFileList;
+    /** アプリケーションルートパス */
+    private $applicationRoot;
 
     /**
      * コンストラクタ
      */
     public function __construct()
     {
-        $this->ignoreFileList = ['.', '..', '.git', '.svn', ".DS_Store"];
+        $this->applicationRoot = $this->getRoot();
+    }
+
+    /**
+     * テスト環境を設定する
+     */
+    public function test()
+    {
+        $this->applicationRoot = $this->getTestApplicationRoot();
     }
 
     /**
@@ -49,10 +56,11 @@ class ClassLoader
      */
     public function import($filepath)
     {
-        $includeFile = $this->getRoot() . DIRECTORY_SEPARATOR . $filepath;
+        $includeFile = $this->getRoot() . "/" . $filepath;
         if (file_exists($includeFile)) {
             include_once $includeFile;
             Logger::debug($includeFile . " import success.");
+
             return true;
         }
 
@@ -66,17 +74,16 @@ class ClassLoader
      */
     public function importAll($dirPath)
     {
-        $includeDir = realpath($this->getRoot() . DIRECTORY_SEPARATOR . $dirPath);
+        $includeDir = realpath($this->getRoot() . "/" . $dirPath);
         if (is_dir($includeDir)) {
-            $baseDir = $this->getRoot() . "/" . $dirPath;
-            $iterator = new FileSearchIterator($baseDir, "/.+\.php$/");
+            $iterator = $this->getFileSearchIterator($includeDir);
             $isSuccess = true;
-            foreach ($iterator as $filepath => $object) {
-                if (file_exists($filepath)) {
+            foreach ($iterator as $filepath => $fileObject) {
+                if (is_file($filepath)) {
                     include_once $filepath;
                     Logger::debug($filepath . " import success.");
                 } else {
-                    Logger::error($filepath . " import failure.");
+                    Logger::warn($filepath . " import failure.");
                     $isSuccess = false;
                 }
             }
@@ -87,7 +94,7 @@ class ClassLoader
 
     /**
      * ロード可能なクラスを返却する
-     * @param string クラス名
+     * @param string クラス名(フルパス指定の場合はクラスパス)
      * @return string|array ロード可能クラス
      */
     private function loadClass($className)
@@ -103,58 +110,50 @@ class ClassLoader
         // coreディレクトリは名前空間とディレクトリパスが
         // 紐づいているのでそのまま連結して読ませる
         $includeFile = $rootDir . "/core/" . $className . ".php";
-        if (file_exists($includeFile) && is_file($includeFile)) {
+        if (is_file($includeFile)) {
             include_once $includeFile;
 
             return;
         }
 
         // 次にcoreディレクトリを名前空間付きで全検索する
-        $includeFile = $this->existModule($rootDir . "/core", $className);
-        if ($includeFile !== null) {
-            include_once $includeFile;
-
-            return;
+        $iterator = $this->getFileSearchIterator($rootDir . "/core");
+        foreach ($iterator as $filepath => $fileObject) {
+            if (strpos($filepath, $className . ".php") !== false) {
+                include_once $filepath;
+                return;
+            }
         }
 
-        // それでも見つからなかったらappディレクトリを名前空間付きで全検索
-        // TODO /app固定にするとテスト用appが検索されない。ApplicationのようにまたはDIで環境依存変数を注入するようにしたい。
-        $includeFile = $this->existModule($rootDir . "/app", $className);
-        if ($includeFile !== null) {
-            include_once $includeFile;
-
-            return;
+        // さらに見つからなかったらappディレクトリを名前空間付きで全検索
+        $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
+        foreach ($iterator as $filepath => $fileObject) {
+            if (strpos($filepath, $className . ".php") !== false) {
+                include_once $filepath;
+                return;
+            }
         }
 
-        // 名前空間を除去し、クラス名を抽出する
-        $list = preg_split("/\//", $className);
-        $className = end($list);
-
-        // さらに見つからない場合は、coreディレクトリをファイル名で全検索する
-        $regexp = "/" . preg_replace("/\//", "\\\/", $className) . "\.php$/";
-        $iterator = new FileSearchIterator($rootDir . "/core/WebStream", $regexp);
-        $isInclude = false;
-        foreach ($iterator as $filepath => $object) {
-            include_once $filepath;
-            $isInclude = true;
-        }
-
-        if ($isInclude) {
-            return;
-        }
-
-        // なおも見つからない場合は、appディレクトリをファイル名で全検索する
-        // TODO ここも。
-        $regexp = "/" . preg_replace("/\//", "\\\/", $className) . "\.php$/";
-        $iterator = new FileSearchIterator($rootDir . "/app", $regexp);
-        $isInclude = false;
-        foreach ($iterator as $filepath => $object) {
-            include_once $filepath;
-            $isInclude = true;
-        }
-
-        if ($isInclude) {
-            return;
+        // 名前空間とディレクトリ構成が一致していない場合、クラス名を抜き出して、マッチするもの全てをincludeする
+        if (preg_match("/.*\/(.+)/", $className, $matches)) {
+            $classNameWithoutNamespace = $matches[1];
+            // この処理が走るケースはapp配下のクラスがディレクトリ構成と名前空間が一致していない
+            // 場合以外ない(テスト用クラス除く)ので、app配下の検索を優先する
+            $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
+            foreach ($iterator as $filepath => $fileObject) {
+                if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
+                    include_once $filepath;
+                    return;
+                }
+            }
+            // ここに到達するのはテスト用クラスのみ
+            $iterator = $this->getFileSearchIterator($rootDir . "/core");
+            foreach ($iterator as $filepath => $fileObject) {
+                if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
+                    include_once $filepath;
+                    return;
+                }
+            }
         }
     }
 
@@ -167,36 +166,5 @@ class ClassLoader
         foreach ($classList as $className) {
             $this->loadClass($className);
         }
-    }
-
-    /**
-     * モジュールが存在するかどうかチェックする
-     * FileSearchIteratorと異なり、指定したクラスパスを起点とした再帰検索なのでオーダはそれほど多くない
-     * @param string ディレクトリパス
-     * @param string クラスパス
-     * @return モジュールパス
-     */
-    private function existModule($currentDir, $classpath)
-    {
-        $includeFile  = $currentDir . DIRECTORY_SEPARATOR . $classpath . ".php";
-        if (file_exists($includeFile) && is_file($includeFile) && is_readable($includeFile)) {
-            return $includeFile;
-        } else {
-            // カレントディレクトリを検索
-            if (is_dir($currentDir) && is_readable($currentDir) && $dh = opendir($currentDir)) {
-                while (false !== ($filename = readdir($dh))) {
-                    if (in_array($filename, $this->ignoreFileList)) {
-                        continue;
-                    }
-                    $childDir = $currentDir . DIRECTORY_SEPARATOR . $filename;
-                    $modulePath = $this->existModule($childDir, $classpath);
-                    if (is_dir($childDir) && $modulePath !== null) {
-                        return $modulePath;
-                    }
-                }
-            }
-        }
-
-        return null;
     }
 }

@@ -2,8 +2,10 @@
 namespace WebStream\Test;
 
 use WebStream\Module\ClassLoader;
+use WebStream\Module\Logger;
 
 require_once 'TestBase.php';
+require_once 'TestConstant.php';
 
 /**
  * ClassLoaderクラスのテストクラス
@@ -13,9 +15,12 @@ require_once 'TestBase.php';
  */
 class ClassLoaderTest extends TestBase
 {
+    use TestConstant;
+
     public function setUp()
     {
         parent::setUp();
+        Logger::init($this->getLogConfigPath() . "/log.test.debug.ok.ini");
     }
 
     /**
@@ -59,8 +64,8 @@ class ClassLoaderTest extends TestBase
     public function okLoadClass()
     {
         $classLoader = new ClassLoader();
-        $isLoad = $classLoader->load("ClassLoaderTestClassStaticLoad");
-        $this->assertTrue($isLoad);
+        $classLoader->test();
+        $classLoader->load("ClassLoaderTestClassStaticLoad");
         $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoad();
         $this->assertTrue($instance instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoad);
     }
@@ -73,8 +78,8 @@ class ClassLoaderTest extends TestBase
     public function okLoadMultipleClass()
     {
         $classLoader = new ClassLoader();
-        $isLoad = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple1", "ClassLoaderTestClassStaticLoadMultiple2"]);
-        $this->assertTrue($isLoad);
+        $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple1", "ClassLoaderTestClassStaticLoadMultiple2"]);
+        $classLoader->test();
         $instance1 = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple1();
         $instance2 = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple2();
         $this->assertTrue($instance1 instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple1);
@@ -89,8 +94,8 @@ class ClassLoaderTest extends TestBase
     public function okImportFile()
     {
         $classLoader = new ClassLoader();
-        $isLoad = $classLoader->import("core/WebStream/Test/TestData/ClassLoaderTestImport.php");
-        $this->assertTrue($isLoad);
+        $classLoader->test();
+        $classLoader->import("core/WebStream/Test/TestData/ClassLoaderTestImport.php");
         $this->assertTrue(function_exists("testImport"));
     }
 
@@ -102,8 +107,8 @@ class ClassLoaderTest extends TestBase
     public function okImportAllFile()
     {
         $classLoader = new ClassLoader();
-        $isLoad = $classLoader->importAll("core/WebStream/Test/TestData/ClassLoaderTest");
-        $this->assertTrue($isLoad);
+        $classLoader->test();
+        $classLoader->importAll("core/WebStream/Test/TestData/ClassLoaderTest");
         $this->assertTrue(function_exists("testImportAll1"));
         $this->assertTrue(function_exists("testImportAll2"));
     }
@@ -116,24 +121,12 @@ class ClassLoaderTest extends TestBase
     public function okSearchMultipleFile()
     {
         $classLoader = new ClassLoader();
-        $isLoad = $classLoader->load("UtilityFileSearch");
-        $this->assertTrue($isLoad);
+        $classLoader->test();
+        $classLoader->load("UtilityFileSearch");
         $instance1 = new \WebStream\Test\TestData\UtilityFileSearch1();
         $instance2 = new \WebStream\Test\TestData\UtilityFileSearch2();
         $this->assertTrue($instance1 instanceof \WebStream\Test\TestData\UtilityFileSearch1);
         $this->assertTrue($instance2 instanceof \WebStream\Test\TestData\UtilityFileSearch2);
-    }
-
-    /**
-     * 異常系
-     * 存在しないクラスはロードできないこと
-     * @test
-     */
-    public function ngLoadClass()
-    {
-        $classLoader = new ClassLoader();
-        $isLoad = $classLoader->load("DummyClass");
-        $this->assertFalse($isLoad);
     }
 
     /**
@@ -145,8 +138,8 @@ class ClassLoaderTest extends TestBase
     public function ngLoadMultipleClass()
     {
         $classLoader = new ClassLoader();
-        $isLoad = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple3", "DummyClass"]);
-        $this->assertFalse($isLoad);
+        $classLoader->test();
+        $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple3", "DummyClass"]);
         $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple3();
     }
 }
