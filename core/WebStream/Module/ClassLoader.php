@@ -139,20 +139,28 @@ class ClassLoader
             $classNameWithoutNamespace = $matches[1];
             // この処理が走るケースはapp配下のクラスがディレクトリ構成と名前空間が一致していない
             // 場合以外ない(テスト用クラス除く)ので、app配下の検索を優先する
+            $isInclude = false;
             $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
-                    return;
+                    $isInclude = true;
                 }
             }
+            if ($isInclude) {
+                return;
+            }
+
             // ここに到達するのはテスト用クラスのみ
             $iterator = $this->getFileSearchIterator($rootDir . "/core");
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
-                    return;
+                    $isInclude = true;
                 }
+            }
+            if ($isInclude) {
+                return;
             }
         }
     }
