@@ -25,6 +25,7 @@ class TestBase extends \PHPUnit_Framework_TestCase
     protected function autoLoad()
     {
         $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader->test();
         spl_autoload_register([$classLoader, "load"]);
         register_shutdown_function('WebStream\Module\shutdownHandler');
     }
@@ -32,6 +33,7 @@ class TestBase extends \PHPUnit_Framework_TestCase
     protected function preloadClass()
     {
         $classLoader = new \WebStream\Module\ClassLoader();
+        $classLoader->test();
         $classLoader->load([
             "AbstractAnnotation",
             "Autowired",
