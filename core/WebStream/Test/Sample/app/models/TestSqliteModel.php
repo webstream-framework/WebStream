@@ -29,15 +29,4 @@ class TestSqliteModel extends CoreModel
         return $this->getTestData($bind);
     }
 
-    /**
-     */
-    public function model3($bind = [])
-    {
-        // $this->beginTransaction();
-        $sql = "insert into T_WebStream (name) values (:name)";
-        $bind = ["name" => "(・8・)"];
-        $count = $this->insert($sql, $bind);
-        var_dump($count);
-        // $this->commit();
-    }
 }
