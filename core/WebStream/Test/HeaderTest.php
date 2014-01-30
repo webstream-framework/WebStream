@@ -58,12 +58,52 @@ class HeaderTest extends TestBase
     }
 
     /**
+     * 正常系
+     * allowMethodで複数指定したメソッドでアクセスできること
+     * @test
+     * @dataProvider allowMethodsProvider
+     */
+    public function okAllowMethods($path, $params, $method)
+    {
+        $http = new HttpClient();
+        $http->{$method}($this->getDocumentRootURL() . $path, $params);
+        $this->assertEquals($http->getStatusCode(), 200);
+    }
+
+    /**
+     * 正常系
+     * contentTypeとallowMethodを同時に指定してアクセスできること
+     * @test
+     * @dataProvider contentTypeAndAllowMethodProvider
+     */
+    public function okContentTypeAndAllowMethod($path, $contentType, $params, $method)
+    {
+        $http = new HttpClient();
+        $http->{$method}($this->getDocumentRootURL() . $path, $params);
+        $this->assertEquals($http->getContentType(), $contentType);
+        $this->assertEquals($http->getStatusCode(), 200);
+    }
+
+    /**
      * 異常系
      * allowMethodで指定していないメソッドでアクセスできないこと
      * @test
      * @dataProvider notAllowMethodProvider
      */
-    public function ngHotAllowMethod($path, $params, $method)
+    public function ngAllowMethod($path, $params, $method)
+    {
+        $http = new HttpClient();
+        $http->{$method}($this->getDocumentRootURL() . $path, $params);
+        $this->assertEquals($http->getStatusCode(), 405);
+    }
+
+    /**
+     * 異常系
+     * allowMethodで複数指定したメソッドのいずれにも含まれないメソッドでアクセスできないこと
+     * @test
+     * @dataProvider notAllowMethodsProvider
+     */
+    public function ngAllowMethods($path, $params, $method)
     {
         $http = new HttpClient();
         $http->{$method}($this->getDocumentRootURL() . $path, $params);
