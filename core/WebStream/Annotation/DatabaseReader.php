@@ -20,6 +20,10 @@ class DatabaseReader extends AnnotationReader
     public function readAnnotation($refClass, $method, $container)
     {
         $reader = new DoctrineAnnotationReader();
+        if (!$reader->getClassAnnotation($refClass, "\WebStream\Annotation\Inject")) {
+            return;
+        }
+
         $class = $reader->getClassAnnotation($refClass, "\WebStream\Annotation\Database");
         if ($class === null || $class->getDriver() === null) {
             Logger::warn("Can't connect database because database driver is undefined in model.");
