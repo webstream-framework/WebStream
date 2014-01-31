@@ -116,8 +116,9 @@ class ClassLoader
             return;
         }
 
-        // 次にcoreディレクトリを名前空間付きで全検索する
-        $iterator = $this->getFileSearchIterator($rootDir . "/core");
+        // 次にcoreのVendorディレクトリを名前空間付きで全検索する
+        // Vendor以外はbootstrapでロード済み
+        $iterator = $this->getFileSearchIterator($rootDir . "/core/WebStream/Vendor");
         foreach ($iterator as $filepath => $fileObject) {
             if (strpos($filepath, $className . ".php") !== false) {
                 include_once $filepath;
@@ -135,7 +136,7 @@ class ClassLoader
         }
 
         // 名前空間とディレクトリ構成が一致していない場合、クラス名を抜き出して、マッチするもの全てをincludeする
-        if (preg_match("/.*\/(.+)/", $className, $matches)) {
+        if (preg_match("/(?:.*\/){0,}(.+)/", $className, $matches)) {
             $classNameWithoutNamespace = $matches[1];
             // この処理が走るケースはapp配下のクラスがディレクトリ構成と名前空間が一致していない
             // 場合以外ない(テスト用クラス除く)ので、app配下の検索を優先する
