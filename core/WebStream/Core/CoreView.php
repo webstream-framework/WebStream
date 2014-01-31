@@ -60,7 +60,7 @@ class CoreView implements CoreInterface
     private function initialize()
     {
         $this->timestamp = 0;
-        $this->cacheDir = STREAM_APP_ROOT . "/views/" . STREAM_VIEW_CACHE;
+        $this->cacheDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE;
     }
 
     /**
