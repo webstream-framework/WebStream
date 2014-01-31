@@ -38,6 +38,10 @@ class QueryReader extends AnnotationReader
     {
         $reader = new DoctrineAnnotationReader();
         $refMethod = $refClass->getMethod($method);
+        if (!$reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Inject")) {
+            return;
+        }
+
         $namespace = $refClass->getNamespaceName();
 
         if ($this->xml !== null) {
