@@ -9,10 +9,11 @@ namespace WebStream\Test\DataProvider;
  */
 trait TemplateCacheProvider
 {
-    public function templateCacheProvider()
+    public function invalidExpireProvider()
     {
         return [
-            ["index", 100]
+            ["error1"],
+            ["error2"]
         ];
     }
 }

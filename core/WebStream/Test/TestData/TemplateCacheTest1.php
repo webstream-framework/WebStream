@@ -8,7 +8,7 @@ class TemplateCacheTest1
 {
     /**
      * @Inject
-     * @TemplateCache(expire=100)
+     * @TemplateCache(expire="100")
      */
     public function index()
     {
@@ -16,7 +16,15 @@ class TemplateCacheTest1
 
     /**
      * @Inject
-     * @TemplateCache(expire=-100)
+     * @TemplateCache(expire="9223372036854775808")
+     */
+    public function index2()
+    {
+    }
+
+    /**
+     * @Inject
+     * @TemplateCache(expire="-100")
      */
     public function error1()
     {
@@ -24,7 +32,7 @@ class TemplateCacheTest1
 
     /**
      * @Inject
-     * @TemplateCache(expire=aaa)
+     * @TemplateCache(expire="aaa")
      */
     public function error2()
     {

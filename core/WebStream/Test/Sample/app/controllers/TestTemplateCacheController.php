@@ -10,7 +10,7 @@ class TestTemplateCacheController extends CoreController
 {
     /**
      * @Inject
-     * @TemplateCache(expire=10)
+     * @TemplateCache(expire="10")
      * @Template("index.tmpl")
      */
     public function index1()

@@ -32,14 +32,27 @@ class TemplateCacheTest extends TestBase
      * 正常系
      * @TemplateCacheのexpire属性で指定した値が取得できること
      * @test
-     * @dataProvider templateCacheProvider
      */
-    public function okTemplateCacheExpire($action, $expire)
+    public function okTemplateCacheExpire()
     {
         $reader = new TemplateCacheReader();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
-        $reader->read($refClass, $action);
-        $this->assertEquals($expire, $reader->getExpire());
+        $reader->read($refClass, "index");
+        $this->assertEquals(100, $reader->getExpire());
+    }
+
+    /**
+     * 正常系
+     * @TemplateCacheのexpire属性に非常に大きな値が指定された場合、PHPの
+     * Integerの最大値(PHP_INT_MAX)に丸められて設定されること
+     * @test
+     */
+    public function okMaximumExpireConvert()
+    {
+        $reader = new TemplateCacheReader();
+        $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
+        $reader->read($refClass, "index2");
+        $this->assertEquals(PHP_INT_MAX, $reader->getExpire());
     }
 
     /**
@@ -65,25 +78,13 @@ class TemplateCacheTest extends TestBase
      * 異常系
      * @TemplateCacheのexpire属性に不正な値が指定されていた場合、値が取得できないこと
      * @test
+     * @dataProvider invalidExpireProvider
      * @expectedException WebStream\Exception\AnnotationException
      */
-    public function ngTemplateCacheExpire()
+    public function ngTemplateCacheExpire($method)
     {
         $reader = new TemplateCacheReader();
         $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
-        $reader->read($refClass, "error1");
-    }
-
-    /**
-     * 異常系
-     * @TemplateCacheのexpire属性に不正な値が指定されていた場合、値が取得できないこと
-     * @test
-     * @expectedException Doctrine\Common\Annotations\AnnotationException
-     */
-    public function ngTemplateCacheExpire2()
-    {
-        $reader = new TemplateCacheReader();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
-        $reader->read($refClass, "error2");
+        $reader->read($refClass, $method);
     }
 }
