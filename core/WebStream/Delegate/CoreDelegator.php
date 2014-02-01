@@ -79,8 +79,6 @@ class CoreDelegator
             $serviceClassPath = $serviceNamespace . "\\" . $serviceClassName;
             $this->coreContainer->service = function() use (&$container, &$classLoader, &$serviceClassPath, &$serviceClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/services/" . $serviceClassName . ".php")) {
-                    \WebStream\Module\Logger::debug($serviceClassPath);
-
                     return new $serviceClassPath($container);
                 }
             };
@@ -93,7 +91,6 @@ class CoreDelegator
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
             $this->coreContainer->model = function() use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
-                    \WebStream\Module\Logger::debug($modelClassPath);
                     $refClass = new \ReflectionClass($modelClassPath);
                     $reader = new DatabaseReader();
                     $reader->read($refClass, null, $container);
@@ -110,8 +107,6 @@ class CoreDelegator
             $helperClassPath = $helperNamespace . "\\" . $helperClassName;
             $this->coreContainer->helper = function() use (&$container, &$classLoader, &$helperClassPath, &$helperClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $helperClassName . ".php")) {
-                    \WebStream\Module\Logger::debug($helperClassPath);
-
                     return new $helperClassPath($container);
                 }
             };
