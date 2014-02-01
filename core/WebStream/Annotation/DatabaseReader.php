@@ -20,34 +20,39 @@ class DatabaseReader extends AnnotationReader
     public function readAnnotation($refClass, $method, $container)
     {
         $reader = new DoctrineAnnotationReader();
-        if (!$reader->getClassAnnotation($refClass, "\WebStream\Annotation\Inject")) {
-            return;
-        }
 
-        $class = $reader->getClassAnnotation($refClass, "\WebStream\Annotation\Database");
-        if ($class === null || $class->getDriver() === null) {
-            Logger::warn("Can't connect database because database driver is undefined in model.");
-            return;
-        }
+        try {
+            if (!$reader->getClassAnnotation($refClass, "\WebStream\Annotation\Inject")) {
+                return;
+            }
 
-        $driverClassPath = $class->getDriver();
-        if (!class_exists($driverClassPath)) {
-            throw new DatabaseException("Database driver is undefined：" . $driverClassPath);
-        }
+            $class = $reader->getClassAnnotation($refClass, "\WebStream\Annotation\Database");
+            if ($class === null || $class->getDriver() === null) {
+                Logger::warn("Can't connect database because database driver is undefined in model.");
+                return;
+            }
 
-        $configPath = STREAM_APP_ROOT . "/" . $class->getConfig();
-        $configRealPath = realpath($configPath);
-        if (!file_exists($configRealPath)) {
-            throw new DatabaseException("Database config file is not found: " . $configPath);
-        }
+            $driverClassPath = $class->getDriver();
+            if (!class_exists($driverClassPath)) {
+                throw new DatabaseException("Database driver is undefined：" . $driverClassPath);
+            }
 
-        $config = parse_ini_file($configRealPath);
-        $driver = new $driverClassPath();
-        $container->manager = new DatabaseManager($driver, $config);
-        $constructor = $refClass->getConstructor();
+            $configPath = STREAM_APP_ROOT . "/" . $class->getConfig();
+            $configRealPath = realpath($configPath);
+            if (!file_exists($configRealPath)) {
+                throw new DatabaseException("Database config file is not found: " . $configPath);
+            }
 
-        if ($constructor !== null) {
-            $constructor->invokeArgs($this->instance, [$container]);
+            $config = parse_ini_file($configRealPath);
+            $driver = new $driverClassPath();
+            $container->manager = new DatabaseManager($driver, $config);
+            $constructor = $refClass->getConstructor();
+
+            if ($constructor !== null) {
+                $constructor->invokeArgs($this->instance, [$container]);
+            }
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e->getMessage());
         }
     }
 }

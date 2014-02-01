@@ -24,30 +24,25 @@ class TemplateCacheReader extends AnnotationReader
         $reader = new DoctrineAnnotationReader();
 
         try {
-            while ($refClass !== false) {
-                if ($refClass->hasMethod($method)) {
-                    $refMethod = $refClass->getMethod($method);
-                    if ($reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Inject")) {
-                        $annotation = $reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\TemplateCache");
-                        $expire = $annotation->getExpire();
-                        if (!preg_match("/^[1-9]{1}[0-9]{0,}$/", $expire)) {
-                            $errorMsg = "Expire value is not integer: @TemplateCache(expire=\"" . strval($expire) . "\")";
+            $refMethod = $refClass->getMethod($method);
+            if ($reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Inject")) {
+                $annotation = $reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\TemplateCache");
+                if ($annotation !== null) {
+                    $expire = $annotation->getExpire();
+                    if (!preg_match("/^[1-9]{1}[0-9]{0,}$/", $expire)) {
+                        $errorMsg = "Expire value is not integer: @TemplateCache(expire=\"" . strval($expire) . "\")";
+                        throw new AnnotationException($errorMsg);
+                    } else {
+                        $expire = intval($expire);
+                        if ($expire <= 0) {
+                            $errorMsg = "Expire value is out of integer range: @TemplateCache(expire=" . strval($expire) . ")";
                             throw new AnnotationException($errorMsg);
-                        } else {
-                            $expire = intval($expire);
-                            if ($expire <= 0) {
-                                $errorMsg = "Expire value is out of integer range: @TemplateCache(expire=" . strval($expire) . ")";
-                                throw new AnnotationException($errorMsg);
-                            } elseif ($expire >= PHP_INT_MAX) {
-                                Logger::warn("Expire value converted the maximum of PHP Integer.");
-                            }
-                            $this->expire = $expire;
+                        } elseif ($expire >= PHP_INT_MAX) {
+                            Logger::warn("Expire value converted the maximum of PHP Integer.");
                         }
-                        break;
+                        $this->expire = $expire;
                     }
                 }
-
-                $refClass = $refClass->getParentClass();
             }
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());

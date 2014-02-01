@@ -37,32 +37,36 @@ class QueryReader extends AnnotationReader
     public function readAnnotation($refClass, $method, $container)
     {
         $reader = new DoctrineAnnotationReader();
-        $refMethod = $refClass->getMethod($method);
-        if (!$reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Inject")) {
-            return;
-        }
+        try {
+            $refMethod = $refClass->getMethod($method);
+            if (!$reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Inject")) {
+                return;
+            }
 
-        $namespace = $refClass->getNamespaceName();
+            $namespace = $refClass->getNamespaceName();
 
-        if ($this->xml !== null) {
-            Logger::debug("Query xml file read from cache.");
-            $elems = $this->xml->xpath("//mapper[@namespace='$namespace']/*[@id='$this->id']");
-            $this->query = trim($elems[0]);
-        } else {
-            $methodAnnotation = $reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Query");
-            $filepath = STREAM_APP_ROOT . "/" . $methodAnnotation->getValue();
-            Logger::debug("Query xml file: " . $filepath);
-
-            if (file_exists($filepath)) {
-                $this->xml = simplexml_load_file($filepath);
+            if ($this->xml !== null) {
+                Logger::debug("Query xml file read from cache.");
                 $elems = $this->xml->xpath("//mapper[@namespace='$namespace']/*[@id='$this->id']");
-                if (empty($elems)) {
-                    throw new DatabaseException("Unmatch namespace mapper attribute in query xml and model class: " . $namespace);
-                }
                 $this->query = trim($elems[0]);
             } else {
-                throw new DatabaseException("Query file is not found: " . $filepath);
+                $methodAnnotation = $reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Query");
+                $filepath = STREAM_APP_ROOT . "/" . $methodAnnotation->getValue();
+                Logger::debug("Query xml file: " . $filepath);
+
+                if (file_exists($filepath)) {
+                    $this->xml = simplexml_load_file($filepath);
+                    $elems = $this->xml->xpath("//mapper[@namespace='$namespace']/*[@id='$this->id']");
+                    if (empty($elems)) {
+                        throw new DatabaseException("Unmatch namespace mapper attribute in query xml and model class: " . $namespace);
+                    }
+                    $this->query = trim($elems[0]);
+                } else {
+                    throw new DatabaseException("Query file is not found: " . $filepath);
+                }
             }
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e->getMessage());
         }
     }
 

@@ -21,7 +21,7 @@ class TemplateReader extends AnnotationReader
     /**
      * @Override
      */
-    public function readAnnotation($refClass, $methodName, $container)
+    public function readAnnotation($refClass, $method, $container)
     {
         $reader = new DoctrineAnnotationReader();
         $component = new TemplateComponent();
@@ -31,50 +31,36 @@ class TemplateReader extends AnnotationReader
         $coreDelegator = $container->coreDelegator;
         $templateDir = $this->camel2snake($coreDelegator->getPageName());
 
-        while ($refClass !== false) {
-            $methods = $refClass->getMethods();
-            foreach ($methods as $method) {
-                if ($refClass->getName() !== $method->class || $methodName !== $method->name) {
-                    continue;
-                }
-                $annotations = $reader->getMethodAnnotations($method);
-
-                $isInject = false;
+        try {
+            $refMethod = $refClass->getMethod($method);
+            if ($reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Inject")) {
+                $annotations = $reader->getMethodAnnotations($refMethod);
                 foreach ($annotations as $annotation) {
-                    if ($annotation instanceof Inject) {
-                        $isInject = true;
-                    }
-                }
-
-                if ($isInject) {
-                    foreach ($annotations as $annotation) {
-                        if ($annotation instanceof Template) {
-                            $template = $annotation->getTemplate();
-                            $name = $annotation->getName();
-
-                            if ($annotation->isBase()) {
-                                if ($isAlreadyBaseRead) {
-                                    $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
-                                    $errorMsg.= "Type of 'base' must be a only definition.";
-                                    throw new AnnotationException($errorMsg);
-                                }
-                                $component->setBase($templateDir . "/" . $template);
-                                $isAlreadyBaseRead = true;
-                            } elseif ($annotation->isShared() && $name !== null) {
-                                $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
-                            } elseif ($annotation->isParts() && $name !== null) {
-                                $embedTemplates[$name] = $templateDir . "/" . $template;
-                            } else {
-                                $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
-                                $errorMsg.= "Please check attribute 'name' or 'type'.";
+                    if ($annotation instanceof Template) {
+                        $template = $annotation->getTemplate();
+                        $name = $annotation->getName();
+                        if ($annotation->isBase()) {
+                            if ($isAlreadyBaseRead) {
+                                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
+                                $errorMsg.= "Type of 'base' must be a only definition.";
                                 throw new AnnotationException($errorMsg);
                             }
+                            $component->setBase($templateDir . "/" . $template);
+                            $isAlreadyBaseRead = true;
+                        } elseif ($annotation->isShared() && $name !== null) {
+                            $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
+                        } elseif ($annotation->isParts() && $name !== null) {
+                            $embedTemplates[$name] = $templateDir . "/" . $template;
+                        } else {
+                            $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
+                            $errorMsg.= "Please check attribute 'name' or 'type'.";
+                            throw new AnnotationException($errorMsg);
                         }
                     }
                 }
             }
-
-            $refClass = $refClass->getParentClass();
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e->getMessage());
         }
 
         $component->setEmbed($embedTemplates);
