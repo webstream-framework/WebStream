@@ -28,7 +28,15 @@ trait FilterProvider
             ["/before_filter_only_enable", "bi1"],
             ["/before_filter_only_disable", "i2"],
             ["/after_filter_only_enable", "i3a"],
-            ["/after_filter_only_disable", "i4"]
+            ["/after_filter_only_disable", "i4"],
+            ["/before_filter_multiple_except_enable", "i1a"],
+            ["/before_filter_multiple_except_enable2", "i2a"],
+            ["/after_filter_multiple_except_enable", "bi3"],
+            ["/after_filter_multiple_except_enable2", "bi4"],
+            ["/before_filter_multiple_only_enable", "bi1"],
+            ["/before_filter_multiple_only_enable2", "bi2"],
+            ["/after_filter_multiple_only_enable", "i3a"],
+            ["/after_filter_multiple_only_enable2", "i4a"]
         ];
     }
 }
