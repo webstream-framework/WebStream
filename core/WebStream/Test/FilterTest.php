@@ -76,4 +76,16 @@ class FilterTest extends TestBase
         $http->get($this->getDocumentRootURL() . "/invalid_filter_error");
         $this->assertEquals($http->getStatusCode(), 500);
     }
+
+    /**
+     * 異常系
+     * exceptとonlyを同時に指定した場合、例外が発生すること
+     * @test
+     */
+    public function ngFilterExceptAndOnly()
+    {
+        $http = new HttpClient();
+        $http->get($this->getDocumentRootURL() . "/filter_except_only");
+        $this->assertEquals($http->getStatusCode(), 500);
+    }
 }

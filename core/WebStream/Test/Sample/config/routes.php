@@ -126,6 +126,7 @@ Router::setRule([
     '/before_filter_multiple_only_enable2' => "test_multiple_only_filter#index2",
     '/after_filter_multiple_only_enable' => "test_multiple_only_filter#index3",
     '/after_filter_multiple_only_enable2' => "test_multiple_only_filter#index4",
+    '/filter_except_only' => "test_except_only_filter#index",
     '/test_helper1' => "test_helper#help1",
     '/test_helper2' => "test_helper#help2",
     '/test_helper3' => "test_helper#help3",
