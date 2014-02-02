@@ -136,7 +136,7 @@ class Resolver
 
             // filter
             $reader = new FilterReader($self);
-            $reader->read($refClass);
+            $reader->read($refClass, $action);
             $filter = $reader->getComponent();
 
             // initialize filter
