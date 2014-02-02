@@ -17,18 +17,26 @@ trait ExceptionHandlerProvider
             ["/exception_handler3", "session timeout error"],
             ["/exception_handler4", "invalid request error"],
             ["/exception_handler5", "csrf error"],
-            ["/exception_handler6", "resource notfound error"]
+            ["/exception_handler6", "resource notfound error"],
+            ["/exception_handler8", "classnotfound error"],
+            ["/exception_handler9", "methodnotfound error"],
+            ["/exception_handler10", "annotation error"],
+            ["/exception_handler11", "router error"]
+        ];
+    }
+
+    public function successErrorMultipleHandlingProvider()
+    {
+        return [
+            ["/multiple_exception_handler1", "12"],
+            ["/multiple_exception_handler2", "12"]
         ];
     }
 
     public function failureErrorHandlingProvider()
     {
         return [
-            ["/exception_handler7"],
-            ["/exception_handler8"],
-            ["/exception_handler9"],
-            ["/exception_handler10"],
-            ["/exception_handler11"]
+            ["/exception_handler7"]
         ];
     }
 }

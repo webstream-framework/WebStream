@@ -1,7 +1,10 @@
 <?php
 namespace WebStream\Annotation;
 
+use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
+
 
 /**
  * ExceptionHandlerReader
@@ -23,34 +26,39 @@ class ExceptionHandlerReader extends AnnotationReader
     public function readAnnotation($refClass, $methodName, $arguments)
     {
         $reader = new DoctrineAnnotationReader();
-        while ($refClass !== false) {
-            $methods = $refClass->getMethods();
-            foreach ($methods as $method) {
-                if ($refClass->getName() !== $method->class) {
-                    continue;
-                }
-                $annotations = $reader->getMethodAnnotations($method);
 
-                $isInject = false;
-                foreach ($annotations as $annotation) {
-                    if ($annotation instanceof Inject) {
-                        $isInject = true;
+        try {
+            while ($refClass !== false) {
+                $methods = $refClass->getMethods();
+                foreach ($methods as $method) {
+                    if ($refClass->getName() !== $method->class) {
+                        continue;
                     }
-                }
+                    $annotations = $reader->getMethodAnnotations($method);
 
-                if ($isInject) {
+                    $isInject = false;
                     foreach ($annotations as $annotation) {
-                        if ($annotation instanceof ExceptionHandler) {
-                            $classpath = $annotation->getExceptionClasspath();
-                            if (is_a($this->handledException, $classpath)) {
-                                $this->handleMethods[] = $method->name;
+                        if ($annotation instanceof Inject) {
+                            $isInject = true;
+                        }
+                    }
+
+                    if ($isInject) {
+                        foreach ($annotations as $annotation) {
+                            if ($annotation instanceof ExceptionHandler) {
+                                $classpath = $annotation->getExceptionClasspath();
+                                if (is_a($this->handledException, $classpath)) {
+                                    $this->handleMethods[] = $method->name;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            $refClass = $refClass->getParentClass();
+                $refClass = $refClass->getParentClass();
+            }
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e->getMessage());
         }
     }
 

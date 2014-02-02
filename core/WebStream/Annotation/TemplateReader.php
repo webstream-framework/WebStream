@@ -4,6 +4,7 @@ namespace WebStream\Annotation;
 use WebStream\Module\Utility;
 use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * TemplateReader

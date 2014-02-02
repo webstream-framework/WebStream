@@ -1,9 +1,10 @@
 <?php
 namespace WebStream\Annotation;
 
-use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use WebStream\Module\Logger;
 use WebStream\Exception\DatabaseException;
+use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * QueryReader

@@ -17,4 +17,18 @@ trait FilterProvider
             ["/before_after_override_filter", "b1b2ia1a2"]
         ];
     }
+
+    public function filterExceptOnlyProvider()
+    {
+        return [
+            ["/before_filter_except_enable", "i1a"],
+            ["/before_filter_except_disable", "bi2a"],
+            ["/after_filter_except_enable", "bi3"],
+            ["/after_filter_except_disable", "bi4a"],
+            ["/before_filter_only_enable", "bi1"],
+            ["/before_filter_only_disable", "i2"],
+            ["/after_filter_only_enable", "i3a"],
+            ["/after_filter_only_disable", "i4"]
+        ];
+    }
 }

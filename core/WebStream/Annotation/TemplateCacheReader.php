@@ -4,6 +4,7 @@ namespace WebStream\Annotation;
 use WebStream\Module\Logger;
 use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * TemplateCacheReader

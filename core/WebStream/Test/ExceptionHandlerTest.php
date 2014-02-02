@@ -44,14 +44,15 @@ class ExceptionHandlerTest extends TestBase
      * 正常系
      * 指定した例外を複数メソッドで補足できること
      * @test
+     * @dataProvider successErrorMultipleHandlingProvider
      */
-    public function okMultipleErrorHandling()
+    public function okMultipleErrorHandling($path, $handleMessage)
     {
         $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . '/multiple_exception_handler11';
+        $url = $this->getDocumentRootURL() . $path;
         $message = $http->get($url);
         $this->assertEquals($http->getStatusCode(), 200);
-        $this->assertEquals($message, "12");
+        $this->assertEquals($message, $handleMessage);
     }
 
     /**

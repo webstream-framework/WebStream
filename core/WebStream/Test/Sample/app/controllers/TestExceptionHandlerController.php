@@ -142,7 +142,7 @@ class TestExceptionHandlerController extends CoreController
      */
     public function uncatchedError2($params)
     {
-        echo "never reached";
+        echo "classnotfound error";
     }
 
     /**
@@ -151,7 +151,7 @@ class TestExceptionHandlerController extends CoreController
      */
     public function uncatchedError3($params)
     {
-        echo "never reached";
+        echo "methodnotfound error";
     }
 
     /**
@@ -160,7 +160,7 @@ class TestExceptionHandlerController extends CoreController
      */
     public function uncatchedError4($params)
     {
-        echo "never reached";
+        echo "annotation error";
     }
 
     /**
@@ -169,6 +169,6 @@ class TestExceptionHandlerController extends CoreController
      */
     public function uncatchedError5($params)
     {
-        echo "never reached";
+        echo "router error";
     }
 }
