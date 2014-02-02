@@ -61,7 +61,7 @@ class CoreController implements CoreInterface
     /**
      * Controllerで使用する処理の初期化
      * @Inject
-     * @Filter("Initialize")
+     * @Filter(type="initialize")
      */
     final public function __initialize()
     {
