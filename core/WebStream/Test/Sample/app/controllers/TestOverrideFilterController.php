@@ -9,7 +9,7 @@ class TestOverrideParentFilterController extends CoreController
 {
     /**
      * @Inject
-     * @Filter("Before")
+     * @Filter(type="before")
      */
     public function before()
     {
@@ -18,7 +18,7 @@ class TestOverrideParentFilterController extends CoreController
 
     /**
      * @Inject
-     * @Filter("After")
+     * @Filter(type="after")
      */
     public function after()
     {
@@ -30,7 +30,7 @@ class TestOverrideFilterController extends TestOverrideParentFilterController
 {
     /**
      * @Inject
-     * @Filter("Before")
+     * @Filter(type="before")
      */
     public function before()
     {
@@ -39,7 +39,7 @@ class TestOverrideFilterController extends TestOverrideParentFilterController
 
     /**
      * @Inject
-     * @Filter("After")
+     * @Filter(type="after")
      */
     public function after()
     {

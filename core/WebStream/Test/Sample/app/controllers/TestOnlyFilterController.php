@@ -5,11 +5,11 @@ use WebStream\Core\CoreController;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 
-class TestFilterController extends CoreController
+class TestOnlyFilterController extends CoreController
 {
     /**
      * @Inject
-     * @Filter(type="before")
+     * @Filter(type="before", only="index")
      */
     public function before()
     {
@@ -18,7 +18,7 @@ class TestFilterController extends CoreController
 
     /**
      * @Inject
-     * @Filter(type="after")
+     * @Filter(type="after", only="index3")
      */
     public function after()
     {
@@ -27,6 +27,21 @@ class TestFilterController extends CoreController
 
     public function index()
     {
-        echo "i";
+        echo "i1";
+    }
+
+    public function index2()
+    {
+        echo "i2";
+    }
+
+    public function index3()
+    {
+        echo "i3";
+    }
+
+    public function index4()
+    {
+        echo "i4";
     }
 }

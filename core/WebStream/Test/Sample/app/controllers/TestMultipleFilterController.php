@@ -9,7 +9,7 @@ class TestParentFilterController extends CoreController
 {
     /**
      * @Inject
-     * @Filter("Before")
+     * @Filter(type="before")
      */
     public function before2()
     {
@@ -18,7 +18,7 @@ class TestParentFilterController extends CoreController
 
     /**
      * @Inject
-     * @Filter("After")
+     * @Filter(type="after")
      */
     public function after2()
     {
@@ -30,7 +30,7 @@ class TestMultipleFilterController extends TestParentFilterController
 {
     /**
      * @Inject
-     * @Filter("Before")
+     * @Filter(type="before")
      */
     public function before()
     {
@@ -39,7 +39,7 @@ class TestMultipleFilterController extends TestParentFilterController
 
     /**
      * @Inject
-     * @Filter("After")
+     * @Filter(type="after")
      */
     public function after()
     {

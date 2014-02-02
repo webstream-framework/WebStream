@@ -76,7 +76,6 @@ class FilterComponent
 
     /**
      * filterを実行する
-     * @return Container コンテナ
      */
     private function execute($containerList)
     {

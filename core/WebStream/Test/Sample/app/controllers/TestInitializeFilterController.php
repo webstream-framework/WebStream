@@ -9,7 +9,7 @@ class TestInitializeFilterController extends CoreController
 {
     /**
      * @Inject
-     * @Filter("Initialize")
+     * @Filter(type="initialize")
      */
     public function initialize()
     {
