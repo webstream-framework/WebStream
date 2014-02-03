@@ -28,8 +28,12 @@ trait ExceptionHandlerProvider
     public function successErrorMultipleHandlingProvider()
     {
         return [
-            ["/multiple_exception_handler1", "12"],
-            ["/multiple_exception_handler2", "12"]
+            ["/multiple_exception_handler1", "125"],
+            ["/multiple_exception_handler2", "125"],
+            ["/multiple_exception_handler3", "235"],
+            ["/multiple_exception_handler4", "235"],
+            ["/multiple_exception_handler5", "245"],
+            ["/multiple_exception_handler6", "25"]
         ];
     }
 

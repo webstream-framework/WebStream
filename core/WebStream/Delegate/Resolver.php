@@ -253,8 +253,7 @@ class Resolver
                 return false;
             }
 
-            for ($i = 0; $i < count($handleMethods); $i++) {
-                $handleMethod = $handleMethods[$i];
+            foreach ($handleMethods as $handleMethod) {
                 $ca = $classpath . "#" . $handleMethod;
                 $instance = $refClass->newInstance($this->container);
                 $method = $refClass->getMethod($handleMethod);

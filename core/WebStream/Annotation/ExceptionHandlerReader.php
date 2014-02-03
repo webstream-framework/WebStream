@@ -46,9 +46,12 @@ class ExceptionHandlerReader extends AnnotationReader
                     if ($isInject) {
                         foreach ($annotations as $annotation) {
                             if ($annotation instanceof ExceptionHandler) {
-                                $classpath = $annotation->getExceptionClasspath();
-                                if (is_a($this->handledException, $classpath)) {
-                                    $this->handleMethods[] = $method->name;
+                                $classpathList = $annotation->getExceptionClasspathList();
+                                foreach ($classpathList as $classpath) {
+                                    // メソッドに同じ例外(祖先含む)が指定された場合、無視する
+                                    if (is_a($this->handledException, $classpath)) {
+                                        $this->handleMethods[] = $method->name;
+                                    }
                                 }
                             }
                         }
@@ -57,6 +60,9 @@ class ExceptionHandlerReader extends AnnotationReader
 
                 $refClass = $refClass->getParentClass();
             }
+
+            $this->handleMethods = array_unique($this->handleMethods);
+
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
         }

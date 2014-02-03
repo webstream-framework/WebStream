@@ -14,8 +14,8 @@ use WebStream\Module\Logger;
  */
 class ExceptionHandler extends AbstractAnnotation
 {
-    /** exceptionClasspath */
-    private $exceptionClasspath;
+    /** exceptionClasspathList */
+    private $exceptionClasspathList;
 
     /**
      * ＠Override
@@ -23,17 +23,20 @@ class ExceptionHandler extends AbstractAnnotation
     public function onInject()
     {
         if (array_key_exists($this->EXCEPTIONHANDLER_ATTR_VALUE, $this->annotations)) {
-            $this->exceptionClasspath = $this->annotations[$this->EXCEPTIONHANDLER_ATTR_VALUE];
+            $this->exceptionClasspathList = $this->annotations[$this->EXCEPTIONHANDLER_ATTR_VALUE];
+            if (!is_array($this->exceptionClasspathList)) {
+                $this->exceptionClasspathList = [$this->exceptionClasspathList];
+            }
         }
         Logger::debug("ExceptionHandler.");
     }
 
     /**
-     * 例外クラスパスを返却する
-     * @return string 例外クラスパス
+     * 例外クラスパスリストを返却する
+     * @return array<string> 例外クラスパスリスト
      */
-    public function getExceptionClasspath()
+    public function getExceptionClasspathList()
     {
-        return $this->exceptionClasspath;
+        return $this->exceptionClasspathList;
     }
 }
