@@ -5,6 +5,7 @@ use WebStream\Module\Container;
 use WebStream\Module\Logger;
 use WebStream\Annotation\QueryReader;
 use WebStream\Exception\DatabaseException;
+use WebStream\Exception\MethodNotFoundException;
 
 /**
  * CoreModel
@@ -126,8 +127,11 @@ class CoreModel implements CoreInterface
         } catch (DatabaseException $e) {
             $this->manager->rollback();
             throw $e;
+        } catch (\ReflectionException $e) {
+            // 存在しないModelメソッドにアクセスしたときの処理
+            $this->manager->rollback();
+            throw new MethodNotFoundException($e->getMessage());
         }
-
         return $result;
     }
 }
