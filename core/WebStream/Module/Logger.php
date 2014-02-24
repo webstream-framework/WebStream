@@ -32,12 +32,18 @@ class Logger
     /**
      * コンストラクタ
      * @param string ログファイルパス
-     * @param string ローテートサイクル
-     * @param string ローテートサイズ
      */
     private function __construct($configPath)
     {
         $this->loadCofig($configPath);
+    }
+
+    /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        Logger::finalize();
     }
 
     /**
@@ -62,7 +68,6 @@ class Logger
             self::$logger->write("DEBUG", "Logger finalized.");
         }
         self::$logger = null;
-        self::$configPath = null;
     }
 
     /**
@@ -119,7 +124,7 @@ class Logger
         $this->logPath = $path;
 
         // ステータスファイルパスを設定
-        $this->statusPath = preg_replace_callback('/(.*)\..+/', function($matches) {
+        $this->statusPath = preg_replace_callback('/(.*)\..+/', function ($matches) {
             return "$matches[1].status";
         }, $this->logPath);
 

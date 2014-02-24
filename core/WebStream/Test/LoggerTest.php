@@ -37,6 +37,7 @@ class LoggerTest extends TestBase
         $log = $this->parseConfig($configPath);
         $logPath = $this->getRoot() . "/" . $log["path"];
         $file = file($logPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
         return array_pop($file);
     }
 
@@ -556,8 +557,16 @@ class LoggerTest extends TestBase
      */
     public function ngNotInitialized()
     {
-        Logger::finalize();
-        Logger::info("test");
+        // 初期化を再現
+        $refClass = new \ReflectionClass("\WebStream\Module\Logger");
+        $refProp = $refClass->getProperty("logger");
+        $refProp->setAccessible(true);
+        $refProp->setValue(null);
+        $refProp = $refClass->getProperty("configPath");
+        $refProp->setAccessible(true);
+        $refProp->setValue(null);
+        $refMethod = $refClass->getMethod("__callStatic");
+        $refMethod->invokeArgs(null, ["info", ["test"]]);
     }
 
     /**
