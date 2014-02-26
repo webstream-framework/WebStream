@@ -52,7 +52,7 @@ class Response
      */
     public function __destruct()
     {
-        Logger::debug("Reponse is clear.");
+        Logger::debug("Response is clear.");
     }
 
     /**
