@@ -14,8 +14,8 @@ trait DatabaseProvider
         return [
             ["/test_model1", "honoka", "/test_model_prepare"],
             ["/test_model2", "honoka", "/test_model_prepare"],
-            ["/test_model4", "honoka", null],
-            ["/test_model5", "honoka", null],
+            ["/test_model4", "honoka", "/test_model_prepare3"],
+            ["/test_model5", "honoka", "/test_model_prepare3"],
             ["/test_model12", "honoka", "/test_model_prepare2"],
             ["/test_model13", "honoka", "/test_model_prepare2"]
         ];
@@ -42,6 +42,15 @@ trait DatabaseProvider
         return [
             ["/test_model10", "1", "/test_model_clear"],
             ["/test_model17", "1", "/test_model_clear2"]
+        ];
+    }
+
+    public function useUndefinedQueryXmlFileProvider()
+    {
+        return [
+            ["/test_model6", "\WebStream\Test\TestData\Sample\App\Controller\TestMysqlController#model5"],
+            ["/test_model16", "\WebStream\Test\TestData\Sample\App\Controller\TestPostgresController#model5"],
+            ["/test_model18", "\WebStream\Test\TestData\Sample\App\Controller\TestSqliteController#model3"]
         ];
     }
 
