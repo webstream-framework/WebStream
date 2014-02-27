@@ -61,7 +61,7 @@ class Logger
      */
     public static function finalize()
     {
-        if (self::$logger === null) {
+        if (!isset(self::$logger) || self::$logger === null) {
             return;
         }
         if (self::$logger->toLogLevelValue('debug') >= self::$logger->getLogLevel()) {
@@ -86,7 +86,7 @@ class Logger
         }
         if (self::$logger->toLogLevelValue($level) >= self::$logger->getLogLevel()) {
             $logArgument = [strtoupper($level)];
-            call_user_func_array(array(self::$logger, "write"), array_merge($logArgument, $arguments));
+            call_user_func_array([self::$logger, "write"], array_merge($logArgument, $arguments));
         }
     }
 
