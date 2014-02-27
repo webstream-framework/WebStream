@@ -9,18 +9,6 @@ namespace WebStream\Module;
  */
 class Security
 {
-    /** 強制置換する文字列と置換文字列を定義 */
-    private static $force_replace_str = [
-        '\t' => '&nbsp;&nbsp;&nbsp;&nbsp;',
-        '\r\n' => '<br/>',
-        '\r' => '<br/>',
-        '\n' => '<br/>',
-        '\\' => '\\\\',
-        '<!--' => '&lt;!--',
-        '-->' => '--&gt;',
-        '<![CDATA[' => '&lt;![CDATA['
-    ];
-
     /**
      * ブラウザから入力されたデータを安全にDBに保存するためのデータに変換する
      * @param String or Array or Hash ブラウザからの入力データ
@@ -80,10 +68,31 @@ class Security
         $data = htmlspecialchars($data, ENT_QUOTES, "UTF-8");
 
         // 強制置換対象の文字を変換する
-        foreach (self::$force_replace_str as $key => $val) {
+        $forceReplaceHtmlMap = [
+            '\t'        => '&nbsp;&nbsp;&nbsp;&nbsp;',
+            '\r\n'      => '<br/>',
+            '\r'        => '<br/>',
+            '\n'        => '<br/>',
+            '\\'        => '\\\\',
+            '<!--'      => '&lt;!--',
+            '-->'       => '--&gt;',
+            '<![CDATA[' => '&lt;![CDATA['
+        ];
+        foreach ($forceReplaceHtmlMap as $key => $val) {
             $data = str_replace($key, $val, $data);
         }
 
         return $data;
+    }
+
+    /**
+     * ブラウザに出力するXMLデータを安全なデータに変換する
+     * @param string ブラウザへの出力XML
+     * @return string 安全なXML
+     */
+    public static function safetyOutXML($data)
+    {
+        return preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $data);
+
     }
 }
