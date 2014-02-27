@@ -5,7 +5,6 @@ use WebStream\Module\Container;
 use WebStream\Module\Logger;
 use WebStream\Annotation\QueryReader;
 use WebStream\Exception\DatabaseException;
-use WebStream\Exception\MethodNotFoundException;
 
 /**
  * CoreModel
@@ -99,7 +98,7 @@ class CoreModel implements CoreInterface
 
                         break;
                 }
-            } elseif (preg_match('/^(?:beginTransaction|rollback|commit)$/', $method)) {
+            } elseif (preg_match('/^(?:(?:co(?:nnec|mmi)|disconnec)t|beginTransaction|rollback)$/', $method)) {
                 $this->manager->{$method}();
             } else {
                 if (array_key_exists(0, $arguments)) {
@@ -126,12 +125,10 @@ class CoreModel implements CoreInterface
 
         } catch (DatabaseException $e) {
             $this->manager->rollback();
+            $this->manager->disconnect();
             throw $e;
-        } catch (\ReflectionException $e) {
-            // 存在しないModelメソッドにアクセスしたときの処理
-            $this->manager->rollback();
-            throw new MethodNotFoundException($e->getMessage());
         }
+
         return $result;
     }
 }

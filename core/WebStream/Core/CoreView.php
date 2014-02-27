@@ -101,14 +101,24 @@ class CoreView implements CoreInterface
         }
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
-        $content = $this->convert(file_get_contents($template));
+        $content = file_get_contents($template);
+        $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
+        $content = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $content);
+        $content = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $content);
+        $content = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php $this->coreDelegator->getHelper()->__initialize("$1", $__params__, [$2]); ?>', $content);
+        $content = preg_replace('/@\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
 
-        // formタグが含まれる場合はCSRFトークンを付与する
-        if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
-            $this->addToken($params, $content);
-        } else {
-            // formタグがない場合、CSRFトークンセッションは不要なので削除
-            $this->session->delete($this->getCsrfTokenKey());
+        if ($mime === "xml") {
+            $content = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOutXML($1); ?>', $content);
+        } elseif ($mime === "html") {
+            $content = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOut($1); ?>', $content);
+            // formタグが含まれる場合はCSRFトークンを付与する
+            if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
+                $this->addToken($params, $content);
+            } else {
+                // formタグがない場合、CSRFトークンセッションは不要なので削除
+                $this->session->delete($this->getCsrfTokenKey());
+            }
         }
 
         // テンプレートファイルをコンパイルし一時ファイルを作成
@@ -147,23 +157,6 @@ class CoreView implements CoreInterface
     private function outputHeader($type)
     {
         $this->response->setType($type);
-    }
-
-    /**
-     * テンプレートの内容を置換する
-     * @param String テンプレートファイルの内容
-     * @return String 置換後のテンプレートファイルの内容
-     */
-    private function convert($s)
-    {
-        $s = preg_replace('/^<\?xml/', '<<?php ?>?xml', $s);
-        $s = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $s);
-        $s = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOut($1); ?>', $s);
-        $s = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $s);
-        $s = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php $this->coreDelegator->getHelper()->__initialize("$1", $__params__, [$2]); ?>', $s);
-        $s = preg_replace('/@\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $s);
-
-        return $s;
     }
 
     /**
@@ -265,9 +258,7 @@ class CoreView implements CoreInterface
         $this->response->downloadFile($filename, $userAgent);
     }
 
-
     // 以下のメソッドは削除予定
-
 
     /**
      * JSONを描画する
