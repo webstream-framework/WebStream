@@ -94,6 +94,10 @@ class Resolver
         $namespace = $coreDelegator->getNamespace($this->router->controller());
         $classpath = $namespace . "\\" . $this->router->controller();
 
+        if (!class_exists($classpath)) {
+            throw new ClassNotFoundException("Undefined class path: " . $classpath);
+        }
+
         // バリデーションチェック
         $validator = $this->container->validator;
         $validator->check();
@@ -154,20 +158,19 @@ class Resolver
                 throw new MethodNotFoundException("${class}#${action} is not defined.");
             }
 
-            $data = $self->{$action}($params);
-            if ($data === null) {
-                $data = [];
-            }
+            $self->{$action}($params);
+            $model = $self->__model();
 
-            $embed = $templateComponent->getEmbed();
-            if (!empty($embed)) {
-                $data = array_merge($data, $embed);
+            $embeds = $templateComponent->getEmbed();
+
+            if (is_a($model, "WebStream\\Core\\CoreModel") || is_a($model, "WebStream\\Core\\CoreService")) {
+                $embeds = array_merge($embeds, ["model" => $model]);
             }
 
             // draw template
             $viewDir = STREAM_APP_ROOT . "/app/views";
             $view = $coreDelegator->getView();
-            $view->draw($viewDir . "/" . $templateComponent->getBase(), $data, $mime);
+            $view->draw($viewDir . "/" . $templateComponent->getBase(), $embeds, $mime);
 
             $templateCache = new TemplateCacheReader();
             $templateCache->read($refClass, $action);
@@ -241,6 +244,10 @@ class Resolver
         ];
 
         try {
+            if (!class_exists($classpath)) {
+                return false;
+            }
+
             // Controller起動
             $refClass = new \ReflectionClass(new $classpath($this->container));
             // @ExceptionHandlerを起動
