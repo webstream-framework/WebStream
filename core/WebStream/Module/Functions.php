@@ -48,8 +48,6 @@ if (!function_exists('shutdownHandler')) {
 
 /**
  * 入力データに対して安全なデータに変換をする
- * @param String or Array or Hash 入力データ
- * @return String or Array or Hash 安全なデータ
  */
 if (!function_exists('safetyIn')) {
     function safetyIn($data)
@@ -59,13 +57,21 @@ if (!function_exists('safetyIn')) {
 }
 
 /**
- * フォルダ内のすべてのファイルをインポートする
- * @param String or Array or Hash 出力データ
- * @return String or Array or Hash 安全なデータ
+ * 出力データに対して安全なデータに変換をする
  */
 if (!function_exists('safetyOut')) {
     function safetyOut($data)
     {
         return Security::safetyOut($data);
+    }
+}
+
+/**
+ * 出力データに対して安全なデータに変換をする(XML専用)
+ */
+if (!function_exists('safetyOutXML')) {
+    function safetyOutXML($data)
+    {
+        return Security::safetyOutXML($data);
     }
 }
