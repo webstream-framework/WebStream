@@ -8,6 +8,7 @@ use WebStream\Annotation\Template;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Value;
 use WebStream\Annotation\Type;
+use WebStream\Annotation\Header;
 
 class TestTemplateController extends CoreController
 {
@@ -19,7 +20,7 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
-     * @Filter("Before")
+     * @Filter(type="before")
      */
     public function before()
     {
@@ -39,7 +40,6 @@ class TestTemplateController extends CoreController
      */
     public function index2()
     {
-        return ["name" => "hoge"];
     }
 
     /**
@@ -76,7 +76,6 @@ class TestTemplateController extends CoreController
      */
     public function index6()
     {
-        return ["name" => "printemps"];
     }
 
     /**
@@ -124,7 +123,16 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
-     * @Filter("After")
+     * @Header(contentType="xml")
+     * @Template("xml.tmpl")
+     */
+    public function xml()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Filter(type="after")
      */
     public function after()
     {
