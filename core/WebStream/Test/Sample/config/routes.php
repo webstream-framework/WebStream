@@ -38,6 +38,8 @@ Router::setRule([
     '/test_template/error3' => "test_template#error3",
     '/test_template/error4' => "test_template#error4",
     '/test_template/error5' => "test_template#error5",
+    '/test_template/model/is_model' => "test_template_with_model#index1",
+    '/test_template/model/access_db' => "test_template_with_model#index2",
     '/csrf' => "test_security#test_csrf",
     '/csrf_get' => "test_security#test_csrf_get",
     '/csrf_post' => "test_security#test_csrf_post",
@@ -154,8 +156,13 @@ Router::setRule([
     '/test_model15' => "test_postgres#model4",
     '/test_model16' => "test_postgres#model5",
     '/test_model17' => "test_postgres#model6",
+    '/test_model18' => "test_sqlite#model3",
     '/test_model_prepare' => "test_mysql#prepare",
     '/test_model_clear' => "test_mysql#clear",
     '/test_model_prepare2' => "test_postgres#prepare",
-    '/test_model_clear2' => "test_postgres#clear"
+    '/test_model_clear2' => "test_postgres#clear",
+    '/test_model_prepare3' => "test_sqlite#prepare",
+    '/test_model_clear3' => "test_sqlite#clear",
+
+    '/test_template/xml' => "test_template#xml",
 ]);

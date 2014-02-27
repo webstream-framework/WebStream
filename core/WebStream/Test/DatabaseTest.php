@@ -129,13 +129,14 @@ class DatabaseTest extends TestBase
      * 異常系
      * QueryXMLファイルパスが存在しない場合、例外が発生すること
      * @test
+     * @dataProvider useUndefinedQueryXmlFileProvider
      */
-    public function ngUseUndefinedQueryXmlFile()
+    public function ngUseUndefinedQueryXmlFile($path, $classpath)
     {
         $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . "/test_model6";
+        $url = $this->getDocumentRootURL() . $path;
         $html = $http->get($url);
-        $this->assertEquals($html, "\WebStream\Test\TestData\Sample\App\Controller\TestMysqlController#model5");
+        $this->assertEquals($html, $classpath);
     }
 
     /**
