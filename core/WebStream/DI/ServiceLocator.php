@@ -72,7 +72,7 @@ class ServiceLocator
         $container = new Container();
 
         // Request
-        $container->request = function() {
+        $container->request = function () {
             $refClass = new \ReflectionClass("\WebStream\Http\Request");
             $autowired = new AutowiredReader();
             $autowired->read($refClass);
@@ -80,23 +80,23 @@ class ServiceLocator
             return $autowired->getInstance();
         };
         // Response
-        $container->response = function() {
+        $container->response = function () {
             return new Response();
         };
         // Session
-        $container->session = function() {
+        $container->session = function () {
             return new Session();
         };
         // Router
-        $container->router = function() use (&$container) {
+        $container->router = function () use (&$container) {
             return new Router($container->request);
         };
         // Validator
-        $container->validator = function() use (&$container) {
+        $container->validator = function () use (&$container) {
             return new Validator($container->request, $container->router);
         };
         // CoreDelegator
-        $container->coreDelegator = function() use (&$container) {
+        $container->coreDelegator = function () use (&$container) {
             return new CoreDelegator($container);
         };
         // ApplicationRoot
