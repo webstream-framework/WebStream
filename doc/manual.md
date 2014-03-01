@@ -1,19 +1,45 @@
 # WebStream
 WebStreamはMVCアーキテクチャをベースとしたWebアプリケーションフレームワークです。  
 さらにS(Service)層を追加した4層構造のアーキテクチャとなっています。  
+
 ***
-##MVC+Sアーキテクチャ
+##WebStreamのアーキテクチャ
+WebStreamはMVCを拡張したアーキテクチャを採用しており、Serviceレイヤを追加しています。  
+MVCはFat Controller/Fat Model問題を引き起こしやすいアーキテクチャであるため、ビジネスロジックはServiceに定義します。  
+また、View内でビジネスロジックを書く場合はHelperを利用し、Viewはレンダリングに専念させます。  
+
+##WebStreamのCore
+Coreとなるレイヤは、`Controller`、`Model`、`Service`、`View`、`Helper`となります。  
+
 ###Controller
-Contollerではクライアントからのリクエストを受け付け、必要に応じてServiceまたはModelに処理を移譲します。処理結果はViewへ渡します。原則的にControllerにビジネスロジックを記述してはなりません。
+Contollerではクライアントからのリクエストを受け付け、ServiceまたはModelを呼び出します。  
+Controllerの処理が完了したらViewを呼び出します。Viewへパラメータを渡す場合、Serviceにセットします。  
+原則的にControllerにビジネスロジックを記述してはなりません。  
+`%PROJECT_ROOT%/app/controllers`に`WebStream\Core\CoreController`クラスを継承したクラスを定義します。  
 
 ###Service
-ServiceではContollerから受け取ったリクエストやデータを処理します。メインとなるビジネスロジックはServiceに記述します。データベースへの問い合わせが必要な場合はModelへ問い合わせます。また、Serviceでは開発者が個別に作成したライブラリを利用することができます。Serviceで処理するロジックがない場合などはServiceを定義する必要はありません。
+ServiceではContollerから受け取ったリクエストやデータを使って処理をしたり、View経由でビジネスロジックを実行します。  
+メインとなるビジネスロジックはServiceに記述します。データベースへの問い合わせが必要な場合はModelへ問い合わせます。  
+また、Serviceでは開発者が個別に定義したクラス(ライブラリ)を利用することができます。Serviceで処理するロジックがない場合などはServiceを定義する必要はありません。  
+`%PROJECT_ROOT%/app/services`に`WebStream\Core\CoreService`クラスを継承したクラスを定義します。  
 
 ###Model
-ModelはControllerまたはServiceからのリクエストやデータを元にデータベースに問い合わせます。Serviceが定義されない場合はControllerから直接呼び出しが可能です。Modelには原則的にデータベースに関連するロジックやデータベース問い合わせ処理を記述します。データベースに問い合わせたり、特にロジックを記述する必要がない場合はModelの定義は必要ありません。
+ModelはController、ServiceまたはViewからのリクエストや受け取ったデータを元にデータベースに問い合わせます。  
+Serviceが定義されない場合はController、Viewから直接呼び出されます。Modelにはデータベース問い合わせ処理を記述します。  
+データベースに問い合わせたり、特にロジックを記述する必要がない場合はModelの定義は必要ありません。  
+`%PROJECT_ROOT%/app/models`に`WebStream\Core\CoreModel`クラスを継承したクラスを定義します。  
 
 ###View
-ViewはControllerから渡された描画データをHTMLとして出力します。HTMLの描画はWebStream独自のテンプレート機能を利用します。テンプレートの描画を支援するヘルパー機能もあります。Helperクラスを定義することで、テンプレート内でロジックを使用することが容易になります。Helperクラスの定義は任意です。
+Viewは画面に出力するHTMLなどを描画し、Controllerから呼ばれます。HTML等の描画はWebStream独自のテンプレート機能を利用します。  
+ViewからはHelperまたはModel、Serviceを呼び出してビジネスロジックを実行することができます。  
+テンプレートファイルは`.tmpl`拡張子を付け、`%PROJECT_ROOT%/app/views`にページ名をスネークケースに変換したフォルダを作成し保存します。  
+`__cache`、`__public`、`__shared`フォルダを作成すると、それぞれテンプレートキャッシュファイル、静的ファイル、共通テンプレートファイルを使用することができます。  
+ViewにはModel/Serviceオブジェクトが渡されるので、Model、Serviceで取得した値やビジネスロジックの実行がViewで可能になります。  
+Model/Serviceオブジェクトは$model変数に格納されています。  
+
+###Helper
+Viewの描画に関するロジックが必要な場合はHelperを呼び出します。  
+`%PROJECT_ROOT%/app/helpers`に`WebStream\Core\CoreHelper`クラスを継承したクラスを定義します。  
 
 ***
 ##命名規則
