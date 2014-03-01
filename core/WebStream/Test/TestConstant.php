@@ -10,7 +10,7 @@ trait TestConstant
 
     private function getProjectRootPath()
     {
-        return "/Users/stay/workspace2/WebStream";
+        return "/Users/mapserver2007/Dropbox/workspace/WebStream";
     }
 
     private function getSampleAppPath()

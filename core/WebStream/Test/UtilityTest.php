@@ -63,7 +63,7 @@ class UtilityTest extends TestBase
      */
     public function okReadNamespace($filepath, $namespace)
     {
-        $path = $this->getNamespace($filepath);
+        $path = $this->getNamespace($this->getProjectRootPath() . $filepath);
         $this->assertEquals($path, $namespace);
     }
 
@@ -75,7 +75,7 @@ class UtilityTest extends TestBase
      */
     public function okReadNoNamespace($filepath)
     {
-        $path = $this->getNamespace($filepath);
+        $path = $this->getNamespace($this->getProjectRootPath() . $filepath);
         $this->assertNull($path);
     }
 }
