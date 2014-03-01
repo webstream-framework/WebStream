@@ -38,6 +38,8 @@ Router::setRule([
     '/test_template/error3' => "test_template#error3",
     '/test_template/error4' => "test_template#error4",
     '/test_template/error5' => "test_template#error5",
+    '/test_template/error6' => "test_template#error6",
+    '/test_template/error7' => "test_template#error7",
     '/test_template/model/is_model' => "test_template_with_model#index1",
     '/test_template/model/access_db' => "test_template_with_model#index2",
     '/csrf' => "test_security#test_csrf",

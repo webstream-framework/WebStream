@@ -25,23 +25,15 @@ class AutowiredReader extends AnnotationReader
             while ($refClass !== false) {
                 $properties = $refClass->getProperties();
                 foreach ($properties as $property) {
-                    $annotations = $reader->getPropertyAnnotations($property);
 
-                    $isAutowired = false;
-                    foreach ($annotations as $annotation) {
-                        if ($annotation instanceof Autowired) {
-                            $isAutowired = true;
-                        }
-                    }
-
-                    if ($isAutowired) {
-                        foreach ($annotations as $annotation) {
-                            if ($annotation instanceof Type || $annotation instanceof Value) {
-                                if ($property->isPrivate() || $property->isProtected()) {
-                                    $property->setAccessible(true);
-                                }
-                                $property->setValue($this->instance, $annotation->getValue());
+                    if ($reader->getPropertyAnnotation($property, "\WebStream\Annotation\Autowired")) {
+                        $annotation = $reader->getPropertyAnnotation($property, "\WebStream\Annotation\Type") ?:
+                            $reader->getPropertyAnnotation($property, "\WebStream\Annotation\Value");
+                        if ($annotation !== null) {
+                            if ($property->isPrivate() || $property->isProtected()) {
+                                $property->setAccessible(true);
                             }
+                            $property->setValue($this->instance, $annotation->getValue());
                         }
                     }
                 }

@@ -123,6 +123,24 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
+     * @Template("base1.tmpl")
+     * @Template("parts1.tmpl", name="model", type="shared");
+     */
+    public function error6()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("base1.tmpl")
+     * @Template("parts1.tmpl", name="model", type="parts");
+     */
+    public function error7()
+    {
+    }
+
+    /**
+     * @Inject
      * @Header(contentType="xml")
      * @Template("xml.tmpl")
      */

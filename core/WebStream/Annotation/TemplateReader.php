@@ -2,6 +2,7 @@
 namespace WebStream\Annotation;
 
 use WebStream\Module\Utility;
+use WebStream\Module\Logger;
 use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
@@ -40,6 +41,12 @@ class TemplateReader extends AnnotationReader
                     if ($annotation instanceof Template) {
                         $template = $annotation->getTemplate();
                         $name = $annotation->getName();
+                        $type = "";
+                        if ($name === $this->getModelVariableName() || $name === $this->getHelperVariableName()) {
+                            $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'name'. ";
+                            $errorMsg.= "'model' or 'helper' can not use name attribute in @Template.";
+                            throw new AnnotationException($errorMsg);
+                        }
                         if ($annotation->isBase()) {
                             if ($isAlreadyBaseRead) {
                                 $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
@@ -48,15 +55,22 @@ class TemplateReader extends AnnotationReader
                             }
                             $component->setBase($templateDir . "/" . $template);
                             $isAlreadyBaseRead = true;
+                            $type = "base";
                         } elseif ($annotation->isShared() && $name !== null) {
                             $embedTemplates[$name] = STREAM_VIEW_SHARED . "/" . $template;
+                            $type = "shared";
                         } elseif ($annotation->isParts() && $name !== null) {
                             $embedTemplates[$name] = $templateDir . "/" . $template;
+                            $type = "parts";
                         } else {
                             $errorMsg = "Argument of @Template('" . $template . "') annotation is not enough. ";
                             $errorMsg.= "Please check attribute 'name' or 'type'.";
                             throw new AnnotationException($errorMsg);
                         }
+                        // Template#onInjectに書くと、FilterReader実行時に余計なログが出るためここに記述。
+                        // これはDoctrineAnnotationのDocParser#Annotaionの制限で、特定のアノテーションを読み込まないように
+                        // することができないため。L683付近の$instance = new $name();を書き換えれえば対応は可能。
+                        Logger::debug("Template injected: name=" . $name . ",value=" . $template . ",type=" . $type);
                     }
                 }
             }

@@ -7,7 +7,8 @@ namespace WebStream\Test\DataProvider;
  * @since 2013/10/19
  * @version 0.4
  */
-trait TemplateProvider {
+trait TemplateProvider
+{
     public function templateProvider()
     {
         return [
@@ -27,7 +28,9 @@ trait TemplateProvider {
             ["/test_template/error2", 404],
             ["/test_template/error3", 500],
             ["/test_template/error4", 500],
-            ["/test_template/error5", 500]
+            ["/test_template/error5", 500],
+            ["/test_template/error6", 500],
+            ["/test_template/error7", 500]
         ];
     }
 }

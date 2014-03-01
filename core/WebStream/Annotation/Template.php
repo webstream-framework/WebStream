@@ -1,8 +1,6 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Module\Logger;
-
 /**
  * Template
  * @author Ryuichi TANAKA.
@@ -52,8 +50,6 @@ class Template extends AbstractAnnotation
             $type = $this->TEMPLATE_VALUE_BASE;
             $this->isBase = true;
         }
-
-        Logger::debug("Template injected: value=" . $this->template . ", type=" . $type);
     }
 
     /**
