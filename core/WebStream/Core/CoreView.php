@@ -105,7 +105,6 @@ class CoreView implements CoreInterface
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
         $content = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $content);
         $content = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $content);
-        $content = preg_replace('/!\{(.*?)\((.*?)\)\}/', '<?php $this->coreDelegator->getHelper()->__initialize("$1", $__params__, [$2]); ?>', $content);
         $content = preg_replace('/@\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
 
         if ($mime === "xml") {

@@ -21,7 +21,7 @@ class TestHelperController extends CoreController
      */
     public function help2()
     {
-        return ["name" => "μ's"];
+        $this->TestHelper->setName("μ's");
     }
 
     /**
@@ -30,7 +30,7 @@ class TestHelperController extends CoreController
      */
     public function help3()
     {
-        return ["name" => "LilyWhite"];
+        $this->TestHelper->setName("LilyWhite");
     }
 
     /**
@@ -39,7 +39,7 @@ class TestHelperController extends CoreController
      */
     public function help4()
     {
-        return ["name" => "BiBi"];
+        $this->TestHelper->setName("BiBi");
     }
 
     /**
@@ -56,9 +56,9 @@ class TestHelperController extends CoreController
      */
     public function help6()
     {
-        return [
+        $this->TestHelper->setMap([
             "name" => "honoka",
             "age" => 16
-        ];
+        ]);
     }
 }
