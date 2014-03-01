@@ -21,6 +21,22 @@ trait TemplateProvider
         ];
     }
 
+    public function templateModelProvider()
+    {
+        return [
+            ["/test_template/model/is_model", "WebStream\Test\TestData\Sample\App\Model\TestTemplateWithModelModel"],
+            ["/test_template/model/access_db", "nicomaki"]
+        ];
+    }
+
+    public function templateHelperProvider()
+    {
+        return [
+            ["/test_template/helper/is_helper", "WebStream\Test\TestData\Sample\App\Helper\TestTemplateWithHelperHelper"],
+            ["/test_template/helper/access_helper", "kayochin"]
+        ];
+    }
+
     public function templateErrorProvider()
     {
         return [
@@ -31,6 +47,14 @@ trait TemplateProvider
             ["/test_template/error5", 500],
             ["/test_template/error6", 500],
             ["/test_template/error7", 500]
+        ];
+    }
+
+    public function notfoundModelOrHelperProvider()
+    {
+        return [
+            ["/test_template/model/null_model", 500],
+            ["/test_template/helper/null_helper", 500]
         ];
     }
 }

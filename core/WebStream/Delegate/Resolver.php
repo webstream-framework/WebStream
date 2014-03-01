@@ -160,12 +160,12 @@ class Resolver
 
             $self->{$action}($params);
             $model = $self->__model();
+            $helper = $coreDelegator->getHelper() ?: new ClassNotFoundException($coreDelegator->getPageName() . "Helper is not defined.");
 
-            $embeds = $templateComponent->getEmbed();
-
-            if (is_a($model, "WebStream\\Core\\CoreModel") || is_a($model, "WebStream\\Core\\CoreService")) {
-                $embeds = array_merge($embeds, ["model" => $model]);
-            }
+            $embeds = array_merge($templateComponent->getEmbed(), [
+                $this->getModelVariableName() => $model,
+                $this->getHelperVariableName() => $helper
+            ]);
 
             // draw template
             $viewDir = STREAM_APP_ROOT . "/app/views";
@@ -178,8 +178,7 @@ class Resolver
 
             if ($expire !== null) {
                 // create cache
-                $pageName = $coreDelegator->getPageName();
-                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($action);
+                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($coreDelegator->getPageName()) . "-" . $this->camel2snake($action);
                 $view->cache($cacheFile, ob_get_contents(), $expire);
             }
 

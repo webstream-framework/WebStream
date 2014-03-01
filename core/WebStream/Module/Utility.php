@@ -19,6 +19,24 @@ trait Utility
     }
 
     /**
+     * Viewで有効なModel変数名を返却する
+     * @return string Model変数名
+     */
+    public function getModelVariableName()
+    {
+        return "model";
+    }
+
+    /**
+     * Viewで有効なHelper変数名を返却する
+     * @return string Helper変数名
+     */
+    public function getHelperVariableName()
+    {
+        return "helper";
+    }
+
+    /**
      * プロジェクトルートファイル名を返却する
      * @return string プロジェクトルートファイル名
      */
@@ -158,7 +176,7 @@ trait Utility
      */
     public function camel2snake($str)
     {
-        $str = preg_replace_callback('/([A-Z])/', function($matches) {
+        $str = preg_replace_callback('/([A-Z])/', function ($matches) {
             return '_' . lcfirst($matches[1]);
         }, $str);
 
@@ -172,7 +190,7 @@ trait Utility
      */
     public function snake2ucamel($str)
     {
-        $str = ucfirst(preg_replace_callback('/_([a-zA-Z])/', function($matches) {
+        $str = ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($matches) {
             return ucfirst($matches[1]);
         }, $str));
 
