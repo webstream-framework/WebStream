@@ -87,6 +87,8 @@ trait RouterProvider
             ['/file/sample.rdf', "application/rdf+xml"],
             ['/file/sample.txt', "text/plain"],
             ['/file/sample.xml', "application/xml"],
+            ['/file/sample.csv', "text/csv"],
+            ['/file/sample.tsv', "text/tab-separated-values"]
         ];
     }
 
@@ -96,7 +98,6 @@ trait RouterProvider
             ['/custom/sample.txt', "text/plain"]
         ];
     }
-
 
     // 異常系
     public function resolveUnknownProvider()

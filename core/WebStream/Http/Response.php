@@ -333,6 +333,7 @@ class Response
         'htm'   => 'text/html',
         'css'   => 'text/css',
         'csv'   => 'text/csv',
+        'tsv'   => 'text/tab-separated-values',
         'js'    => 'text/javascript',
         'jsonp' => 'text/javascript',
         'json'  => 'application/json',
