@@ -14,6 +14,10 @@ http://mapserver2007.github.io/WebStream/
 * feature-0.3 - 0.3.x系(PHP5.3)
 * feature-0.4 - 0.4.x系(PHP5.4)
 
+## タグ
+* 0.1.10
+* 0.2.0
+* 0.3.17
 
 ## License
 Licensed under the MIT
