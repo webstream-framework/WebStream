@@ -6,7 +6,6 @@ use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
-use WebStream\Module\FileSearchIterator;
 use WebStream\Annotation\DatabaseReader;
 
 /**
@@ -71,25 +70,25 @@ class CoreDelegator
         $helperNamespace  = $this->getNamespace($helperClassName);
 
         // View
-        $this->coreContainer->view = function() use (&$container) {
+        $this->coreContainer->view = function () use (&$container) {
             return new CoreView($container);
         };
         // Service
         if ($serviceNamespace !== null) {
             $serviceClassPath = $serviceNamespace . "\\" . $serviceClassName;
-            $this->coreContainer->service = function() use (&$container, &$classLoader, &$serviceClassPath, &$serviceClassName) {
+            $this->coreContainer->service = function () use (&$container, &$classLoader, &$serviceClassPath, &$serviceClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/services/" . $serviceClassName . ".php")) {
                     return new $serviceClassPath($container);
                 }
             };
         } else {
-            $this->coreContainer->service = function() {};
+            $this->coreContainer->service = function () {};
         }
 
         // Model
         if ($modelNamespace !== null) {
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
-            $this->coreContainer->model = function() use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
+            $this->coreContainer->model = function () use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
                     $refClass = new \ReflectionClass($modelClassPath);
                     $reader = new DatabaseReader();
@@ -99,19 +98,19 @@ class CoreDelegator
                 }
             };
         } else {
-            $this->coreContainer->model = function() {};
+            $this->coreContainer->model = function () {};
         }
 
         // Helper
         if ($helperNamespace !== null) {
             $helperClassPath = $helperNamespace . "\\" . $helperClassName;
-            $this->coreContainer->helper = function() use (&$container, &$classLoader, &$helperClassPath, &$helperClassName) {
+            $this->coreContainer->helper = function () use (&$container, &$classLoader, &$helperClassPath, &$helperClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $helperClassName . ".php")) {
                     return new $helperClassPath($container);
                 }
             };
         } else {
-            $this->coreContainer->helper = function() {};
+            $this->coreContainer->helper = function () {};
         }
     }
 
