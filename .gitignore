@@ -1,7 +1,9 @@
 .svn
 .DS_Store
-TODO.txt
 sandbox/
 phpunit/
 log/
 core/WebStream/Test/Sample/log/
+vendor
+composer.phar
+composer.lock
