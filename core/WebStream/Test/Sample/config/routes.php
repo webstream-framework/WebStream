@@ -114,6 +114,8 @@ Router::setRule([
     '/multiple_exception_handler4' => "test_multiple_exception_handler#index3",
     '/multiple_exception_handler5' => "test_multiple_exception_handler#index4",
     '/multiple_exception_handler6' => "test_multiple_exception_handler#index5",
+    '/double_exception_handler1' => "test_double_exception_handler#index1",
+    '/double_exception_handler2' => "test_double_exception_handler#index2",
     '/session_limit' => "test_session#set_session_limit_expire",
     '/session_no_limit' => "test_session#set_session_no_limit_expire",
     '/session_index' => "test_session#index1",

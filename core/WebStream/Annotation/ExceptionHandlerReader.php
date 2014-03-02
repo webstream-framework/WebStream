@@ -5,7 +5,6 @@ use WebStream\Exception\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
-
 /**
  * ExceptionHandlerReader
  * @author Ryuichi TANAKA.
@@ -29,28 +28,17 @@ class ExceptionHandlerReader extends AnnotationReader
 
         try {
             while ($refClass !== false) {
-                $methods = $refClass->getMethods();
-                foreach ($methods as $method) {
-                    if ($refClass->getName() !== $method->class) {
-                        continue;
-                    }
-                    $annotations = $reader->getMethodAnnotations($method);
-
-                    $isInject = false;
-                    foreach ($annotations as $annotation) {
-                        if ($annotation instanceof Inject) {
-                            $isInject = true;
-                        }
-                    }
-
-                    if ($isInject) {
+                $refMethods = $refClass->getMethods();
+                foreach ($refMethods as $refMethod) {
+                    if ($reader->getMethodAnnotation($refMethod, "\WebStream\Annotation\Inject")) {
+                        $annotations = $reader->getMethodAnnotations($refMethod);
                         foreach ($annotations as $annotation) {
                             if ($annotation instanceof ExceptionHandler) {
                                 $classpathList = $annotation->getExceptionClasspathList();
                                 foreach ($classpathList as $classpath) {
                                     // メソッドに同じ例外(祖先含む)が指定された場合、無視する
                                     if (is_a($this->handledException, $classpath)) {
-                                        $this->handleMethods[] = $method->name;
+                                        $this->handleMethods[] = $refMethod->name;
                                     }
                                 }
                             }

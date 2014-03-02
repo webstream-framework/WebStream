@@ -33,7 +33,9 @@ trait ExceptionHandlerProvider
             ["/multiple_exception_handler3", "235"],
             ["/multiple_exception_handler4", "235"],
             ["/multiple_exception_handler5", "245"],
-            ["/multiple_exception_handler6", "25"]
+            ["/multiple_exception_handler6", "25"],
+            ["/double_exception_handler1", "1"],
+            ["/double_exception_handler2", "1"]
         ];
     }
 
