@@ -5,6 +5,7 @@ use WebStream\Module\Logger;
 use WebStream\Module\ClassLoader;
 use WebStream\DI\ServiceLocator;
 
+require_once dirname(__FILE__) . "/../../../../vendor/autoload.php";
 require_once dirname(__FILE__) . '/../../Module/Utility.php';
 require_once dirname(__FILE__) . '/../../Module/ClassLoader.php';
 require_once dirname(__FILE__) . '/../../Module/Logger.php';
@@ -79,14 +80,13 @@ require_once dirname(__FILE__) . '/../../Http/Method/Put.php';
 require_once dirname(__FILE__) . '/../../Http/Request.php';
 require_once dirname(__FILE__) . '/../../Http/Response.php';
 require_once dirname(__FILE__) . '/../../Http/Session.php';
-require_once dirname(__FILE__) . '/../../Vendor/Doctrine/Common/Annotations/AnnotationException.php';
 require_once dirname(__FILE__) . '/config/routes.php';
 require_once dirname(__FILE__) . '/config/validates.php';
 
 // ログ出力ディレクトリ、ログレベルをテスト用に変更
 Logger::init("core/WebStream/Test/Sample/config/log.ini");
 
-$isXhprof = true;
+$isXhprof = false;
 
 // xhprof
 if ($isXhprof) {
@@ -112,8 +112,9 @@ $method->invoke($instance);
 ServiceLocator::removeContainer();
 
 if ($isXhprof) {
+    // TODO Vendor以下にもっていきたい。
     $xhprofData = xhprof_disable();
-    $xhprofRoot = '/Users/stay/workspace2/github-project-sample/';
+    $xhprofRoot = '/Users/mapserver2007/Dropbox/workspace/xhprof';
     $projectName = 'WebStream';
     include_once $xhprofRoot . '/xhprof_lib/utils/xhprof_lib.php';
     include_once $xhprofRoot . '/xhprof_lib/utils/xhprof_runs.php';

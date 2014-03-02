@@ -1,9 +1,6 @@
 <?php
 namespace WebStream\Module;
 
-use WebStream\Module\Utility;
-use WebStream\Module\Logger;
-
 require_once dirname(__FILE__) . '/Utility.php';
 require_once dirname(__FILE__) . '/Logger.php';
 
@@ -116,21 +113,12 @@ class ClassLoader
             return;
         }
 
-        // 次にcoreのVendorディレクトリを名前空間付きで全検索する
-        // Vendor以外はbootstrapでロード済み
-        $iterator = $this->getFileSearchIterator($rootDir . "/core/WebStream/Vendor");
-        foreach ($iterator as $filepath => $fileObject) {
-            if (strpos($filepath, $className . ".php") !== false) {
-                include_once $filepath;
-                return;
-            }
-        }
-
         // さらに見つからなかったらappディレクトリを名前空間付きで全検索
         $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
         foreach ($iterator as $filepath => $fileObject) {
             if (strpos($filepath, $className . ".php") !== false) {
                 include_once $filepath;
+
                 return;
             }
         }
