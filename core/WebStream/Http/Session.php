@@ -21,13 +21,15 @@ class Session
 
     /**
      * コンストラクタ
-     * @param Integer セッションの有効期限(秒)
-     * @param String Cookieを有効にするパス
-     * @param String Cookieを有効にするドメイン
+     * @param integer セッションの有効期限(秒)
+     * @param string Cookieを有効にするパス
+     * @param string Cookieを有効にするドメイン
+     * @param boolean Secure属性を有効にする
+     * @param boolean HttpOnly属性を有効にする
      */
-    public function __construct($expire = null, $path = '/', $domain = "")
+    public function __construct($expire = null, $path = '/', $domain = "", $secure = false, $httpOnly = false)
     {
-        $this->initialize($expire, $path, $domain);
+        $this->initialize($expire, $path, $domain, $secure, $httpOnly);
     }
 
     /**
@@ -40,15 +42,17 @@ class Session
 
     /**
      * 初期設定
-     * @param Integer セッションの有効期限(秒)
-     * @param String Cookieを有効にするパス
-     * @param String Cookieを有効にするドメイン
+     * @param integer セッションの有効期限(秒)
+     * @param string Cookieを有効にするパス
+     * @param string Cookieを有効にするドメイン
+     * @param boolean Secure属性を有効にする
+     * @param boolean HttpOnly属性を有効にする
      */
-    private function initialize($expire, $path, $domain)
+    private function initialize($expire, $path, $domain, $secure, $httpOnly)
     {
         // 有効期限が設定されている場合のみ、Cookieに値をセットする
         if ($expire !== null) {
-            session_set_cookie_params($expire, $path, $domain);
+            session_set_cookie_params($expire, $path, $domain, $secure, $httpOnly);
         }
 
         // セッションIDの予測リスクを低減する
@@ -76,7 +80,6 @@ class Session
     /**
      * セッションを開始する
      */
-
     public function start()
     {
         // セッション名を設定
@@ -102,18 +105,20 @@ class Session
 
     /**
      * セッションを再始動する
-     * @param Integer セッションの有効期限(秒)
-     * @param String Cookieを有効にするパス
-     * @param String Cookieを有効にするドメイン
+     * @param integer セッションの有効期限(秒)
+     * @param string Cookieを有効にするパス
+     * @param string Cookieを有効にするドメイン
+     * @param boolean Secure属性を有効にする
+     * @param boolean HttpOnly属性を有効にする
      */
-    public function restart($expire = null, $path = '/', $domain = '')
+    public function restart($expire = null, $path = '/', $domain = '', $secure = false, $httpOnly = false)
     {
         if ($expire === null) {
             // 初期化する
             $this->createInitializeCookie();
         } else {
             // 再設定する
-            setcookie(self::SESSION_EXPIRE_COOKIE_NAME, time(), time() + $expire, $path, $domain);
+            setcookie(self::SESSION_EXPIRE_COOKIE_NAME, time(), time() + $expire, $path, $domain, $secure, $httpOnly);
             $_SESSION[self::SESSION_EXPIRE_COOKIE_NAME] = time() + $expire;
         }
     }
@@ -130,7 +135,7 @@ class Session
     /**
      * セッションタイムアウト状態かどうか
      * WSSESS_LIFEクッキーが送られてこない場合、セッションタイムアウトとする
-     * @return Boolean セッションタイムアウトかどうか
+     * @return boolean セッションタイムアウトかどうか
      */
     private function isSessionTimeout()
     {
@@ -141,7 +146,7 @@ class Session
     /**
      * 初回起動時かどうか
      * WSSESS_STARTEDクッキーが削除されていた場合は強制的に初期化扱いする
-     * @return Boolean 初回起動時かどうか
+     * @return boolean 初回起動時かどうか
      */
     private function isInitialStart()
     {
@@ -164,7 +169,7 @@ class Session
 
     /**
      * セッションIDを返却する
-     * return String セッションID
+     * @return string セッションID
      */
     public function id()
     {
@@ -173,8 +178,8 @@ class Session
 
     /**
      * セッションをセットする
-     * @param String セッションキー
-     * @param String セッション値
+     * @param string セッションキー
+     * @param string セッション値
      */
     public function set($name, $value)
     {
@@ -183,7 +188,7 @@ class Session
 
     /**
      * セッションを破棄する
-     * @param String セッションキー
+     * @param string セッションキー
      */
     public function delete($key)
     {
@@ -192,8 +197,8 @@ class Session
 
     /**
      * セッションを取得する
-     * @param String セッションキー
-     * @return String セッション値
+     * @param string セッションキー
+     * @return string セッション値
      */
     public function get($name)
     {
@@ -204,7 +209,7 @@ class Session
 
     /**
      * セッションタイムアウトしたか返却する
-     * @return Boolean セッションタイムアウトしたかどうか
+     * @return boolean セッションタイムアウトしたかどうか
      */
     public function timeout()
     {
