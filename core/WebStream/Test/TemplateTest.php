@@ -68,6 +68,19 @@ class TemplateTest extends TestBase
     }
 
     /**
+     * 正常系
+     * テンプレート内で展開されたJavaScriptコードがエスケープされること
+     * @test
+     * @dataProvider templateJavaScriptEscape
+     */
+    public function okTemplateJavaScriptEscape($path, $response)
+    {
+        $url = $this->getDocumentRootURL() . $path;
+        $responseText = file_get_contents($url);
+        $this->assertEquals($response, $responseText);
+    }
+
+    /**
      * 異常系
      * テンプレート記述に間違いがある場合、例外が発生すること
      * @test

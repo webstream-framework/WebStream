@@ -67,6 +67,16 @@ if (!function_exists('safetyOut')) {
 }
 
 /**
+ * 出力データに対して安全なデータに変換をする(JavaScript専用)
+ */
+if (!function_exists('safetyOutJavaScript')) {
+    function safetyOutJavaScript($data)
+    {
+        return Security::safetyOutJavaScript($data);
+    }
+}
+
+/**
  * 出力データに対して安全なデータに変換をする(XML専用)
  */
 if (!function_exists('safetyOutXML')) {

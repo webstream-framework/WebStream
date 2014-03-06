@@ -111,6 +111,7 @@ class CoreView implements CoreInterface
             $content = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOutXML($1); ?>', $content);
         } elseif ($mime === "html") {
             $content = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOut($1); ?>', $content);
+            $content = preg_replace('/%J\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOutJavaScript($1); ?>', $content);
             // formタグが含まれる場合はCSRFトークンを付与する
             if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
                 $this->addToken($params, $content);

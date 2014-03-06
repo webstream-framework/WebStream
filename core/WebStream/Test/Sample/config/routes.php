@@ -46,6 +46,14 @@ Router::setRule([
     '/test_template/helper/access_helper' => "test_template_with_helper#index2",
     '/test_template/model/null_model' => "test_template_without_model#index1",
     '/test_template/helper/null_helper' => "test_template_without_helper#index1",
+    '/test_template/javascript1' => "test_template#javascript1",
+    '/test_template/javascript2' => "test_template#javascript2",
+    '/test_template/javascript3' => "test_template#javascript3",
+    '/test_template/javascript4' => "test_template#javascript4",
+    '/test_template/javascript5' => "test_template#javascript5",
+    '/test_template/javascript6' => "test_template#javascript6",
+    '/test_template/javascript7' => "test_template#javascript7",
+    '/test_template/javascript8' => "test_template#javascript8",
     '/csrf' => "test_security#test_csrf",
     '/csrf_get' => "test_security#test_csrf_get",
     '/csrf_post' => "test_security#test_csrf_post",
@@ -171,6 +179,5 @@ Router::setRule([
     '/test_model_clear2' => "test_postgres#clear",
     '/test_model_prepare3' => "test_sqlite#prepare",
     '/test_model_clear3' => "test_sqlite#clear",
-
-    '/test_template/xml' => "test_template#xml",
+    '/test_template/xml' => "test_template#xml"
 ]);

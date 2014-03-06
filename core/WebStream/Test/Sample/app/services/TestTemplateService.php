@@ -26,4 +26,44 @@ class TestTemplateService extends CoreService
 </items>
 XML;
     }
+
+    public function showCode1()
+    {
+        return "honoka\nkotori";
+    }
+
+    public function showCode2()
+    {
+        return "honoka\rumi";
+    }
+
+    public function showCode3()
+    {
+        return "kotori\r\numi";
+    }
+
+    public function showCode4()
+    {
+        return "nico\u2028\u2029\u0085maki";
+    }
+
+    public function showCode5()
+    {
+        return "'erichika'";
+    }
+
+    public function showCode6()
+    {
+        return '"nozomi"';
+    }
+
+    public function showCode7()
+    {
+        return "<script></script>";
+    }
+
+    public function showCode8()
+    {
+        return "rin\v\fpana";
+    }
 }

@@ -47,8 +47,8 @@ class Security
 
     /**
      * ブラウザに出力するデータを安全なデータに変換する
-     * @param String or Array or Hash ブラウザへの出力データ
-     * @return String or Array or Hash 安全なデータ
+     * @param mixed ブラウザへの出力データ
+     * @return mixed 安全なデータ
      */
     public static function safetyOut($data)
     {
@@ -69,16 +69,61 @@ class Security
 
         // 強制置換対象の文字を変換する
         $forceReplaceHtmlMap = [
-            '\t'        => '&nbsp;&nbsp;&nbsp;&nbsp;',
-            '\r\n'      => '<br/>',
-            '\r'        => '<br/>',
-            '\n'        => '<br/>',
-            '\\'        => '\\\\',
+            "\t"        => '&nbsp;&nbsp;&nbsp;&nbsp;',
+            "\r\n"      => '<br/>',
+            "\r"        => '<br/>',
+            "\n"        => '<br/>',
+            "\\"        => '\\\\',
             '<!--'      => '&lt;!--',
             '-->'       => '--&gt;',
             '<![CDATA[' => '&lt;![CDATA['
         ];
         foreach ($forceReplaceHtmlMap as $key => $val) {
+            $data = str_replace($key, $val, $data);
+        }
+
+        return $data;
+    }
+
+    /**
+     * ブラウザに出力するJavaScriptコードを安全なコードに変換する
+     * @param mixed ブラウザへの出力データ
+     * @return mixed 安全なデータ
+     */
+    public static function safetyOutJavaScript($data)
+    {
+        // 文字列、配列以外のデータは置換しない
+        if (!is_string($data) && !is_array($data)) {
+            return $data;
+        }
+        // 渡されたデータが配列の場合、分解して再帰処理
+        if (is_array($data)) {
+            while (list($key) = each($data)) {
+                $data[$key] = self::safetyOutJavaScript($data[$key]);
+            }
+
+            return $data;
+        }
+
+        // 強制置換対象の文字
+        $forceReplaceCharacterMap = [
+            "\u2028" => "\n",
+            "\u2029" => "\n",
+            "\u0085" => "\n",
+            '\\'     => "\\\\",
+            "'"      => '\u0022',
+            "\""     => '\u0027',
+            "/"      => "\/",
+            "<"      => '\x3c',
+            ">"      => '\x3e',
+            "\r\n"   => "\n",
+            "\r"     => "\n",
+            "\v"     => '\u000B',
+            "\f"     => '\u000C',
+            "\n"     => '\u000D\u000A'
+        ];
+
+        foreach ($forceReplaceCharacterMap as $key => $val) {
             $data = str_replace($key, $val, $data);
         }
 

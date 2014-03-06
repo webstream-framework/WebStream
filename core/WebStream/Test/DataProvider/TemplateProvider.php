@@ -37,6 +37,20 @@ trait TemplateProvider
         ];
     }
 
+    public function templateJavaScriptEscape()
+    {
+        return [
+            ["/test_template/javascript1", "<html><head><script type='text/javascript'>alert('honoka\u000D\u000Akotori')</script></head></html>"],
+            ["/test_template/javascript2", "<html><head><script type='text/javascript'>alert('honoka\u000D\u000Aumi')</script></head></html>"],
+            ["/test_template/javascript3", "<html><head><script type='text/javascript'>alert('kotori\u000D\u000Aumi')</script></head></html>"],
+            ["/test_template/javascript4", "<html><head><script type='text/javascript'>alert('nico\u000D\u000A\u000D\u000A\u000D\u000Amaki')</script></head></html>"],
+            ["/test_template/javascript5", "<html><head><script type='text/javascript'>alert('\u0022erichika\u0022')</script></head></html>"],
+            ["/test_template/javascript6", "<html><head><script type='text/javascript'>alert('\u0027nozomi\u0027')</script></head></html>"],
+            ["/test_template/javascript7", "<html><head><script type='text/javascript'>alert('\\x3cscript\\x3e\\x3c\/script\\x3e')</script></head></html>"],
+            ["/test_template/javascript8", "<html><head><script type='text/javascript'>alert('rin\u000B\u000Cpana')</script></head></html>"]
+        ];
+    }
+
     public function templateErrorProvider()
     {
         return [

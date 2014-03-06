@@ -150,6 +150,70 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
+     * @Template("javascript1.tmpl")
+     */
+    public function javascript1()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("javascript2.tmpl")
+     */
+    public function javascript2()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("javascript3.tmpl")
+     */
+    public function javascript3()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("javascript4.tmpl")
+     */
+    public function javascript4()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("javascript5.tmpl")
+     */
+    public function javascript5()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("javascript6.tmpl")
+     */
+    public function javascript6()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("javascript7.tmpl")
+     */
+    public function javascript7()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("javascript8.tmpl")
+     */
+    public function javascript8()
+    {
+    }
+
+    /**
+     * @Inject
      * @Filter(type="after")
      */
     public function after()
