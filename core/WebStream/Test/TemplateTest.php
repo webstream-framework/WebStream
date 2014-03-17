@@ -69,11 +69,37 @@ class TemplateTest extends TestBase
 
     /**
      * 正常系
+     * テンプレート内で展開されたHtmlコードがエスケープされること
+     * @test
+     * @dataProvider templateHtmlEscapeProvider
+     */
+    public function okTemplateHtmlEscape($path, $response)
+    {
+        $url = $this->getDocumentRootURL() . $path;
+        $responseText = file_get_contents($url);
+        $this->assertEquals($response, $responseText);
+    }
+
+    /**
+     * 正常系
      * テンプレート内で展開されたJavaScriptコードがエスケープされること
      * @test
-     * @dataProvider templateJavaScriptEscape
+     * @dataProvider templateJavaScriptEscapeProvider
      */
     public function okTemplateJavaScriptEscape($path, $response)
+    {
+        $url = $this->getDocumentRootURL() . $path;
+        $responseText = file_get_contents($url);
+        $this->assertEquals($response, $responseText);
+    }
+
+    /**
+     * 正常系
+     * テンプレート内で展開されたPHPコードはエスケープされないこと
+     * @test
+     * @dataProvider templatePhpNonEscapeProvider
+     */
+    public function okTemplatePhpEscape($path, $response)
     {
         $url = $this->getDocumentRootURL() . $path;
         $responseText = file_get_contents($url);

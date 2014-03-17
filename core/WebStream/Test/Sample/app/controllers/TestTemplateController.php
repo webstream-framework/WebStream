@@ -214,6 +214,22 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
+     * @Template("html1.tmpl")
+     */
+    public function html1()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("php1.tmpl")
+     */
+    public function php1()
+    {
+    }
+
+    /**
+     * @Inject
      * @Filter(type="after")
      */
     public function after()

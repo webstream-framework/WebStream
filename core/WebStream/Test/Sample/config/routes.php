@@ -54,6 +54,8 @@ Router::setRule([
     '/test_template/javascript6' => "test_template#javascript6",
     '/test_template/javascript7' => "test_template#javascript7",
     '/test_template/javascript8' => "test_template#javascript8",
+    '/test_template/html1' => "test_template#html1",
+    '/test_template/php1' => "test_template#php1",
     '/csrf' => "test_security#test_csrf",
     '/csrf_get' => "test_security#test_csrf_get",
     '/csrf_post' => "test_security#test_csrf_post",

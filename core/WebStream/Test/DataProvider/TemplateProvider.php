@@ -37,7 +37,21 @@ trait TemplateProvider
         ];
     }
 
-    public function templateJavaScriptEscape()
+    public function templateHtmlEscapeProvider()
+    {
+        return [
+            ["/test_template/html1", "&lt;p&gt;test&lt;/p&gt;"]
+        ];
+    }
+
+    public function templatePhpEscapeProvider()
+    {
+        return [
+            ["/test_template/php1", "<p>test</p>"]
+        ];
+    }
+
+    public function templateJavaScriptEscapeProvider()
     {
         return [
             ["/test_template/javascript1", "<html><head><script type='text/javascript'>alert('honoka\u000D\u000Akotori')</script></head></html>"],
@@ -48,6 +62,13 @@ trait TemplateProvider
             ["/test_template/javascript6", "<html><head><script type='text/javascript'>alert('\u0027nozomi\u0027')</script></head></html>"],
             ["/test_template/javascript7", "<html><head><script type='text/javascript'>alert('\\x3cscript\\x3e\\x3c\/script\\x3e')</script></head></html>"],
             ["/test_template/javascript8", "<html><head><script type='text/javascript'>alert('rin\u000B\u000Cpana')</script></head></html>"]
+        ];
+    }
+
+    public function templatePhpNonEscapeProvider()
+    {
+        return [
+            ["/test_template/php1", "<p>test</p>"]
         ];
     }
 
