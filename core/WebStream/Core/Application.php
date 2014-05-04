@@ -165,7 +165,7 @@ class Application
                 $this->response->move(500);
             }
         } catch (\RuntimeException $e) {
-            // OutOfBoundsException, CollectionExceptionは500だが復帰可能
+            // OutOfBoundsExceptionは500だが復帰可能
             Logger::error($e->getMessage(), $e->getTraceAsString());
             if (!$this->handle($e)) {
                 $this->response->move(500);
