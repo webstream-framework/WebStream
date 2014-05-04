@@ -71,6 +71,8 @@ class Session
             ini_set('session.save_path', 'C:\\tmp');
         }
 
+        ini_set('session.hash_function', 'sha256');
+
         // RefererによるセッションID漏洩を防止する
         // セッションIDはCookieにのみ保存する
         ini_set('session.use_cookies', '1');
