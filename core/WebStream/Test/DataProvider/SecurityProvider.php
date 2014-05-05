@@ -17,7 +17,7 @@ trait SecurityProvider
     public function replaceXSSStringsProvider()
     {
         return [
-            ['<div>\\a\t\n\r\r\n<!-- --><![CDATA[</div>',
+            ["<div>\\a\t\n\r\r\n<!-- --><![CDATA[</div>",
              '&lt;div&gt;\\\\a&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/>&lt;!-- --&gt;&lt;![CDATA[&lt;/div&gt;']
         ];
     }

@@ -181,5 +181,7 @@ Router::setRule([
     '/test_model_clear2' => "test_postgres#clear",
     '/test_model_prepare3' => "test_sqlite#prepare",
     '/test_model_clear3' => "test_sqlite#clear",
-    '/test_template/xml' => "test_template#xml"
+    '/test_template/xml' => "test_template#xml",
+    '/test_json1' => "test_json#json1",
+    '/test_json2' => "test_json#json2"
 ]);

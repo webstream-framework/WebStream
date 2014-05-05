@@ -1,12 +1,13 @@
 <?php
-namespace WebStream\Module;
-
 /**
  * Functions
  * @author Ryuichi TANAKA.
  * @since 2013/09/04
  * @version 0.4
  */
+
+use WebStream\Module\Logger;
+use WebStream\Module\Security;
 
 /**
  * ハンドリングできないエラーをハンドリングする
@@ -83,5 +84,15 @@ if (!function_exists('safetyOutXML')) {
     function safetyOutXML($data)
     {
         return Security::safetyOutXML($data);
+    }
+}
+
+/**
+ * 出力データに対して安全なデータに変換をする(JSON専用)
+ */
+if (!function_exists('safetyOutJSON')) {
+    function safetyOutJSON($data)
+    {
+        return json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
     }
 }

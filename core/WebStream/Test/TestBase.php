@@ -28,7 +28,7 @@ class TestBase extends \PHPUnit_Framework_TestCase
         $classLoader = new \WebStream\Module\ClassLoader();
         $classLoader->test();
         spl_autoload_register([$classLoader, "load"]);
-        register_shutdown_function('WebStream\Module\shutdownHandler');
+        register_shutdown_function('shutdownHandler');
     }
 
     protected function preloadClass()

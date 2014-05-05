@@ -96,7 +96,7 @@ if ($isXhprof) {
 $classLoader = new ClassLoader();
 $classLoader->test();
 spl_autoload_register([$classLoader, "load"]);
-register_shutdown_function('WebStream\Module\shutdownHandler');
+register_shutdown_function('shutdownHandler');
 
 // サービスロケータをロード
 ServiceLocator::test();

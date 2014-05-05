@@ -89,6 +89,16 @@ class CoreView implements CoreInterface
      */
     final public function draw($template, $params, $mime = "html")
     {
+        // Content-typeを出力
+        $this->outputHeader($mime);
+
+        // HTML,XML以外はテンプレートを使用しない
+        if ($mime !== "html" && $mime !== "xml") {
+            Logger::debug("Only html or xml draw view template.");
+
+            return;
+        }
+
         // テンプレートファイルがない場合エラー
         if (!file_exists($template)) {
             throw new ResourceNotFoundException("Invalid template file path: " . $template);
@@ -103,15 +113,14 @@ class CoreView implements CoreInterface
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($template);
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
-        $content = preg_replace('/#\{(.*?)\}/', '<?php echo $1; ?>', $content);
-        $content = preg_replace('/<%\s(.*?)\s%>/', '<?php $1; ?>', $content);
-        $content = preg_replace('/@\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
+        $content = preg_replace('/%P\{(.*?)\}/', '<?php echo $1; ?>', $content);
+        $content = preg_replace('/%T\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
 
         if ($mime === "xml") {
-            $content = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOutXML($1); ?>', $content);
+            $content = preg_replace('/%X\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
         } elseif ($mime === "html") {
-            $content = preg_replace('/%\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOut($1); ?>', $content);
-            $content = preg_replace('/%J\{(.*?)\}/', '<?php echo \WebStream\Module\safetyOutJavaScript($1); ?>', $content);
+            $content = preg_replace('/%H\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
+            $content = preg_replace('/%J\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
             // formタグが含まれる場合はCSRFトークンを付与する
             if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
                 $this->addToken($params, $content);
@@ -132,7 +141,6 @@ class CoreView implements CoreInterface
         }
 
         $params["__params__"] = $params;
-        $this->outputHeader($mime);
         $this->outputHTML($temp, $params);
 
         unlink($temp);
@@ -256,28 +264,5 @@ class CoreView implements CoreInterface
     {
         $userAgent = $this->request->userAgent();
         $this->response->downloadFile($filename, $userAgent);
-    }
-
-    // 以下のメソッドは削除予定
-
-    /**
-     * JSONを描画する
-     * @param Hash 出力データ
-     */
-    final public function __json($params)
-    {
-        $this->outputHeader("json");
-        echo json_encode($params);
-    }
-
-    /**
-     * JSONPを描画する
-     * @param Hash 出力データ
-     * @param String コールバック関数名
-     */
-    final public function __jsonp($params, $callback)
-    {
-        $this->outputHeader("jsonp");
-        echo $callback . "(" . json_encode($params) . ");";
     }
 }
