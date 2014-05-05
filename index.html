@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Webstream : MVC+ServiceによるWebアプリケーションフレームワーク" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Webstream</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mapserver2007/WebStream">View on GitHub</a>
+
+          <h1 id="project_title">Webstream</h1>
+          <h2 id="project_tagline">MVC+ServiceによるWebアプリケーションフレームワーク</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/mapserver2007/WebStream/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/mapserver2007/WebStream/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="webstream" class="anchor" href="#webstream"><span class="octicon octicon-link"></span></a>WebStream</h1>
+
+<p>WebStreamはMVCアーキテクチャをベースとしたWebアプリケーションフレームワークです。
+さらにS(Service)層を追加した4層構造のアーキテクチャとなっています。</p>
+
+<h2>
+<a name="webstream%E3%81%AE%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3" class="anchor" href="#webstream%E3%81%AE%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3"><span class="octicon octicon-link"></span></a>WebStreamのアーキテクチャ</h2>
+
+<p>WebStreamはMVCを拡張したアーキテクチャを採用しており、Serviceレイヤを追加しています。
+MVCはFat Controller/Fat Model問題を引き起こしやすいアーキテクチャであるため、ビジネスロジックはServiceに定義します。
+また、View内でビジネスロジックを書く場合はHelperを利用し、Viewはレンダリングに専念させます。  </p>
+
+<h2>
+<a name="controller" class="anchor" href="#controller"><span class="octicon octicon-link"></span></a><a href="#controller">Controller</a>
+</h2>
+
+<p>Contollerではクライアントからのリクエストを受け付け、ServiceまたはModelを呼び出します。
+Controllerの処理が完了したらViewを呼び出します。Viewへパラメータを渡す場合、Serviceにセットします。
+原則的にControllerにビジネスロジックを記述してはなりません。
+<code>app/controllers</code>に<code>WebStream\Core\CoreController</code>クラスを継承したクラスを定義します。  </p>
+
+<h3>
+<a name="controller%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E5%AE%9A%E7%BE%A9" class="anchor" href="#controller%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E5%AE%9A%E7%BE%A9"><span class="octicon octicon-link"></span></a>Controllerクラスの定義</h3>
+
+<p>Controllerクラスは<code>\WebStream\Core\CoreController</code>クラスを継承します。
+ControllerクラスからはServiceクラスまたはModelクラスを参照できます。またViewテンプレートを呼び出して描画できます。</p>
+
+<h4>
+<a name="service%E3%82%AF%E3%83%A9%E3%82%B9model%E3%82%AF%E3%83%A9%E3%82%B9%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97" class="anchor" href="#service%E3%82%AF%E3%83%A9%E3%82%B9model%E3%82%AF%E3%83%A9%E3%82%B9%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97"><span class="octicon octicon-link"></span></a>Serviceクラス、Modelクラス呼び出し</h4>
+
+<p>Serviceクラス、Modelクラスは以下のように呼び出します。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+class BlogController extends CoreController {
+    public funciton execute() {
+        // $this-&gt;{ページ名}-&gt;(Service|Modelクラスのメソッド)
+        $this-&gt;Blog-&gt;entry();
+    }
+}
+</code></pre>
+
+<p>Controllerクラス内の<code>$this-&gt;{ページ名}</code>オブジェクトにはServiceクラスまたはModelクラスのインスタンスが格納されています。Serviceクラスを定義している場合はServiceクラスインスタンスが格納されます。このときのページ名はアッパーキャメルケースで指定します。
+Serviceクラスを定義せずModelクラスのみ定義した場合はModelクラスインスタンスが格納されます。Serviceクラスに特段のビジネスロジックを記述する必要がなく、DBからのデータを取り出したいだけの場合など、Controllerクラスから直接Modelクラスにアクセスすることができます。
+Controllerクラスでは<a href="#annotaion">アノテーション</a>を使ってメソッドやプロパティを操作できます。</p>
+
+<h4>
+<a name="view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97" class="anchor" href="#view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97"><span class="octicon octicon-link"></span></a>Viewテンプレート呼び出し</h4>
+
+<p>HTMLを描画するにはControllerからViewテンプレートを呼び出します。Viewテンプレート呼び出しは<a href="#annotaion">アノテーション</a>を利用します。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+
+/**
+ * @Inject
+ * @Template("index.tmpl")
+ */
+class BlogController extends CoreController {
+    public funciton execute() {
+        // $this-&gt;{ページ名}-&gt;(Service|Modelクラスのメソッド)
+        $this-&gt;Blog-&gt;entry();
+    }
+}
+</code></pre>
+
+<p>この処理で<code>@Template</code>に指定したテンプレートファイル<code>index.tmpl</code>を呼び出します。
+テンプレートファイルは<code>app/views/(ページ名)/</code>に保存します。このときのページ名はスネークケースで指定します(詳細は<a href="#view">View</a>で説明します)。</p>
+
+<h2>
+<a name="service" class="anchor" href="#service"><span class="octicon octicon-link"></span></a><a href="#service">Service</a>
+</h2>
+
+<p>ServiceクラスではContollerクラスから受け取ったリクエストやデータを使って処理をしたり、View経由でビジネスロジックを実行します。
+メインとなるビジネスロジックはServiceに記述します。データベースへの問い合わせが必要な場合はModelへ問い合わせます。
+また、Serviceでは開発者が個別に定義したクラス(ライブラリ)を利用することができます。Serviceで処理するロジックがない場合などはServiceを定義する必要はありません。
+<code>app/services</code>に<code>WebStream\Core\CoreService</code>クラスを継承したクラスを定義します。  </p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreService;
+class BlogService extends CoreService {
+    public funciton entry() {
+        // $this-&gt;{ページ名}-&gt;(Modelクラスのメソッド)
+        $this-&gt;Blog-&gt;getEntryData();
+    }
+}
+</code></pre>
+
+<p>Serviceクラス内の<code>$this-&gt;{ページ名}</code>オブジェクトにはModelクラスのインスタンスが格納されています。ModelクラスにアクセスしてDB処理を実行します。
+また、ServiceクラスにはContoller、Service、Model、Helperの各クラスに属さないユーザ定義クラスへのパスが通っています。<code>app/libraries/</code>ディレクトリに任意のクラスを定義することでServiceクラスからアクセスできます。例えば、外部APIにアクセスするクラスや、データをバインドするEntityクラスなど特定用途のクラスはlibrariesに定義してください。</p>
+
+<h2>
+<a name="model" class="anchor" href="#model"><span class="octicon octicon-link"></span></a><a href="#model">Model</a>
+</h2>
+
+<p>ModelクラスはControllerクラス、ServiceクラスまたはViewクラスからのリクエストや受け取ったデータを元にデータベースに問い合わせます。
+Serviceクラスが定義されない場合はController、Viewから直接呼び出されます。Modelにはデータベース問い合わせ処理を記述します。
+<code>app/models</code>に<code>WebStream\Core\CoreModel</code>クラスを継承したクラスを定義します。  </p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreModel;
+/**
+ * @Inject
+ * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")
+ */
+class BlogModel extends CoreModel {
+    public funciton getEntryData() {
+        $sql = "SELECT * FROM T_Blog";
+        return $this-&gt;select($sql);
+    }
+}
+</code></pre>
+
+<p>外部変数をパラメータに指定するには<code>$bind</code>変数にパラメータをセットします。
+<code>$bind</code>変数には連想配列でプリペアードステートメントに設定する値を指定します。
+データベース接続設定はクラスに<a href="#annotaion">アノテーション</a>を指定します。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreModel;
+/**
+ * @Inject
+ * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")
+ */
+class BlogModel extends CoreModel {
+    public funciton getEntryData() {
+        $sql = "SELECT * FROM T_Blog WHERE id = :id";
+        $bind = ["id" =&gt; 10];
+        return $this-&gt;select($sql, $bind);
+    }
+}
+</code></pre>
+
+<p>Modelクラスでは以下のメソッドが利用可能です。</p>
+
+<h4>
+<a name="model%E3%81%A7%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E4%B8%80%E8%A6%A7" class="anchor" href="#model%E3%81%A7%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E4%B8%80%E8%A6%A7"><span class="octicon octicon-link"></span></a>Modelで利用可能なメソッド一覧</h4>
+
+<table>
+<thead><tr>
+<th>メソッド</th>
+<th>内容</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>select(string $sql)<br>select(string $sql, array $bind)</td>
+<td>SELECTを実行する。</td>
+</tr>
+<tr>
+<td>insert(string $sql, array $bind)</td>
+<td>INSERTを実行する。</td>
+</tr>
+<tr>
+<td>update(string $sql, array $bind)</td>
+<td>UPDATEを実行する。</td>
+</tr>
+<tr>
+<td>delete(string $sql)<br>delete(string $sql, array $bind)</td>
+<td>DELETEを実行する。</td>
+</tr>
+<tr>
+<td>beginTransation()</td>
+<td>トランザクションを開始する。</td>
+</tr>
+<tr>
+<td>commit()</td>
+<td>コミットする。</td>
+</tr>
+<tr>
+<td>rollback()</td>
+<td>ロールバックする。</td>
+</tr>
+<tr>
+<td>connect()</td>
+<td>DBに接続する。</td>
+</tr>
+<tr>
+<td>disconnect()</td>
+<td>DBを切断する。</td>
+</tr>
+</tbody>
+</table><h4>
+<a name="%E3%82%AF%E3%82%A8%E3%83%AA%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8Bsql%E5%AE%9F%E8%A1%8C" class="anchor" href="#%E3%82%AF%E3%82%A8%E3%83%AA%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8Bsql%E5%AE%9F%E8%A1%8C"><span class="octicon octicon-link"></span></a>クエリファイルによるSQL実行</h4>
+
+<p>Modelクラスでは直接SQLをメソッド内に記述する以外に、クエリファイル(XML)を使ってSQLを実行できます。クエリファイルは<code>query/</code>に保存します。</p>
+
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!DOCTYPE mapper PUBLIC
+  "-//github.com/mapserver2007//DTD Mapper 3.0//EN" "http://localhost/webstream-model-mapper.dtd"&gt;
+&lt;mapper namespace="MyBlog"&gt;
+  &lt;select id="getData"&gt;
+    SELECT
+        *
+    FROM
+        T_Blog
+    WHERE
+        id = :id
+  &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+
+<p>クエリファイルのDTDは同ディレクトリに配置し、DOCTYPEの値は適宜修正しDTDを指すようにします。
+mapperタグの<code>namespace</code>にModelクラスの名前空間を指定します。名前空間が一致すればModelクラスからクエリファイルを呼び出すことができます。
+mapperタグ配下にSQLを記述するタグを記述します。<code>&lt;select&gt;</code>、<code>&lt;insert&gt;</code>、<code>&lt;update&gt;</code>、<code>&lt;delete&gt;</code>タグが指定可能です。タグの<code>id</code>をModelクラスのメソッドからアクセスするとSQLを実行できます。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreModel;
+/**
+ * @Inject
+ * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")
+ */
+class BlogModel extends CoreModel {
+    /**
+     * @Inject
+     * @Query(file="query/myblog.xml")
+     */
+    public funciton getEntryData() {
+        $bind = ["id" =&gt; 10];
+        return $this-&gt;getData($bind);
+    }
+}
+</code></pre>
+
+<p><a href="#annotaion">アノテーション</a>を使い、クエリファイルパスを指定します。これによりクエリファイルに記述したSQLが自動的に紐付けられます。</p>
+
+<h4>
+<a name="%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B6%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%87%A6%E7%90%86" class="anchor" href="#%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B6%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%87%A6%E7%90%86"><span class="octicon octicon-link"></span></a>トランザクション処理</h4>
+
+<p><code>$this-&gt;beginTransation()</code>でトランザクションを開始し<code>$this-&gt;commit()</code>でコミット、<code>$this-&gt;rollback()</code>でロールバックを実行します。
+ただし、DBMSがトランザクション処理に対応していない場合はトランザクション処理は有効になりません。
+なお、トランザクション処理を明示しない場合、処理が終了後、自動的にコミットを実行します。</p>
+
+<h2>
+<a name="view" class="anchor" href="#view"><span class="octicon octicon-link"></span></a><a href="#view">View</a>
+</h2>
+
+<p>Viewは画面に出力するHTMLなどを描画し、Controllerクラスから呼ばれます。HTML等の描画はWebStream独自のテンプレート機能を利用します。
+ViewからはHelperまたはModel、Serviceを呼び出してビジネスロジックを実行することができます。
+テンプレートファイルは<code>.tmpl</code>拡張子を付け、<code>app/views</code>にページ名をスネークケースに変換したフォルダを作成し保存します。
+<code>__cache</code>、<code>__public</code>、<code>__shared</code>フォルダを作成すると、それぞれテンプレートキャッシュファイル、静的ファイル、共通テンプレートファイルを使用することができます。
+ViewにはModel/Serviceオブジェクトが渡されるので、Model、Serviceで取得した値やビジネスロジックの実行がViewで可能になります。
+Model/Serviceオブジェクトは<code>$model</code>変数に格納されます。また、Helperオブジェクトは<code>$helper</code>変数に格納されます。</p>
+
+<p>ContollerクラスからViewテンプレートを呼び出します。<code>@Template</code>の仕様は<a href="#annotaion">アノテーション</a>を参照してください。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+
+/**
+ * テンプレートを呼び出す。
+ * @Inject
+ * @Template("index.tmpl")
+ */
+class BlogController extends CoreController {
+    public funciton execute() {
+        $this-&gt;Blog-&gt;entry();
+    }
+}
+</code></pre>
+
+<p><code>__shared</code>に保存した共通テンプレートを呼び出すことができます。
+共通点プレートはheaderやfooterなど共通になる部分を定義するときに使用します。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+
+/**
+ * 基本テンプレートと共通テンプレートを呼び出す。
+ * @Inject
+ * @Template("index.tmpl")
+ * @Template("common.tmpl", name="common", type="shared")
+ */
+class BlogController extends CoreController {
+    public funciton execute() {
+        $this-&gt;Blog-&gt;entry();
+    }
+}
+</code></pre>
+
+<p>共通テンプレートにするほどではないが、テンプレートを部品化したい場合、部分テンプレートとして呼び出すことができます。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+
+/**
+ * 基本テンプレートと共通テンプレートを呼び出す。
+ * @Inject
+ * @Template("index.tmpl")
+ * @Template("side.tmpl", name="side_menu", type="parts")
+ */
+class BlogController extends CoreController {
+    public funciton execute() {
+        $this-&gt;Blog-&gt;entry();
+    }
+}
+</code></pre>
+
+<p>ViewテンプレートにはHTMLを記述しますが、Service/Modelの値などを埋め込むことができます。</p>
+
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt;
+    &lt;head&gt;
+        &lt;title&gt;%H{$model-&gt;getTitle()}&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div&gt;%H{$model-&gt;getContent()}&lt;/div&gt;
+        %T{$common}
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p><code>$model</code>にアクセスするとServiceクラスまたはModelクラスにアクセスできます。また、<code>@Template</code>の<code>name</code>属性に指定した名前は変数としてアクセスできます。
+Viewテンプレートでは以下の構文が使用可能です。</p>
+
+<h3>
+<a name="view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E6%A7%8B%E6%96%87" class="anchor" href="#view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E6%A7%8B%E6%96%87"><span class="octicon octicon-link"></span></a><a href="#template_keyword">Viewテンプレート構文</a>
+</h3>
+
+<table>
+<thead><tr>
+<th>構文</th>
+<th>説明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>%P{$hoge}</td>
+<td>%P{}で囲ったPHPのコードを実行する。関数を実行する場合などに使用する。<br>ただし、関数の実行結果をreturnしても画面表示されない。また、関数内部で<code>echo</code>で標準出力した場合はエスケープされないので注意。<br>実行結果を伴わない関数の実行が必要な場合に使用する。</td>
+</tr>
+<tr>
+<td>%H{$hoge}</td>
+<td>%H{}で囲った変数を安全な値にエスケープしてHTMLとして表示する。関数を実行する場合も使用可能で、returnで返却された結果をエスケープして画面表示する。<br>ただし、関数内部で<code>echo</code>で標準出力した場合はエスケープされないので注意。</td>
+</tr>
+<tr>
+<td>%J{$hoge}</td>
+<td>%J{}で囲った変数を安全な値にエスケープしてJavaScriptコードとして評価する。関数を実行する場合も使用可能で、returnで返却された結果をエスケープして画面表示する。<br>ただし、関数内部で<code>echo</code>で標準出力した場合はエスケープされないので注意。</td>
+</tr>
+<tr>
+<td>%X{$hoge}</td>
+<td>%X{}で囲った変数を安全な値にエスケープしてXMLとして評価する。関数を実行する場合も使用可能で、returnで返却された結果をエスケープして画面表示する。<br>ただし、関数内部で<code>echo</code>で標準出力した場合はエスケープされないので注意。</td>
+</tr>
+<tr>
+<td>%T{$template}</td>
+<td>%T{}で囲ったテンプレートパスを読み込む。</td>
+</tr>
+</tbody>
+</table><h2>
+<a name="helper" class="anchor" href="#helper"><span class="octicon octicon-link"></span></a><a href="#helper">Helper</a>
+</h2>
+
+<p>Viewの描画に関するロジックが必要な場合はHelperを呼び出します。
+Helperクラスは<code>app/helpers</code>に<code>WebStream\Core\CoreHelper</code>クラスを継承したクラスを定義します。</p>
+
+<pre><code>namespace WebStream\Test\TestData\Sample\App\Helper;
+
+use WebStream\Core\CoreHelper;
+use WebStream\Core\CoreService;
+
+class TestHelperHelper extends CoreHelper
+{
+    public function help1()
+    {
+         return $this-&gt;help2($model-&gt;getName());
+    }
+}
+</code></pre>
+
+<p>Helperクラス内ではViewテンプレート内と同様に<code>$model</code>オブジェクトからModelクラス、Serviceクラスを呼び出すことができます。
+Helperクラスのメソッドは<code>$helper</code>オブジェクトにより呼び出します。</p>
+
+<pre><code>$helper-&gt;method();
+</code></pre>
+
+<p>メソッド呼び出しにより、Viewテンプレートで必要なロジックを実行します。
+メソッドの戻り値はViewテンプレートに描画されますが、<a href="#template_keyword">Viewテンプレート構文</a>によりエスケープして出力し、安全な値として出力する必要があります。</p>
+
+<pre><code>%H{$helper-&gt;method()}
+</code></pre>
+
+<p>ただし、Helper内で直接echoで出力するとエスケープされないので注意してください。</p>
+
+<h2>
+<a name="library" class="anchor" href="#library"><span class="octicon octicon-link"></span></a><a href="#library">Library</a>
+</h2>
+
+<p>Libraryクラスは開発者が自由に定義できるクラスです。クラスは<code>app/libraries</code>に保存します。
+例えば汎用的なクラスなどを個別のクラスに切り出したい場合に定義します。Libraryクラスのクラス名、ファイル名に制限はありません。定義したクラスは<code>Service</code>クラスからのみ参照可能です。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreService;
+class BlogService extends CoreService {
+    public funciton getWeather() {
+        // libraries/Weather.phpを呼び出す
+        $weather = new Weather();
+    }
+}
+</code></pre>
+
+<p>定義したクラスは自動的にクラスパスが通っているのでインスタンス化することができます。</p>
+
+<h2>
+<a name="%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87%E3%81%BE%E3%81%A8%E3%82%81" class="anchor" href="#%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87%E3%81%BE%E3%81%A8%E3%82%81"><span class="octicon octicon-link"></span></a><a href="#naming_rule">命名規則まとめ</a>
+</h2>
+
+<p>各クラスの命名規則、保存場所のまとめは以下のとおりです。</p>
+
+<table>
+<thead><tr>
+<th>レイヤ</th>
+<th>サンプルクラス名</th>
+<th>保存場所</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Controller</td>
+<td>SampleController</td>
+<td>app/controllers/SampleController.php</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>SampleService</td>
+<td>app/services/SampleService.php</td>
+</tr>
+<tr>
+<td>Model</td>
+<td>SampleModel</td>
+<td>app/models/SampleModel.php</td>
+</tr>
+<tr>
+<td>View</td>
+<td>(任意の名前).tmpl</td>
+<td>app/views/sample/(任意の名前).tmpl</td>
+</tr>
+<tr>
+<td>Helper</td>
+<td>SampleHelper</td>
+<td>app/helpers/SampleHelper.php</td>
+</tr>
+<tr>
+<td>Library</td>
+<td>(任意の名前)</td>
+<td>app/libraries/(任意の名前).php</td>
+</tr>
+</tbody>
+</table><h2>
+<a name="%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E5%AE%9A%E7%BE%A9" class="anchor" href="#%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E5%AE%9A%E7%BE%A9"><span class="octicon octicon-link"></span></a><a href="#routing">ルーティング定義</a>
+</h2>
+
+<h3>
+<a name="routesphp" class="anchor" href="#routesphp"><span class="octicon octicon-link"></span></a>routes.php</h3>
+
+<p>ルーティング設定により、URI設計を行うことができます。ルーティングにはmod_rewiteが必要です。<br>
+ルーティング定義は<code>config/routes.php</code>に記述します。  </p>
+
+<pre><code>namespace WebStream\Router;
+Router::setRule([
+    '/login' =&gt; 'sample#login'
+    '/blog/:id' =&gt; 'blog#entry'
+]);
+</code></pre>
+
+<p>ルーティングルールは配列で定義し、キーにURIパス定義、バリューにクラス、アクション定義を記述します。誤った定義が記述された場合、例外が発生します。</p>
+
+<h3>
+<a name="uri%E3%83%91%E3%82%B9%E5%AE%9A%E7%BE%A9" class="anchor" href="#uri%E3%83%91%E3%82%B9%E5%AE%9A%E7%BE%A9"><span class="octicon octicon-link"></span></a>URIパス定義</h3>
+
+<p>URIパスは<code>/path/to</code>形式で定義します。またURIには変数の設定が可能で、<code>:value</code>形式で記述します。例えば、<code>/blog/:id</code>と定義し、<code>/blog/10</code>にアクセスした場合、Controllerクラスでは以下の方法で値を取得出来ます。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+class BlogController extends CoreController {
+    public function execute(array $params) {
+        $id = $params['id']; // 10
+    }
+}
+</code></pre>
+
+<h2>
+<a name="%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9A%E7%BE%A9" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9A%E7%BE%A9"><span class="octicon octicon-link"></span></a>バリデーション定義</h2>
+
+<h3>
+<a name="validatesphp" class="anchor" href="#validatesphp"><span class="octicon octicon-link"></span></a>validates.php</h3>
+
+<p>バリデーション設定により、GET/POST/PUT/DELETEリクエストに含まれるパラメータをチェックすることができます。<br>
+バリデーション定義は<code>config/validates.php</code>に記述します。  </p>
+
+<pre><code>namespace WebStream\Validator;
+Validator::setRule([
+    "sample#validateForm" =&gt; [
+        "post#name" =&gt; "required",
+        "get#page"  =&gt; "required|number"
+    ]
+]);
+</code></pre>
+
+<p>Validator::setRule内にバリデーション定義を記述します。
+定義は、キーにクラス#アクション、バリューにバリデーション内容を記述します。バリデーション内容もキー、バリュー形式になっており、キーにリクエストメソッド#パラメータ名、バリューにチェックルールを記述します。</p>
+
+<h4>
+<a name="%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%AB" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%AB"><span class="octicon octicon-link"></span></a>バリデーションチェックルール</h4>
+
+<table>
+<thead><tr>
+<th>ルール</th>
+<th>内容</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>required</td>
+<td>必須チェック</td>
+</tr>
+<tr>
+<td>number</td>
+<td>数値チェック(整数)</td>
+</tr>
+<tr>
+<td>min[n]</td>
+<td>最小値チェック(整数)</td>
+</tr>
+<tr>
+<td>max[n]</td>
+<td>最大値チェック(整数)</td>
+</tr>
+<tr>
+<td>min_length[n]</td>
+<td>最小文字数チェック(整数)</td>
+</tr>
+<tr>
+<td>max_length[n]</td>
+<td>最大文字数チェック(整数)</td>
+</tr>
+<tr>
+<td>equal</td>
+<td>文字列一致チェック</td>
+</tr>
+<tr>
+<td>length</td>
+<td>文字数一致チェック</td>
+</tr>
+<tr>
+<td>range[n..m]</td>
+<td>範囲チェック(整数)</td>
+</tr>
+<tr>
+<td>regexp[//]</td>
+<td>正規表現チェック</td>
+</tr>
+</tbody>
+</table><h2>
+<a name="%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF" class="anchor" href="#%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF"><span class="octicon octicon-link"></span></a>リクエストパラメータ</h2>
+
+<p>GET/POST/PUT/DELETEで送信した値をControllerで取得できます。
+<code>$this-&gt;request</code>オブジェクトからリクエストパラメータを取得でき、<code>get</code>,<code>post</code>,<code>put</code>,<code>delete</code>メソッドにそれぞれアクセスします。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+class BlogController extends CoreController {
+    public function execute() {
+        $getParams = $this-&gt;request-&gt;get(); // GETパラメータすべて取得
+        $getParam  = $this-&gt;request-&gt;get("name");
+    }
+}
+</code></pre>
+
+<h2>
+<a name="%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3" class="anchor" href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3"><span class="octicon octicon-link"></span></a>セッション</h2>
+
+<p>ログイン処理などを実装するときに、セッション管理を使用しますが、WebStreamでは<code>$this-&gt;session</code>オブジェクトを使用します。セッション期限を指定するには<code>restart</code>メソッドを使用します。</p>
+
+<pre><code>namespace MyBlog;
+use WebStream\Core\CoreController;
+class LoginController extends CoreController {
+    public function execute() {
+        $expire = 6000; // 10分
+        $path = "/login";
+        $domain = ".mydomain.com";
+        $getParams = $this-&gt;session-&gt;restart($expire, $path, $domain);
+    }
+}
+</code></pre>
+
+<p>セッションがタイムアウトした場合、<code>SessionTimeoutException</code>が発生します。</p>
+
+<h2>
+<a name="-%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3-" class="anchor" href="#-%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3-"><span class="octicon octicon-link"></span></a><a href="annotaion"> アノテーション </a>
+</h2>
+
+<p>ControllerとModelではアノテーションを使ってクラスやメソッドを操作することができます。アノテーションを利用することで便利な処理が可能になります。
+クラスまたはメソッドに対するアノテーションは<code>@Inject</code>、プロパティに対するアノテーションは<code>@Autowired</code>の指定が必須です。</p>
+
+<table>
+<thead><tr>
+<th>アノテーション</th>
+<th>説明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/Inject" class="user-mention">@Inject</a></td>
+<td>メソッドに対するアノテーションを有効にする</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Autowired" class="user-mention">@Autowired</a></td>
+<td>プロパティに対するアノテーションを有効にする</td>
+</tr>
+</tbody>
+</table><h4>
+<a name="controller%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" class="anchor" href="#controller%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="octicon octicon-link"></span></a>Controllerで使用可能なアノテーション</h4>
+
+<table>
+<thead><tr>
+<th>アノテーション</th>
+<th>説明</th>
+<th>サンプル</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/Value" class="user-mention">@Value</a></td>
+<td>プロパティに初期値(文字列、数値)を設定する</td>
+<td>
+<a href="https://github.com/Value" class="user-mention">@Value</a>(10)<br><a href="https://github.com/Value" class="user-mention">@Value</a>("hoge")</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Type" class="user-mention">@Type</a></td>
+<td>プロパティに指定した型で初期化する</td>
+<td>
+<a href="https://github.com/Type" class="user-mention">@Type</a>("\MyBlog\Entity")</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Filter" class="user-mention">@Filter</a></td>
+<td>アクションメソッドが呼ばれる前または後に任意の処理を実行する</td>
+<td>
+<a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="after")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before" except="method1")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before" only="method2")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before",only="method1",except="method2")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="after",except={"method1","method2"})</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Header" class="user-mention">@Header</a></td>
+<td>リクエスト/レスポンスを制御する</td>
+<td>
+<a href="https://github.com/Header" class="user-mention">@Header</a>(contentType="html")<br><a href="https://github.com/Header" class="user-mention">@Header</a>(contentType="xml")<br><a href="https://github.com/Header" class="user-mention">@Header</a>(allowMethod="POST")<br><a href="https://github.com/Header" class="user-mention">@Header</a>(allowMethod={"GET","POST"})</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Template" class="user-mention">@Template</a></td>
+<td>Viewテンプレートを設定する</td>
+<td>
+<a href="https://github.com/Template" class="user-mention">@Template</a>("index.tmpl")<br><a href="https://github.com/Template" class="user-mention">@Template</a>("index.tmpl",name="head" type="parts")<br><a href="https://github.com/Template" class="user-mention">@Template</a>("index.tmpl",name="shared",type="shared")</td>
+</tr>
+<tr>
+<td>@TemplateCache</td>
+<td>テンプレートをキャッシュする時間を指定</td>
+<td>@TemplateCache(expire=3600)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ExceptionHandler" class="user-mention">@ExceptionHandler</a></td>
+<td>例外を補足して別処理を実行する</td>
+<td>
+<a href="https://github.com/ExceptionHandler" class="user-mention">@ExceptionHandler</a>("\WebStream\Exception\SessionTimeoutException")<br><a href="https://github.com/ExceptionHandler" class="user-mention">@ExceptionHandler</a>({"\WebStream\Exception\ResourceNotFoundException","\WebStream\Exception\ClassNotFoundException"})</td>
+</tr>
+</tbody>
+</table><h4>
+<a name="model%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" class="anchor" href="#model%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="octicon octicon-link"></span></a>Modelで使用可能なアノテーション</h4>
+
+<table>
+<thead><tr>
+<th>アノテーション</th>
+<th>説明</th>
+<th>サンプル</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/Database" class="user-mention">@Database</a></td>
+<td>Modelクラスに対してデータベース設定をする</td>
+<td>
+<a href="https://github.com/Database" class="user-mention">@Database</a>(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Query" class="user-mention">@Query</a></td>
+<td>読み込むクエリファイルを指定する</td>
+<td>
+<a href="https://github.com/Query" class="user-mention">@Query</a>(file="query/blog_query.xml")</td>
+</tr>
+</tbody>
+</table>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Webstream maintained by <a href="https://github.com/mapserver2007">mapserver2007</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
