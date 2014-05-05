@@ -66,4 +66,14 @@ XML;
     {
         return "rin\v\fpana";
     }
+
+    public function showHtml1()
+    {
+        return "<p>test</p>";
+    }
+
+    public function showPhp1()
+    {
+        return "<p>test</p>";
+    }
 }
