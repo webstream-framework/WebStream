@@ -96,3 +96,13 @@ if (!function_exists('safetyOutJSON')) {
         return json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
     }
 }
+
+/**
+ * 出力データに対して安全なデータに変換をする(JSON専用)
+ */
+if (!function_exists('safetyOutJSONP')) {
+    function safetyOutJSONP($data, $callback)
+    {
+        return safetyOutJavaScript($callback) . "(" . json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ");";
+    }
+}

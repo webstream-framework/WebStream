@@ -16,4 +16,12 @@ trait JsonProvider
             ["/test_json2", "{\"name\":\"\u003C\u003E\u0027\u0022\"}"]
         ];
     }
+
+    public function jsonpProvider()
+    {
+        return [
+            ["/test_jsonp1", "callback({\"name\":\"<>'\\\"\"});"],
+            ["/test_jsonp2", "callback({\"name\":\"\u003C\u003E\u0027\u0022\"});"]
+        ];
+    }
 }

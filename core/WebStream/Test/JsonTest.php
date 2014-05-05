@@ -40,4 +40,20 @@ class JsonTest extends TestBase
         $this->assertEquals($http->getContentType(), "Content-Type: application/json; charset=UTF-8");
         $this->assertEquals($response, $json);
     }
+
+    /**
+     * 正常系
+     * JSONPデータを取得できること
+     * @test
+     * @dataProvider jsonpProvider
+     */
+    public function okJsonp($path, $json)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $response = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($http->getContentType(), "Content-Type: text/javascript; charset=UTF-8");
+        $this->assertEquals($response, $json);
+    }
 }

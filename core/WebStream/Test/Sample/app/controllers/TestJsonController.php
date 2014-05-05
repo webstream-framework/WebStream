@@ -24,4 +24,22 @@ class TestJsonController extends CoreController
     {
         echo safetyOutJSON(["name" => "<>'\""]);
     }
+
+    /**
+     * @Inject
+     * @Header(contentType="jsonp")
+     */
+    public function jsonp1()
+    {
+        echo "callback(" . json_encode(["name" => "<>'\""]) . ");";
+    }
+
+    /**
+     * @Inject
+     * @Header(contentType="jsonp")
+     */
+    public function jsonp2()
+    {
+        echo safetyOutJSONP(["name" => "<>'\""], "callback");
+    }
 }
