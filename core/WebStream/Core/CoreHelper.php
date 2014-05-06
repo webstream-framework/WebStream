@@ -5,8 +5,8 @@ use WebStream\Module\Utility;
 use WebStream\Module\Security;
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
-use WebStream\Exception\MethodNotFoundException;
-use WebStream\Exception\IOException;
+use WebStream\Exception\Extend\MethodNotFoundException;
+use WebStream\Exception\Extend\IOException;
 
 /**
  * CoreHelperクラス

@@ -185,5 +185,7 @@ Router::setRule([
     '/test_json1' => "test_json#json1",
     '/test_json2' => "test_json#json2",
     '/test_jsonp1' => "test_json#jsonp1",
-    '/test_jsonp2' => "test_json#jsonp2"
+    '/test_jsonp2' => "test_json#jsonp2",
+
+    '/exception_test1' => "test#hoge"
 ]);

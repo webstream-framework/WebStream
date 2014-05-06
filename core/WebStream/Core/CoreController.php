@@ -6,8 +6,8 @@ use WebStream\Module\Logger;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Module\Container;
-use WebStream\Exception\ClassNotFoundException;
-use WebStream\Exception\CsrfException;
+use WebStream\Exception\Extend\ClassNotFoundException;
+use WebStream\Exception\Extend\CsrfException;
 
 /**
  * CoreControllerクラス

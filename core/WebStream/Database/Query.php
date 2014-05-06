@@ -3,8 +3,7 @@ namespace WebStream\Database;
 
 use WebStream\Module\Logger;
 use WebStream\Database\Driver\DatabaseDriver;
-use WebStream\Database\Result;
-use WebStream\Exception\DatabaseException;
+use WebStream\Exception\Extend\DatabaseException;
 
 /**
  * Query
@@ -72,6 +71,7 @@ class Query
     public function insert()
     {
         Logger::debug("execute insert.");
+
         return $this->execute();
     }
 
@@ -82,6 +82,7 @@ class Query
     public function update()
     {
         Logger::debug("execute update.");
+
         return $this->execute();
     }
 
@@ -92,6 +93,7 @@ class Query
     public function delete()
     {
         Logger::debug("execute delete.");
+
         return $this->execute();
     }
 

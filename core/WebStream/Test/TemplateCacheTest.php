@@ -79,7 +79,7 @@ class TemplateCacheTest extends TestBase
      * @TemplateCacheのexpire属性に不正な値が指定されていた場合、値が取得できないこと
      * @test
      * @dataProvider invalidExpireProvider
-     * @expectedException WebStream\Exception\AnnotationException
+     * @expectedException WebStream\Exception\Extend\AnnotationException
      */
     public function ngTemplateCacheExpire($method)
     {

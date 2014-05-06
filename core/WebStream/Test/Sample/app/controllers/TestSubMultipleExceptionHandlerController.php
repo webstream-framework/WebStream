@@ -1,10 +1,9 @@
 <?php
 namespace WebStream\Test\TestData\Sample\App\Controller;
 
-use WebStream\Core\CoreController;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\ExceptionHandler;
-use WebStream\Exception\ResourceNotFoundException;
+use WebStream\Exception\Extend\ResourceNotFoundException;
 
 class TestSubMultipleExceptionHandlerController extends TestMultipleExceptionHandlerController
 {
@@ -15,7 +14,7 @@ class TestSubMultipleExceptionHandlerController extends TestMultipleExceptionHan
 
     /**
      * @Inject
-     * @ExceptionHandler("WebStream\Exception\ResourceNotFoundException")
+     * @ExceptionHandler("WebStream\Exception\Extend\ResourceNotFoundException")
      */
     public function subException($params)
     {

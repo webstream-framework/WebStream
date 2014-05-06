@@ -3,7 +3,7 @@ namespace WebStream\Delegate;
 
 use WebStream\Module\Security;
 use WebStream\Module\Logger;
-use WebStream\Exception\RouterException;
+use WebStream\Exception\Extend\RouterException;
 
 /**
  * ルーティングクラス
@@ -93,6 +93,7 @@ class Router
         $staticFile = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_PUBLIC . $this->pathInfo;
         if (is_file($staticFile)) {
             $this->route["staticFile"] = $staticFile;
+
             return;
         }
         // ルーティングルールからController、Actionを取得
@@ -161,7 +162,7 @@ class Router
         $controller = null;
         if (isset($this->route['controller'])) {
             // _[a-z]を[A-Z]に置換する
-            $controller = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
+            $controller = preg_replace_callback('/_(?=[a-z])(.+?)/', function ($matches) {
                 return ucfirst($matches[1]);
             }, $this->route["controller"]);
             $controller = ucfirst($controller) . "Controller";
@@ -179,7 +180,7 @@ class Router
         $action = null;
         if (isset($this->route['action'])) {
             // _[a-z]を[A-Z]に置換する
-            $action = preg_replace_callback('/_(?=[a-z])(.+?)/', function($matches) {
+            $action = preg_replace_callback('/_(?=[a-z])(.+?)/', function ($matches) {
                 return ucfirst($matches[1]);
             }, $this->route["action"]);
         }

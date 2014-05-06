@@ -6,20 +6,19 @@ use WebStream\Module\Container;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
-use WebStream\Exception\RouterException;
-use WebStream\Exception\ResourceNotFoundException;
-use WebStream\Exception\ClassNotFoundException;
-use WebStream\Exception\AnnotationException;
 use WebStream\Exception\ApplicationException;
-use WebStream\Exception\MethodNotFoundException;
-use WebStream\Exception\CollectionException;
-use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
+use WebStream\Exception\Extend\RouterException;
+use WebStream\Exception\Extend\ResourceNotFoundException;
+use WebStream\Exception\Extend\ClassNotFoundException;
+use WebStream\Exception\Extend\AnnotationException;
+use WebStream\Exception\Extend\MethodNotFoundException;
 use WebStream\Annotation\ExceptionHandlerReader;
 use WebStream\Annotation\FilterReader;
 use WebStream\Annotation\AutowiredReader;
 use WebStream\Annotation\TemplateReader;
 use WebStream\Annotation\HeaderReader;
 use WebStream\Annotation\TemplateCacheReader;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * Resolver
@@ -186,8 +185,6 @@ class Resolver
             $filter->after();
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
-        } catch (CollectionException $e) {
-            throw new ApplicationException($e);
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
         }

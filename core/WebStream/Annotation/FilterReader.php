@@ -2,7 +2,7 @@
 namespace WebStream\Annotation;
 
 use WebStream\Module\Container;
-use WebStream\Exception\AnnotationException;
+use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 

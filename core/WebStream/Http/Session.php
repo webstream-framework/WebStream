@@ -2,7 +2,7 @@
 namespace WebStream\Http;
 
 use WebStream\Module\Logger;
-use WebStream\Exception\SessionTimeoutException;
+use WebStream\Exception\Extend\SessionTimeoutException;
 
 /**
  * セッションクラス

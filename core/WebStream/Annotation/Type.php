@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Exception\AnnotationException;
+use WebStream\Exception\Extend\AnnotationException;
 
 /**
  * Type

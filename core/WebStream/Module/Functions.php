@@ -103,6 +103,6 @@ if (!function_exists('safetyOutJSON')) {
 if (!function_exists('safetyOutJSONP')) {
     function safetyOutJSONP($data, $callback)
     {
-        return safetyOutJavaScript($callback) . "(" . json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ");";
+        return safetyOutJavaScript($callback) . "(" . safetyOutJSON($data) . ");";
     }
 }

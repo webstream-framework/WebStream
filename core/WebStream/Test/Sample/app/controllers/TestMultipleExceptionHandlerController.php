@@ -4,11 +4,11 @@ namespace WebStream\Test\TestData\Sample\App\Controller;
 use WebStream\Core\CoreController;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\ExceptionHandler;
-use WebStream\Exception\ValidateException;
-use WebStream\Exception\InvalidRequestException;
-use WebStream\Exception\ForbiddenAccessException;
-use WebStream\Exception\CsrfException;
-use WebStream\Exception\ResourceNotFoundException;
+use WebStream\Exception\Extend\ValidateException;
+use WebStream\Exception\Extend\InvalidRequestException;
+use WebStream\Exception\Extend\ForbiddenAccessException;
+use WebStream\Exception\Extend\CsrfException;
+use WebStream\Exception\Extend\ResourceNotFoundException;
 
 class TestMultipleExceptionHandlerController extends CoreController
 {
@@ -39,7 +39,7 @@ class TestMultipleExceptionHandlerController extends CoreController
 
     /**
      * @Inject
-     * @ExceptionHandler("WebStream\Exception\ValidateException")
+     * @ExceptionHandler("WebStream\Exception\Extend\ValidateException")
      */
     public function subException($params)
     {
@@ -57,7 +57,7 @@ class TestMultipleExceptionHandlerController extends CoreController
 
     /**
      * @Inject
-     * @ExceptionHandler({"WebStream\Exception\InvalidRequestException", "WebStream\Exception\ForbiddenAccessException"})
+     * @ExceptionHandler({"WebStream\Exception\Extend\InvalidRequestException", "WebStream\Exception\Extend\ForbiddenAccessException"})
      */
     public function multiHandleException($params)
     {
@@ -66,7 +66,7 @@ class TestMultipleExceptionHandlerController extends CoreController
 
     /**
      * @Inject
-     * @ExceptionHandler({"WebStream\Exception\CsrfException", "WebStream\Exception\CsrfException"})
+     * @ExceptionHandler({"WebStream\Exception\Extend\CsrfException", "WebStream\Exception\Extend\CsrfException"})
      */
     public function sameHandleException($params)
     {
@@ -75,7 +75,7 @@ class TestMultipleExceptionHandlerController extends CoreController
 
     /**
      * @Inject
-     * @ExceptionHandler({"WebStream\Exception\ResourceNotFoundException", "\Exception"})
+     * @ExceptionHandler({"WebStream\Exception\Extend\ResourceNotFoundException", "\Exception"})
      */
     public function ancestorHandleException($params)
     {

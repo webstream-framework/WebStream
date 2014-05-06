@@ -5,8 +5,8 @@ use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
-use WebStream\Exception\IOException;
-use WebStream\Exception\ResourceNotFoundException;
+use WebStream\Exception\Extend\IOException;
+use WebStream\Exception\Extend\ResourceNotFoundException;
 
 /**
  * CoreViewクラス
@@ -18,6 +18,16 @@ class CoreView implements CoreInterface
 {
     use Utility;
 
+    /** HTML記法 */
+    const TEMPLATE_MARK_HTML       = '%H';
+    /** PHP記法 */
+    const TEMPLATE_MARK_PHP        = '%P';
+    /** JavaScript記法 */
+    const TEMPLATE_MARK_JAVASCRIPT = '%J';
+    /** XML記法 */
+    const TEMPLATE_MARK_XML        = '%X';
+    /** Template記法 */
+    const TEMPLATE_MARK_TEMPLATE   = '%T';
     /** ヘルパのレシーバ名 */
     const HELPER_RECEIVER = "__HELPER__";
     /** リクエスト */
@@ -113,14 +123,14 @@ class CoreView implements CoreInterface
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($template);
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
-        $content = preg_replace('/%P\{(.*?)\}/', '<?php echo $1; ?>', $content);
-        $content = preg_replace('/%T\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
+        $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
+        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
 
         if ($mime === "xml") {
-            $content = preg_replace('/%X\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
+            $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
         } elseif ($mime === "html") {
-            $content = preg_replace('/%H\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
-            $content = preg_replace('/%J\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
+            $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
+            $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
             // formタグが含まれる場合はCSRFトークンを付与する
             if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
                 $this->addToken($params, $content);

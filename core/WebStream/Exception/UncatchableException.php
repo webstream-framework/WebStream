@@ -4,12 +4,12 @@ namespace WebStream\Exception;
 use WebStream\Module\Logger;
 
 /**
- * ApplicationException
+ * UncatchableException
  * @author Ryuichi TANAKA.
  * @since 2014/05/05
  * @version 0.4
  */
-class ApplicationException extends \LogicException
+class UncatchableException extends \RuntimeException
 {
     /**
      * constructor

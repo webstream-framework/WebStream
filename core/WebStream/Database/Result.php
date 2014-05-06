@@ -2,7 +2,8 @@
 namespace WebStream\Database;
 
 use WebStream\Module\Logger;
-use WebStream\Exception\CollectionException;
+use WebStream\Exception\Extend\CollectionException;
+use WebStream\Exception\Extend\OutOfBoundsException;
 
 /**
  * Result
@@ -68,7 +69,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
         if (array_key_exists($offset, $this->rowCache)) {
             return $this->rowCache[$offset];
         } else {
-            throw new \OutOfBoundsException("Current cursor is out of range: " . $offset);
+            throw new OutOfBoundsException("Current cursor is out of range: " . $offset);
         }
     }
 
@@ -81,8 +82,9 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
     {
         if ($this->stmt === null) {
             if (!array_key_exists($this->position, $this->rowCache)) {
-                throw new \OutOfBoundsException("Access out of range.");
+                throw new OutOfBoundsException("Access out of range.");
             }
+
             return $this->rowCache[$this->position];
         }
 
@@ -191,6 +193,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
         $this->rowCache = $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
         Logger::debug("All results to array and cached.");
         $this->stmt = null;
+
         return $this->rowCache;
     }
 }

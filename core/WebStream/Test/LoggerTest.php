@@ -552,7 +552,7 @@ class LoggerTest extends TestBase
      * 異常系
      * Loggerを初期化していない場合、例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\LoggerException
+     * @expectedException WebStream\Exception\Extend\LoggerException
      * @expectedExceptionMessage Logger is not initialized.
      */
     public function ngNotInitialized()
@@ -573,7 +573,7 @@ class LoggerTest extends TestBase
      * 異常系
      * ログ設定ファイルが存在しない場合、例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\LoggerException
+     * @expectedException WebStream\Exception\Extend\LoggerException
      * @expectedExceptionMessage Log config file does not exist: dummy.ini
      */
     public function ngConfigFileNotFound()
@@ -586,7 +586,7 @@ class LoggerTest extends TestBase
      * 異常系
      * ログ設定ファイルのログファイルパスが存在しない場合、例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\LoggerException
+     * @expectedException WebStream\Exception\Extend\LoggerException
      */
     public function ngInvalidConfigPath()
     {
@@ -599,7 +599,7 @@ class LoggerTest extends TestBase
      * 異常系
      * ログ設定ファイルのログレベルが不正な場合、例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\LoggerException
+     * @expectedException WebStream\Exception\Extend\LoggerException
      */
     public function ngInvalidLogLevel()
     {
@@ -612,7 +612,7 @@ class LoggerTest extends TestBase
      * 異常系
      * ログの書き込み権限がない場合、例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\LoggerException
+     * @expectedException WebStream\Exception\Extend\LoggerException
      */
     public function ngNotPermittedWriteLog()
     {
@@ -647,7 +647,7 @@ class LoggerTest extends TestBase
      * 例外が発生すること
      * @test
      * @dataProvider invalidRotateCycleConfigProvider
-     * @expectedException WebStream\Exception\LoggerException
+     * @expectedException WebStream\Exception\Extend\LoggerException
      * @expectedExceptionMessage Invalid log rotate cycle: dummy
      */
     public function ngInvalidRotateCycleConfig($configPath)
@@ -682,7 +682,7 @@ class LoggerTest extends TestBase
      * 例外が発生すること
      * @test
      * @dataProvider invalidRotateSizeConfigProvider
-     * @expectedException WebStream\Exception\LoggerException
+     * @expectedException WebStream\Exception\Extend\LoggerException
      * @expectedExceptionMessage Invalid log rotate size: dummy
      */
     public function ngInvalidRotateSizeConfig($configPath)

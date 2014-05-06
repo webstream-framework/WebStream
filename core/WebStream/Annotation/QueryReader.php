@@ -2,7 +2,7 @@
 namespace WebStream\Annotation;
 
 use WebStream\Module\Logger;
-use WebStream\Exception\DatabaseException;
+use WebStream\Exception\Extend\DatabaseException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 

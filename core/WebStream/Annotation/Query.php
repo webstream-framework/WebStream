@@ -1,8 +1,6 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Exception\AnnotationException;
-
 /**
  * Query
  * @author Ryuichi TANAKA.

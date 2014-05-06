@@ -4,8 +4,8 @@ namespace WebStream\Test\TestData\Sample\App\Controller;
 use WebStream\Core\CoreController;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\ExceptionHandler;
-use WebStream\Exception\ClassNotFoundException;
-use WebStream\Exception\ResourceNotFoundException;
+use WebStream\Exception\Extend\ClassNotFoundException;
+use WebStream\Exception\Extend\ResourceNotFoundException;
 
 class TestDoubleExceptionHandlerController extends CoreController
 {
@@ -21,8 +21,8 @@ class TestDoubleExceptionHandlerController extends CoreController
 
     /**
      * @Inject
-     * @ExceptionHandler("WebStream\Exception\ClassNotFoundException")
-     * @ExceptionHandler("WebStream\Exception\ResourceNotFoundException")
+     * @ExceptionHandler("WebStream\Exception\Extend\ClassNotFoundException")
+     * @ExceptionHandler("WebStream\Exception\Extend\ResourceNotFoundException")
      */
     public function multiHandleException2($params)
     {

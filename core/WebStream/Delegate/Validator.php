@@ -2,8 +2,7 @@
 namespace WebStream\Delegate;
 
 use WebStream\Http\Request;
-use WebStream\Delegate\Router;
-use WebStream\Exception\ValidateException;
+use WebStream\Exception\Extend\ValidateException;
 use WebStream\Module\Logger;
 
 /**
@@ -397,7 +396,7 @@ class Validator
      */
     private function ruleDouble($rule)
     {
-        return preg_match('/^(double)$/', $rule);
+        return preg_match('/^(double) $/', $rule);
     }
 
     /**

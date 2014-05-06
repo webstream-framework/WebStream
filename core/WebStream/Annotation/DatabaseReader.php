@@ -3,7 +3,7 @@ namespace WebStream\Annotation;
 
 use WebStream\Module\Logger;
 use WebStream\Database\DatabaseManager;
-use WebStream\Exception\DatabaseException;
+use WebStream\Exception\Extend\DatabaseException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
@@ -30,6 +30,7 @@ class DatabaseReader extends AnnotationReader
             $class = $reader->getClassAnnotation($refClass, "\WebStream\Annotation\Database");
             if ($class === null || $class->getDriver() === null) {
                 Logger::warn("Can't connect database because database driver is undefined in model.");
+
                 return;
             }
 

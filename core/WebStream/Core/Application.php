@@ -6,18 +6,7 @@ use WebStream\Module\Logger;
 use WebStream\Module\Utility;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
-use WebStream\Exception\RouterException;
-use WebStream\Exception\ResourceNotFoundException;
-use WebStream\Exception\ClassNotFoundException;
-use WebStream\Exception\MethodNotFoundException;
-use WebStream\Exception\AnnotationException;
-use WebStream\Exception\CsrfException;
-use WebStream\Exception\InvalidRequestException;
-use WebStream\Exception\ValidateException;
-use WebStream\Exception\ForbiddenAccessException;
-use WebStream\Exception\SessionTimeoutException;
-use WebStream\Exception\DatabaseException;
-use WebStream\Exception\IOException;
+use WebStream\Exception\UncatchableException;
 
 /**
  * Applicationクラス
@@ -89,111 +78,19 @@ class Application
             $this->resolver = new Resolver($this->container);
             $this->resolver->run(); // MVCレイヤへのリクエストの振り分けを実行する
         } catch (ApplicationException $e) {
-            // アプリケーション内部エラーの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
-        } catch (CsrfException $e) {
-            // CSRFエラーの場合は400
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(400);
-            }
-        } catch (SessionTimeoutException $e) {
-            // セッションタイムアウトの場合は404
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(404);
-            }
-        } catch (ClassNotFoundException $e) {
-            // 存在しないクラスアクセスの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
+            // 内部例外の内、ハンドリングを許可している例外
+            try {
+                if (!$this->resolver->handle($e)) {
+                    $this->response->move($e->getCode());
+                }
+            } catch (\Exception $e) {
+                // 開発者由来の例外は全て500
+                Logger::error($e->getMessage(), $e->getTraceAsString());
                 $this->response->move(500);
             }
-        } catch (MethodNotFoundException $e) {
-            // 存在しないメソッドアクセスの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(500);
-            }
-        } catch (InvalidRequestException $e) {
-            // 許可されないメソッドの場合は405
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(405);
-            }
-        } catch (ForbiddenAccessException $e) {
-            // アクセス禁止の場合は403
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(403);
-            }
-        } catch (ResourceNotFoundException $e) {
-            // リソース(URI)が見つからない場合は404
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(404);
-            }
-        } catch (AnnotationException $e) {
-            // アノテーションエラーの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(500);
-            }
-        } catch (ValidateException $e) {
-            // バリデーションエラーの場合は422
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(422);
-            }
-        } catch (RouterException $e) {
-            // ルーティング解決失敗の場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(500);
-            }
-        } catch (DatabaseException $e) {
-            // データベースエラーの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(500);
-            }
-        } catch (IOException $e) {
-            // 入出力エラーの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(500);
-            }
-        } catch (\RuntimeException $e) {
-            // OutOfBoundsExceptionは500だが復帰可能
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            if (!$this->handle($e)) {
-                $this->response->move(500);
-            }
-        }
-    }
-
-    /**
-     * エラー処理のハンドリングチェック
-     * @param object 例外オブジェクト
-     * @return boolean 例外ハンドリング可否
-     */
-    private function handle(\Exception $e)
-    {
-        try {
-            return $this->resolver->handle($e);
-        } catch (AnnotationException $e) {
-            // アノテーションエラーの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
-        } catch (ApplicationException $e) {
-            // アプリケーション内部エラーの場合は500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
-        } catch (\Exception $e) {
-            // 開発者由来の例外は全て500
-            Logger::error($e->getMessage(), $e->getTraceAsString());
-            $this->response->move(500);
+        } catch (UncatchableException $e) {
+            // 内部例外の内、ハンドリング不許可の例外
+            $this->response->move($e->getCode());
         }
     }
 }

@@ -2,9 +2,8 @@
 namespace WebStream\Database;
 
 use WebStream\Database\Driver\DatabaseDriver;
-use WebStream\Database\Query;
 use WebStream\Module\Logger;
-use WebStream\Exception\DatabaseException;
+use WebStream\Exception\Extend\DatabaseException;
 
 /**
  * DriverManager

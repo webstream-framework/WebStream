@@ -3,8 +3,8 @@ namespace WebStream\Annotation;
 
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
-use WebStream\Exception\AnnotationException;
-use WebStream\Exception\InvalidRequestException;
+use WebStream\Exception\Extend\AnnotationException;
+use WebStream\Exception\Extend\InvalidRequestException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 

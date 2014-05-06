@@ -2,6 +2,7 @@
 namespace WebStream\Test\TestData\Sample\App\Controller;
 
 use WebStream\Core\CoreController;
+use WebStream\Exception\Extend\CollectionException;
 
 class TestController extends CoreController
 {
@@ -58,5 +59,10 @@ class TestController extends CoreController
     public function service2()
     {
         echo $this->Test->service2();
+    }
+
+    public function hoge()
+    {
+        throw new CollectionException("owata!");
     }
 }

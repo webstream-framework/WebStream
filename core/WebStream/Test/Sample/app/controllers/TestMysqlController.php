@@ -50,7 +50,7 @@ class TestMysqlController extends CoreController
 
     /**
      * @Inject
-     * @ExceptionHandler("WebStream\Exception\DatabaseException")
+     * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
      */
     public function handle($params)
     {

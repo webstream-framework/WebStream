@@ -4,7 +4,7 @@ namespace WebStream\Core;
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
 use WebStream\Annotation\QueryReader;
-use WebStream\Exception\DatabaseException;
+use WebStream\Exception\Extend\DatabaseException;
 
 /**
  * CoreModel

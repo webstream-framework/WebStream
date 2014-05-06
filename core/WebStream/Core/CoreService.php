@@ -5,7 +5,7 @@ use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Module\ClassLoader;
 use WebStream\Module\Logger;
-use WebStream\Exception\MethodNotFoundException;
+use WebStream\Exception\Extend\MethodNotFoundException;
 
 /**
  * CoreService
