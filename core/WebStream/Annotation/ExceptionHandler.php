@@ -12,31 +12,13 @@ use WebStream\Module\Logger;
  * @Annotation
  * @Target("METHOD")
  */
-class ExceptionHandler extends AbstractAnnotation
+class ExceptionHandler extends Annotation
 {
-    /** exceptionClasspathList */
-    private $exceptionClasspathList;
-
     /**
-     * ＠Override
+     * {@inheritdoc}
      */
     public function onInject()
     {
-        if (array_key_exists($this->EXCEPTIONHANDLER_ATTR_VALUE, $this->annotations)) {
-            $this->exceptionClasspathList = $this->annotations[$this->EXCEPTIONHANDLER_ATTR_VALUE];
-            if (!is_array($this->exceptionClasspathList)) {
-                $this->exceptionClasspathList = [$this->exceptionClasspathList];
-            }
-        }
-        Logger::debug("ExceptionHandler.");
-    }
-
-    /**
-     * 例外クラスパスリストを返却する
-     * @return array<string> 例外クラスパスリスト
-     */
-    public function getExceptionClasspathList()
-    {
-        return $this->exceptionClasspathList;
+        Logger::debug("@ExceptionHandler injected.");
     }
 }

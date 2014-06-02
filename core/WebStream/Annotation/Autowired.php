@@ -12,13 +12,13 @@ use WebStream\Module\Logger;
  * @Annotation
  * @Target("PROPERTY")
  */
-class Autowired extends AbstractAnnotation
+class Autowired extends Annotation
 {
     /**
-     * ＠Override
+     * {@inheritdoc}
      */
     public function onInject()
     {
-        Logger::debug("Autowired.");
+        Logger::debug("@Autowired injected.");
     }
 }

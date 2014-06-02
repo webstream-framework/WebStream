@@ -10,15 +10,15 @@ use WebStream\Module\Logger;
  * @version 0.4
  *
  * @Annotation
- * @Target({"CLASS","METHOD"})
+ * @Target({"CLASS","METHOD","PROPERTY"})
  */
-class Inject extends AbstractAnnotation
+class Inject extends Annotation
 {
     /**
-     * ＠Override
+     * {@inheritdoc}
      */
     public function onInject()
     {
-        Logger::debug("Injected.");
+        Logger::debug("@Injected found.");
     }
 }

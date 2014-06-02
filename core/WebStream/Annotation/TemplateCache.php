@@ -12,28 +12,13 @@ use WebStream\Module\Logger;
  * @Annotation
  * @Target("METHOD")
  */
-class TemplateCache extends AbstractAnnotation
+class TemplateCache extends Annotation
 {
-    /** template */
-    private $expire;
-
     /**
-     * @Override
+     * {@inheritdoc}
      */
     public function onInject()
     {
-        if (array_key_exists($this->TEMPLATECACHE_ATTR_EXPIRE, $this->annotations)) {
-            $this->expire = $this->annotations[$this->TEMPLATECACHE_ATTR_EXPIRE];
-        }
-        Logger::debug("TemplateCache enabled.");
-    }
-
-    /**
-     * 有効期限を返却する
-     * @return integer 有効期限
-     */
-    public function getExpire()
-    {
-        return $this->expire;
+        Logger::debug("@TemplateCache injected.");
     }
 }
