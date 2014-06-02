@@ -2,11 +2,13 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
+use WebStream\Core\CoreErrorDelegator;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
 use WebStream\Annotation\DatabaseReader;
+use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
  * CoreDelegator
@@ -27,9 +29,6 @@ class CoreDelegator
     /** CoreContainer */
     private $coreContainer;
 
-    /** Routerオブジェクト */
-    private $router;
-
     /**
      * Constructor
      * @param object DIContainer
@@ -38,7 +37,6 @@ class CoreDelegator
     {
         $this->container = $container;
         $this->coreContainer = new Container();
-        $this->router = $container->router;
         $this->initialize();
     }
 
@@ -47,6 +45,7 @@ class CoreDelegator
      */
     public function __destruct()
     {
+        $this->coreContainer->remove("controller");
         $this->coreContainer->remove("view");
         $this->coreContainer->remove("service");
         $this->coreContainer->remove("model");
@@ -65,14 +64,27 @@ class CoreDelegator
         $serviceClassName = $pageName . "Service";
         $modelClassName   = $pageName . "Model";
         $helperClassName  = $pageName . "Helper";
-        $serviceNamespace = $this->getNamespace($serviceClassName);
-        $modelNamespace   = $this->getNamespace($modelClassName);
-        $helperNamespace  = $this->getNamespace($helperClassName);
+        $controllerNamespace = $this->getNamespace($container->router->controller());
+        $serviceNamespace    = $this->getNamespace($serviceClassName);
+        $modelNamespace      = $this->getNamespace($modelClassName);
+        $helperNamespace     = $this->getNamespace($helperClassName);
+
+        // Controller
+        $this->coreContainer->controller = function () use (&$container, &$controllerNamespace) {
+            $controllerClassPath = $controllerNamespace . "\\" . $container->router->controller();
+            Logger::warn($controllerClassPath);
+            if (!class_exists($controllerClassPath)) {
+                throw new ClassNotFoundException("Undefined class path: " . $controllerClassPath);
+            }
+
+            return new $controllerClassPath($container);
+        };
 
         // View
         $this->coreContainer->view = function () use (&$container) {
             return new CoreView($container);
         };
+
         // Service
         if ($serviceNamespace !== null) {
             $serviceClassPath = $serviceNamespace . "\\" . $serviceClassName;
@@ -82,7 +94,8 @@ class CoreDelegator
                 }
             };
         } else {
-            $this->coreContainer->service = function () {};
+            $container->errorMessage = $serviceClassName . " is not defined.";
+            $this->coreContainer->service = new CoreErrorDelegator($container);
         }
 
         // Model
@@ -98,7 +111,8 @@ class CoreDelegator
                 }
             };
         } else {
-            $this->coreContainer->model = function () {};
+            $container->errorMessage = $modelClassName . " is not defined.";
+            $this->coreContainer->model = new CoreErrorDelegator($container);
         }
 
         // Helper
@@ -110,7 +124,8 @@ class CoreDelegator
                 }
             };
         } else {
-            $this->coreContainer->helper = function () {};
+            $container->errorMessage = $helperClassName . " is not defined.";
+            $this->coreContainer->helper = new CoreErrorDelegator($container);
         }
     }
 
@@ -141,9 +156,18 @@ class CoreDelegator
      */
     public function getPageName()
     {
-        $params = $this->router->routingParams();
+        $params = $this->container->router->routingParams();
 
         return $this->snake2ucamel($params['controller']);
+    }
+
+    /**
+     * Controllerインスタンスを返却する
+     * @return object Controllerインスタンス
+     */
+    public function getController()
+    {
+        return $this->coreContainer->controller;
     }
 
     /**

@@ -6,7 +6,6 @@ use WebStream\Module\Logger;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Module\Container;
-use WebStream\Exception\Extend\ClassNotFoundException;
 use WebStream\Exception\Extend\CsrfException;
 
 /**
@@ -121,9 +120,6 @@ class CoreController implements CoreInterface
             $this->{$pageName} = $service;
         } elseif ($model) {
             $this->{$pageName} = $model;
-        } else {
-            $errorMsg = $pageName . "Service and " . $pageName . "Model is not defined.";
-            $this->{$pageName} = new ClassNotFoundException($errorMsg);
         }
     }
 }

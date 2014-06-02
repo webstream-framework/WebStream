@@ -11,13 +11,13 @@ use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 use WebStream\Exception\Extend\ClassNotFoundException;
 use WebStream\Exception\Extend\AnnotationException;
-use WebStream\Exception\Extend\MethodNotFoundException;
-use WebStream\Annotation\ExceptionHandlerReader;
-use WebStream\Annotation\FilterReader;
-use WebStream\Annotation\AutowiredReader;
-use WebStream\Annotation\TemplateReader;
-use WebStream\Annotation\HeaderReader;
-use WebStream\Annotation\TemplateCacheReader;
+use WebStream\Annotation\Reader\ExceptionHandlerReader;
+use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Reader\AutowiredReader;
+use WebStream\Annotation\Reader\HeaderReader;
+use WebStream\Annotation\Reader\FilterReader;
+use WebStream\Annotation\Reader\TemplateReader;
+use WebStream\Annotation\Reader\TemplateCacheReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
@@ -90,12 +90,6 @@ class Resolver
     {
         // クラスパスを取得
         $coreDelegator = $this->container->coreDelegator;
-        $namespace = $coreDelegator->getNamespace($this->router->controller());
-        $classpath = $namespace . "\\" . $this->router->controller();
-
-        if (!class_exists($classpath)) {
-            throw new ClassNotFoundException("Undefined class path: " . $classpath);
-        }
 
         // バリデーションチェック
         $validator = $this->container->validator;
@@ -125,54 +119,52 @@ class Resolver
             }
 
             // Controller起動
-            $refClass = new \ReflectionClass(new $classpath($this->container));
+            $refClass = new \ReflectionClass($coreDelegator->getController());
+            $controllerInstance = $coreDelegator->getController();
 
-            // autowired
-            $autowired = new AutowiredReader();
-            $autowired->read($refClass, null, $this->container);
-            $self = $autowired->getInstance();
+            // AnnotaionReaderを取得
+            $reader = new AnnotationReader($controllerInstance);
+            $reader->setContainer($this->container);
+            $reader->read();
 
-            // header
-            $header = new HeaderReader();
-            $header->read($refClass, $action, $this->container);
-            $mime = $header->getMimeType();
+            // @Autowired
+            $autowired = new AutowiredReader($reader);
+            $autowired->inject($controllerInstance);
+            $autowired->execute();
+            $controllerInstance = $autowired->getInstance();
 
-            // filter
-            $reader = new FilterReader($self);
-            $reader->read($refClass, $action);
-            $filter = $reader->getComponent();
+            // @Header
+            $header = new HeaderReader($reader);
+            $header->execute();
+            $mimeType = $header->getMimeType();
+
+            // @Filter
+            $filter = new FilterReader($reader);
+            $filter->inject($controllerInstance);
+            $filter->execute();
+            $controllerInstance = $filter->getInstance();
 
             // initialize filter
             $filter->initialize();
             // before filter
             $filter->before();
-
             // action
-            $template = new TemplateReader();
-            $template->read($refClass, $action, $this->container);
-            $templateComponent = $template->getComponent();
+            $controllerInstance->{$action}($params);
 
-            if (!method_exists($self, $action)) {
-                $class = get_class($self);
-                throw new MethodNotFoundException("${class}#${action} is not defined.");
-            }
+            // @Template
+            $template = new TemplateReader($reader);
+            $template->execute();
+            $templateContainer = $template->getTemplateContainer();
 
-            $self->{$action}($params);
-            $model = $self->__model();
-            $helper = $coreDelegator->getHelper() ?: new ClassNotFoundException($coreDelegator->getPageName() . "Helper is not defined.");
-
-            $embeds = array_merge($templateComponent->getEmbed(), [
-                $this->getModelVariableName() => $model,
-                $this->getHelperVariableName() => $helper
-            ]);
+            $model = $controllerInstance->__model();
+            $helper = $coreDelegator->getHelper();
 
             // draw template
-            $viewDir = STREAM_APP_ROOT . "/app/views";
             $view = $coreDelegator->getView();
-            $view->draw($viewDir . "/" . $templateComponent->getBase(), $embeds, $mime);
+            $view->draw($templateContainer, $model, $helper, $mimeType);
 
-            $templateCache = new TemplateCacheReader();
-            $templateCache->read($refClass, $action);
+            $templateCache = new TemplateCacheReader($reader);
+            $templateCache->execute();
             $expire = $templateCache->getExpire();
 
             if ($expire !== null) {
@@ -245,12 +237,18 @@ class Resolver
             }
 
             // Controller起動
-            $refClass = new \ReflectionClass(new $classpath($this->container));
+            $refClass = new \ReflectionClass($this->container->coreDelegator->getController());
+            $controllerInstance = $this->container->coreDelegator->getController();
+
             // @ExceptionHandlerを起動
-            $reader = new ExceptionHandlerReader();
-            $reader->setHandledException($e);
-            $reader->read($refClass, null, $this->container);
-            $handleMethods = $reader->getHandleMethods();
+            $reader = new AnnotationReader($controllerInstance);
+            $reader->setContainer($this->container);
+            $reader->read();
+
+            $exceptionHandler = new ExceptionHandlerReader($reader);
+            $exceptionHandler->inject($e);
+            $exceptionHandler->execute();
+            $handleMethods = $exceptionHandler->getHandleMethods();
 
             if (count($handleMethods) === 0) {
                 return false;

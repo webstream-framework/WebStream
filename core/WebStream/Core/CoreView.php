@@ -5,8 +5,8 @@ use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\IOException;
-use WebStream\Exception\Extend\ResourceNotFoundException;
 
 /**
  * CoreViewクラス
@@ -94,25 +94,28 @@ class CoreView implements CoreInterface
 
     /**
      * テンプレートを描画する
-     * @param string テンプレートファイルパス
-     * @param mixed 埋め込みパラメータ
+     * @param AnnotationContainer テンプレートコンテナ
+     * @param CoreInterface Modelオブジェクト
+     * @param CoreInterface Helperオブジェクト
+     * @param string mime type
      */
-    final public function draw($template, $params, $mime = "html")
+    final public function draw(AnnotationContainer $templateContainer,
+                               CoreInterface $model,
+                               CoreInterface $helper,
+                               $mimeType = "html")
     {
         // Content-typeを出力
-        $this->outputHeader($mime);
+        $this->outputHeader($mimeType);
 
         // HTML,XML以外はテンプレートを使用しない
-        if ($mime !== "html" && $mime !== "xml") {
+        if ($mimeType !== "html" && $mimeType !== "xml") {
             Logger::debug("Only html or xml draw view template.");
 
             return;
         }
 
-        // テンプレートファイルがない場合エラー
-        if (!file_exists($template)) {
-            throw new ResourceNotFoundException("Invalid template file path: " . $template);
-        }
+        // テンプレートファイルパス
+        $template = STREAM_APP_ROOT . "/app/views/" . $templateContainer->base;
 
         // テンプレートファイルの最新の変更日時を取得
         $timestamp = filemtime($template);
@@ -120,15 +123,20 @@ class CoreView implements CoreInterface
             $this->timestamp = $timestamp;
         }
 
+        $params = [
+            "model" => $model,
+            "helper" => $helper
+        ];
+
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($template);
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
         $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
         $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
 
-        if ($mime === "xml") {
+        if ($mimeType === "xml") {
             $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
-        } elseif ($mime === "html") {
+        } elseif ($mimeType === "html") {
             $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
             $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
             // formタグが含まれる場合はCSRFトークンを付与する
