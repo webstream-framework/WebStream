@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Module;
 
-use WebStream\Module\ValueProxy;
+use WebStream\Exception\Extend\InvalidArgumentException;
 
 /**
  * Containerクラス
@@ -75,7 +75,7 @@ class Container
     public function get($key)
     {
         if (!isset($this->values[$key])) {
-            throw new \InvalidArgumentException("The value of the specified key does not exist: $key");
+            throw new InvalidArgumentException("The value of the specified key does not exist: $key");
         }
         if ($this->values[$key] instanceof ValueProxy) {
             return $this->values[$key]->fetch();
@@ -123,10 +123,6 @@ class Container
      */
     public function registerAsDynamic($key, $callback, $context = array())
     {
-        $args = func_get_args();
-        $key = array_shift($args);
-        $callback = array_shift($args);
-        $context = $args;
         $valueObject = new ValueProxy($callback, $context, true);
         $this->values[$key] = $valueObject->fetch();
     }
@@ -140,10 +136,6 @@ class Container
      */
     public function registerAsLazy($key, $callback, $context = [])
     {
-        $args = func_get_args();
-        $key = array_shift($args);
-        $callback = array_shift($args);
-        $context = $args;
         $this->values[$key] = new ValueProxy($callback, $context, true);
     }
 
@@ -157,10 +149,6 @@ class Container
      */
     public function registerAsLazyUnCached($key, $callback, $context = [])
     {
-        $args = func_get_args();
-        $key = array_shift($args);
-        $callback = array_shift($args);
-        $context = $args;
         $this->values[$key] = new ValueProxy($callback, $context, false);
     }
 }
