@@ -88,6 +88,13 @@ class AutowiredReader extends AbstractAnnotationReader
                                     Logger::warn("Failed set '$type' instance because can't find class of $type.");
                                 }
                             }
+                        } else {
+                            // type属性なしかつvalue属性ありの場合は指定された値をそのまま設定
+                            if ($value !== null) {
+                                if ($property->getValue($this->instance) === null) {
+                                    $property->setValue($this->instance, $value);
+                                }
+                            }
                         }
                     }
                 }
