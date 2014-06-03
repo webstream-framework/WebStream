@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Http;
 
+use WebStream\Annotation\Inject;
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Type;
 use WebStream\Module\Security;
 use WebStream\Module\Logger;
 
@@ -15,20 +15,20 @@ use WebStream\Module\Logger;
 class Request
 {
     /**
-     * @Autowired
-     * @Type("\WebStream\Http\Method\Get")
+     * @Inject
+     * @Autowired(type="\WebStream\Http\Method\Get")
      */
     private $get;
 
     /**
-     * @Autowired
-     * @Type("\WebStream\Http\Method\Post")
+     * @Inject
+     * @Autowired(type="\WebStream\Http\Method\Post")
      */
     private $post;
 
     /**
-     * @Autowired
-     * @Type("\WebStream\Http\Method\Put")
+     * @Inject
+     * @Autowired(type="\WebStream\Http\Method\Put")
      */
     private $put;
 
@@ -225,6 +225,7 @@ class Request
     public function get($key = null)
     {
         $params = $this->get->params();
+
         return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
 
@@ -236,9 +237,9 @@ class Request
     public function post($key = null)
     {
         $params = $this->post->params();
+
         return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
-
 
     /**
      * PUTパラメータ取得
@@ -252,6 +253,7 @@ class Request
     public function put($key = null)
     {
         $params = $this->put->params();
+
         return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
     }
 
