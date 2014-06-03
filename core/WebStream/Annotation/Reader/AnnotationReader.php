@@ -1,7 +1,6 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
-use WebStream\Core\CoreInterface;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
@@ -27,7 +26,7 @@ class AnnotationReader
     /** アノテーション情報 */
     private $annotations = [];
 
-    public function __construct(CoreInterface $instance)
+    public function __construct($instance)
     {
         // アノテーション処理対象インスタンスのリフレクションクラスオブジェクト
         $this->refClass = new \ReflectionClass($instance);
