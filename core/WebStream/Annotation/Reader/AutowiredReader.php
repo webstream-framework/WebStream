@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
-use WebStream\Core\CoreInterface;
+use WebStream\Module\Logger;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
@@ -29,9 +29,9 @@ class AutowiredReader extends AbstractAnnotationReader
 
     /**
      * インスタンスを設定する
-     * @param CoreInterface インスタンス
+     * @param object 注入対象インスタンス
      */
-    public function inject(CoreInterface $instance)
+    public function inject($instance)
     {
         $this->instance = $instance;
     }
@@ -49,9 +49,8 @@ class AutowiredReader extends AbstractAnnotationReader
             throw new AnnotationException("Can't find autowired instance.");
         }
 
-        $refClass = $this->reader->getReflectionClass();
-
         try {
+            $refClass = $this->reader->getReflectionClass();
             while ($refClass !== false) {
                 $properties = $refClass->getProperties();
                 foreach ($properties as $property) {
@@ -64,24 +63,34 @@ class AutowiredReader extends AbstractAnnotationReader
                         $value = $container->value;
                         $type = $container->type;
                         if ($type !== null) {
-                            if (!settype($value, $type)) {
-                                Logger::warn("Failed to cast '$value' to '$type'.");
-                            }
-                        }
-                        if ($value !== null) {
                             if ($property->isPrivate() || $property->isProtected()) {
                                 $property->setAccessible(true);
                             }
-                            // 初期値が設定してある場合、Autowiredしない。
-                            // メンバ変数に初期値が設定してある場合、または、コンストラクタで
-                            // メンバ変数に値を設定した場合(タイミング的にAutowired後に値を上書きしたとみなすため)
-                            if ($property->getValue($this->instance) === null) {
-                                $property->setValue($this->instance, $value);
+                            // value属性の指定ありの場合、型と一致すれば値を設定する
+                            if ($value !== null) {
+                                if (settype($value, $type)) {
+                                    // 初期値が設定してある場合、Autowiredしない。
+                                    // メンバ変数に初期値が設定してある場合、または、コンストラクタで
+                                    // メンバ変数に値を設定した場合(タイミング的にAutowired後に値を上書きしたとみなすため)
+                                    if ($property->getValue($this->instance) === null) {
+                                        $property->setValue($this->instance, $value);
+                                    }
+                                } else {
+                                    Logger::warn("Failed to cast '$value' to '$type'.");
+                                }
+                            } else { // value属性の指定がない場合、参照型であればインスタンスを代入する
+                                if (class_exists($type)) {
+                                    $value = new $type();
+                                    if ($property->getValue($this->instance) === null) {
+                                        $property->setValue($this->instance, $value);
+                                    }
+                                } else {
+                                    Logger::warn("Failed set '$type' instance because can't find class of $type.");
+                                }
                             }
                         }
                     }
                 }
-
                 $refClass = $refClass->getParentClass();
             }
         } catch (DoctrineAnnotationException $e) {
