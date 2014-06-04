@@ -2,12 +2,12 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
-use WebStream\Core\CoreErrorDelegator;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
-use WebStream\Annotation\DatabaseReader;
+use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Reader\DatabaseReader;
 use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
@@ -94,8 +94,7 @@ class CoreDelegator
                 }
             };
         } else {
-            $container->errorMessage = $serviceClassName . " is not defined.";
-            $this->coreContainer->service = new CoreErrorDelegator($container);
+            $this->coreContainer->service = function () {};
         }
 
         // Model
@@ -103,16 +102,24 @@ class CoreDelegator
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
             $this->coreContainer->model = function () use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
-                    $refClass = new \ReflectionClass($modelClassPath);
-                    $reader = new DatabaseReader();
-                    $reader->read($refClass, null, $container);
 
-                    return $reader->getInstance();
+                    $model = new $modelClassPath($container);
+                    $reader = new AnnotationReader($model);
+                    // $reader->setContainer($this->container);
+                    $reader->read();
+
+                    $database = new DatabaseReader($reader);
+                    $database->execute();
+
+                    return $database;
+                    // TODO
+                    // $reader->read($refClass, null, $container);
+
+                    // return $reader->getInstance();
                 }
             };
         } else {
-            $container->errorMessage = $modelClassName . " is not defined.";
-            $this->coreContainer->model = new CoreErrorDelegator($container);
+            $this->coreContainer->model = function () {};
         }
 
         // Helper
@@ -124,9 +131,14 @@ class CoreDelegator
                 }
             };
         } else {
-            $container->errorMessage = $helperClassName . " is not defined.";
-            $this->coreContainer->helper = new CoreErrorDelegator($container);
+            // $container->errorMessage = $helperClassName . " is not defined.";
+            // $this->coreContainer->helper = new CoreErrorDelegator($container);
+            // TODO ServiceModelのようにClassNotFoundExceptionを引き起こすように治す
+            $this->coreContainer->helper = function () {};
         }
+
+        // Error
+        $this->coreContainer->error = new ClassNotFoundException("$serviceClassName or $modelClassName is not defined.");
     }
 
     /**
