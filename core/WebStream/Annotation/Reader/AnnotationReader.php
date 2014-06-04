@@ -60,10 +60,38 @@ class AnnotationReader
     private function readAnnotaion()
     {
         try {
+            $this->readClass();
             $this->readProperties();
             $this->readMethods();
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
+        }
+    }
+
+    private function readClass()
+    {
+        $reader = new DoctrineAnnotationReader();
+        $refClass = $this->refClass;
+
+        while ($refClass !== false) {
+            $annotations = $reader->getClassAnnotations($refClass);
+            if (!empty($annotations)) {
+                // @Injectは先頭に定義されていなければならない
+                if (!$annotations[0] instanceof \WebStream\Annotation\Inject) {
+                    throw new AnnotationException("@Inject must be defined at the top of class.");
+                }
+                for ($i = 1; $i < count($annotations); $i++) {
+                    $annotation = $annotations[$i];
+                    $classpath = get_class($annotation);
+                    // リストで初期化
+                    if (!array_key_exists($classpath, $this->annotations)) {
+                        $this->annotations[$classpath] = [];
+                    }
+                    $this->annotations[$classpath][$refClass->getName()] = $annotation->getAnnotationContainer();
+                }
+            }
+
+            $refClass = $refClass->getParentClass();
         }
     }
 
