@@ -65,58 +65,58 @@ class HeaderReader extends AbstractAnnotationReader
      */
     public function execute()
     {
-        $refClass = $this->reader->getReflectionClass();
-        $container = $this->reader->getContainer();
-        $action = $this->camel2snake($container->router->action());
+        if ($this->annotation === null) {
+            return;
+        }
 
         try {
-            if ($this->annotation !== null) {
-                while ($refClass !== false) {
-                    $classpathWithAction = $refClass->getName() . "#" . $action;
-                    if (array_key_exists($classpathWithAction, $this->annotation)) {
-                        // 複数指定されても先頭のみ有効
-                        $annotation = array_shift($this->annotation[$classpathWithAction]);
-                        $allowMethods = $annotation->allowMethod;
+            $refClass = $this->reader->getReflectionClass();
+            $container = $this->reader->getContainer();
+            $action = $this->camel2snake($container->router->action());
+            while ($refClass !== false) {
+                $classpathWithAction = $refClass->getName() . "#" . $action;
+                if (array_key_exists($classpathWithAction, $this->annotation)) {
+                    // 複数指定されても先頭のみ有効
+                    $annotation = array_shift($this->annotation[$classpathWithAction]);
+                    $allowMethods = $annotation->allowMethod;
 
-                        // 指定無しの場合はチェックしない(すべてのメソッドを許可する)
-                        if ($allowMethods !== null) {
-                            if (!is_array($allowMethods)) {
-                                $allowMethods = [$allowMethods];
-                            }
-
-                            for ($i = 0; $i < count($allowMethods); $i++) {
-                                if (!preg_match("/^(?:(?:P(?:OS|U)|GE)T|(?:p(?:os|u)|ge)t|DELETE|delete)$/", $allowMethods[$i])) {
-                                    $errorMsg = "Invalid value '" . $allowMethods[$i] . "' in 'allowMethod' attribute of @Header.";
-                                    throw new AnnotationException($errorMsg);
-                                }
-                                $allowMethods[$i] = strtoupper($allowMethods[$i]);
-                            }
-
-                            // 複数指定した場合、一つでも許可されていればOK
-                            if (!in_array($container->request->requestMethod(), $allowMethods)) {
-                                $errorMsg = "Not allowed request method '" . $container->request->requestMethod() . "' in " . $container->request->getPathInfo();
-                                throw new InvalidRequestException($errorMsg);
-                            }
+                    // 指定無しの場合はチェックしない(すべてのメソッドを許可する)
+                    if ($allowMethods !== null) {
+                        if (!is_array($allowMethods)) {
+                            $allowMethods = [$allowMethods];
                         }
 
-                        Logger::debug("Accepted request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction);
-
-                        $ext = $annotation->contentType;
-                        if ($ext !== null) {
-                            $contentType = $this->contentTypeList[$ext];
-                            if ($contentType === null) {
-                                $errorMsg = "Invalid value '$ext' in 'contentType' attribute of @Header.";
+                        for ($i = 0; $i < count($allowMethods); $i++) {
+                            if (!preg_match("/^(?:(?:P(?:OS|U)|GE)T|(?:p(?:os|u)|ge)t|DELETE|delete)$/", $allowMethods[$i])) {
+                                $errorMsg = "Invalid value '" . $allowMethods[$i] . "' in 'allowMethod' attribute of @Header.";
                                 throw new AnnotationException($errorMsg);
                             }
-                            $this->mime = $ext;
-                            Logger::debug("Accepted contentType '$ext' in " . $classpathWithAction);
+                            $allowMethods[$i] = strtoupper($allowMethods[$i]);
+                        }
+
+                        // 複数指定した場合、一つでも許可されていればOK
+                        if (!in_array($container->request->requestMethod(), $allowMethods)) {
+                            $errorMsg = "Not allowed request method '" . $container->request->requestMethod() . "' in " . $container->request->getPathInfo();
+                            throw new InvalidRequestException($errorMsg);
                         }
                     }
 
-                    $refClass = $refClass->getParentClass();
-                }
-            }
+                    Logger::debug("Accepted request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction);
 
+                    $ext = $annotation->contentType;
+                    if ($ext !== null) {
+                        $contentType = $this->contentTypeList[$ext];
+                        if ($contentType === null) {
+                            $errorMsg = "Invalid value '$ext' in 'contentType' attribute of @Header.";
+                            throw new AnnotationException($errorMsg);
+                        }
+                        $this->mime = $ext;
+                        Logger::debug("Accepted contentType '$ext' in " . $classpathWithAction);
+                    }
+                }
+
+                $refClass = $refClass->getParentClass();
+            }
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
         }
