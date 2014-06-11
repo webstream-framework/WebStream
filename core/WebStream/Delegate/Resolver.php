@@ -157,11 +157,10 @@ class Resolver
             $templateContainer = $template->getTemplateContainer();
 
             $model = $controllerInstance->__model();
-            $helper = $coreDelegator->getHelper();
 
             // draw template
             $view = $coreDelegator->getView();
-            $view->draw($templateContainer, $model, $helper, $mimeType);
+            $view->draw($templateContainer, $model, $mimeType);
 
             $templateCache = new TemplateCacheReader($reader);
             $templateCache->execute();
