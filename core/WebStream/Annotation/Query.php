@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Annotation;
 
+use WebStream\Module\Logger;
+
 /**
  * Query
  * @author Ryuichi TANAKA.
@@ -10,27 +12,13 @@ namespace WebStream\Annotation;
  * @Annotation
  * @Target("METHOD")
  */
-class Query extends AbstractAnnotation
+class Query extends Annotation
 {
-    /** 値 */
-    private $value;
-
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function onInject()
     {
-        if (array_key_exists($this->QUERY_ATTR_FILE, $this->annotations)) {
-            $this->value = $this->annotations[$this->QUERY_ATTR_FILE];
-        }
-    }
-
-    /**
-     * 値を返却する
-     * @return object 値
-     */
-    public function getValue()
-    {
-        return $this->value;
+        Logger::debug("@Query injected.");
     }
 }
