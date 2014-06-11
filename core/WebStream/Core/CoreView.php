@@ -7,6 +7,7 @@ use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\IOException;
+use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
  * CoreViewクラス
@@ -44,7 +45,7 @@ class CoreView implements CoreInterface
     private $cacheDir;
 
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
@@ -57,7 +58,7 @@ class CoreView implements CoreInterface
     }
 
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function __destruct()
     {
@@ -96,12 +97,10 @@ class CoreView implements CoreInterface
      * テンプレートを描画する
      * @param AnnotationContainer テンプレートコンテナ
      * @param CoreInterface Modelオブジェクト
-     * @param CoreInterface Helperオブジェクト
      * @param string mime type
      */
     final public function draw(AnnotationContainer $templateContainer,
-                               CoreInterface $model,
-                               CoreInterface $helper,
+                               $model,
                                $mimeType = "html")
     {
         // Content-typeを出力
@@ -121,6 +120,14 @@ class CoreView implements CoreInterface
         $timestamp = filemtime($template);
         if ($timestamp > $this->timestamp) {
             $this->timestamp = $timestamp;
+        }
+
+        $helper = $this->coreDelegator->getHelper();
+        if ($helper === null) {
+            $pageName = $this->coreDelegator->getPageName();
+            $helper = function () {
+                new ClassNotFoundException($pageName . "Helper is not defined.");
+            };
         }
 
         $params = [
