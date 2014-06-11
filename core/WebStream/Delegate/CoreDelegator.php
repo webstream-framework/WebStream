@@ -6,8 +6,6 @@ use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
-use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\DatabaseReader;
 use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
@@ -102,20 +100,7 @@ class CoreDelegator
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
             $this->coreContainer->model = function () use (&$container, &$classLoader, &$modelClassPath, &$modelClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
-
-                    $model = new $modelClassPath($container);
-                    $reader = new AnnotationReader($model);
-                    // $reader->setContainer($this->container);
-                    $reader->read();
-
-                    $database = new DatabaseReader($reader);
-                    $database->execute();
-
-                    return $database;
-                    // TODO
-                    // $reader->read($refClass, null, $container);
-
-                    // return $reader->getInstance();
+                    return new $modelClassPath($container);
                 }
             };
         } else {
@@ -131,14 +116,8 @@ class CoreDelegator
                 }
             };
         } else {
-            // $container->errorMessage = $helperClassName . " is not defined.";
-            // $this->coreContainer->helper = new CoreErrorDelegator($container);
-            // TODO ServiceModelのようにClassNotFoundExceptionを引き起こすように治す
             $this->coreContainer->helper = function () {};
         }
-
-        // Error
-        $this->coreContainer->error = new ClassNotFoundException("$serviceClassName or $modelClassName is not defined.");
     }
 
     /**
