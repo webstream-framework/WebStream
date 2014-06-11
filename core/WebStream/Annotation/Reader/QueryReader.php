@@ -61,7 +61,7 @@ class QueryReader extends AbstractAnnotationReader
 
     /**
      * クエリオブジェクトを返却する
-     *
+     * @param mixed SQL文字列またはnull
      */
     public function getQuery($queryKey, $queryId)
     {
