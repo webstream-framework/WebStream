@@ -33,6 +33,7 @@ Router::setRule([
     '/test_template/index4' => "test_template#index4",
     '/test_template/index5' => "test_template#index5",
     '/test_template/index6' => "test_template#index6",
+    // '/test_template/index7' => "test_template#index7",
     '/test_template/error1' => "test_template#error1",
     '/test_template/error2' => "test_template#error2",
     '/test_template/error3' => "test_template#error3",
@@ -40,6 +41,7 @@ Router::setRule([
     '/test_template/error5' => "test_template#error5",
     '/test_template/error6' => "test_template#error6",
     '/test_template/error7' => "test_template#error7",
+    '/test_template/error8' => "test_template#error8",
     '/test_template/model/is_model' => "test_template_with_model#index1",
     '/test_template/model/access_db' => "test_template_with_model#index2",
     '/test_template/helper/is_helper' => "test_template_with_helper#index1",
@@ -175,6 +177,9 @@ Router::setRule([
     '/test_model16' => "test_postgres#model5",
     '/test_model17' => "test_postgres#model6",
     '/test_model18' => "test_sqlite#model3",
+    '/test_model19' => "test_mysql#model7",
+    '/test_model20' => "test_postgres#model7",
+    '/test_model21' => "test_sqlite#model4",
     '/test_model_prepare' => "test_mysql#prepare",
     '/test_model_clear' => "test_mysql#clear",
     '/test_model_prepare2' => "test_postgres#prepare",
@@ -187,5 +192,7 @@ Router::setRule([
     '/test_jsonp1' => "test_json#jsonp1",
     '/test_jsonp2' => "test_json#jsonp2",
 
-    '/exception_test1' => "test#hoge"
+    // 以下削除予定
+    '/annotation/refactor/index1' => "test_annotation_refactor#index1",
+    '/annotation/refactor/index2' => "test_annotation_refactor#index2"
 ]);
