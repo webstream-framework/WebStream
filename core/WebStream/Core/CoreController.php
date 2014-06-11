@@ -7,6 +7,7 @@ use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\CsrfException;
+use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
  * CoreControllerクラス
@@ -28,7 +29,7 @@ class CoreController implements CoreInterface
     private $container;
 
     /**
-     * Override
+     * {@inheritdoc}
      */
     final public function __construct(Container $container)
     {
@@ -40,7 +41,7 @@ class CoreController implements CoreInterface
     }
 
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function __destruct()
     {
@@ -120,6 +121,9 @@ class CoreController implements CoreInterface
             $this->{$pageName} = $service;
         } elseif ($model) {
             $this->{$pageName} = $model;
+        } else {
+            $errorMsg = $pageName . "Service and " . $pageName . "Model is not defined.";
+            $this->{$pageName} = new ClassNotFoundException($errorMsg);
         }
     }
 }
