@@ -3,8 +3,12 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
-use WebStream\Annotation\QueryReader;
+use WebStream\Database\DatabaseManager;
+use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Reader\DatabaseReader;
+use WebStream\Annotation\Reader\QueryReader;
 use WebStream\Exception\Extend\DatabaseException;
+use WebStream\Exception\Extend\MethodNotFoundException;
 
 /**
  * CoreModel
@@ -14,34 +18,58 @@ use WebStream\Exception\Extend\DatabaseException;
  */
 class CoreModel implements CoreInterface
 {
-    /** manager */
-    private $connection;
-
-    /** container */
-    private $container;
+    /** database manager */
+    private $manager;
 
     /** query reqder */
     private $queryReader;
 
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
         Logger::debug("Model start.");
-        $this->container = $container;
-        $this->manager = $container->manager;
-        $this->manager->connect();
-        $this->manager->beginTransaction();
-        $this->queryReader = new QueryReader();
+        $this->initialize($container);
     }
 
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function __destruct()
     {
         Logger::debug("Model end.");
+    }
+
+    /**
+     * 初期処理
+     * @param Container DIコンテナ
+     */
+    private function initialize(Container $container)
+    {
+        $reader = new AnnotationReader($this);
+        $reader->setContainer($container);
+        $reader->read();
+
+        $database = new DatabaseReader($reader);
+        $database->execute();
+        $driver = $database->getDriver();
+        $config = $database->getConfig();
+
+        // driverまたはconfigが取れない場合、ModelでDB接続しない
+        if ($driver === null || $config === null) {
+            Logger::warn("Can't use database in Model Layer.");
+
+            return;
+        }
+
+        $this->manager = new DatabaseManager($database->getDriver(), $database->getConfig());
+        $this->manager->connect();
+        $this->manager->beginTransaction();
+
+        $query = new QueryReader($reader);
+        $query->execute();
+        $this->queryReader = $query;
     }
 
     /**
@@ -51,6 +79,11 @@ class CoreModel implements CoreInterface
      */
     public function __call($method, $arguments)
     {
+        // DBを使用しない場合にここが呼ばれたらエラー
+        if ($this->manager === null) {
+            throw new MethodNotFoundException("Undefined method called: $method");
+        }
+
         $sql = null;
         $bind = null;
         $result = null;
@@ -105,21 +138,21 @@ class CoreModel implements CoreInterface
                     $bind = $arguments[0];
                 }
 
-                $refClass = new \ReflectionClass($this);
-                $methodName = $this->container->router->routingParams()["action"];
+                $modelMethod = debug_backtrace()[2]["function"];
+                $queryKey = get_class($this) . "#" . $modelMethod;
+                $query = $this->queryReader->getQuery($queryKey, $method);
 
-                $this->queryReader->setId($method);
-                $this->queryReader->read($refClass, $methodName, $this->container);
-                $sql = $this->queryReader->getQuery();
-
-                if ($sql === null) {
+                if ($query === null) {
                     throw new DatabaseException("SQL statement can't getting from xml file.");
                 }
 
+                $sql = $query["sql"];
+                $method = $query["method"];
+
                 if (is_array($bind)) {
-                    $result = $this->manager->query($sql, $bind)->select();
+                    $result = $this->manager->query($sql, $bind)->{$method}();
                 } else {
-                    $result = $this->manager->query($sql)->select();
+                    $result = $this->manager->query($sql)->{$method}();
                 }
             }
 
