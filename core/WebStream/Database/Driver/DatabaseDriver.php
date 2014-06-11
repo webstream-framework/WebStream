@@ -88,6 +88,15 @@ abstract class DatabaseDriver
     }
 
     /**
+     * DB接続されているか
+     * @param boolean 接続有無
+     */
+    public function isConnected()
+    {
+        return $this->connection !== null;
+    }
+
+    /**
      * トランザクション内かどうか
      * @return boolean トランザクション内かどうか
      */

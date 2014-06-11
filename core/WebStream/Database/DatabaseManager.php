@@ -142,6 +142,15 @@ class DatabaseManager
     }
 
     /**
+     * DB接続されているか
+     * @param boolean 接続有無
+     */
+    public function isConnected()
+    {
+        return $this->driver->isConnected();
+    }
+
+    /**
      * クエリを設定する
      * @param string SQL
      * @param array<string> パラメータ
