@@ -82,6 +82,23 @@ class TestPostgresModel extends CoreModel
         return $this->getTestDataNum();
     }
 
+    public function model7()
+    {
+        // Modelメソッドを直接Controllerから呼ばないパターン
+        return $this->model8();
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-innercall.xml")
+     */
+    public function model8()
+    {
+        $bind = ["limit" => 1, "offset" => 0];
+
+        return $this->innerSelectPostgres($bind);
+    }
+
     /**
      * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")

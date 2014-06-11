@@ -48,6 +48,14 @@ class TestMysqlController extends CoreController
         echo $result->toArray()[0]["count"];
     }
 
+    public function model7()
+    {
+        $result = $this->TestMysql->model7();
+        foreach ($result as $value) {
+            echo $value["name"];
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")

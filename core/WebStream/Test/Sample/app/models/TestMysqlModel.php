@@ -82,6 +82,23 @@ class TestMysqlModel extends CoreModel
         return $this->getTestDataNum();
     }
 
+    public function model7()
+    {
+        // Modelメソッドを直接Controllerから呼ばないパターン
+        return $this->model8();
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-innercall.xml")
+     */
+    public function model8()
+    {
+        $bind = ["limit" => 0, "offset" => 1];
+
+        return $this->innerSelectMysql($bind);
+    }
+
     /**
      * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")

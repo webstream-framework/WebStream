@@ -28,6 +28,14 @@ class TestSqliteController extends CoreController
         $this->TestSqlite->model3();
     }
 
+    public function model4()
+    {
+        $result = $this->TestSqlite->model4();
+        foreach ($result as $value) {
+            echo $value["name"];
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")

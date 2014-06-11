@@ -45,6 +45,15 @@ trait DatabaseProvider
         ];
     }
 
+    public function innserCallModelMethodProvider()
+    {
+        return [
+            ["/test_model19", "honoka", "/test_model_prepare"],
+            ["/test_model20", "honoka", "/test_model_prepare2"],
+            ["/test_model21", "honoka", "/test_model_prepare3"]
+        ];
+    }
+
     public function useUndefinedQueryXmlFileProvider()
     {
         return [
