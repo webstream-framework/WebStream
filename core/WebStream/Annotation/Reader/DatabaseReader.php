@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
+use WebStream\Module\Container;
+use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Exception\Extend\DatabaseException;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
@@ -13,11 +15,10 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class DatabaseReader extends AbstractAnnotationReader
 {
-    /** データベース設定 */
-    private $config;
-
-    /** データベースドライバ */
-    private $driver;
+    /**
+     * @var AnnotationListContainer DB接続情報コンテナリスト
+     */
+    private $connectionItemContainerList;
 
     /**
      * {@inheritdoc}
@@ -25,6 +26,7 @@ class DatabaseReader extends AbstractAnnotationReader
     public function onRead()
     {
         $this->annotation = $this->reader->getAnnotation("WebStream\Annotation\Database");
+        $this->connectionItemContainerList = new AnnotationListContainer();
     }
 
     /**
@@ -40,51 +42,44 @@ class DatabaseReader extends AbstractAnnotationReader
             $refClass = $this->reader->getReflectionClass();
 
             while ($refClass !== false) {
-                $key = $refClass->getName();
+                $classpath = $refClass->getName();
                 // アノテーションが取得できなかった場合はエラーにはせずDB接続なしのModelとして扱う
-                if (array_key_exists($key, $this->annotation)) {
-                    $container = $this->annotation[$key];
-                    $driverClassPath = $container->driver;
+                if (array_key_exists($classpath, $this->annotation)) {
+                    $databaseContainer = $this->annotation[$classpath];
+                    $driverClassPath = $databaseContainer->driver;
 
                     if (!class_exists($driverClassPath)) {
                         throw new DatabaseException("Database driver is undefined：" . $driverClassPath);
                     }
 
-                    $configPath = STREAM_APP_ROOT . "/" . $container->config;
+                    $configPath = STREAM_APP_ROOT . "/" . $databaseContainer->config;
                     $configRealPath = realpath($configPath);
                     if (!file_exists($configRealPath)) {
                         throw new DatabaseException("Database config file is not found: " . $configPath);
                     }
 
-                    // TODO Modelごとに異なるDBMSが指定された場合の処理
-                    // 仕様上ありえるので対応したい
-
-                    $this->config = parse_ini_file($configRealPath);
-                    $this->driver = new $driverClassPath();
+                    // ここではパスを読み取る以上のこと(権限)はしない
+                    // 処理自体はDatabaseManager,ConnectionManagerに委譲
+                    $container = new Container();
+                    $container->filepath = $refClass->getFileName();
+                    $container->configPath = $configRealPath;
+                    $container->driverClassPath = $driverClassPath;
+                    $this->connectionItemContainerList->push($container);
                 }
 
                 $refClass = $refClass->getParentClass();
             }
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 
     /**
-     * データベース設定を返却する
-     * @return array<string> データベース設定
+     * DB接続情報コンテナリストを返却する
+     * @return AnnotationListContainer DB接続情報コンテナリスト
      */
-    public function getConfig()
+    public function getConnectionItemContainerList()
     {
-        return $this->config;
-    }
-
-    /**
-     * データベースドライバを返却する
-     * @return array<string> データベース設定
-     */
-    public function getDriver()
-    {
-        return $this->driver;
+        return $this->connectionItemContainerList;
     }
 }

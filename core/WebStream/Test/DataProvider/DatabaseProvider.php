@@ -16,8 +16,8 @@ trait DatabaseProvider
             ["/test_model2", "honoka", "/test_model_prepare"],
             ["/test_model4", "honoka", "/test_model_prepare3"],
             ["/test_model5", "honoka", "/test_model_prepare3"],
-            ["/test_model12", "honoka", "/test_model_prepare2"],
-            ["/test_model13", "honoka", "/test_model_prepare2"]
+            ["/test_model12", "kotori", "/test_model_prepare2"],
+            ["/test_model13", "kotori", "/test_model_prepare2"]
         ];
     }
 
@@ -49,8 +49,15 @@ trait DatabaseProvider
     {
         return [
             ["/test_model19", "honoka", "/test_model_prepare"],
-            ["/test_model20", "honoka", "/test_model_prepare2"],
+            ["/test_model20", "kotori", "/test_model_prepare2"],
             ["/test_model21", "honoka", "/test_model_prepare3"]
+        ];
+    }
+
+    public function okMultipleDatabaseAccessProvider()
+    {
+        return [
+            ["/test_model22", "honokakotori", "/test_model_prepare", "/test_model_prepare2"]
         ];
     }
 

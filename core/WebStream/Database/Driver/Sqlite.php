@@ -22,6 +22,6 @@ class Sqlite extends DatabaseDriver
         $options = [\PDO::ATTR_PERSISTENT => true,
                     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION];
         $this->connection = new \PDO($dsn, $username, $password, $options);
-        Logger::debug("Database connect.");
+        Logger::debug("SQLite connect.");
     }
 }

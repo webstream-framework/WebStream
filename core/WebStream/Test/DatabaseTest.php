@@ -117,6 +117,25 @@ class DatabaseTest extends TestBase
     }
 
     /**
+     * 正常系
+     * 子クラスと親クラスで別DBに接続している場合、それぞれのDBから値を取得できること
+     * @test
+     * @dataProvider okMultipleDatabaseAccessProvider
+     */
+    public function okMultipleDatabaseAccess($path, $response, $preparePath1, $preparePath2)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath1;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $preparePath2;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
      * 異常系
      * 不明なDatabaseDriverを指定した場合、例外が発生すること
      * @test

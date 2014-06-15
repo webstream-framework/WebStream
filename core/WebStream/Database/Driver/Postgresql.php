@@ -22,6 +22,6 @@ class Postgresql extends DatabaseDriver
         $password = $this->password;
         $options = [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION];
         $this->connection = new \PDO($dsn, $username, $password, $options);
-        Logger::debug("Database connect.");
+        Logger::debug("PostgreSQL connect.");
     }
 }

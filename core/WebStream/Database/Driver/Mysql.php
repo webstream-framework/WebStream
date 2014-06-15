@@ -26,6 +26,6 @@ class Mysql extends DatabaseDriver
                     \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true];
 
         $this->connection = new \PDO($dsn, $username, $password, $options);
-        Logger::debug("Database connect.");
+        Logger::debug("MySQL connect.");
     }
 }

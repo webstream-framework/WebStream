@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Database\Driver\DatabaseDriver;
+use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Module\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
@@ -13,27 +13,33 @@ use WebStream\Exception\Extend\DatabaseException;
  */
 class DatabaseManager
 {
-    /** database driver */
-    private $driver;
+    /**
+     * @var ConnectionManager コネクションマネージャ
+     */
+    private $connectionManager;
 
-    /** query */
+    /**
+     * @var DatabaseDriver データベースコネクション
+     */
+    private $connection;
+
+    /**
+     * @var Query クエリオブジェクト
+     */
     private $query;
 
-    /** database config */
-    private $config;
-
-    /** error flg */
+    /**
+     * @var boolean 接続エラーフラグ
+     */
     private $isError;
 
     /**
      * constructor
-     * @param object データベースドライバ
-     * @param array データベース設定
+     * @param AnnotationListContainer データベース接続項目コンテナ
      */
-    public function __construct(DatabaseDriver $driver, array $config)
+    public function __construct(AnnotationListContainer $connectionItemContainerList)
     {
-        $this->driver = $driver;
-        $this->config = $config;
+        $this->connectionManager = new ConnectionManager($connectionItemContainerList);
         $this->isError = false;
     }
 
@@ -47,32 +53,13 @@ class DatabaseManager
 
     /**
      * データベース接続する
+     * すでに接続中であれば再接続はしない
      */
     public function connect()
     {
-        if (array_key_exists("host", $this->config)) {
-            $this->driver->setHost($this->config["host"]);
-        }
-        if (array_key_exists("port", $this->config)) {
-            $this->driver->setPort($this->config["port"]);
-        }
-        if (array_key_exists("dbname", $this->config)) {
-            $this->driver->setDbname($this->config["dbname"]);
-        }
-        if (array_key_exists("username", $this->config)) {
-            $this->driver->setUsername($this->config["username"]);
-        }
-        if (array_key_exists("password", $this->config)) {
-            $this->driver->setPassword($this->config["password"]);
-        }
-        if (array_key_exists("dbfile", $this->config)) {
-            $this->driver->setDbfile($this->config["dbfile"]);
-        }
-
         try {
-            $this->driver->connect();
-            $this->query = new Query($this->driver);
-
+            $this->connection->connect();
+            $this->query = new Query($this->connection);
         } catch (\PDOException $e) {
             throw new DatabaseException($e);
         }
@@ -84,9 +71,9 @@ class DatabaseManager
     public function disconnect()
     {
         if (!$this->isError) {
-            $this->driver->commit();
+            $this->connection->commit();
         }
-        $this->driver->disconnect();
+        $this->connection->disconnect();
     }
 
     /**
@@ -100,7 +87,7 @@ class DatabaseManager
             $this->rollback();
         }
 
-        $trans = $this->driver->beginTransaction();
+        $trans = $this->connection->beginTransaction();
         Logger::debug("Transaction start.");
     }
 
@@ -109,7 +96,7 @@ class DatabaseManager
      */
     public function commit()
     {
-        $this->driver->commit();
+        $this->connection->commit();
         Logger::debug("Execute commit.");
     }
 
@@ -118,7 +105,7 @@ class DatabaseManager
      */
     public function rollback()
     {
-        $this->driver->rollback();
+        $this->connection->rollback();
         $this->isError = true;
         Logger::debug("Execute rollback.");
     }
@@ -138,7 +125,7 @@ class DatabaseManager
      */
     public function inTransaction()
     {
-        return $this->driver->inTransaction();
+        return $this->connection->inTransaction();
     }
 
     /**
@@ -147,7 +134,22 @@ class DatabaseManager
      */
     public function isConnected()
     {
-        return $this->driver->isConnected();
+        return $this->connection !== null && $this->connection->isConnected();
+    }
+
+    /**
+     * データベース接続を使用する
+     */
+    public function useDatabase($filepath)
+    {
+        $this->connection = $this->connectionManager->getConnection($filepath);
+        // DB接続がない場合は接続する
+        if (!$this->isConnected()) {
+            $this->connect();
+            $this->beginTransaction();
+        }
+
+        return $this->connection !== null;
     }
 
     /**

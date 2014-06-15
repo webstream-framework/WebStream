@@ -18,10 +18,14 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  */
 class CoreModel implements CoreInterface
 {
-    /** database manager */
+    /**
+     * @var DatabaseManager データベースマネージャ
+     */
     private $manager;
 
-    /** query reqder */
+    /**
+     * @var QueryReader クエリリーダ
+     */
     private $queryReader;
 
     /**
@@ -53,19 +57,15 @@ class CoreModel implements CoreInterface
 
         $database = new DatabaseReader($reader);
         $database->execute();
-        $driver = $database->getDriver();
-        $config = $database->getConfig();
+        $connectionItemContainerList = $database->getConnectionItemContainerList();
 
-        // driverまたはconfigが取れない場合、ModelでDB接続しない
-        if ($driver === null || $config === null) {
+        if ($connectionItemContainerList === null) {
             Logger::warn("Can't use database in Model Layer.");
 
             return;
         }
 
-        $this->manager = new DatabaseManager($database->getDriver(), $database->getConfig());
-        $this->manager->connect();
-        $this->manager->beginTransaction();
+        $this->manager = new DatabaseManager($connectionItemContainerList);
 
         $query = new QueryReader($reader);
         $query->execute();
@@ -79,18 +79,19 @@ class CoreModel implements CoreInterface
      */
     public function __call($method, $arguments)
     {
+        $filepath = debug_backtrace()[1]["file"];
+
         // DBを使用しない場合にここが呼ばれたらエラー
-        if ($this->manager === null) {
+        if (!$this->manager->useDatabase($filepath)) {
             throw new MethodNotFoundException("Undefined method called: $method");
         }
 
-        $sql = null;
-        $bind = null;
         $result = null;
 
         try {
             if (preg_match('/^(?:select|(?:dele|upda)te|insert)$/', $method)) {
                 $sql = $arguments[0];
+                $bind = null;
                 if (array_key_exists(1, $arguments)) {
                     $bind = $arguments[1];
                 }
@@ -134,6 +135,7 @@ class CoreModel implements CoreInterface
             } elseif (preg_match('/^(?:(?:co(?:nnec|mmi)|disconnec)t|beginTransaction|rollback)$/', $method)) {
                 $this->manager->{$method}();
             } else {
+                $bind = null;
                 if (array_key_exists(0, $arguments)) {
                     $bind = $arguments[0];
                 }
@@ -155,7 +157,6 @@ class CoreModel implements CoreInterface
                     $result = $this->manager->query($sql)->{$method}();
                 }
             }
-
         } catch (DatabaseException $e) {
             $this->manager->rollback();
             $this->manager->disconnect();
