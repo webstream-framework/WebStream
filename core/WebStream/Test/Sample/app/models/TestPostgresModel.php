@@ -105,7 +105,7 @@ class TestPostgresModel extends CoreModel
      */
     public function prepare()
     {
-        $bind = ['name' => "honoka"];
+        $bind = ['name' => "kotori"];
         $this->beginTransaction();
         if ($this->deleteTestData() !== 0 && $this->setTestData($bind) !== 0) {
             $this->commit();
