@@ -96,7 +96,7 @@ class Resolver
         $validator->check();
 
         // テンプレートキャッシュチェック
-        $pageName = preg_replace("/Controller/", "", $this->router->controller());
+        $pageName = $coreDelegator->getPageName();
         $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($this->router->action());
         $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
         $data = $cache->get($cacheFile);
@@ -223,7 +223,11 @@ class Resolver
             }
         }
         $classpath = $namespace . '\\' . $this->router->controller();
-        $ca = $classpath;
+
+        if (!class_exists($classpath)) {
+            return false;
+        }
+
         $validator = $this->container->validator;
         $errorInfo = [
             "class" => $classpath,
@@ -231,13 +235,9 @@ class Resolver
         ];
 
         try {
-            if (!class_exists($classpath)) {
-                return false;
-            }
-
             // Controller起動
-            $refClass = new \ReflectionClass($this->container->coreDelegator->getController());
             $controllerInstance = $this->container->coreDelegator->getController();
+            $refClass = new \ReflectionClass($controllerInstance);
 
             // @ExceptionHandlerを起動
             $reader = new AnnotationReader($controllerInstance);
