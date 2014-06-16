@@ -9,13 +9,15 @@ class TestExceptOnlyFilterController extends CoreController
 {
     /**
      * @Inject
-     * @Filter(type="before", only="index", except="index")
+     * @Filter(type="before", except="index", only="index")
      */
     public function before()
     {
+        echo "b";
     }
 
     public function index()
     {
+        echo "i";
     }
 }

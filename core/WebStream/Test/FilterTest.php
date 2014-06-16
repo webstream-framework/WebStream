@@ -54,6 +54,35 @@ class FilterTest extends TestBase
     }
 
     /**
+     * 正常系
+     * skipフィルタがが有効になること
+     * @test
+     * @dataProvider filterSkipProvider
+     */
+    public function okFilterSkip($path, $response)
+    {
+        $http = new HttpClient();
+        $result = $http->get($this->getDocumentRootURL() . $path);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, $result);
+    }
+
+    /**
+     * 正常系
+     * exceptとonlyを同時に指定した場合、exceptが有効になること
+     * アクションメソッド「だけ=only」でフィルタが有効になり、アクションメソッドで「除外=except」するのでexceptが有効
+     * @test
+     * @dataProvider filterExceptAndOnlyProvider
+     */
+    public function okFilterExceptAndOnly($path, $response)
+    {
+        $http = new HttpClient();
+        $result = $http->get($this->getDocumentRootURL() . $path);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, $result);
+    }
+
+    /**
      * 異常系
      * initializeフィルタを定義した場合、例外発生すること
      * @test
@@ -74,18 +103,6 @@ class FilterTest extends TestBase
     {
         $http = new HttpClient();
         $http->get($this->getDocumentRootURL() . "/invalid_filter_error");
-        $this->assertEquals($http->getStatusCode(), 500);
-    }
-
-    /**
-     * 異常系
-     * exceptとonlyを同時に指定した場合、例外が発生すること
-     * @test
-     */
-    public function ngFilterExceptAndOnly()
-    {
-        $http = new HttpClient();
-        $http->get($this->getDocumentRootURL() . "/filter_except_only");
         $this->assertEquals($http->getStatusCode(), 500);
     }
 }

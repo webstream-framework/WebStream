@@ -39,4 +39,19 @@ trait FilterProvider
             ["/after_filter_multiple_only_enable2", "i4a"]
         ];
     }
+
+    public function filterSkipProvider()
+    {
+        return [
+            ["/skip_filter1", "b2i"],
+            ["/skip_filter2", "i"]
+        ];
+    }
+
+    public function filterExceptAndOnlyProvider()
+    {
+        return [
+            ["/filter_except_only", "i"]
+        ];
+    }
 }
