@@ -129,22 +129,13 @@ class DatabaseManager
     }
 
     /**
-     * DB接続されているか
-     * @param boolean 接続有無
-     */
-    public function isConnected()
-    {
-        return $this->connection !== null && $this->connection->isConnected();
-    }
-
-    /**
      * データベース接続を使用する
      */
     public function useDatabase($filepath)
     {
         $this->connection = $this->connectionManager->getConnection($filepath);
         // DB接続がない場合は接続する
-        if (!$this->isConnected()) {
+        if (!($this->connection !== null && $this->connection->isConnected())) {
             $this->connect();
             $this->beginTransaction();
         }
