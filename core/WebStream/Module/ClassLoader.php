@@ -76,6 +76,9 @@ class ClassLoader
             $iterator = $this->getFileSearchIterator($includeDir);
             $isSuccess = true;
             foreach ($iterator as $filepath => $fileObject) {
+                if ($filepath === $includeDir . "/." || $filepath === $includeDir . "/..") {
+                    continue;
+                }
                 if (is_file($filepath)) {
                     include_once $filepath;
                     Logger::debug($filepath . " import success.");
