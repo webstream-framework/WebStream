@@ -156,11 +156,25 @@ class Resolver
             $template->execute();
             $templateContainer = $template->getTemplateContainer();
 
-            $model = $controllerInstance->__model();
+            $pageName = $coreDelegator->getPageName();
+            $viewParams = [];
+            $viewParams["model"] = $controllerInstance->__model();
+            $viewParams["helper"] = $coreDelegator->getHelper() ?: function () {
+                throw new ClassNotFoundException($pageName . "Helper is not defined.");
+            };
+
+            if ($templateContainer->base !== null) {
+                $viewParams["base"] = $templateContainer->base;
+            }
+            if ($templateContainer->parts !== null) {
+                foreach ($templateContainer->parts as $key => $value) {
+                    $viewParams[$key] = $value;
+                }
+            }
 
             // draw template
             $view = $coreDelegator->getView();
-            $view->draw($templateContainer, $model, $mimeType);
+            $view->draw($templateContainer->base, $viewParams, $mimeType);
 
             $templateCache = new TemplateCacheReader($reader);
             $templateCache->execute();

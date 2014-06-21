@@ -7,7 +7,6 @@ use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\IOException;
-use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
  * CoreViewクラス
@@ -99,8 +98,8 @@ class CoreView implements CoreInterface
      * @param CoreInterface Modelオブジェクト
      * @param string mime type
      */
-    final public function draw(AnnotationContainer $templateContainer,
-                               $model,
+    final public function draw($templatePath,
+                               array $params,
                                $mimeType = "html")
     {
         // Content-typeを出力
@@ -114,7 +113,7 @@ class CoreView implements CoreInterface
         }
 
         // テンプレートファイルパス
-        $template = STREAM_APP_ROOT . "/app/views/" . $templateContainer->base;
+        $template = STREAM_APP_ROOT . "/app/views/" . $templatePath;
 
         // テンプレートファイルの最新の変更日時を取得
         $timestamp = filemtime($template);
@@ -122,24 +121,11 @@ class CoreView implements CoreInterface
             $this->timestamp = $timestamp;
         }
 
-        $helper = $this->coreDelegator->getHelper();
-        if ($helper === null) {
-            $pageName = $this->coreDelegator->getPageName();
-            $helper = function () {
-                new ClassNotFoundException($pageName . "Helper is not defined.");
-            };
-        }
-
-        $params = [
-            "model" => $model,
-            "helper" => $helper
-        ];
-
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($template);
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
         $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
-        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw(STREAM_APP_ROOT."/app/views/$1", $__params__); ?>', $content);
+        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
 
         if ($mimeType === "xml") {
             $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
@@ -166,6 +152,7 @@ class CoreView implements CoreInterface
         }
 
         $params["__params__"] = $params;
+        $params["__mimeType__"] = $mimeType;
         $this->outputHTML($temp, $params);
 
         unlink($temp);
