@@ -2,18 +2,29 @@
 namespace WebStream\Test\TestData;
 
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Value;
+use WebStream\Annotation\Inject;
 
 class AutowiredTest8
 {
     /**
-     * @Autowired
-     * @Value("name2")
+     * @Inject
+     * @Autowired(value="name3")
      */
-    private $name = "default2";
+    private $name3 = "default3";
 
-    public function getName2()
+    /**
+     * @Inject
+     * @Autowired(value="name4")
+     */
+    private $name4;
+
+    public function getName3()
     {
-        return $this->name;
+        return $this->name3;
+    }
+
+    public function getName4()
+    {
+        return $this->name4;
     }
 }

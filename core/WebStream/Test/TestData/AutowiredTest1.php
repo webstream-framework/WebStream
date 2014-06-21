@@ -2,26 +2,25 @@
 namespace WebStream\Test\TestData;
 
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Type;
-use WebStream\Annotation\Value;
+use WebStream\Annotation\Inject;
 
 class AutowiredTest1
 {
     /**
-     * @Autowired
-     * @Type("\WebStream\Test\TestData\AutowiredTestType")
+     * @Inject
+     * @Autowired(type="\WebStream\Test\TestData\AutowiredTestType")
      */
     private $instance;
 
     /**
-     * @Autowired
-     * @Value("kotori@lovelive.com")
+     * @Inject
+     * @Autowired(value="kotori@lovelive.com")
      */
     private $mail;
 
     /**
-     * @Autowired
-     * @Value(17)
+     * @Inject
+     * @Autowired(value=17)
      */
     private $age;
 

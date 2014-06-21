@@ -2,14 +2,18 @@
 namespace WebStream\Test\TestData;
 
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Type;
-use WebStream\Annotation\Value;
+use WebStream\Annotation\Inject;
 
 class AutowiredTest6
 {
     /**
-     * @Autowired("test", "test")
-     * @Type("\WebStream\Test\TestData\AutowiredTestTypeConstructor")
+     * @Inject
+     * @Autowired(hoge="\WebStream\Test\TestData\AutowiredTestTypeConstructor")
      */
     private $instance;
+
+    public function getInstance()
+    {
+        return $this->instance;
+    }
 }

@@ -76,6 +76,7 @@ class AutowiredReader extends AbstractAnnotationReader
                                         $property->setValue($this->instance, $value);
                                     }
                                 } else {
+                                    // プリミティブ型の場合、警告を出すだけに留める
                                     Logger::warn("Failed to cast '$value' to '$type'.");
                                 }
                             } else { // value属性の指定がない場合、参照型であればインスタンスを代入する
@@ -85,16 +86,18 @@ class AutowiredReader extends AbstractAnnotationReader
                                         $property->setValue($this->instance, $value);
                                     }
                                 } else {
-                                    Logger::warn("Failed set '$type' instance because can't find class of $type.");
+                                    // クラス参照型の場合、存在しないクラスアクセスなので例外を出す
+                                    throw new AnnotationException("Failed set '$type' instance because can't find class of $type.");
                                 }
+                            }
+                        // type属性なしかつvalue属性ありの場合は指定された値をそのまま設定
+                        } elseif ($value !== null) {
+                            if ($property->getValue($this->instance) === null) {
+                                $property->setValue($this->instance, $value);
                             }
                         } else {
-                            // type属性なしかつvalue属性ありの場合は指定された値をそのまま設定
-                            if ($value !== null) {
-                                if ($property->getValue($this->instance) === null) {
-                                    $property->setValue($this->instance, $value);
-                                }
-                            }
+                            // 不明な属性が指定された場合、警告を出す
+                            Logger::warn("An unknown attribute is specified in $key.");
                         }
                     }
                 }

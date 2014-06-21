@@ -2,19 +2,19 @@
 namespace WebStream\Test\TestData;
 
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Value;
+use WebStream\Annotation\Inject;
 
 class AutowiredTest3
 {
     /**
-     * @Autowired
-     * @Value(AutowiredConstant::HONOKA)
+     * @Inject
+     * @Autowired(value=AutowiredConstant::HONOKA)
      */
     private $name;
 
     /**
-     * @Autowired
-     * @Value(AutowiredConstant::MEMBER_NUM)
+     * @Inject
+     * @Autowired(value=AutowiredConstant::MEMBER_NUM)
      */
     private $memberNum;
 

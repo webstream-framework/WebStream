@@ -2,14 +2,13 @@
 namespace WebStream\Test\TestData;
 
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Type;
-use WebStream\Annotation\Value;
+use WebStream\Annotation\Inject;
 
 class AutowiredTest2
 {
     /**
-     * @Autowired
-     * @Type("\Dummy\Test")
+     * @Inject
+     * @Autowired(type="\Dummy\Test")
      */
     private $dummy;
 }
