@@ -47,8 +47,6 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
     public function execute()
     {
         if ($this->annotation === null) {
-            $this->filterContainer = $filterContainer;
-
             return;
         }
 
