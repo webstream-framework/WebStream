@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Test;
 
-use WebStream\Annotation\Type;
-use WebStream\Annotation\AutowiredReader;
+use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Reader\AutowiredReader;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\DI\ServiceLocator;
@@ -22,6 +22,8 @@ class AutowiredTest extends TestBase
 {
     use Utility, TestConstant, AutowiredProvider;
 
+    private $reader;
+
     public function setUp()
     {
         parent::setUp();
@@ -36,11 +38,17 @@ class AutowiredTest extends TestBase
      */
     public function okAutowired($mail, $age)
     {
-        $reader = new AutowiredReader();
+        $instance = new \WebStream\Test\TestData\AutowiredTest1();
+        $reader = new AnnotationReader($instance);
         $container = ServiceLocator::getContainer();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest1");
-        $reader->read($refClass, null, $container);
-        $instance = $reader->getInstance();
+        $reader->setContainer($container);
+        $reader->read();
+
+        $autowired = new AutowiredReader($reader);
+        $autowired->inject($instance);
+        $autowired->execute();
+        $instance = $autowired->getInstance();
+
         $this->assertEquals($mail, $instance->getMail());
         $this->assertEquals($age, $instance->getAge());
     }
@@ -53,30 +61,19 @@ class AutowiredTest extends TestBase
      */
     public function okAutowiredForConstantValueProvider($name, $num)
     {
-        $reader = new AutowiredReader();
+        $instance = new \WebStream\Test\TestData\AutowiredTest3();
+        $reader = new AnnotationReader($instance);
         $container = ServiceLocator::getContainer();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest3");
-        $reader->read($refClass, null, $container);
-        $instance = $reader->getInstance();
+        $reader->setContainer($container);
+        $reader->read();
+
+        $autowired = new AutowiredReader($reader);
+        $autowired->inject($instance);
+        $autowired->execute();
+        $instance = $autowired->getInstance();
+
         $this->assertEquals($name, $instance->getName());
         $this->assertEquals($num, $instance->getMemberNum());
-    }
-
-    /**
-     * 正常系
-     * @Autowiredと@Type,@Valueの順序が逆でもインスタンスを注入できること
-     * @test
-     * @dataProvider autowiredProvider
-     */
-    public function okAutowiredReverse($mail, $age)
-    {
-        $reader = new AutowiredReader();
-        $container = ServiceLocator::getContainer();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest4");
-        $reader->read($refClass, null, $container);
-        $instance = $reader->getInstance();
-        $this->assertEquals($mail, $instance->getMail());
-        $this->assertEquals($age, $instance->getAge());
     }
 
     /**
@@ -86,49 +83,67 @@ class AutowiredTest extends TestBase
      */
     public function okAutowiredSuperClass()
     {
-        $reader = new AutowiredReader();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest7");
-        $instance = $refClass->newInstance();
-        $default1 = $instance->getName();
-        $default2 = $instance->getName2();
-        $this->assertEquals($default1, "default1");
-        $this->assertEquals($default2, "default2");
-
+        $instance = new \WebStream\Test\TestData\AutowiredTest7();
+        $reader = new AnnotationReader($instance);
         $container = ServiceLocator::getContainer();
-        $reader->read($refClass, null, $container);
-        $instance = $reader->getInstance();
+        $reader->setContainer($container);
+        $reader->read();
+
+        $autowired = new AutowiredReader($reader);
+        $autowired->inject($instance);
+        $autowired->execute();
+        $instance = $autowired->getInstance();
+
         $autowired1 = $instance->getName();
         $autowired2 = $instance->getName2();
-        $this->assertEquals($autowired1, "name1");
+        $autowired3 = $instance->getName3();
+        $autowired4 = $instance->getName4();
+        $this->assertEquals($autowired1, "default1");
         $this->assertEquals($autowired2, "name2");
+        $this->assertEquals($autowired3, "default3");
+        $this->assertEquals($autowired4, "name4");
     }
 
     /**
      * 異常系
-     * @Typeで指定したクラスが存在しないまたはrequireされていない場合、
-     * 例外が発生すること
+     * valueに存在しないクラス参照型を指定した場合、例外が発生すること
      * @test
      * @expectedException WebStream\Exception\Extend\AnnotationException
      */
     public function ngAutowiredInvalidType()
     {
-        $reader = new AutowiredReader();
+        $instance = new \WebStream\Test\TestData\AutowiredTest2();
+        $reader = new AnnotationReader($instance);
         $container = ServiceLocator::getContainer();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest2");
-        $reader->read($refClass, null, $container);
+        $reader->setContainer($container);
+        $reader->read();
+
+        $autowired = new AutowiredReader($reader);
+        $autowired->inject($instance);
+        $autowired->execute();
+        $instance = $autowired->getInstance();
+
+        $this->assertTrue(false);
     }
 
     /**
      * 異常系
-     * 間違ったアノテーション定義をした場合、例外が発生すること
+     * 間違ったアノテーション定義をした場合、値はセットされないこと
      * @test
-     * @expectedException WebStream\Exception\Extend\AnnotationException
      */
     public function ngAutowiredAnnotationDefinition()
     {
-        $reader = new AutowiredReader();
+        $instance = new \WebStream\Test\TestData\AutowiredTest6();
+        $reader = new AnnotationReader($instance);
         $container = ServiceLocator::getContainer();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\AutowiredTest6");
-        $reader->read($refClass, null, $container);
+        $reader->setContainer($container);
+        $reader->read();
+
+        $autowired = new AutowiredReader($reader);
+        $autowired->inject($instance);
+        $autowired->execute();
+        $instance = $autowired->getInstance();
+
+        $this->assertNull($instance->getInstance());
     }
 }
