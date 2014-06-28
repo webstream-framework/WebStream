@@ -29,6 +29,11 @@ class CoreModel implements CoreInterface
     private $queryReader;
 
     /**
+     * @var boolean オートコミットフラグ
+     */
+    private $isAutoCommit;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
@@ -70,6 +75,8 @@ class CoreModel implements CoreInterface
         $query = new QueryReader($reader);
         $query->execute();
         $this->queryReader = $query;
+
+        $this->isAutoCommit = true;
     }
 
     /**
@@ -77,15 +84,38 @@ class CoreModel implements CoreInterface
      * @param string メソッド名
      * @param array sql/bindパラメータ
      */
-    public function __call($method, $arguments)
+    final public function __call($method, $arguments)
     {
         $filepath = debug_backtrace()[1]["file"];
 
-        // DBを使用しない場合にここが呼ばれたらエラー
-        if (!$this->manager->useDatabase($filepath)) {
+        // DBコネクションが取得できなければエラー
+        if (!$this->manager->loadConnection($filepath)) {
             throw new MethodNotFoundException("Undefined method called: $method");
         }
 
+        if (!$this->manager->isConnected()) {
+            $this->manager->connect();
+        }
+
+        if ($this->isAutoCommit) {
+            // Modelメソッド内でModelメソッドを呼んだときはトランザクション継続
+            $this->manager->beginTransaction();
+        }
+
+        $result = $this->__execute($method, $arguments);
+
+        if ($this->isAutoCommit) {
+            if (is_int($result) && $result > 0) {
+                $this->manager->commit();
+            }
+            $this->manager->disconnect();
+        }
+
+        return $result;
+    }
+
+    final public function __execute($method, $arguments)
+    {
         $result = null;
 
         try {
@@ -132,15 +162,13 @@ class CoreModel implements CoreInterface
 
                         break;
                 }
-            } elseif (preg_match('/^(?:(?:co(?:nnec|mmi)|disconnec)t|beginTransaction|rollback)$/', $method)) {
-                $this->manager->{$method}();
             } else {
                 $bind = null;
                 if (array_key_exists(0, $arguments)) {
                     $bind = $arguments[0];
                 }
 
-                $modelMethod = debug_backtrace()[2]["function"];
+                $modelMethod = debug_backtrace()[3]["function"];
                 $queryKey = get_class($this) . "#" . $modelMethod;
                 $query = $this->queryReader->getQuery($queryKey, $method);
 
@@ -156,6 +184,8 @@ class CoreModel implements CoreInterface
                 } else {
                     $result = $this->manager->query($sql)->{$method}();
                 }
+
+                return $result;
             }
         } catch (DatabaseException $e) {
             $this->manager->rollback();
@@ -164,5 +194,31 @@ class CoreModel implements CoreInterface
         }
 
         return $result;
+    }
+
+    /**
+     * トランザクション開始
+     */
+    final public function beginTransaction()
+    {
+        $this->isAutoCommit = false;
+    }
+
+    /**
+     * コミットする
+     */
+    final public function commit()
+    {
+        if ($this->isAutoCommit) {
+            $this->manager->commit();
+        }
+    }
+
+    /**
+     * ロールバックする
+     */
+    final public function rollback()
+    {
+        $this->manager->rollback();
     }
 }

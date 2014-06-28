@@ -25,6 +25,9 @@ class Query
     /** ステートメント */
     private $stmt;
 
+    /** 更新クエリが実行されたかどうか */
+    // private $isUpdated;
+
     /**
      * Constructor
      * @param object データベースドライバ
@@ -32,6 +35,7 @@ class Query
     public function __construct(DatabaseDriver $driver)
     {
         $this->driver = $driver;
+        // $this->isUpdated = false;
     }
 
     /**
@@ -66,7 +70,7 @@ class Query
 
     /**
      * INSERT
-     * @param integer 処理結果件数
+     * @return integer 処理結果件数
      */
     public function insert()
     {
@@ -77,7 +81,7 @@ class Query
 
     /**
      * UPDATE
-     * @param integer 処理結果件数
+     * @return integer 処理結果件数
      */
     public function update()
     {
@@ -88,7 +92,7 @@ class Query
 
     /**
      * DELETE
-     * @param integer 処理結果件数
+     * @return integer 処理結果件数
      */
     public function delete()
     {
@@ -96,6 +100,15 @@ class Query
 
         return $this->execute();
     }
+
+    // /**
+    //  * 更新クエリが実行されたか
+    //  * @return boolean 実行結果
+    //  */
+    // public function isUpdated()
+    // {
+    //     return $this->isUpdated;
+    // }
 
     /**
      * SQLを実行する
@@ -108,6 +121,7 @@ class Query
         try {
             $stmt = $this->driver->getStatement($this->sql);
             if ($stmt === false) {
+                // $this->isUpdated = false;
                 throw new DatabaseException("Can't create statement: ". $this->sql);
             }
             Logger::info("Executed SQL: " . $this->sql);
@@ -122,8 +136,9 @@ class Query
 
             if ($stmt->execute()) {
                 $this->stmt = $stmt;
-
-                return $stmt->rowCount();
+                $rowCount = $stmt->rowCount();
+                // $this->isUpdated = true;
+                return $rowCount;
             } else {
                 $messages = $stmt->errorInfo();
                 $message = $messages[2];
@@ -132,6 +147,7 @@ class Query
                 throw new DatabaseException("${message} ${sqlState} ${errorCode}");
             }
         } catch (\PDOException $e) {
+            $this->isUpdated = false;
             throw new DatabaseException($e);
         }
     }

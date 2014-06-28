@@ -45,6 +45,7 @@ abstract class DatabaseDriver
      */
     public function __destruct()
     {
+        Logger::debug("Release driver: " . get_class($this));
     }
 
     /**
@@ -65,6 +66,7 @@ abstract class DatabaseDriver
 
     /**
      * トランザクションを開始する
+     * @return boolean トランザクション開始結果
      */
     public function beginTransaction()
     {

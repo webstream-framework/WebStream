@@ -29,18 +29,12 @@ class DatabaseManager
     private $query;
 
     /**
-     * @var boolean 接続エラーフラグ
-     */
-    private $isError;
-
-    /**
      * constructor
      * @param AnnotationListContainer データベース接続項目コンテナ
      */
     public function __construct(AnnotationListContainer $connectionItemContainerList)
     {
         $this->connectionManager = new ConnectionManager($connectionItemContainerList);
-        $this->isError = false;
     }
 
     /**
@@ -70,10 +64,17 @@ class DatabaseManager
      */
     public function disconnect()
     {
-        if (!$this->isError) {
+        if ($this->connection === null) {
+            return;
+        }
+
+        if ($this->inTransaction()) {
             $this->connection->commit();
         }
+
         $this->connection->disconnect();
+        $this->connection = null;
+        $this->query = null;
     }
 
     /**
@@ -81,13 +82,18 @@ class DatabaseManager
      */
     public function beginTransaction()
     {
-        // 既にトランザクションが開始されている場合、以前の処理を破棄して新たに開始
+        // 既にトランザクションが開始されている場合、継続しているトランザクションを有効のままにする
+        // トランザクションを破棄して再度開始する場合は明示的に破棄してから再呼び出しする
         if ($this->inTransaction()) {
-            Logger::debug("Transaction destruction.");
-            $this->rollback();
+            Logger::debug("Transaction already started.");
+
+            return;
         }
 
-        $trans = $this->connection->beginTransaction();
+        if (!$this->connection->beginTransaction()) {
+            throw new DatabaseException("Failed to start transaction.");
+        }
+
         Logger::debug("Transaction start.");
     }
 
@@ -96,8 +102,12 @@ class DatabaseManager
      */
     public function commit()
     {
-        $this->connection->commit();
-        Logger::debug("Execute commit.");
+        if ($this->inTransaction()) {
+            $this->connection->commit();
+            Logger::debug("Execute commit.");
+        }
+
+        $this->disconnect();
     }
 
     /**
@@ -106,7 +116,7 @@ class DatabaseManager
     public function rollback()
     {
         $this->connection->rollback();
-        $this->isError = true;
+        $this->query = null;
         Logger::debug("Execute rollback.");
     }
 
@@ -129,15 +139,24 @@ class DatabaseManager
     }
 
     /**
-     * データベース接続を使用する
+     * DB接続されているか
+     * @param boolean 接続有無
      */
-    public function useDatabase($filepath)
+    public function isConnected()
     {
-        $this->connection = $this->connectionManager->getConnection($filepath);
-        // DB接続がない場合は接続する
-        if (!($this->connection !== null && $this->connection->isConnected())) {
-            $this->connect();
-            $this->beginTransaction();
+        return $this->connection->isConnected();
+    }
+
+    /**
+     * データベース接続が可能かどうか
+     * @param string Modelファイルパス
+     * @return boolean 接続可否
+     */
+    public function loadConnection($filepath)
+    {
+        $connection = $this->connectionManager->getConnection($filepath);
+        if ($connection !== null) {
+            $this->connection = $connection;
         }
 
         return $this->connection !== null;
