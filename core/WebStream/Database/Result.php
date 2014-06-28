@@ -69,6 +69,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
         if (array_key_exists($offset, $this->rowCache)) {
             return $this->rowCache[$offset];
         } else {
+            // TODO \OutOfBoundsException でなければならない。
             throw new OutOfBoundsException("Current cursor is out of range: " . $offset);
         }
     }
@@ -82,6 +83,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
     {
         if ($this->stmt === null) {
             if (!array_key_exists($this->position, $this->rowCache)) {
+                // TODO 例外処理自体いらない？マニュアルよく読む.
                 throw new OutOfBoundsException("Access out of range.");
             }
 
