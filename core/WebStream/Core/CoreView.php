@@ -95,7 +95,7 @@ class CoreView implements CoreInterface
     /**
      * テンプレートを描画する
      * @param AnnotationContainer テンプレートコンテナ
-     * @param CoreInterface Modelオブジェクト
+     * @param array<mixed> パラメータ
      * @param string mime type
      */
     final public function draw($templatePath,
