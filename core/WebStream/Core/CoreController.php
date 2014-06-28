@@ -123,7 +123,9 @@ class CoreController implements CoreInterface
             $this->{$pageName} = $model;
         } else {
             $errorMsg = $pageName . "Service and " . $pageName . "Model is not defined.";
-            $this->{$pageName} = new ClassNotFoundException($errorMsg);
+            $this->{$pageName} = function () use ($errorMsg) {
+                new ClassNotFoundException($errorMsg);
+            };
         }
     }
 }
