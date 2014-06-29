@@ -6,15 +6,13 @@ use WebStream\Annotation\Inject;
 use WebStream\Annotation\Autowired;
 use WebStream\Annotation\Template;
 use WebStream\Annotation\Filter;
-use WebStream\Annotation\Value;
-use WebStream\Annotation\Type;
 use WebStream\Annotation\Header;
 
 class TestTemplateController extends CoreController
 {
     /**
-     * @Autowired
-     * @Value("autowired value")
+     * @Inject
+     * @Autowired(value="autowired value")
      */
     private $name;
 
@@ -80,6 +78,14 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
+     * @Template("shared3.tmpl", type={"base","shared"})
+     */
+    public function index7()
+    {
+    }
+
+    /**
+     * @Inject
      * @Template("notfound.tmpl")
      */
     public function error1()
@@ -136,6 +142,14 @@ class TestTemplateController extends CoreController
      * @Template("parts1.tmpl", name="model", type="parts");
      */
     public function error7()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template(name="index")
+     */
+    public function error8()
     {
     }
 
