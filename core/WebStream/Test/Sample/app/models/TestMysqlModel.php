@@ -107,7 +107,8 @@ class TestMysqlModel extends CoreModel
     {
         $bind = ['name' => "honoka"];
         $this->beginTransaction();
-        if ($this->deleteTestData() !== 0 && $this->setTestData($bind) !== 0) {
+        $this->deleteTestData();
+        if ($this->setTestData($bind) !== 0) {
             $this->commit();
 
             return true;

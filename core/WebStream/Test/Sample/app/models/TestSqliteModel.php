@@ -64,8 +64,9 @@ class TestSqliteModel extends CoreModel
     public function prepare()
     {
         $bind = ['name' => "honoka"];
+        $this->deleteTestData();
 
-        return $this->deleteTestData() !== 0 && $this->setTestData($bind) !== 0;
+        return $this->setTestData($bind) !== 0;
     }
 
     /**
