@@ -25,9 +25,6 @@ class Query
     /** ステートメント */
     private $stmt;
 
-    /** 更新クエリが実行されたかどうか */
-    // private $isUpdated;
-
     /**
      * Constructor
      * @param object データベースドライバ
@@ -35,7 +32,6 @@ class Query
     public function __construct(DatabaseDriver $driver)
     {
         $this->driver = $driver;
-        // $this->isUpdated = false;
     }
 
     /**
@@ -100,15 +96,6 @@ class Query
 
         return $this->execute();
     }
-
-    // /**
-    //  * 更新クエリが実行されたか
-    //  * @return boolean 実行結果
-    //  */
-    // public function isUpdated()
-    // {
-    //     return $this->isUpdated;
-    // }
 
     /**
      * SQLを実行する
