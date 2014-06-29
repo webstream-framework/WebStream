@@ -61,6 +61,27 @@ trait DatabaseProvider
         ];
     }
 
+    public function okTransactionInControllerProvider()
+    {
+        return [
+            ["/test_transaction1", "trans1trans2", "/test_transaction_clear"]
+        ];
+    }
+
+    public function okTransactionRollbackInControllerProvider()
+    {
+        return [
+            ["/test_transaction2", "", "/test_transaction_clear"]
+        ];
+    }
+
+    public function okTransactionRollbackInModelProvider()
+    {
+        return [
+            ["/test_transaction3", "", "/test_transaction_clear"]
+        ];
+    }
+
     public function useUndefinedQueryXmlFileProvider()
     {
         return [
