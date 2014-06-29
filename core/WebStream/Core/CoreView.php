@@ -7,6 +7,7 @@ use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\IOException;
+use WebStream\Exception\Extend\ResourceNotFoundException;
 
 /**
  * CoreViewクラス
@@ -114,6 +115,11 @@ class CoreView implements CoreInterface
 
         // テンプレートファイルパス
         $template = STREAM_APP_ROOT . "/app/views/" . $templatePath;
+
+        // テンプレートファイルがない場合エラー
+        if (!file_exists($template)) {
+            throw new ResourceNotFoundException("Invalid template file path: " . $template);
+        }
 
         // テンプレートファイルの最新の変更日時を取得
         $timestamp = filemtime($template);
