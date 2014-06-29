@@ -108,7 +108,6 @@ class Query
         try {
             $stmt = $this->driver->getStatement($this->sql);
             if ($stmt === false) {
-                // $this->isUpdated = false;
                 throw new DatabaseException("Can't create statement: ". $this->sql);
             }
             Logger::info("Executed SQL: " . $this->sql);
@@ -124,7 +123,7 @@ class Query
             if ($stmt->execute()) {
                 $this->stmt = $stmt;
                 $rowCount = $stmt->rowCount();
-                // $this->isUpdated = true;
+
                 return $rowCount;
             } else {
                 $messages = $stmt->errorInfo();
