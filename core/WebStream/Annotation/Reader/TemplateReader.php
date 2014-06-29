@@ -64,9 +64,17 @@ class TemplateReader extends AbstractAnnotationReader
                     }
                 }
 
+                // type属性は複数指定可能
+                $typeList = $actionContainer->type ?: ["base"];
+                if (!is_array($typeList)) {
+                    $typeList = [$typeList];
+                }
+
                 // name属性は複数指定されたらエラーとする
                 // 複数定義された場合は同じ値が異なる変数に代入されるだけ
                 // 本来は1つしか指定されないはずだが、許可する以上はリストとして処理
+                // テンプレートで変数化するときにsharedとpartsの変数名が重複しないようにprefix(parts|shared)をつける
+                // さらに、{"parts","shared"}と{"shared","parts"}は同じものと判定する
                 $name = $actionContainer->name;
                 if ($name !== null) {
                     if (is_array($name)) {
@@ -89,11 +97,6 @@ class TemplateReader extends AbstractAnnotationReader
                     }
                 }
 
-                // type属性は複数指定可能
-                $typeList = $actionContainer->type ?: [];
-                if (!is_array($typeList)) {
-                    $typeList = [$typeList];
-                }
                 // ページ名からディレクトリ名を取得
                 $templateDir = $this->camel2snake($this->reader->getContainer()->coreDelegator->getPageName());
                 // ベーステンプレートは暫定的に1番はじめに指定されたテンプレートを設定する
@@ -103,47 +106,63 @@ class TemplateReader extends AbstractAnnotationReader
                 }
 
                 // type="base"が設定された場合は後勝ちでベーステンプレートとする
+                // name属性は指定されても無視
                 if (in_array("base", $typeList)) {
                     // type="base"が複数指定された場合、エラーとする
                     if ($this->templateContainer->isBase) {
-                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
+                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                         $errorMsg.= "The type attribute 'base' must be a only definition.";
                         throw new AnnotationException($errorMsg);
                     }
-                    // type={"base","shared"}
-                    if (in_array("shared", $typeList)) { // baseかつsharedの場合はname属性の指定不要
+                    if (in_array("shared", $typeList)) { // type={"base","shared"}
                         $this->templateContainer->base = STREAM_VIEW_SHARED . "/" . $template;
-                    } else { // type="parts"が含まれていた場合もbaseのみの場合と同様の扱い
-                        $this->templateContainer->base = $templateDir . "/" . $template;
+                    } elseif (in_array("parts", $typeList)) { // type={"base","parts"}はありえない
+                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
+                        $errorMsg.= "The type attribute can't setting 'base' and 'type'.";
+                        throw new AnnotationException($errorMsg);
                     }
                     $this->templateContainer->isBase = true;
-                } elseif (in_array("shared", $typeList)) {
-                    // sharedのみの場合、name属性必須
-                    if ($name === null) {
-                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
-                        $errorMsg.= "The name attribute is required if type attribute is 'shared'.";
+                } else {
+                    // type={"shared","parts"}
+                    if (count($typeList) === 2 && in_array("shared", $typeList) && in_array("parts", $typeList)) {
+                        // name属性が必須
+                        if ($name === null) {
+                            $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
+                            $errorMsg.= "The name attribute is required if type attribute is 'shared' or 'parts'.";
+                            throw new AnnotationException($errorMsg);
+                        }
+                        $partsList[$name] = STREAM_VIEW_SHARED . "/" . $template;
+                    } elseif (count($typeList) === 1) {
+                        // type="shared"
+                        if (in_array("shared", $typeList)) {
+                            // name属性が必須
+                            if ($name === null) {
+                                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
+                                $errorMsg.= "The name attribute is required if type attribute is 'shared'.";
+                                throw new AnnotationException($errorMsg);
+                            }
+                            $partsList[$name] = STREAM_VIEW_SHARED . "/" . $template;
+                        // type="parts"
+                        } elseif (in_array("parts", $typeList)) {
+                            // name属性が必須
+                            if ($name === null) {
+                                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
+                                $errorMsg.= "The name attribute is required if type attribute is 'parts'.";
+                                throw new AnnotationException($errorMsg);
+                            }
+                            $partsList[$name] = $templateDir . "/" . $template;
+                        } else {
+                            $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type' included " . $typeList[0] . ".";
+                            throw new AnnotationException($errorMsg);
+                        }
+                    } else {
+                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                         throw new AnnotationException($errorMsg);
                     }
-                    // type={"shared","parts"}は矛盾するのでエラー
-                    if (in_array("parts", $typeList)) {
-                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
-                        $errorMsg.= "Can not be specified at the same time 'parts' and 'shared' in the type attribute.";
-                        throw new AnnotationException($errorMsg);
-                    }
-                    $partsList[$name] = STREAM_VIEW_SHARED . "/" . $template;
-                } elseif (in_array("parts", $typeList)) {
-                    // partsのみの場合、name属性必須
-                    if ($name === null) {
-                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'. ";
-                        $errorMsg.= "The name attribute is required if type attribute is 'parts'.";
-                        throw new AnnotationException($errorMsg);
-                    }
-                    // nameが重複した場合はエラーにはせず後勝ち
-                    $partsList[$name] = $templateDir . "/" . $template;
                 }
-
-                $this->templateContainer->parts = $partsList;
             }
+
+            $this->templateContainer->parts = $partsList;
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e->getMessage());
         }
