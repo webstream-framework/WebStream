@@ -7,7 +7,6 @@ use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\CsrfException;
-use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
  * CoreControllerクラス
@@ -111,21 +110,6 @@ class CoreController implements CoreInterface
     final private function __load()
     {
         $pageName = $this->coreDelegator->getPageName();
-
-        // Serviceクラスインスタンスを取得
-        $service = $this->coreDelegator->getService();
-        // Modelクラスインスタンスを取得
-        $model = $this->coreDelegator->getModel();
-
-        if ($service) {
-            $this->{$pageName} = $service;
-        } elseif ($model) {
-            $this->{$pageName} = $model;
-        } else {
-            $errorMsg = $pageName . "Service and " . $pageName . "Model is not defined.";
-            $this->{$pageName} = function () use ($errorMsg) {
-                new ClassNotFoundException($errorMsg);
-            };
-        }
+        $this->{$pageName} = $this->coreDelegator->getService() ?: $this->coreDelegator->getModel();
     }
 }
