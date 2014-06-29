@@ -159,9 +159,7 @@ class Resolver
             $pageName = $coreDelegator->getPageName();
             $viewParams = [];
             $viewParams["model"] = $controllerInstance->__model();
-            $viewParams["helper"] = $coreDelegator->getHelper() ?: function () {
-                throw new ClassNotFoundException($pageName . "Helper is not defined.");
-            };
+            $viewParams["helper"] = $coreDelegator->getHelper();
 
             if ($templateContainer->base !== null) {
                 $viewParams["base"] = $templateContainer->base;

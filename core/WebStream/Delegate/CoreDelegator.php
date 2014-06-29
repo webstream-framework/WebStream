@@ -104,7 +104,8 @@ class CoreDelegator
                 }
             };
         } else {
-            $this->coreContainer->model = function () {};
+            $exception = new ClassNotFoundException($pageName . "Service and " . $pageName . "Model is not defined.");
+            $this->coreContainer->model = $exception;
         }
 
         // Helper
@@ -116,7 +117,8 @@ class CoreDelegator
                 }
             };
         } else {
-            $this->coreContainer->helper = function () {};
+            $exception = new ClassNotFoundException($pageName . "Helper is not defined.");
+            $this->coreContainer->helper = new ExceptionDelegator($exception);
         }
     }
 
