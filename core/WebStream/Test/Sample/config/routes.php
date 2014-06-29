@@ -33,7 +33,7 @@ Router::setRule([
     '/test_template/index4' => "test_template#index4",
     '/test_template/index5' => "test_template#index5",
     '/test_template/index6' => "test_template#index6",
-    // '/test_template/index7' => "test_template#index7",
+    '/test_template/index7' => "test_template#index7",
     '/test_template/error1' => "test_template#error1",
     '/test_template/error2' => "test_template#error2",
     '/test_template/error3' => "test_template#error3",
@@ -197,9 +197,5 @@ Router::setRule([
     '/test_json1' => "test_json#json1",
     '/test_json2' => "test_json#json2",
     '/test_jsonp1' => "test_json#jsonp1",
-    '/test_jsonp2' => "test_json#jsonp2",
-
-    // 以下削除予定
-    '/annotation/refactor/index1' => "test_annotation_refactor#index1",
-    '/annotation/refactor/index2' => "test_annotation_refactor#index2"
+    '/test_jsonp2' => "test_json#jsonp2"
 ]);
