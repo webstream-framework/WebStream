@@ -8,6 +8,7 @@
 
 use WebStream\Module\Logger;
 use WebStream\Module\Security;
+use WebStream\DI\ServiceLocator;
 
 /**
  * ハンドリングできないエラーをハンドリングする
@@ -15,6 +16,10 @@ use WebStream\Module\Security;
 if (!function_exists('shutdownHandler')) {
     function shutdownHandler()
     {
+        // サービスロケータをクリア
+        ServiceLocator::removeContainer();
+
+        // ログ処理
         if ($error = error_get_last()) {
             $errorMsg = $error['message'] . " " . $error['file'] . "(" . $error['line'] . ")";
             switch ($error['type']) {

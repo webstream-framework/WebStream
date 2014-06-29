@@ -110,9 +110,6 @@ $instance = $class->newInstance($container);
 $method = $class->getMethod("run");
 $method->invoke($instance);
 
-// サービスロケータをクリア
-ServiceLocator::removeContainer();
-
 if ($isXhprof) {
     // TODO Vendor以下にもっていきたい。
     $xhprofData = xhprof_disable();
