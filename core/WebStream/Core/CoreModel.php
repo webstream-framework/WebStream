@@ -93,13 +93,8 @@ class CoreModel implements CoreInterface
             throw new MethodNotFoundException("Undefined method called: $method");
         }
 
-        if (!$this->manager->isConnected()) {
+        if ($this->manager->isConnected() === false) {
             $this->manager->connect();
-        }
-
-        if ($this->isAutoCommit) {
-            // Modelメソッド内でModelメソッドを呼んだときはトランザクション継続
-            $this->manager->beginTransaction();
         }
 
         $result = $this->__execute($method, $arguments);
@@ -139,6 +134,7 @@ class CoreModel implements CoreInterface
 
                         break;
                     case "insert":
+                        $this->manager->beginTransaction();
                         if (is_string($sql) && is_array($bind)) {
                             $result = $this->manager->query($sql, $bind)->insert();
                         } else {
@@ -147,6 +143,7 @@ class CoreModel implements CoreInterface
 
                         break;
                     case "update":
+                        $this->manager->beginTransaction();
                         if (is_string($sql) && is_array($bind)) {
                             $result = $this->manager->query($sql, $bind)->update();
                             throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
@@ -154,6 +151,7 @@ class CoreModel implements CoreInterface
 
                         break;
                     case "delete":
+                        $this->manager->beginTransaction();
                         if (is_string($sql) && is_array($bind)) {
                             $result = $this->manager->query($sql, $bind)->delete();
                         } else {
@@ -178,6 +176,8 @@ class CoreModel implements CoreInterface
 
                 $sql = $query["sql"];
                 $method = $query["method"];
+
+                $this->manager->beginTransaction();
 
                 if (is_array($bind)) {
                     $result = $this->manager->query($sql, $bind)->{$method}();
@@ -209,7 +209,7 @@ class CoreModel implements CoreInterface
      */
     final public function commit()
     {
-        if ($this->isAutoCommit) {
+        if ($this->isAutoCommit === false) {
             $this->manager->commit();
         }
     }
