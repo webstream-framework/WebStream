@@ -115,8 +115,16 @@ class DatabaseManager
      */
     public function rollback()
     {
-        $this->connection->rollback();
+        try {
+            $this->connection->rollback();
+        } catch (\PDOException $e) {
+            $this->query = null;
+            $this->disconnect();
+            throw new DatabaseException($e);
+        }
+
         $this->query = null;
+        $this->disconnect();
         Logger::debug("Execute rollback.");
     }
 
