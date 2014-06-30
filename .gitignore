@@ -4,6 +4,7 @@ sandbox/
 phpunit/
 log/
 core/WebStream/Test/Sample/log/
+app/views/_cache/
 vendor
 composer.phar
 composer.lock
