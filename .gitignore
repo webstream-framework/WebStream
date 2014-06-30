@@ -1,3 +1,11 @@
 .svn
 .DS_Store
 sandbox/
+phpunit/
+log/
+core/reports/
+core/WebStream/Test/Sample/log/
+app/views/_cache/
+vendor
+composer.phar
+composer.lock

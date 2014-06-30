@@ -1,1 +1,0 @@
-<?php ${self::HELPER_RECEIVER}->__initialize("show_snake_camel", array()); ?>

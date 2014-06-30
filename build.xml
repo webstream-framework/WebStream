@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="stream" basedir="." default="main">
-    <target name="main" depends="init,phpmd,phpcpd,test"></target>
+    <target name="main" depends="init,test"></target>
 
     <!-- init -->
     <target name="init">
@@ -13,7 +13,7 @@
         <phpunit haltonfailure="false" printsummary="true">
             <formatter type="xml" outfile="./core/reports/phpunit.xml"/>
             <batchtest>
-                <fileset dir="./core/test">
+                <fileset dir="./core/WebStream/Test">
                     <include name="**/*Test.php" />
                 </fileset>
             </batchtest>

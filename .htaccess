@@ -2,5 +2,5 @@
   RewriteEngine On
   RewriteCond %{REQUEST_FILENAME} !-f
   #RewriteRule ^(.*)$ index.php [QSA,L]
-  RewriteRule ^(.*)$ core/test/testdata/index.php [QSA,L]
+  RewriteRule ^(.*)$ core/WebStream/Test/Sample/index.php [QSA,L]
 </IfModule>

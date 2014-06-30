@@ -1,2 +1,0 @@
-<h2>in helper</h2>
-<?php echo \WebStream\safetyOut($name); ?>
