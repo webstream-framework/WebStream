@@ -5,11 +5,11 @@
     <head>
         <link type="text/css" rel="stylesheet" href="/eclipse/stream/css/sample.css" />
         <script type="text/javascript" src="/eclipse/stream/js/sample.js"></script>
-        <title>%{$title}</title>
+        <title>%H{$model->getTitle()}</title>
     </head>
     <body>
         <div>
-            @{index}
+            %T{$index}
         </div>
     </body>
 </html>

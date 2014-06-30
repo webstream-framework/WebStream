@@ -1,17 +1,23 @@
 <?php
-namespace WebStream;
+namespace WebStream\Sample;
+
+use WebStream\Core\CoreModel;
+use WebStream\Annotation\Inject;
+use WebStream\Annotation\Query;
+use WebStream\Annotation\Database;
+
 /**
  * @Inject
- * @Database("test")
- * @Table("users")
- * @Properties("sql/users.properties")
+ * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.ini")
  */
-class SampleModel extends CoreModel {
+class SampleModel extends CoreModel
+{
     /**
      * @Inject
-     * @SQL("users.users")
+     * @Query(file="query/webstream-model-mapper-sample.xml")
      */
-    public function model1() {
-        return $this->select();
+    public function getData()
+    {
+        return $this->getTestData(["limit" => 0, "offset" => 1]);
     }
 }

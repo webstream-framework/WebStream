@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
   "-//github.com/mapserver2007//DTD Mapper 3.0//EN"
   "http://localhost/WebStream/core/WebStream/Test/Sample/custom/webstream-model-mapper.dtd">
-<mapper namespace="WebStream\Test\TestData\Sample\App\Model">
+<mapper namespace="WebStream\Sample">
   <select id="getTestData">
     SELECT
         *

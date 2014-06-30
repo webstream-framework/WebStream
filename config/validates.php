@@ -1,10 +1,11 @@
 <?php
-namespace WebStream;
+namespace WebStream\Delegate;
 
-Validator::setRule(
-    array(
-        "sample#validate_form" => array(
-            "post#name" => "required"
-        ) 
-    )
-);
+/**
+ * バリデーションルールを記述する
+ */
+Validator::setRule([
+    "sample#validate_form" => [
+        "post#name" => "required"
+    ]
+]);
