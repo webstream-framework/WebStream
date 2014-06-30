@@ -1,3 +1,0 @@
-<?php ${self::HELPER_RECEIVER}->__initialize("show1", array($name)); ?>
-<?php ${self::HELPER_RECEIVER}->__initialize("show2", array($name)); ?>
-<?php ${self::HELPER_RECEIVER}->__initialize("show_snake", array($name)); ?>

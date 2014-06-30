@@ -1,2 +1,0 @@
-<h1>Model Test</h1>
-<?php ${self::HELPER_RECEIVER}->__initialize("by_array", array($data)); ?>
