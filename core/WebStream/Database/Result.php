@@ -3,7 +3,6 @@ namespace WebStream\Database;
 
 use WebStream\Module\Logger;
 use WebStream\Exception\Extend\CollectionException;
-use WebStream\Exception\Extend\OutOfBoundsException;
 
 /**
  * Result
@@ -27,7 +26,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 
     /**
      * コンストラクタ
-     * @param object ステートメントオブジェクト
+     * @param PDOStatement ステートメントオブジェクト
      */
     public function __construct(\PDOStatement $stmt)
     {
@@ -51,7 +50,18 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
      */
     public function count()
     {
-        return $this->stmt === null ? count($this->rowCache) : $this->stmt->rowCount();
+        $count = 0;
+        if ($this->stmt === null) {
+            $count = count($this->rowCache);
+        } else {
+            $count = $this->stmt->rowCount();
+            if ($count === 0) {
+                $this->toArray();
+                $count = count($this->rowCache);
+            }
+        }
+
+        return $count;
     }
 
     /**
@@ -69,8 +79,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
         if (array_key_exists($offset, $this->rowCache)) {
             return $this->rowCache[$offset];
         } else {
-            // TODO \OutOfBoundsException でなければならない。
-            throw new OutOfBoundsException("Current cursor is out of range: " . $offset);
+            throw new \OutOfBoundsException("Current cursor is out of range: " . $offset);
         }
     }
 
@@ -82,12 +91,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
     public function current()
     {
         if ($this->stmt === null) {
-            if (!array_key_exists($this->position, $this->rowCache)) {
-                // TODO 例外処理自体いらない？マニュアルよく読む.
-                throw new OutOfBoundsException("Access out of range.");
-            }
-
-            return $this->rowCache[$this->position];
+            return array_key_exists($this->position, $this->rowCache) ? $this->rowCache[$this->position] : null;
         }
 
         return $this->row;
