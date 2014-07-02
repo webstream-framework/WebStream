@@ -104,8 +104,9 @@ class CoreDelegator
                 }
             };
         } else {
-            $exception = new ClassNotFoundException($pageName . "Service and " . $pageName . "Model is not defined.");
-            $this->coreContainer->model = $exception;
+            $classpath = "\WebStream\Exception\Extend\ClassNotFoundException";
+            $message = $pageName . "Service and " . $pageName . "Model is not defined.";
+            $this->coreContainer->model = new ExceptionDelegator($classpath, $message);
         }
 
         // Helper
@@ -117,8 +118,9 @@ class CoreDelegator
                 }
             };
         } else {
-            $exception = new ClassNotFoundException($pageName . "Helper is not defined.");
-            $this->coreContainer->helper = new ExceptionDelegator($exception);
+            $classpath = "\WebStream\Exception\Extend\ClassNotFoundException";
+            $message = $pageName . "Helper is not defined.";
+            $this->coreContainer->helper = new ExceptionDelegator($classpath, $message);
         }
     }
 
