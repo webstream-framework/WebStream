@@ -197,5 +197,11 @@ Router::setRule([
     '/test_json1' => "test_json#json1",
     '/test_json2' => "test_json#json2",
     '/test_jsonp1' => "test_json#jsonp1",
-    '/test_jsonp2' => "test_json#jsonp2"
+    '/test_jsonp2' => "test_json#jsonp2",
+    '/test_iterator1' => "test_iterator#count",
+    '/test_iterator2' => "test_iterator#seek",
+    '/test_iterator3' => "test_iterator#seek_failure",
+    '/test_iterator4' => "test_iterator#key_value",
+    '/test_iterator5' => "test_iterator#array_access_get",
+    '/test_iterator6' => "test_iterator#array_access_set",
 ]);
