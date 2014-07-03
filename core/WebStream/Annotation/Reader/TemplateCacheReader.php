@@ -63,9 +63,8 @@ class TemplateCacheReader extends AbstractAnnotationReader
                 }
                 $this->expire = $expire;
             }
-
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 

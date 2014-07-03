@@ -118,7 +118,7 @@ class HeaderReader extends AbstractAnnotationReader
                 $refClass = $refClass->getParentClass();
             }
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 

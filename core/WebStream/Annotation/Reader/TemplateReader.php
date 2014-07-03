@@ -164,7 +164,7 @@ class TemplateReader extends AbstractAnnotationReader
 
             $this->templateContainer->parts = $partsList;
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 

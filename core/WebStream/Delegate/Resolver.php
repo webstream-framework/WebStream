@@ -187,7 +187,7 @@ class Resolver
             // after filter
             $filter->after();
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
         }

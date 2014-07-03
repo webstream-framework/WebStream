@@ -55,7 +55,7 @@ class QueryReader extends AbstractAnnotationReader
                 }
             }
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 
