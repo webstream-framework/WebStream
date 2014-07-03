@@ -29,8 +29,6 @@ class CoreView implements CoreInterface
     const TEMPLATE_MARK_XML        = '%X';
     /** Template記法 */
     const TEMPLATE_MARK_TEMPLATE   = '%T';
-    /** ヘルパのレシーバ名 */
-    const HELPER_RECEIVER = "__HELPER__";
     /** リクエスト */
     private $request;
     /** レスポンス */
