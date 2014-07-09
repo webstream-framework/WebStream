@@ -70,7 +70,7 @@ abstract class DatabaseDriver
      */
     public function beginTransaction()
     {
-        return $this->connection->beginTransaction();
+        return $this->connection !== null ? $this->connection->beginTransaction() : false;
     }
 
     /**
@@ -78,7 +78,9 @@ abstract class DatabaseDriver
      */
     public function commit()
     {
-        $this->connection->commit();
+        if ($this->connection !== null) {
+            $this->connection->commit();
+        }
     }
 
     /**
@@ -86,7 +88,9 @@ abstract class DatabaseDriver
      */
     public function rollback()
     {
-        $this->connection->rollback();
+        if ($this->connection !== null) {
+            $this->connection->rollback();
+        }
     }
 
     /**
@@ -104,7 +108,7 @@ abstract class DatabaseDriver
      */
     public function inTransaction()
     {
-        return $this->connection->inTransaction();
+        return $this->connection !== null ? $this->connection->inTransaction() : false;
     }
 
     /**
@@ -114,7 +118,7 @@ abstract class DatabaseDriver
      */
     public function getStatement($sql)
     {
-        return $this->connection->prepare($sql);
+        return $this->connection !== null ? $this->connection->prepare($sql) : null;
     }
 
     /**

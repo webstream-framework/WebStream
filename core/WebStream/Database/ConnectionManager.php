@@ -3,6 +3,7 @@ namespace WebStream\Database;
 
 use WebStream\Module\Container;
 use WebStream\Annotation\Container\AnnotationListContainer;
+use WebStream\Exception\Extend\DatabaseException;
 
 /**
  * ConnectionManager
@@ -61,7 +62,16 @@ class ConnectionManager
         $this->connectionContainer = new Container();
 
         foreach ($connectionItemContainerList as $container) {
-            $config = parse_ini_file($container->configPath);
+            $config = null;
+            $ext = pathinfo($container->configPath, PATHINFO_EXTENSION);
+            if ($ext === 'ini') {
+                $config = parse_ini_file($container->configPath);
+            } elseif ($ext === 'yml' || $ext === 'yaml') {
+                $config = \Spyc::YAMLLoad($container->configPath);
+            } else {
+                throw new DatabaseException("Yaml or ini file only available database configuration file.");
+            }
+
             $driverClassPath = $container->driverClassPath;
 
             $dsnHash = "";

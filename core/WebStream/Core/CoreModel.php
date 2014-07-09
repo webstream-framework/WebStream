@@ -109,6 +109,11 @@ class CoreModel implements CoreInterface
         return $result;
     }
 
+    /**
+     * DB処理を実行する
+     * @param string メソッド名
+     * @param array sql/bindパラメータ
+     */
     final public function __execute($method, $arguments)
     {
         $result = null;

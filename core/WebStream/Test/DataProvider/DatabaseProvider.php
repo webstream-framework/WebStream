@@ -82,6 +82,14 @@ trait DatabaseProvider
         ];
     }
 
+    public function okYamlConfigProvider()
+    {
+        return [
+            ["/test_model23", "honoka", "/test_model_prepare4"],
+            ["/test_model24", "honoka", "/test_model_prepare4"]
+        ];
+    }
+
     public function useUndefinedQueryXmlFileProvider()
     {
         return [

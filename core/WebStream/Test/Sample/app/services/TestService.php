@@ -14,6 +14,7 @@ class TestService extends CoreService
     public function service2()
     {
         $sampleLibrary = new SampleLibrary();
+
         return $sampleLibrary->getName();
     }
 }
