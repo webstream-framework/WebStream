@@ -1,7 +1,6 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Utility;
 use WebStream\Module\Container;
 use WebStream\Module\Security;
 use WebStream\Module\Logger;
@@ -14,8 +13,6 @@ use WebStream\Module\Logger;
  */
 class CoreHelper implements CoreInterface
 {
-    use Utility;
-
     /**
      * {@inheritdoc}
      */
