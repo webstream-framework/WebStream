@@ -208,4 +208,5 @@ Router::setRule([
     '/test_iterator4' => "test_iterator#key_value",
     '/test_iterator5' => "test_iterator#array_access_get",
     '/test_iterator6' => "test_iterator#array_access_set",
+    '/test_custom_dir1' => "test_custom_dir#from_controller"
 ]);
