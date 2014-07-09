@@ -133,7 +133,6 @@ class Query
                 throw new DatabaseException("${message} ${sqlState} ${errorCode}");
             }
         } catch (\PDOException $e) {
-            $this->isUpdated = false;
             throw new DatabaseException($e);
         }
     }

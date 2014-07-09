@@ -24,8 +24,8 @@ class TemplateCacheTest extends TestBase
 
     public function setUp()
     {
-        parent::setUp();
         Logger::init($this->getLogConfigPath() . "/log.test.debug.ok.ini");
+        parent::setUp();
     }
 
     /**

@@ -36,16 +36,17 @@ class TestBase extends \PHPUnit_Framework_TestCase
         $classLoader = new \WebStream\Module\ClassLoader();
         $classLoader->test();
         $classLoader->load([
-            "WebStream\Annotation\AbstractAnnotation",
+            "WebStream\Annotation\Annotation",
             "WebStream\Annotation\Autowired",
-            "WebStream\Annotation\Value",
-            "WebStream\Annotation\Type",
             "WebStream\Annotation\Inject",
             "WebStream\Annotation\Filter",
             "WebStream\Annotation\Template",
             "WebStream\Annotation\TemplateCache",
             "WebStream\Annotation\Header",
-            "Doctrine/Common/Annotations/AnnotationException"
+            "WebStream\Annotation\Query",
+            "WebStream\Annotation\ExceptionHandler",
+            "WebStream\Annotation\Database",
+            "Doctrine\Common\Annotations\AnnotationException"
         ]);
     }
 }
