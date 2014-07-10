@@ -189,6 +189,20 @@ class RouterTest extends TestBase
     }
 
     /**
+     * 正常系
+     * 開発者が定義したクラスを各階層で呼べること
+     * @test
+     * @dataProvider customDirProvider
+     */
+    public function okCustomDir($path, $response)
+    {
+        $http = new HttpClient();
+        $result = $http->get($this->getDocumentRootURL() . $path);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, $result);
+    }
+
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @test

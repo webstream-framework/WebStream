@@ -99,6 +99,17 @@ trait RouterProvider
         ];
     }
 
+    public function customDirProvider()
+    {
+        return [
+            ['/test_custom_dir1', 'WebStream\Test\TestData\Sample\App\Entity\TestEntity'],
+            ['/test_custom_dir2', 'WebStream\Test\TestData\Sample\App\Entity\TestEntity'],
+            ['/test_custom_dir3', 'WebStream\Test\TestData\Sample\App\Entity\TestEntity'],
+            ['/test_custom_dir4', 'WebStream\Test\TestData\Sample\App\Entity\TestEntity'],
+            ['/test_custom_dir5', 'WebStream\Test\TestData\Sample\App\Entity\TestEntity']
+        ];
+    }
+
     // 異常系
     public function resolveUnknownProvider()
     {
@@ -115,5 +126,4 @@ trait RouterProvider
             ["/snake_ng2"]
         ];
     }
-
 }

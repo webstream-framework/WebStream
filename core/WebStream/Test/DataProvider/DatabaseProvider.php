@@ -54,35 +54,35 @@ trait DatabaseProvider
         ];
     }
 
-    public function okMultipleDatabaseAccessProvider()
+    public function multipleDatabaseAccessProvider()
     {
         return [
             ["/test_model22", "honokakotori", "/test_model_prepare", "/test_model_prepare2"]
         ];
     }
 
-    public function okTransactionInControllerProvider()
+    public function transactionInControllerProvider()
     {
         return [
             ["/test_transaction1", "trans1trans2", "/test_transaction_clear"]
         ];
     }
 
-    public function okTransactionRollbackInControllerProvider()
+    public function transactionRollbackInControllerProvider()
     {
         return [
             ["/test_transaction2", "", "/test_transaction_clear"]
         ];
     }
 
-    public function okTransactionRollbackInModelProvider()
+    public function transactionRollbackInModelProvider()
     {
         return [
             ["/test_transaction3", "", "/test_transaction_clear"]
         ];
     }
 
-    public function okYamlConfigProvider()
+    public function yamlConfigProvider()
     {
         return [
             ["/test_model23", "honoka", "/test_model_prepare4"],

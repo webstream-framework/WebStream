@@ -43,9 +43,11 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/HeaderReader
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/FilterReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/TemplateReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/TemplateCacheReader.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/QueryReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/ExceptionHandlerReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/DatabaseReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/DatabaseManager.php';
+require_once dirname(__FILE__) . '/core/WebStream/Database/ConnectionManager.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/DatabaseDriver.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Mysql.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Postgresql.php';
