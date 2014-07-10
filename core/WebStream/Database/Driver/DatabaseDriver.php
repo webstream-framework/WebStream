@@ -88,7 +88,7 @@ abstract class DatabaseDriver
      */
     public function rollback()
     {
-        if ($this->connection !== null) {
+        if ($this->inTransaction()) {
             $this->connection->rollback();
         }
     }
