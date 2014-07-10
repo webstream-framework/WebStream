@@ -120,7 +120,7 @@ class DatabaseTest extends TestBase
      * 正常系
      * 子クラスと親クラスで別DBに接続している場合、それぞれのDBから値を取得できること
      * @test
-     * @dataProvider okMultipleDatabaseAccessProvider
+     * @dataProvider multipleDatabaseAccessProvider
      */
     public function okMultipleDatabaseAccess($path, $response, $preparePath1, $preparePath2)
     {
@@ -139,7 +139,7 @@ class DatabaseTest extends TestBase
      * 正常系
      * Controllerクラス内で明示的にトランザクションスコープを指定した場合、すべて正常にコミットされること
      * @test
-     * @dataProvider okTransactionInControllerProvider
+     * @dataProvider transactionInControllerProvider
      */
     public function okTransactionInController($path, $response, $preparePath)
     {
@@ -156,7 +156,7 @@ class DatabaseTest extends TestBase
      * 正常系
      * Controllerクラス内で明示的にトランザクションスコープを指定した場合、すべて正常にロールバックされること
      * @test
-     * @dataProvider okTransactionRollbackInControllerProvider
+     * @dataProvider transactionRollbackInControllerProvider
      */
     public function okTransactionRollbackInController($path, $response, $preparePath)
     {
@@ -173,7 +173,7 @@ class DatabaseTest extends TestBase
      * 正常系
      * Modelクラス内で明示的にトランザクションスコープを指定した場合、すべて正常にロールバックされること
      * @test
-     * @dataProvider okTransactionRollbackInModelProvider
+     * @dataProvider transactionRollbackInModelProvider
      */
     public function okTransactionRollbackInModel($path, $response, $preparePath)
     {
@@ -190,7 +190,7 @@ class DatabaseTest extends TestBase
      * 正常系
      * 設定ファイルに.yml|.yamlを指定した時、正常にデータが取得できること
      * @test
-     * @dataProvider okYamlConfigProvider
+     * @dataProvider yamlConfigProvider
      */
     public function okYamlConfig($path, $response, $preparePath)
     {
