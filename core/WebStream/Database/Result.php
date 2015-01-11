@@ -13,16 +13,16 @@ use WebStream\Exception\Extend\CollectionException;
 class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 {
     /** ステートメントオブジェクト */
-    private $stmt;
+    protected $stmt;
 
     /** 列データ */
-    private $row;
+    protected $row;
 
     /** キャッシュ化列データ */
-    private $rowCache;
+    protected $rowCache;
 
     /** インデックス位置 */
-    private $position;
+    protected $position;
 
     /**
      * コンストラクタ

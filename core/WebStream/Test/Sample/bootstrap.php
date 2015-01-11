@@ -48,12 +48,14 @@ require_once dirname(__FILE__) . '/../../Annotation/Reader/ExceptionHandlerReade
 require_once dirname(__FILE__) . '/../../Annotation/Reader/DatabaseReader.php';
 require_once dirname(__FILE__) . '/../../Database/DatabaseManager.php';
 require_once dirname(__FILE__) . '/../../Database/ConnectionManager.php';
+require_once dirname(__FILE__) . '/../../Database/EntityManager.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/DatabaseDriver.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/Mysql.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/Postgresql.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/Sqlite.php';
 require_once dirname(__FILE__) . '/../../Database/Query.php';
 require_once dirname(__FILE__) . '/../../Database/Result.php';
+require_once dirname(__FILE__) . '/../../Database/ResultEntity.php';
 require_once dirname(__FILE__) . '/../../Delegate/CoreDelegator.php';
 require_once dirname(__FILE__) . '/../../Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/../../Delegate/Resolver.php';

@@ -56,6 +56,14 @@ class TestPostgresController extends CoreController
         }
     }
 
+    public function model8()
+    {
+        $result = $this->TestPostgres->model8();
+        foreach ($result as $entity) {
+            echo $entity->getName();
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")

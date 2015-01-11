@@ -204,6 +204,23 @@ class DatabaseTest extends TestBase
     }
 
     /**
+     * 正常系
+     * select結果をエンティティクラスにマッピングできること
+     * @test
+     * @dataProvider entityMappingProvider
+     */
+    public function okEntityMapping($path, $response, $preparePath)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
      * 異常系
      * 不明なDatabaseDriverを指定した場合、例外が発生すること
      * @test

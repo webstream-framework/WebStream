@@ -99,4 +99,12 @@ trait DatabaseProvider
         ];
     }
 
+    public function entityMappingProvider()
+    {
+        return [
+            ["/test_model25", "honoka", "test_model_prepare"],
+            ["/test_model26", "kotori", "test_model_prepare2"]
+        ];
+    }
+
 }

@@ -43,18 +43,27 @@ class TestSqliteModel extends CoreModel
     public function model4()
     {
         // Modelメソッドを直接Controllerから呼ばないパターン
-        return $this->model5();
+        return $this->model4_2();
     }
 
     /**
      * @Inject
      * @Query(file="query/webstream-model-mapper-sample-innercall.xml")
      */
-    public function model5()
+    public function model4_2()
     {
         $bind = ["limit" => 1, "offset" => 0];
 
         return $this->innerSelectSqlite($bind);
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model5()
+    {
+        return $this->entityMappingSqlite(["limit" => 1, "offset" => 0]);
     }
 
     /**
