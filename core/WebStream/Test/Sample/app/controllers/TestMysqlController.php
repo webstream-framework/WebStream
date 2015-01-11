@@ -56,6 +56,14 @@ class TestMysqlController extends CoreController
         }
     }
 
+    public function model8()
+    {
+        $result = $this->TestMysql->model8();
+        foreach ($result as $entity) {
+            echo $entity->getName();
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")

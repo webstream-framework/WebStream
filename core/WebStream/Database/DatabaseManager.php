@@ -185,4 +185,9 @@ class DatabaseManager
 
         return $this->query;
     }
+
+    public function queryAsEntity($entity)
+    {
+        // TODO select以外の時に使用する
+    }
 }

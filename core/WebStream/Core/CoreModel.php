@@ -4,6 +4,7 @@ namespace WebStream\Core;
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
 use WebStream\Database\DatabaseManager;
+use WebStream\Database\Result;
 use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Annotation\Reader\DatabaseReader;
 use WebStream\Annotation\Reader\QueryReader;
@@ -125,45 +126,18 @@ class CoreModel implements CoreInterface
                 if (array_key_exists(1, $arguments)) {
                     $bind = $arguments[1];
                 }
-                switch ($method) {
-                    case "select":
-                        if (is_string($sql)) {
-                            if (is_array($bind)) {
-                                $result = $this->manager->query($sql, $bind)->select();
-                            } else {
-                                $result = $this->manager->query($sql)->select();
-                            }
-                        } else {
-                            throw new DatabaseException("Invalid SQL: " . $sql);
-                        }
 
-                        break;
-                    case "insert":
+                if (is_string($sql)) {
+                    if ($method !== 'select') {
                         $this->manager->beginTransaction();
-                        if (is_string($sql) && is_array($bind)) {
-                            $result = $this->manager->query($sql, $bind)->insert();
-                        } else {
-                            throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
-                        }
-
-                        break;
-                    case "update":
-                        $this->manager->beginTransaction();
-                        if (is_string($sql) && is_array($bind)) {
-                            $result = $this->manager->query($sql, $bind)->update();
-                            throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
-                        }
-
-                        break;
-                    case "delete":
-                        $this->manager->beginTransaction();
-                        if (is_string($sql) && is_array($bind)) {
-                            $result = $this->manager->query($sql, $bind)->delete();
-                        } else {
-                            throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
-                        }
-
-                        break;
+                    }
+                    if (is_array($bind)) {
+                        $result = $this->manager->query($sql, $bind)->{$method}();
+                    } else {
+                        $result = $this->manager->query($sql)->{$method}();
+                    }
+                } else {
+                    throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
                 }
             } else {
                 $bind = null;
@@ -181,16 +155,46 @@ class CoreModel implements CoreInterface
 
                 $sql = $query["sql"];
                 $method = $query["method"];
+                $entityClassPath = $query["entity"];
 
-                $this->manager->beginTransaction();
+                if ($entityClassPath !== null) {
+                    if (!class_exists($entityClassPath)) {
+                        throw new DatabaseException("Entity classpath is not found: " . $entityClassPath);
+                    }
 
-                if (is_array($bind)) {
-                    $result = $this->manager->query($sql, $bind)->{$method}();
+                    switch ($method) {
+                        case "select":
+                            if (is_string($sql)) {
+                                if (is_array($bind)) {
+                                    $result = $this->manager->query($sql, $bind)->selectAsEntity($entityClassPath);
+                                } else {
+                                    $result = $this->manager->query($sql)->selectAsEntity($entityClassPath);
+                                }
+                            } else {
+                                throw new DatabaseException("Invalid SQL: " . $sql);
+                            }
+
+                            break;
+                        case "insert":
+                        case "update":
+                        case "delete":
+                            // Not implement
+                            throw new DatabaseException("Entity mapping is select only.");
+                    }
                 } else {
-                    $result = $this->manager->query($sql)->{$method}();
+                    if (is_string($sql)) {
+                        if ($method !== 'select') {
+                            $this->manager->beginTransaction();
+                        }
+                        if (is_array($bind)) {
+                            $result = $this->manager->query($sql, $bind)->{$method}();
+                        } else {
+                            $result = $this->manager->query($sql)->{$method}();
+                        }
+                    } else {
+                        throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
+                    }
                 }
-
-                return $result;
             }
         } catch (DatabaseException $e) {
             $this->manager->rollback();

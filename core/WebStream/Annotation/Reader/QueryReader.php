@@ -74,6 +74,8 @@ class QueryReader extends AbstractAnnotationReader
                 $query = $xml->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
                 if (!empty($query)) {
                     $queryMap = ["sql" => trim($query[0]), "method" => $query[0]->getName()];
+                    $entity = $query[0]->attributes()["entity"];
+                    $queryMap["entity"] = $entity !== null ? $entity->__toString() : null;
 
                     return $queryMap;
                 }

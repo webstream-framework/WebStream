@@ -98,6 +98,19 @@ class Query
     }
 
     /**
+     * SELECT
+     * @param string エンティティクラスパス
+     * @return object 取得結果
+     */
+    public function selectAsEntity($classpath)
+    {
+        Logger::debug("execute select.");
+        $this->execute();
+
+        return new ResultEntity($this->stmt, $classpath);
+    }
+
+    /**
      * SQLを実行する
      * @return integer 結果件数
      */
