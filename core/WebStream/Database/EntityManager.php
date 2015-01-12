@@ -78,8 +78,8 @@ class EntityManager
                     break;
                 case 'DATETIME':  // mysql:datetime
                 case 'DATE':      // mysql:date
-                case 'timestamp': // postgres:timestamp
-                case 'date':      // postgres:date
+                case 'timestamp': // postgres:timestamp, sqlite:timestamp
+                case 'date':      // postgres:date, sqlite:date
                     $value = new \DateTime($value);
                     break;
                 default: // string
