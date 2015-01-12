@@ -68,6 +68,15 @@ class TestSqliteModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model6()
+    {
+        return $this->entityMappingSqlite2(["limit" => 1, "offset" => 0]);
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()
@@ -80,10 +89,48 @@ class TestSqliteModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function prepare2()
+    {
+        $bind = ['value1' => "honoka", 'value2' => "kotori", 'value3' => "umichang"];
+        $this->beginTransaction();
+        $this->deleteTestData();
+        if ($this->setTestData($bind) !== 0) {
+            $this->commit();
+
+            return true;
+        } else {
+            $this->rollback();
+
+            return false;
+        }
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function clear()
     {
         return $this->deleteTestData() !== 0;
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function clear2()
+    {
+        $this->beginTransaction();
+        if ($this->deleteTestData() !== 0) {
+            $this->commit();
+
+            return true;
+        } else {
+            $this->rollback();
+
+            return false;
+        }
     }
 }

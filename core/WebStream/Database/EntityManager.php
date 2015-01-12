@@ -2,6 +2,7 @@
 namespace WebStream\Database;
 
 use WebStream\Module\Utility;
+use WebStream\Module\Logger;
 
 /**
  * EntityManager
@@ -37,12 +38,22 @@ class EntityManager
         $instance = new $this->classpath();
         $refClass = new \ReflectionClass($this->classpath);
         $properties = $refClass->getProperties();
+
+        $propertyMap = [];
         foreach ($properties as $property) {
             if ($property->isPrivate() || $property->isProtected()) {
                 $property->setAccessible(true);
             }
-            // カラム名(スネークケース) -> フィールド名(キャメルケース)
-            $property->setValue($instance, $row[$this->snake2lcamel($property->getName())]);
+            $propertyMap[strtolower($property->getName())] = $property;
+        }
+
+        foreach ($row as $col => $value) {
+            $col = strtolower($this->snake2lcamel($col));
+            if (array_key_exists($col, $propertyMap)) {
+                $propertyMap[$col]->setValue($instance, $value);
+            } else {
+                Logger::error("Column '$col' is failed mapping in " . $this->classpath);
+            }
         }
 
         return $instance;

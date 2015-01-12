@@ -103,7 +103,9 @@ trait DatabaseProvider
     {
         return [
             ["/test_model25", "honoka", "test_model_prepare"],
-            ["/test_model26", "kotori", "test_model_prepare2"]
+            ["/test_model26", "kotori", "test_model_prepare2"],
+            ["/test_model27", "honoka", "test_model_prepare3"],
+            ["/test_model28", "honokakotoriumichang", "test_model_prepare5"]
         ];
     }
 

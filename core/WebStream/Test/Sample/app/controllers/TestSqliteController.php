@@ -44,6 +44,16 @@ class TestSqliteController extends CoreController
         }
     }
 
+    public function model6()
+    {
+        $result = $this->TestSqlite->model6();
+        foreach ($result as $entity) {
+            echo $entity->getValue1();
+            echo $entity->getValue2();
+            echo $entity->getValue3();
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
@@ -61,5 +71,15 @@ class TestSqliteController extends CoreController
     public function clear()
     {
         $this->TestSqlite->clear();
+    }
+
+    public function prepare2()
+    {
+        $this->TestSqlite->prepare2();
+    }
+
+    public function clear2()
+    {
+        $this->TestSqlite->clear2();
     }
 }

@@ -64,6 +64,16 @@ class TestPostgresController extends CoreController
         }
     }
 
+    public function model9()
+    {
+        $result = $this->TestPostgres->model9();
+        foreach ($result as $entity) {
+            echo $entity->getValue1();
+            echo $entity->getValue2();
+            echo $entity->getValue3();
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
@@ -81,5 +91,15 @@ class TestPostgresController extends CoreController
     public function clear()
     {
         $this->TestPostgres->clear();
+    }
+
+    public function prepare2()
+    {
+        $this->TestPostgres->prepare2();
+    }
+
+    public function clear2()
+    {
+        $this->TestPostgres->clear2();
     }
 }

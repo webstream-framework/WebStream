@@ -33,4 +33,57 @@
     OFFSET
         :offset
   </select>
+
+  <select id="entityMappingMysql2" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity2">
+    SELECT
+        *
+    FROM
+        T_WebStream_Entity_Mapping
+    LIMIT
+        :limit, :offset
+  </select>
+
+  <select id="entityMappingPostgres2" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity2">
+    SELECT
+        *
+    FROM
+        T_WebStream_Entity_Mapping
+    LIMIT
+        :limit
+    OFFSET
+        :offset
+  </select>
+
+  <select id="entityMappingSqlite2" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity2">
+    SELECT
+        *
+    FROM
+        T_WebStream_Entity_Mapping
+    LIMIT
+        :limit
+    OFFSET
+        :offset
+  </select>
+
+  <insert id="setTestData">
+    INSERT
+    INTO
+        T_WebStream_Entity_Mapping
+    (
+        camelcaseCol,
+        snakecase_col,
+        UcamelcaseCol
+    )
+    VALUES
+    (
+        :value1,
+        :value2,
+        :value3
+    )
+  </insert>
+
+  <delete id="deleteTestData">
+    DELETE FROM
+        T_WebStream_Entity_Mapping
+  </delete>
 </mapper>

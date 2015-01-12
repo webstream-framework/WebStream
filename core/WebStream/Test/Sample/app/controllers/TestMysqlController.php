@@ -64,6 +64,16 @@ class TestMysqlController extends CoreController
         }
     }
 
+    public function model9()
+    {
+        $result = $this->TestMysql->model9();
+        foreach ($result as $entity) {
+            echo $entity->getValue1();
+            echo $entity->getValue2();
+            echo $entity->getValue3();
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
@@ -81,5 +91,15 @@ class TestMysqlController extends CoreController
     public function clear()
     {
         $this->TestMysql->clear();
+    }
+
+    public function prepare2()
+    {
+        $this->TestMysql->prepare2();
+    }
+
+    public function clear2()
+    {
+        $this->TestMysql->clear2();
     }
 }
