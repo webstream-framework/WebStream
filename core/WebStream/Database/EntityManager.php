@@ -20,12 +20,26 @@ class EntityManager
     private $classpath;
 
     /**
+     * @var array<string> カラムメタ情報
+     */
+    private $columnMeta;
+
+    /**
      * コンストラクタ
      * @param string エンティティクラスパス
      */
     public function __construct($classpath)
     {
         $this->classpath = $classpath;
+    }
+
+    /**
+     * カラムメタ情報を設定する
+     * @param string カラムメタ情報
+     */
+    public function setColumnMeta(array $columnMeta)
+    {
+        $this->columnMeta = $columnMeta;
     }
 
     /**
@@ -50,6 +64,7 @@ class EntityManager
         foreach ($row as $col => $value) {
             $col = strtolower($this->snake2lcamel($col));
             if (array_key_exists($col, $propertyMap)) {
+
                 $propertyMap[$col]->setValue($instance, $value);
             } else {
                 Logger::error("Column '$col' is failed mapping in " . $this->classpath);

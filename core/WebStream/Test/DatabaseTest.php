@@ -221,6 +221,44 @@ class DatabaseTest extends TestBase
     }
 
     /**
+     * 正常系
+     * JOINを含むselect結果をエンティティクラスにマッピングできること
+     * @test
+     * @dataProvider entityMappingMultipleTableProvider
+     */
+    public function entityMappingMultipleTable($path, $response, $preparePath1, $preparePath2)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath1;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $preparePath2;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
+     * 正常系
+     * 別名を付けたカラム含むselect結果をエンティティクラスにマッピングできること
+     * @test
+     * @dataProvider entityMappingAliasProvider
+     */
+    public function entityMappingAlias($path, $preparePath1, $preparePath2)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath1;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $preparePath2;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertRegExp('/^\d+$/', $html);
+    }
+
+    /**
      * 異常系
      * 不明なDatabaseDriverを指定した場合、例外が発生すること
      * @test

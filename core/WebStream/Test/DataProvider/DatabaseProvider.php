@@ -105,7 +105,27 @@ trait DatabaseProvider
             ["/test_model25", "honoka", "test_model_prepare"],
             ["/test_model26", "kotori", "test_model_prepare2"],
             ["/test_model27", "honoka", "test_model_prepare3"],
-            ["/test_model28", "honokakotoriumichang", "test_model_prepare5"]
+            ["/test_model28", "honokakotoriumichang", "test_model_prepare5"],
+            ["/test_model29", "honokakotoriumichang", "test_model_prepare6"],
+            ["/test_model30", "honokakotoriumichang", "test_model_prepare7"]
+        ];
+    }
+
+    public function entityMappingMultipleTableProvider()
+    {
+        return [
+            ["/test_model31", "honokahonokakotoriumichang", "test_model_prepare", "test_model_prepare5"],
+            ["/test_model32", "kotorihonokakotoriumichang", "test_model_prepare", "test_model_prepare6"],
+            ["/test_model33", "honokahonokakotoriumichang", "test_model_prepare", "test_model_prepare7"]
+        ];
+    }
+
+    public function entityMappingAliasProvider()
+    {
+        return [
+            ["/test_model34", "test_model_prepare", "test_model_prepare5"],
+            ["/test_model35", "test_model_prepare", "test_model_prepare6"],
+            ["/test_model36", "test_model_prepare", "test_model_prepare7"]
         ];
     }
 

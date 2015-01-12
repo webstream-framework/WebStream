@@ -188,11 +188,15 @@ Router::setRule([
     '/test_model25' => "test_mysql#model8",
     '/test_model26' => "test_postgres#model8",
     '/test_model27' => "test_sqlite#model5",
-
     '/test_model28' => "test_mysql#model9",
     '/test_model29' => "test_postgres#model9",
     '/test_model30' => "test_sqlite#model6",
-
+    '/test_model31' => "test_mysql#model10",
+    '/test_model32' => "test_postgres#model10",
+    '/test_model33' => "test_sqlite#model7",
+    '/test_model34' => "test_mysql#model11",
+    '/test_model35' => "test_postgres#model11",
+    '/test_model36' => "test_sqlite#model8",
     '/test_transaction1' => "test_transaction#transaction_in_controller",
     '/test_transaction2' => "test_transaction#transaction_rollback_in_controller",
     '/test_transaction3' => "test_transaction#transaction_in_model",

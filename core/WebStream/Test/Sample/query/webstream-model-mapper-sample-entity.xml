@@ -65,6 +65,63 @@
         :offset
   </select>
 
+  <select id="entityMappingMultipleTableMysql" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity3">
+    SELECT
+        *
+    FROM
+        T_WebStream
+    CROSS JOIN
+        T_WebStream_Entity_Mapping;
+  </select>
+
+  <select id="entityMappingMultipleTablePostgres" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity3">
+    SELECT
+        *
+    FROM
+        T_WebStream
+    CROSS JOIN
+        T_WebStream_Entity_Mapping;
+  </select>
+
+  <select id="entityMappingMultipleTableSqlite" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity3">
+    SELECT
+        *
+    FROM
+        T_WebStream
+    CROSS JOIN
+        T_WebStream_Entity_Mapping;
+  </select>
+
+  <select id="entityMappingAliasMysql" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity4">
+    SELECT
+        T1.id AS id1,
+        T2.id AS id2
+    FROM
+        T_WebStream AS T1
+    CROSS JOIN
+        T_WebStream_Entity_Mapping T2;
+  </select>
+
+  <select id="entityMappingAliasPostgres" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity4">
+    SELECT
+        T1.id AS id1,
+        T2.id AS id2
+    FROM
+        T_WebStream AS T1
+    CROSS JOIN
+        T_WebStream_Entity_Mapping T2;
+  </select>
+
+  <select id="entityMappingAliasSqlite" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity4">
+    SELECT
+        T1.id AS id1,
+        T2.id AS id2
+    FROM
+        T_WebStream AS T1
+    CROSS JOIN
+        T_WebStream_Entity_Mapping T2;
+  </select>
+
   <insert id="setTestData">
     INSERT
     INTO

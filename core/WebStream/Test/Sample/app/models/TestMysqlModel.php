@@ -119,6 +119,24 @@ class TestMysqlModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model10()
+    {
+        return $this->entityMappingMultipleTableMysql();
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model11()
+    {
+        return $this->entityMappingAliasMysql();
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()

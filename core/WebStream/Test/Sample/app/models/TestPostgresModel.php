@@ -119,6 +119,24 @@ class TestPostgresModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model10()
+    {
+        return $this->entityMappingMultipleTablePostgres();
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model11()
+    {
+        return $this->entityMappingAliasPostgres();
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()

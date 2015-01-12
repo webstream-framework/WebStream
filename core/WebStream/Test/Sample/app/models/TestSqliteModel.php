@@ -77,6 +77,24 @@ class TestSqliteModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model7()
+    {
+        return $this->entityMappingMultipleTableSqlite();
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model8()
+    {
+        return $this->entityMappingAliasSqlite();
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()
