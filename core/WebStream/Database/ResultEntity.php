@@ -49,7 +49,13 @@ class ResultEntity extends Result
         $columnMeta = [];
         for ($index = 0; $index < $this->stmt->columnCount(); $index++) {
             $column = $this->stmt->getColumnMeta($index);
-            $columnMeta[$column['name']] = $column['pdo_type'];
+            if (array_key_exists('sqlite:decl_type', $column)) {
+                // sqlite
+                $columnMeta[$column['name']] = $column['sqlite:decl_type'];
+            } else {
+                // mysql, postgresql
+                $columnMeta[$column['name']] = $column['native_type'];
+            }
         }
 
         return $columnMeta;

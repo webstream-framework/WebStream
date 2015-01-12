@@ -129,4 +129,13 @@ trait DatabaseProvider
         ];
     }
 
+    public function entityMappingTypeProvider()
+    {
+        return [
+            ["/test_model37", "integerstringobjectstringobjectdoubleinteger", "test_model_prepare8"],
+            ["/test_model38", "integerstringobjectstringobjectdoubleinteger", "test_model_prepare9"],
+            ["/test_model39", "integerstringobjectstringobjectdoubleinteger", "test_model_prepare10"]
+        ];
+    }
+
 }

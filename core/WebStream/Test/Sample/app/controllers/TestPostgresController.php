@@ -94,6 +94,20 @@ class TestPostgresController extends CoreController
         }
     }
 
+    public function model12()
+    {
+        $result = $this->TestPostgres->model12();
+        foreach ($result as $entity) {
+            echo gettype($entity->getId());
+            echo gettype($entity->getName());
+            echo gettype($entity->getCreatedAt());
+            echo gettype($entity->getCreatedAtTime());
+            echo gettype($entity->getCreatedAtDate());
+            echo gettype($entity->getBigintNum());
+            echo gettype($entity->getSmallintNum());
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
@@ -121,5 +135,15 @@ class TestPostgresController extends CoreController
     public function clear2()
     {
         $this->TestPostgres->clear2();
+    }
+
+    public function prepare3()
+    {
+        $this->TestPostgres->prepare3();
+    }
+
+    public function clear3()
+    {
+        $this->TestPostgres->clear3();
     }
 }

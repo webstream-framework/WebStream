@@ -137,6 +137,15 @@ class TestPostgresModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model12()
+    {
+        return $this->entityMappingTypePostgres();
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()
@@ -177,6 +186,26 @@ class TestPostgresModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function prepare3()
+    {
+        $bind = ['name' => "elichika", 'bigint_num' => 9223372036854775807, 'smallint_num' => 3];
+        $this->beginTransaction();
+        $this->deleteTestData2();
+        if ($this->setTestData2($bind) !== 0) {
+            $this->commit();
+
+            return true;
+        } else {
+            $this->rollback();
+
+            return false;
+        }
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function clear()
@@ -201,6 +230,24 @@ class TestPostgresModel extends CoreModel
     {
         $this->beginTransaction();
         if ($this->deleteTestData() !== 0) {
+            $this->commit();
+
+            return true;
+        } else {
+            $this->rollback();
+
+            return false;
+        }
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function clear3()
+    {
+        $this->beginTransaction();
+        if ($this->deleteTestData2() !== 0) {
             $this->commit();
 
             return true;

@@ -62,9 +62,33 @@ class EntityManager
         }
 
         foreach ($row as $col => $value) {
-            $col = strtolower($this->snake2lcamel($col));
-            if (array_key_exists($col, $propertyMap)) {
+            switch ($this->columnMeta[$col]) {
+                case 'LONG':      // mysql:int
+                case 'SHORT':     // mysql:smallint
+                case 'int4':      // postgres:int
+                case 'int2':      // postgres:smallint
+                case 'integer':   // sqlite:int
+                case 'smallint':  // sqlite:smallint
+                    $value = intval($value);
+                    break;
+                case 'LONGLONG':  // mysql:bigint
+                case 'int8':      // postgres:bigint
+                case 'bigint':    // sqlite:bigint
+                    $value = doubleval($value);
+                    break;
+                case 'DATETIME':  // mysql:datetime
+                case 'DATE':      // mysql:date
+                case 'timestamp': // postgres:timestamp
+                case 'date':      // postgres:date
+                    $value = new \DateTime($value);
+                    break;
+                default: // string
+                    break;
+            }
 
+            $col = strtolower($this->snake2lcamel($col));
+
+            if (array_key_exists($col, $propertyMap)) {
                 $propertyMap[$col]->setValue($instance, $value);
             } else {
                 Logger::error("Column '$col' is failed mapping in " . $this->classpath);

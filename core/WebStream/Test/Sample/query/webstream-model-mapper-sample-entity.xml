@@ -122,6 +122,27 @@
         T_WebStream_Entity_Mapping T2;
   </select>
 
+  <select id="entityMappingTypeMysql" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity5">
+    SELECT
+        *
+    FROM
+        T_WebStream_Entity_Mapping_Type
+  </select>
+
+  <select id="entityMappingTypePostgres" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity5">
+    SELECT
+        *
+    FROM
+        T_WebStream_Entity_Mapping_Type
+  </select>
+
+  <select id="entityMappingTypeSqlite" entity="\WebStream\Test\TestData\Sample\App\Entity\QueryEntity5">
+    SELECT
+        *
+    FROM
+        T_WebStream_Entity_Mapping_Type
+  </select>
+
   <insert id="setTestData">
     INSERT
     INTO
@@ -142,5 +163,56 @@
   <delete id="deleteTestData">
     DELETE FROM
         T_WebStream_Entity_Mapping
+  </delete>
+
+  <insert id="setTestData2">
+    INSERT
+    INTO
+        T_WebStream_Entity_Mapping_Type
+    (
+        name,
+        created_at,
+        created_at_time,
+        created_at_date,
+        bigint_num,
+        smallint_num
+    )
+    VALUES
+    (
+        :name,
+        now(),
+        now(),
+        now(),
+        :bigint_num,
+        :smallint_num
+    )
+  </insert>
+
+  <insert id="setTestData3">
+    INSERT
+    INTO
+        T_WebStream_Entity_Mapping_Type
+    (
+        name,
+        created_at,
+        created_at_time,
+        created_at_date,
+        bigint_num,
+        smallint_num
+    )
+    VALUES
+    (
+        :name,
+        datetime('now'),
+        time('now'),
+        date('now'),
+        :bigint_num,
+        :smallint_num
+    )
+  </insert>
+
+  <delete id="deleteTestData2">
+    DELETE FROM
+        T_WebStream_Entity_Mapping_Type
   </delete>
 </mapper>
