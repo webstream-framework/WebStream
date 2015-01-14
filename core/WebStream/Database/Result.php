@@ -202,4 +202,13 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 
         return $this->rowCache;
     }
+
+    /**
+     * 検索結果をエンティティとして返却する
+     * @return object 検索結果
+     */
+    public function toEntity($classpath)
+    {
+        return new ResultEntity($this->stmt, $classpath);
+    }
 }

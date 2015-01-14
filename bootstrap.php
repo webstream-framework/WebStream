@@ -48,12 +48,14 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/ExceptionHan
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/DatabaseReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/DatabaseManager.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/ConnectionManager.php';
+require_once dirname(__FILE__) . '/core/WebStream/Database/EntityManager.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/DatabaseDriver.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Mysql.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Postgresql.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Sqlite.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Query.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Result.php';
+require_once dirname(__FILE__) . '/core/WebStream/Database/ResultEntity.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/CoreDelegator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Resolver.php';

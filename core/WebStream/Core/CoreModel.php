@@ -166,9 +166,9 @@ class CoreModel implements CoreInterface
                         case "select":
                             if (is_string($sql)) {
                                 if (is_array($bind)) {
-                                    $result = $this->manager->query($sql, $bind)->selectAsEntity($entityClassPath);
+                                    $result = $this->manager->query($sql, $bind)->select()->toEntity($entityClassPath);
                                 } else {
-                                    $result = $this->manager->query($sql)->selectAsEntity($entityClassPath);
+                                    $result = $this->manager->query($sql)->select()->toEntity($entityClassPath);
                                 }
                             } else {
                                 throw new DatabaseException("Invalid SQL: " . $sql);

@@ -44,7 +44,7 @@ class ResultEntity extends Result
      * テーブルのメタデータを返却する
      * @return array<string> メタデータ
      */
-    public function getColumnMeta()
+    private function getColumnMeta()
     {
         $columnMeta = [];
         for ($index = 0; $index < $this->stmt->columnCount(); $index++) {
@@ -59,5 +59,13 @@ class ResultEntity extends Result
         }
 
         return $columnMeta;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toEntity()
+    {
+        return $this;
     }
 }
