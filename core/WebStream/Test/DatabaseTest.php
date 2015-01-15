@@ -188,6 +188,25 @@ class DatabaseTest extends TestBase
 
     /**
      * 正常系
+     * 複数のQueryアノテーションを定義した場合、それぞれのファイルに定義してあるSQLを実行できること
+     * @test
+     * @dataProvider multipleQueryAnnotationProvider
+     */
+    public function okMultipleQueryAnnotation($path, $response, $preparePath1, $preparePath2)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath1;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $preparePath2;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
+     * 正常系
      * 設定ファイルに.yml|.yamlを指定した時、正常にデータが取得できること
      * @test
      * @dataProvider yamlConfigProvider
@@ -226,7 +245,7 @@ class DatabaseTest extends TestBase
      * @test
      * @dataProvider entityMappingMultipleTableProvider
      */
-    public function entityMappingMultipleTable($path, $response, $preparePath1, $preparePath2)
+    public function okEntityMappingMultipleTable($path, $response, $preparePath1, $preparePath2)
     {
         $http = new HttpClient();
         $url = $this->getDocumentRootURL() . $preparePath1;
@@ -245,7 +264,7 @@ class DatabaseTest extends TestBase
      * @test
      * @dataProvider entityMappingAliasProvider
      */
-    public function entityMappingAlias($path, $preparePath1, $preparePath2)
+    public function okEntityMappingAlias($path, $preparePath1, $preparePath2)
     {
         $http = new HttpClient();
         $url = $this->getDocumentRootURL() . $preparePath1;
@@ -264,7 +283,7 @@ class DatabaseTest extends TestBase
      * @test
      * @dataProvider entityMappingTypeProvider
      */
-    public function entityMappingType($path, $response, $preparePath)
+    public function okEntityMappingType($path, $response, $preparePath)
     {
         $http = new HttpClient();
         $url = $this->getDocumentRootURL() . $preparePath;

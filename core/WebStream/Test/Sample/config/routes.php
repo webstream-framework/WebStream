@@ -197,11 +197,12 @@ Router::setRule([
     '/test_model34' => "test_mysql#model11",
     '/test_model35' => "test_postgres#model11",
     '/test_model36' => "test_sqlite#model8",
-
     '/test_model37' => "test_mysql#model12",
     '/test_model38' => "test_postgres#model12",
     '/test_model39' => "test_sqlite#model9",
-
+    '/test_model40' => "test_mysql#model13",
+    '/test_model41' => "test_postgres#model13",
+    '/test_model42' => "test_sqlite#model10",
     '/test_transaction1' => "test_transaction#transaction_in_controller",
     '/test_transaction2' => "test_transaction#transaction_rollback_in_controller",
     '/test_transaction3' => "test_transaction#transaction_in_model",
@@ -220,16 +221,12 @@ Router::setRule([
     '/test_model_clear6' => "test_postgres#clear2",
     '/test_model_prepare7' => "test_sqlite#prepare2",
     '/test_model_clear7' => "test_sqlite#clear2",
-
     '/test_model_prepare8' => "test_mysql#prepare3",
     '/test_model_clear8' => "test_mysql#clear3",
-
     '/test_model_prepare9' => "test_postgres#prepare3",
     '/test_model_clear9' => "test_postgres#clear3",
-
     '/test_model_prepare10' => "test_sqlite#prepare3",
     '/test_model_clear10' => "test_sqlite#clear3",
-
     '/test_template/xml' => "test_template#xml",
     '/test_json1' => "test_json#json1",
     '/test_json2' => "test_json#json2",

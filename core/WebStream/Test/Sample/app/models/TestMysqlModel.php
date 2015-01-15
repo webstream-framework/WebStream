@@ -147,6 +147,19 @@ class TestMysqlModel extends CoreModel
     /**
      * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model13()
+    {
+        $result1 = $this->getTestData(["limit" => 0, "offset" => 1]);
+        $result2 = $this->entityMappingMysql(["limit" => 0, "offset" => 1]);
+
+        return [$result1, $result2];
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()
     {

@@ -14,8 +14,8 @@ trait DatabaseProvider
         return [
             ["/test_model1", "honoka", "/test_model_prepare"],
             ["/test_model2", "honoka", "/test_model_prepare"],
-            ["/test_model4", "honoka", "/test_model_prepare3"],
-            ["/test_model5", "honoka", "/test_model_prepare3"],
+            ["/test_model4", "umichang", "/test_model_prepare3"],
+            ["/test_model5", "umichang", "/test_model_prepare3"],
             ["/test_model12", "kotori", "/test_model_prepare2"],
             ["/test_model13", "kotori", "/test_model_prepare2"]
         ];
@@ -50,7 +50,7 @@ trait DatabaseProvider
         return [
             ["/test_model19", "honoka", "/test_model_prepare"],
             ["/test_model20", "kotori", "/test_model_prepare2"],
-            ["/test_model21", "honoka", "/test_model_prepare3"]
+            ["/test_model21", "umichang", "/test_model_prepare3"]
         ];
     }
 
@@ -102,39 +102,48 @@ trait DatabaseProvider
     public function entityMappingProvider()
     {
         return [
-            ["/test_model25", "honoka", "test_model_prepare"],
-            ["/test_model26", "kotori", "test_model_prepare2"],
-            ["/test_model27", "honoka", "test_model_prepare3"],
-            ["/test_model28", "honokakotoriumichang", "test_model_prepare5"],
-            ["/test_model29", "honokakotoriumichang", "test_model_prepare6"],
-            ["/test_model30", "honokakotoriumichang", "test_model_prepare7"]
+            ["/test_model25", "honoka", "/test_model_prepare"],
+            ["/test_model26", "kotori", "/test_model_prepare2"],
+            ["/test_model27", "umichang", "/test_model_prepare3"],
+            ["/test_model28", "honokakotoriumichang", "/test_model_prepare5"],
+            ["/test_model29", "honokakotoriumichang", "/test_model_prepare6"],
+            ["/test_model30", "honokakotoriumichang", "/test_model_prepare7"]
         ];
     }
 
     public function entityMappingMultipleTableProvider()
     {
         return [
-            ["/test_model31", "honokahonokakotoriumichang", "test_model_prepare", "test_model_prepare5"],
-            ["/test_model32", "kotorihonokakotoriumichang", "test_model_prepare", "test_model_prepare6"],
-            ["/test_model33", "honokahonokakotoriumichang", "test_model_prepare", "test_model_prepare7"]
+            ["/test_model31", "honokahonokakotoriumichang", "/test_model_prepare", "/test_model_prepare5"],
+            ["/test_model32", "kotorihonokakotoriumichang", "/test_model_prepare", "/test_model_prepare6"],
+            ["/test_model33", "umichanghonokakotoriumichang", "/test_model_prepare", "/test_model_prepare7"]
         ];
     }
 
     public function entityMappingAliasProvider()
     {
         return [
-            ["/test_model34", "test_model_prepare", "test_model_prepare5"],
-            ["/test_model35", "test_model_prepare", "test_model_prepare6"],
-            ["/test_model36", "test_model_prepare", "test_model_prepare7"]
+            ["/test_model34", "/test_model_prepare", "/test_model_prepare5"],
+            ["/test_model35", "/test_model_prepare", "/test_model_prepare6"],
+            ["/test_model36", "/test_model_prepare", "/test_model_prepare7"]
         ];
     }
 
     public function entityMappingTypeProvider()
     {
         return [
-            ["/test_model37", "integerstringobjectstringobjectdoubleinteger", "test_model_prepare8"],
-            ["/test_model38", "integerstringobjectstringobjectdoubleinteger", "test_model_prepare9"],
-            ["/test_model39", "integerstringobjectstringobjectdoubleinteger", "test_model_prepare10"]
+            ["/test_model37", "integerstringobjectstringobjectdoubleinteger", "/test_model_prepare8"],
+            ["/test_model38", "integerstringobjectstringobjectdoubleinteger", "/test_model_prepare9"],
+            ["/test_model39", "integerstringobjectstringobjectdoubleinteger", "/test_model_prepare10"]
+        ];
+    }
+
+    public function multipleQueryAnnotationProvider()
+    {
+        return [
+            ["/test_model40", "honokastring", "/test_model_prepare", "/test_model_prepare8"],
+            ["/test_model41", "kotoristring", "/test_model_prepare2", "/test_model_prepare9"],
+            ["/test_model42", "umichangstring", "/test_model_prepare3", "/test_model_prepare10"]
         ];
     }
 
