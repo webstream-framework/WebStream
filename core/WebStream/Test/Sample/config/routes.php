@@ -203,6 +203,7 @@ Router::setRule([
     '/test_model40' => "test_mysql#model13",
     '/test_model41' => "test_postgres#model13",
     '/test_model42' => "test_sqlite#model10",
+    '/test_model43' => "test_database_error3#model2",
     '/test_transaction1' => "test_transaction#transaction_in_controller",
     '/test_transaction2' => "test_transaction#transaction_rollback_in_controller",
     '/test_transaction3' => "test_transaction#transaction_in_model",

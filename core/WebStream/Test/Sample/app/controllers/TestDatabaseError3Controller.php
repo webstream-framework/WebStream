@@ -9,7 +9,12 @@ class TestDatabaseError3Controller extends CoreController
 {
     public function model1()
     {
-        $result = $this->TestDatabaseError3->model1();
+        $this->TestDatabaseError3->model1();
+    }
+
+    public function model2()
+    {
+        $this->TestDatabaseError3->model2();
     }
 
     /**

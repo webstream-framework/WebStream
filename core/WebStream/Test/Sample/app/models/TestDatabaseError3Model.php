@@ -22,4 +22,13 @@ class TestDatabaseError3Model extends CoreModel
 
         return $this->getTestData($bind);
     }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-entity.xml")
+     */
+    public function model2()
+    {
+        $this->entityMappingInvalidClassPath();
+    }
 }

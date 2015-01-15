@@ -346,4 +346,17 @@ class DatabaseTest extends TestBase
         $html = $http->get($url);
         $this->assertEquals($html, "\WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError3Controller#model1");
     }
+
+    /**
+     * 異常系
+     * QueryXMLファイル内のselectタグのentity属性のクラスパスが存在しない場合、例外が発生すること
+     * @test
+     */
+    public function ngInvalidEntityClassPathQueryXmlFile()
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . "/test_model43";
+        $html = $http->get($url);
+        $this->assertEquals($html, "\WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError3Controller#model2");
+    }
 }
