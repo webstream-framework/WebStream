@@ -99,7 +99,5 @@ register_shutdown_function('shutdownHandler');
 $container = ServiceLocator::getContainer();
 
 // アプリケーションを起動する
-$class = new \ReflectionClass("WebStream\Core\Application");
-$instance = $class->newInstance($container);
-$method = $class->getMethod("run");
-$method->invoke($instance);
+$application = new \WebStream\Core\Application($container);
+$application->run();

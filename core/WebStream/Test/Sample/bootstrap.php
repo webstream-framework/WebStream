@@ -109,10 +109,8 @@ ServiceLocator::test();
 $container = ServiceLocator::getContainer();
 
 // アプリケーションを起動
-$class = new \ReflectionClass("WebStream\Core\Application");
-$instance = $class->newInstance($container);
-$method = $class->getMethod("run");
-$method->invoke($instance);
+$application = new \WebStream\Core\Application($container);
+$application->run();
 
 if ($isXhprof) {
     // TODO Vendor以下にもっていきたい。
