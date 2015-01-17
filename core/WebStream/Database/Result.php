@@ -13,22 +13,22 @@ use WebStream\Exception\Extend\CollectionException;
 class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 {
     /** ステートメントオブジェクト */
-    protected $stmt;
+    private $stmt;
 
     /** 列データ */
-    protected $row;
+    private $row;
 
     /** キャッシュ化列データ */
-    protected $rowCache;
+    private $rowCache;
 
     /** インデックス位置 */
-    protected $position;
+    private $position;
 
     /**
      * コンストラクタ
-     * @param PDOStatement ステートメントオブジェクト
+     * @param Doctrine\DBAL\Statement ステートメントオブジェクト
      */
-    public function __construct(\PDOStatement $stmt)
+    public function __construct(\Doctrine\DBAL\Statement $stmt)
     {
         $this->stmt = $stmt;
         $this->position = 0;
@@ -209,6 +209,6 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
      */
     public function toEntity($classpath)
     {
-        return new ResultEntity($this->stmt, $classpath);
+        return new ResultEntity($this->stmt->getWrappedStatement(), $classpath);
     }
 }

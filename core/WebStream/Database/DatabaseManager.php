@@ -6,7 +6,7 @@ use WebStream\Module\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**
- * DriverManager
+ * DatabaseManager
  * @author Ryuichi TANAKA.
  * @since 2013/12/07
  * @version 0.4
@@ -184,10 +184,5 @@ class DatabaseManager
         $this->query->setBind($bind);
 
         return $this->query;
-    }
-
-    public function queryAsEntity($entity)
-    {
-        // TODO select以外の時に使用する
     }
 }
