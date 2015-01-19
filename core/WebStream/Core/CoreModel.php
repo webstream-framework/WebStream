@@ -171,7 +171,12 @@ class CoreModel implements CoreInterface
                                     $result = $this->manager->query($sql)->select()->toEntity($entityClassPath);
                                 }
                             } else {
-                                throw new DatabaseException("Invalid SQL: " . $sql);
+                                $errorMessage = "Invalid SQL or bind parameters: " . $sql;
+                                if (is_array($bind)) {
+                                    $errorMessage .= ", " . strval($bind);
+                                }
+
+                                throw new DatabaseException($errorMessage);
                             }
 
                             break;
@@ -192,7 +197,12 @@ class CoreModel implements CoreInterface
                             $result = $this->manager->query($sql)->{$method}();
                         }
                     } else {
-                        throw new DatabaseException("Invalid SQL or bind parameters: " . $sql .", " . strval($bind));
+                        $errorMessage = "Invalid SQL or bind parameters: " . $sql;
+                        if (is_array($bind)) {
+                            $errorMessage .= ", " . strval($bind);
+                        }
+
+                        throw new DatabaseException($errorMessage);
                     }
                 }
             }

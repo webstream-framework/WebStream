@@ -51,6 +51,7 @@ abstract class DatabaseDriver
     {
         if ($this->connection !== null) {
             Logger::debug("Database disconnect.");
+            $this->connection->close();
             $this->connection = null;
         }
     }
