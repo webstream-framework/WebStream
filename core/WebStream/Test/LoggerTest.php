@@ -21,7 +21,6 @@ class LoggerTest extends TestBase
 
     public function setUp()
     {
-        parent::setUp();
     }
 
     public function tearDown()
@@ -557,6 +556,8 @@ class LoggerTest extends TestBase
      */
     public function ngNotInitialized()
     {
+        // オートロード有効
+        $this->autoLoad();
         // 初期化を再現
         $refClass = new \ReflectionClass("\WebStream\Module\Logger");
         $refProp = $refClass->getProperty("logger");

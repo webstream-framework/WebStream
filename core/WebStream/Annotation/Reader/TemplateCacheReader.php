@@ -2,6 +2,8 @@
 namespace WebStream\Annotation\Reader;
 
 use WebStream\Module\Logger;
+use WebStream\Exception\Extend\AnnotationException;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * TemplateCacheReader
@@ -11,7 +13,9 @@ use WebStream\Module\Logger;
  */
 class TemplateCacheReader extends AbstractAnnotationReader
 {
-    /** 有効期限 */
+    /**
+     * @var int 有効期限
+     */
     private $expire;
 
     /**
@@ -31,10 +35,8 @@ class TemplateCacheReader extends AbstractAnnotationReader
             return;
         }
 
-        $refClass = $this->reader->getReflectionClass();
-        $action = $this->reader->getContainer()->router->action();
-
-        $annotationContainerKey = $refClass->getName() . "#" . $action;
+        $container = $this->reader->getContainer();
+        $annotationContainerKey = $container->classpath . "#" . $container->action;
         if (!array_key_exists($annotationContainerKey, $this->annotation)) {
             return;
         }

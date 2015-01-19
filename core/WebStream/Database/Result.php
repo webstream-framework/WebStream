@@ -26,9 +26,9 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 
     /**
      * コンストラクタ
-     * @param PDOStatement ステートメントオブジェクト
+     * @param Doctrine\DBAL\Statement ステートメントオブジェクト
      */
-    public function __construct(\PDOStatement $stmt)
+    public function __construct(\Doctrine\DBAL\Statement $stmt)
     {
         $this->stmt = $stmt;
         $this->position = 0;
@@ -201,5 +201,14 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
         $this->stmt = null;
 
         return $this->rowCache;
+    }
+
+    /**
+     * 検索結果をエンティティとして返却する
+     * @return object 検索結果
+     */
+    public function toEntity($classpath)
+    {
+        return new ResultEntity($this->stmt->getWrappedStatement(), $classpath);
     }
 }

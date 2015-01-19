@@ -188,11 +188,102 @@ class DatabaseTest extends TestBase
 
     /**
      * 正常系
+     * 複数のQueryアノテーションを定義した場合、それぞれのファイルに定義してあるSQLを実行できること
+     * @test
+     * @dataProvider multipleQueryAnnotationProvider
+     */
+    public function okMultipleQueryAnnotation($path, $response, $preparePath1, $preparePath2)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath1;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $preparePath2;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
+     * 正常系
      * 設定ファイルに.yml|.yamlを指定した時、正常にデータが取得できること
      * @test
      * @dataProvider yamlConfigProvider
      */
     public function okYamlConfig($path, $response, $preparePath)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
+     * 正常系
+     * select結果をエンティティクラスにマッピングできること
+     * @test
+     * @dataProvider entityMappingProvider
+     */
+    public function okEntityMapping($path, $response, $preparePath)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
+     * 正常系
+     * JOINを含むselect結果をエンティティクラスにマッピングできること
+     * @test
+     * @dataProvider entityMappingMultipleTableProvider
+     */
+    public function okEntityMappingMultipleTable($path, $response, $preparePath1, $preparePath2)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath1;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $preparePath2;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
+     * 正常系
+     * 別名を付けたカラム含むselect結果をエンティティクラスにマッピングできること
+     * @test
+     * @dataProvider entityMappingAliasProvider
+     */
+    public function okEntityMappingAlias($path, $preparePath1, $preparePath2)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $preparePath1;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $preparePath2;
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertRegExp('/^\d+$/', $html);
+    }
+
+    /**
+     * 正常系
+     * 別名を付けたカラム含むselect結果をエンティティクラスにマッピングできること
+     * @test
+     * @dataProvider entityMappingTypeProvider
+     */
+    public function okEntityMappingType($path, $response, $preparePath)
     {
         $http = new HttpClient();
         $url = $this->getDocumentRootURL() . $preparePath;
@@ -254,5 +345,18 @@ class DatabaseTest extends TestBase
         $url = $this->getDocumentRootURL() . "/test_model11";
         $html = $http->get($url);
         $this->assertEquals($html, "\WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError3Controller#model1");
+    }
+
+    /**
+     * 異常系
+     * QueryXMLファイル内のselectタグのentity属性のクラスパスが存在しない場合、例外が発生すること
+     * @test
+     */
+    public function ngInvalidEntityClassPathQueryXmlFile()
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . "/test_model43";
+        $html = $http->get($url);
+        $this->assertEquals($html, "\WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError3Controller#model2");
     }
 }

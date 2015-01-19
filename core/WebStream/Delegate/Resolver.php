@@ -130,6 +130,8 @@ class Resolver
 
             // AnnotaionReaderを取得
             $reader = new AnnotationReader($controllerInstance);
+            $this->container->classpath = $refClass->getName();
+            $this->container->action = $action;
             $reader->setContainer($this->container);
             $reader->read();
 
