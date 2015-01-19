@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Module;
 
-use WebStream\Exception\IOException;
+use WebStream\Exception\Extend\IOException;
 
 /**
  * Cacheクラス

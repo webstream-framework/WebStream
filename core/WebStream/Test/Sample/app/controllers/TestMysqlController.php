@@ -56,6 +56,69 @@ class TestMysqlController extends CoreController
         }
     }
 
+    public function model8()
+    {
+        $result = $this->TestMysql->model8();
+        foreach ($result as $entity) {
+            echo $entity->getName();
+        }
+    }
+
+    public function model9()
+    {
+        $result = $this->TestMysql->model9();
+        foreach ($result as $entity) {
+            echo $entity->getValue1();
+            echo $entity->getValue2();
+            echo $entity->getValue3();
+        }
+    }
+
+    public function model10()
+    {
+        $result = $this->TestMysql->model10();
+        foreach ($result as $entity) {
+            echo $entity->getName();
+            echo $entity->getValue1();
+            echo $entity->getValue2();
+            echo $entity->getValue3();
+        }
+    }
+
+    public function model11()
+    {
+        $result = $this->TestMysql->model11();
+        foreach ($result as $entity) {
+            echo $entity->getId1();
+            echo $entity->getId2();
+        }
+    }
+
+    public function model12()
+    {
+        $result = $this->TestMysql->model12();
+        foreach ($result as $entity) {
+            echo gettype($entity->getId());
+            echo gettype($entity->getName());
+            echo gettype($entity->getCreatedAt());
+            echo gettype($entity->getCreatedAtTime());
+            echo gettype($entity->getCreatedAtDate());
+            echo gettype($entity->getBigintNum());
+            echo gettype($entity->getSmallintNum());
+        }
+    }
+
+    public function model13()
+    {
+        $results = $this->TestMysql->model13();
+        foreach ($results[0] as $value) {
+            echo $value["name"];
+        }
+        foreach ($results[1] as $entity) {
+            echo gettype($entity->getName());
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
@@ -73,5 +136,25 @@ class TestMysqlController extends CoreController
     public function clear()
     {
         $this->TestMysql->clear();
+    }
+
+    public function prepare2()
+    {
+        $this->TestMysql->prepare2();
+    }
+
+    public function clear2()
+    {
+        $this->TestMysql->clear2();
+    }
+
+    public function prepare3()
+    {
+        $this->TestMysql->prepare3();
+    }
+
+    public function clear3()
+    {
+        $this->TestMysql->clear3();
     }
 }

@@ -72,7 +72,7 @@ class HeaderReader extends AbstractAnnotationReader
         try {
             $refClass = $this->reader->getReflectionClass();
             $container = $this->reader->getContainer();
-            $action = $this->camel2snake($container->router->action());
+            $action = $this->camel2snake($container->action);
             while ($refClass !== false) {
                 $classpathWithAction = $refClass->getName() . "#" . $action;
                 if (array_key_exists($classpathWithAction, $this->annotation)) {
@@ -118,7 +118,7 @@ class HeaderReader extends AbstractAnnotationReader
                 $refClass = $refClass->getParentClass();
             }
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 

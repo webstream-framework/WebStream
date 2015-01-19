@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Database\Driver;
 
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 use WebStream\Module\Logger;
 
 /**
@@ -12,16 +14,24 @@ use WebStream\Module\Logger;
 class Postgresql extends DatabaseDriver
 {
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function connect()
     {
-        $dsn = "pgsql:host=" . $this->host . ";dbname=" . $this->dbname;
-        $dsn.= $this->port !== null ? ";port=" . $this->port : "";
-        $username = $this->username;
-        $password = $this->password;
-        $options = [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION];
-        $this->connection = new \PDO($dsn, $username, $password, $options);
+        $params = [
+            'dbname'   => $this->config->dbname,
+            'user'     => $this->config->username,
+            'password' => $this->config->password,
+            'host'     => $this->config->host,
+            'port'     => $this->config->port,
+            'driver'   => 'pdo_pgsql',
+            'charset'  => 'utf8'
+        ];
+
+        $config = new Configuration([\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+
+        $this->connection = DriverManager::getConnection($params, $config);
+
         Logger::debug("PostgreSQL connect.");
     }
 }

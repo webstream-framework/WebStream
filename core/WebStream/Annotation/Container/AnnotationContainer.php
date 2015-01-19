@@ -14,8 +14,8 @@ class AnnotationContainer extends Container
     /**
      * {@inheritdoc}
      */
-    public function get($key)
+    public function __construct()
     {
-        return isset($this->values[$key]) ? parent::get($key) : null;
+        parent::__construct(false);
     }
 }

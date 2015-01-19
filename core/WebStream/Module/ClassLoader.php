@@ -112,6 +112,7 @@ class ClassLoader
         $includeFile = $rootDir . "/core/" . $className . ".php";
         if (is_file($includeFile)) {
             include_once $includeFile;
+            Logger::debug($includeFile . " load success. (search from " . $rootDir . "/core/)");
 
             return;
         }
@@ -121,6 +122,7 @@ class ClassLoader
         foreach ($iterator as $filepath => $fileObject) {
             if (strpos($filepath, $className . ".php") !== false) {
                 include_once $filepath;
+                Logger::debug($filepath . " load success. (search from " . $rootDir . "/app/)");
 
                 return;
             }
@@ -136,6 +138,7 @@ class ClassLoader
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
+                    Logger::debug($includeFile . " load success. (full search)");
                     $isInclude = true;
                 }
             }
@@ -148,6 +151,7 @@ class ClassLoader
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
+                    Logger::debug($includeFile . " load success. (full search, use in test)");
                     $isInclude = true;
                 }
             }

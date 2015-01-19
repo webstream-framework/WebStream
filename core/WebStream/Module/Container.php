@@ -11,8 +11,23 @@ use WebStream\Exception\Extend\InvalidArgumentException;
  */
 class Container
 {
-    /** パラメータMap */
+    /**
+     * @var array<string> パラメータMap
+     */
     protected $values = [];
+
+    /**
+     * @var bool strict container flag
+     */
+    private $isStrict;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($isStrict = true)
+    {
+        $this->isStrict = $isStrict;
+    }
 
     /**
      * magic method of set
@@ -75,7 +90,11 @@ class Container
     public function get($key)
     {
         if (!isset($this->values[$key])) {
-            throw new InvalidArgumentException("The value of the specified key does not exist: $key");
+            if ($this->isStrict) {
+                throw new InvalidArgumentException("The value of the specified key does not exist: $key");
+            } else {
+                return null;
+            }
         }
         if ($this->values[$key] instanceof ValueProxy) {
             return $this->values[$key]->fetch();

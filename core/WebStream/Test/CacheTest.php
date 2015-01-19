@@ -26,9 +26,9 @@ class CacheTest extends TestBase
 
     public function setUp()
     {
-        parent::setUp();
         $this->cacheDir = PHP_OS === "WIN32" || PHP_OS === "WINNT" ? "C:\\Windows\\Temp" : "/tmp/";
         Logger::init($this->getLogConfigPath() . "/log.test.debug.ok.ini");
+        parent::setUp();
     }
 
     /**
@@ -146,7 +146,7 @@ class CacheTest extends TestBase
      * 書き込み権限のないディレクトリにキャッシュファイルを保存できない場合、
      * 例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\IOException
+     * @expectedException WebStream\Exception\Extend\IOException
      */
     public function ngCreateCacheCustomDir()
     {

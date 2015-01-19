@@ -24,6 +24,7 @@ class AnnotationListContainer extends AnnotationContainer implements \Iterator, 
      */
     public function __construct()
     {
+        parent::__construct();
         $this->index = 0;
         $this->position = 0;
     }

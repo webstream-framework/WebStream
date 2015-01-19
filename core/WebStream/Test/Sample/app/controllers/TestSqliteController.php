@@ -36,6 +36,69 @@ class TestSqliteController extends CoreController
         }
     }
 
+    public function model5()
+    {
+        $result = $this->TestSqlite->model5();
+        foreach ($result as $entity) {
+            echo $entity->getName();
+        }
+    }
+
+    public function model6()
+    {
+        $result = $this->TestSqlite->model6();
+        foreach ($result as $entity) {
+            echo $entity->getValue1();
+            echo $entity->getValue2();
+            echo $entity->getValue3();
+        }
+    }
+
+    public function model7()
+    {
+        $result = $this->TestSqlite->model7();
+        foreach ($result as $entity) {
+            echo $entity->getName();
+            echo $entity->getValue1();
+            echo $entity->getValue2();
+            echo $entity->getValue3();
+        }
+    }
+
+    public function model8()
+    {
+        $result = $this->TestSqlite->model8();
+        foreach ($result as $entity) {
+            echo $entity->getId1();
+            echo $entity->getId2();
+        }
+    }
+
+    public function model9()
+    {
+        $result = $this->TestSqlite->model9();
+        foreach ($result as $entity) {
+            echo gettype($entity->getId());
+            echo gettype($entity->getName());
+            echo gettype($entity->getCreatedAt());
+            echo gettype($entity->getCreatedAtTime());
+            echo gettype($entity->getCreatedAtDate());
+            echo gettype($entity->getBigintNum());
+            echo gettype($entity->getSmallintNum());
+        }
+    }
+
+    public function model10()
+    {
+        $results = $this->TestSqlite->model10();
+        foreach ($results[0] as $value) {
+            echo $value["name"];
+        }
+        foreach ($results[1] as $entity) {
+            echo gettype($entity->getName());
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
@@ -53,5 +116,25 @@ class TestSqliteController extends CoreController
     public function clear()
     {
         $this->TestSqlite->clear();
+    }
+
+    public function prepare2()
+    {
+        $this->TestSqlite->prepare2();
+    }
+
+    public function clear2()
+    {
+        $this->TestSqlite->clear2();
+    }
+
+    public function prepare3()
+    {
+        $this->TestSqlite->prepare3();
+    }
+
+    public function clear3()
+    {
+        $this->TestSqlite->clear3();
     }
 }

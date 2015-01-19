@@ -55,14 +55,14 @@ class FilterReader extends AbstractAnnotationReader
         }
 
         try {
-            $refClass = $this->reader->getReflectionClass();
-            $action = $this->reader->getContainer()->router->action();
+            $container = $this->reader->getContainer();
             $isInitialized = false;
             $exceptMethods = [];
 
             // アクションメソッドの@Filter(type="skip")をチェックする
-            // 1メソッドに大して複数の@Filterが指定されてもエラーにはしない
-            $actionAnnotationKey = $refClass->getName() . "#" . $action;
+            // 1メソッドに対して複数の@Filterが指定されてもエラーにはしない
+            $action = $container->action;
+            $actionAnnotationKey = $container->classpath . "#" . $action;
             if (array_key_exists($actionAnnotationKey, $this->annotation)) {
                 $actionContainerList = $this->annotation[$actionAnnotationKey];
                 foreach ($actionContainerList as $actionContainer) {
@@ -75,6 +75,7 @@ class FilterReader extends AbstractAnnotationReader
                 }
             }
 
+            $refClass = $this->reader->getReflectionClass();
             while ($refClass !== false) {
                 $refMethods = $refClass->getMethods();
                 foreach ($refMethods as $refMethod) {
@@ -136,7 +137,7 @@ class FilterReader extends AbstractAnnotationReader
                 $refClass = $refClass->getParentClass();
             }
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 

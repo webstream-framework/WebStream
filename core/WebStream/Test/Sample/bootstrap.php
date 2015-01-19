@@ -43,15 +43,19 @@ require_once dirname(__FILE__) . '/../../Annotation/Reader/HeaderReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/FilterReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/TemplateReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/TemplateCacheReader.php';
+require_once dirname(__FILE__) . '/../../Annotation/Reader/QueryReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/ExceptionHandlerReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/DatabaseReader.php';
 require_once dirname(__FILE__) . '/../../Database/DatabaseManager.php';
+require_once dirname(__FILE__) . '/../../Database/ConnectionManager.php';
+require_once dirname(__FILE__) . '/../../Database/EntityManager.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/DatabaseDriver.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/Mysql.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/Postgresql.php';
 require_once dirname(__FILE__) . '/../../Database/Driver/Sqlite.php';
 require_once dirname(__FILE__) . '/../../Database/Query.php';
 require_once dirname(__FILE__) . '/../../Database/Result.php';
+require_once dirname(__FILE__) . '/../../Database/ResultEntity.php';
 require_once dirname(__FILE__) . '/../../Delegate/CoreDelegator.php';
 require_once dirname(__FILE__) . '/../../Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/../../Delegate/Resolver.php';
@@ -105,10 +109,8 @@ ServiceLocator::test();
 $container = ServiceLocator::getContainer();
 
 // アプリケーションを起動
-$class = new \ReflectionClass("WebStream\Core\Application");
-$instance = $class->newInstance($container);
-$method = $class->getMethod("run");
-$method->invoke($instance);
+$application = new \WebStream\Core\Application($container);
+$application->run();
 
 if ($isXhprof) {
     // TODO Vendor以下にもっていきたい。

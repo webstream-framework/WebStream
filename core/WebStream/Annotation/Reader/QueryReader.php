@@ -39,9 +39,8 @@ class QueryReader extends AbstractAnnotationReader
         }
 
         try {
-            $refClass = $this->reader->getReflectionClass();
             $container = $this->reader->getContainer();
-            $action = $this->camel2snake($container->router->action());
+            $action = $this->camel2snake($container->action);
 
             foreach ($this->annotation as $classpath => $annotation) {
                 // @Queryは複数指定を許可(複数のxmlファイル指定可)
@@ -55,7 +54,7 @@ class QueryReader extends AbstractAnnotationReader
                 }
             }
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         }
     }
 
@@ -74,6 +73,8 @@ class QueryReader extends AbstractAnnotationReader
                 $query = $xml->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
                 if (!empty($query)) {
                     $queryMap = ["sql" => trim($query[0]), "method" => $query[0]->getName()];
+                    $entity = $query[0]->attributes()["entity"];
+                    $queryMap["entity"] = $entity !== null ? $entity->__toString() : null;
 
                     return $queryMap;
                 }

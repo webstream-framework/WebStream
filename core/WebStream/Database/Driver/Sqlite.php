@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Database\Driver;
 
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 use WebStream\Module\Logger;
 
 /**
@@ -12,16 +14,25 @@ use WebStream\Module\Logger;
 class Sqlite extends DatabaseDriver
 {
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function connect()
     {
-        $dsn = "sqlite:" . $this->dbfile;
-        $username = $this->username;
-        $password = $this->password;
-        $options = [\PDO::ATTR_PERSISTENT => true,
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION];
-        $this->connection = new \PDO($dsn, $username, $password, $options);
+        $params = [
+            'path'     => $this->config->dbfile,
+            'user'     => $this->config->username,
+            'password' => $this->config->password,
+            'driver'   => 'pdo_sqlite',
+            'charset'  => 'utf8'
+        ];
+
+        $config = new Configuration([
+            \PDO::ATTR_PERSISTENT => true,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+        ]);
+
+        $this->connection = DriverManager::getConnection($params, $config);
+
         Logger::debug("SQLite connect.");
     }
 }

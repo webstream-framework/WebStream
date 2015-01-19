@@ -43,15 +43,19 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/HeaderReader
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/FilterReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/TemplateReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/TemplateCacheReader.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/QueryReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/ExceptionHandlerReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/DatabaseReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/DatabaseManager.php';
+require_once dirname(__FILE__) . '/core/WebStream/Database/ConnectionManager.php';
+require_once dirname(__FILE__) . '/core/WebStream/Database/EntityManager.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/DatabaseDriver.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Mysql.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Postgresql.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Driver/Sqlite.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Query.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Result.php';
+require_once dirname(__FILE__) . '/core/WebStream/Database/ResultEntity.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/CoreDelegator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Resolver.php';
@@ -95,7 +99,5 @@ register_shutdown_function('shutdownHandler');
 $container = ServiceLocator::getContainer();
 
 // アプリケーションを起動する
-$class = new \ReflectionClass("WebStream\Core\Application");
-$instance = $class->newInstance($container);
-$method = $class->getMethod("run");
-$method->invoke($instance);
+$application = new \WebStream\Core\Application($container);
+$application->run();

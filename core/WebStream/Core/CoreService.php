@@ -3,7 +3,6 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
-use WebStream\Module\ClassLoader;
 use WebStream\Module\Logger;
 use WebStream\Exception\Extend\MethodNotFoundException;
 
@@ -28,8 +27,6 @@ class CoreService implements CoreInterface
         Logger::debug("Service start.");
         $this->coreDelegator = $container->coreDelegator;
         $this->{$this->coreDelegator->getPageName()} = $this->coreDelegator->getModel();
-        $classLoader = new ClassLoader();
-        $classLoader->importAll(STREAM_APP_DIR . "/libraries");
     }
 
     /**

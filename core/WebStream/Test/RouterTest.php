@@ -21,8 +21,8 @@ class RouterTest extends TestBase
 
     public function setUp()
     {
-        parent::setUp();
         Logger::init($this->getLogConfigPath() . "/log.test.debug.ok.ini");
+        parent::setUp();
     }
 
     public function tearDown()
@@ -186,6 +186,20 @@ class RouterTest extends TestBase
         }
 
         $this->assertEquals($contentType, $responseContentType);
+    }
+
+    /**
+     * 正常系
+     * 開発者が定義したクラスを各階層で呼べること
+     * @test
+     * @dataProvider customDirProvider
+     */
+    public function okCustomDir($path, $response)
+    {
+        $http = new HttpClient();
+        $result = $http->get($this->getDocumentRootURL() . $path);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, $result);
     }
 
     /**

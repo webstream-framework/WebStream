@@ -3,6 +3,7 @@ namespace WebStream\Database;
 
 use WebStream\Module\Container;
 use WebStream\Annotation\Container\AnnotationListContainer;
+use WebStream\Exception\Extend\DatabaseException;
 
 /**
  * ConnectionManager
@@ -61,40 +62,30 @@ class ConnectionManager
         $this->connectionContainer = new Container();
 
         foreach ($connectionItemContainerList as $container) {
-            $config = parse_ini_file($container->configPath);
+            $config = null;
+            $ext = pathinfo($container->configPath, PATHINFO_EXTENSION);
+            if ($ext === 'ini') {
+                $config = parse_ini_file($container->configPath);
+            } elseif ($ext === 'yml' || $ext === 'yaml') {
+                $config = \Spyc::YAMLLoad($container->configPath);
+            } else {
+                throw new DatabaseException("Yaml or ini file only available database configuration file.");
+            }
+
             $driverClassPath = $container->driverClassPath;
 
             $dsnHash = "";
+            $databaseConfigContainer = new Container(false);
             foreach ($config as $key => $value) {
                 $dsnHash .= $key . $value;
+                $databaseConfigContainer->{$key} = $value;
             }
             $dsnHash = md5($dsnHash);
 
             $this->classpathMap[$container->filepath] = $dsnHash;
 
-            $this->connectionContainer->{$dsnHash} = function () use ($config, $driverClassPath) {
-                $driver = new $driverClassPath();
-
-                if (array_key_exists("host", $config)) {
-                    $driver->setHost($config["host"]);
-                }
-                if (array_key_exists("port", $config)) {
-                    $driver->setPort($config["port"]);
-                }
-                if (array_key_exists("dbname", $config)) {
-                    $driver->setDbname($config["dbname"]);
-                }
-                if (array_key_exists("username", $config)) {
-                    $driver->setUsername($config["username"]);
-                }
-                if (array_key_exists("password", $config)) {
-                    $driver->setPassword($config["password"]);
-                }
-                if (array_key_exists("dbfile", $config)) {
-                    $driver->setDbfile($config["dbfile"]);
-                }
-
-                return $driver;
+            $this->connectionContainer->{$dsnHash} = function () use ($driverClassPath, $databaseConfigContainer) {
+                return new $driverClassPath($databaseConfigContainer);
             };
         }
     }

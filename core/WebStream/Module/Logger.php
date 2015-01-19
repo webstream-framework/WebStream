@@ -1,7 +1,6 @@
 <?php
 namespace WebStream\Module;
 
-use WebStream\Exception\UncatchableException;
 use WebStream\Exception\Extend\LoggerException;
 
 /**
@@ -249,16 +248,10 @@ class Logger
         $msg = $this->message($msg, $stacktrace);
         $msg = "[".$this->getTimeStamp()."] [".$level."] ".$msg."\n";
         $this->rotate();
-        $isWriteLog = false;
         try {
-            $isWriteLog = @error_log($msg, 3, $this->logPath);
+            @error_log($msg, 3, $this->logPath);
         } catch (\Exception $e) {
-            throw new LoggerException($e->getMessage());
-        }
-
-        if (!$isWriteLog) {
-            // TODO
-            // throw new UncatchableException("erro");
+            throw new LoggerException($e);
         }
     }
 

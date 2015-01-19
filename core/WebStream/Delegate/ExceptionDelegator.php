@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Delegate;
 
+use WebStream\Exception\Extend\ClassNotFoundException;
+
 /**
  * ExceptionDelegator
  * @author Ryuichi TANAKA.
@@ -10,25 +12,24 @@ namespace WebStream\Delegate;
 class ExceptionDelegator
 {
     /**
-     * @var \Exception 例外オブジェクト
+     * @var stirng 例外クラスパス
      */
-    private $exception;
+    private $classpath;
+
+    /**
+     * @var stirng 例外メッセージ
+     */
+    private $message;
 
     /**
      * constructor
-     * @param \Exception 例外オブジェクト
+     * @param stirng 例外クラスパス
+     * @param string 例外メッセージ
      */
-    public function __construct(\Exception $exception)
+    public function __construct($classpath, $message)
     {
-        $this->exception = $exception;
-    }
-
-    /**
-     * destructor
-     */
-    public function __destruct()
-    {
-        $this->exception = null;
+        $this->classpath = $classpath;
+        $this->message = $message;
     }
 
     /**
@@ -36,8 +37,10 @@ class ExceptionDelegator
      */
     public function __call($method, $arguments)
     {
-        if ($this->exception instanceof \Exception) {
-            throw $this->exception;
+        if (class_exists($this->classpath)) {
+            throw new $this->classpath($this->message);
+        } else {
+            throw new ClassNotFoundException($this->classpath . " is not found.");
         }
     }
 }

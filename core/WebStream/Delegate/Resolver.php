@@ -10,6 +10,7 @@ use WebStream\Exception\ApplicationException;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 use WebStream\Exception\Extend\ClassNotFoundException;
+use WebStream\Exception\Extend\MethodNotFoundException;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Annotation\Reader\ExceptionHandlerReader;
 use WebStream\Annotation\Reader\AnnotationReader;
@@ -90,6 +91,15 @@ class Resolver
     {
         // クラスパスを取得
         $coreDelegator = $this->container->coreDelegator;
+        $controllerInstance = $coreDelegator->getController();
+        $controller = $this->router->controller();
+        $action = $this->router->action();
+        $params = $this->router->params();
+
+        if (!method_exists($controllerInstance, $action)) {
+            $class = get_class($controllerInstance);
+            throw new MethodNotFoundException("${class}#${action} is not defined.");
+        }
 
         // バリデーションチェック
         $validator = $this->container->validator;
@@ -97,7 +107,7 @@ class Resolver
 
         // テンプレートキャッシュチェック
         $pageName = $coreDelegator->getPageName();
-        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($this->router->action());
+        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($action);
         $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
         $data = $cache->get($cacheFile);
 
@@ -107,23 +117,21 @@ class Resolver
             return;
         }
 
-        $action = $this->router->action();
-        $params = $this->router->params();
-
         try {
             $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
             foreach ($iterator as $filepath => $fileObject) {
-                if (strpos($filepath, $this->router->controller() . ".php") !== false) {
+                if (strpos($filepath, $controller . ".php") !== false) {
                     include_once $filepath;
                 }
             }
 
             // Controller起動
-            $refClass = new \ReflectionClass($coreDelegator->getController());
-            $controllerInstance = $coreDelegator->getController();
+            $refClass = new \ReflectionClass($controllerInstance);
 
             // AnnotaionReaderを取得
             $reader = new AnnotationReader($controllerInstance);
+            $this->container->classpath = $refClass->getName();
+            $this->container->action = $action;
             $reader->setContainer($this->container);
             $reader->read();
 
@@ -187,7 +195,7 @@ class Resolver
             // after filter
             $filter->after();
         } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e->getMessage());
+            throw new AnnotationException($e);
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
         }

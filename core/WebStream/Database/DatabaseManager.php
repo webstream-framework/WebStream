@@ -6,7 +6,7 @@ use WebStream\Module\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**
- * DriverManager
+ * DatabaseManager
  * @author Ryuichi TANAKA.
  * @since 2013/12/07
  * @version 0.4
