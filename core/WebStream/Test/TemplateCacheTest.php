@@ -5,7 +5,9 @@ use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Module\HttpClient;
 use WebStream\Module\Cache;
-use WebStream\Annotation\TemplateCacheReader;
+use WebStream\Module\Container;
+use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Reader\TemplateCacheReader;
 use WebStream\Test\DataProvider\TemplateCacheProvider;
 
 require_once 'TestBase.php';
@@ -26,6 +28,7 @@ class TemplateCacheTest extends TestBase
     {
         Logger::init($this->getLogConfigPath() . "/log.test.debug.ok.ini");
         parent::setUp();
+
     }
 
     /**
@@ -35,9 +38,15 @@ class TemplateCacheTest extends TestBase
      */
     public function okTemplateCacheExpire()
     {
-        $reader = new TemplateCacheReader();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
-        $reader->read($refClass, "index");
+        $container = new Container();
+        $container->classpath = "WebStream\Test\TestData\TemplateCacheTest1";
+        $container->action = "index";
+        $instance = new \WebStream\Test\TestData\TemplateCacheTest1();
+        $annotationReader = new AnnotationReader($instance);
+        $annotationReader->setContainer($container);
+        $annotationReader->read();
+        $reader = new TemplateCacheReader($annotationReader);
+        $reader->execute();
         $this->assertEquals(100, $reader->getExpire());
     }
 
@@ -49,9 +58,15 @@ class TemplateCacheTest extends TestBase
      */
     public function okMaximumExpireConvert()
     {
-        $reader = new TemplateCacheReader();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
-        $reader->read($refClass, "index2");
+        $container = new Container();
+        $container->classpath = "WebStream\Test\TestData\TemplateCacheTest1";
+        $container->action = "index2";
+        $instance = new \WebStream\Test\TestData\TemplateCacheTest1();
+        $annotationReader = new AnnotationReader($instance);
+        $annotationReader->setContainer($container);
+        $annotationReader->read();
+        $reader = new TemplateCacheReader($annotationReader);
+        $reader->execute();
         $this->assertEquals(PHP_INT_MAX, $reader->getExpire());
     }
 
@@ -83,8 +98,15 @@ class TemplateCacheTest extends TestBase
      */
     public function ngTemplateCacheExpire($method)
     {
-        $reader = new TemplateCacheReader();
-        $refClass = new \ReflectionClass("\WebStream\Test\TestData\TemplateCacheTest1");
+        $container = new Container();
+        $container->classpath = "WebStream\Test\TestData\TemplateCacheTest1";
+        $container->action = $method;
+        $instance = new \WebStream\Test\TestData\TemplateCacheTest1();
+        $annotationReader = new AnnotationReader($instance);
+        $annotationReader->setContainer($container);
+        $annotationReader->read();
+        $reader = new TemplateCacheReader($annotationReader);
+        $reader->execute();
         $reader->read($refClass, $method);
     }
 }

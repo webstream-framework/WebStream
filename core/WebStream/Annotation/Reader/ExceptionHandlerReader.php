@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
+use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
@@ -66,9 +67,14 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
                     if (array_key_exists($actionAnnotationKey, $this->annotation)) {
                         $exceptionContainers = $this->annotation[$actionAnnotationKey];
                         foreach ($exceptionContainers as $exceptionContainer) {
-                            $exceptionClass = $exceptionContainer->get("value");
-                            if (is_a($this->handledException, $exceptionClass)) {
-                                $this->handleMethods[] = $refMethod->name;
+                            $exceptionClassList = $exceptionContainer->get("value");
+                            if (!is_array($exceptionClassList)) {
+                                $exceptionClassList = [$exceptionClassList];
+                            }
+                            foreach ($exceptionClassList as $exceptionClass) {
+                                if (is_a($this->handledException, $exceptionClass)) {
+                                    $this->handleMethods[] = $refMethod->name;
+                                }
                             }
                         }
                     }

@@ -79,6 +79,9 @@ Router::setRule([
     '/test_header/dummy_allowmethod' => "test_header#test15",
     '/test_header/parent/html' => "test_header#test16",
     '/test_template_cache/index1' => "test_template_cache#index1",
+
+    '/test_template_cache/index2' => "test_template_cache#index2",
+
     '/get_validate1' => "test_validator#get_required",
     '/get_validate2' => "test_validator#get_min_length",
     '/get_validate3' => "test_validator#get_max_length",

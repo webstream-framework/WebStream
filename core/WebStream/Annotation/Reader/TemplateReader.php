@@ -37,10 +37,8 @@ class TemplateReader extends AbstractAnnotationReader
             return;
         }
 
-        $refClass = $this->reader->getReflectionClass();
-        $action = $this->reader->getContainer()->router->action();
-
-        $annotationContainerKey = $refClass->getName() . "#" . $action;
+        $container = $this->reader->getContainer();
+        $annotationContainerKey = $container->classpath . "#" . $container->action;
         if (!array_key_exists($annotationContainerKey, $this->annotation)) {
             return;
         }
