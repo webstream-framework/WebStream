@@ -48,8 +48,17 @@ class QueryReader extends AbstractAnnotationReader
                     if ($this->queryContainer->{$classpath} === null) {
                         $this->queryContainer->{$classpath} = new AnnotationListContainer();
                     }
-                    $this->queryContainer->{$classpath}->pushAsLazy(function () use ($query, $classpath) {
-                        return file_exists($query->file) ? simplexml_load_file($query->file) : null;
+
+                    $this->queryContainer->{$classpath}->pushAsLazy(function () use ($query) {
+                        $xmlObjectList = [];
+                        $queryList = is_array($query->file) ? $query->file : [$query->file];
+                        foreach ($queryList as $queryFile) {
+                            if (file_exists($queryFile)) {
+                                $xmlObjectList[] = simplexml_load_file($queryFile);
+                            }
+                        }
+
+                        return $xmlObjectList;
                     });
                 }
             }
@@ -68,20 +77,21 @@ class QueryReader extends AbstractAnnotationReader
         $classpath = $this->reader->getReflectionClass()->getNamespaceName();
 
         foreach ($list as $func) {
-            $xml = $func->fetch();
-            if ($xml !== null) {
-                $query = $xml->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
-                if (!empty($query)) {
-                    $queryMap = ["sql" => trim($query[0]), "method" => $query[0]->getName()];
-                    $entity = $query[0]->attributes()["entity"];
-                    $queryMap["entity"] = $entity !== null ? $entity->__toString() : null;
+            $xmlObjectList = $func->fetch();
+            foreach ($xmlObjectList as $xmlObject) {
+                if ($xmlObject !== null) {
+                    $query = $xmlObject->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
+                    if (!empty($query)) {
+                        $queryMap = ["sql" => trim($query[0]), "method" => $query[0]->getName()];
+                        $entity = $query[0]->attributes()["entity"];
+                        $queryMap["entity"] = $entity !== null ? $entity->__toString() : null;
 
-                    return $queryMap;
+                        return $queryMap;
+                    }
                 }
             }
         }
 
         return null;
     }
-
 }

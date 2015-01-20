@@ -119,6 +119,17 @@ class TestMysqlController extends CoreController
         }
     }
 
+    public function model14()
+    {
+        $results = $this->TestMysql->model14();
+        foreach ($results[0] as $value) {
+            echo $value["name"];
+        }
+        foreach ($results[1] as $entity) {
+            echo gettype($entity->getName());
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")
