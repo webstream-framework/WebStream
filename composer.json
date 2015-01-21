@@ -3,5 +3,8 @@
         "doctrine/annotations": "1.2.*",
         "doctrine/dbal": "2.5.*",
         "mustangostang/spyc": "*"
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "2.*"
     }
 }
