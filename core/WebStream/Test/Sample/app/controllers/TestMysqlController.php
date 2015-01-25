@@ -130,6 +130,11 @@ class TestMysqlController extends CoreController
         }
     }
 
+    public function model15()
+    {
+        $this->TestMysql->model15();
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")

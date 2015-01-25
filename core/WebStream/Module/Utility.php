@@ -19,6 +19,15 @@ trait Utility
     }
 
     /**
+     * CoreHelper#asyncで使用するIDを返却する
+     * @return string DOMID
+     */
+    public function getAsyncDomId()
+    {
+        return "W80f2647ef3d2cfe2e4301261ffc7290bb23f5095";
+    }
+
+    /**
      * Viewで有効なModel変数名を返却する
      * @return string Model変数名
      */
@@ -302,5 +311,18 @@ trait Utility
     public function decode($data)
     {
         return unserialize(base64_decode($data));
+    }
+
+    /**
+     * CoreHelper#asyncで使用するコードを返却する
+     * @param string URL
+     * @param string CSSクラス名
+     * @return string コード
+     */
+    public function asyncHelperCode($url, $className)
+    {
+        return <<< JSCODE
+(function (c,b) {var a;a=window.XMLHttpRequest?new XMLHttpRequest:new ActiveXObject("Microsoft.XMLHTTP");a.onreadystatechange=function () {4==a.readyState&&200==a.status&&(console.log(document.getElementsByClassName(b)[0].outerHTML),document.getElementsByClassName(b)[0].outerHTML=a.responseText)};a.open("GET",c,!0);a.send()})("$url","$className");
+JSCODE;
     }
 }

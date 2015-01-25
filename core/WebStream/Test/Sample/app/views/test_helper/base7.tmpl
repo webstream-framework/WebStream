@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>helper test</title>
+</head>
+<body>
+<div>
+    <div id="hoge">
+        %P{$helper->async('/test_helper_async_response')}
+        <ul>
+            <li>%P{$helper->async('/test_helper_async_response')}</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

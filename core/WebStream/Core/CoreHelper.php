@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Core;
 
+use WebStream\Module\Utility;
 use WebStream\Module\Container;
 use WebStream\Module\Security;
 use WebStream\Module\Logger;
@@ -13,11 +14,19 @@ use WebStream\Module\Logger;
  */
 class CoreHelper implements CoreInterface
 {
+    use Utility;
+
+    /**
+     * @var Container DIコンテナ
+     */
+    private $container;
+
     /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
+        $this->container = $container;
         Logger::debug("Helper start.");
     }
 
@@ -47,5 +56,19 @@ class CoreHelper implements CoreInterface
     public function encodeJavaScript($str)
     {
         return Security::safetyOutJavaScript($str);
+    }
+
+    /**
+     * 非同期処理を実行する
+     * @param string パス
+     * @return string JavaScript文字列
+     */
+    public function async($path)
+    {
+        $safetyPath = str_replace('\\', '', $this->encodeJavaScript($path));
+        $url = "//" . $this->container->request->server("HTTP_HOST") . $this->container->request->getBaseURL() . $safetyPath;
+        $className = $this->getAsyncDomId();
+
+        return "<script type='text/javascript'>" . $this->asyncHelperCode($url, $className) . "</script>";
     }
 }

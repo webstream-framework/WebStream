@@ -128,6 +128,11 @@ class CoreView implements CoreInterface
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($template);
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
+
+        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.*\)})/', function ($matches) {
+            return "<div class='" . $this->getAsyncDomId() . "'>$matches[1]</div>";
+        }, $content);
+
         $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
         $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
 

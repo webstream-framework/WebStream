@@ -208,6 +208,7 @@ Router::setRule([
     '/test_model44' => "test_mysql#model14",
     '/test_model45' => "test_postgres#model14",
     '/test_model46' => "test_sqlite#model11",
+    '/test_model47' => "test_mysql#model15",
     '/test_transaction1' => "test_transaction#transaction_in_controller",
     '/test_transaction2' => "test_transaction#transaction_rollback_in_controller",
     '/test_transaction3' => "test_transaction#transaction_in_model",
@@ -247,5 +248,7 @@ Router::setRule([
     '/test_custom_dir2' => "test_custom_dir#from_service",
     '/test_custom_dir3' => "test_custom_dir#from_model",
     '/test_custom_dir4' => "test_custom_dir#from_view",
-    '/test_custom_dir5' => "test_custom_dir#from_helper"
+    '/test_custom_dir5' => "test_custom_dir#from_helper",
+    '/test_helper_async' => "test_helper#help7",
+    '/test_helper_async_response' => "test_helper#help7_async"
 ]);
