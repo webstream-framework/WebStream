@@ -14,9 +14,9 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
 class TemplateCacheReader extends AbstractAnnotationReader
 {
     /**
-     * @var int 有効期限
+     * @var AnnotationContainer アノテーションコンテナ
      */
-    private $expire;
+    private $annotation;
 
     /**
      * {@inheritdoc}
@@ -44,6 +44,7 @@ class TemplateCacheReader extends AbstractAnnotationReader
         try {
             $actionContainerList = $this->annotation[$annotationContainerKey];
             foreach ($actionContainerList as $actionContainer) {
+                $this->annotationAttributes = $actionContainer;
                 $expire = $actionContainer->expire;
                 // 複数指定は不可
                 if (is_array($expire)) {
@@ -63,19 +64,9 @@ class TemplateCacheReader extends AbstractAnnotationReader
                 } elseif ($expire >= PHP_INT_MAX) {
                     Logger::warn("Expire value converted the maximum of PHP Integer.");
                 }
-                $this->expire = $expire;
             }
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
-
-    /**
-     * 有効期限を返却する
-     * @return int 有効期限
-     */
-    public function getExpire()
-    {
-        return $this->expire;
     }
 }

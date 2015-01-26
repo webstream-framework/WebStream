@@ -17,8 +17,10 @@ class QueryReader extends AbstractAnnotationReader
 {
     use Utility;
 
-    /** query container */
-    private $queryContainer;
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
+    private $annotation;
 
     /**
      * {@inheritdoc}
@@ -26,7 +28,6 @@ class QueryReader extends AbstractAnnotationReader
     public function onRead()
     {
         $this->annotation = $this->reader->getAnnotation("WebStream\Annotation\Query");
-        $this->queryContainer = new AnnotationContainer();
     }
 
     /**
@@ -45,11 +46,11 @@ class QueryReader extends AbstractAnnotationReader
             foreach ($this->annotation as $classpath => $annotation) {
                 // @Queryは複数指定を許可(複数のxmlファイル指定可)
                 foreach ($annotation as $query) {
-                    if ($this->queryContainer->{$classpath} === null) {
-                        $this->queryContainer->{$classpath} = new AnnotationListContainer();
+                    if ($this->annotationAttributes->{$classpath} === null) {
+                        $this->annotationAttributes->{$classpath} = new AnnotationListContainer();
                     }
 
-                    $this->queryContainer->{$classpath}->pushAsLazy(function () use ($query) {
+                    $this->annotationAttributes->{$classpath}->pushAsLazy(function () use ($query) {
                         $xmlObjectList = [];
                         $queryList = is_array($query->file) ? $query->file : [$query->file];
                         foreach ($queryList as $queryFile) {
@@ -73,7 +74,7 @@ class QueryReader extends AbstractAnnotationReader
      */
     public function getQuery($queryKey, $queryId)
     {
-        $list = $this->queryContainer->get($queryKey);
+        $list = $this->annotationAttributes->get($queryKey);
         $classpath = $this->reader->getReflectionClass()->getNamespaceName();
 
         foreach ($list as $func) {

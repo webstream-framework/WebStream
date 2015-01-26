@@ -15,14 +15,10 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class ExceptionHandlerReader extends AbstractAnnotationReader
 {
-    /** アノテーションコンテナ */
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
     private $annotation;
-
-    /** ハンドリング例外 */
-    private $handledException;
-
-    /** ハンドリングメソッドリスト */
-    private $handleMethods;
 
     /**
      * {@inheritdoc}
@@ -30,16 +26,6 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
     public function onRead()
     {
         $this->annotation = $this->reader->getAnnotation("WebStream\Annotation\ExceptionHandler");
-        $this->handleMethods = [];
-    }
-
-    /**
-     * 例外クラスインスタンスを設定する
-     * @param \Exception 例外クラスインスタンス
-     */
-    public function inject(\Exception $handledException)
-    {
-        $this->handledException = $handledException;
     }
 
     /**
@@ -52,6 +38,7 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
         }
 
         $refClass = $this->reader->getReflectionClass();
+        $handleMethods = [];
 
         try {
             while ($refClass !== false) {
@@ -72,27 +59,20 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
                                 $exceptionClassList = [$exceptionClassList];
                             }
                             foreach ($exceptionClassList as $exceptionClass) {
-                                if (is_a($this->handledException, $exceptionClass)) {
-                                    $this->handleMethods[] = $refMethod->name;
+                                if (is_a($this->instance, $exceptionClass)) {
+                                    $handleMethods[] = $refMethod->name;
                                 }
                             }
                         }
                     }
-
                 }
+
                 $refClass = $refClass->getParentClass();
             }
+
+            $this->annotationAttributes->handleMethods = $handleMethods;
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
-
-    /**
-     * ハンドリングメソッドを返却する
-     * @return array ハンドリングメソッド
-     */
-    public function getHandleMethods()
-    {
-        return $this->handleMethods;
     }
 }

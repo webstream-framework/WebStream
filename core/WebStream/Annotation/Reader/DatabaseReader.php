@@ -16,9 +16,9 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
 class DatabaseReader extends AbstractAnnotationReader
 {
     /**
-     * @var AnnotationListContainer DB接続情報コンテナリスト
+     * @var AnnotationContainer アノテーションコンテナ
      */
-    private $connectionItemContainerList;
+    private $annotation;
 
     /**
      * {@inheritdoc}
@@ -26,7 +26,6 @@ class DatabaseReader extends AbstractAnnotationReader
     public function onRead()
     {
         $this->annotation = $this->reader->getAnnotation("WebStream\Annotation\Database");
-        $this->connectionItemContainerList = new AnnotationListContainer();
     }
 
     /**
@@ -40,6 +39,7 @@ class DatabaseReader extends AbstractAnnotationReader
 
         try {
             $refClass = $this->reader->getReflectionClass();
+            $connectionItemContainerList = new AnnotationListContainer();
 
             while ($refClass !== false) {
                 $classpath = $refClass->getName();
@@ -64,22 +64,15 @@ class DatabaseReader extends AbstractAnnotationReader
                     $container->filepath = $refClass->getFileName();
                     $container->configPath = $configRealPath;
                     $container->driverClassPath = $driverClassPath;
-                    $this->connectionItemContainerList->push($container);
+                    $connectionItemContainerList->push($container);
                 }
 
                 $refClass = $refClass->getParentClass();
             }
+
+            $this->annotationAttributes->connectionItemContainerList = $connectionItemContainerList;
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
-
-    /**
-     * DB接続情報コンテナリストを返却する
-     * @return AnnotationListContainer DB接続情報コンテナリスト
-     */
-    public function getConnectionItemContainerList()
-    {
-        return $this->connectionItemContainerList;
     }
 }

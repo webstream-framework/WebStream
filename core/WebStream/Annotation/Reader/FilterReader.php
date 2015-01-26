@@ -1,7 +1,6 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Exception\Extend\AnnotationException;
@@ -15,13 +14,14 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class FilterReader extends AbstractAnnotationReader
 {
-    /** アノテーションコンテナ */
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
     private $annotation;
 
-    /** インスタンス */
-    private $instance;
-
-    /** フィルタコンテナ */
+    /**
+     * @var AnnotationContainer フィルタコンテナ
+     */
     private $filterContainer;
 
     /**
@@ -34,15 +34,6 @@ class FilterReader extends AbstractAnnotationReader
         $this->filterContainer->initialize = new AnnotationListContainer();
         $this->filterContainer->before = new AnnotationListContainer();
         $this->filterContainer->after = new AnnotationListContainer();
-    }
-
-    /**
-     * インスタンスを設定する
-     * @param CoreInterface インスタンス
-     */
-    public function inject(CoreInterface $instance)
-    {
-        $this->instance = $instance;
     }
 
     /**
@@ -169,14 +160,5 @@ class FilterReader extends AbstractAnnotationReader
         foreach ($this->filterContainer->after as $refMethod) {
             $refMethod->invoke($this->instance);
         }
-    }
-
-    /**
-     * インスタンスを返却する
-     * return CoreInterface インスタンス
-     */
-    public function getInstance()
-    {
-        return $this->instance;
     }
 }

@@ -17,13 +17,14 @@ class HeaderReader extends AbstractAnnotationReader
 {
     use Utility;
 
-    /** アノテーションコンテナ */
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
     private $annotation;
 
-    /** mime type */
-    private $mime = "html";
-
-    /** contentType */
+    /**
+     * @var array<string> mimeタイプリスト
+     */
     private $contentTypeList = [
         'txt'   => 'text/plain',
         'jpeg'  => 'image/jpeg',
@@ -73,11 +74,13 @@ class HeaderReader extends AbstractAnnotationReader
             $refClass = $this->reader->getReflectionClass();
             $container = $this->reader->getContainer();
             $action = $this->camel2snake($container->action);
+
             while ($refClass !== false) {
                 $classpathWithAction = $refClass->getName() . "#" . $action;
                 if (array_key_exists($classpathWithAction, $this->annotation)) {
                     // 複数指定されても先頭のみ有効
                     $annotation = array_shift($this->annotation[$classpathWithAction]);
+                    $this->annotationAttributes = $annotation;
                     $allowMethods = $annotation->allowMethod;
 
                     // 指定無しの場合はチェックしない(すべてのメソッドを許可する)
@@ -110,9 +113,11 @@ class HeaderReader extends AbstractAnnotationReader
                             $errorMsg = "Invalid value '$ext' in 'contentType' attribute of @Header.";
                             throw new AnnotationException($errorMsg);
                         }
-                        $this->mime = $ext;
                         Logger::debug("Accepted contentType '$ext' in " . $classpathWithAction);
                     }
+
+                    // 読み込みできた時点で終了
+                    break;
                 }
 
                 $refClass = $refClass->getParentClass();
@@ -120,14 +125,5 @@ class HeaderReader extends AbstractAnnotationReader
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
-
-    /**
-     * mime typeを返却する
-     * @return string mime type
-     */
-    public function getMimeType()
-    {
-        return $this->mime;
     }
 }

@@ -144,7 +144,8 @@ class Resolver
             // @Header
             $header = new HeaderReader($reader);
             $header->execute();
-            $mimeType = $header->getMimeType();
+            $headerAttribute = $header->getAnnotationAttributes();
+            $mimeType = $headerAttribute->contentType ?: "html";
 
             // @Filter
             $filter = new FilterReader($reader);
@@ -162,7 +163,7 @@ class Resolver
             // @Template
             $template = new TemplateReader($reader);
             $template->execute();
-            $templateContainer = $template->getTemplateContainer();
+            $templateContainer = $template->getannotationAttributes();
 
             $pageName = $coreDelegator->getPageName();
             $viewParams = [];
@@ -184,7 +185,8 @@ class Resolver
 
             $templateCache = new TemplateCacheReader($reader);
             $templateCache->execute();
-            $expire = $templateCache->getExpire();
+            $templateCacheAttributes = $templateCache->getAnnotationAttributes();
+            $expire = $templateCacheAttributes->getExpire;
 
             if ($expire !== null) {
                 // create cache
@@ -267,7 +269,8 @@ class Resolver
             $exceptionHandler = new ExceptionHandlerReader($reader);
             $exceptionHandler->inject($e);
             $exceptionHandler->execute();
-            $handleMethods = $exceptionHandler->getHandleMethods();
+            $exceptionHandlerAttributes = $exceptionHandler->getannotationAttributes();
+            $handleMethods = $exceptionHandlerAttributes->handleMethods;
 
             if (count($handleMethods) === 0) {
                 return false;

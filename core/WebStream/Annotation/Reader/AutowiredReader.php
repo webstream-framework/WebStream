@@ -13,11 +13,10 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class AutowiredReader extends AbstractAnnotationReader
 {
-    /** アノテーションコンテナ */
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
     private $annotation;
-
-    /** Autowired実行済みインスタンス */
-    private $instance;
 
     /**
      * {@inheritdoc}
@@ -28,25 +27,12 @@ class AutowiredReader extends AbstractAnnotationReader
     }
 
     /**
-     * インスタンスを設定する
-     * @param object 注入対象インスタンス
-     */
-    public function inject($instance)
-    {
-        $this->instance = $instance;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function execute()
     {
         if ($this->annotation === null) {
             return;
-        }
-
-        if ($this->instance === null) {
-            throw new AnnotationException("Can't find autowired instance.");
         }
 
         try {
@@ -106,14 +92,5 @@ class AutowiredReader extends AbstractAnnotationReader
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
-
-    /**
-     * インスタンスを返却する
-     * @return CoreInterface インスタンス
-     */
-    public function getInstance()
-    {
-        return $this->instance;
     }
 }

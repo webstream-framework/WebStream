@@ -2,7 +2,6 @@
 namespace WebStream\Annotation\Reader;
 
 use WebStream\Module\Utility;
-use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
@@ -16,8 +15,10 @@ class TemplateReader extends AbstractAnnotationReader
 {
     use Utility;
 
-    /** テンプレートコンテナ */
-    private $templateContainer;
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
+    private $annotation;
 
     /**
      * {@inheritdoc}
@@ -25,7 +26,6 @@ class TemplateReader extends AbstractAnnotationReader
     public function onRead()
     {
         $this->annotation = $this->reader->getAnnotation("WebStream\Annotation\Template");
-        $this->templateContainer = new AnnotationContainer();
     }
 
     /**
@@ -44,10 +44,11 @@ class TemplateReader extends AbstractAnnotationReader
         }
 
         $actionContainerList = $this->annotation[$annotationContainerKey];
-        $this->templateContainer->isBase = false;
+        $this->annotationAttributes->isBase = false;
 
         try {
             $partsList = [];
+
             foreach ($actionContainerList as $actionContainer) {
                 // 属性値なしの第一引数はテンプレート名
                 $template = $actionContainer->value;
@@ -98,28 +99,28 @@ class TemplateReader extends AbstractAnnotationReader
                 // ページ名からディレクトリ名を取得
                 $templateDir = $this->camel2snake($this->reader->getContainer()->coreDelegator->getPageName());
                 // ベーステンプレートは暫定的に1番はじめに指定されたテンプレートを設定する
-                if ($this->templateContainer->base === null) {
-                    $this->templateContainer->base = $templateDir . "/" . $template;
-                    $this->templateContainer->isBase = false;
+                if ($this->annotationAttributes->base === null) {
+                    $this->annotationAttributes->base = $templateDir . "/" . $template;
+                    $this->annotationAttributes->isBase = false;
                 }
 
                 // type="base"が設定された場合は後勝ちでベーステンプレートとする
                 // name属性は指定されても無視
                 if (in_array("base", $typeList)) {
                     // type="base"が複数指定された場合、エラーとする
-                    if ($this->templateContainer->isBase) {
+                    if ($this->annotationAttributes->isBase) {
                         $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                         $errorMsg.= "The type attribute 'base' must be a only definition.";
                         throw new AnnotationException($errorMsg);
                     }
                     if (in_array("shared", $typeList)) { // type={"base","shared"}
-                        $this->templateContainer->base = STREAM_VIEW_SHARED . "/" . $template;
+                        $this->annotationAttributes->base = STREAM_VIEW_SHARED . "/" . $template;
                     } elseif (in_array("parts", $typeList)) { // type={"base","parts"}はありえない
                         $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                         $errorMsg.= "The type attribute can't setting 'base' and 'type'.";
                         throw new AnnotationException($errorMsg);
                     }
-                    $this->templateContainer->isBase = true;
+                    $this->annotationAttributes->isBase = true;
                 } else {
                     // type={"shared","parts"}
                     if (count($typeList) === 2 && in_array("shared", $typeList) && in_array("parts", $typeList)) {
@@ -160,18 +161,9 @@ class TemplateReader extends AbstractAnnotationReader
                 }
             }
 
-            $this->templateContainer->parts = $partsList;
+            $this->annotationAttributes->parts = $partsList;
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
-
-    /**
-     * テンプレートコンテナを返却する
-     * @return AnnotationContainer テンプレートコンテナ
-     */
-    public function getTemplateContainer()
-    {
-        return $this->templateContainer;
     }
 }

@@ -57,13 +57,14 @@ class CoreModel implements CoreInterface
      */
     private function initialize(Container $container)
     {
+        // TODO 読み込むタイミングがおかしいので後で直す
         $reader = new AnnotationReader($this);
         $reader->setContainer($container);
         $reader->read();
 
         $database = new DatabaseReader($reader);
         $database->execute();
-        $connectionItemContainerList = $database->getConnectionItemContainerList();
+        $connectionItemContainerList = $database->getannotationAttributes()->connectionItemContainerList;
 
         if ($connectionItemContainerList === null) {
             Logger::warn("Can't use database in Model Layer.");
