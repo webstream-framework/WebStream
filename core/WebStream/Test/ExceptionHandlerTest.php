@@ -56,6 +56,21 @@ class ExceptionHandlerTest extends TestBase
     }
 
     /**
+     * 正常系
+     * 親クラスで定義したメソッドで補足できること
+     * @test
+     * @dataProvider successParentClassErrorHandling
+     */
+    public function okParentClassErrorHandling($path, $handleMessage)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $message = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($message, $handleMessage);
+    }
+
+    /**
      * 異常系
      * ハンドリング不可例外は500を返却すること
      * @test

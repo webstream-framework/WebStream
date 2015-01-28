@@ -37,6 +37,8 @@ require_once dirname(__FILE__) . '/../../Annotation/Container/ContainerFactory.p
 require_once dirname(__FILE__) . '/../../Annotation/Container/AnnotationContainer.php';
 require_once dirname(__FILE__) . '/../../Annotation/Container/AnnotationListContainer.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/AnnotationReader.php';
+require_once dirname(__FILE__) . '/../../Annotation/Reader/AnnotationInjectInterface.php';
+require_once dirname(__FILE__) . '/../../Annotation/Reader/AnnotationReadInterface.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/AbstractAnnotationReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/AutowiredReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Reader/HeaderReader.php';

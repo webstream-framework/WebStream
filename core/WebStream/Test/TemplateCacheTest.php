@@ -46,8 +46,7 @@ class TemplateCacheTest extends TestBase
         $annotationReader->setContainer($container);
         $annotationReader->read();
         $reader = new TemplateCacheReader($annotationReader);
-        $reader->execute();
-        $this->assertEquals(100, $reader->getExpire());
+        $this->assertEquals(100, $reader->read()->expire);
     }
 
     /**
@@ -66,8 +65,7 @@ class TemplateCacheTest extends TestBase
         $annotationReader->setContainer($container);
         $annotationReader->read();
         $reader = new TemplateCacheReader($annotationReader);
-        $reader->execute();
-        $this->assertEquals(PHP_INT_MAX, $reader->getExpire());
+        $this->assertEquals(PHP_INT_MAX, $reader->read()->expire);
     }
 
     /**
@@ -106,7 +104,6 @@ class TemplateCacheTest extends TestBase
         $annotationReader->setContainer($container);
         $annotationReader->read();
         $reader = new TemplateCacheReader($annotationReader);
-        $reader->execute();
-        $reader->read($refClass, $method);
+        $reader->read();
     }
 }

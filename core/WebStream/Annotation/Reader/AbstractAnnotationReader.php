@@ -31,7 +31,7 @@ abstract class AbstractAnnotationReader
     public function __construct(AnnotationReader $reader)
     {
         $this->reader = $reader;
-        $this->annotationAttributes = new AnnotationContainer();
+        $this->annotationAttributes = new AnnotationContainer(); // TODO 消す
         $this->onRead();
     }
 
@@ -42,12 +42,14 @@ abstract class AbstractAnnotationReader
 
     /**
      * アノテーション処理を実行
+     * [Obsolete]
      * @param object インスタンス
      */
-    abstract public function execute();
+    public function execute() {}
 
     /**
      * アノテーション処理を実行
+     * [Obsolete]
      * @param object インスタンス
      */
     public function inject($instance)
@@ -57,6 +59,7 @@ abstract class AbstractAnnotationReader
 
     /**
      * インスタンスを返却する
+     * [Obsolete]
      * @return object インスタンス
      */
     public function getInstance()

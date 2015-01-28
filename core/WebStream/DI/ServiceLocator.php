@@ -81,8 +81,6 @@ class ServiceLocator
 
             $autowired = new AutowiredReader($reader);
             $autowired->inject($request);
-            $autowired->execute();
-            $request = $autowired->getInstance();
 
             return $request;
         };

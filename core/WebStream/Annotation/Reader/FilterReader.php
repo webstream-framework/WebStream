@@ -12,7 +12,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  * @since 2013/09/18
  * @version 0.4
  */
-class FilterReader extends AbstractAnnotationReader
+class FilterReader extends AbstractAnnotationReader implements AnnotationReadInterface
 {
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -20,29 +20,25 @@ class FilterReader extends AbstractAnnotationReader
     private $annotation;
 
     /**
-     * @var AnnotationContainer フィルタコンテナ
-     */
-    private $filterContainer;
-
-    /**
      * {@inheritdoc}
      */
     public function onRead()
     {
         $this->annotation = $this->reader->getAnnotation("WebStream\Annotation\Filter");
-        $this->filterContainer = new AnnotationContainer();
-        $this->filterContainer->initialize = new AnnotationListContainer();
-        $this->filterContainer->before = new AnnotationListContainer();
-        $this->filterContainer->after = new AnnotationListContainer();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function read()
     {
+        $annotationContainer = new AnnotationContainer();
+        $annotationContainer->initialize = new AnnotationListContainer();
+        $annotationContainer->before = new AnnotationListContainer();
+        $annotationContainer->after = new AnnotationListContainer();
+
         if ($this->annotation === null) {
-            return;
+            return $annotationContainer;
         }
 
         try {
@@ -120,7 +116,7 @@ class FilterReader extends AbstractAnnotationReader
 
                             // 実行時に動的にインスタンスを渡すようにしないと、各メソッドでの実行結果が反映されないため
                             // この時点でのクロージャへのインスタンス設定はせず、リストとして保持するに留める
-                            $this->filterContainer->{$container->type}->push($refMethod);
+                            $annotationContainer->{$container->type}->push($refMethod);
                         }
                     }
                 }
@@ -130,35 +126,7 @@ class FilterReader extends AbstractAnnotationReader
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
 
-    /**
-     * initialize filterを実行する
-     */
-    public function initialize()
-    {
-        foreach ($this->filterContainer->initialize as $refMethod) {
-            $refMethod->invoke($this->instance);
-        }
-    }
-
-    /**
-     * before filterを実行する
-     */
-    public function before()
-    {
-        foreach ($this->filterContainer->before as $refMethod) {
-            $refMethod->invoke($this->instance);
-        }
-    }
-
-    /**
-     * after filterを実行する
-     */
-    public function after()
-    {
-        foreach ($this->filterContainer->after as $refMethod) {
-            $refMethod->invoke($this->instance);
-        }
+        return $annotationContainer;
     }
 }

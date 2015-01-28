@@ -2,6 +2,7 @@
 namespace WebStream\Annotation\Reader;
 
 use WebStream\Module\Container;
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Exception\Extend\DatabaseException;
 use WebStream\Exception\Extend\AnnotationException;
@@ -13,7 +14,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  * @since 2013/12/07
  * @version 0.4
  */
-class DatabaseReader extends AbstractAnnotationReader
+class DatabaseReader extends AbstractAnnotationReader implements AnnotationReadInterface
 {
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -31,8 +32,10 @@ class DatabaseReader extends AbstractAnnotationReader
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function read()
     {
+        $annotationContainer = new AnnotationContainer();
+
         if ($this->annotation === null) {
             return;
         }
@@ -70,9 +73,11 @@ class DatabaseReader extends AbstractAnnotationReader
                 $refClass = $refClass->getParentClass();
             }
 
-            $this->annotationAttributes->connectionItemContainerList = $connectionItemContainerList;
+            $annotationContainer->connectionItemContainerList = $connectionItemContainerList;
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
+
+        return $annotationContainer;
     }
 }

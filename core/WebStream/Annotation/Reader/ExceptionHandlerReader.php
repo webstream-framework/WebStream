@@ -1,19 +1,17 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
- * TemplateCache
+ * ExceptionHandlerReader
  * @author Ryuichi TANAKA.
  * @since 2013/10/30
  * @version 0.4
- *
- * @Annotation
- * @Target("METHOD")
  */
-class ExceptionHandlerReader extends AbstractAnnotationReader
+class ExceptionHandlerReader extends AbstractAnnotationReader implements AnnotationReadInterface
 {
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -31,14 +29,16 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function read()
     {
+        $annotationContainer = new AnnotationContainer();
+
         if ($this->annotation === null) {
-            return;
+            return $annotationContainer;
         }
 
         $refClass = $this->reader->getReflectionClass();
-        $handleMethods = [];
+        $exceptions = [];
 
         try {
             while ($refClass !== false) {
@@ -50,19 +50,24 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
                         continue;
                     }
 
-                    $actionAnnotationKey = $refClass->getName() . "#" . $refMethod->getName();
+                    $actionAnnotationKey = $refMethod->class . "#" . $refMethod->name;
                     if (array_key_exists($actionAnnotationKey, $this->annotation)) {
                         $exceptionContainers = $this->annotation[$actionAnnotationKey];
+
                         foreach ($exceptionContainers as $exceptionContainer) {
                             $exceptionClassList = $exceptionContainer->get("value");
                             if (!is_array($exceptionClassList)) {
                                 $exceptionClassList = [$exceptionClassList];
                             }
-                            foreach ($exceptionClassList as $exceptionClass) {
-                                if (is_a($this->instance, $exceptionClass)) {
-                                    $handleMethods[] = $refMethod->name;
-                                }
+                            if (!array_key_exists($refMethod->class, $exceptions)) {
+                                $exceptions[$refMethod->class] = [];
                             }
+                            if (!array_key_exists($refMethod->name, $exceptions[$refMethod->class])) {
+                                $exceptions[$refMethod->class][$refMethod->name] = [];
+                            }
+
+                            // 複数の@ExceptionHandlerが指定された場合を考慮して配列
+                            $exceptions[$refMethod->class][$refMethod->name][] = $exceptionClassList;
                         }
                     }
                 }
@@ -70,9 +75,12 @@ class ExceptionHandlerReader extends AbstractAnnotationReader
                 $refClass = $refClass->getParentClass();
             }
 
-            $this->annotationAttributes->handleMethods = $handleMethods;
+            $annotationContainer->exceptions = $exceptions;
+
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
+
+        return $annotationContainer;
     }
 }

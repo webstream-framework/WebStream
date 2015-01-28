@@ -129,6 +129,8 @@ Router::setRule([
     '/multiple_exception_handler6' => "test_multiple_exception_handler#index5",
     '/double_exception_handler1' => "test_double_exception_handler#index1",
     '/double_exception_handler2' => "test_double_exception_handler#index2",
+    '/parent_exception_handler1' => "test_exception_handler_child#index1",
+    '/parent_exception_handler2' => "test_exception_handler_child#index2",
     '/session_limit' => "test_session#set_session_limit_expire",
     '/session_no_limit' => "test_session#set_session_no_limit_expire",
     '/session_index' => "test_session#index1",
@@ -250,5 +252,7 @@ Router::setRule([
     '/test_custom_dir4' => "test_custom_dir#from_view",
     '/test_custom_dir5' => "test_custom_dir#from_helper",
     '/test_helper_async' => "test_helper#help7",
-    '/test_helper_async_response' => "test_helper#help7_async"
+    '/test_helper_async_response' => "test_helper#help7_async",
+
+    '/test_render' => "test_render#index"
 ]);

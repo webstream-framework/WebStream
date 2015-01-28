@@ -12,7 +12,9 @@ use WebStream\Annotation\Container\ContainerFactory;
  */
 abstract class Annotation
 {
-    /** アノテーションコンテナ */
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
     protected $annotationContainer;
 
     /**

@@ -138,32 +138,32 @@ class Resolver
             // @Autowired
             $autowired = new AutowiredReader($reader);
             $autowired->inject($controllerInstance);
-            $autowired->execute();
-            $controllerInstance = $autowired->getInstance();
 
             // @Header
             $header = new HeaderReader($reader);
-            $header->execute();
-            $headerAttribute = $header->getAnnotationAttributes();
-            $mimeType = $headerAttribute->contentType ?: "html";
+            $headerContainer = $header->read();
+            $mimeType = $headerContainer->contentType ?: "html";
 
             // @Filter
             $filter = new FilterReader($reader);
-            $filter->inject($controllerInstance);
-            $filter->execute();
-            $controllerInstance = $filter->getInstance();
+            $filterContainer = $filter->read();
 
             // initialize filter
-            $filter->initialize();
+            foreach ($filterContainer->initialize as $refMethod) {
+                $refMethod->invoke($controllerInstance);
+            }
+
             // before filter
-            $filter->before();
+            foreach ($filterContainer->before as $refMethod) {
+                $refMethod->invoke($controllerInstance);
+            }
+
             // action
             $controllerInstance->{$action}($params);
 
             // @Template
             $template = new TemplateReader($reader);
-            $template->execute();
-            $templateContainer = $template->getannotationAttributes();
+            $templateContainer = $template->read();
 
             $pageName = $coreDelegator->getPageName();
             $viewParams = [];
@@ -184,9 +184,8 @@ class Resolver
             $view->draw($templateContainer->base, $viewParams, $mimeType);
 
             $templateCache = new TemplateCacheReader($reader);
-            $templateCache->execute();
-            $templateCacheAttributes = $templateCache->getAnnotationAttributes();
-            $expire = $templateCacheAttributes->getExpire;
+            $templateCacheContainer = $templateCache->read();
+            $expire = $templateCacheContainer->expire;
 
             if ($expire !== null) {
                 // create cache
@@ -195,7 +194,10 @@ class Resolver
             }
 
             // after filter
-            $filter->after();
+            foreach ($filterContainer->after as $refMethod) {
+                $refMethod->invoke($controllerInstance);
+            }
+
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         } catch (\ReflectionException $e) {
@@ -266,25 +268,35 @@ class Resolver
             $reader->setContainer($this->container);
             $reader->read();
 
+            $isHandled = false;
             $exceptionHandler = new ExceptionHandlerReader($reader);
-            $exceptionHandler->inject($e);
-            $exceptionHandler->execute();
-            $exceptionHandlerAttributes = $exceptionHandler->getannotationAttributes();
-            $handleMethods = $exceptionHandlerAttributes->handleMethods;
+            $exceptionHandlerContainer = $exceptionHandler->read();
 
-            if (count($handleMethods) === 0) {
-                return false;
+            while ($refClass !== false) {
+                if (array_key_exists($refClass->getName(), $exceptionHandlerContainer->exceptions)) {
+                    $exceptionMethods = $exceptionHandlerContainer->exceptions[$refClass->getName()];
+                    foreach ($exceptionMethods as $handleMethod => $exceptionMethodAnnotationClasses) {
+                        foreach ($exceptionMethodAnnotationClasses as $exceptionClasses) {
+                            foreach ($exceptionClasses as $exceptionClass) {
+                                if (is_a($e, $exceptionClass)) {
+                                    $ca = $classpath . "#" . $handleMethod;
+                                    $instance = $refClass->newInstance($this->container);
+                                    $method = $refClass->getMethod($handleMethod);
+                                    $method->invokeArgs($instance, [$errorInfo]);
+                                    $isHandled = true;
+                                    Logger::debug("Execution of handling is success: " . $ca);
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                $refClass = $refClass->getParentClass();
             }
 
-            foreach ($handleMethods as $handleMethod) {
-                $ca = $classpath . "#" . $handleMethod;
-                $instance = $refClass->newInstance($this->container);
-                $method = $refClass->getMethod($handleMethod);
-                $method->invokeArgs($instance, [$errorInfo]);
-                Logger::debug("Execution of handling is success: " . $ca);
-            }
+            return $isHandled;
 
-            return true;
         } catch (DoctrineAnnotationException $e) {
             Logger::error("Error occued in handled method: " . $ca);
             throw new AnnotationException($e);

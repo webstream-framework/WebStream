@@ -2,6 +2,7 @@
 namespace WebStream\Annotation\Reader;
 
 use WebStream\Module\Utility;
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
@@ -11,7 +12,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  * @since 2013/10/10
  * @version 0.4
  */
-class TemplateReader extends AbstractAnnotationReader
+class TemplateReader extends AbstractAnnotationReader implements AnnotationReadInterface
 {
     use Utility;
 
@@ -31,10 +32,12 @@ class TemplateReader extends AbstractAnnotationReader
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function read()
     {
+        $annotationContainer = new AnnotationContainer();
+
         if ($this->annotation === null) {
-            return;
+            return $annotationContainer;
         }
 
         $container = $this->reader->getContainer();
@@ -44,7 +47,7 @@ class TemplateReader extends AbstractAnnotationReader
         }
 
         $actionContainerList = $this->annotation[$annotationContainerKey];
-        $this->annotationAttributes->isBase = false;
+        $annotationContainer->isBase = false;
 
         try {
             $partsList = [];
@@ -99,28 +102,28 @@ class TemplateReader extends AbstractAnnotationReader
                 // ページ名からディレクトリ名を取得
                 $templateDir = $this->camel2snake($this->reader->getContainer()->coreDelegator->getPageName());
                 // ベーステンプレートは暫定的に1番はじめに指定されたテンプレートを設定する
-                if ($this->annotationAttributes->base === null) {
-                    $this->annotationAttributes->base = $templateDir . "/" . $template;
-                    $this->annotationAttributes->isBase = false;
+                if ($annotationContainer->base === null) {
+                    $annotationContainer->base = $templateDir . "/" . $template;
+                    $annotationContainer->isBase = false;
                 }
 
                 // type="base"が設定された場合は後勝ちでベーステンプレートとする
                 // name属性は指定されても無視
                 if (in_array("base", $typeList)) {
                     // type="base"が複数指定された場合、エラーとする
-                    if ($this->annotationAttributes->isBase) {
+                    if ($annotationContainer->isBase) {
                         $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                         $errorMsg.= "The type attribute 'base' must be a only definition.";
                         throw new AnnotationException($errorMsg);
                     }
                     if (in_array("shared", $typeList)) { // type={"base","shared"}
-                        $this->annotationAttributes->base = STREAM_VIEW_SHARED . "/" . $template;
+                        $annotationContainer->base = STREAM_VIEW_SHARED . "/" . $template;
                     } elseif (in_array("parts", $typeList)) { // type={"base","parts"}はありえない
                         $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                         $errorMsg.= "The type attribute can't setting 'base' and 'type'.";
                         throw new AnnotationException($errorMsg);
                     }
-                    $this->annotationAttributes->isBase = true;
+                    $annotationContainer->isBase = true;
                 } else {
                     // type={"shared","parts"}
                     if (count($typeList) === 2 && in_array("shared", $typeList) && in_array("parts", $typeList)) {
@@ -161,7 +164,10 @@ class TemplateReader extends AbstractAnnotationReader
                 }
             }
 
-            $this->annotationAttributes->parts = $partsList;
+            $annotationContainer->parts = $partsList;
+
+            return $annotationContainer;
+
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }

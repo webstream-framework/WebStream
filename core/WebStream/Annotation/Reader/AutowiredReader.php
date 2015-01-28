@@ -11,7 +11,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  * @since 2013/09/18
  * @version 0.4.1
  */
-class AutowiredReader extends AbstractAnnotationReader
+class AutowiredReader extends AbstractAnnotationReader implements AnnotationInjectInterface
 {
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -29,7 +29,7 @@ class AutowiredReader extends AbstractAnnotationReader
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function inject(&$instance)
     {
         if ($this->annotation === null) {
             return;
@@ -58,8 +58,8 @@ class AutowiredReader extends AbstractAnnotationReader
                                     // 初期値が設定してある場合、Autowiredしない。
                                     // メンバ変数に初期値が設定してある場合、または、コンストラクタで
                                     // メンバ変数に値を設定した場合(タイミング的にAutowired後に値を上書きしたとみなすため)
-                                    if ($property->getValue($this->instance) === null) {
-                                        $property->setValue($this->instance, $value);
+                                    if ($property->getValue($instance) === null) {
+                                        $property->setValue($instance, $value);
                                     }
                                 } else {
                                     // プリミティブ型の場合、警告を出すだけに留める
@@ -68,8 +68,8 @@ class AutowiredReader extends AbstractAnnotationReader
                             } else { // value属性の指定がない場合、参照型であればインスタンスを代入する
                                 if (class_exists($type)) {
                                     $value = new $type();
-                                    if ($property->getValue($this->instance) === null) {
-                                        $property->setValue($this->instance, $value);
+                                    if ($property->getValue($instance) === null) {
+                                        $property->setValue($instance, $value);
                                     }
                                 } else {
                                     // クラス参照型の場合、存在しないクラスアクセスなので例外を出す
@@ -78,8 +78,8 @@ class AutowiredReader extends AbstractAnnotationReader
                             }
                         // type属性なしかつvalue属性ありの場合は指定された値をそのまま設定
                         } elseif ($value !== null) {
-                            if ($property->getValue($this->instance) === null) {
-                                $property->setValue($this->instance, $value);
+                            if ($property->getValue($instance) === null) {
+                                $property->setValue($instance, $value);
                             }
                         } else {
                             // 不明な属性が指定された場合、警告を出す

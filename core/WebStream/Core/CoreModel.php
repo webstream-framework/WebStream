@@ -63,8 +63,8 @@ class CoreModel implements CoreInterface
         $reader->read();
 
         $database = new DatabaseReader($reader);
-        $database->execute();
-        $connectionItemContainerList = $database->getannotationAttributes()->connectionItemContainerList;
+        $databaseContainer = $database->read();
+        $connectionItemContainerList = $databaseContainer->connectionItemContainerList;
 
         if ($connectionItemContainerList === null) {
             Logger::warn("Can't use database in Model Layer.");

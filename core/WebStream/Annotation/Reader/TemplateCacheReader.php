@@ -2,6 +2,7 @@
 namespace WebStream\Annotation\Reader;
 
 use WebStream\Module\Logger;
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
@@ -11,7 +12,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  * @since 2013/10/30
  * @version 0.4
  */
-class TemplateCacheReader extends AbstractAnnotationReader
+class TemplateCacheReader extends AbstractAnnotationReader implements AnnotationReadInterface
 {
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -29,10 +30,12 @@ class TemplateCacheReader extends AbstractAnnotationReader
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function read()
     {
+        $annotationContainer = new AnnotationContainer();
+
         if ($this->annotation === null) {
-            return;
+            return $annotationContainer;
         }
 
         $container = $this->reader->getContainer();
@@ -44,7 +47,7 @@ class TemplateCacheReader extends AbstractAnnotationReader
         try {
             $actionContainerList = $this->annotation[$annotationContainerKey];
             foreach ($actionContainerList as $actionContainer) {
-                $this->annotationAttributes = $actionContainer;
+                $annotationContainer = $actionContainer;
                 $expire = $actionContainer->expire;
                 // 複数指定は不可
                 if (is_array($expire)) {
@@ -64,9 +67,14 @@ class TemplateCacheReader extends AbstractAnnotationReader
                 } elseif ($expire >= PHP_INT_MAX) {
                     Logger::warn("Expire value converted the maximum of PHP Integer.");
                 }
+
+                // 読み込みできた時点で終了
+                break;
             }
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
+
+        return $annotationContainer;
     }
 }

@@ -39,6 +39,14 @@ trait ExceptionHandlerProvider
         ];
     }
 
+    public function successParentClassErrorHandling()
+    {
+        return [
+            ["/parent_exception_handler1", "parent"],
+            ["/parent_exception_handler2", "childparent"]
+        ];
+    }
+
     public function failureErrorHandlingProvider()
     {
         return [

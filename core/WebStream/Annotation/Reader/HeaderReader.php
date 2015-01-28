@@ -3,6 +3,7 @@ namespace WebStream\Annotation\Reader;
 
 use WebStream\Module\Logger;
 use WebStream\Module\Utility;
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Exception\Extend\InvalidRequestException;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
@@ -13,7 +14,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  * @since 2013/10/20
  * @version 0.4
  */
-class HeaderReader extends AbstractAnnotationReader
+class HeaderReader extends AbstractAnnotationReader implements AnnotationReadInterface
 {
     use Utility;
 
@@ -64,10 +65,12 @@ class HeaderReader extends AbstractAnnotationReader
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function read()
     {
+        $annotationContainer = new AnnotationContainer();
+
         if ($this->annotation === null) {
-            return;
+            return $annotationContainer;
         }
 
         try {
@@ -80,7 +83,7 @@ class HeaderReader extends AbstractAnnotationReader
                 if (array_key_exists($classpathWithAction, $this->annotation)) {
                     // 複数指定されても先頭のみ有効
                     $annotation = array_shift($this->annotation[$classpathWithAction]);
-                    $this->annotationAttributes = $annotation;
+                    $annotationContainer = $annotation;
                     $allowMethods = $annotation->allowMethod;
 
                     // 指定無しの場合はチェックしない(すべてのメソッドを許可する)
@@ -125,5 +128,7 @@ class HeaderReader extends AbstractAnnotationReader
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
+
+        return $annotationContainer;
     }
 }

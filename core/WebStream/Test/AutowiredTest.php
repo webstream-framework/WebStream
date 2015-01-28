@@ -46,8 +46,6 @@ class AutowiredTest extends TestBase
 
         $autowired = new AutowiredReader($reader);
         $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $this->assertEquals($mail, $instance->getMail());
         $this->assertEquals($age, $instance->getAge());
@@ -69,8 +67,6 @@ class AutowiredTest extends TestBase
 
         $autowired = new AutowiredReader($reader);
         $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $this->assertEquals($name, $instance->getName());
         $this->assertEquals($num, $instance->getMemberNum());
@@ -91,8 +87,6 @@ class AutowiredTest extends TestBase
 
         $autowired = new AutowiredReader($reader);
         $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $autowired1 = $instance->getName();
         $autowired2 = $instance->getName2();
@@ -120,8 +114,6 @@ class AutowiredTest extends TestBase
 
         $autowired = new AutowiredReader($reader);
         $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $this->assertTrue(false);
     }
@@ -141,8 +133,6 @@ class AutowiredTest extends TestBase
 
         $autowired = new AutowiredReader($reader);
         $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $this->assertNull($instance->getInstance());
     }
