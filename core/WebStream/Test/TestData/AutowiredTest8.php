@@ -1,10 +1,12 @@
 <?php
 namespace WebStream\Test\TestData;
 
-use WebStream\Annotation\Autowired;
+use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Inject;
+use WebStream\Annotation\Autowired;
+use WebStream\Module\Container;
 
-class AutowiredTest8
+class AutowiredTest8 implements CoreInterface
 {
     /**
      * @Inject
@@ -17,6 +19,10 @@ class AutowiredTest8
      * @Autowired(value="name4")
      */
     private $name4;
+
+    public function __construct(Container $container) {}
+
+    public function __destruct() {}
 
     public function getName3()
     {

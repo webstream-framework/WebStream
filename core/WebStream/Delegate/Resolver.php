@@ -6,19 +6,13 @@ use WebStream\Module\Container;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 use WebStream\Exception\Extend\ClassNotFoundException;
 use WebStream\Exception\Extend\MethodNotFoundException;
 use WebStream\Exception\Extend\AnnotationException;
-use WebStream\Annotation\Reader\ExceptionHandlerReader;
-use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\AutowiredReader;
-use WebStream\Annotation\Reader\HeaderReader;
-use WebStream\Annotation\Reader\FilterReader;
-use WebStream\Annotation\Reader\TemplateReader;
-use WebStream\Annotation\Reader\TemplateCacheReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
@@ -31,16 +25,35 @@ class Resolver
 {
     use Utility;
 
-    /** ルーティングオブジェクト */
+    /**
+     * @var Router ルーティングオブジェクト
+     */
     private $router;
-    /** リクエストオブジェクト */
+
+    /**
+     * @var Request リクエストオブジェクト
+     */
     private $request;
-    /** レスポンスオブジェクト */
+
+    /**
+     * @var Response レスポンスオブジェクト
+     */
     private $response;
-    /** セッションオブジェクト */
+
+    /**
+     * @var Session セッションオブジェクト
+     */
     private $session;
-    /** DIコンテナ */
+
+    /**
+     * @var Container DIコンテナ
+     */
     private $container;
+
+    /**
+     * @var array<AnnotationContainer> 注入後アノテーション情報
+     */
+    private $injectedAnnotation;
 
     /**
      * コンストラクタ
@@ -126,75 +139,103 @@ class Resolver
             }
 
             // Controller起動
-            $refClass = new \ReflectionClass($controllerInstance);
-
-            // AnnotaionReaderを取得
-            $reader = new AnnotationReader($controllerInstance);
-            $this->container->classpath = $refClass->getName();
-            $this->container->action = $action;
-            $reader->setContainer($this->container);
+            $reader = new AnnotationReader($controllerInstance, $this->container);
             $reader->read();
-
-            // @Autowired
-            $autowired = new AutowiredReader($reader);
-            $autowired->inject($controllerInstance);
+            $this->injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
             // @Header
-            $header = new HeaderReader($reader);
-            $headerContainer = $header->read();
-            $mimeType = $headerContainer->contentType ?: "html";
+            $mimeType = "html";
+            if (array_key_exists("WebStream\Annotation\Header", $this->injectedAnnotation)) {
+                $headerAnnotations = $this->injectedAnnotation["WebStream\Annotation\Header"];
+                $mimeType = $headerAnnotations[0]->contentType;
+            }
 
             // @Filter
-            $filter = new FilterReader($reader);
-            $filterContainer = $filter->read();
+            $invokeInitializeList = [];
+            $invokeBeforeList = [];
+            $invokeAfterList = [];
+            if (array_key_exists("WebStream\Annotation\Filter", $this->injectedAnnotation)) {
+                $filterAnnotations = $this->injectedAnnotation["WebStream\Annotation\Filter"];
+                foreach ($filterAnnotations as $filterAnnotation) {
+                    if ($filterAnnotation->initialize !== null) {
+                        $invokeInitializeList[] = $filterAnnotation->initialize;
+                    }
+                    if ($filterAnnotation->before !== null) {
+                        $invokeBeforeList[] = $filterAnnotation->before;
+                    }
+                    if ($filterAnnotation->after !== null) {
+                        $invokeAfterList[] = $filterAnnotation->after;
+                    }
+                }
+            }
+
+            // @Template
+            $viewParams = [];
+            $baseTemplate = null;
+            if (array_key_exists("WebStream\Annotation\Template", $this->injectedAnnotation)) {
+                $templateAnnotations = $this->injectedAnnotation["WebStream\Annotation\Template"];
+                $baseTemplateCandidate = null;
+
+                foreach ($templateAnnotations as $templateAnnotation) {
+                    if ($baseTemplateCandidate === null) {
+                        // ベーステンプレートは暫定的に1番はじめに指定されたテンプレートを設定する
+                        $baseTemplateCandidate = $templateAnnotation->name;
+                    }
+
+                    if ($templateAnnotation->base !== null) {
+                        if ($baseTemplate !== null) {
+                            // ベーステンプレートが複数指定された場合、エラーとする
+                            $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
+                            $errorMsg.= "The type attribute 'base' must be a only definition.";
+                            throw new AnnotationException($errorMsg);
+                        }
+                        $baseTemplate = $templateAnnotation->base;
+                    }
+
+                    if ($templateAnnotation->parts !== null) {
+                        foreach ($templateAnnotation->parts as $key => $value) {
+                            $viewParams[$key] = $value;
+                        }
+                    }
+                }
+                if ($baseTemplate === null) {
+                    $baseTemplate = $baseTemplateCandidate;
+                }
+
+                $viewParams["model"] = $coreDelegator->getService() ?: $coreDelegator->getModel();
+                $viewParams["helper"] = $coreDelegator->getHelper();
+            }
+
+            // @Template
+            $expire = null;
+            if (array_key_exists("WebStream\Annotation\TemplateCache", $this->injectedAnnotation)) {
+                $templateCacheAnnotations = $this->injectedAnnotation["WebStream\Annotation\TemplateCache"];
+                $expire = $templateCacheAnnotations[0]->expire;
+            }
 
             // initialize filter
-            foreach ($filterContainer->initialize as $refMethod) {
+            foreach ($invokeInitializeList as $refMethod) {
                 $refMethod->invoke($controllerInstance);
             }
 
             // before filter
-            foreach ($filterContainer->before as $refMethod) {
+            foreach ($invokeBeforeList as $refMethod) {
                 $refMethod->invoke($controllerInstance);
             }
 
             // action
             $controllerInstance->{$action}($params);
 
-            // @Template
-            $template = new TemplateReader($reader);
-            $templateContainer = $template->read();
-
-            $pageName = $coreDelegator->getPageName();
-            $viewParams = [];
-            $viewParams["model"] = $controllerInstance->__model();
-            $viewParams["helper"] = $coreDelegator->getHelper();
-
-            if ($templateContainer->base !== null) {
-                $viewParams["base"] = $templateContainer->base;
-            }
-            if ($templateContainer->parts !== null) {
-                foreach ($templateContainer->parts as $key => $value) {
-                    $viewParams[$key] = $value;
-                }
-            }
-
             // draw template
             $view = $coreDelegator->getView();
-            $view->draw($templateContainer->base, $viewParams, $mimeType);
-
-            $templateCache = new TemplateCacheReader($reader);
-            $templateCacheContainer = $templateCache->read();
-            $expire = $templateCacheContainer->expire;
-
+            $view->draw($baseTemplate, $viewParams, $mimeType);
             if ($expire !== null) {
-                // create cache
                 $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($coreDelegator->getPageName()) . "-" . $this->camel2snake($action);
                 $view->cache($cacheFile, ob_get_contents(), $expire);
             }
 
             // after filter
-            foreach ($filterContainer->after as $refMethod) {
+            foreach ($invokeAfterList as $refMethod) {
                 $refMethod->invoke($controllerInstance);
             }
 
@@ -252,7 +293,6 @@ class Resolver
             return false;
         }
 
-        $validator = $this->container->validator;
         $errorInfo = [
             "class" => $classpath,
             "method" => $this->router->action()
@@ -261,38 +301,30 @@ class Resolver
         try {
             // Controller起動
             $controllerInstance = $this->container->coreDelegator->getController();
-            $refClass = new \ReflectionClass($controllerInstance);
+            $exceptionHandlerAnnotations = $this->injectedAnnotation["WebStream\Annotation\ExceptionHandler"];
 
-            // @ExceptionHandlerを起動
-            $reader = new AnnotationReader($controllerInstance);
-            $reader->setContainer($this->container);
-            $reader->read();
-
-            $isHandled = false;
-            $exceptionHandler = new ExceptionHandlerReader($reader);
-            $exceptionHandlerContainer = $exceptionHandler->read();
-
-            while ($refClass !== false) {
-                if (array_key_exists($refClass->getName(), $exceptionHandlerContainer->exceptions)) {
-                    $exceptionMethods = $exceptionHandlerContainer->exceptions[$refClass->getName()];
-                    foreach ($exceptionMethods as $handleMethod => $exceptionMethodAnnotationClasses) {
-                        foreach ($exceptionMethodAnnotationClasses as $exceptionClasses) {
-                            foreach ($exceptionClasses as $exceptionClass) {
-                                if (is_a($e, $exceptionClass)) {
-                                    $ca = $classpath . "#" . $handleMethod;
-                                    $instance = $refClass->newInstance($this->container);
-                                    $method = $refClass->getMethod($handleMethod);
-                                    $method->invokeArgs($instance, [$errorInfo]);
-                                    $isHandled = true;
-                                    Logger::debug("Execution of handling is success: " . $ca);
-                                }
-                            }
+            $invokeMethods = [];
+            foreach ($exceptionHandlerAnnotations as $exceptionHandlerAnnotation) {
+                $exceptions = $exceptionHandlerAnnotation->exceptions;
+                $refMethod = $exceptionHandlerAnnotation->method;
+                foreach ($exceptions as $exception) {
+                    if (is_a($e, $exception)) {
+                        // 一つのメソッドに複数の捕捉例外が指定された場合(派生例外クラス含む)、先勝で1回のみ実行する
+                        // そうでなければ複数回メソッドが実行されるため
+                        // ただし同一クラス内に限る(親クラスの同一名のメソッドは実行する)
+                        // TODO ここはテストを追加する
+                        $key = $refMethod->class . "#" . $refMethod->name;
+                        if (!array_key_exists($key, $invokeMethods)) {
+                            $invokeMethods[$key] = $refMethod;
                         }
                     }
-
                 }
+            }
 
-                $refClass = $refClass->getParentClass();
+            foreach ($invokeMethods as $invokeMethod) {
+                $invokeMethod->invokeArgs($controllerInstance, [$errorInfo]);
+                $isHandled = true;
+                Logger::debug("Execution of handling is success: " . $errorInfo["class"] . "#" . $errorInfo["method"]);
             }
 
             return $isHandled;

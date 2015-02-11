@@ -3,11 +3,9 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
+use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
-use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\DatabaseReader;
-use WebStream\Annotation\Reader\QueryReader;
 use WebStream\Exception\Extend\DatabaseException;
 use WebStream\Exception\Extend\MethodNotFoundException;
 
@@ -25,9 +23,9 @@ class CoreModel implements CoreInterface
     private $manager;
 
     /**
-     * @var QueryReader クエリリーダ
+     * @var array<AnnotationContainer> クエリアノテーションリスト
      */
-    private $queryReader;
+    private $queryAnnotations;
 
     /**
      * @var boolean オートコミットフラグ
@@ -57,27 +55,19 @@ class CoreModel implements CoreInterface
      */
     private function initialize(Container $container)
     {
-        // TODO 読み込むタイミングがおかしいので後で直す
-        $reader = new AnnotationReader($this);
-        $reader->setContainer($container);
+        $reader = new AnnotationReader($this, $container);
         $reader->read();
+        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
-        $database = new DatabaseReader($reader);
-        $databaseContainer = $database->read();
-        $connectionItemContainerList = $databaseContainer->connectionItemContainerList;
-
+        $connectionItemContainerList = $injectedAnnotation["WebStream\Annotation\Database"];
         if ($connectionItemContainerList === null) {
             Logger::warn("Can't use database in Model Layer.");
 
             return;
         }
 
+        $this->queryAnnotations = $injectedAnnotation["WebStream\Annotation\Query"];
         $this->manager = new DatabaseManager($connectionItemContainerList);
-
-        $query = new QueryReader($reader);
-        $query->execute();
-        $this->queryReader = $query;
-
         $this->isAutoCommit = true;
     }
 
@@ -148,7 +138,33 @@ class CoreModel implements CoreInterface
 
                 $modelMethod = debug_backtrace()[3]["function"];
                 $queryKey = get_class($this) . "#" . $modelMethod;
-                $query = $this->queryReader->getQuery($queryKey, $method);
+                $queryId = $method;
+
+                $refClass = new \ReflectionClass($this);
+                $classpath = $refClass->getNamespaceName();
+
+                $query = null;
+                foreach ($this->queryAnnotations as $queryAnnotation) {
+                    $queryFunctions = $queryAnnotation->get($queryKey);
+
+                    if ($queryFunctions === null) {
+                        continue;
+                    }
+
+                    foreach ($queryFunctions as $queryFunction) {
+                        $xmlObjectList = $queryFunction->fetch();
+                        foreach ($xmlObjectList as $xmlObject) {
+                            if ($xmlObject !== null) {
+                                $xmlElement = $xmlObject->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
+                                if (!empty($xmlElement)) {
+                                    $query = ["sql" => trim($xmlElement[0]), "method" => $xmlElement[0]->getName()];
+                                    $entity = $xmlElement[0]->attributes()["entity"];
+                                    $query["entity"] = $entity !== null ? $entity->__toString() : null;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 if ($query === null) {
                     throw new DatabaseException("SQL statement can't getting from xml file.");

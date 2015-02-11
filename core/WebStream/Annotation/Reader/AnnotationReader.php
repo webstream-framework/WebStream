@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
+use WebStream\Core\CoreInterface;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
@@ -20,7 +21,7 @@ class AnnotationReader
     private $refClass;
 
     /**
-     * @var object インスタンス
+     * @var CoreInterface インスタンス
      */
     private $instance;
 
@@ -30,74 +31,41 @@ class AnnotationReader
     private $container;
 
     /**
-     * @var array アノテーションリスト
+     * @var array 注入後のアノテーションリスト
      */
-    private $annotations;
+    private $injectedAnnotations;
 
     /**
      * constructor
-     * @param object インスタンス
+     * @param CoreInterface インスタンス
+     * @param Container 依存コンテナ
      */
-    public function __construct($instance)
+    public function __construct(CoreInterface &$instance, Container $container)
     {
-        // アノテーション処理対象インスタンスのリフレクションクラスオブジェクト
-        $this->refClass = new \ReflectionClass($instance);
-        $this->annotations = [];
-    }
-
-    /**
-     * コンテナを設定
-     * @param Container コンテナ
-     */
-    public function setContainer(Container $container)
-    {
+        $this->instance = $instance;
         $this->container = $container;
+        $this->refClass = new \ReflectionClass($instance);
+        $this->injectedAnnotations = [];
     }
 
     /**
-     * コンテナを返却
-     * @return Container コンテナ
+     * 注入後の処理結果を返却する
+     * @param array<mixed> 注入後の処理結果
      */
-    public function getContainer()
+    public function getInjectedAnnotationInfo()
     {
-        return $this->container;
-    }
-
-    /**
-     * アノテーションを読み込む
-     */
-    public function read()
-    {
-        $this->readAnnotaion();
-    }
-
-    /**
-     * リフレクションクラスオブジェクトを返却する
-     * @return \ReflectionClass リフレクションクラスオブジェクト
-     */
-    public function getReflectionClass()
-    {
-        return $this->refClass;
-    }
-
-    /**
-     * アノテーションコンテナを返却する
-     * @return Container アノテーションコンテナ
-     */
-    public function getAnnotation($classpath)
-    {
-        return array_key_exists($classpath, $this->annotations) ? $this->annotations[$classpath] : null;
+        return $this->injectedAnnotations;
     }
 
     /**
      * アノテーション情報を読み込む
      */
-    private function readAnnotaion()
+    public function read()
     {
         try {
             $this->readClass();
-            $this->readProperties();
             $this->readMethods();
+            $this->readProperties();
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
@@ -113,19 +81,26 @@ class AnnotationReader
 
         while ($refClass !== false) {
             $annotations = $reader->getClassAnnotations($refClass);
+
+            // アノテーション定義がなければ次へ
             if (!empty($annotations)) {
                 // @Injectは先頭に定義されていなければならない
                 if (!$annotations[0] instanceof \WebStream\Annotation\Inject) {
                     throw new AnnotationException("@Inject must be defined at the top of class.");
                 }
+
                 for ($i = 1; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
-                    $classpath = get_class($annotation);
-                    // リストで初期化
-                    if (!array_key_exists($classpath, $this->annotations)) {
-                        $this->annotations[$classpath] = [];
+                    $annotation->onClassInject($this->instance, $this->container, $refClass);
+                    $key = get_class($annotation);
+
+                    // IReadを実装している場合、任意のデータを返却する
+                    if ($annotation instanceof \WebStream\Annotation\Base\IRead) {
+                        if (!array_key_exists($key, $this->injectedAnnotations)) {
+                            $this->injectedAnnotations[$key] = [];
+                        }
+                        $this->injectedAnnotations[$key][] = $annotation->onInjected();
                     }
-                    $this->annotations[$classpath][$refClass->getName()] = $annotation->getAnnotationContainer();
                 }
             }
 
@@ -140,31 +115,44 @@ class AnnotationReader
     {
         $reader = new DoctrineAnnotationReader();
         $refClass = $this->refClass;
+        $actionMethod = $this->container->router->action();
 
         while ($refClass !== false) {
             foreach ($refClass->getMethods() as $method) {
+                if ($refClass->getName() !== $method->class) {
+                    continue;
+                }
+
                 $annotations = $reader->getMethodAnnotations($method);
+
                 // アノテーション定義がなければ次へ
                 if (empty($annotations)) {
                     continue;
                 }
+
                 // @Injectは先頭に定義されていなければならない
                 if (!$annotations[0] instanceof \WebStream\Annotation\Inject) {
                     throw new AnnotationException("@Inject must be defined at the top of method.");
                 }
+
                 for ($i = 1; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
-                    $classpath = get_class($annotation);
-                    // リストで初期化
-                    if (!array_key_exists($classpath, $this->annotations)) {
-                        $this->annotations[$classpath] = [];
+
+                    // IMethodを実装している場合、アクションメソッドのアノテーション以外は読み込まない
+                    if ($actionMethod !== $method->name && $annotation instanceof \WebStream\Annotation\Base\IMethod) {
+                        continue;
                     }
-                    // 同じアノテーションが指定された場合はリストにする
-                    $ca = $refClass->getName() . "#" . $method->getName();
-                    if (!array_key_exists($ca, $this->annotations[$classpath])) {
-                        $this->annotations[$classpath][$ca] = [];
+
+                    $annotation->onMethodInject($this->instance, $this->container, $method);
+                    $key = get_class($annotation);
+
+                    // IReadを実装している場合、任意のデータを返却する
+                    if ($annotation instanceof \WebStream\Annotation\Base\IRead) {
+                        if (!array_key_exists($key, $this->injectedAnnotations)) {
+                            $this->injectedAnnotations[$key] = [];
+                        }
+                        $this->injectedAnnotations[$key][] = $annotation->onInjected();
                     }
-                    $this->annotations[$classpath][$ca][] = $annotation->getAnnotationContainer();
                 }
             }
             $refClass = $refClass->getParentClass();
@@ -181,7 +169,12 @@ class AnnotationReader
 
         while ($refClass !== false) {
             foreach ($refClass->getProperties() as $property) {
+                if ($refClass->getName() !== $property->class) {
+                    continue;
+                }
+
                 $annotations = $reader->getPropertyAnnotations($property);
+
                 // アノテーション定義がなければ次へ
                 if (empty($annotations)) {
                     continue;
@@ -190,15 +183,10 @@ class AnnotationReader
                 if (!$annotations[0] instanceof \WebStream\Annotation\Inject) {
                     throw new AnnotationException("@Inject must be defined at the top of property.");
                 }
+
                 for ($i = 1; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
-                    $classpath = get_class($annotation);
-                    // リストで初期化
-                    if (!array_key_exists($classpath, $this->annotations)) {
-                        $this->annotations[$classpath] = [];
-                    }
-                    // プロパティの場合は複数指定しても後勝ちでリストにはしない
-                    $this->annotations[$classpath][$refClass->getName() . "." . $property->getName()] = $annotation->getAnnotationContainer();
+                    $annotation->onPropertyInject($this->instance, $property);
                 }
             }
             $refClass = $refClass->getParentClass();

@@ -69,15 +69,6 @@ class CoreController implements CoreInterface
     }
 
     /**
-     * Model/Serviceオブジェクトを返却する
-     * @return object Model/Serviceオブジェクト
-     */
-    final public function __model()
-    {
-        return $this->{$this->coreDelegator->getPageName()};
-    }
-
-    /**
      * CSRFトークンをチェックする
      */
     final private function __csrfCheck()

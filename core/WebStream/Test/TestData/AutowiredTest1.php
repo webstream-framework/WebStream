@@ -1,10 +1,12 @@
 <?php
 namespace WebStream\Test\TestData;
 
+use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Autowired;
 use WebStream\Annotation\Inject;
+use WebStream\Module\Container;
 
-class AutowiredTest1
+class AutowiredTest1 implements CoreInterface
 {
     /**
      * @Inject
@@ -23,6 +25,10 @@ class AutowiredTest1
      * @Autowired(value=17)
      */
     private $age;
+
+    public function __construct(Container $container) {}
+
+    public function __destruct() {}
 
     public function getInstance()
     {

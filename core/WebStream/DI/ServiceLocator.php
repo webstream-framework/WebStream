@@ -6,8 +6,6 @@ use WebStream\Module\Container;
 use WebStream\Delegate\Router;
 use WebStream\Delegate\Validator;
 use WebStream\Delegate\CoreDelegator;
-use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\AutowiredReader;
 use WebStream\Http\Request;
 use WebStream\Http\Response;
 use WebStream\Http\Session;
@@ -75,14 +73,7 @@ class ServiceLocator
 
         // Request
         $container->request = function () {
-            $request = new Request();
-            $reader = new AnnotationReader($request);
-            $reader->read();
-
-            $autowired = new AutowiredReader($reader);
-            $autowired->inject($request);
-
-            return $request;
+            return new Request();
         };
         // Response
         $container->response = function () {
