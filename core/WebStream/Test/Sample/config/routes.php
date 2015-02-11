@@ -252,7 +252,5 @@ Router::setRule([
     '/test_custom_dir4' => "test_custom_dir#from_view",
     '/test_custom_dir5' => "test_custom_dir#from_helper",
     '/test_helper_async' => "test_helper#help7",
-    '/test_helper_async_response' => "test_helper#help7_async",
-
-    '/test_render' => "test_render#index"
+    '/test_helper_async_response' => "test_helper#help7_async"
 ]);

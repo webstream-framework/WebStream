@@ -50,6 +50,7 @@ require_once dirname(__FILE__) . '/core/WebStream/Database/Query.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/Result.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/ResultEntity.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/CoreDelegator.php';
+require_once dirname(__FILE__) . '/core/WebStream/Delegate/AnnotationDelegator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Resolver.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Router.php';

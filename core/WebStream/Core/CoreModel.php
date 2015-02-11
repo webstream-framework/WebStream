@@ -3,7 +3,6 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
-use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
 use WebStream\Exception\Extend\DatabaseException;
@@ -55,18 +54,17 @@ class CoreModel implements CoreInterface
      */
     private function initialize(Container $container)
     {
-        $reader = new AnnotationReader($this, $container);
-        $reader->read();
-        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
+        $annotationDelegator = $container->annotationDelegator;
+        $annotation = $annotationDelegator->read($this);
 
-        $connectionItemContainerList = $injectedAnnotation["WebStream\Annotation\Database"];
+        $connectionItemContainerList = $annotation->database;
         if ($connectionItemContainerList === null) {
             Logger::warn("Can't use database in Model Layer.");
 
             return;
         }
 
-        $this->queryAnnotations = $injectedAnnotation["WebStream\Annotation\Query"];
+        $this->queryAnnotations = $annotation->query;
         $this->manager = new DatabaseManager($connectionItemContainerList);
         $this->isAutoCommit = true;
     }

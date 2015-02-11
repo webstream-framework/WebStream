@@ -6,6 +6,7 @@ use WebStream\Module\Container;
 use WebStream\Delegate\Router;
 use WebStream\Delegate\Validator;
 use WebStream\Delegate\CoreDelegator;
+use WebStream\Delegate\AnnotationDelegator;
 use WebStream\Http\Request;
 use WebStream\Http\Response;
 use WebStream\Http\Session;
@@ -94,6 +95,10 @@ class ServiceLocator
         // CoreDelegator
         $container->coreDelegator = function () use (&$container) {
             return new CoreDelegator($container);
+        };
+        // AnnotationDelegator
+        $container->annotationDelegator = function () use (&$container) {
+            return new AnnotationDelegator($container);
         };
         // ApplicationRoot
         $container->applicationRoot = $isTest ? $this->getTestApplicationRoot() : $this->getRoot();

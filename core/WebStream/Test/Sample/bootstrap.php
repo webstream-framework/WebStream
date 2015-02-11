@@ -50,6 +50,7 @@ require_once dirname(__FILE__) . '/../../Database/Query.php';
 require_once dirname(__FILE__) . '/../../Database/Result.php';
 require_once dirname(__FILE__) . '/../../Database/ResultEntity.php';
 require_once dirname(__FILE__) . '/../../Delegate/CoreDelegator.php';
+require_once dirname(__FILE__) . '/../../Delegate/AnnotationDelegator.php';
 require_once dirname(__FILE__) . '/../../Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/../../Delegate/Resolver.php';
 require_once dirname(__FILE__) . '/../../Delegate/Router.php';

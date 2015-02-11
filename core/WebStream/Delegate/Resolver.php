@@ -6,7 +6,6 @@ use WebStream\Module\Container;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
-use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
@@ -53,7 +52,9 @@ class Resolver
     /**
      * @var array<AnnotationContainer> 注入後アノテーション情報
      */
-    private $injectedAnnotation;
+    // private $injectedAnnotation;
+
+    private $annotation;
 
     /**
      * コンストラクタ
@@ -105,6 +106,7 @@ class Resolver
         // クラスパスを取得
         $coreDelegator = $this->container->coreDelegator;
         $controllerInstance = $coreDelegator->getController();
+        $annotationDelegator = $this->container->annotationDelegator;
         $controller = $this->router->controller();
         $action = $this->router->action();
         $params = $this->router->params();
@@ -138,88 +140,27 @@ class Resolver
                 }
             }
 
-            // Controller起動
-            $reader = new AnnotationReader($controllerInstance, $this->container);
-            $reader->read();
-            $this->injectedAnnotation = $reader->getInjectedAnnotationInfo();
+            $this->annotation = $annotationDelegator->read($controllerInstance);
 
             // @Header
-            $mimeType = "html";
-            if (array_key_exists("WebStream\Annotation\Header", $this->injectedAnnotation)) {
-                $headerAnnotations = $this->injectedAnnotation["WebStream\Annotation\Header"];
-                $mimeType = $headerAnnotations[0]->contentType;
-            }
+            $mimeType = $this->annotation->header->mimeType;
 
             // @Filter
-            $invokeInitializeList = [];
-            $invokeBeforeList = [];
-            $invokeAfterList = [];
-            if (array_key_exists("WebStream\Annotation\Filter", $this->injectedAnnotation)) {
-                $filterAnnotations = $this->injectedAnnotation["WebStream\Annotation\Filter"];
-                foreach ($filterAnnotations as $filterAnnotation) {
-                    if ($filterAnnotation->initialize !== null) {
-                        $invokeInitializeList[] = $filterAnnotation->initialize;
-                    }
-                    if ($filterAnnotation->before !== null) {
-                        $invokeBeforeList[] = $filterAnnotation->before;
-                    }
-                    if ($filterAnnotation->after !== null) {
-                        $invokeAfterList[] = $filterAnnotation->after;
-                    }
-                }
-            }
+            $filter = $this->annotation->filter;
 
             // @Template
-            $viewParams = [];
-            $baseTemplate = null;
-            if (array_key_exists("WebStream\Annotation\Template", $this->injectedAnnotation)) {
-                $templateAnnotations = $this->injectedAnnotation["WebStream\Annotation\Template"];
-                $baseTemplateCandidate = null;
+            $template = $this->annotation->template;
 
-                foreach ($templateAnnotations as $templateAnnotation) {
-                    if ($baseTemplateCandidate === null) {
-                        // ベーステンプレートは暫定的に1番はじめに指定されたテンプレートを設定する
-                        $baseTemplateCandidate = $templateAnnotation->name;
-                    }
-
-                    if ($templateAnnotation->base !== null) {
-                        if ($baseTemplate !== null) {
-                            // ベーステンプレートが複数指定された場合、エラーとする
-                            $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
-                            $errorMsg.= "The type attribute 'base' must be a only definition.";
-                            throw new AnnotationException($errorMsg);
-                        }
-                        $baseTemplate = $templateAnnotation->base;
-                    }
-
-                    if ($templateAnnotation->parts !== null) {
-                        foreach ($templateAnnotation->parts as $key => $value) {
-                            $viewParams[$key] = $value;
-                        }
-                    }
-                }
-                if ($baseTemplate === null) {
-                    $baseTemplate = $baseTemplateCandidate;
-                }
-
-                $viewParams["model"] = $coreDelegator->getService() ?: $coreDelegator->getModel();
-                $viewParams["helper"] = $coreDelegator->getHelper();
-            }
-
-            // @Template
-            $expire = null;
-            if (array_key_exists("WebStream\Annotation\TemplateCache", $this->injectedAnnotation)) {
-                $templateCacheAnnotations = $this->injectedAnnotation["WebStream\Annotation\TemplateCache"];
-                $expire = $templateCacheAnnotations[0]->expire;
-            }
+            // @TemplateCache
+            $expire = $this->annotation->templateCache->expire;
 
             // initialize filter
-            foreach ($invokeInitializeList as $refMethod) {
+            foreach ($filter->initialize as $refMethod) {
                 $refMethod->invoke($controllerInstance);
             }
 
             // before filter
-            foreach ($invokeBeforeList as $refMethod) {
+            foreach ($filter->before as $refMethod) {
                 $refMethod->invoke($controllerInstance);
             }
 
@@ -228,14 +169,14 @@ class Resolver
 
             // draw template
             $view = $coreDelegator->getView();
-            $view->draw($baseTemplate, $viewParams, $mimeType);
+            $view->draw($template->baseTemplate, $template->viewParams, $mimeType);
             if ($expire !== null) {
                 $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($coreDelegator->getPageName()) . "-" . $this->camel2snake($action);
                 $view->cache($cacheFile, ob_get_contents(), $expire);
             }
 
             // after filter
-            foreach ($invokeAfterList as $refMethod) {
+            foreach ($filter->after as $refMethod) {
                 $refMethod->invoke($controllerInstance);
             }
 
@@ -300,11 +241,12 @@ class Resolver
 
         try {
             // Controller起動
+            $isHandled = false;
             $controllerInstance = $this->container->coreDelegator->getController();
-            $exceptionHandlerAnnotations = $this->injectedAnnotation["WebStream\Annotation\ExceptionHandler"];
+            $annotations = $this->annotation->exceptionHandler;
 
             $invokeMethods = [];
-            foreach ($exceptionHandlerAnnotations as $exceptionHandlerAnnotation) {
+            foreach ($annotations as $exceptionHandlerAnnotation) {
                 $exceptions = $exceptionHandlerAnnotation->exceptions;
                 $refMethod = $exceptionHandlerAnnotation->method;
                 foreach ($exceptions as $exception) {
