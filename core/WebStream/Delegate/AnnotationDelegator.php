@@ -7,6 +7,7 @@ use WebStream\Core\CoreModel;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Exception\Extend\AnnotationException;
 
 /**
@@ -74,7 +75,7 @@ class AnnotationDelegator
             $headerContainer->mimeType = "html";
             if (array_key_exists("WebStream\Annotation\Header", $injectedAnnotation)) {
                 $headerAnnotations = $injectedAnnotation["WebStream\Annotation\Header"];
-                $headerContainer->mimeType = $headerAnnotations[0]->contentType;
+                $headerContainer->mimeType = $headerAnnotations[0]->contentType ?: $headerContainer->mimeType;
             }
 
             return $headerContainer;
@@ -82,30 +83,80 @@ class AnnotationDelegator
 
         // @Filter
         $annotationContainer->filter = function () use ($injectedAnnotation) {
-            $filterContainer = new Container();
-            $invokeInitializeList = [];
-            $invokeBeforeList = [];
-            $invokeAfterList = [];
+            $filterListContainer = new Container();
+            $filterListContainer->initialize = new AnnotationListContainer();
+            $filterListContainer->before     = new AnnotationListContainer();
+            $filterListContainer->after      = new AnnotationListContainer();
+
             if (array_key_exists("WebStream\Annotation\Filter", $injectedAnnotation)) {
                 $filterAnnotations = $injectedAnnotation["WebStream\Annotation\Filter"];
+                $exceptMethods = [];
+
+                // アクションメソッドの@Filter(type="skip")をチェックする
+                // 1メソッドに対して複数の@Filterが指定されてもエラーにはしない
                 foreach ($filterAnnotations as $filterAnnotation) {
-                    if ($filterAnnotation->initialize !== null) {
-                        $invokeInitializeList[] = $filterAnnotation->initialize;
+                    if ($filterAnnotation->classpath . "#" . $filterAnnotation->action === $filterAnnotation->method->class . "#" . $filterAnnotation->method->name) {
+                        if ($filterAnnotation->annotation->type === 'skip') {
+                            $exceptMethods = $filterAnnotation->annotation->except;
+                            if (!is_array($exceptMethods)) {
+                                $exceptMethods = [$exceptMethods];
+                            }
+                        }
                     }
-                    if ($filterAnnotation->before !== null) {
-                        $invokeBeforeList[] = $filterAnnotation->before;
+                }
+
+                $isInitialized = false;
+                foreach ($filterAnnotations as $filterAnnotation) {
+                    $type = $filterAnnotation->annotation->type;
+                    $only = $filterAnnotation->annotation->only;
+                    $except = $filterAnnotation->annotation->except;
+                    $method = $filterAnnotation->method;
+                    $action = $filterAnnotation->action;
+
+                    // initializeはCoreControllerでのみ使用可能なため複数回指定されたら例外
+                    if ($type === "initialize") {
+                        if ($isInitialized) {
+                            throw new AnnotationException("Can not multiple define @Filter(type=\"initialize\") at method.");
+                        }
+                        $isInitialized = true;
+                    } elseif (in_array($type, ["before", "after"])) {
+                        // skip filterが有効なら適用しない
+                        // クラスに関係なくメソッド名が一致した場合すべて適用しない
+                        if (in_array($method->name, $exceptMethods)) {
+                            continue;
+                        }
+                        // only
+                        if ($only !== null) {
+                            $onlyList = $only;
+                            if (!is_array($onlyList)) {
+                                $onlyList = [$onlyList];
+                            }
+                            // アクションメソッド名がonlyListに含まれていれば実行対象とする
+                            if (!in_array($action, $onlyList)) {
+                                continue;
+                            }
+                        }
+                        // exceptは親クラス以上すべてのメソッドに対して適用するのでメソッド名のみ取得
+                        if ($except !== null) {
+                            $exceptList = $except;
+                            if (!is_array($exceptList)) {
+                                $exceptList = [$exceptList];
+                            }
+                            // アクションメソッド名がexceptListに含まれていれば実行対象としない
+                            if (in_array($action, $exceptList)) {
+                                continue;
+                            }
+                        }
+                    } else {
+                        continue;
                     }
-                    if ($filterAnnotation->after !== null) {
-                        $invokeAfterList[] = $filterAnnotation->after;
-                    }
+                    // 実行時に動的にインスタンスを渡すようにしないと、各メソッドでの実行結果が反映されないため
+                    // この時点でのクロージャへのインスタンス設定はせず、リストとして保持するに留める
+                    $filterListContainer->{$type}->push($method);
                 }
             }
 
-            $filterContainer->initialize = $invokeInitializeList;
-            $filterContainer->before = $invokeBeforeList;
-            $filterContainer->after = $invokeAfterList;
-
-            return $filterContainer;
+            return $filterListContainer;
         };
 
         // @Template
@@ -124,6 +175,8 @@ class AnnotationDelegator
                         $baseTemplateCandidate = $templateAnnotation->name;
                     }
 
+                    $baseTemplate = $templateAnnotation->baseCandidate;
+
                     if ($templateAnnotation->base !== null) {
                         if ($baseTemplate !== null) {
                             // ベーステンプレートが複数指定された場合、エラーとする
@@ -131,6 +184,13 @@ class AnnotationDelegator
                             $errorMsg.= "The type attribute 'base' must be a only definition.";
                             throw new AnnotationException($errorMsg);
                         }
+                        // if ($templateAnnotation->parts === null) {
+                        //     // @Templateが複数定義されていて、2つ目以降にparts属性の指定がない場合、エラーとする
+                        //     $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
+                        //     $errorMsg.= "The type attribute 'parts' must be a only definition.";
+                        //     throw new AnnotationException($errorMsg);
+                        // }
+
                         $baseTemplate = $templateAnnotation->base;
                     }
 
