@@ -674,7 +674,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>セッションがタイムアウトした場合、<code>SessionTimeoutException</code>が発生します。</p>
 
 <h2>
-<a id="-アノテーション-" class="anchor" href="#-%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3-" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="annotaion"> アノテーション </a>
+<a id="アノテーション" class="anchor" href="#%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="annotaion">アノテーション</a>
 </h2>
 
 <p>ControllerとModelではアノテーションを使ってクラスやメソッドを操作することができます。アノテーションを利用することで便利な処理が可能になります。
@@ -711,18 +711,6 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><a href="https://github.com/Value" class="user-mention">@Value</a></td>
-<td>プロパティに初期値(文字列、数値)を設定する</td>
-<td>
-<a href="https://github.com/Value" class="user-mention">@Value</a>(10)<br><a href="https://github.com/Value" class="user-mention">@Value</a>("hoge")</td>
-</tr>
-<tr>
-<td><a href="https://github.com/Type" class="user-mention">@Type</a></td>
-<td>プロパティに指定した型で初期化する</td>
-<td>
-<a href="https://github.com/Type" class="user-mention">@Type</a>("\MyBlog\Entity")</td>
-</tr>
 <tr>
 <td><a href="https://github.com/Filter" class="user-mention">@Filter</a></td>
 <td>アクションメソッドが呼ばれる前または後に任意の処理を実行する</td>
@@ -781,6 +769,123 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 </tr>
 </tbody>
 </table>
+
+<h3>
+<a id="カスタムアノテーション" class="anchor" href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>カスタムアノテーション</h3>
+
+<p>用意されているアノテーション(デフォルトアノテーション)以外に独自のカスタムアノテーションを定義することができます。</p>
+
+<h4>
+<a id="定義方法" class="anchor" href="#%E5%AE%9A%E7%BE%A9%E6%96%B9%E6%B3%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>定義方法</h4>
+
+<p><code>app</code>ディレクトリ以下の任意の場所にクラスを定義します。定義したクラスは自動的にクラスパスが通ります。
+クラスの定義は以下のルールに従って定義してください。  </p>
+
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>ルール</th>
+<th>内容</th>
+<th>必須かどうか</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>
+<code>@Annotation</code>、<code>@Target</code>をクラスにアノテート</td>
+<td>Doctrine Annotationを使用する</td>
+<td>必須</td>
+</tr>
+<tr>
+<td>2</td>
+<td>
+<code>\WebStream\Annotation\Annotation</code>を継承</td>
+<td>アノテーション処理実行可能なクラスにする</td>
+<td>必須</td>
+</tr>
+<tr>
+<td>3</td>
+<td>
+<code>Annotation#onInject</code>を実装する</td>
+<td>アノテーション初期処理を実行</td>
+<td>必須</td>
+</tr>
+<tr>
+<td>4</td>
+<td>
+<code>IClass</code>を実装する</td>
+<td>クラスに対するアノテーションを実行する</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>5</td>
+<td>
+<code>IClass#onClassInject</code>を実装する</td>
+<td>クラスに対するアノテーションを実行したときに呼ばれる</td>
+<td>IClass実装時は必須</td>
+</tr>
+<tr>
+<td>6</td>
+<td>
+<code>IMethod</code>を実装する</td>
+<td>実行するメソッド(アクションメソッド)に対するアノテーションを実行する</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>7</td>
+<td>
+<code>IMethod#onMethodInject</code>を実装する</td>
+<td>メソッド(アクションメソッド)に対するアノテーションを実行する</td>
+<td>IMethod実装時は必須</td>
+</tr>
+<tr>
+<td>8</td>
+<td>
+<code>IMethods</code>を実装する</td>
+<td>すべてのメソッドに対するアノテーションを実行する</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>9</td>
+<td>
+<code>IMethods#onMethodInject</code>を実装する</td>
+<td>すべてのメソッドに対するアノテーションを実行する</td>
+<td>IMethods実装時は必須</td>
+</tr>
+<tr>
+<td>10</td>
+<td>
+<code>IProperty</code>を実装する</td>
+<td>すべてのプロパティに対するアノテーションを実行する</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>11</td>
+<td>
+<code>IProperty#onPropertyInject</code>を実装する</td>
+<td>すべてのプロパティに対するアノテーションを実行する</td>
+<td>IProperty実装時は必須</td>
+</tr>
+<tr>
+<td>12</td>
+<td>
+<code>IRead</code>を実装する</td>
+<td>アノテーション処理実行後、任意のデータを返却する処理を実行</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>13</td>
+<td>
+<code>IRead#onInjected</code>を実装する</td>
+<td>任意のデータを返却する</td>
+<td>IRead実装時は必須</td>
+</tr>
+</tbody>
+</table>
+
+<p>デフォルトアノテーションは使用できるレイヤが制限されていますが、カスタムアノテーションはController/Service/Modelレイヤで使用可能です。</p>
       </section>
 
     </div>
