@@ -498,7 +498,7 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 
 
 ####Controllerで使用可能なアノテーション
-アノテーション        |説明                                         |サンプル
+アノテーション     |説明                                         |サンプル
 -----------------|---------------------------------------------|------
 @Filter          |アクションメソッドが呼ばれる前または後に任意の処理を実行する|@Filter(type="before")<br>@Filter(type="after")<br>@Filter(type="before" except="method1")<br>@Filter(type="before" only="method2")<br>@Filter(type="before",only="method1",except="method2")<br>@Filter(type="after",except={"method1","method2"})
 @Header          |リクエスト/レスポンスを制御する                       |@Header(contentType="html")<br>@Header(contentType="xml")<br>@Header(allowMethod="POST")<br>@Header(allowMethod={"GET","POST"})
@@ -507,31 +507,32 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 @ExceptionHandler|例外を補足して別処理を実行する                     |@ExceptionHandler("\Exception")<br>@ExceptionHandler({"\RuntimeException","\LogicException"})
 
 ####Modelで使用可能なアノテーション
-アノテーション  |説明                           |サンプル
------------|-------------------------------|------
-@Database  |Modelクラスに対してデータベース設定をする|@Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")
-@Query     |読み込むクエリファイルを指定する        |@Query(file="query/blog_query.xml")
+アノテーション |説明                                 |サンプル
+-------------|------------------------------------|---------------------------------------------------------------------------------------
+@Database    |Modelクラスに対してデータベース設定をする|@Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")
+@Query       |読み込むクエリファイルを指定する         |@Query(file="query/blog_query.xml")
 
 ###カスタムアノテーション
 用意されているアノテーション(デフォルトアノテーション)以外に独自のカスタムアノテーションを定義することができます。
 
 ####定義方法
 `app`ディレクトリ以下の任意の場所にクラスを定義します。定義したクラスは自動的にクラスパスが通ります。
-クラスの定義は以下のルールに従って定義してください。
-No |ルール|内容|必須かどうか
----|----|----|----------
-1  |`@Annotation`、`@Target`をクラスにアノテート|Doctrine Annotationを使用する|必須
-2  |`\WebStream\Annotation\Annotation`を継承|アノテーション処理実行可能なクラスにする|必須
-3  |`Annotation#onInject`を実装する|アノテーション初期処理を実行|必須
-4  |`IClass`を実装する|クラスに対するアノテーションを実行する|任意
-5  |`IClass#onClassInject`を実装する|クラスに対するアノテーションを実行したときに呼ばれる|IClass実装時は必須
-6  |`IMethod`を実装する|実行するメソッド(アクションメソッド)に対するアノテーションを実行する|任意
-7  |`IMethod#onMethodInject`を実装する|メソッド(アクションメソッド)に対するアノテーションを実行する|IMethod実装時は必須
-8  |`IMethods`を実装する|すべてのメソッドに対するアノテーションを実行する|任意
-9  |`IMethods#onMethodInject`を実装する|すべてのメソッドに対するアノテーションを実行する|IMethods実装時は必須
-10 |`IProperty`を実装する|すべてのプロパティに対するアノテーションを実行する|任意
-11 |`IProperty#onPropertyInject`を実装する|すべてのプロパティに対するアノテーションを実行する|IProperty実装時は必須
-12 |`IRead`を実装する|アノテーション処理実行後、任意のデータを返却する処理を実行|任意
-13 |`IRead#onInjected`を実装する|任意のデータを返却する|IRead実装時は必須
+クラスの定義は以下のルールに従って定義してください。  
+
+No |ルール                                      |内容                                                       |必須かどうか
+---|-------------------------------------------|-----------------------------------------------------------|-------------------
+1  |`@Annotation`、`@Target`をクラスにアノテート  |Doctrine Annotationを使用する                               |必須
+2  |`\WebStream\Annotation\Annotation`を継承    |アノテーション処理実行可能なクラスにする                        |必須
+3  |`Annotation#onInject`を実装する             |アノテーション初期処理を実行                                   |必須
+4  |`IClass`を実装する                          |クラスに対するアノテーションを実行する                          |任意
+5  |`IClass#onClassInject`を実装する            |クラスに対するアノテーションを実行したときに呼ばれる              |IClass実装時は必須
+6  |`IMethod`を実装する                         |実行するメソッド(アクションメソッド)に対するアノテーションを実行する|任意
+7  |`IMethod#onMethodInject`を実装する          |メソッド(アクションメソッド)に対するアノテーションを実行する       |IMethod実装時は必須
+8  |`IMethods`を実装する                        |すべてのメソッドに対するアノテーションを実行する                  |任意
+9  |`IMethods#onMethodInject`を実装する         |すべてのメソッドに対するアノテーションを実行する                  |IMethods実装時は必須
+10 |`IProperty`を実装する                       |すべてのプロパティに対するアノテーションを実行する                |任意
+11 |`IProperty#onPropertyInject`を実装する      |すべてのプロパティに対するアノテーションを実行する                |IProperty実装時は必須
+12 |`IRead`を実装する                           |アノテーション処理実行後、任意のデータを返却する処理を実行         |任意
+13 |`IRead#onInjected`を実装する                |任意のデータを返却する                                        |IRead実装時は必須
 
 デフォルトアノテーションは使用できるレイヤが制限されていますが、カスタムアノテーションはController/Service/Modelレイヤで使用可能です。
