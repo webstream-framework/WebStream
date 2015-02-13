@@ -486,7 +486,7 @@ class LoginController extends CoreController {
 
 セッションがタイムアウトした場合、`SessionTimeoutException`が発生します。
 
-##<a href="annotaion"> アノテーション </a>
+##<a href="annotaion">アノテーション</a>
 ControllerとModelではアノテーションを使ってクラスやメソッドを操作することができます。アノテーションを利用することで便利な処理が可能になります。
 クラスまたはメソッドに対するアノテーションは`@Inject`、プロパティに対するアノテーションは`@Autowired`の指定が必須です。
 
@@ -500,8 +500,6 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 ####Controllerで使用可能なアノテーション
 アノテーション        |説明                                         |サンプル
 -----------------|---------------------------------------------|------
-@Value           |プロパティに初期値(文字列、数値)を設定する           |@Value(10)<br>@Value("hoge")
-@Type            |プロパティに指定した型で初期化する                   |@Type("\MyBlog\Entity")
 @Filter          |アクションメソッドが呼ばれる前または後に任意の処理を実行する|@Filter(type="before")<br>@Filter(type="after")<br>@Filter(type="before" except="method1")<br>@Filter(type="before" only="method2")<br>@Filter(type="before",only="method1",except="method2")<br>@Filter(type="after",except={"method1","method2"})
 @Header          |リクエスト/レスポンスを制御する                       |@Header(contentType="html")<br>@Header(contentType="xml")<br>@Header(allowMethod="POST")<br>@Header(allowMethod={"GET","POST"})
 @Template        |Viewテンプレートを設定する                         |@Template("index.tmpl")<br>@Template("index.tmpl",name="head" type="parts")<br>@Template("index.tmpl",name="shared",type="shared")
@@ -514,3 +512,26 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 @Database  |Modelクラスに対してデータベース設定をする|@Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")
 @Query     |読み込むクエリファイルを指定する        |@Query(file="query/blog_query.xml")
 
+###カスタムアノテーション
+用意されているアノテーション(デフォルトアノテーション)以外に独自のカスタムアノテーションを定義することができます。
+
+####定義方法
+`app`ディレクトリ以下の任意の場所にクラスを定義します。定義したクラスは自動的にクラスパスが通ります。
+クラスの定義は以下のルールに従って定義してください。
+No |ルール|内容|必須かどうか
+---|----|----|----------
+1  |`@Annotation`、`@Target`をクラスにアノテート|Doctrine Annotationを使用する|必須
+2  |`\WebStream\Annotation\Annotation`を継承|アノテーション処理実行可能なクラスにする|必須
+3  |`Annotation#onInject`を実装する|アノテーション初期処理を実行|必須
+4  |`IClass`を実装する|クラスに対するアノテーションを実行する|任意
+5  |`IClass#onClassInject`を実装する|クラスに対するアノテーションを実行したときに呼ばれる|IClass実装時は必須
+6  |`IMethod`を実装する|実行するメソッド(アクションメソッド)に対するアノテーションを実行する|任意
+7  |`IMethod#onMethodInject`を実装する|メソッド(アクションメソッド)に対するアノテーションを実行する|IMethod実装時は必須
+8  |`IMethods`を実装する|すべてのメソッドに対するアノテーションを実行する|任意
+9  |`IMethods#onMethodInject`を実装する|すべてのメソッドに対するアノテーションを実行する|IMethods実装時は必須
+10 |`IProperty`を実装する|すべてのプロパティに対するアノテーションを実行する|任意
+11 |`IProperty#onPropertyInject`を実装する|すべてのプロパティに対するアノテーションを実行する|IProperty実装時は必須
+12 |`IRead`を実装する|アノテーション処理実行後、任意のデータを返却する処理を実行|任意
+13 |`IRead#onInjected`を実装する|任意のデータを返却する|IRead実装時は必須
+
+デフォルトアノテーションは使用できるレイヤが制限されていますが、カスタムアノテーションはController/Service/Modelレイヤで使用可能です。
