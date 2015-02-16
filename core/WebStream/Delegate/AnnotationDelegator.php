@@ -170,26 +170,24 @@ class AnnotationDelegator
                 $baseTemplateCandidate = null;
 
                 foreach ($templateAnnotations as $templateAnnotation) {
-                    if ($baseTemplateCandidate === null) {
-                        // ベーステンプレートは暫定的に1番はじめに指定されたテンプレートを設定する
-                        $baseTemplateCandidate = $templateAnnotation->name;
+                    if ($templateAnnotation->baseCandidate !== null) {
+                        if ($baseTemplate !== null || $baseTemplateCandidate !== null) {
+                            // ベーステンプレート候補が2つ以上ある場合は、2つ目以降のtype属性が未指定の場合なのでエラー
+                            $errorMsg = "Invalid argument of @Template attribute 'type'. ";
+                            $errorMsg.= "The type attribute is required.";
+                            throw new AnnotationException($errorMsg);
+                        } else {
+                            $baseTemplateCandidate = $templateAnnotation->baseCandidate;
+                        }
                     }
-
-                    $baseTemplate = $templateAnnotation->baseCandidate;
 
                     if ($templateAnnotation->base !== null) {
                         if ($baseTemplate !== null) {
                             // ベーステンプレートが複数指定された場合、エラーとする
-                            $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
+                            $errorMsg = "Invalid argument of @Template attribute 'type'. ";
                             $errorMsg.= "The type attribute 'base' must be a only definition.";
                             throw new AnnotationException($errorMsg);
                         }
-                        // if ($templateAnnotation->parts === null) {
-                        //     // @Templateが複数定義されていて、2つ目以降にparts属性の指定がない場合、エラーとする
-                        //     $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
-                        //     $errorMsg.= "The type attribute 'parts' must be a only definition.";
-                        //     throw new AnnotationException($errorMsg);
-                        // }
 
                         $baseTemplate = $templateAnnotation->base;
                     }

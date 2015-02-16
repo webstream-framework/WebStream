@@ -9,6 +9,7 @@ use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Exception\Extend\AnnotationException;
 
 /**
  * Template
@@ -71,10 +72,18 @@ class Template extends Annotation implements IMethod, IRead
             }
         }
 
+        if ($template === null) {
+            $errorMsg = "Invalid argument of @Template('" . safetyOut($template) . "'. ";
+            $errorMsg.= "There is no specification of the base template.";
+            throw new AnnotationException($errorMsg);
+        }
+
         // type属性は複数指定可能
-        $typeList = $type ?: ["base"];
-        if (!is_array($typeList)) {
-            $typeList = [$typeList];
+        $typeList = is_array($type) ? $type : ($type === null ? [] : [$type]);
+
+        // type属性指定なしの場合、base候補とする
+        if (empty($typeList)) {
+            $typeList[] = "baseCandidate";
         }
 
         // name属性は複数指定されたらエラーとする
@@ -105,7 +114,6 @@ class Template extends Annotation implements IMethod, IRead
 
         // ページ名からディレクトリ名を取得
         $templateDir = $this->camel2snake($container->coreDelegator->getPageName());
-        $this->injectedContainer->name = $templateDir . "/" . $template;
 
         // type="base"が設定された場合は後勝ちでベーステンプレートとする
         // name属性は指定されても無視
@@ -116,7 +124,11 @@ class Template extends Annotation implements IMethod, IRead
                 $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                 $errorMsg.= "The type attribute can't setting 'base' and 'type'.";
                 throw new AnnotationException($errorMsg);
+            } else { // type="base" or type={"base"}
+                $this->injectedContainer->base = $templateDir . "/" . $template;
             }
+        } elseif (in_array("baseCandidate", $typeList)) {
+            $this->injectedContainer->baseCandidate = $templateDir . "/" . $template;
         } else {
             // type={"shared","parts"}
             if (count($typeList) === 2 && in_array("shared", $typeList) && in_array("parts", $typeList)) {

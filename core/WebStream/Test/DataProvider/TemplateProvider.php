@@ -82,7 +82,9 @@ trait TemplateProvider
             ["/test_template/error4", 500],
             ["/test_template/error5", 500],
             ["/test_template/error6", 500],
-            ["/test_template/error7", 500]
+            ["/test_template/error7", 500],
+            ["/test_template/error8", 500],
+            ["/test_template/error9", 500]
         ];
     }
 

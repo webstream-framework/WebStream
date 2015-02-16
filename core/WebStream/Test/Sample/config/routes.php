@@ -42,6 +42,8 @@ Router::setRule([
     '/test_template/error6' => "test_template#error6",
     '/test_template/error7' => "test_template#error7",
     '/test_template/error8' => "test_template#error8",
+    '/test_template/error9' => "test_template#error9",
+    '/test_template/error10' => "test_template#error10",
     '/test_template/model/is_model' => "test_template_with_model#index1",
     '/test_template/model/access_db' => "test_template_with_model#index2",
     '/test_template/helper/is_helper' => "test_template_with_helper#index1",

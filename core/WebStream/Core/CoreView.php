@@ -115,7 +115,7 @@ class CoreView implements CoreInterface
         $template = STREAM_APP_ROOT . "/app/views/" . $templatePath;
 
         // テンプレートファイルがない場合エラー
-        if (!file_exists($template)) {
+        if (!is_file($template)) {
             throw new ResourceNotFoundException("Invalid template file path: " . $template);
         }
 
