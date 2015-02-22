@@ -31,7 +31,7 @@ class AutowiredTest extends TestBase
 
     /**
      * 正常系
-     * @Type,@Valueで指定した値が注入できること
+     * 指定した値が注入できること
      * @test
      * @dataProvider autowiredProvider
      */
@@ -49,7 +49,7 @@ class AutowiredTest extends TestBase
 
     /**
      * 正常系
-     * @Valueで指定した値(定数型)を注入できること
+     * value属性で指定した値(定数型)を注入できること
      * @test
      * @dataProvider autowiredForConstantValueProvider
      */
@@ -90,7 +90,7 @@ class AutowiredTest extends TestBase
 
     /**
      * 異常系
-     * valueに存在しないクラス参照型を指定した場合、例外が発生すること
+     * value属性に存在しないクラス参照型を指定した場合、例外が発生すること
      * @test
      */
     public function ngAutowiredInvalidType()
