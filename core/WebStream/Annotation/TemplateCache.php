@@ -8,6 +8,7 @@ use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
+use WebStream\Exception\Extend\AnnotationException;
 
 /**
  * TemplateCache

@@ -194,14 +194,18 @@ class Resolver
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
         } catch (\Exception $e) {
-            // 例外の粒度が大きすぎる場合、ApplicationExceptionにラップする
-            if ($e instanceof \RuntimeException) {
-                // RuntimeExceptionは捕捉不能
-                throw new UncatchableException($e->getMessage(), 500, $e);
-            } else {
-                // LogicException、Exceptionは捕捉可能
-                throw new ApplicationException($e->getMessage(), 500, $e);
+            $exceptionClass = get_class($e);
+            switch ($exceptionClass) {
+                case "Exception":
+                case "LogicException":
+                    $e = new ApplicationException($e->getMessage(), 500, $e);
+                    break;
+                case "RuntimeException":
+                    $e = new UncatchableException($e->getMessage(), 500, $e);
+                    break;
             }
+
+            throw $e;
         }
     }
 
@@ -262,6 +266,10 @@ class Resolver
             $isHandled = false;
             $controllerInstance = $this->container->coreDelegator->getController();
             $annotations = $this->annotation->exceptionHandler;
+
+            if ($annotations === null) {
+                return $isHandled;
+            }
 
             $invokeMethods = [];
             foreach ($annotations as $exceptionHandlerAnnotation) {

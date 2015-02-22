@@ -6,13 +6,14 @@ use WebStream\Module\Logger;
 use WebStream\Module\HttpClient;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
+use WebStream\DI\ServiceLocator;
 use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\TemplateCacheReader;
 use WebStream\Test\DataProvider\TemplateCacheProvider;
 
 require_once 'TestBase.php';
 require_once 'TestConstant.php';
 require_once 'DataProvider/TemplateCacheProvider.php';
+require_once 'TestData/TestContainer/TestTemplateCacheContainer.php';
 
 /**
  * TemplateCacheクラスのテストクラス
@@ -28,7 +29,6 @@ class TemplateCacheTest extends TestBase
     {
         Logger::init($this->getLogConfigPath() . "/log.test.debug.ok.ini");
         parent::setUp();
-
     }
 
     /**
@@ -38,15 +38,17 @@ class TemplateCacheTest extends TestBase
      */
     public function okTemplateCacheExpire()
     {
-        $container = new Container();
-        $container->classpath = "WebStream\Test\TestData\TemplateCacheTest1";
-        $container->action = "index";
-        $instance = new \WebStream\Test\TestData\TemplateCacheTest1();
-        $annotationReader = new AnnotationReader($instance);
-        $annotationReader->setContainer($container);
-        $annotationReader->read();
-        $reader = new TemplateCacheReader($annotationReader);
-        $this->assertEquals(100, $reader->read()->expire);
+        ServiceLocator::test();
+        $container = ServiceLocator::getContainer();
+        $templateCacheContainer = new \WebStream\Test\TestData\TestContainer\TestTemplateCacheContainer([
+            "action" => "index1"
+        ]);
+        $container->router = $templateCacheContainer;
+        $instance = new \WebStream\Test\TestData\TemplateCacheTest1($container);
+        $reader = new AnnotationReader($instance, $container);
+        $reader->read();
+        $annotation = $reader->getInjectedAnnotationInfo();
+        $this->assertEquals(100, $annotation["WebStream\Annotation\TemplateCache"][0]->expire);
     }
 
     /**
@@ -57,15 +59,17 @@ class TemplateCacheTest extends TestBase
      */
     public function okMaximumExpireConvert()
     {
-        $container = new Container();
-        $container->classpath = "WebStream\Test\TestData\TemplateCacheTest1";
-        $container->action = "index2";
-        $instance = new \WebStream\Test\TestData\TemplateCacheTest1();
-        $annotationReader = new AnnotationReader($instance);
-        $annotationReader->setContainer($container);
-        $annotationReader->read();
-        $reader = new TemplateCacheReader($annotationReader);
-        $this->assertEquals(PHP_INT_MAX, $reader->read()->expire);
+        ServiceLocator::test();
+        $container = ServiceLocator::getContainer();
+        $templateCacheContainer = new \WebStream\Test\TestData\TestContainer\TestTemplateCacheContainer([
+            "action" => "index2"
+        ]);
+        $container->router = $templateCacheContainer;
+        $instance = new \WebStream\Test\TestData\TemplateCacheTest1($container);
+        $reader = new AnnotationReader($instance, $container);
+        $reader->read();
+        $annotation = $reader->getInjectedAnnotationInfo();
+        $this->assertEquals(PHP_INT_MAX, $annotation["WebStream\Annotation\TemplateCache"][0]->expire);
     }
 
     /**
@@ -91,19 +95,23 @@ class TemplateCacheTest extends TestBase
      * 異常系
      * @TemplateCacheのexpire属性に不正な値が指定されていた場合、値が取得できないこと
      * @test
-     * @dataProvider invalidExpireProvider
      * @expectedException WebStream\Exception\Extend\AnnotationException
+     * @dataProvider invalidExpireProvider
      */
     public function ngTemplateCacheExpire($method)
     {
-        $container = new Container();
-        $container->classpath = "WebStream\Test\TestData\TemplateCacheTest1";
-        $container->action = $method;
-        $instance = new \WebStream\Test\TestData\TemplateCacheTest1();
-        $annotationReader = new AnnotationReader($instance);
-        $annotationReader->setContainer($container);
-        $annotationReader->read();
-        $reader = new TemplateCacheReader($annotationReader);
+        ServiceLocator::test();
+        $container = ServiceLocator::getContainer();
+        $templateCacheContainer = new \WebStream\Test\TestData\TestContainer\TestTemplateCacheContainer([
+            "action" => $method
+        ]);
+        $container->router = $templateCacheContainer;
+        $instance = new \WebStream\Test\TestData\TemplateCacheTest1($container);
+        $reader = new AnnotationReader($instance, $container);
         $reader->read();
+        $exception = $reader->getException();
+
+        $this->assertTrue(is_callable($exception));
+        $exception();
     }
 }

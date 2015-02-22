@@ -117,21 +117,21 @@ class Template extends Annotation implements IMethod, IRead
 
         // type="base"が設定された場合は後勝ちでベーステンプレートとする
         // name属性は指定されても無視
-        if (in_array("base", $typeList)) {
-            if (in_array("shared", $typeList)) { // type={"base","shared"}
+        if ($this->inArray("base", $typeList)) {
+            if ($this->inArray("shared", $typeList)) { // type={"base","shared"}
                 $this->injectedContainer->base = STREAM_VIEW_SHARED . "/" . $template;
-            } elseif (in_array("parts", $typeList)) { // type={"base","parts"}はありえない
+            } elseif ($this->inArray("parts", $typeList)) { // type={"base","parts"}はありえない
                 $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
                 $errorMsg.= "The type attribute can't setting 'base' and 'type'.";
                 throw new AnnotationException($errorMsg);
             } else { // type="base" or type={"base"}
                 $this->injectedContainer->base = $templateDir . "/" . $template;
             }
-        } elseif (in_array("baseCandidate", $typeList)) {
+        } elseif ($this->inArray("baseCandidate", $typeList)) {
             $this->injectedContainer->baseCandidate = $templateDir . "/" . $template;
         } else {
             // type={"shared","parts"}
-            if (count($typeList) === 2 && in_array("shared", $typeList) && in_array("parts", $typeList)) {
+            if (count($typeList) === 2 && $this->inArray("shared", $typeList) && $this->inArray("parts", $typeList)) {
                 // name属性が必須
                 if ($name === null) {
                     $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
@@ -141,7 +141,7 @@ class Template extends Annotation implements IMethod, IRead
                 $partsList[$name] = STREAM_VIEW_SHARED . "/" . $template;
             } elseif (count($typeList) === 1) {
                 // type="shared"
-                if (in_array("shared", $typeList)) {
+                if ($this->inArray("shared", $typeList)) {
                     // name属性が必須
                     if ($name === null) {
                         $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
@@ -150,7 +150,7 @@ class Template extends Annotation implements IMethod, IRead
                     }
                     $partsList[$name] = STREAM_VIEW_SHARED . "/" . $template;
                 // type="parts"
-                } elseif (in_array("parts", $typeList)) {
+                } elseif ($this->inArray("parts", $typeList)) {
                     // name属性が必須
                     if ($name === null) {
                         $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";

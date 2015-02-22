@@ -127,10 +127,10 @@ class AnnotationDelegator
                             throw new AnnotationException("Can not multiple define @Filter(type=\"initialize\") at method.");
                         }
                         $isInitialized = true;
-                    } elseif (in_array($type, ["before", "after"])) {
+                    } elseif ($this->inArray($type, ["before", "after"])) {
                         // skip filterが有効なら適用しない
                         // クラスに関係なくメソッド名が一致した場合すべて適用しない
-                        if (in_array($method->name, $exceptMethods)) {
+                        if ($this->inArray($method->name, $exceptMethods)) {
                             continue;
                         }
                         // only
@@ -140,7 +140,7 @@ class AnnotationDelegator
                                 $onlyList = [$onlyList];
                             }
                             // アクションメソッド名がonlyListに含まれていれば実行対象とする
-                            if (!in_array($action, $onlyList)) {
+                            if (!$this->inArray($action, $onlyList)) {
                                 continue;
                             }
                         }
@@ -151,7 +151,7 @@ class AnnotationDelegator
                                 $exceptList = [$exceptList];
                             }
                             // アクションメソッド名がexceptListに含まれていれば実行対象としない
-                            if (in_array($action, $exceptList)) {
+                            if ($this->inArray($action, $exceptList)) {
                                 continue;
                             }
                         }
@@ -235,8 +235,10 @@ class AnnotationDelegator
 
         // @ExceptionHandler
         $annotationContainer->exceptionHandler = function () use (&$injectedAnnotation) {
-            $exceptionHandlerAnnotations = $injectedAnnotation["WebStream\Annotation\ExceptionHandler"];
-            unset($injectedAnnotation["WebStream\Annotation\ExceptionHandler"]);
+            if (array_key_exists("WebStream\Annotation\ExceptionHandler", $injectedAnnotation)) {
+                $exceptionHandlerAnnotations = $injectedAnnotation["WebStream\Annotation\ExceptionHandler"];
+                unset($injectedAnnotation["WebStream\Annotation\ExceptionHandler"]);
+            }
 
             return $exceptionHandlerAnnotations;
         };

@@ -103,7 +103,7 @@ class Header extends Annotation implements IMethod, IRead
             }
 
             // 複数指定した場合、一つでも許可されていればOK
-            if (!in_array($container->request->requestMethod(), $allowMethods)) {
+            if (!$this->inArray($container->request->requestMethod(), $allowMethods)) {
                 $errorMsg = "Not allowed request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction;
                 throw new InvalidRequestException($errorMsg);
             }

@@ -92,6 +92,7 @@ class AutowiredTest extends TestBase
      * 異常系
      * value属性に存在しないクラス参照型を指定した場合、例外が発生すること
      * @test
+     * @expectedException WebStream\Exception\Extend\AnnotationException
      */
     public function ngAutowiredInvalidType()
     {
@@ -103,6 +104,7 @@ class AutowiredTest extends TestBase
         $exception = $reader->getException();
 
         $this->assertTrue(is_callable($exception));
+        $exception();
     }
 
     /**
