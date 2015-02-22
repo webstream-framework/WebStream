@@ -254,5 +254,14 @@ Router::setRule([
     '/test_custom_dir4' => "test_custom_dir#from_view",
     '/test_custom_dir5' => "test_custom_dir#from_helper",
     '/test_helper_async' => "test_helper#help7",
-    '/test_helper_async_response' => "test_helper#help7_async"
+    '/test_helper_async_response' => "test_helper#help7_async",
+    '/test_custom_class_annotation/index1' => "test_custom_class1_annotation#index1",
+    '/test_custom_class_annotation/index2' => "test_custom_class2_annotation#index1",
+    '/test_custom_method_annotation/index1' => "test_custom_method_annotation#index1",
+    '/test_custom_method_annotation/index2' => "test_custom_method_annotation#index2",
+    '/test_custom_method_annotation/index3' => "test_custom_method_annotation#index3",
+    '/test_custom_method_annotation/index4' => "test_custom_methods_annotation#index1",
+    '/test_custom_property_annotation/index1' => "test_custom_property1_annotation#index1",
+    '/test_custom_property_annotation/index2' => "test_custom_property2_annotation#index1",
+    '/test_custom_property_annotation/index3' => "test_custom_property3_annotation#index1"
 ]);

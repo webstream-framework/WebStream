@@ -70,7 +70,6 @@ class CoreDelegator
         // Controller
         $this->coreContainer->controller = function () use ($container, $controllerNamespace) {
             $controllerClassPath = $controllerNamespace . "\\" . $container->router->controller();
-            Logger::warn($controllerClassPath);
             if (!class_exists($controllerClassPath)) {
                 throw new ClassNotFoundException("Undefined class path: " . $controllerClassPath);
             }

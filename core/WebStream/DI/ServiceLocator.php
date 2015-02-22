@@ -104,6 +104,8 @@ class ServiceLocator
         $container->applicationRoot = $isTest ? $this->getTestApplicationRoot() : $this->getRoot();
         // ApplicationDir
         $container->applicationDir = $isTest ? $this->getTestApplicationDir() : "app";
+        // test
+        $container->isTest = $isTest;
 
         return $container;
     }

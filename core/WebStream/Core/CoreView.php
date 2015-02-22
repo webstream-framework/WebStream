@@ -111,6 +111,13 @@ class CoreView implements CoreInterface
             return;
         }
 
+        // テンプレートを使用しない場合
+        if ($templatePath === null) {
+            Logger::debug("Template is not used.");
+
+            return;
+        }
+
         // テンプレートファイルパス
         $template = STREAM_APP_ROOT . "/app/views/" . $templatePath;
 

@@ -2,6 +2,7 @@
 namespace WebStream\Annotation\Base;
 
 use WebStream\Core\CoreInterface;
+use WebStream\Module\Container;
 
 /**
  * IProperty
@@ -14,7 +15,8 @@ interface IProperty
     /**
      * プロパティオブジェクトを注入
      * @param CoreInterface 注入先インスタンス
+     * @param Container 依存コンテナ
      * @param ReflectionProperty リフレクションプロパティオブジェクト
      */
-    public function onPropertyInject(CoreInterface &$instance, \ReflectionProperty $property);
+    public function onPropertyInject(CoreInterface &$instance, Container $container, \ReflectionProperty $property);
 }

@@ -37,6 +37,7 @@ class AutowiredTest extends TestBase
      */
     public function okAutowired($mail, $age)
     {
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
         $instance = new \WebStream\Test\TestData\AutowiredTest1($container);
         $reader = new AnnotationReader($instance, $container);
@@ -54,6 +55,7 @@ class AutowiredTest extends TestBase
      */
     public function okAutowiredForConstantValueProvider($name, $num)
     {
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
         $instance = new \WebStream\Test\TestData\AutowiredTest3($container);
         $reader = new AnnotationReader($instance, $container);
@@ -70,6 +72,7 @@ class AutowiredTest extends TestBase
      */
     public function okAutowiredSuperClass()
     {
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
         $instance = new \WebStream\Test\TestData\AutowiredTest7($container);
         $reader = new AnnotationReader($instance, $container);
@@ -89,16 +92,17 @@ class AutowiredTest extends TestBase
      * 異常系
      * valueに存在しないクラス参照型を指定した場合、例外が発生すること
      * @test
-     * @expectedException WebStream\Exception\Extend\AnnotationException
      */
     public function ngAutowiredInvalidType()
     {
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
         $instance = new \WebStream\Test\TestData\AutowiredTest2($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
+        $exception = $reader->getException();
 
-        $this->assertTrue(false);
+        $this->assertTrue(is_callable($exception));
     }
 
     /**
@@ -108,6 +112,7 @@ class AutowiredTest extends TestBase
      */
     public function ngAutowiredAnnotationDefinition()
     {
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
         $instance = new \WebStream\Test\TestData\AutowiredTest6($container);
         $reader = new AnnotationReader($instance, $container);

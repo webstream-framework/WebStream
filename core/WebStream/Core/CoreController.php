@@ -18,13 +18,29 @@ class CoreController implements CoreInterface
 {
     use Utility;
 
-    /** セッション */
+    /**
+     * @var Session セッション
+     */
     protected $session;
-    /** リクエスト */
+
+    /**
+     * @var Request リクエスト
+     */
     protected $request;
-    /** レスポンス */
+
+    /**
+     * @var Response レスポンス
+     */
     private $response;
-    /** CoreDelegator */
+
+    /**
+     * @var array<mixed> アノテーション
+     */
+    protected $annotation;
+
+    /**
+     * @var Container コンテナ
+     */
     private $container;
 
     /**
@@ -53,8 +69,16 @@ class CoreController implements CoreInterface
      */
     final public function __callStaticFile($filepath)
     {
-        $view = $this->coreDelegator->getView();
-        $view->__file($filepath);
+        $this->coreDelegator->getView()->__file($filepath);
+    }
+
+    /**
+     * カスタムアノテーション情報を設定する
+     * @param array<mixed> カスタムアノテーション情報
+     */
+    final public function __customAnnotation(array $annotation)
+    {
+        $this->annotation = $annotation;
     }
 
     /**
@@ -64,15 +88,7 @@ class CoreController implements CoreInterface
      */
     final public function __initialize()
     {
-        $this->__csrfCheck();
-        $this->__load();
-    }
-
-    /**
-     * CSRFトークンをチェックする
-     */
-    final private function __csrfCheck()
-    {
+        // CSRF
         $csrfKey = $this->getCsrfTokenKey();
         $sessionToken = $this->session->get($csrfKey);
         $requestToken = null;
@@ -93,13 +109,8 @@ class CoreController implements CoreInterface
         if ($requestToken !== $sessionToken) {
             throw new CsrfException("Sent invalid CSRF token");
         }
-    }
 
-    /**
-     * Service/Modelクラスのインスタンスをロードする
-     */
-    final private function __load()
-    {
+        // Service/Modelロード
         $pageName = $this->coreDelegator->getPageName();
         $this->{$pageName} = $this->coreDelegator->getService() ?: $this->coreDelegator->getModel();
     }

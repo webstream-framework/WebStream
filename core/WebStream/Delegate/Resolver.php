@@ -7,6 +7,7 @@ use WebStream\Module\Cache;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Exception\ApplicationException;
+use WebStream\Exception\UncatchableException;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 use WebStream\Exception\Extend\ClassNotFoundException;
@@ -154,6 +155,14 @@ class Resolver
             // @TemplateCache
             $expire = $this->annotation->templateCache->expire;
 
+            $controllerInstance->__customAnnotation($this->annotation->customAnnotations);
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            if (is_callable($this->annotation->exception)) {
+                $this->annotation->exception();
+            }
+
             // initialize filter
             foreach ($filter->initialize as $refMethod) {
                 $refMethod->invoke($controllerInstance);
@@ -184,6 +193,15 @@ class Resolver
             throw new AnnotationException($e);
         } catch (\ReflectionException $e) {
             throw new ClassNotFoundException($e);
+        } catch (\Exception $e) {
+            // 例外の粒度が大きすぎる場合、ApplicationExceptionにラップする
+            if ($e instanceof \RuntimeException) {
+                // RuntimeExceptionは捕捉不能
+                throw new UncatchableException($e->getMessage(), 500, $e);
+            } else {
+                // LogicException、Exceptionは捕捉可能
+                throw new ApplicationException($e->getMessage(), 500, $e);
+            }
         }
     }
 

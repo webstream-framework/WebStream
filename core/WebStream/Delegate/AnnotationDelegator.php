@@ -3,6 +3,7 @@ namespace WebStream\Delegate;
 
 use WebStream\Core\CoreInterface;
 use WebStream\Core\CoreController;
+use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
@@ -50,6 +51,8 @@ class AnnotationDelegator
     {
         if ($instance instanceof CoreController) {
             return $this->readController($instance);
+        } elseif ($instance instanceof CoreService) {
+            return $this->readService($instance);
         } elseif ($instance instanceof CoreModel) {
             return $this->readModel($instance);
         }
@@ -67,14 +70,18 @@ class AnnotationDelegator
         $reader->read();
         $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
-        $annotationContainer = new Container();
+        $annotationContainer = new Container(false);
+
+        // exceptions
+        $annotationContainer->exception = $reader->getException();
 
         // @Header
-        $annotationContainer->header = function () use ($injectedAnnotation) {
+        $annotationContainer->header = function () use (&$injectedAnnotation) {
             $headerContainer = new Container();
             $headerContainer->mimeType = "html";
             if (array_key_exists("WebStream\Annotation\Header", $injectedAnnotation)) {
                 $headerAnnotations = $injectedAnnotation["WebStream\Annotation\Header"];
+                unset($injectedAnnotation["WebStream\Annotation\Header"]);
                 $headerContainer->mimeType = $headerAnnotations[0]->contentType ?: $headerContainer->mimeType;
             }
 
@@ -82,7 +89,7 @@ class AnnotationDelegator
         };
 
         // @Filter
-        $annotationContainer->filter = function () use ($injectedAnnotation) {
+        $annotationContainer->filter = function () use (&$injectedAnnotation) {
             $filterListContainer = new Container();
             $filterListContainer->initialize = new AnnotationListContainer();
             $filterListContainer->before     = new AnnotationListContainer();
@@ -90,6 +97,7 @@ class AnnotationDelegator
 
             if (array_key_exists("WebStream\Annotation\Filter", $injectedAnnotation)) {
                 $filterAnnotations = $injectedAnnotation["WebStream\Annotation\Filter"];
+                unset($injectedAnnotation["WebStream\Annotation\Filter"]);
                 $exceptMethods = [];
 
                 // アクションメソッドの@Filter(type="skip")をチェックする
@@ -160,13 +168,14 @@ class AnnotationDelegator
         };
 
         // @Template
-        $annotationContainer->template = function () use ($injectedAnnotation, $container) {
+        $annotationContainer->template = function () use (&$injectedAnnotation, $container) {
             $templateContainer = new Container(false);
 
             $viewParams = [];
             $baseTemplate = null;
             if (array_key_exists("WebStream\Annotation\Template", $injectedAnnotation)) {
                 $templateAnnotations = $injectedAnnotation["WebStream\Annotation\Template"];
+                unset($injectedAnnotation["WebStream\Annotation\Template"]);
                 $baseTemplateCandidate = null;
 
                 foreach ($templateAnnotations as $templateAnnotation) {
@@ -213,10 +222,11 @@ class AnnotationDelegator
         };
 
         // @TemplateCache
-        $annotationContainer->templateCache = function () use ($injectedAnnotation) {
+        $annotationContainer->templateCache = function () use (&$injectedAnnotation) {
             $templateCacheContainer = new Container(false);
             if (array_key_exists("WebStream\Annotation\TemplateCache", $injectedAnnotation)) {
                 $templateCacheAnnotations = $injectedAnnotation["WebStream\Annotation\TemplateCache"];
+                unset($injectedAnnotation["WebStream\Annotation\TemplateCache"]);
                 $templateCacheContainer->expire = $templateCacheAnnotations[0]->expire;
             }
 
@@ -224,11 +234,29 @@ class AnnotationDelegator
         };
 
         // @ExceptionHandler
-        $annotationContainer->exceptionHandler = function () use ($injectedAnnotation) {
-            return $injectedAnnotation["WebStream\Annotation\ExceptionHandler"];
+        $annotationContainer->exceptionHandler = function () use (&$injectedAnnotation) {
+            $exceptionHandlerAnnotations = $injectedAnnotation["WebStream\Annotation\ExceptionHandler"];
+            unset($injectedAnnotation["WebStream\Annotation\ExceptionHandler"]);
+
+            return $exceptionHandlerAnnotations;
+        };
+
+        // CustomAnnotations
+        $annotationContainer->customAnnotations = function () use (&$injectedAnnotation) {
+            return $injectedAnnotation;
         };
 
         return $annotationContainer;
+    }
+
+    /**
+     * Serviceのアノテーション情報をロードする
+     * @param CoreService インスタンス
+     * @return Container コンテナ
+     */
+    private function readService(CoreService $instance)
+    {
+        // TODO
     }
 
     /**
@@ -247,12 +275,18 @@ class AnnotationDelegator
 
         // @Database
         $annotationContainer->database = function () use ($injectedAnnotation) {
-            return $injectedAnnotation["WebStream\Annotation\Database"];
+            $databaseAnnotations = $injectedAnnotation["WebStream\Annotation\Database"];
+            unset($injectedAnnotation["WebStream\Annotation\Database"]);
+
+            return $databaseAnnotations;
         };
 
         // @Query
         $annotationContainer->query = function () use ($injectedAnnotation) {
-            return $injectedAnnotation["WebStream\Annotation\Query"];
+            $queryAnnotations = $injectedAnnotation["WebStream\Annotation\Query"];
+            unset($injectedAnnotation["WebStream\Annotation\Query"]);
+
+            return $queryAnnotations;
         };
 
         return $annotationContainer;
