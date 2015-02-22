@@ -78,4 +78,15 @@ class UtilityTest extends TestBase
         $path = $this->getNamespace($this->getProjectRootPath() . $filepath);
         $this->assertNull($path);
     }
+
+    /**
+     * 正常系
+     * 要素が存在する場合、trueを返すこと
+     * @test
+     * @dataProvider customInArrayProvider
+     */
+    public function okCustomInArray($target, $list)
+    {
+        $this->assertTrue($this->inArray($target, $list));
+    }
 }
