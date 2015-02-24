@@ -71,9 +71,9 @@ class Resolver
     }
 
     /**
-     * Resolverを起動する
+     * Controllerを起動する
      */
-    public function run()
+    public function runController()
     {
         // ルータインスタンスをセットする必要がある
         if (!$this->router instanceof Router) {
@@ -88,9 +88,113 @@ class Resolver
         $this->response->start();
 
         if ($this->router->controller() !== null && $this->router->action() !== null) {
-            $this->runController();
+            // クラスパスを取得
+            $coreDelegator = $this->container->coreDelegator;
+            $controllerInstance = $coreDelegator->getController();
+            $annotationDelegator = $this->container->annotationDelegator;
+            $action = $this->router->action();
+            $params = $this->router->params();
+
+            if (!method_exists($controllerInstance, $action)) {
+                $class = get_class($controllerInstance);
+                throw new MethodNotFoundException("${class}#${action} is not defined.");
+            }
+
+            // バリデーションチェック
+            $validator = $this->container->validator;
+            $validator->check();
+
+            // テンプレートキャッシュチェック
+            $pageName = $coreDelegator->getPageName();
+            $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($action);
+            $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
+            $data = $cache->get($cacheFile);
+
+            if ($data !== null) {
+                echo $data;
+
+                return;
+            }
+
+            $controller = $this->router->controller();
+
+            try {
+                $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
+                foreach ($iterator as $filepath => $fileObject) {
+                    if (strpos($filepath, $controller . ".php") !== false) {
+                        include_once $filepath;
+                    }
+                }
+
+                $this->annotation = $annotationDelegator->read($controllerInstance);
+
+                // @Header
+                $mimeType = $this->annotation->header->mimeType;
+
+                // @Filter
+                $filter = $this->annotation->filter;
+
+                // @Template
+                $template = $this->annotation->template;
+
+                // @TemplateCache
+                $expire = $this->annotation->templateCache->expire;
+
+                $controllerInstance->__customAnnotation($this->annotation->customAnnotations);
+
+                // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+                // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+                if (is_callable($this->annotation->exception)) {
+                    $this->annotation->exception();
+                }
+
+                // initialize filter
+                foreach ($filter->initialize as $refMethod) {
+                    $refMethod->invokeArgs($controllerInstance, [$this->container]);
+                }
+
+                // before filter
+                foreach ($filter->before as $refMethod) {
+                    $refMethod->invoke($controllerInstance);
+                }
+
+                // action
+                $controllerInstance->{$action}($params);
+
+                // draw template
+                $view = $this->runView();
+                $view->draw($template->baseTemplate, $template->viewParams, $mimeType);
+                if ($expire !== null) {
+                    $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($coreDelegator->getPageName()) . "-" . $this->camel2snake($action);
+                    $view->cache($cacheFile, ob_get_contents(), $expire);
+                }
+
+                // after filter
+                foreach ($filter->after as $refMethod) {
+                    $refMethod->invoke($controllerInstance);
+                }
+
+            } catch (DoctrineAnnotationException $e) {
+                throw new AnnotationException($e);
+            } catch (\ReflectionException $e) {
+                throw new ClassNotFoundException($e);
+            } catch (\Exception $e) {
+                $exceptionClass = get_class($e);
+                switch ($exceptionClass) {
+                    case "Exception":
+                    case "LogicException":
+                        $e = new ApplicationException($e->getMessage(), 500, $e);
+                        break;
+                    case "RuntimeException":
+                        $e = new UncatchableException($e->getMessage(), 500, $e);
+                        break;
+                }
+
+                throw $e;
+            }
         } elseif ($this->router->staticFile() !== null) {
-            $this->readFile();
+            $controller = new CoreController($this->container);
+            $controller->__callStaticFile($this->router->staticFile());
         } else {
             $errorMsg = "Failed to resolve the routing: " . $this->request->server("REQUEST_URI");
             throw new ResourceNotFoundException($errorMsg);
@@ -100,62 +204,20 @@ class Resolver
     }
 
     /**
-     * Controllerを起動する
+     * Serviceを起動する
+     * @return CoreService Serviceオブジェクト
      */
-    private function runController()
+    public function runService()
     {
-        // クラスパスを取得
         $coreDelegator = $this->container->coreDelegator;
-        $controllerInstance = $coreDelegator->getController();
         $annotationDelegator = $this->container->annotationDelegator;
-        $controller = $this->router->controller();
-        $action = $this->router->action();
-        $params = $this->router->params();
+        $serviceInstance = $coreDelegator->getService();
 
-        if (!method_exists($controllerInstance, $action)) {
-            $class = get_class($controllerInstance);
-            throw new MethodNotFoundException("${class}#${action} is not defined.");
-        }
-
-        // バリデーションチェック
-        $validator = $this->container->validator;
-        $validator->check();
-
-        // テンプレートキャッシュチェック
-        $pageName = $coreDelegator->getPageName();
-        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($action);
-        $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
-        $data = $cache->get($cacheFile);
-
-        if ($data !== null) {
-            echo $data;
-
-            return;
-        }
-
-        try {
-            $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
-            foreach ($iterator as $filepath => $fileObject) {
-                if (strpos($filepath, $controller . ".php") !== false) {
-                    include_once $filepath;
-                }
-            }
-
-            $this->annotation = $annotationDelegator->read($controllerInstance);
-
-            // @Header
-            $mimeType = $this->annotation->header->mimeType;
+        if ($serviceInstance instanceof \WebStream\Core\CoreService) {
+            $this->annotation = $annotationDelegator->read($serviceInstance);
 
             // @Filter
             $filter = $this->annotation->filter;
-
-            // @Template
-            $template = $this->annotation->template;
-
-            // @TemplateCache
-            $expire = $this->annotation->templateCache->expire;
-
-            $controllerInstance->__customAnnotation($this->annotation->customAnnotations);
 
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
@@ -163,59 +225,106 @@ class Resolver
                 $this->annotation->exception();
             }
 
-            // initialize filter
             foreach ($filter->initialize as $refMethod) {
-                $refMethod->invoke($controllerInstance);
+                $refMethod->invokeArgs($serviceInstance, [$this->container]);
             }
-
-            // before filter
-            foreach ($filter->before as $refMethod) {
-                $refMethod->invoke($controllerInstance);
-            }
-
-            // action
-            $controllerInstance->{$action}($params);
-
-            // draw template
-            $view = $coreDelegator->getView();
-            $view->draw($template->baseTemplate, $template->viewParams, $mimeType);
-            if ($expire !== null) {
-                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($coreDelegator->getPageName()) . "-" . $this->camel2snake($action);
-                $view->cache($cacheFile, ob_get_contents(), $expire);
-            }
-
-            // after filter
-            foreach ($filter->after as $refMethod) {
-                $refMethod->invoke($controllerInstance);
-            }
-
-        } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e);
-        } catch (\ReflectionException $e) {
-            throw new ClassNotFoundException($e);
-        } catch (\Exception $e) {
-            $exceptionClass = get_class($e);
-            switch ($exceptionClass) {
-                case "Exception":
-                case "LogicException":
-                    $e = new ApplicationException($e->getMessage(), 500, $e);
-                    break;
-                case "RuntimeException":
-                    $e = new UncatchableException($e->getMessage(), 500, $e);
-                    break;
-            }
-
-            throw $e;
         }
+
+        return $serviceInstance;
     }
 
     /**
-     * ファイルを読み込む
+     * Modelを起動する
+     * @return CoreModel Modelオブジェクト
      */
-    private function readFile()
+    public function runModel()
     {
-        $controller = new CoreController($this->container);
-        $controller->__callStaticFile($this->router->staticFile());
+        $coreDelegator = $this->container->coreDelegator;
+        $annotationDelegator = $this->container->annotationDelegator;
+        $modelInstance = $coreDelegator->getModel();
+
+        if ($modelInstance instanceof \WebStream\Core\CoreModel) {
+            $this->annotation = $annotationDelegator->read($modelInstance);
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            if (is_callable($this->annotation->exception)) {
+                $this->annotation->exception();
+            }
+
+            $initializeContainer = new Container(false);
+            $initializeContainer->connectionContainerList = $this->annotation->database;
+            $initializeContainer->queryAnnotations = $this->annotation->query;
+
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($modelInstance, [$initializeContainer]);
+            }
+        }
+
+        return $modelInstance;
+    }
+
+    /**
+     * Viewを起動する
+     * @return CoreView Viewオブジェクト
+     */
+    private function runView()
+    {
+        $coreDelegator = $this->container->coreDelegator;
+        $annotationDelegator = $this->container->annotationDelegator;
+        $viewInstance = $coreDelegator->getView();
+
+        if ($viewInstance instanceof \WebStream\Core\CoreView) {
+            $this->annotation = $annotationDelegator->read($viewInstance);
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            if (is_callable($this->annotation->exception)) {
+                $this->annotation->exception();
+            }
+
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($viewInstance, [$this->container]);
+            }
+        }
+
+        return $viewInstance;
+    }
+
+    /**
+     * Helperを起動する
+     * @return CoreHelper Helperオブジェクト
+     */
+    public function runHelper()
+    {
+        $coreDelegator = $this->container->coreDelegator;
+        $annotationDelegator = $this->container->annotationDelegator;
+        $helperInstance = $coreDelegator->getHelper();
+
+        if ($helperInstance instanceof \WebStream\Core\CoreHelper) {
+            $this->annotation = $annotationDelegator->read($helperInstance);
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            if (is_callable($this->annotation->exception)) {
+                $this->annotation->exception();
+            }
+
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($helperInstance, [$this->container]);
+            }
+        }
+
+        return $helperInstance;
     }
 
     /**
@@ -266,10 +375,6 @@ class Resolver
             $isHandled = false;
             $controllerInstance = $this->container->coreDelegator->getController();
             $annotations = $this->annotation->exceptionHandler;
-
-            if ($annotations === null) {
-                return $isHandled;
-            }
 
             $invokeMethods = [];
             foreach ($annotations as $exceptionHandlerAnnotation) {

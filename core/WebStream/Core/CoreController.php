@@ -1,11 +1,12 @@
 <?php
 namespace WebStream\Core;
 
+use WebStream\Delegate\Resolver;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Module\Container;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
-use WebStream\Module\Container;
 use WebStream\Exception\Extend\CsrfException;
 
 /**
@@ -34,14 +35,9 @@ class CoreController implements CoreInterface
     private $response;
 
     /**
-     * @var array<mixed> アノテーション
+     * @var array<mixed> カスタムアノテーション
      */
     protected $annotation;
-
-    /**
-     * @var Container コンテナ
-     */
-    private $container;
 
     /**
      * {@inheritdoc}
@@ -82,11 +78,11 @@ class CoreController implements CoreInterface
     }
 
     /**
-     * Controllerで使用する処理の初期化
+     * 初期化処理
      * @Inject
      * @Filter(type="initialize")
      */
-    final public function __initialize()
+    public function __initialize(Container $container)
     {
         // CSRF
         $csrfKey = $this->getCsrfTokenKey();
@@ -112,6 +108,7 @@ class CoreController implements CoreInterface
 
         // Service/Modelロード
         $pageName = $this->coreDelegator->getPageName();
-        $this->{$pageName} = $this->coreDelegator->getService() ?: $this->coreDelegator->getModel();
+        $resolver = new Resolver($container);
+        $this->{$pageName} = $resolver->runService() ?: $resolver->runModel();
     }
 }

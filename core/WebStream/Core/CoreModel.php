@@ -3,6 +3,8 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
+use WebStream\Annotation\Inject;
+use WebStream\Annotation\Filter;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
 use WebStream\Exception\Extend\DatabaseException;
@@ -16,6 +18,11 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  */
 class CoreModel implements CoreInterface
 {
+    /**
+     * @var Container コンテナ
+     */
+    private $container;
+
     /**
      * @var DatabaseManager データベースマネージャ
      */
@@ -32,12 +39,17 @@ class CoreModel implements CoreInterface
     private $isAutoCommit;
 
     /**
+     * @var array<mixed> カスタムアノテーション
+     */
+    protected $annotation;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
         Logger::debug("Model start.");
-        $this->initialize($container);
+        $this->container = $container;
     }
 
     /**
@@ -49,24 +61,30 @@ class CoreModel implements CoreInterface
     }
 
     /**
-     * 初期処理
-     * @param Container DIコンテナ
+     * 初期化処理
+     * @Inject
+     * @Filter(type="initialize")
      */
-    private function initialize(Container $container)
+    public function __initialize(Container $container)
     {
-        $annotationDelegator = $container->annotationDelegator;
-        $annotation = $annotationDelegator->read($this);
-
-        $connectionItemContainerList = $annotation->database;
-        if ($connectionItemContainerList === null) {
+        if ($container->connectionContainerList === null) {
             Logger::warn("Can't use database in Model Layer.");
 
             return;
         }
 
-        $this->queryAnnotations = $annotation->query;
-        $this->manager = new DatabaseManager($connectionItemContainerList);
+        $this->queryAnnotations = $container->queryAnnotations;
+        $this->manager = new DatabaseManager($container->connectionContainerList);
         $this->isAutoCommit = true;
+    }
+
+    /**
+     * カスタムアノテーション情報を設定する
+     * @param array<mixed> カスタムアノテーション情報
+     */
+    final public function __customAnnotation(array $annotation)
+    {
+        $this->annotation = $annotation;
     }
 
     /**

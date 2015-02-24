@@ -1,9 +1,12 @@
 <?php
 namespace WebStream\Core;
 
+use WebStream\Delegate\Resolver;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Annotation\Inject;
+use WebStream\Annotation\Filter;
 use WebStream\Exception\Extend\MethodNotFoundException;
 
 /**
@@ -16,25 +19,53 @@ class CoreService implements CoreInterface
 {
     use Utility;
 
-    /** coreDelegator */
-    private $coreDelegator;
+    /**
+     * @var Container コンテナ
+     */
+    private $container;
 
     /**
-     * Override
+     * @var array<mixed> カスタムアノテーション
      */
-    final public function __construct(Container $container)
+    protected $annotation;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(Container $container)
     {
         Logger::debug("Service start.");
-        $this->coreDelegator = $container->coreDelegator;
-        $this->{$this->coreDelegator->getPageName()} = $this->coreDelegator->getModel();
+        $this->container = $container;
     }
 
     /**
-     * Override
+     * {@inheritdoc}
      */
     public function __destruct()
     {
         Logger::debug("Service end.");
+    }
+
+    /**
+     * 初期化処理
+     * @Inject
+     * @Filter(type="initialize")
+     */
+    public function __initialize(Container $container)
+    {
+        $coreDelegator = $container->coreDelegator;
+        $pageName = $coreDelegator->getPageName();
+        $resolver = new Resolver($this->container);
+        $this->{$pageName} = $resolver->runModel();
+    }
+
+    /**
+     * カスタムアノテーション情報を設定する
+     * @param array<mixed> カスタムアノテーション情報
+     */
+    final public function __customAnnotation(array $annotation)
+    {
+        $this->annotation = $annotation;
     }
 
     /**
@@ -45,7 +76,8 @@ class CoreService implements CoreInterface
      */
     final public function __call($method, $arguments)
     {
-        $pageName = $this->coreDelegator->getPageName();
+        $coreDelegator = $this->container->coreDelegator;
+        $pageName = $coreDelegator->getPageName();
         if (method_exists($this->{$pageName}, $method) === false) {
             $class = get_class($this);
             throw new MethodNotFoundException("${class}#${method} is not defined.");

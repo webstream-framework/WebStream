@@ -58,9 +58,7 @@ class ExceptionHandler extends Annotation implements IMethods, IRead
             $exceptions = [$exceptions];
         }
 
-        foreach ($exceptions as $exception) {
-            $this->injectedContainer->exceptions = $exceptions;
-            $this->injectedContainer->method = $method;
-        }
+        $this->injectedContainer->exceptions = $exceptions;
+        $this->injectedContainer->method = $method;
     }
 }

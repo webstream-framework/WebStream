@@ -76,7 +76,7 @@ class Application
         try {
             $this->init();
             $this->resolver = new Resolver($this->container);
-            $this->resolver->run(); // MVCレイヤへのリクエストの振り分けを実行する
+            $this->resolver->runController(); // MVCレイヤへのリクエストの振り分けを実行する
         } catch (ApplicationException $e) {
             // 内部例外の内、ハンドリングを許可している例外
             try {

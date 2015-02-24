@@ -5,6 +5,8 @@ use WebStream\Module\Utility;
 use WebStream\Module\Container;
 use WebStream\Module\Security;
 use WebStream\Module\Logger;
+use WebStream\Annotation\Inject;
+use WebStream\Annotation\Filter;
 
 /**
  * CoreHelperクラス
@@ -22,6 +24,11 @@ class CoreHelper implements CoreInterface
     private $container;
 
     /**
+     * @var array<mixed> カスタムアノテーション
+     */
+    protected $annotation;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
@@ -36,6 +43,24 @@ class CoreHelper implements CoreInterface
     public function __destruct()
     {
         Logger::debug("Helper end.");
+    }
+
+    /**
+     * 初期化処理
+     * @Inject
+     * @Filter(type="initialize")
+     */
+    public function __initialize(Container $container)
+    {
+    }
+
+    /**
+     * カスタムアノテーション情報を設定する
+     * @param array<mixed> カスタムアノテーション情報
+     */
+    final public function __customAnnotation(array $annotation)
+    {
+        $this->annotation = $annotation;
     }
 
     /**

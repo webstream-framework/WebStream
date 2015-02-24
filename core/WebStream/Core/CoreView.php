@@ -5,6 +5,8 @@ use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Annotation\Inject;
+use WebStream\Annotation\Filter;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\IOException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
@@ -52,7 +54,6 @@ class CoreView implements CoreInterface
         $this->response = $container->response;
         $this->session  = $container->session;
         $this->coreDelegator = $container->coreDelegator;
-        $this->initialize();
     }
 
     /**
@@ -65,8 +66,10 @@ class CoreView implements CoreInterface
 
     /**
      * 初期化処理
+     * @Inject
+     * @Filter(type="initialize")
      */
-    private function initialize()
+    public function __initialize(Container $container)
     {
         $this->timestamp = 0;
         $this->cacheDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE;
