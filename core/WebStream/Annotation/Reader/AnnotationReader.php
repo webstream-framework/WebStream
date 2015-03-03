@@ -4,6 +4,7 @@ namespace WebStream\Annotation\Reader;
 use WebStream\Core\CoreInterface;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
+use WebStream\Delegate\ExceptionDelegator;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
@@ -154,7 +155,7 @@ class AnnotationReader
     {
         $reader = new DoctrineAnnotationReader();
         $refClass = $this->refClass;
-        $actionMethod = $this->container->router->action();
+        $executeMethod = $this->container->executeMethod;
 
         while ($refClass !== false) {
             foreach ($refClass->getMethods() as $method) {
@@ -178,7 +179,7 @@ class AnnotationReader
                     $annotation = $annotations[$i];
 
                     // IMethodを実装している場合、アクションメソッドのアノテーション以外は読み込まない
-                    if ($actionMethod !== $method->name && $annotation instanceof \WebStream\Annotation\Base\IMethod) {
+                    if ($executeMethod !== $method->name && $annotation instanceof \WebStream\Annotation\Base\IMethod) {
                         continue;
                     }
 
@@ -186,9 +187,7 @@ class AnnotationReader
                         $annotation->onMethodInject($this->instance, $this->container, $method);
                     } catch (\Exception $e) {
                         if ($this->exception === null) {
-                            $this->exception = function () use ($e) {
-                                throw $e;
-                            };
+                            $this->exception = new ExceptionDelegator($this->instance, $executeMethod, $e);
                         }
                         continue;
                     }

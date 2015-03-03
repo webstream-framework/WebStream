@@ -17,4 +17,6 @@ class AutowiredTest2 implements CoreInterface
     public function __construct(Container $container) {}
 
     public function __destruct() {}
+
+    public function __initialize(Container $container) {}
 }

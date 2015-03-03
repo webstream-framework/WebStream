@@ -214,10 +214,6 @@ class AnnotationDelegatorFactory
                 if ($baseTemplate === null) {
                     $baseTemplate = $baseTemplateCandidate;
                 }
-
-                $resolver = new Resolver($container);
-                $viewParams["model"] = $container->coreDelegator->getService() ?: $container->coreDelegator->getModel();
-                $viewParams["helper"] = $resolver->runHelper();
             }
 
             $templateContainer->viewParams = $viewParams;

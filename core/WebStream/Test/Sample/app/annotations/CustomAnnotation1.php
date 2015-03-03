@@ -16,7 +16,7 @@ class CustomAnnotation1 extends Annotation implements IMethod
     /**
      * @var AnnotationContainer アノテーションコンテナ
      */
-    private $annotaion;
+    private $annotation;
 
     /**
      * {@inheritdoc}

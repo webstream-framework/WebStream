@@ -13,7 +13,11 @@ trait CustomAnnotationProvider
     {
         return [
             ["/test_custom_class_annotation/index1", "kke"],
-            ["/test_custom_class_annotation/index2", "kashikoi"]
+            ["/test_custom_class_annotation/index2", "kashikoi"],
+            ["/test_custom_class_annotation/service1", "kkekkeservice"],
+            ["/test_custom_class_annotation/service2", "kashikoiservice"],
+            ["/test_custom_class_annotation/model1", "kkekkekkemodel"],
+            ["/test_custom_class_annotation/model2", "kashikoimodel"]
         ];
     }
 
@@ -23,7 +27,8 @@ trait CustomAnnotationProvider
             ["/test_custom_method_annotation/index1", "niconiconi-"],
             ["/test_custom_method_annotation/index2", "makimakima-"],
             ["/test_custom_method_annotation/index3", "chunchun"],
-            ["/test_custom_method_annotation/index4", "niconiconi-"]
+            ["/test_custom_method_annotation/index4", "niconiconi-"],
+            ["/test_custom_method_annotation/service1", "niconiconi-"]
         ];
     }
 

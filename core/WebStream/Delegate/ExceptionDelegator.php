@@ -1,7 +1,10 @@
 <?php
 namespace WebStream\Delegate;
 
-use WebStream\Exception\Extend\ClassNotFoundException;
+use WebStream\Core\CoreInterface;
+use WebStream\Module\Logger;
+use WebStream\Exception\UncatchableException;
+use WebStream\Exception\DelegateException;
 
 /**
  * ExceptionDelegator
@@ -12,35 +15,93 @@ use WebStream\Exception\Extend\ClassNotFoundException;
 class ExceptionDelegator
 {
     /**
-     * @var stirng 例外クラスパス
+     * @var CoreInterface インスタンス
      */
-    private $classpath;
+    private $instance;
 
     /**
-     * @var stirng 例外メッセージ
+     * @var string メソッド名
      */
-    private $message;
+    private $method;
+
+    /**
+     * @var \Exception 例外オブジェクト
+     */
+    private $exceptionObject;
+
+    /**
+     * @var array<AnnotationContainer> 例外ハンドリングリスト
+     */
+    private $exceptionHandler;
 
     /**
      * constructor
-     * @param stirng 例外クラスパス
-     * @param string 例外メッセージ
      */
-    public function __construct($classpath, $message)
+    public function __construct(CoreInterface $instance, $method, \Exception $exceptionObject)
     {
-        $this->classpath = $classpath;
-        $this->message = $message;
+        $this->instance = $instance;
+        $this->method = $method;
+        $this->exceptionObject = $exceptionObject;
+        $this->exceptionHandler = [];
     }
 
     /**
-     * method missing
+     * 例外ハンドリングリストを設定する
+     * @param array<AnnotationContainer> 例外ハンドリングリスト
      */
-    public function __call($method, $arguments)
+    public function setExceptionHandler(array $exceptionHandler)
     {
-        if (class_exists($this->classpath)) {
-            throw new $this->classpath($this->message);
+        $this->exceptionHandler = $exceptionHandler;
+    }
+
+    /**
+     * 例外を実行する
+     */
+    public function raise()
+    {
+        // 捕捉可能な例外の場合のみDelegateExceptionでラップする
+        // そうでない場合はそのままスロー
+        if ($this->exceptionObject instanceof UncatchableException) {
+            throw $this->exceptionObject;
         } else {
-            throw new ClassNotFoundException($this->classpath . " is not found.");
+            $originException = $this->exceptionObject;
+            $delegateException = null;
+
+            if ($originException instanceof DelegateException) {
+                // 複数レイヤ間で例外がやりとりされる場合、すでにDelegateExceptionでラップ済みなので戻す
+                $delegateException = $this->exceptionObject;
+                $originException = $delegateException->getOriginException();
+            } else {
+                // ExceptionやLogicExceptionを含むそれ以外の例外は捕捉可能
+                $delegateException = new DelegateException($this->exceptionObject);
+            }
+
+            $invokeMethods = [];
+            foreach ($this->exceptionHandler as $exceptionHandlerAnnotation) {
+                $exceptions = $exceptionHandlerAnnotation->exceptions;
+                $refMethod = $exceptionHandlerAnnotation->method;
+                foreach ($exceptions as $exception) {
+                    if (is_a($originException, $exception)) {
+                        // 一つのメソッドに複数の捕捉例外が指定された場合(派生例外クラス含む)、先勝で1回のみ実行する
+                        // そうでなければ複数回メソッドが実行されるため
+                        // ただし同一クラス内に限る(親クラスの同一名のメソッドは実行する)
+                        // TODO ここはテストを追加する
+                        $classpath = $refMethod->class . "#" . $refMethod->name;
+                        if (!array_key_exists($classpath, $invokeMethods)) {
+                            $invokeMethods[$classpath] = $refMethod;
+                        }
+                    }
+                }
+            }
+
+            foreach ($invokeMethods as $classpath => $invokeMethod) {
+                $params = ["class" => get_class($this->instance), "method" => $this->method];
+                $invokeMethod->invokeArgs($this->instance, [$params]);
+                $delegateException->enableHandled();
+                Logger::debug("Execution of handling is success: " . $classpath);
+            }
+
+            throw $delegateException;
         }
     }
 }

@@ -7,7 +7,6 @@ use WebStream\Module\Utility;
 use WebStream\Module\Logger;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
-use WebStream\Exception\Extend\MethodNotFoundException;
 
 /**
  * CoreService
@@ -55,7 +54,7 @@ class CoreService implements CoreInterface
     {
         $coreDelegator = $container->coreDelegator;
         $pageName = $coreDelegator->getPageName();
-        $resolver = new Resolver($this->container);
+        $resolver = new Resolver($container);
         $this->{$pageName} = $resolver->runModel();
     }
 
@@ -78,11 +77,7 @@ class CoreService implements CoreInterface
     {
         $coreDelegator = $this->container->coreDelegator;
         $pageName = $coreDelegator->getPageName();
-        if (method_exists($this->{$pageName}, $method) === false) {
-            $class = get_class($this);
-            throw new MethodNotFoundException("${class}#${method} is not defined.");
-        }
 
-        return call_user_func_array([$this->{$pageName}, $method], $arguments);
+        return $this->{$pageName}->run($method, $arguments);
     }
 }

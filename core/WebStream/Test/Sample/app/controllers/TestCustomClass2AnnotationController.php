@@ -15,4 +15,14 @@ class TestCustomClass2AnnotationController extends CoreController
     {
         echo $this->annotation["WebStream\Test\TestData\Sample\App\Annotation\CustomAnnotation5"][0];
     }
+
+    public function index2()
+    {
+        $this->TestCustomClass2Annotation->service1();
+    }
+
+    public function index3()
+    {
+        $this->TestCustomClass2Annotation->model1();
+    }
 }

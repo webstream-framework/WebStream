@@ -18,6 +18,8 @@ class AutowiredTest5 implements CoreInterface
 
     public function __destruct() {}
 
+    public function __initialize(Container $container) {}
+
     public function getInstance()
     {
         return $this->instance;

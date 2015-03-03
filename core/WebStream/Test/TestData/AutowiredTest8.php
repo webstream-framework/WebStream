@@ -24,6 +24,8 @@ class AutowiredTest8 implements CoreInterface
 
     public function __destruct() {}
 
+    public function __initialize(Container $container) {}
+
     public function getName3()
     {
         return $this->name3;

@@ -5,7 +5,7 @@ use WebStream\Core\CoreController;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Template;
 
-class TestTemplateWithHelperController extends CoreController
+class TestTemplateWithServiceController extends CoreController
 {
     /**
      * @Inject
@@ -20,14 +20,6 @@ class TestTemplateWithHelperController extends CoreController
      * @Template("base2.tmpl")
      */
     public function index2()
-    {
-    }
-
-    /**
-     * @Inject
-     * @Template("base3.tmpl")
-     */
-    public function index3()
     {
     }
 }

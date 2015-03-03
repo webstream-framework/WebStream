@@ -39,6 +39,7 @@ class AutowiredTest extends TestBase
     {
         ServiceLocator::test();
         $container = ServiceLocator::getContainer();
+        $container->executeMethod = "";
         $instance = new \WebStream\Test\TestData\AutowiredTest1($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
@@ -57,6 +58,7 @@ class AutowiredTest extends TestBase
     {
         ServiceLocator::test();
         $container = ServiceLocator::getContainer();
+        $container->executeMethod = "";
         $instance = new \WebStream\Test\TestData\AutowiredTest3($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
@@ -74,6 +76,7 @@ class AutowiredTest extends TestBase
     {
         ServiceLocator::test();
         $container = ServiceLocator::getContainer();
+        $container->executeMethod = "";
         $instance = new \WebStream\Test\TestData\AutowiredTest7($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
@@ -98,6 +101,7 @@ class AutowiredTest extends TestBase
     {
         ServiceLocator::test();
         $container = ServiceLocator::getContainer();
+        $container->executeMethod = "";
         $instance = new \WebStream\Test\TestData\AutowiredTest2($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
@@ -116,6 +120,7 @@ class AutowiredTest extends TestBase
     {
         ServiceLocator::test();
         $container = ServiceLocator::getContainer();
+        $container->executeMethod = "";
         $instance = new \WebStream\Test\TestData\AutowiredTest6($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();

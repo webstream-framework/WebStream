@@ -10,6 +10,7 @@ use WebStream\Core\CoreHelper;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Container\AnnotationContainer;
 
 /**
  * AnnotationDelegator
@@ -45,10 +46,13 @@ class AnnotationDelegator
     /**
      * アノテーション情報をロードする
      * @param CoreInterface インスタンス
+     * @param string メソッド
      * @return Container コンテナ
      */
-    public function read(CoreInterface $instance)
+    public function read(CoreInterface $instance, $method)
     {
+        $this->container->executeMethod = $method;
+
         if ($instance instanceof CoreController) {
             return $this->readController($instance);
         } elseif ($instance instanceof CoreService) {
@@ -75,7 +79,7 @@ class AnnotationDelegator
         $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
         $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new Container(false);
+        $annotationContainer = new AnnotationContainer();
 
         // exceptions
         $annotationContainer->exception = $reader->getException();
@@ -114,13 +118,16 @@ class AnnotationDelegator
         $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
         $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new Container(false);
+        $annotationContainer = new AnnotationContainer();
 
         // exceptions
         $annotationContainer->exception = $reader->getException();
 
         // @Filter
         $annotationContainer->filter = $factory->createFilter();
+
+        // @ExceptionHandler
+        $annotationContainer->exceptionHandler = $factory->createExceptionHandler();
 
         // custom annotation
         $annotationContainer->customAnnotations = $factory->createCustomAnnotation();
@@ -141,13 +148,16 @@ class AnnotationDelegator
         $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
         $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new Container(false);
+        $annotationContainer = new AnnotationContainer();
 
         // exceptions
         $annotationContainer->exception = $reader->getException();
 
         // @Filter
         $annotationContainer->filter = $factory->createFilter();
+
+        // @ExceptionHandler
+        $annotationContainer->exceptionHandler = $factory->createExceptionHandler();
 
         // @Database
         $annotationContainer->database = $factory->createDatabase();
@@ -174,7 +184,7 @@ class AnnotationDelegator
         $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
         $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new Container(false);
+        $annotationContainer = new AnnotationContainer();
 
         // exceptions
         $annotationContainer->exception = $reader->getException();
@@ -198,13 +208,16 @@ class AnnotationDelegator
         $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
         $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new Container(false);
+        $annotationContainer = new AnnotationContainer();
 
         // exceptions
         $annotationContainer->exception = $reader->getException();
 
         // @Filter
         $annotationContainer->filter = $factory->createFilter();
+
+        // @ExceptionHandler
+        $annotationContainer->exceptionHandler = $factory->createExceptionHandler();
 
         // custom annotation
         $annotationContainer->customAnnotations = $factory->createCustomAnnotation();

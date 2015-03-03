@@ -25,7 +25,8 @@ trait TemplateProvider
     public function templateModelProvider()
     {
         return [
-            ["/test_template/model/is_model", "WebStream\Test\TestData\Sample\App\Model\TestTemplateWithModelModel"],
+            ["/test_template/model/is_model", "WebStream\Delegate\CoreExecuteDelegator"],
+            ["/test_template/model/origin_model", "WebStream\Test\TestData\Sample\App\Model\TestTemplateWithModelModel"],
             ["/test_template/model/access_db", "nicomaki"]
         ];
     }
@@ -33,7 +34,8 @@ trait TemplateProvider
     public function templateHelperProvider()
     {
         return [
-            ["/test_template/helper/is_helper", "WebStream\Test\TestData\Sample\App\Helper\TestTemplateWithHelperHelper"],
+            ["/test_template/helper/is_helper", "WebStream\Delegate\CoreExecuteDelegator"],
+            ["/test_template/helper/origin_helper", "WebStream\Test\TestData\Sample\App\Helper\TestTemplateWithHelperHelper"],
             ["/test_template/helper/access_helper", "kayochin"]
         ];
     }
