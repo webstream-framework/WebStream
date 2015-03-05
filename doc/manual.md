@@ -494,13 +494,16 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 アノテーション  |説明
 -----------|----
 @Inject    |メソッドに対するアノテーションを有効にする
-@Autowired |プロパティに対するアノテーションを有効にする
 
+####すべてのレイヤで使用可能なアノテーション
+アノテーション        |説明                                         |サンプル
+-----------------|---------------------------------------------|------
+@Autowired       |プロパティに対するアノテーションを有効にする              |@Autowired(value="hoge")<br>@Autowired(type="\Hoge")
+@Filter          |メソッドが呼ばれる前または後に任意の処理を実行する      |@Filter(type="before")<br>@Filter(type="after")<br>@Filter(type="before" except="method1")<br>@Filter(type="before" only="method2")<br>@Filter(type="before",only="method1",except="method2")<br>@Filter(type="after",except={"method1","method2"})
 
 ####Controllerで使用可能なアノテーション
 アノテーション     |説明                                         |サンプル
 -----------------|---------------------------------------------|------
-@Filter          |アクションメソッドが呼ばれる前または後に任意の処理を実行する|@Filter(type="before")<br>@Filter(type="after")<br>@Filter(type="before" except="method1")<br>@Filter(type="before" only="method2")<br>@Filter(type="before",only="method1",except="method2")<br>@Filter(type="after",except={"method1","method2"})
 @Header          |リクエスト/レスポンスを制御する                       |@Header(contentType="html")<br>@Header(contentType="xml")<br>@Header(allowMethod="POST")<br>@Header(allowMethod={"GET","POST"})
 @Template        |Viewテンプレートを設定する                         |@Template("index.tmpl")<br>@Template("index.tmpl",name="head" type="parts")<br>@Template("index.tmpl",name="shared",type="shared")
 @TemplateCache   |テンプレートをキャッシュする時間を指定                  |@TemplateCache(expire=3600)
