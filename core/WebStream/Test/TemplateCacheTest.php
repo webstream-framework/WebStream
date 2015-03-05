@@ -44,6 +44,7 @@ class TemplateCacheTest extends TestBase
             "action" => "index1"
         ]);
         $container->router = $templateCacheContainer;
+        $container->executeMethod = "index1";
         $instance = new \WebStream\Test\TestData\TemplateCacheTest1($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
@@ -65,6 +66,7 @@ class TemplateCacheTest extends TestBase
             "action" => "index2"
         ]);
         $container->router = $templateCacheContainer;
+        $container->executeMethod = "index2";
         $instance = new \WebStream\Test\TestData\TemplateCacheTest1($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
@@ -106,12 +108,18 @@ class TemplateCacheTest extends TestBase
             "action" => $method
         ]);
         $container->router = $templateCacheContainer;
+        $container->executeMethod = $method;
         $instance = new \WebStream\Test\TestData\TemplateCacheTest1($container);
         $reader = new AnnotationReader($instance, $container);
         $reader->read();
         $exception = $reader->getException();
 
-        $this->assertTrue(is_callable($exception));
-        $exception();
+        $this->assertTrue($exception instanceof \WebStream\Delegate\ExceptionDelegator);
+
+        try {
+            $exception->raise();
+        } catch (\Exception $e) {
+            throw $e->getOriginException();
+        }
     }
 }

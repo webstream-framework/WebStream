@@ -12,6 +12,8 @@ class TemplateCacheTest1 implements CoreInterface
 
     public function __destruct() {}
 
+    public function __initialize(Container $container) {}
+
     /**
      * @Inject
      * @TemplateCache(expire="100")
