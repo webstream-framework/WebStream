@@ -12,6 +12,16 @@ class TestCustomMethodsAnnotationController extends CoreController
         echo "ni-";
     }
 
+    public function index2()
+    {
+        $this->TestCustomMethodsAnnotation->service1();
+    }
+
+    public function index3()
+    {
+        $this->TestCustomMethodsAnnotation->model1();
+    }
+
     /**
      * @Inject
      * @CustomAnnotation3

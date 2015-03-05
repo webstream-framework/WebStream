@@ -2,9 +2,9 @@
 namespace WebStream\Test\DataProvider;
 
 /**
- * FilterProvider
+ * CustomAnnotationProvider
  * @author Ryuichi TANAKA.
- * @since 2013/11/30
+ * @since 2015/03/03
  * @version 0.4
  */
 trait CustomAnnotationProvider
@@ -28,7 +28,14 @@ trait CustomAnnotationProvider
             ["/test_custom_method_annotation/index2", "makimakima-"],
             ["/test_custom_method_annotation/index3", "chunchun"],
             ["/test_custom_method_annotation/index4", "niconiconi-"],
-            ["/test_custom_method_annotation/service1", "niconiconi-"]
+            ["/test_custom_method_annotation/service1", "niconiconi-"],
+            ["/test_custom_method_annotation/service2", "makimakima-"],
+            ["/test_custom_method_annotation/service3", "chunchun"],
+            ["/test_custom_method_annotation/service4", "niconiconiconiconi-"],
+            ["/test_custom_method_annotation/model1", "niconiconi-"],
+            ["/test_custom_method_annotation/model2", "makimakima-"],
+            ["/test_custom_method_annotation/model3", "chunchun"],
+            ["/test_custom_method_annotation/model4", "niconiconiconiconiconiconi-"]
         ];
     }
 

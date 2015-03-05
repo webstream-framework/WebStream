@@ -45,6 +45,26 @@ class TestCustomMethodAnnotationController extends CoreController
         $this->TestCustomMethodAnnotation->service2();
     }
 
+    public function index6()
+    {
+        $this->TestCustomMethodAnnotation->service3();
+    }
+
+    public function index7()
+    {
+        $this->TestCustomMethodAnnotation->model1();
+    }
+
+    public function index8()
+    {
+        $this->TestCustomMethodAnnotation->model2();
+    }
+
+    public function index9()
+    {
+        $this->TestCustomMethodAnnotation->model3();
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("\Exception")

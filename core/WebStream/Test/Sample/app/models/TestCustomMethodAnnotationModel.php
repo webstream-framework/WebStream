@@ -1,19 +1,19 @@
 <?php
-namespace WebStream\Test\TestData\Sample\App\Controller;
+namespace WebStream\Test\TestData\Sample\App\Model;
 
-use WebStream\Core\CoreService;
+use WebStream\Core\CoreModel;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\ExceptionHandler;
 use WebStream\Test\TestData\Sample\App\Annotation\CustomAnnotation1;
 use WebStream\Test\TestData\Sample\App\Annotation\CustomAnnotation2;
 
-class TestCustomMethodAnnotationService extends CoreService
+class TestCustomMethodAnnotationModel extends CoreModel
 {
     /**
      * @Inject
      * @CustomAnnotation1(exception=false)
      */
-    public function service1()
+    public function model1()
     {
         echo "niconiconi-";
     }
@@ -22,7 +22,7 @@ class TestCustomMethodAnnotationService extends CoreService
      * @Inject
      * @CustomAnnotation1(exception=true)
      */
-    public function service2()
+    public function model2()
     {
     }
 
@@ -30,7 +30,7 @@ class TestCustomMethodAnnotationService extends CoreService
      * @Inject
      * @CustomAnnotation2
      */
-    public function service3()
+    public function model3()
     {
         echo $this->annotation["WebStream\Test\TestData\Sample\App\Annotation\CustomAnnotation2"][0];
     }
