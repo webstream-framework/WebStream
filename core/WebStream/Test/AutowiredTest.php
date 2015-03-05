@@ -4,6 +4,7 @@ namespace WebStream\Test;
 use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Module\HttpClient;
 use WebStream\DI\ServiceLocator;
 use WebStream\Test\DataProvider\AutowiredProvider;
 
@@ -89,6 +90,20 @@ class AutowiredTest extends TestBase
         $this->assertEquals($autowired2, "name2");
         $this->assertEquals($autowired3, "default3");
         $this->assertEquals($autowired4, "name4");
+    }
+
+    /**
+     * 正常系
+     * 各レイヤ(Controller/Service/Model/Helper)でAutowiredが有効になること
+     * @dataProvider autowiredMVCLayerProvider
+     * @test
+     */
+    public function okAutowiredMVCLayer($path, $response)
+    {
+        $http = new HttpClient();
+        $result = $http->get($this->getDocumentRootURL() . $path);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, $result);
     }
 
     /**
