@@ -2,6 +2,9 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreController;
+use WebStream\Core\CoreService;
+use WebStream\Core\CoreModel;
+use WebStream\Core\CoreHelper;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Exception\Extend\RouterException;
@@ -90,6 +93,7 @@ class Resolver
             $controller = new CoreController($this->container);
             $controller->__callStaticFile($this->router->staticFile());
         } else {
+            $this->response->clean();
             $errorMsg = "Failed to resolve the routing: " . $this->request->server("REQUEST_URI");
             throw new ResourceNotFoundException($errorMsg);
         }
@@ -104,7 +108,7 @@ class Resolver
     public function runService()
     {
         $service = $this->container->coreDelegator->getService();
-        $service = $service !== null ? new CoreExecuteDelegator($service, $this->container) : $this->runModel();
+        $service = $service instanceof CoreService ? new CoreExecuteDelegator($service, $this->container) : $this->runModel();
 
         return $service;
     }
@@ -116,7 +120,7 @@ class Resolver
     public function runModel()
     {
         $model = $this->container->coreDelegator->getModel();
-        $model = $model instanceof \WebStream\Core\CoreModel ? new CoreExecuteDelegator($model, $this->container) : $model;
+        $model = $model instanceof CoreModel ? new CoreExecuteDelegator($model, $this->container) : $model;
 
         return $model;
     }
@@ -137,7 +141,7 @@ class Resolver
     public function runHelper()
     {
         $helper = $this->container->coreDelegator->getHelper();
-        $helper = $helper instanceof \WebStream\Core\CoreHelper ? new CoreExecuteDelegator($helper, $this->container) : $helper;
+        $helper = $helper instanceof CoreHelper ? new CoreExecuteDelegator($helper, $this->container) : $helper;
 
         return $helper;
     }
