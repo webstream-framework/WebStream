@@ -271,7 +271,17 @@ Router::setRule([
     '/test_custom_method_annotation/index4' => "test_custom_methods_annotation#index1",
     '/test_custom_method_annotation/service1' => "test_custom_method_annotation#index4",
     '/test_custom_method_annotation/service2' => "test_custom_method_annotation#index5",
+    '/test_custom_method_annotation/service3' => "test_custom_method_annotation#index6",
+    '/test_custom_method_annotation/service4' => "test_custom_methods_annotation#index2",
+    '/test_custom_method_annotation/model1' => "test_custom_method_annotation#index7",
+    '/test_custom_method_annotation/model2' => "test_custom_method_annotation#index8",
+    '/test_custom_method_annotation/model3' => "test_custom_method_annotation#index9",
+    '/test_custom_method_annotation/model4' => "test_custom_methods_annotation#index3",
     '/test_custom_property_annotation/index1' => "test_custom_property1_annotation#index1",
     '/test_custom_property_annotation/index2' => "test_custom_property2_annotation#index1",
-    '/test_custom_property_annotation/index3' => "test_custom_property3_annotation#index1"
+    '/test_custom_property_annotation/index3' => "test_custom_property3_annotation#index1",
+    '/test_autowired/index' => "test_autowired#index1",
+    '/test_autowired/service' => "test_autowired#index2",
+    '/test_autowired/model' => "test_autowired#index3",
+    '/test_autowired/helper' => "test_autowired#index4"
 ]);
