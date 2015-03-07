@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="stream" basedir="." default="main">
-    <target name="main" depends="init,test"></target>
+<project name="WebStream" basedir="." default="main">
+    <target name="main" depends="init,test,phpdoc"></target>
 
     <!-- init -->
     <target name="init">
         <delete dir="./core/reports" includeemptydirs="true" />
         <mkdir dir="./core/reports" />
+    </target>
+
+    <!-- phpdoc -->
+    <target name="phpdoc">
+        <delete dir="./core/reports/phpdoc" includeemptydirs="true" />
+        <mkdir dir="./core/reports/phpdoc" />
+        <exec dir="./vendor/bin" command="phpdoc -d ../../core -t ../../core/reports/phpdoc -i ../../core/WebStream/Test"/>
     </target>
 
     <!-- PHPUnit -->
