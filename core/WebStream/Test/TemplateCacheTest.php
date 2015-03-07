@@ -115,11 +115,6 @@ class TemplateCacheTest extends TestBase
         $exception = $reader->getException();
 
         $this->assertTrue($exception instanceof \WebStream\Delegate\ExceptionDelegator);
-
-        try {
-            $exception->raise();
-        } catch (\Exception $e) {
-            throw $e->getOriginException();
-        }
+        $exception->raise();
     }
 }

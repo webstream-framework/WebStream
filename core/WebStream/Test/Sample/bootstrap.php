@@ -14,6 +14,7 @@ require_once dirname(__FILE__) . '/../../Module/Container.php';
 require_once dirname(__FILE__) . '/../../Module/Functions.php';
 require_once dirname(__FILE__) . '/../../Module/HttpClient.php';
 require_once dirname(__FILE__) . '/../../Module/Security.php';
+require_once dirname(__FILE__) . '/../../Module/Singleton.php';
 require_once dirname(__FILE__) . '/../../Module/ValueProxy.php';
 require_once dirname(__FILE__) . '/../../DI/ServiceLocator.php';
 require_once dirname(__FILE__) . '/../../Core/Application.php';

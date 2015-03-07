@@ -37,7 +37,7 @@ class ExceptionDelegator
     /**
      * constructor
      */
-    public function __construct(CoreInterface $instance, $method, \Exception $exceptionObject)
+    public function __construct(CoreInterface $instance, \Exception $exceptionObject, $method = null)
     {
         $this->instance = $instance;
         $this->method = $method;
@@ -69,11 +69,7 @@ class ExceptionDelegator
 
             if ($originException instanceof DelegateException) {
                 // 複数レイヤ間で例外がやりとりされる場合、すでにDelegateExceptionでラップ済みなので戻す
-                $delegateException = $this->exceptionObject;
                 $originException = $delegateException->getOriginException();
-            } else {
-                // ExceptionやLogicExceptionを含むそれ以外の例外は捕捉可能
-                $delegateException = new DelegateException($this->exceptionObject);
             }
 
             $invokeMethods = [];
@@ -94,14 +90,18 @@ class ExceptionDelegator
                 }
             }
 
+            if (count($invokeMethods) > 0) {
+                $delegateException = new DelegateException($this->exceptionObject);
+                $delegateException->enableHandled();
+            }
+
             foreach ($invokeMethods as $classpath => $invokeMethod) {
                 $params = ["class" => get_class($this->instance), "method" => $this->method];
                 $invokeMethod->invokeArgs($this->instance, [$params]);
-                $delegateException->enableHandled();
                 Logger::debug("Execution of handling is success: " . $classpath);
             }
 
-            throw $delegateException;
+            throw $delegateException ?: $originException;
         }
     }
 }

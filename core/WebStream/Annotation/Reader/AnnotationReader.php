@@ -125,9 +125,7 @@ class AnnotationReader
                         $annotation->onClassInject($this->instance, $this->container, $refClass);
                     } catch (\Exception $e) {
                         if ($this->exception === null) {
-                            $this->exception = function () use ($e) {
-                                throw $e;
-                            };
+                            $this->exception = new ExceptionDelegator($this->instance, $e);
                         }
                         continue;
                     }
@@ -187,7 +185,7 @@ class AnnotationReader
                         $annotation->onMethodInject($this->instance, $this->container, $method);
                     } catch (\Exception $e) {
                         if ($this->exception === null) {
-                            $this->exception = new ExceptionDelegator($this->instance, $executeMethod, $e);
+                            $this->exception = new ExceptionDelegator($this->instance, $e, $executeMethod);
                         }
                         continue;
                     }

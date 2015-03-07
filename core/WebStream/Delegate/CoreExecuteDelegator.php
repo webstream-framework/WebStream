@@ -47,6 +47,8 @@ class CoreExecuteDelegator
      */
     private $annotation;
 
+    private $exceptionHandler;
+
     /**
      * constructor
      */
@@ -107,7 +109,8 @@ class CoreExecuteDelegator
                     break;
             }
 
-            $exception = new ExceptionDelegator($instance, $method, $e);
+            $exception = new ExceptionDelegator($instance, $e, $method);
+
             if (is_array($this->annotation->exceptionHandler)) {
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
             }
@@ -210,7 +213,10 @@ class CoreExecuteDelegator
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $this->annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
-                $exception->setExceptionHandler($this->annotation->exceptionHandler);
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
+                $exception->setExceptionHandler($this->exceptionHandler);
                 $exception->raise();
             }
 
@@ -263,6 +269,9 @@ class CoreExecuteDelegator
             // @Filter
             $filter = $this->annotation->filter;
 
+            // @ExceptionHandler
+            $this->exceptionHandler = $this->annotation->exceptionHandler;
+
             // custom annotation
             $this->instance->__customAnnotation($this->annotation->customAnnotations);
 
@@ -270,7 +279,10 @@ class CoreExecuteDelegator
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $this->annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
-                $exception->setExceptionHandler($this->annotation->exceptionHandler);
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
+                $exception->setExceptionHandler($this->exceptionHandler);
                 $exception->raise();
             }
 
@@ -302,10 +314,17 @@ class CoreExecuteDelegator
             // custom annotation
             $this->instance->__customAnnotation($this->annotation->customAnnotations);
 
+            if ($this->exceptionHandler === null) {
+                $this->exceptionHandler = $this->annotation->exceptionHandler;
+            }
+
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $this->annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
                 $exception->raise();
             }
@@ -374,10 +393,17 @@ class CoreExecuteDelegator
             // custom annotation
             $this->instance->__customAnnotation($this->annotation->customAnnotations);
 
+            if ($this->exceptionHandler === null) {
+                $this->exceptionHandler = $this->annotation->exceptionHandler;
+            }
+
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $this->annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
                 $exception->raise();
             }

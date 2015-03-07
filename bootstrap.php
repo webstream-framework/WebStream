@@ -14,6 +14,7 @@ require_once dirname(__FILE__) . '/core/WebStream/Module/Container.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/Functions.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/HttpClient.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/Security.php';
+require_once dirname(__FILE__) . '/core/WebStream/Module/Singleton.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/ValueProxy.php';
 require_once dirname(__FILE__) . '/core/WebStream/DI/ServiceLocator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Core/Application.php';
