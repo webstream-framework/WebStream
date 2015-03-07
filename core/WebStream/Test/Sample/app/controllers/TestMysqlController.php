@@ -132,7 +132,11 @@ class TestMysqlController extends CoreController
 
     public function model15()
     {
-        $this->TestMysql->model15();
+        $result = $this->TestMysql->model15();
+        foreach ($result as $entity) {
+            echo gettype($entity->getId());
+            echo gettype($entity->getName());
+        }
     }
 
     /**

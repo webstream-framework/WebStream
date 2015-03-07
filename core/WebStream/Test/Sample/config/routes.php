@@ -217,6 +217,8 @@ Router::setRule([
     '/test_model45' => "test_postgres#model14",
     '/test_model46' => "test_sqlite#model11",
     '/test_model47' => "test_mysql#model15",
+    '/test_model48' => "test_postgres#model15",
+    '/test_model49' => "test_sqlite#model12",
     '/test_transaction1' => "test_transaction#transaction_in_controller",
     '/test_transaction2' => "test_transaction#transaction_rollback_in_controller",
     '/test_transaction3' => "test_transaction#transaction_in_model",

@@ -171,6 +171,17 @@ class TestPostgresModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-trait-entity.xml")
+     */
+    public function model15()
+    {
+        $result = $this->entityMappingPostgres(["limit" => 1, "offset" => 0]);
+
+        return $result;
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()
