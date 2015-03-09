@@ -19,6 +19,15 @@ trait Utility
     }
 
     /**
+     * CoreHelper#asyncで使用するIDを返却する
+     * @return string DOMID
+     */
+    public function getAsyncDomId()
+    {
+        return "W80f2647ef3d2cfe2e4301261ffc7290bb23f5095";
+    }
+
+    /**
      * Viewで有効なModel変数名を返却する
      * @return string Model変数名
      */
@@ -302,5 +311,37 @@ trait Utility
     public function decode($data)
     {
         return unserialize(base64_decode($data));
+    }
+
+    /**
+     * 要素が存在するかどうか
+     * @param array 検索対象配列
+     * @param mixed 検索値
+     * @return bool 存在すればtrue
+     */
+    public function inArray($target, $list)
+    {
+        $type = gettype($target);
+        switch ($type) {
+            case "string":
+            case "integer":
+                return array_key_exists($target, array_flip($list));
+            default:
+                // それ以外の場合、in_arrayを使用する
+                return in_array($target, $list, true);
+        }
+    }
+
+    /**
+     * CoreHelper#asyncで使用するコードを返却する
+     * @param string URL
+     * @param string CSSクラス名
+     * @return string コード
+     */
+    public function asyncHelperCode($url, $className)
+    {
+        return <<< JSCODE
+(function (c,b) {var a;a=window.XMLHttpRequest?new XMLHttpRequest:new ActiveXObject("Microsoft.XMLHTTP");a.onreadystatechange=function () {4==a.readyState&&200==a.status&&(console.log(document.getElementsByClassName(b)[0].outerHTML),document.getElementsByClassName(b)[0].outerHTML=a.responseText)};a.open("GET",c,!0);a.send()})("$url","$className");
+JSCODE;
     }
 }

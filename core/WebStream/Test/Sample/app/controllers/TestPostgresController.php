@@ -119,6 +119,26 @@ class TestPostgresController extends CoreController
         }
     }
 
+    public function model14()
+    {
+        $results = $this->TestPostgres->model14();
+        foreach ($results[0] as $value) {
+            echo $value["name"];
+        }
+        foreach ($results[1] as $entity) {
+            echo gettype($entity->getName());
+        }
+    }
+
+    public function model15()
+    {
+        $result = $this->TestPostgres->model15();
+        foreach ($result as $entity) {
+            echo gettype($entity->getId());
+            echo gettype($entity->getName());
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")

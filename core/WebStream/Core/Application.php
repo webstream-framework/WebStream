@@ -7,6 +7,7 @@ use WebStream\Module\Utility;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\UncatchableException;
+use WebStream\Exception\DelegateException;
 
 /**
  * Applicationクラス
@@ -76,11 +77,16 @@ class Application
         try {
             $this->init();
             $this->resolver = new Resolver($this->container);
-            $this->resolver->run(); // MVCレイヤへのリクエストの振り分けを実行する
+            $this->resolver->runController(); // MVCレイヤへのリクエストの振り分けを実行する
         } catch (ApplicationException $e) {
             // 内部例外の内、ハンドリングを許可している例外
             try {
-                if (!$this->resolver->handle($e)) {
+                $isHandled = false;
+                if ($e instanceof DelegateException) {
+                    $isHandled = $e->isHandled();
+                    $e = $e->getOriginException();
+                }
+                if (!$isHandled) {
                     $this->response->move($e->getCode());
                 }
             } catch (\Exception $e) {

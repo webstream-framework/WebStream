@@ -22,4 +22,12 @@ class TestTemplateWithModelController extends CoreController
     public function index2()
     {
     }
+
+    /**
+     * @Inject
+     * @Template("base3.tmpl")
+     */
+    public function index3()
+    {
+    }
 }

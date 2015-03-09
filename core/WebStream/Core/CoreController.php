@@ -1,11 +1,12 @@
 <?php
 namespace WebStream\Core;
 
+use WebStream\Delegate\Resolver;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Module\Container;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
-use WebStream\Module\Container;
 use WebStream\Exception\Extend\CsrfException;
 
 /**
@@ -18,14 +19,25 @@ class CoreController implements CoreInterface
 {
     use Utility;
 
-    /** セッション */
+    /**
+     * @var Session セッション
+     */
     protected $session;
-    /** リクエスト */
+
+    /**
+     * @var Request リクエスト
+     */
     protected $request;
-    /** レスポンス */
+
+    /**
+     * @var Response レスポンス
+     */
     private $response;
-    /** CoreDelegator */
-    private $container;
+
+    /**
+     * @var array<mixed> カスタムアノテーション
+     */
+    protected $annotation;
 
     /**
      * {@inheritdoc}
@@ -53,35 +65,26 @@ class CoreController implements CoreInterface
      */
     final public function __callStaticFile($filepath)
     {
-        $view = $this->coreDelegator->getView();
-        $view->__file($filepath);
+        $this->coreDelegator->getView()->__file($filepath);
     }
 
     /**
-     * Controllerで使用する処理の初期化
+     * カスタムアノテーション情報を設定する
+     * @param array<mixed> カスタムアノテーション情報
+     */
+    final public function __customAnnotation(array $annotation)
+    {
+        $this->annotation = $annotation;
+    }
+
+    /**
+     * 初期化処理
      * @Inject
      * @Filter(type="initialize")
      */
-    final public function __initialize()
+    public function __initialize(Container $container)
     {
-        $this->__csrfCheck();
-        $this->__load();
-    }
-
-    /**
-     * Model/Serviceオブジェクトを返却する
-     * @return object Model/Serviceオブジェクト
-     */
-    final public function __model()
-    {
-        return $this->{$this->coreDelegator->getPageName()};
-    }
-
-    /**
-     * CSRFトークンをチェックする
-     */
-    final private function __csrfCheck()
-    {
+        // CSRF
         $csrfKey = $this->getCsrfTokenKey();
         $sessionToken = $this->session->get($csrfKey);
         $requestToken = null;
@@ -102,14 +105,10 @@ class CoreController implements CoreInterface
         if ($requestToken !== $sessionToken) {
             throw new CsrfException("Sent invalid CSRF token");
         }
-    }
 
-    /**
-     * Service/Modelクラスのインスタンスをロードする
-     */
-    final private function __load()
-    {
+        // Service/Modelロード
         $pageName = $this->coreDelegator->getPageName();
-        $this->{$pageName} = $this->coreDelegator->getService() ?: $this->coreDelegator->getModel();
+        $resolver = new Resolver($container);
+        $this->{$pageName} = $resolver->runService() ?: $resolver->runModel();
     }
 }

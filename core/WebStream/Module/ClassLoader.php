@@ -14,7 +14,9 @@ class ClassLoader
 {
     use Utility;
 
-    /** アプリケーションルートパス */
+    /**
+     * @var string アプリケーションルートパス
+     */
     private $applicationRoot;
 
     /**
@@ -122,7 +124,7 @@ class ClassLoader
         foreach ($iterator as $filepath => $fileObject) {
             if (strpos($filepath, $className . ".php") !== false) {
                 include_once $filepath;
-                Logger::debug($filepath . " load success. (search from " . $rootDir . "/app/)");
+                Logger::debug($filepath . " load success. (search from " . $this->applicationRoot . "/app/)");
 
                 return;
             }
@@ -138,7 +140,7 @@ class ClassLoader
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
-                    Logger::debug($includeFile . " load success. (full search)");
+                    Logger::debug($filepath . " load success. (full search)");
                     $isInclude = true;
                 }
             }

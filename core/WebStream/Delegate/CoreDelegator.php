@@ -70,7 +70,6 @@ class CoreDelegator
         // Controller
         $this->coreContainer->controller = function () use ($container, $controllerNamespace) {
             $controllerClassPath = $controllerNamespace . "\\" . $container->router->controller();
-            Logger::warn($controllerClassPath);
             if (!class_exists($controllerClassPath)) {
                 throw new ClassNotFoundException("Undefined class path: " . $controllerClassPath);
             }
@@ -98,7 +97,6 @@ class CoreDelegator
         // Model
         if ($modelNamespace !== null) {
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
-            $container->action = $container->router->action();
             $this->coreContainer->model = function () use ($container, $classLoader, $modelClassPath, $modelClassName) {
                 if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
                     return new $modelClassPath($container);
@@ -107,7 +105,7 @@ class CoreDelegator
         } else {
             $classpath = "\WebStream\Exception\Extend\ClassNotFoundException";
             $message = $pageName . "Service and " . $pageName . "Model is not defined.";
-            $this->coreContainer->model = new ExceptionDelegator($classpath, $message);
+            $this->coreContainer->model = new CoreExceptionDelegator($classpath, $message);
         }
 
         // Helper
@@ -121,7 +119,7 @@ class CoreDelegator
         } else {
             $classpath = "\WebStream\Exception\Extend\ClassNotFoundException";
             $message = $pageName . "Helper is not defined.";
-            $this->coreContainer->helper = new ExceptionDelegator($classpath, $message);
+            $this->coreContainer->helper = new CoreExceptionDelegator($classpath, $message);
         }
     }
 

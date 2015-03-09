@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Annotation;
 
+use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Logger;
 
 /**
@@ -17,7 +19,7 @@ class Inject extends Annotation
     /**
      * {@inheritdoc}
      */
-    public function onInject()
+    public function onInject(AnnotationContainer $ignore)
     {
         Logger::debug("@Injected found.");
     }

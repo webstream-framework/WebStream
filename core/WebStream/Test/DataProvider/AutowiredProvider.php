@@ -22,4 +22,14 @@ trait AutowiredProvider
             ["honoka", 9]
         ];
     }
+
+    public function autowiredMVCLayerProvider()
+    {
+        return [
+            ["/test_autowired/index", "honoka"],
+            ["/test_autowired/service", "kotori"],
+            ["/test_autowired/model", "umichang"],
+            ["/test_autowired/helper", "kotohonoumi"]
+        ];
+    }
 }

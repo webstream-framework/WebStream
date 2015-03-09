@@ -2,9 +2,9 @@
 namespace WebStream\Test;
 
 use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\AutowiredReader;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Module\HttpClient;
 use WebStream\DI\ServiceLocator;
 use WebStream\Test\DataProvider\AutowiredProvider;
 
@@ -32,22 +32,18 @@ class AutowiredTest extends TestBase
 
     /**
      * 正常系
-     * @Type,@Valueで指定した値が注入できること
+     * 指定した値が注入できること
      * @test
      * @dataProvider autowiredProvider
      */
     public function okAutowired($mail, $age)
     {
-        $instance = new \WebStream\Test\TestData\AutowiredTest1();
-        $reader = new AnnotationReader($instance);
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
-        $reader->setContainer($container);
+        $container->executeMethod = "";
+        $instance = new \WebStream\Test\TestData\AutowiredTest1($container);
+        $reader = new AnnotationReader($instance, $container);
         $reader->read();
-
-        $autowired = new AutowiredReader($reader);
-        $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $this->assertEquals($mail, $instance->getMail());
         $this->assertEquals($age, $instance->getAge());
@@ -55,22 +51,18 @@ class AutowiredTest extends TestBase
 
     /**
      * 正常系
-     * @Valueで指定した値(定数型)を注入できること
+     * value属性で指定した値(定数型)を注入できること
      * @test
      * @dataProvider autowiredForConstantValueProvider
      */
     public function okAutowiredForConstantValueProvider($name, $num)
     {
-        $instance = new \WebStream\Test\TestData\AutowiredTest3();
-        $reader = new AnnotationReader($instance);
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
-        $reader->setContainer($container);
+        $container->executeMethod = "";
+        $instance = new \WebStream\Test\TestData\AutowiredTest3($container);
+        $reader = new AnnotationReader($instance, $container);
         $reader->read();
-
-        $autowired = new AutowiredReader($reader);
-        $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $this->assertEquals($name, $instance->getName());
         $this->assertEquals($num, $instance->getMemberNum());
@@ -83,16 +75,12 @@ class AutowiredTest extends TestBase
      */
     public function okAutowiredSuperClass()
     {
-        $instance = new \WebStream\Test\TestData\AutowiredTest7();
-        $reader = new AnnotationReader($instance);
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
-        $reader->setContainer($container);
+        $container->executeMethod = "";
+        $instance = new \WebStream\Test\TestData\AutowiredTest7($container);
+        $reader = new AnnotationReader($instance, $container);
         $reader->read();
-
-        $autowired = new AutowiredReader($reader);
-        $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $autowired1 = $instance->getName();
         $autowired2 = $instance->getName2();
@@ -105,25 +93,37 @@ class AutowiredTest extends TestBase
     }
 
     /**
+     * 正常系
+     * 各レイヤ(Controller/Service/Model/Helper)でAutowiredが有効になること
+     * @dataProvider autowiredMVCLayerProvider
+     * @test
+     */
+    public function okAutowiredMVCLayer($path, $response)
+    {
+        $http = new HttpClient();
+        $result = $http->get($this->getDocumentRootURL() . $path);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($response, $result);
+    }
+
+    /**
      * 異常系
-     * valueに存在しないクラス参照型を指定した場合、例外が発生すること
+     * value属性に存在しないクラス参照型を指定した場合、例外が発生すること
      * @test
      * @expectedException WebStream\Exception\Extend\AnnotationException
      */
     public function ngAutowiredInvalidType()
     {
-        $instance = new \WebStream\Test\TestData\AutowiredTest2();
-        $reader = new AnnotationReader($instance);
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
-        $reader->setContainer($container);
+        $container->executeMethod = "";
+        $instance = new \WebStream\Test\TestData\AutowiredTest2($container);
+        $reader = new AnnotationReader($instance, $container);
         $reader->read();
+        $exception = $reader->getException();
 
-        $autowired = new AutowiredReader($reader);
-        $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
-
-        $this->assertTrue(false);
+        $this->assertTrue(is_callable($exception));
+        $exception();
     }
 
     /**
@@ -133,16 +133,12 @@ class AutowiredTest extends TestBase
      */
     public function ngAutowiredAnnotationDefinition()
     {
-        $instance = new \WebStream\Test\TestData\AutowiredTest6();
-        $reader = new AnnotationReader($instance);
+        ServiceLocator::test();
         $container = ServiceLocator::getContainer();
-        $reader->setContainer($container);
+        $container->executeMethod = "";
+        $instance = new \WebStream\Test\TestData\AutowiredTest6($container);
+        $reader = new AnnotationReader($instance, $container);
         $reader->read();
-
-        $autowired = new AutowiredReader($reader);
-        $autowired->inject($instance);
-        $autowired->execute();
-        $instance = $autowired->getInstance();
 
         $this->assertNull($instance->getInstance());
     }

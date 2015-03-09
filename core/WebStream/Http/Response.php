@@ -524,12 +524,20 @@ class Response
     }
 
     /**
-     * レスポンス送出を終了する
+     * レスポンスを送出して終了する
      */
     public function end()
     {
         $this->setBody(ob_get_clean());
         $this->send();
+    }
+
+    /**
+     * レスポンス送出せず終了する
+     */
+    public function clean()
+    {
+        ob_end_clean();
     }
 
     /**

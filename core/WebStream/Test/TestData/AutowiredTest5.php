@@ -1,17 +1,24 @@
 <?php
 namespace WebStream\Test\TestData;
 
+use WebStream\Core\CoreInterface;
+use WebStream\Annotation\Inject;
 use WebStream\Annotation\Autowired;
-use WebStream\Annotation\Type;
-use WebStream\Annotation\Value;
+use WebStream\Module\Container;
 
-class AutowiredTest5
+class AutowiredTest5 implements CoreInterface
 {
     /**
-     * @Type("\WebStream\Test\TestData\AutowiredTestTypeConstructor")
-     * @Autowired
+     * @Inject
+     * @Autowired(type="\WebStream\Test\TestData\AutowiredTestTypeConstructor")
      */
     private $instance;
+
+    public function __construct(Container $container) {}
+
+    public function __destruct() {}
+
+    public function __initialize(Container $container) {}
 
     public function getInstance()
     {

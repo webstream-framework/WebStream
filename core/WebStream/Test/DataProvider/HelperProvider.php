@@ -7,7 +7,8 @@ namespace WebStream\Test\DataProvider;
  * @since 2013/12/05
  * @version 0.4
  */
-trait HelperProvider {
+trait HelperProvider
+{
     public function helperProvider()
     {
         return [

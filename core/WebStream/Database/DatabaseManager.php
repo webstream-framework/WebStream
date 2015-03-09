@@ -1,7 +1,6 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Module\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
@@ -30,9 +29,9 @@ class DatabaseManager
 
     /**
      * constructor
-     * @param AnnotationListContainer データベース接続項目コンテナ
+     * @param array<AnnotationContainer> データベース接続項目コンテナ
      */
-    public function __construct(AnnotationListContainer $connectionItemContainerList)
+    public function __construct(array $connectionItemContainerList)
     {
         $this->connectionManager = new ConnectionManager($connectionItemContainerList);
     }

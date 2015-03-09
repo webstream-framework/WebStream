@@ -117,6 +117,29 @@ class TestSqliteModel extends CoreModel
 
     /**
      * @Inject
+     * @Query(file={"query/webstream-model-mapper-sample.xml", "query/webstream-model-mapper-sample-entity.xml"})
+     */
+    public function model11()
+    {
+        $result1 = $this->getTestData2(["limit" => 1, "offset" => 0]);
+        $result2 = $this->entityMappingSqlite(["limit" => 1, "offset" => 0]);
+
+        return [$result1, $result2];
+    }
+
+    /**
+     * @Inject
+     * @Query(file="query/webstream-model-mapper-sample-trait-entity.xml")
+     */
+    public function model12()
+    {
+        $result = $this->entityMappingSqlite(["limit" => 1, "offset" => 0]);
+
+        return $result;
+    }
+
+    /**
+     * @Inject
      * @Query(file="query/webstream-model-mapper-sample.xml")
      */
     public function prepare()

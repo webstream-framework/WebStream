@@ -2,12 +2,12 @@
 namespace WebStream\Test\DataProvider;
 
 /**
- * DatabaseProvider
+ * ModelProvider
  * @author Ryuichi TANAKA.
  * @since 2014/01/19
  * @version 0.4
  */
-trait DatabaseProvider
+trait ModelProvider
 {
     public function selectProvider()
     {
@@ -93,9 +93,9 @@ trait DatabaseProvider
     public function useUndefinedQueryXmlFileProvider()
     {
         return [
-            ["/test_model6", "\WebStream\Test\TestData\Sample\App\Controller\TestMysqlController#model5"],
-            ["/test_model16", "\WebStream\Test\TestData\Sample\App\Controller\TestPostgresController#model5"],
-            ["/test_model18", "\WebStream\Test\TestData\Sample\App\Controller\TestSqliteController#model3"]
+            ["/test_model6", "WebStream\Test\TestData\Sample\App\Controller\TestMysqlController#model5"],
+            ["/test_model16", "WebStream\Test\TestData\Sample\App\Controller\TestPostgresController#model5"],
+            ["/test_model18", "WebStream\Test\TestData\Sample\App\Controller\TestSqliteController#model3"]
         ];
     }
 
@@ -143,8 +143,10 @@ trait DatabaseProvider
         return [
             ["/test_model40", "honokastring", "/test_model_prepare", "/test_model_prepare8"],
             ["/test_model41", "kotoristring", "/test_model_prepare2", "/test_model_prepare9"],
-            ["/test_model42", "umichangstring", "/test_model_prepare3", "/test_model_prepare10"]
+            ["/test_model42", "umichangstring", "/test_model_prepare3", "/test_model_prepare10"],
+            ["/test_model44", "honokastring", "/test_model_prepare", "/test_model_prepare8"],
+            ["/test_model45", "kotoristring", "/test_model_prepare2", "/test_model_prepare9"],
+            ["/test_model46", "umichangstring", "/test_model_prepare3", "/test_model_prepare10"]
         ];
     }
-
 }
