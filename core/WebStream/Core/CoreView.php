@@ -5,6 +5,8 @@ use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Annotation\Inject;
+use WebStream\Annotation\Filter;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Exception\Extend\IOException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
@@ -52,7 +54,6 @@ class CoreView implements CoreInterface
         $this->response = $container->response;
         $this->session  = $container->session;
         $this->coreDelegator = $container->coreDelegator;
-        $this->initialize();
     }
 
     /**
@@ -65,8 +66,10 @@ class CoreView implements CoreInterface
 
     /**
      * 初期化処理
+     * @Inject
+     * @Filter(type="initialize")
      */
-    private function initialize()
+    public function __initialize(Container $container)
     {
         $this->timestamp = 0;
         $this->cacheDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE;
@@ -111,11 +114,18 @@ class CoreView implements CoreInterface
             return;
         }
 
+        // テンプレートを使用しない場合
+        if ($templatePath === null) {
+            Logger::debug("Template is not used.");
+
+            return;
+        }
+
         // テンプレートファイルパス
         $template = STREAM_APP_ROOT . "/app/views/" . $templatePath;
 
         // テンプレートファイルがない場合エラー
-        if (!file_exists($template)) {
+        if (!is_file($template)) {
             throw new ResourceNotFoundException("Invalid template file path: " . $template);
         }
 
@@ -128,6 +138,11 @@ class CoreView implements CoreInterface
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($template);
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
+
+        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.*\)})/', function ($matches) {
+            return "<div class='" . $this->getAsyncDomId() . "'>$matches[1]</div>";
+        }, $content);
+
         $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
         $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
 

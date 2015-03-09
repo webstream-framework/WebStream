@@ -99,6 +99,26 @@ class TestSqliteController extends CoreController
         }
     }
 
+    public function model11()
+    {
+        $results = $this->TestSqlite->model11();
+        foreach ($results[0] as $value) {
+            echo $value["name"];
+        }
+        foreach ($results[1] as $entity) {
+            echo gettype($entity->getName());
+        }
+    }
+
+    public function model12()
+    {
+        $result = $this->TestSqlite->model12();
+        foreach ($result as $entity) {
+            echo gettype($entity->getId());
+            echo gettype($entity->getName());
+        }
+    }
+
     /**
      * @Inject
      * @ExceptionHandler("WebStream\Exception\Extend\DatabaseException")

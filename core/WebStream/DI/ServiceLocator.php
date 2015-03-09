@@ -6,8 +6,7 @@ use WebStream\Module\Container;
 use WebStream\Delegate\Router;
 use WebStream\Delegate\Validator;
 use WebStream\Delegate\CoreDelegator;
-use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\AutowiredReader;
+use WebStream\Delegate\AnnotationDelegator;
 use WebStream\Http\Request;
 use WebStream\Http\Response;
 use WebStream\Http\Session;
@@ -75,16 +74,7 @@ class ServiceLocator
 
         // Request
         $container->request = function () {
-            $request = new Request();
-            $reader = new AnnotationReader($request);
-            $reader->read();
-
-            $autowired = new AutowiredReader($reader);
-            $autowired->inject($request);
-            $autowired->execute();
-            $request = $autowired->getInstance();
-
-            return $request;
+            return new Request();
         };
         // Response
         $container->response = function () {
@@ -106,10 +96,16 @@ class ServiceLocator
         $container->coreDelegator = function () use (&$container) {
             return new CoreDelegator($container);
         };
+        // AnnotationDelegator
+        $container->annotationDelegator = function () use (&$container) {
+            return new AnnotationDelegator($container);
+        };
         // ApplicationRoot
         $container->applicationRoot = $isTest ? $this->getTestApplicationRoot() : $this->getRoot();
         // ApplicationDir
         $container->applicationDir = $isTest ? $this->getTestApplicationDir() : "app";
+        // test
+        $container->isTest = $isTest;
 
         return $container;
     }

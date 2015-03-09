@@ -2,24 +2,13 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreController;
+use WebStream\Core\CoreService;
+use WebStream\Core\CoreModel;
+use WebStream\Core\CoreHelper;
 use WebStream\Module\Container;
-use WebStream\Module\Cache;
 use WebStream\Module\Utility;
-use WebStream\Module\Logger;
-use WebStream\Exception\ApplicationException;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
-use WebStream\Exception\Extend\ClassNotFoundException;
-use WebStream\Exception\Extend\MethodNotFoundException;
-use WebStream\Exception\Extend\AnnotationException;
-use WebStream\Annotation\Reader\ExceptionHandlerReader;
-use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\AutowiredReader;
-use WebStream\Annotation\Reader\HeaderReader;
-use WebStream\Annotation\Reader\FilterReader;
-use WebStream\Annotation\Reader\TemplateReader;
-use WebStream\Annotation\Reader\TemplateCacheReader;
-use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
 
 /**
  * Resolver
@@ -31,16 +20,35 @@ class Resolver
 {
     use Utility;
 
-    /** ルーティングオブジェクト */
+    /**
+     * @var Router ルーティングオブジェクト
+     */
     private $router;
-    /** リクエストオブジェクト */
+
+    /**
+     * @var Request リクエストオブジェクト
+     */
     private $request;
-    /** レスポンスオブジェクト */
+
+    /**
+     * @var Response レスポンスオブジェクト
+     */
     private $response;
-    /** セッションオブジェクト */
+
+    /**
+     * @var Session セッションオブジェクト
+     */
     private $session;
-    /** DIコンテナ */
+
+    /**
+     * @var Container DIコンテナ
+     */
     private $container;
+
+    /**
+     * @var AnnotationContainer アノテーションコンテナ
+     */
+    private $annotation;
 
     /**
      * コンストラクタ
@@ -56,9 +64,9 @@ class Resolver
     }
 
     /**
-     * Resolverを起動する
+     * Controllerを起動する
      */
-    public function run()
+    public function runController()
     {
         // ルータインスタンスをセットする必要がある
         if (!$this->router instanceof Router) {
@@ -73,10 +81,19 @@ class Resolver
         $this->response->start();
 
         if ($this->router->controller() !== null && $this->router->action() !== null) {
-            $this->runController();
+            $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
+            foreach ($iterator as $filepath => $fileObject) {
+                if (strpos($filepath, $this->router->controller() . ".php") !== false) {
+                    include_once $filepath;
+                }
+            }
+            $controllerDelegator = new CoreExecuteDelegator($this->container->coreDelegator->getController(), $this->container);
+            $controllerDelegator->run($this->router->action(), [$this->router->params()]);
         } elseif ($this->router->staticFile() !== null) {
-            $this->readFile();
+            $controller = new CoreController($this->container);
+            $controller->__callStaticFile($this->router->staticFile());
         } else {
+            $this->response->clean();
             $errorMsg = "Failed to resolve the routing: " . $this->request->server("REQUEST_URI");
             throw new ResourceNotFoundException($errorMsg);
         }
@@ -85,129 +102,48 @@ class Resolver
     }
 
     /**
-     * Controllerを起動する
+     * Serviceを起動する
+     * @return CoreService Serviceオブジェクト
      */
-    private function runController()
+    public function runService()
     {
-        // クラスパスを取得
-        $coreDelegator = $this->container->coreDelegator;
-        $controllerInstance = $coreDelegator->getController();
-        $controller = $this->router->controller();
-        $action = $this->router->action();
-        $params = $this->router->params();
+        $service = $this->container->coreDelegator->getService();
+        $service = $service instanceof CoreService ? new CoreExecuteDelegator($service, $this->container) : $this->runModel();
 
-        if (!method_exists($controllerInstance, $action)) {
-            $class = get_class($controllerInstance);
-            throw new MethodNotFoundException("${class}#${action} is not defined.");
-        }
-
-        // バリデーションチェック
-        $validator = $this->container->validator;
-        $validator->check();
-
-        // テンプレートキャッシュチェック
-        $pageName = $coreDelegator->getPageName();
-        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($action);
-        $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
-        $data = $cache->get($cacheFile);
-
-        if ($data !== null) {
-            echo $data;
-
-            return;
-        }
-
-        try {
-            $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
-            foreach ($iterator as $filepath => $fileObject) {
-                if (strpos($filepath, $controller . ".php") !== false) {
-                    include_once $filepath;
-                }
-            }
-
-            // Controller起動
-            $refClass = new \ReflectionClass($controllerInstance);
-
-            // AnnotaionReaderを取得
-            $reader = new AnnotationReader($controllerInstance);
-            $this->container->classpath = $refClass->getName();
-            $this->container->action = $action;
-            $reader->setContainer($this->container);
-            $reader->read();
-
-            // @Autowired
-            $autowired = new AutowiredReader($reader);
-            $autowired->inject($controllerInstance);
-            $autowired->execute();
-            $controllerInstance = $autowired->getInstance();
-
-            // @Header
-            $header = new HeaderReader($reader);
-            $header->execute();
-            $mimeType = $header->getMimeType();
-
-            // @Filter
-            $filter = new FilterReader($reader);
-            $filter->inject($controllerInstance);
-            $filter->execute();
-            $controllerInstance = $filter->getInstance();
-
-            // initialize filter
-            $filter->initialize();
-            // before filter
-            $filter->before();
-            // action
-            $controllerInstance->{$action}($params);
-
-            // @Template
-            $template = new TemplateReader($reader);
-            $template->execute();
-            $templateContainer = $template->getTemplateContainer();
-
-            $pageName = $coreDelegator->getPageName();
-            $viewParams = [];
-            $viewParams["model"] = $controllerInstance->__model();
-            $viewParams["helper"] = $coreDelegator->getHelper();
-
-            if ($templateContainer->base !== null) {
-                $viewParams["base"] = $templateContainer->base;
-            }
-            if ($templateContainer->parts !== null) {
-                foreach ($templateContainer->parts as $key => $value) {
-                    $viewParams[$key] = $value;
-                }
-            }
-
-            // draw template
-            $view = $coreDelegator->getView();
-            $view->draw($templateContainer->base, $viewParams, $mimeType);
-
-            $templateCache = new TemplateCacheReader($reader);
-            $templateCache->execute();
-            $expire = $templateCache->getExpire();
-
-            if ($expire !== null) {
-                // create cache
-                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($coreDelegator->getPageName()) . "-" . $this->camel2snake($action);
-                $view->cache($cacheFile, ob_get_contents(), $expire);
-            }
-
-            // after filter
-            $filter->after();
-        } catch (DoctrineAnnotationException $e) {
-            throw new AnnotationException($e);
-        } catch (\ReflectionException $e) {
-            throw new ClassNotFoundException($e);
-        }
+        return $service;
     }
 
     /**
-     * ファイルを読み込む
+     * Modelを起動する
+     * @return CoreModel Modelオブジェクト
      */
-    private function readFile()
+    public function runModel()
     {
-        $controller = new CoreController($this->container);
-        $controller->__callStaticFile($this->router->staticFile());
+        $model = $this->container->coreDelegator->getModel();
+        $model = $model instanceof CoreModel ? new CoreExecuteDelegator($model, $this->container) : $model;
+
+        return $model;
+    }
+
+    /**
+     * Viewを起動する
+     * @return CoreView Viewオブジェクト
+     */
+    public function runView()
+    {
+        return new CoreExecuteDelegator($this->container->coreDelegator->getView(), $this->container);
+    }
+
+    /**
+     * Helperを起動する
+     * @return CoreHelper Helperオブジェクト
+     */
+    public function runHelper()
+    {
+        $helper = $this->container->coreDelegator->getHelper();
+        $helper = $helper instanceof CoreHelper ? new CoreExecuteDelegator($helper, $this->container) : $helper;
+
+        return $helper;
     }
 
     /**
@@ -217,79 +153,5 @@ class Resolver
     public function move($statusCode)
     {
         $this->response->move($statusCode);
-    }
-
-    /**
-     * エラー処理のハンドリングチェック
-     * @param object エラーオブジェクト
-     * @param array エラー内容
-     * @return boolean ハンドリングするかどうか
-     */
-    public function handle(\Exception $e)
-    {
-        if ($this->router->controller() === null) {
-            Logger::debug("Execution of handling is failure for static file.");
-
-            return false;
-        }
-
-        $namespace = "";
-        $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
-        foreach ($iterator as $filepath => $fileObject) {
-            if (strpos($filepath, $this->router->controller() . ".php") !== false) {
-                include_once $filepath;
-                $namespace = $this->getNamespace($filepath);
-                break;
-            }
-        }
-        $classpath = $namespace . '\\' . $this->router->controller();
-
-        if (!class_exists($classpath)) {
-            return false;
-        }
-
-        $validator = $this->container->validator;
-        $errorInfo = [
-            "class" => $classpath,
-            "method" => $this->router->action()
-        ];
-
-        try {
-            // Controller起動
-            $controllerInstance = $this->container->coreDelegator->getController();
-            $refClass = new \ReflectionClass($controllerInstance);
-
-            // @ExceptionHandlerを起動
-            $reader = new AnnotationReader($controllerInstance);
-            $reader->setContainer($this->container);
-            $reader->read();
-
-            $exceptionHandler = new ExceptionHandlerReader($reader);
-            $exceptionHandler->inject($e);
-            $exceptionHandler->execute();
-            $handleMethods = $exceptionHandler->getHandleMethods();
-
-            if (count($handleMethods) === 0) {
-                return false;
-            }
-
-            foreach ($handleMethods as $handleMethod) {
-                $ca = $classpath . "#" . $handleMethod;
-                $instance = $refClass->newInstance($this->container);
-                $method = $refClass->getMethod($handleMethod);
-                $method->invokeArgs($instance, [$errorInfo]);
-                Logger::debug("Execution of handling is success: " . $ca);
-            }
-
-            return true;
-        } catch (DoctrineAnnotationException $e) {
-            Logger::error("Error occued in handled method: " . $ca);
-            throw new AnnotationException($e);
-        } catch (\ReflectionException $e) {
-            Logger::error("Error occued in handled method: " . $ca);
-            throw new ApplicationException($e);
-        }
-
-        return false;
     }
 }

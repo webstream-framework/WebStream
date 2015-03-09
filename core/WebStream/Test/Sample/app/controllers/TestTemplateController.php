@@ -155,6 +155,24 @@ class TestTemplateController extends CoreController
 
     /**
      * @Inject
+     * @Template("base1.tmpl", type="base")
+     * @Template("base2.tmpl", type="base")
+     */
+    public function error9()
+    {
+    }
+
+    /**
+     * @Inject
+     * @Template("base1.tmpl", type="base")
+     * @Template("base2.tmpl")
+     */
+    public function error10()
+    {
+    }
+
+    /**
+     * @Inject
      * @Header(contentType="xml")
      * @Template("xml.tmpl")
      */

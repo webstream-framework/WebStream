@@ -1,0 +1,421 @@
+<?php
+namespace WebStream\Delegate;
+
+use WebStream\Core\CoreInterface;
+use WebStream\Core\CoreController;
+use WebStream\Core\CoreService;
+use WebStream\Core\CoreModel;
+use WebStream\Core\CoreView;
+use WebStream\Core\CoreHelper;
+use WebStream\Module\Utility;
+use WebStream\Module\Cache;
+use WebStream\Module\Container;
+use WebStream\Exception\ApplicationException;
+use WebStream\Exception\UncatchableException;
+use WebStream\Exception\DelegateException;
+use WebStream\Exception\Extend\AnnotationException;
+use WebStream\Exception\Extend\MethodNotFoundException;
+use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationException;
+
+/**
+ * CoreExecuteDelegator
+ * @author Ryuichi TANAKA.
+ * @since 2015/02/25
+ * @version 0.4
+ */
+class CoreExecuteDelegator
+{
+    use Utility;
+
+    /**
+     * @var CoreInterface インスタンス
+     */
+    private $instance;
+
+    /**
+     * @var CoreInterface 注入済みインスタンス
+     */
+    private $injectedInstance;
+
+    /**
+     * @var Container 依存コンテナ
+     */
+    private $container;
+
+    /**
+     * @var AnnotationContainer アノテーション
+     */
+    private $annotation;
+
+    private $exceptionHandler;
+
+    /**
+     * constructor
+     */
+    public function __construct(CoreInterface $instance, Container $container)
+    {
+        $this->instance = $instance;
+        $this->container = $container;
+    }
+
+    /**
+     * method missing
+     */
+    public function __call($method, $arguments)
+    {
+        return $this->run($method, $arguments);
+    }
+
+    /**
+     * 処理を実行する
+     * @param string メソッド名
+     * @param array 引数リスト
+     */
+    public function run($method, $arguments = [])
+    {
+        $instance = $this->injectedInstance ?: $this->instance;
+
+        try {
+            $result = null;
+
+            if ($instance instanceof CoreController) {
+                $this->controllerInjector($method, $arguments);
+            } elseif ($instance instanceof CoreService) {
+                $result = $this->serviceInjector($method, $arguments);
+            } elseif ($instance instanceof CoreModel) {
+                $result = $this->modelInjector($method, $arguments);
+            } elseif ($instance instanceof CoreView) {
+                $this->viewInjector($method, $arguments);
+            } elseif ($instance instanceof CoreHelper) {
+                $result = $this->helperInjector($method, $arguments);
+            }
+
+            return $result;
+        } catch (DoctrineAnnotationException $e) {
+            throw new AnnotationException($e);
+        } catch (DelegateException $e) {
+            // すでにデリゲート済み例外の場合はそのままスロー
+            // カスタムアノテーション定義で発生する
+            throw $e;
+        } catch (\Exception $e) {
+            $exceptionClass = get_class($e);
+            switch ($exceptionClass) {
+                case "Exception":
+                case "LogicException":
+                    $e = new ApplicationException($e->getMessage(), 500, $e);
+                    break;
+                case "RuntimeException":
+                    $e = new UncatchableException($e->getMessage(), 500, $e);
+                    break;
+            }
+
+            $exception = new ExceptionDelegator($instance, $e, $method);
+
+            if (is_array($this->annotation->exceptionHandler)) {
+                $exception->setExceptionHandler($this->annotation->exceptionHandler);
+            }
+            $exception->raise();
+        }
+    }
+
+    /**
+     * オリジナルのインスタンスを返却する
+     */
+    public function getInstance()
+    {
+        return $this->injectedInstance ?: $this->instance;
+    }
+
+    /**
+     * メソッドを実行する
+     * @param string メソッド名
+     * @param array 引数リスト
+     */
+    private function execute($method, $arguments)
+    {
+        return call_user_func_array([$this->injectedInstance, $method], $arguments);
+    }
+
+    /**
+     * Controllerに注入する
+     * @param string メソッド名
+     * @param array 引数リスト
+     */
+    private function controllerInjector($method, $arguments)
+    {
+        if (!method_exists($this->instance, $method)) {
+            $this->injectedInstance = $this->instance;
+            $this->instance = null;
+            $class = get_class($this->instance);
+            throw new MethodNotFoundException("${class}#${method} is not defined.");
+        }
+
+        // バリデーションチェック
+        $validator = $this->container->validator;
+        $validator->check();
+
+        // テンプレートキャッシュチェック
+        $pageName = $this->container->coreDelegator->getPageName();
+        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+        $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
+        $data = $cache->get($cacheFile);
+
+        if ($data !== null) {
+            echo $data;
+
+            return;
+        }
+
+        $resolver = new Resolver($this->container);
+        $model = $resolver->runService() ?: $resolver->runModel();
+
+        if ($this->injectedInstance !== null && $this->annotation !== null) {
+            // @Header
+            $mimeType = $this->annotation->header->mimeType;
+
+            // @Template
+            $template = $this->annotation->template;
+
+            // @TemplateCache
+            $expire = $this->annotation->templateCache->expire;
+
+            // draw template
+            $view = $resolver->runView();
+            $view->draw($template->baseTemplate, $template->viewParams, $mimeType);
+            if ($expire !== null) {
+                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+                $view->cache($cacheFile, ob_get_contents(), $expire);
+            }
+
+            $this->execute($method, [$arguments]);
+        }
+
+        // アノテーション注入処理は1度しか行わない
+        if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
+            // @Header
+            $mimeType = $this->annotation->header->mimeType;
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // @Template
+            $template = $this->annotation->template;
+
+            // @TemplateCache
+            $expire = $this->annotation->templateCache->expire;
+
+            // custom annotation
+            $this->instance->__customAnnotation($this->annotation->customAnnotations);
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            $exception = $this->annotation->exception;
+            if ($exception instanceof ExceptionDelegator) {
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
+                $exception->setExceptionHandler($this->exceptionHandler);
+                $exception->raise();
+            }
+
+            // initialize filter
+            $container = $this->container;
+            $container->model = $model;
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($this->instance, [$container]);
+            }
+
+            // before filter
+            foreach ($filter->before as $refMethod) {
+                $refMethod->invoke($this->instance);
+            }
+
+            $this->injectedInstance = $this->instance;
+            $this->execute($method, $arguments);
+
+            // draw template
+            $view = $resolver->runView();
+            $viewParams = $template->viewParams;
+            $viewParams['model'] = $model;
+            $viewParams['helper'] = $resolver->runHelper();
+            $view->run('draw', [$template->baseTemplate, $viewParams, $mimeType]);
+            if ($expire !== null) {
+                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+                $view->cache($cacheFile, ob_get_contents(), $expire);
+            }
+
+            // after filter
+            foreach ($filter->after as $refMethod) {
+                $refMethod->invoke($this->injectedInstance);
+            }
+
+            $this->instance = null;
+        }
+    }
+
+    /**
+     * Serviceに注入する
+     * @param string メソッド名
+     * @param array 引数リスト
+     */
+    private function serviceInjector($method, $arguments)
+    {
+        // アノテーション注入処理は1度しか行わない
+        if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // @ExceptionHandler
+            $this->exceptionHandler = $this->annotation->exceptionHandler;
+
+            // custom annotation
+            $this->instance->__customAnnotation($this->annotation->customAnnotations);
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            $exception = $this->annotation->exception;
+            if ($exception instanceof ExceptionDelegator) {
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
+                $exception->setExceptionHandler($this->exceptionHandler);
+                $exception->raise();
+            }
+
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($this->instance, [$this->container]);
+            }
+
+            $this->injectedInstance = $this->instance;
+            $this->instance = null;
+        }
+
+        return $this->execute($method, $arguments);
+    }
+
+    /**
+     * Modelに注入する
+     * @param string メソッド名
+     * @param array 引数リスト
+     */
+    private function modelInjector($method, $arguments)
+    {
+        // アノテーション注入処理は1度しか行わない
+        if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // custom annotation
+            $this->instance->__customAnnotation($this->annotation->customAnnotations);
+
+            if ($this->exceptionHandler === null) {
+                $this->exceptionHandler = $this->annotation->exceptionHandler;
+            }
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            $exception = $this->annotation->exception;
+            if ($exception instanceof ExceptionDelegator) {
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
+                $exception->setExceptionHandler($this->annotation->exceptionHandler);
+                $exception->raise();
+            }
+
+            $initializeContainer = new Container(false);
+            $initializeContainer->connectionContainerList = $this->annotation->database;
+            $initializeContainer->queryAnnotations = $this->annotation->query;
+
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($this->instance, [$initializeContainer]);
+            }
+
+            $this->injectedInstance = $this->instance;
+            $this->instance = null;
+        }
+
+        return $this->execute($method, $arguments);
+    }
+
+    /**
+     * Viewに注入する
+     * @param string メソッド名
+     * @param array 引数リスト
+     */
+    private function viewInjector($method, $arguments)
+    {
+        // アノテーション注入処理は1度しか行わない
+        if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            $exception = $this->annotation->exception;
+            if ($exception instanceof ExceptionDelegator) {
+                $exception->raise();
+            }
+
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($this->instance, [$this->container]);
+            }
+
+            $this->injectedInstance = $this->instance;
+            $this->instance = null;
+        }
+
+        $this->execute($method, $arguments);
+    }
+
+    /**
+     * Helperに注入する
+     * @param string メソッド名
+     * @param array 引数リスト
+     */
+    private function helperInjector($method, $arguments)
+    {
+        // アノテーション注入処理は1度しか行わない
+        if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
+            // @Filter
+            $filter = $this->annotation->filter;
+
+            // custom annotation
+            $this->instance->__customAnnotation($this->annotation->customAnnotations);
+
+            if ($this->exceptionHandler === null) {
+                $this->exceptionHandler = $this->annotation->exceptionHandler;
+            }
+
+            // 各アノテーションでエラーがあった場合この時点で例外を起こす。
+            // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
+            $exception = $this->annotation->exception;
+            if ($exception instanceof ExceptionDelegator) {
+                if ($this->annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                }
+                $exception->setExceptionHandler($this->annotation->exceptionHandler);
+                $exception->raise();
+            }
+
+            foreach ($filter->initialize as $refMethod) {
+                $refMethod->invokeArgs($this->instance, [$this->container]);
+            }
+
+            $this->injectedInstance = $this->instance;
+            $this->instance = null;
+        }
+
+        return $this->execute($method, $arguments);
+    }
+}

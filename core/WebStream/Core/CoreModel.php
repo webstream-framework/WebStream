@@ -3,11 +3,10 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
+use WebStream\Annotation\Inject;
+use WebStream\Annotation\Filter;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
-use WebStream\Annotation\Reader\AnnotationReader;
-use WebStream\Annotation\Reader\DatabaseReader;
-use WebStream\Annotation\Reader\QueryReader;
 use WebStream\Exception\Extend\DatabaseException;
 use WebStream\Exception\Extend\MethodNotFoundException;
 
@@ -20,14 +19,19 @@ use WebStream\Exception\Extend\MethodNotFoundException;
 class CoreModel implements CoreInterface
 {
     /**
+     * @var Container コンテナ
+     */
+    private $container;
+
+    /**
      * @var DatabaseManager データベースマネージャ
      */
     private $manager;
 
     /**
-     * @var QueryReader クエリリーダ
+     * @var array<AnnotationContainer> クエリアノテーションリスト
      */
-    private $queryReader;
+    private $queryAnnotations;
 
     /**
      * @var boolean オートコミットフラグ
@@ -35,12 +39,17 @@ class CoreModel implements CoreInterface
     private $isAutoCommit;
 
     /**
+     * @var array<mixed> カスタムアノテーション
+     */
+    protected $annotation;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
         Logger::debug("Model start.");
-        $this->initialize($container);
+        $this->container = $container;
     }
 
     /**
@@ -52,32 +61,30 @@ class CoreModel implements CoreInterface
     }
 
     /**
-     * 初期処理
-     * @param Container DIコンテナ
+     * 初期化処理
+     * @Inject
+     * @Filter(type="initialize")
      */
-    private function initialize(Container $container)
+    public function __initialize(Container $container)
     {
-        $reader = new AnnotationReader($this);
-        $reader->setContainer($container);
-        $reader->read();
-
-        $database = new DatabaseReader($reader);
-        $database->execute();
-        $connectionItemContainerList = $database->getConnectionItemContainerList();
-
-        if ($connectionItemContainerList === null) {
+        if ($container->connectionContainerList === null) {
             Logger::warn("Can't use database in Model Layer.");
 
             return;
         }
 
-        $this->manager = new DatabaseManager($connectionItemContainerList);
-
-        $query = new QueryReader($reader);
-        $query->execute();
-        $this->queryReader = $query;
-
+        $this->queryAnnotations = $container->queryAnnotations;
+        $this->manager = new DatabaseManager($container->connectionContainerList);
         $this->isAutoCommit = true;
+    }
+
+    /**
+     * カスタムアノテーション情報を設定する
+     * @param array<mixed> カスタムアノテーション情報
+     */
+    final public function __customAnnotation(array $annotation)
+    {
+        $this->annotation = $annotation;
     }
 
     /**
@@ -147,7 +154,33 @@ class CoreModel implements CoreInterface
 
                 $modelMethod = debug_backtrace()[3]["function"];
                 $queryKey = get_class($this) . "#" . $modelMethod;
-                $query = $this->queryReader->getQuery($queryKey, $method);
+                $queryId = $method;
+
+                $refClass = new \ReflectionClass($this);
+                $classpath = $refClass->getNamespaceName();
+
+                $query = null;
+                foreach ($this->queryAnnotations as $queryAnnotation) {
+                    $queryFunctions = $queryAnnotation->get($queryKey);
+
+                    if ($queryFunctions === null) {
+                        continue;
+                    }
+
+                    foreach ($queryFunctions as $queryFunction) {
+                        $xmlObjectList = $queryFunction->fetch();
+                        foreach ($xmlObjectList as $xmlObject) {
+                            if ($xmlObject !== null) {
+                                $xmlElement = $xmlObject->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
+                                if (!empty($xmlElement)) {
+                                    $query = ["sql" => trim($xmlElement[0]), "method" => $xmlElement[0]->getName()];
+                                    $entity = $xmlElement[0]->attributes()["entity"];
+                                    $query["entity"] = $entity !== null ? $entity->__toString() : null;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 if ($query === null) {
                     throw new DatabaseException("SQL statement can't getting from xml file.");

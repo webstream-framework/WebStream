@@ -1,6 +1,9 @@
 <?php
 namespace WebStream\Database;
 
+use WebStream\Module\Logger;
+use WebStream\Exception\Extend\CollectionException;
+
 /**
  * ResultEntity
  * @author Ryuichi TANAKA.

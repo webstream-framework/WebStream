@@ -13,7 +13,7 @@ interface CoreInterface
 {
     /**
      * Constructor
-     * @param object DIContainer
+     * @param Container DIContainer
      */
     public function __construct(Container $container);
 
@@ -21,4 +21,10 @@ interface CoreInterface
      * Destructor
      */
     public function __destruct();
+
+    /**
+     * 初期処理
+     * @param Container DIContainer
+     */
+    public function __initialize(Container $container);
 }

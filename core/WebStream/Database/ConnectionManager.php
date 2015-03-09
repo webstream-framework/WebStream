@@ -2,7 +2,6 @@
 namespace WebStream\Database;
 
 use WebStream\Module\Container;
-use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**
@@ -25,9 +24,9 @@ class ConnectionManager
 
     /**
      * constructor
-     * @param AnnotationContainer データベース接続項目コンテナ
+     * @param array<AnnotationContainer> データベース接続項目コンテナ
      */
-    public function __construct(AnnotationListContainer $connectionItemContainerList)
+    public function __construct(array $connectionItemContainerList)
     {
         $this->initialize($connectionItemContainerList);
     }
@@ -54,9 +53,9 @@ class ConnectionManager
 
     /**
      * 初期処理
-     * @param AnnotationContainer データベース接続項目コンテナ
+     * @param array<AnnotationContainer> データベース接続項目コンテナ
      */
-    private function initialize(AnnotationListContainer $connectionItemContainerList)
+    private function initialize(array $connectionItemContainerList)
     {
         $this->classpathMap = [];
         $this->connectionContainer = new Container();

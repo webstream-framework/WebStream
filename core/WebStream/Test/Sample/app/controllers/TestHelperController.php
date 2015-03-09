@@ -61,4 +61,17 @@ class TestHelperController extends CoreController
             "age" => 16
         ]);
     }
+
+    /**
+     * @Inject
+     * @Template("base7.tmpl")
+     */
+    public function help7()
+    {
+    }
+
+    public function help7Async()
+    {
+        echo "<p>async</p>";
+    }
 }

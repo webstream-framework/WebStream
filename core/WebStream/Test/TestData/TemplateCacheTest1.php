@@ -1,16 +1,24 @@
 <?php
 namespace WebStream\Test\TestData;
 
+use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\TemplateCache;
+use WebStream\Module\Container;
 
-class TemplateCacheTest1
+class TemplateCacheTest1 implements CoreInterface
 {
+    public function __construct(Container $container) {}
+
+    public function __destruct() {}
+
+    public function __initialize(Container $container) {}
+
     /**
      * @Inject
      * @TemplateCache(expire="100")
      */
-    public function index()
+    public function index1()
     {
     }
 

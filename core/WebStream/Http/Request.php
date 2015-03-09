@@ -1,10 +1,11 @@
 <?php
 namespace WebStream\Http;
 
-use WebStream\Annotation\Inject;
-use WebStream\Annotation\Autowired;
 use WebStream\Module\Security;
 use WebStream\Module\Logger;
+use WebStream\Http\Method\Get;
+use WebStream\Http\Method\Post;
+use WebStream\Http\Method\Put;
 
 /**
  * Request
@@ -15,20 +16,17 @@ use WebStream\Module\Logger;
 class Request
 {
     /**
-     * @Inject
-     * @Autowired(type="\WebStream\Http\Method\Get")
+     * @var Get GETパラメータ
      */
     private $get;
 
     /**
-     * @Inject
-     * @Autowired(type="\WebStream\Http\Method\Post")
+     * @var Post POSTパラメータ
      */
     private $post;
 
     /**
-     * @Inject
-     * @Autowired(type="\WebStream\Http\Method\Put")
+     * @var Put PUTパラメータ
      */
     private $put;
 
@@ -45,6 +43,9 @@ class Request
      */
     public function __construct()
     {
+        $this->get = new Get();
+        $this->post = new Post();
+        $this->put = new Put();
     }
 
     /**

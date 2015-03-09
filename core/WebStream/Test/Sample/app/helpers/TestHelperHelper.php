@@ -2,7 +2,7 @@
 namespace WebStream\Test\TestData\Sample\App\Helper;
 
 use WebStream\Core\CoreHelper;
-use WebStream\Core\CoreService;
+use WebStream\Delegate\CoreExecuteDelegator;
 
 class TestHelperHelper extends CoreHelper
 {
@@ -16,12 +16,12 @@ class TestHelperHelper extends CoreHelper
         return $name;
     }
 
-    public function help3(CoreService $model)
+    public function help3(CoreExecuteDelegator $model)
     {
         return $this->help2($model->getName());
     }
 
-    public function help4(CoreService $model)
+    public function help4(CoreExecuteDelegator $model)
     {
         return <<< HELPER
 {$model->getName()}
@@ -35,7 +35,7 @@ HELPER;
 HELPER;
     }
 
-    public function help6(CoreService $model)
+    public function help6(CoreExecuteDelegator $model)
     {
         $map = $model->getMap();
         echo $map["name"] . $map["age"];
