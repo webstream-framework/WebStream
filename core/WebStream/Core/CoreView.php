@@ -18,13 +18,19 @@ class CoreView implements CoreInterface
 {
     use Utility;
 
-    /** リクエスト */
+    /**
+     * @var Request リクエスト
+     */
     private $request;
-    /** レスポンス */
+
+    /**
+     * @var Response レスポンス
+     */
     private $response;
-    /** キャッシュ保存ディレクトリ */
-    private $cacheDir;
-    /** テンプレートエンジン */
+
+    /**
+     * @var ITemplateEngine テンプレートエンジン
+     */
     private $templateEngine;
 
     /**
@@ -64,8 +70,8 @@ class CoreView implements CoreInterface
     }
 
     /**
-     * テンプレートエンジンを設定する
-     * @param ITemplateEngine テンプレートエンジン
+     * テンプレートを描画する
+     * @param array<string> パラメータ
      */
     public function draw(array $params)
     {
