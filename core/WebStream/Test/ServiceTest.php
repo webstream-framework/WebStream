@@ -90,32 +90,4 @@ class ServiceTest extends TestBase
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
-
-    /**
-     * 正常系
-     * ViewからServiceオブジェクト(CoreExecuteDelegator参照型)を認識できること
-     * @test
-     */
-    public function okServiceFromView()
-    {
-        $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . "/test_template/service/is_service";
-        $html = $http->get($url);
-        $this->assertEquals($http->getStatusCode(), 200);
-        $this->assertEquals($html, "WebStream\Delegate\CoreExecuteDelegator");
-    }
-
-    /**
-     * 正常系
-     * Viewから実際のServiceオブジェクトを認識できること
-     * @test
-     */
-    public function okOriginServiceFromView()
-    {
-        $http = new HttpClient();
-        $url = $this->getDocumentRootURL() . "/test_template/service/origin_service";
-        $html = $http->get($url);
-        $this->assertEquals($http->getStatusCode(), 200);
-        $this->assertEquals($html, "WebStream\Test\TestData\Sample\App\Service\TestTemplateWithServiceService");
-    }
 }

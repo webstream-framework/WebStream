@@ -39,7 +39,6 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Autowired.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Header.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Filter.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Template.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/TemplateCache.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/ExceptionHandler.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Database.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Query.php';
@@ -61,6 +60,9 @@ require_once dirname(__FILE__) . '/core/WebStream/Delegate/ExceptionDelegator.ph
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Resolver.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Router.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Validator.php';
+require_once dirname(__FILE__) . '/core/WebStream/Template/ITemplateEngine.php';
+require_once dirname(__FILE__) . '/core/WebStream/Template/Basic.php';
+require_once dirname(__FILE__) . '/core/WebStream/Template/Twig.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/ApplicationException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/UncatchableException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/DelegateException.php';

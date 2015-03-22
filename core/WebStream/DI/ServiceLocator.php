@@ -106,6 +106,10 @@ class ServiceLocator
         $container->applicationDir = $isTest ? $this->getTestApplicationDir() : "app";
         // test
         $container->isTest = $isTest;
+        // twig
+        $container->twig = function () {
+            Twig_Autoloader::register();
+        };
 
         return $container;
     }

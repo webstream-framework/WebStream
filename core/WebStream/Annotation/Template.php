@@ -9,6 +9,8 @@ use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Template\Basic;
+use WebStream\Template\Twig;
 use WebStream\Exception\Extend\AnnotationException;
 
 /**
@@ -57,117 +59,77 @@ class Template extends Annotation implements IMethod, IRead
      */
     public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
     {
-        $template = $this->annotation->value; // 属性値なしの第一引数はテンプレート名
-        $type = $this->annotation->type;
-        $name = $this->annotation->name;
-        $partsList = [];
+        $filename = $this->annotation->value;
+        $engine = $this->annotation->engine ?: "basic";
+        $debug = $this->annotation->debug;
+        $cacheTime = $this->annotation->cacheTime;
 
         if (PHP_OS === "WIN32" || PHP_OS === "WINNT") {
-            if (preg_match("/^.*[. ]|.*[\p{Cntrl}\/:*?\"<>|].*|(?i:CON|PRN|AUX|CLOCK\$|NUL|COM[1-9]|LPT[1-9])(?:[.].+)?$/", $template)) {
-                throw new AnnotationException("Invalid string contains in @Template('" . safetyOut($template) . "'");
+            if (preg_match("/^.*[. ]|.*[\p{Cntrl}\/:*?\"<>|].*|(?i:CON|PRN|AUX|CLOCK\$|NUL|COM[1-9]|LPT[1-9])(?:[.].+)?$/", $filename)) {
+                throw new AnnotationException("Invalid string contains in @Template('" . safetyOut($filename) . "')");
             }
         } else {
-            if (preg_match("/:|\//", $template)) {
-                throw new AnnotationException("Invalid string contains in @Template('" . safetyOut($template) . "'");
+            if (preg_match("/:|\.\.\/|\.\.\\\\/", $filename)) {
+                throw new AnnotationException("Invalid string contains in @Template('" . safetyOut($filename) . "')");
             }
         }
 
-        if ($template === null) {
-            $errorMsg = "Invalid argument of @Template('" . safetyOut($template) . "'. ";
+        if ($filename === null) {
+            $errorMsg = "Invalid argument of @Template('" . safetyOut($filename) . "'). ";
             $errorMsg.= "There is no specification of the base template.";
             throw new AnnotationException($errorMsg);
         }
 
-        // type属性は複数指定可能
-        $typeList = is_array($type) ? $type : ($type === null ? [] : [$type]);
+        $container->filename = $filename;
 
-        // type属性指定なしの場合、base候補とする
-        if (empty($typeList)) {
-            $typeList[] = "baseCandidate";
-        }
+        if ($engine === "twig") {
+            if (!is_bool($debug)) {
+                if ($debug !== null) {
+                    $errorMsg = "Invalid argument of @Template('" . safetyOut($filename) . "'). ";
+                    $errorMsg.= "'debug' attribute bool only be specified.";
+                    throw new AnnotationException($errorMsg);
+                }
+                $debug = false;
+            }
+            $container->debug = $debug;
 
-        // name属性は複数指定されたらエラーとする
-        // 複数定義された場合は同じ値が異なる変数に代入されるだけ
-        // 本来は1つしか指定されないはずだが、許可する以上はリストとして処理
-        // テンプレートで変数化するときにsharedとpartsの変数名が重複しないようにprefix(parts|shared)をつける
-        // さらに、{"parts","shared"}と{"shared","parts"}は同じものと判定する
-        if ($name !== null) {
-            if (is_array($name)) {
-                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'name'. ";
-                $errorMsg = "The name attribute can not be specified multiple in @Template.";
-                throw new AnnotationException($errorMsg);
+            if ($cacheTime !== null) {
+                Logger::warn("'cacheTime' attribute is not used in Twig template.");
             }
 
-            // 不正なnameが指定された場合エラー
-            if (!preg_match("/^[a-zA-Z_][a-z-A-Z0-9_]+$/", $name)) {
-                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'name': " . safetyOut($name);
-                throw new AnnotationException($errorMsg);
+            $this->injectedContainer->engine = new Twig($container);
+        } elseif ($engine === "basic") {
+            if ($debug !== null) {
+                Logger::warn("'debug' attribute is not used in Basic template.");
             }
 
-            // model、helperオブジェクトを格納する用の変数は予約されているので重複指定はエラー
-            if ($name === $this->getModelVariableName() || $name === $this->getHelperVariableName()) {
-                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'name'. ";
-                $errorMsg.= "'" . $this->getModelVariableName() . "' or '" . $this->getHelperVariableName() . "' can not use name attribute in @Template.";
-                throw new AnnotationException($errorMsg);
-            }
-        }
+            if ($cacheTime !== null) {
+                // 複数指定は不可
+                if (is_array($cacheTime)) {
+                    $errorMsg = "Invalid argument of @Template attribute 'cacheTime' should not be array.";
+                    throw new AnnotationException($errorMsg);
+                }
+                // 数値以外は不可
+                if (!preg_match("/^[1-9]{1}[0-9]{0,}$/", $cacheTime)) {
+                    $errorMsg = "Invalid argument of @Template attribute 'cacheTime' should not be integer.";
+                    throw new AnnotationException($errorMsg);
+                }
 
-        // ページ名からディレクトリ名を取得
-        $templateDir = $this->camel2snake($container->coreDelegator->getPageName());
+                $cacheTime = intval($cacheTime);
+                if ($cacheTime <= 0) {
+                    $errorMsg = "Expire value is out of integer range: @Template(cacheTime=" . strval($cacheTime) . ")";
+                    throw new AnnotationException($errorMsg);
+                } elseif ($cacheTime >= PHP_INT_MAX) {
+                    Logger::warn("Expire value converted the maximum of PHP Integer.");
+                }
 
-        // type="base"が設定された場合は後勝ちでベーステンプレートとする
-        // name属性は指定されても無視
-        if ($this->inArray("base", $typeList)) {
-            if ($this->inArray("shared", $typeList)) { // type={"base","shared"}
-                $this->injectedContainer->base = STREAM_VIEW_SHARED . "/" . $template;
-            } elseif ($this->inArray("parts", $typeList)) { // type={"base","parts"}はありえない
-                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
-                $errorMsg.= "The type attribute can't setting 'base' and 'type'.";
-                throw new AnnotationException($errorMsg);
-            } else { // type="base" or type={"base"}
-                $this->injectedContainer->base = $templateDir . "/" . $template;
+                $this->injectedContainer->cacheTime = $cacheTime;
             }
-        } elseif ($this->inArray("baseCandidate", $typeList)) {
-            $this->injectedContainer->baseCandidate = $templateDir . "/" . $template;
+
+            $this->injectedContainer->engine = new Basic($container);
         } else {
-            // type={"shared","parts"}
-            if (count($typeList) === 2 && $this->inArray("shared", $typeList) && $this->inArray("parts", $typeList)) {
-                // name属性が必須
-                if ($name === null) {
-                    $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
-                    $errorMsg.= "The name attribute is required if type attribute is 'shared' or 'parts'.";
-                    throw new AnnotationException($errorMsg);
-                }
-                $partsList[$name] = STREAM_VIEW_SHARED . "/" . $template;
-            } elseif (count($typeList) === 1) {
-                // type="shared"
-                if ($this->inArray("shared", $typeList)) {
-                    // name属性が必須
-                    if ($name === null) {
-                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
-                        $errorMsg.= "The name attribute is required if type attribute is 'shared'.";
-                        throw new AnnotationException($errorMsg);
-                    }
-                    $partsList[$name] = STREAM_VIEW_SHARED . "/" . $template;
-                // type="parts"
-                } elseif ($this->inArray("parts", $typeList)) {
-                    // name属性が必須
-                    if ($name === null) {
-                        $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
-                        $errorMsg.= "The name attribute is required if type attribute is 'parts'.";
-                        throw new AnnotationException($errorMsg);
-                    }
-                    $partsList[$name] = $templateDir . "/" . $template;
-                } else {
-                    $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type' included " . $typeList[0] . ".";
-                    throw new AnnotationException($errorMsg);
-                }
-            } else {
-                $errorMsg = "Invalid argument of @Template('" . $template . "') attribute 'type'.";
-                throw new AnnotationException($errorMsg);
-            }
+            $errorMsg = "Invalid 'engine' attribute of @Template('" . safetyOut($filename) . "'.";
+            throw new AnnotationException($errorMsg);
         }
-
-        $this->injectedContainer->parts = $partsList;
     }
 }
