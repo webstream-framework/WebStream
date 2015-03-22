@@ -71,14 +71,14 @@ ControllerクラスからはServiceクラスまたはModelクラスを参照で�
 
 <p>Serviceクラス、Modelクラスは以下のように呼び出します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> execute() {</span>
-<span class="pl-s2">        <span class="pl-c">// $this-&gt;{ページ名}-&gt;(Service|Modelクラスのメソッド)</span></span>
-<span class="pl-s2">        <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-c">// $this-&gt;{ページ名}-&gt;(Service|Modelクラスのメソッド)</span></span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>Controllerクラス内の<code>$this-&gt;{ページ名}</code>オブジェクトにはServiceクラスまたはModelクラスのインスタンスが格納されています。Serviceクラスを定義している場合はServiceクラスインスタンスが格納されます。このときのページ名はアッパーキャメルケースで指定します。
 Serviceクラスを定義せずModelクラスのみ定義した場合はModelクラスインスタンスが格納されます。Serviceクラスに特段のビジネスロジックを記述する必要がなく、DBからのデータを取り出したいだけの場合など、Controllerクラスから直接Modelクラスにアクセスすることができます。
@@ -89,19 +89,19 @@ Controllerクラスでは<a href="#annotaion">アノテーション</a>を使っ
 
 <p>HTMLを描画するにはControllerからViewテンプレートを呼び出します。Viewテンプレート呼び出しは<a href="#annotaion">アノテーション</a>を利用します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"></span>
-<span class="pl-s2"><span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Template("index.tmpl")</span></span>
-<span class="pl-s2"><span class="pl-c"> */</span></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> execute() {</span>
-<span class="pl-s2">        <span class="pl-c">// $this-&gt;{ページ名}-&gt;(Service|Modelクラスのメソッド)</span></span>
-<span class="pl-s2">        <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-c">// $this-&gt;{ページ名}-&gt;(Service|Modelクラスのメソッド)</span></span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>この処理で<code>@Template</code>に指定したテンプレートファイル<code>index.tmpl</code>を呼び出します。
 テンプレートファイルは<code>app/views/(ページ名)/</code>に保存します。このときのページ名はスネークケースで指定します(詳細は<a href="#view">View</a>で説明します)。</p>
@@ -115,14 +115,14 @@ Controllerクラスでは<a href="#annotaion">アノテーション</a>を使っ
 また、Serviceでは開発者が個別に定義したクラス(ライブラリ)を利用することができます。Serviceで処理するロジックがない場合などはServiceを定義する必要はありません。
 <code>app/services</code>に<code>WebStream\Core\CoreService</code>クラスを継承したクラスを定義します。  </p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreService</span>;</span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogService</span> <span class="pl-s">extends</span> <span class="pl-e">CoreService</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> entry() {</span>
-<span class="pl-s2">        <span class="pl-c">// $this-&gt;{ページ名}-&gt;(Modelクラスのメソッド)</span></span>
-<span class="pl-s2">        <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">Blog</span><span class="pl-k">-&gt;</span>getEntryData();</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreService</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogService</span> <span class="pl-k">extends</span> <span class="pl-e">CoreService</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> entry() {</span>
+<span class="pl-s1">        <span class="pl-c">// $this-&gt;{ページ名}-&gt;(Modelクラスのメソッド)</span></span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>getEntryData();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>Serviceクラス内の<code>$this-&gt;{ページ名}</code>オブジェクトにはModelクラスのインスタンスが格納されています。ModelクラスにアクセスしてDB処理を実行します。
 また、ServiceクラスにはContoller、Service、Model、Helperの各クラスに属さないユーザ定義クラスへのパスが通っています。<code>app/libraries/</code>ディレクトリに任意のクラスを定義することでServiceクラスからアクセスできます。例えば、外部APIにアクセスするクラスや、データをバインドするEntityクラスなど特定用途のクラスはlibrariesに定義してください。</p>
@@ -135,36 +135,36 @@ Controllerクラスでは<a href="#annotaion">アノテーション</a>を使っ
 Serviceクラスが定義されない場合はController、Viewから直接呼び出されます。Modelにはデータベース問い合わせ処理を記述します。
 <code>app/models</code>に<code>WebStream\Core\CoreModel</code>クラスを継承したクラスを定義します。  </p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreModel</span>;</span>
-<span class="pl-s2"><span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")</span></span>
-<span class="pl-s2"><span class="pl-c"> */</span></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogModel</span> <span class="pl-s">extends</span> <span class="pl-e">CoreModel</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> getEntryData() {</span>
-<span class="pl-s2">        <span class="pl-vo">$sql</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-s2"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> T_Blog</span><span class="pl-pds">"</span></span>;</span>
-<span class="pl-s2">        <span class="pl-k">return</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-vo">$sql</span>);</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreModel</span>;</span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogModel</span> <span class="pl-k">extends</span> <span class="pl-e">CoreModel</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> getEntryData() {</span>
+<span class="pl-s1">        <span class="pl-smi">$sql</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s1"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> T_Blog</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-smi">$sql</span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>外部変数をパラメータに指定するには<code>$bind</code>変数にパラメータをセットします。
 <code>$bind</code>変数には連想配列でプリペアードステートメントに設定する値を指定します。
 データベース接続設定はクラスに<a href="#annotaion">アノテーション</a>を指定します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreModel</span>;</span>
-<span class="pl-s2"><span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")</span></span>
-<span class="pl-s2"><span class="pl-c"> */</span></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogModel</span> <span class="pl-s">extends</span> <span class="pl-e">CoreModel</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> getEntryData() {</span>
-<span class="pl-s2">        <span class="pl-vo">$sql</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-s2"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> T_Blog <span class="pl-k">WHERE</span> id <span class="pl-k">=</span> :id</span><span class="pl-pds">"</span></span>;</span>
-<span class="pl-s2">        <span class="pl-vo">$bind</span> <span class="pl-k">=</span> [<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">10</span>];</span>
-<span class="pl-s2">        <span class="pl-k">return</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-vo">$sql</span>, <span class="pl-vo">$bind</span>);</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreModel</span>;</span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogModel</span> <span class="pl-k">extends</span> <span class="pl-e">CoreModel</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> getEntryData() {</span>
+<span class="pl-s1">        <span class="pl-smi">$sql</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s1"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> T_Blog <span class="pl-k">WHERE</span> id <span class="pl-k">=</span> :id</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">        <span class="pl-smi">$bind</span> <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">10</span>];</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-smi">$sql</span>, <span class="pl-smi">$bind</span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>Modelクラスでは以下のメソッドが利用可能です。</p>
 
@@ -223,11 +223,11 @@ Serviceクラスが定義されない場合はController、Viewから直接呼�
 
 <p>Modelクラスでは直接SQLをメソッド内に記述する以外に、クエリファイル(XML)を使ってSQLを実行できます。クエリファイルは<code>query/</code>に保存します。</p>
 
-<div class="highlight highlight-xml"><pre>&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s1"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span><span class="pl-e"> encoding</span>=<span class="pl-s1"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>?&gt;
+<div class="highlight highlight-xml"><pre>&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span><span class="pl-e"> encoding</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>?&gt;
 &lt;!<span class="pl-k">DOCTYPE</span> <span class="pl-v">mapper</span> PUBLIC
   "-//github.com/mapserver2007//DTD Mapper 3.0//EN" "http://localhost/webstream-model-mapper.dtd"&gt;
-&lt;<span class="pl-ent">mapper</span> <span class="pl-e">namespace</span>=<span class="pl-s1"><span class="pl-pds">"</span>MyBlog<span class="pl-pds">"</span></span>&gt;
-  &lt;<span class="pl-ent">select</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>getData<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">mapper</span> <span class="pl-e">namespace</span>=<span class="pl-s"><span class="pl-pds">"</span>MyBlog<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">select</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>getData<span class="pl-pds">"</span></span>&gt;
     SELECT
         *
     FROM
@@ -241,22 +241,22 @@ Serviceクラスが定義されない場合はController、Viewから直接呼�
 mapperタグの<code>namespace</code>にModelクラスの名前空間を指定します。名前空間が一致すればModelクラスからクエリファイルを呼び出すことができます。
 mapperタグ配下にSQLを記述するタグを記述します。<code>&lt;select&gt;</code>、<code>&lt;insert&gt;</code>、<code>&lt;update&gt;</code>、<code>&lt;delete&gt;</code>タグが指定可能です。タグの<code>id</code>をModelクラスのメソッドからアクセスするとSQLを実行できます。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreModel</span>;</span>
-<span class="pl-s2"><span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")</span></span>
-<span class="pl-s2"><span class="pl-c"> */</span></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogModel</span> <span class="pl-s">extends</span> <span class="pl-e">CoreModel</span> {</span>
-<span class="pl-s2">    <span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c">     * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c">     * @Query(file="query/myblog.xml")</span></span>
-<span class="pl-s2"><span class="pl-c">     */</span></span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> getEntryData() {</span>
-<span class="pl-s2">        <span class="pl-vo">$bind</span> <span class="pl-k">=</span> [<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">10</span>];</span>
-<span class="pl-s2">        <span class="pl-k">return</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>getData(<span class="pl-vo">$bind</span>);</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreModel</span>;</span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Database(driver="WebStream\Database\Driver\Mysql", config="config/database.mysql.ini")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogModel</span> <span class="pl-k">extends</span> <span class="pl-e">CoreModel</span> {</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Query(file="query/myblog.xml")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> getEntryData() {</span>
+<span class="pl-s1">        <span class="pl-smi">$bind</span> <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">10</span>];</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>getData(<span class="pl-smi">$bind</span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <h4>
 <a id="クエリファイルによるsql実行結果をエンティティクラスにマッピングする" class="anchor" href="#%E3%82%AF%E3%82%A8%E3%83%AA%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8Bsql%E5%AE%9F%E8%A1%8C%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AB%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0%E3%81%99%E3%82%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>クエリファイルによるSQL実行結果をエンティティクラスにマッピングする</h4>
@@ -264,11 +264,11 @@ mapperタグ配下にSQLを記述するタグを記述します。<code>&lt;sele
 <p>クエリファイルの<code>&lt;select&gt;</code>タグの<code>entity</code>属性にクラスパスを設定すると、取得結果をマッピングすることができます。<br>
 Modelクラスでは直接SQLをメソッド内に記述する以外に、クエリファイル(XML)を使ってSQLを実行できます。クエリファイルは<code>query/</code>に保存します。</p>
 
-<div class="highlight highlight-xml"><pre>&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s1"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span><span class="pl-e"> encoding</span>=<span class="pl-s1"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>?&gt;
+<div class="highlight highlight-xml"><pre>&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span><span class="pl-e"> encoding</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>?&gt;
 &lt;!<span class="pl-k">DOCTYPE</span> <span class="pl-v">mapper</span> PUBLIC
   "-//github.com/mapserver2007//DTD Mapper 3.0//EN" "http://localhost/webstream-model-mapper.dtd"&gt;
-&lt;<span class="pl-ent">mapper</span> <span class="pl-e">namespace</span>=<span class="pl-s1"><span class="pl-pds">"</span>MyBlog<span class="pl-pds">"</span></span>&gt;
-  &lt;<span class="pl-ent">select</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>getData<span class="pl-pds">"</span></span> <span class="pl-e">entity</span>=<span class="pl-s1"><span class="pl-pds">"</span>\MyBlog\Entity\BlogEntity<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">mapper</span> <span class="pl-e">namespace</span>=<span class="pl-s"><span class="pl-pds">"</span>MyBlog<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">select</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>getData<span class="pl-pds">"</span></span> <span class="pl-e">entity</span>=<span class="pl-s"><span class="pl-pds">"</span>\MyBlog\Entity\BlogEntity<span class="pl-pds">"</span></span>&gt;
     SELECT
         title,
         description
@@ -277,19 +277,19 @@ Modelクラスでは直接SQLをメソッド内に記述する以外に、クエ
   &lt;/<span class="pl-ent">select</span>&gt;
 &lt;/<span class="pl-ent">mapper</span>&gt;</pre></div>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog\Entity</span>;</span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogEntity</span> {</span>
-<span class="pl-s2">    <span class="pl-s">private</span> <span class="pl-vo">$title</span>;</span>
-<span class="pl-s2">    <span class="pl-s">private</span> <span class="pl-vo">$description</span>;</span>
-<span class="pl-s2"></span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> getTitle() {</span>
-<span class="pl-s2">        <span class="pl-k">return</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">title</span>;</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2"></span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> getDescription() {</span>
-<span class="pl-s2">        <span class="pl-k">return</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">description</span>;</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog\Entity</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogEntity</span> {</span>
+<span class="pl-s1">    <span class="pl-k">private</span> <span class="pl-smi">$title</span>;</span>
+<span class="pl-s1">    <span class="pl-k">private</span> <span class="pl-smi">$description</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> getTitle() {</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">title</span>;</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> getDescription() {</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">description</span>;</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>テーブルのカラム名とエンティティクラスのフィールド名には対応関係があり、それにしたがってマッピング定義する必要があります。
 エンティティクラスのフィールド名はローワーキャメルケースで定義すると、型を含めてマッピングが実行されます。
@@ -300,20 +300,20 @@ Modelクラスでは直接SQLをメソッド内に記述する以外に、クエ
 
 <p><code>select</code>で取得した結果を配列に変換します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-vo">$sql</span>, <span class="pl-vo">$bind</span>)<span class="pl-k">-&gt;</span>toArray();</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-smi">$sql</span>, <span class="pl-smi">$bind</span>)<span class="pl-k">-&gt;</span>toArray();</span></pre></div>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>getData(<span class="pl-vo">$bind</span>)<span class="pl-k">-&gt;</span>toArray();</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>getData(<span class="pl-smi">$bind</span>)<span class="pl-k">-&gt;</span>toArray();</span></pre></div>
 
 <h4>
 <a id="取得結果をエンティティにする" class="anchor" href="#%E5%8F%96%E5%BE%97%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3%E3%81%AB%E3%81%99%E3%82%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>取得結果をエンティティにする</h4>
 
 <p><code>select</code>で取得した結果をエンティティに変換します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$entityClasspath</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>\MyBlog\Entity\BlogEntity<span class="pl-pds">"</span></span>;</span>
-<span class="pl-s2"><span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-vo">$sql</span>, <span class="pl-vo">$bind</span>)<span class="pl-k">-&gt;</span>toEntity(<span class="pl-vo">$entityClasspath</span>);</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$entityClasspath</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>\MyBlog\Entity\BlogEntity<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>select(<span class="pl-smi">$sql</span>, <span class="pl-smi">$bind</span>)<span class="pl-k">-&gt;</span>toEntity(<span class="pl-smi">$entityClasspath</span>);</span></pre></div>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$entityClasspath</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>\MyBlog\Entity\BlogEntity<span class="pl-pds">"</span></span>;</span>
-<span class="pl-s2"><span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>getData(<span class="pl-vo">$bind</span>)<span class="pl-k">-&gt;</span>toEntity(<span class="pl-vo">$entityClasspath</span>);</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$entityClasspath</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>\MyBlog\Entity\BlogEntity<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>getData(<span class="pl-smi">$bind</span>)<span class="pl-k">-&gt;</span>toEntity(<span class="pl-smi">$entityClasspath</span>);</span></pre></div>
 
 <p><a href="#annotaion">アノテーション</a>を使い、クエリファイルパスを指定します。これによりクエリファイルに記述したSQLが自動的に紐付けられます。</p>
 
@@ -329,80 +329,125 @@ Modelクラスでは直接SQLをメソッド内に記述する以外に、クエ
 </h2>
 
 <p>Viewは画面に出力するHTMLなどを描画し、Controllerクラスから呼ばれます。HTML等の描画はWebStream独自のテンプレート機能を利用します。
-ViewからはHelperまたはModel、Serviceを呼び出してビジネスロジックを実行することができます。
-テンプレートファイルは<code>.tmpl</code>拡張子を付け、<code>app/views</code>にページ名をスネークケースに変換したフォルダを作成し保存します。
+ViewからはHelperまたはModel、Serviceを呼び出してビジネスロジックを実行することができます。</p>
+
+<p>ViewテンプレートはWebStream独自のBasicテンプレートとTwigテンプレートが使えます。
+Baicテンプレートファイルは<code>.tmpl</code>拡張子を、Twigテンプレートは<code>.twig</code>を付け、<code>app/views</code>にページ名をスネークケースに変換したフォルダを作成し保存します。
 <code>__cache</code>、<code>__public</code>、<code>__shared</code>フォルダを作成すると、それぞれテンプレートキャッシュファイル、静的ファイル、共通テンプレートファイルを使用することができます。
 ViewにはModel/Serviceオブジェクトが渡されるので、Model、Serviceで取得した値やビジネスロジックの実行がViewで可能になります。
 Model/Serviceオブジェクトは<code>$model</code>変数に格納されます。また、Helperオブジェクトは<code>$helper</code>変数に格納されます。</p>
 
 <p>ContollerクラスからViewテンプレートを呼び出します。<code>@Template</code>の仕様は<a href="#annotaion">アノテーション</a>を参照してください。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"></span>
-<span class="pl-s2"><span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c"> * テンプレートを呼び出す。</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Template("index.tmpl")</span></span>
-<span class="pl-s2"><span class="pl-c"> */</span></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> execute() {</span>
-<span class="pl-s2">        <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * テンプレートを呼び出す。</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p><code>__shared</code>に保存した共通テンプレートを呼び出すことができます。
 共通点プレートはheaderやfooterなど共通になる部分を定義するときに使用します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"></span>
-<span class="pl-s2"><span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c"> * 基本テンプレートと共通テンプレートを呼び出す。</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Template("index.tmpl")</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Template("common.tmpl", name="common", type="shared")</span></span>
-<span class="pl-s2"><span class="pl-c"> */</span></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> execute() {</span>
-<span class="pl-s2">        <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<p>テンプレートを部品化したい場合、部分テンプレートとして呼び出すことができます。</p>
 
-<p>共通テンプレートにするほどではないが、テンプレートを部品化したい場合、部分テンプレートとして呼び出すことができます。</p>
-
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"></span>
-<span class="pl-s2"><span class="pl-c">/**</span></span>
-<span class="pl-s2"><span class="pl-c"> * 基本テンプレートと共通テンプレートを呼び出す。</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Template("index.tmpl")</span></span>
-<span class="pl-s2"><span class="pl-c"> * @Template("side.tmpl", name="side_menu", type="parts")</span></span>
-<span class="pl-s2"><span class="pl-c"> */</span></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-c1">funciton</span> execute() {</span>
-<span class="pl-s2">        <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * 基本テンプレートと共通テンプレートを呼び出す。</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>ViewテンプレートにはHTMLを記述しますが、Service/Modelの値などを埋め込むことができます。</p>
 
-<div class="highlight highlight-html"><pre>&lt;!DOCTYPE html PUBLIC <span class="pl-s1">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span>
-  <span class="pl-s1">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;
-&lt;<span class="pl-ent">html</span> <span class="pl-e">xmlns</span>=<span class="pl-s1"><span class="pl-pds">"</span>http://www.w3.org/1999/xhtml<span class="pl-pds">"</span></span> <span class="pl-e">xml:lang</span>=<span class="pl-s1"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span> <span class="pl-e">lang</span>=<span class="pl-s1"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span>&gt;
-    &lt;<span class="pl-ent">meta</span> <span class="pl-e">http-equiv</span>=<span class="pl-s1"><span class="pl-pds">"</span>Content-Type<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s1"><span class="pl-pds">"</span>text/html; charset=UTF-8<span class="pl-pds">"</span></span>/&gt;
+<div class="highlight highlight-html"><pre>&lt;!DOCTYPE html PUBLIC <span class="pl-s">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span>
+  <span class="pl-s">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;
+&lt;<span class="pl-ent">html</span> <span class="pl-e">xmlns</span>=<span class="pl-s"><span class="pl-pds">"</span>http://www.w3.org/1999/xhtml<span class="pl-pds">"</span></span> <span class="pl-e">xml:lang</span>=<span class="pl-s"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span> <span class="pl-e">lang</span>=<span class="pl-s"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">meta</span> <span class="pl-e">http-equiv</span>=<span class="pl-s"><span class="pl-pds">"</span>Content-Type<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span>text/html; charset=UTF-8<span class="pl-pds">"</span></span>/&gt;
     &lt;<span class="pl-ent">head</span>&gt;
         &lt;<span class="pl-ent">title</span>&gt;%H{$model-&gt;getTitle()}&lt;/<span class="pl-ent">title</span>&gt;
     &lt;/<span class="pl-ent">head</span>&gt;
     &lt;<span class="pl-ent">body</span>&gt;
         &lt;<span class="pl-ent">div</span>&gt;%H{$model-&gt;getContent()}&lt;/<span class="pl-ent">div</span>&gt;
-        %T{$common}
+        %T{parts.tmpl}
     &lt;/<span class="pl-ent">body</span>&gt;
 &lt;/<span class="pl-ent">html</span>&gt;</pre></div>
 
-<p><code>$model</code>にアクセスするとServiceクラスまたはModelクラスにアクセスできます。また、<code>@Template</code>の<code>name</code>属性に指定した名前は変数としてアクセスできます。
-Viewテンプレートでは以下の構文が使用可能です。</p>
+<p><code>$model</code>にアクセスするとServiceクラスまたはModelクラスにアクセスできます。また、<code>@Template</code>の<code>name</code>属性に指定した名前は変数としてアクセスできます。</p>
+
+<p>使用するテンプレートエンジンを明示する場合は以下のようにします。</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * Basicテンプレートを使用する</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl", engine="basic")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * Twigテンプレートを使用する</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl", engine="twig")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>BasicテンプレートとTwigテンプレートの違いは、Basicテンプレートではテンプレートキャッシュ機能とCSRF対策トークン自動挿入機能がつきます。
+テンプレートキャッシュ機能は、出力した内容をまるごとキャッシュする機能で、<code>cacheTime</code>属性で指定した時間(秒)だけキャッシュします。CSRF対策トークン機能は、formタグが使用された場合自動的にCSRF対策が有効になる機能です。</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * テンプレートキャッシュを600秒有効にする</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl", engine="basic", cacheTime=600)</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">title</span>&gt;CSRF CHECK&lt;/<span class="pl-ent">title</span>&gt;
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;
+&lt;<span class="pl-ent">form</span> <span class="pl-e">action</span>=<span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-e">method</span>=<span class="pl-s"><span class="pl-pds">"</span>post<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>hidden<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>__CSRF_TOKEN__<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>a2891f68edeb487a9140edf8575a8e3382f96c0d<span class="pl-pds">"</span></span>&gt;
+&lt;/<span class="pl-ent">form</span>&gt;
+&lt;/<span class="pl-ent">body</span>&gt;</pre></div>
+
+<p>Viewテンプレートでは以下の構文が使用可能です。</p>
 
 <h3>
 <a id="viewテンプレート構文" class="anchor" href="#view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E6%A7%8B%E6%96%87" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#template_keyword">Viewテンプレート構文</a>
@@ -446,28 +491,28 @@ Viewテンプレートでは以下の構文が使用可能です。</p>
 <p>Viewの描画に関するロジックが必要な場合はHelperを呼び出します。
 Helperクラスは<code>app/helpers</code>に<code>WebStream\Core\CoreHelper</code>クラスを継承したクラスを定義します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Test\TestData\Sample\App\Helper</span>;</span>
-<span class="pl-s2"></span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreHelper</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreService</span>;</span>
-<span class="pl-s2"></span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">TestHelperHelper</span> <span class="pl-s">extends</span> <span class="pl-e">CoreHelper</span></span>
-<span class="pl-s2">{</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-st">function</span> <span class="pl-en">help1</span>()</span>
-<span class="pl-s2">    {</span>
-<span class="pl-s2">         <span class="pl-k">return</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span>help2(<span class="pl-vo">$model</span><span class="pl-k">-&gt;</span>getName());</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Test\TestData\Sample\App\Helper</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreHelper</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreService</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">TestHelperHelper</span> <span class="pl-k">extends</span> <span class="pl-e">CoreHelper</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">help1</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">         <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>help2(<span class="pl-smi">$model</span><span class="pl-k">-&gt;</span>getName());</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>Helperクラス内ではViewテンプレート内と同様に<code>$model</code>オブジェクトからModelクラス、Serviceクラスを呼び出すことができます。
 Helperクラスのメソッドは<code>$helper</code>オブジェクトにより呼び出します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-vo">$helper</span><span class="pl-k">-&gt;</span>method();</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$helper</span><span class="pl-k">-&gt;</span>method();</span></pre></div>
 
 <p>メソッド呼び出しにより、Viewテンプレートで必要なロジックを実行します。
 メソッドの戻り値はViewテンプレートに描画されますが、<a href="#template_keyword">Viewテンプレート構文</a>によりエスケープして出力し、安全な値として出力する必要があります。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">%</span><span class="pl-c1">H</span>{<span class="pl-vo">$helper</span><span class="pl-k">-&gt;</span>method()}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">%</span><span class="pl-c1">H</span>{<span class="pl-smi">$helper</span><span class="pl-k">-&gt;</span>method()}</span></pre></div>
 
 <p>ただし、Helper内で直接echoで出力するとエスケープされないので注意してください。</p>
 
@@ -545,11 +590,11 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>ルーティング設定により、URI設計を行うことができます。ルーティングにはmod_rewiteが必要です。<br>
 ルーティング定義は<code>config/routes.php</code>に記述します。  </p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Router</span>;</span>
-<span class="pl-s2"><span class="pl-s3">Router</span><span class="pl-k">::</span>setRule([</span>
-<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>/login<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>sample#login<span class="pl-pds">'</span></span></span>
-<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">'</span>/blog/:id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>blog#entry<span class="pl-pds">'</span></span></span>
-<span class="pl-s2">]);</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Router</span>;</span>
+<span class="pl-s1"><span class="pl-c1">Router</span><span class="pl-k">::</span>setRule([</span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>/login<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>sample#login<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>/blog/:id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>blog#entry<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">]);</span></pre></div>
 
 <p>ルーティングルールは配列で定義し、キーにURIパス定義、バリューにクラス、アクション定義を記述します。誤った定義が記述された場合、例外が発生します。</p>
 
@@ -558,13 +603,13 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 
 <p>URIパスは<code>/path/to</code>形式で定義します。またURIには変数の設定が可能で、<code>:value</code>形式で記述します。例えば、<code>/blog/:id</code>と定義し、<code>/blog/10</code>にアクセスした場合、Controllerクラスでは以下の方法で値を取得出来ます。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-st">function</span> <span class="pl-en">execute</span>(<span class="pl-st">array</span> <span class="pl-vo">$params</span>) {</span>
-<span class="pl-s2">        <span class="pl-vo">$id</span> <span class="pl-k">=</span> <span class="pl-vo">$params</span>[<span class="pl-s1"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span>]; <span class="pl-c">// 10</span></span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">execute</span>(<span class="pl-k">array</span> <span class="pl-smi">$params</span>) {</span>
+<span class="pl-s1">        <span class="pl-smi">$id</span> <span class="pl-k">=</span> <span class="pl-smi">$params</span>[<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span>]; <span class="pl-c">// 10</span></span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <h2>
 <a id="バリデーション定義" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>バリデーション定義</h2>
@@ -575,13 +620,13 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>バリデーション設定により、GET/POST/PUT/DELETEリクエストに含まれるパラメータをチェックすることができます。<br>
 バリデーション定義は<code>config/validates.php</code>に記述します。  </p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Validator</span>;</span>
-<span class="pl-s2"><span class="pl-s3">Validator</span><span class="pl-k">::</span>setRule([</span>
-<span class="pl-s2">    <span class="pl-s1"><span class="pl-pds">"</span>sample#validateForm<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> [</span>
-<span class="pl-s2">        <span class="pl-s1"><span class="pl-pds">"</span>post#name<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>,</span>
-<span class="pl-s2">        <span class="pl-s1"><span class="pl-pds">"</span>get#page<span class="pl-pds">"</span></span>  <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">"</span>required|number<span class="pl-pds">"</span></span></span>
-<span class="pl-s2">    ]</span>
-<span class="pl-s2">]);</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Validator</span>;</span>
+<span class="pl-s1"><span class="pl-c1">Validator</span><span class="pl-k">::</span>setRule([</span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">"</span>sample#validateForm<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">"</span>post#name<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">"</span>get#page<span class="pl-pds">"</span></span>  <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>required|number<span class="pl-pds">"</span></span></span>
+<span class="pl-s1">    ]</span>
+<span class="pl-s1">]);</span></pre></div>
 
 <p>Validator::setRule内にバリデーション定義を記述します。
 定義は、キーにクラス#アクション、バリューにバリデーション内容を記述します。バリデーション内容もキー、バリュー形式になっており、キーにリクエストメソッド#パラメータ名、バリューにチェックルールを記述します。</p>
@@ -646,30 +691,30 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>GET/POST/PUT/DELETEで送信した値をControllerで取得できます。
 <code>$this-&gt;request</code>オブジェクトからリクエストパラメータを取得でき、<code>get</code>,<code>post</code>,<code>put</code>,<code>delete</code>メソッドにそれぞれアクセスします。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">BlogController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-st">function</span> <span class="pl-en">execute</span>() {</span>
-<span class="pl-s2">        <span class="pl-vo">$getParams</span> <span class="pl-k">=</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">request</span><span class="pl-k">-&gt;</span>get(); <span class="pl-c">// GETパラメータすべて取得</span></span>
-<span class="pl-s2">        <span class="pl-vo">$getParam</span>  <span class="pl-k">=</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">request</span><span class="pl-k">-&gt;</span>get(<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>);</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">execute</span>() {</span>
+<span class="pl-s1">        <span class="pl-smi">$getParams</span> <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">request</span><span class="pl-k">-&gt;</span>get(); <span class="pl-c">// GETパラメータすべて取得</span></span>
+<span class="pl-s1">        <span class="pl-smi">$getParam</span>  <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">request</span><span class="pl-k">-&gt;</span>get(<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <h2>
 <a id="セッション" class="anchor" href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>セッション</h2>
 
 <p>ログイン処理などを実装するときに、セッション管理を使用しますが、WebStreamでは<code>$this-&gt;session</code>オブジェクトを使用します。セッション期限を指定するには<code>restart</code>メソッドを使用します。</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s2"><span class="pl-k">use</span> <span class="pl-s3">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s2"><span class="pl-st">class</span> <span class="pl-en">LoginController</span> <span class="pl-s">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s2">    <span class="pl-s">public</span> <span class="pl-st">function</span> <span class="pl-en">execute</span>() {</span>
-<span class="pl-s2">        <span class="pl-vo">$expire</span> <span class="pl-k">=</span> <span class="pl-c1">6000</span>; <span class="pl-c">// 10分</span></span>
-<span class="pl-s2">        <span class="pl-vo">$path</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>/login<span class="pl-pds">"</span></span>;</span>
-<span class="pl-s2">        <span class="pl-vo">$domain</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>.mydomain.com<span class="pl-pds">"</span></span>;</span>
-<span class="pl-s2">        <span class="pl-vo">$getParams</span> <span class="pl-k">=</span> <span class="pl-vo">$this</span><span class="pl-k">-&gt;</span><span class="pl-vo">session</span><span class="pl-k">-&gt;</span>restart(<span class="pl-vo">$expire</span>, <span class="pl-vo">$path</span>, <span class="pl-vo">$domain</span>);</span>
-<span class="pl-s2">    }</span>
-<span class="pl-s2">}</span></pre></div>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">LoginController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">execute</span>() {</span>
+<span class="pl-s1">        <span class="pl-smi">$expire</span> <span class="pl-k">=</span> <span class="pl-c1">6000</span>; <span class="pl-c">// 10分</span></span>
+<span class="pl-s1">        <span class="pl-smi">$path</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>/login<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">        <span class="pl-smi">$domain</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>.mydomain.com<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">        <span class="pl-smi">$getParams</span> <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">session</span><span class="pl-k">-&gt;</span>restart(<span class="pl-smi">$expire</span>, <span class="pl-smi">$path</span>, <span class="pl-smi">$domain</span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>セッションがタイムアウトした場合、<code>SessionTimeoutException</code>が発生します。</p>
 
@@ -692,9 +737,31 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <td><a href="https://github.com/Inject" class="user-mention">@Inject</a></td>
 <td>メソッドに対するアノテーションを有効にする</td>
 </tr>
+</tbody>
+</table>
+
+<h4>
+<a id="すべてのレイヤで使用可能なアノテーション" class="anchor" href="#%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E3%83%AC%E3%82%A4%E3%83%A4%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>すべてのレイヤで使用可能なアノテーション</h4>
+
+<table>
+<thead>
 <tr>
-<td><a href="https://github.com/Autowired" class="user-mention">@Autowired</a></td>
+<th>アノテーション</th>
+<th>説明</th>
+<th>サンプル</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Autowired</td>
 <td>プロパティに対するアノテーションを有効にする</td>
+<td>@Autowired(value="hoge")<br>@Autowired(type="\Hoge")</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Filter" class="user-mention">@Filter</a></td>
+<td>メソッドが呼ばれる前または後に任意の処理を実行する</td>
+<td>
+<a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="after")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before" except="method1")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before" only="method2")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before",only="method1",except="method2")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="after",except={"method1","method2"})</td>
 </tr>
 </tbody>
 </table>
@@ -712,12 +779,6 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 </thead>
 <tbody>
 <tr>
-<td><a href="https://github.com/Filter" class="user-mention">@Filter</a></td>
-<td>アクションメソッドが呼ばれる前または後に任意の処理を実行する</td>
-<td>
-<a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="after")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before" except="method1")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before" only="method2")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="before",only="method1",except="method2")<br><a href="https://github.com/Filter" class="user-mention">@Filter</a>(type="after",except={"method1","method2"})</td>
-</tr>
-<tr>
 <td><a href="https://github.com/Header" class="user-mention">@Header</a></td>
 <td>リクエスト/レスポンスを制御する</td>
 <td>
@@ -728,11 +789,6 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <td>Viewテンプレートを設定する</td>
 <td>
 <a href="https://github.com/Template" class="user-mention">@Template</a>("index.tmpl")<br><a href="https://github.com/Template" class="user-mention">@Template</a>("index.tmpl",name="head" type="parts")<br><a href="https://github.com/Template" class="user-mention">@Template</a>("index.tmpl",name="shared",type="shared")</td>
-</tr>
-<tr>
-<td>@TemplateCache</td>
-<td>テンプレートをキャッシュする時間を指定</td>
-<td>@TemplateCache(expire=3600)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/ExceptionHandler" class="user-mention">@ExceptionHandler</a></td>
