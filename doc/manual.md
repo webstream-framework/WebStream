@@ -246,7 +246,9 @@ $this->getData($bind)->toEntity($entityClasspath);
 ##[View](#view)
 Viewは画面に出力するHTMLなどを描画し、Controllerクラスから呼ばれます。HTML等の描画はWebStream独自のテンプレート機能を利用します。
 ViewからはHelperまたはModel、Serviceを呼び出してビジネスロジックを実行することができます。
-テンプレートファイルは`.tmpl`拡張子を付け、`app/views`にページ名をスネークケースに変換したフォルダを作成し保存します。
+
+ViewテンプレートはWebStream独自のBasicテンプレートとTwigテンプレートが使えます。
+Baicテンプレートファイルは`.tmpl`拡張子を、Twigテンプレートは`.twig`を付け、`app/views`にページ名をスネークケースに変換したフォルダを作成し保存します。
 `__cache`、`__public`、`__shared`フォルダを作成すると、それぞれテンプレートキャッシュファイル、静的ファイル、共通テンプレートファイルを使用することができます。
 ViewにはModel/Serviceオブジェクトが渡されるので、Model、Serviceで取得した値やビジネスロジックの実行がViewで可能になります。
 Model/Serviceオブジェクトは`$model`変数に格納されます。また、Helperオブジェクトは`$helper`変数に格納されます。
@@ -272,24 +274,7 @@ class BlogController extends CoreController {
 `__shared`に保存した共通テンプレートを呼び出すことができます。
 共通点プレートはheaderやfooterなど共通になる部分を定義するときに使用します。
 
-```php
-namespace MyBlog;
-use WebStream\Core\CoreController;
-
-/**
- * 基本テンプレートと共通テンプレートを呼び出す。
- * @Inject
- * @Template("index.tmpl")
- * @Template("common.tmpl", name="common", type="shared")
- */
-class BlogController extends CoreController {
-    public funciton execute() {
-        $this->Blog->entry();
-    }
-}
-```
-
-共通テンプレートにするほどではないが、テンプレートを部品化したい場合、部分テンプレートとして呼び出すことができます。
+テンプレートを部品化したい場合、部分テンプレートとして呼び出すことができます。
 
 ```php
 namespace MyBlog;
@@ -299,7 +284,6 @@ use WebStream\Core\CoreController;
  * 基本テンプレートと共通テンプレートを呼び出す。
  * @Inject
  * @Template("index.tmpl")
- * @Template("side.tmpl", name="side_menu", type="parts")
  */
 class BlogController extends CoreController {
     public funciton execute() {
@@ -320,12 +304,80 @@ ViewテンプレートにはHTMLを記述しますが、Service/Modelの値な�
     </head>
     <body>
         <div>%H{$model->getContent()}</div>
-        %T{$common}
+        %T{parts.tmpl}
     </body>
 </html>
 ```
 
 `$model`にアクセスするとServiceクラスまたはModelクラスにアクセスできます。また、`@Template`の`name`属性に指定した名前は変数としてアクセスできます。
+
+使用するテンプレートエンジンを明示する場合は以下のようにします。
+
+```php
+namespace MyBlog;
+use WebStream\Core\CoreController;
+
+/**
+ * Basicテンプレートを使用する
+ * @Inject
+ * @Template("index.tmpl", engine="basic")
+ */
+class BlogController extends CoreController {
+    public funciton execute() {
+        $this->Blog->entry();
+    }
+}
+```
+
+```php
+namespace MyBlog;
+use WebStream\Core\CoreController;
+
+/**
+ * Twigテンプレートを使用する
+ * @Inject
+ * @Template("index.tmpl", engine="twig")
+ */
+class BlogController extends CoreController {
+    public funciton execute() {
+        $this->Blog->entry();
+    }
+}
+```
+
+BasicテンプレートとTwigテンプレートの違いは、Basicテンプレートではテンプレートキャッシュ機能とCSRF対策トークン自動挿入機能がつきます。
+テンプレートキャッシュ機能は、出力した内容をまるごとキャッシュする機能で、`cacheTime`属性で指定した時間(秒)だけキャッシュします。CSRF対策トークン機能は、formタグが使用された場合自動的にCSRF対策が有効になる機能です。
+
+```php
+namespace MyBlog;
+use WebStream\Core\CoreController;
+
+/**
+ * テンプレートキャッシュを600秒有効にする
+ * @Inject
+ * @Template("index.tmpl", engine="basic", cacheTime=600)
+ */
+class BlogController extends CoreController {
+    public funciton execute() {
+        $this->Blog->entry();
+    }
+}
+```
+
+```html
+<head>
+<meta charset="utf-8">
+<title>CSRF CHECK</title>
+</head>
+<body>
+<form action="/" method="post">
+    <input type="button" value="submit">
+    <input type="hidden" name="__CSRF_TOKEN__" value="a2891f68edeb487a9140edf8575a8e3382f96c0d">
+</form>
+</body>
+```
+
+
 Viewテンプレートでは以下の構文が使用可能です。
 
 ###[Viewテンプレート構文](#template_keyword)
@@ -496,17 +548,16 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 @Inject    |メソッドに対するアノテーションを有効にする
 
 ####すべてのレイヤで使用可能なアノテーション
-アノテーション        |説明                                         |サンプル
+アノテーション      |説明                                         |サンプル
 -----------------|---------------------------------------------|------
-@Autowired       |プロパティに対するアノテーションを有効にする              |@Autowired(value="hoge")<br>@Autowired(type="\Hoge")
-@Filter          |メソッドが呼ばれる前または後に任意の処理を実行する      |@Filter(type="before")<br>@Filter(type="after")<br>@Filter(type="before" except="method1")<br>@Filter(type="before" only="method2")<br>@Filter(type="before",only="method1",except="method2")<br>@Filter(type="after",except={"method1","method2"})
+@Autowired       |プロパティに対するアノテーションを有効にする         |@Autowired(value="hoge")<br>@Autowired(type="\Hoge")
+@Filter          |メソッドが呼ばれる前または後に任意の処理を実行する    |@Filter(type="before")<br>@Filter(type="after")<br>@Filter(type="before" except="method1")<br>@Filter(type="before" only="method2")<br>@Filter(type="before",only="method1",except="method2")<br>@Filter(type="after",except={"method1","method2"})
 
 ####Controllerで使用可能なアノテーション
 アノテーション     |説明                                         |サンプル
 -----------------|---------------------------------------------|------
 @Header          |リクエスト/レスポンスを制御する                       |@Header(contentType="html")<br>@Header(contentType="xml")<br>@Header(allowMethod="POST")<br>@Header(allowMethod={"GET","POST"})
 @Template        |Viewテンプレートを設定する                         |@Template("index.tmpl")<br>@Template("index.tmpl",name="head" type="parts")<br>@Template("index.tmpl",name="shared",type="shared")
-@TemplateCache   |テンプレートをキャッシュする時間を指定                  |@TemplateCache(expire=3600)
 @ExceptionHandler|例外を補足して別処理を実行する                     |@ExceptionHandler("\Exception")<br>@ExceptionHandler({"\RuntimeException","\LogicException"})
 
 ####Modelで使用可能なアノテーション
