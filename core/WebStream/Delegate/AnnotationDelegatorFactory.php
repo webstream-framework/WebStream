@@ -44,7 +44,6 @@ class AnnotationDelegatorFactory
             "header" => "WebStream\Annotation\Header",
             "filter" => "WebStream\Annotation\Filter",
             "template" => "WebStream\Annotation\Template",
-            "templateCache" => "WebStream\Annotation\TemplateCache",
             "exceptionHandler" => "WebStream\Annotation\ExceptionHandler",
             "database" => "WebStream\Annotation\Database",
             "query" => "WebStream\Annotation\Query"
@@ -172,75 +171,12 @@ class AnnotationDelegatorFactory
             $templateAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["template"]];
         }
 
-        $container = $this->container;
-
-        return function () use ($templateAnnotations, $container) {
+        return function () use ($templateAnnotations) {
             $templateContainer = new Container(false);
-
-            $viewParams = [];
-            $baseTemplate = null;
-            if ($templateAnnotations !== null) {
-                $baseTemplateCandidate = null;
-
-                foreach ($templateAnnotations as $templateAnnotation) {
-                    if ($templateAnnotation->baseCandidate !== null) {
-                        if ($baseTemplate !== null || $baseTemplateCandidate !== null) {
-                            // ベーステンプレート候補が2つ以上ある場合は、2つ目以降のtype属性が未指定の場合なのでエラー
-                            $errorMsg = "Invalid argument of @Template attribute 'type'. ";
-                            $errorMsg.= "The type attribute is required.";
-                            throw new AnnotationException($errorMsg);
-                        } else {
-                            $baseTemplateCandidate = $templateAnnotation->baseCandidate;
-                        }
-                    }
-
-                    if ($templateAnnotation->base !== null) {
-                        if ($baseTemplate !== null) {
-                            // ベーステンプレートが複数指定された場合、エラーとする
-                            $errorMsg = "Invalid argument of @Template attribute 'type'. ";
-                            $errorMsg.= "The type attribute 'base' must be a only definition.";
-                            throw new AnnotationException($errorMsg);
-                        }
-
-                        $baseTemplate = $templateAnnotation->base;
-                    }
-
-                    if ($templateAnnotation->parts !== null) {
-                        foreach ($templateAnnotation->parts as $key => $value) {
-                            $viewParams[$key] = $value;
-                        }
-                    }
-                }
-                if ($baseTemplate === null) {
-                    $baseTemplate = $baseTemplateCandidate;
-                }
-            }
-
-            $templateContainer->viewParams = $viewParams;
-            $templateContainer->baseTemplate = $baseTemplate;
+            $templateContainer->engine = $templateAnnotations[0]->engine;
+            $templateContainer->cacheTime = $templateAnnotations[0]->cacheTime;
 
             return $templateContainer;
-        };
-    }
-
-    /**
-     * TemplateCache結果を返却する
-     * @return Callable TemplateCache結果
-     */
-    public function createTemplateCache()
-    {
-        $templateCacheAnnotations = null;
-        if (array_key_exists($this->injectedAnnotationKeys["templateCache"], $this->injectedAnnotation)) {
-            $templateCacheAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["templateCache"]];
-        }
-
-        return function () use ($templateCacheAnnotations) {
-            $templateCacheContainer = new Container(false);
-            if ($templateCacheAnnotations !== null) {
-                $templateCacheContainer->expire = $templateCacheAnnotations[0]->expire;
-            }
-
-            return $templateCacheContainer;
         };
     }
 

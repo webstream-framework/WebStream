@@ -5,6 +5,7 @@ phpunit/
 log/
 core/reports/
 core/WebStream/Test/Sample/log/
+core/WebStream/Test/Sample/app/views/_cache/
 app/views/_cache/
 vendor
 composer.phar

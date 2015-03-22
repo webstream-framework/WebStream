@@ -8,6 +8,7 @@ use WebStream\Core\CoreModel;
 use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
 use WebStream\Module\Utility;
+use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Exception\ApplicationException;
@@ -47,6 +48,9 @@ class CoreExecuteDelegator
      */
     private $annotation;
 
+    /**
+     * @var array<AnnotationContainer> 例外ハンドラリスト
+     */
     private $exceptionHandler;
 
     /**
@@ -111,7 +115,7 @@ class CoreExecuteDelegator
 
             $exception = new ExceptionDelegator($instance, $e, $method);
 
-            if (is_array($this->annotation->exceptionHandler)) {
+            if ($this->annotation !== null && is_array($this->annotation->exceptionHandler)) {
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
             }
             $exception->raise();
@@ -133,6 +137,12 @@ class CoreExecuteDelegator
      */
     private function execute($method, $arguments)
     {
+        // serviceの場合、modelの探索に行くためエラーにはしない
+        if (!($this->injectedInstance instanceof CoreService) && !method_exists($this->injectedInstance, $method)) {
+            $class = get_class($this->injectedInstance);
+            throw new MethodNotFoundException("${class}#${method} is not defined.");
+        }
+
         return call_user_func_array([$this->injectedInstance, $method], $arguments);
     }
 
@@ -161,6 +171,7 @@ class CoreExecuteDelegator
         $data = $cache->get($cacheFile);
 
         if ($data !== null) {
+            Logger::debug("Template cache read success: $cacheFile.cache");
             echo $data;
 
             return;
@@ -168,27 +179,6 @@ class CoreExecuteDelegator
 
         $resolver = new Resolver($this->container);
         $model = $resolver->runService() ?: $resolver->runModel();
-
-        if ($this->injectedInstance !== null && $this->annotation !== null) {
-            // @Header
-            $mimeType = $this->annotation->header->mimeType;
-
-            // @Template
-            $template = $this->annotation->template;
-
-            // @TemplateCache
-            $expire = $this->annotation->templateCache->expire;
-
-            // draw template
-            $view = $resolver->runView();
-            $view->draw($template->baseTemplate, $template->viewParams, $mimeType);
-            if ($expire !== null) {
-                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
-                $view->cache($cacheFile, ob_get_contents(), $expire);
-            }
-
-            $this->execute($method, [$arguments]);
-        }
 
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
@@ -202,9 +192,6 @@ class CoreExecuteDelegator
 
             // @Template
             $template = $this->annotation->template;
-
-            // @TemplateCache
-            $expire = $this->annotation->templateCache->expire;
 
             // custom annotation
             $this->instance->__customAnnotation($this->annotation->customAnnotations);
@@ -237,13 +224,15 @@ class CoreExecuteDelegator
 
             // draw template
             $view = $resolver->runView();
-            $viewParams = $template->viewParams;
-            $viewParams['model'] = $model;
-            $viewParams['helper'] = $resolver->runHelper();
-            $view->run('draw', [$template->baseTemplate, $viewParams, $mimeType]);
-            if ($expire !== null) {
+            $view->setTemplateEngine($template->engine);
+            $view->draw([
+                "model" => $model,
+                "helper" => $resolver->runHelper(),
+                "mimeType" => $mimeType
+            ]);
+            if ($template->cacheTime !== null) {
                 $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
-                $view->cache($cacheFile, ob_get_contents(), $expire);
+                $view->templateCache($cacheFile, ob_get_contents(), $template->cacheTime);
             }
 
             // after filter
