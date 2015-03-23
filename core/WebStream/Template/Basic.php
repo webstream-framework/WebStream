@@ -33,8 +33,14 @@ class Basic implements ITemplateEngine
      */
     private $container;
 
+    /**
+     * @var Session セッション
+     */
     private $session;
 
+    /**
+     * @var int Unixタイムスタンプ
+     */
     private $timestamp;
 
     /**

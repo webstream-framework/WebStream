@@ -43,15 +43,37 @@ class Twig implements ITemplateEngine
         $filepath = STREAM_APP_ROOT . "/app/views/" . $dirname . "/" . $this->container->filename;
         $realpath = realpath($filepath);
 
-        if ($realpath === false) {
-            throw new ResourceNotFoundException("Invalid template file path: " . safetyOut($filepath));
+        $filename = null;
+        $dirpath = null;
+
+        if ($realpath !== false) {
+            $filename = basename($realpath);
+            $dirpath = dirname($realpath);
         }
 
-        $filename = basename($realpath);
-        $dirpath = dirname($realpath);
+        $filepath = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED . "/" . $this->container->filename;
+        $realpath = realpath($filepath);
 
-        $this->loader->addPath($dirpath);
-        $this->loader->addPath(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED);
+        $sharedFilename = null;
+        $sharedDirpath = null;
+
+        if ($realpath !== false) {
+            $sharedFilename = basename($realpath);
+            $sharedDirpath = dirname($realpath);
+        }
+
+        $filename = $filename ?: $sharedFilename;
+
+        if ($filename === null) {
+            throw new ResourceNotFoundException("Invalid template file: " . safetyOut($this->container->filename));
+        }
+
+        if ($dirpath !== null) {
+            $this->loader->addPath($dirpath);
+        }
+        if ($sharedDirpath !== null) {
+            $this->loader->addPath($sharedDirpath);
+        }
 
         $escaper = new \Twig_Extension_Escaper(true);
         $twig = new \Twig_Environment($this->loader, [
@@ -59,7 +81,9 @@ class Twig implements ITemplateEngine
             'auto_reload' => true,
             'debug' => $this->container->debug
         ]);
-        $twig->addExtension(new \Twig_Extension_Debug());
+        if ($this->container->debug) {
+            $twig->addExtension(new \Twig_Extension_Debug());
+        }
 
         echo $twig->loadTemplate($filename)->render([
             "model" => $params["model"],
