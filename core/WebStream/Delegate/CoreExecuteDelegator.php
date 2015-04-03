@@ -160,10 +160,6 @@ class CoreExecuteDelegator
             throw new MethodNotFoundException("${class}#${method} is not defined.");
         }
 
-        // バリデーションチェック
-        $validator = $this->container->validator;
-        $validator->check();
-
         // テンプレートキャッシュチェック
         $pageName = $this->container->coreDelegator->getPageName();
         $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);

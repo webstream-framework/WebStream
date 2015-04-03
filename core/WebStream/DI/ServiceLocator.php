@@ -4,7 +4,6 @@ namespace WebStream\DI;
 use WebStream\Module\Utility;
 use WebStream\Module\Container;
 use WebStream\Delegate\Router;
-use WebStream\Delegate\Validator;
 use WebStream\Delegate\CoreDelegator;
 use WebStream\Delegate\AnnotationDelegator;
 use WebStream\Http\Request;
@@ -87,10 +86,6 @@ class ServiceLocator
         // Router
         $container->router = function () use (&$container) {
             return new Router($container->request);
-        };
-        // Validator
-        $container->validator = function () use (&$container) {
-            return new Validator($container->request, $container->router);
         };
         // CoreDelegator
         $container->coreDelegator = function () use (&$container) {

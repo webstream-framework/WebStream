@@ -56,34 +56,7 @@ class Validate extends Annotation implements IMethod
             throw new AnnotationException($errorMsg);
         }
 
-        $params = null;
-        if ($container->request->isGet()) {
-            if ($method === null || "get" === mb_strtolower($method)) {
-                $params = $container->request->get();
-            }
-        } elseif ($container->request->isPost()) {
-            if ($method === null || "post" === mb_strtolower($method)) {
-                $params = $container->request->post();
-            }
-        } elseif ($container->request->isPut()) {
-            if ($method === null || "put" === mb_strtolower($method)) {
-                $params = $container->request->put();
-            }
-        } elseif ($container->request->isDelete()) {
-            if ($method === null || "delete" === mb_strtolower($method)) {
-                $params = $container->request->delete();
-            }
-        } else {
-            $errorMsg = "Unsupported method is specified: " . safetyOut($method);
-            throw new AnnotationException($errorMsg);
-        }
-
-        if ($params === null || empty($params) || !array_key_exists($key, $params)) {
-            Logger::info("Parameter validation is not performed.");
-
-            return;
-        }
-
+        // パラメータの有無にかかわらずルール定義が間違っている場合はエラー
         if (preg_match('/^([a-zA-Z]{1}[a-zA-Z0-9_]{1,})(?:$|\[(.+?)\]$)/', $rule, $matches)) {
             $className = $this->snake2ucamel($matches[1]);
             $classLoader = new ClassLoader();
@@ -105,13 +78,43 @@ class Validate extends Annotation implements IMethod
                 throw new AnnotationException($errorMsg);
             }
 
-            if (!$validateInstance->isValid($params[$key], $rule)) {
-                $errorMsg = "Validation rule error. Rule is '$rule', value is " . safetyOut($params[$key]);
+            $params = null;
+            if ($container->request->isGet()) {
+                if ($method === null || "get" === mb_strtolower($method)) {
+                    $params = $container->request->get();
+                }
+            } elseif ($container->request->isPost()) {
+                if ($method === null || "post" === mb_strtolower($method)) {
+                    $params = $container->request->post();
+                }
+            } elseif ($container->request->isPut()) {
+                if ($method === null || "put" === mb_strtolower($method)) {
+                    $params = $container->request->put();
+                }
+            } elseif ($container->request->isDelete()) {
+                if ($method === null || "delete" === mb_strtolower($method)) {
+                    $params = $container->request->delete();
+                }
+            } else {
+                $errorMsg = "Unsupported method is specified: " . safetyOut($method);
+                throw new AnnotationException($errorMsg);
+            }
+
+            // if ($params === null || empty($params) || !array_key_exists($key, $params)) {
+            //     Logger::info("Parameter validation is not performed.");
+
+            //     return;
+            // }
+
+            $value = is_array($params) && array_key_exists($key, $params) ? $params[$key] : null;
+
+            if (!$validateInstance->isValid($value, $rule)) {
+                $errorMsg = "Validation rule error. Rule is '$rule', value is " . (safetyOut($value) ?: "null");
                 throw new ValidateException($errorMsg);
             }
         } else {
-            $errorMsg = "Invalid valudation rule: " . $rule;
-            throw new AnnotationException($errorMsg);
+            $errorMsg = "Invalid validation rule definition: " . $rule;
+            throw new ValidateException($errorMsg);
         }
     }
 }

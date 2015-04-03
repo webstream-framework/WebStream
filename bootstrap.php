@@ -42,6 +42,8 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Template.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/ExceptionHandler.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Database.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Query.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Template.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Validate.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/DatabaseManager.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/ConnectionManager.php';
 require_once dirname(__FILE__) . '/core/WebStream/Database/EntityManager.php';
@@ -59,10 +61,20 @@ require_once dirname(__FILE__) . '/core/WebStream/Delegate/AnnotationDelegatorFa
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Resolver.php';
 require_once dirname(__FILE__) . '/core/WebStream/Delegate/Router.php';
-require_once dirname(__FILE__) . '/core/WebStream/Delegate/Validator.php';
 require_once dirname(__FILE__) . '/core/WebStream/Template/ITemplateEngine.php';
 require_once dirname(__FILE__) . '/core/WebStream/Template/Basic.php';
 require_once dirname(__FILE__) . '/core/WebStream/Template/Twig.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/IValidate.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Equal.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Length.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Max.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/MaxLength.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Min.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/MinLength.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Number.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Range.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Regexp.php';
+require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Required.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/ApplicationException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/UncatchableException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/DelegateException.php';
@@ -90,7 +102,6 @@ require_once dirname(__FILE__) . '/core/WebStream/Http/Request.php';
 require_once dirname(__FILE__) . '/core/WebStream/Http/Response.php';
 require_once dirname(__FILE__) . '/core/WebStream/Http/Session.php';
 require_once dirname(__FILE__) . '/config/routes.php';
-require_once dirname(__FILE__) . '/config/validates.php';
 
 Logger::init("config/log.ini");
 
