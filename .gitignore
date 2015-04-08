@@ -2,12 +2,13 @@
 .svn
 .DS_Store
 sandbox/
-log/
+log/*.log
+log/*.status
 core/reports/phpunit.xml
 core/reports/phpdoc
+core/WebStream/Test/Sample/app/views/_cache/
 core/WebStream/Test/Sample/log/*.log
 core/WebStream/Test/Sample/log/*.status
-core/WebStream/Test/Sample/app/views/_cache/
 app/views/_cache/
 vendor
 composer.phar
