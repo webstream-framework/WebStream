@@ -55,6 +55,31 @@ class ValidateTest extends TestBase
     }
 
     /**
+     * 正常系
+     * カスタムバリデーションチェックを通過すること
+     * @test
+     * @dataProvider customValidateProvider
+     */
+    public function okCustomValid($path, $method, $key, $value)
+    {
+        $http = new HttpClient();
+        if ($method === "all") {
+            $methods = ["get", "post", "put"];
+            foreach ($methods as $method) {
+                $url = $this->getDocumentRootURL() . $path;
+                $response = call_user_func_array([$http, $method], [$url, [$key => $value]]);
+                $this->assertEquals($http->getStatusCode(), 200);
+                $this->assertEquals($response, $value);
+            }
+        } else {
+            $url = $this->getDocumentRootURL() . $path;
+            $response = call_user_func_array([$http, $method], [$url, [$key => $value]]);
+            $this->assertEquals($http->getStatusCode(), 200);
+            $this->assertEquals($response, $value);
+        }
+    }
+
+    /**
      * 異常系
      * バリデーションチェックを通過しないこと
      * @test
@@ -108,6 +133,19 @@ class ValidateTest extends TestBase
      * @dataProvider invalidAnnotationProvider
      */
     public function ngInvalidAnnotation($path, $response)
+    {
+        $url = $this->getDocumentRootURL() . $path;
+        $http = new HttpClient();
+        $this->assertEquals($response, $http->get($url));
+    }
+
+    /**
+     * 異常系
+     * カスタムバリデーションルールを複数定義かつ同一クラス名の場合、例外が発生すること
+     * @test
+     * @dataProvider invalidCustomValidateProvider
+     */
+    public function ngInvalidCustomValidate($path, $response)
     {
         $url = $this->getDocumentRootURL() . $path;
         $http = new HttpClient();

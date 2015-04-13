@@ -368,6 +368,42 @@ class TestValidateController extends CoreController
         echo $this->request->get("test") ?: $this->request->post("test") ?: $this->request->put("test");
     }
 
+    /**
+     * @Inject
+     * @Validate(key="test", rule="mail", method="get")
+     */
+    public function getMail()
+    {
+        echo $this->request->get("test");
+    }
+
+    /**
+     * @Inject
+     * @Validate(key="test", rule="mail", method="post")
+     */
+    public function postMail()
+    {
+        echo $this->request->post("test");
+    }
+
+    /**
+     * @Inject
+     * @Validate(key="test", rule="mail", method="put")
+     */
+    public function putMail()
+    {
+        echo $this->request->put("test");
+    }
+
+    /**
+     * @Inject
+     * @Validate(key="test", rule="mail")
+     */
+    public function allMail()
+    {
+        echo $this->request->get("test") ?: $this->request->post("test") ?: $this->request->put("test");
+    }
+
     // 異常系
 
     /**
@@ -498,6 +534,15 @@ class TestValidateController extends CoreController
     public function invalidValidateAnnotation2()
     {
         // rule属性指定なし
+    }
+
+    /**
+     * @Inject
+     * @Validate(key="test", rule="invalid")
+     */
+    public function duplicateValidateRule()
+    {
+        // 同一クラス名(クラスパスが異なってもNG)
     }
 
     /**

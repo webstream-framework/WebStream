@@ -59,14 +59,27 @@ class Validate extends Annotation implements IMethod
         // パラメータの有無にかかわらずルール定義が間違っている場合はエラー
         if (preg_match('/^([a-zA-Z]{1}[a-zA-Z0-9_]{1,})(?:$|\[(.+?)\]$)/', $rule, $matches)) {
             $className = $this->snake2ucamel($matches[1]);
+            $classpath = null;
             $classLoader = new ClassLoader();
+            // デフォルトバリデーションルールのパス
             $filepath = "core/WebStream/Validate/Rule/" . $className . ".php";
             if (!$classLoader->import($filepath)) {
-                $errorMsg = "Invalid Validate class filepath: " . $filepath . "";
-                throw new AnnotationException($errorMsg);
+                $loadList = $classLoader->load($className);
+                if (count($loadList) >= 2) {
+                    $errorMsg = "Class load failed because the same class name has been identified: " . $className . "";
+                    throw new ValidateException($errorMsg);
+                }
+
+                if (count($loadList) === 0) {
+                    $errorMsg = "Invalid Validate class filepath: " . $filepath . "";
+                    throw new ValidateException($errorMsg);
+                }
+
+                $namespace = $this->getNamespace($loadList[0]);
+                $classpath = $namespace . "\\" . $className;
             }
 
-            $classpath = $this->getNamespace($this->getRoot() . "/" . $filepath) . "\\" . $className;
+            $classpath = $classpath ?: $this->getNamespace($this->getRoot() . "/" . $filepath) . "\\" . $className;
             if (!class_exists($classpath)) {
                 $errorMsg = "Invalid Validate class's classpath: " . $classpath . "";
                 throw new AnnotationException($errorMsg);
@@ -100,12 +113,8 @@ class Validate extends Annotation implements IMethod
                 throw new AnnotationException($errorMsg);
             }
 
-            // if ($params === null || empty($params) || !array_key_exists($key, $params)) {
-            //     Logger::info("Parameter validation is not performed.");
-
-            //     return;
-            // }
-
+            // パラメータの指定なしの場合、value=null
+            // パラメータの指定ありあつ値の指定なしの場合、value=""
             $value = is_array($params) && array_key_exists($key, $params) ? $params[$key] : null;
 
             if (!$validateInstance->isValid($value, $rule)) {

@@ -65,9 +65,10 @@ class ClassLoaderTest extends TestBase
     {
         $classLoader = new ClassLoader();
         $classLoader->test();
-        $classLoader->load("ClassLoaderTestClassStaticLoad");
+        $list = $classLoader->load("ClassLoaderTestClassStaticLoad");
         $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoad();
         $this->assertTrue($instance instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoad);
+        $this->assertTrue(count($list) === 1);
     }
 
     /**
@@ -78,12 +79,29 @@ class ClassLoaderTest extends TestBase
     public function okLoadMultipleClass()
     {
         $classLoader = new ClassLoader();
-        $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple1", "ClassLoaderTestClassStaticLoadMultiple2"]);
+        $list = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple1", "ClassLoaderTestClassStaticLoadMultiple2"]);
         $classLoader->test();
         $instance1 = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple1();
         $instance2 = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple2();
         $this->assertTrue($instance1 instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple1);
         $this->assertTrue($instance2 instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple2);
+        $this->assertTrue(count($list) === 2);
+    }
+
+    /**
+     * 正常系
+     * 検索結果で複数のファイルが該当した場合、全てロードされること
+     * @test
+     */
+    public function okSearchMultipleFile()
+    {
+        $classLoader = new ClassLoader();
+        $classLoader->test();
+        $list = $classLoader->load("UtilityFileSearch");
+        $instance1 = new \WebStream\Test\TestData\UtilityFileSearch1();
+        $instance2 = new \WebStream\Test\TestData\UtilityFileSearch2();
+        $this->assertTrue($instance1 instanceof \WebStream\Test\TestData\UtilityFileSearch1);
+        $this->assertTrue($instance2 instanceof \WebStream\Test\TestData\UtilityFileSearch2);
     }
 
     /**
@@ -115,31 +133,17 @@ class ClassLoaderTest extends TestBase
 
     /**
      * 正常系
-     * 検索結果で複数のファイルが該当した場合、全てロードされること
-     * @test
-     */
-    public function okSearchMultipleFile()
-    {
-        $classLoader = new ClassLoader();
-        $classLoader->test();
-        $classLoader->load("UtilityFileSearch");
-        $instance1 = new \WebStream\Test\TestData\UtilityFileSearch1();
-        $instance2 = new \WebStream\Test\TestData\UtilityFileSearch2();
-        $this->assertTrue($instance1 instanceof \WebStream\Test\TestData\UtilityFileSearch1);
-        $this->assertTrue($instance2 instanceof \WebStream\Test\TestData\UtilityFileSearch2);
-    }
-
-    /**
-     * 異常系
      * 複数のクラスロード時に存在しないクラスが指定された場合、
-     * 存在するクラスもロードされないこと
+     * 存在するクラスのみロードされること
      * @test
      */
-    public function ngLoadMultipleClass()
+    public function okLoadMultipleClassWithNotExistClass()
     {
         $classLoader = new ClassLoader();
         $classLoader->test();
-        $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple3", "DummyClass"]);
+        $list = $classLoader->load(["ClassLoaderTestClassStaticLoadMultiple3", "DummyClass"]);
         $instance = new \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple3();
+        $this->assertTrue($instance instanceof \WebStream\Test\TestData\ClassLoaderTestClassStaticLoadMultiple3);
+        $this->assertTrue(count($list) === 1);
     }
 }

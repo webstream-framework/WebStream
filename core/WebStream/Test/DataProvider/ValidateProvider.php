@@ -157,4 +157,20 @@ trait ValidateProvider
         ];
     }
 
+    public function customValidateProvider()
+    {
+        return [
+            ["/test_validate/custom/mail/get", "get", "test", "honoka@lovelive.com"],
+            ["/test_validate/custom/mail/post", "post", "test", "honoka@lovelive.com"],
+            ["/test_validate/custom/mail/put", "put", "test", "honoka@lovelive.com"],
+            ["/test_validate/custom/mail/all", "all", "test", "honoka@lovelive.com"]
+        ];
+    }
+
+    public function invalidCustomValidateProvider()
+    {
+        return [
+            ["/test_validate/custom/invalid/get", "WebStream\Exception\Extend\ValidateException"]
+        ];
+    }
 }

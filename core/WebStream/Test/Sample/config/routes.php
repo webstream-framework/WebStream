@@ -317,5 +317,10 @@ Router::setRule([
     '/test_validate/invalid_rule/range2' => "test_validate#invalid_rule_range2",
     '/test_validate/invalid_rule/regexp' => "test_validate#invalid_rule_regexp",
     '/test_validate/invalid_annotation1' => "test_validate#invalid_validate_annotation2",
-    '/test_validate/invalid_annotation2' => "test_validate#invalid_validate_annotation2"
+    '/test_validate/invalid_annotation2' => "test_validate#invalid_validate_annotation2",
+    '/test_validate/custom/mail/get' => "test_validate#get_mail",
+    '/test_validate/custom/mail/post' => "test_validate#post_mail",
+    '/test_validate/custom/mail/put' => "test_validate#put_mail",
+    '/test_validate/custom/mail/all' => "test_validate#all_mail",
+    '/test_validate/custom/invalid/get' => "test_validate#duplicate_validate_rule"
 ]);
