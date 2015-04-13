@@ -16,7 +16,7 @@ class Equal implements IValidate
     {
         $isValid = false;
         if (preg_match('/^equal\[(.+)\]$/', $rule, $matches)) {
-            $isValid = $value === $matches[1];
+            $isValid = $value === null || $value === $matches[1];
         }
 
         return $isValid;

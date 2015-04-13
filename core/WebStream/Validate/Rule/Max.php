@@ -16,7 +16,7 @@ class Max implements IValidate
     {
         $isValid = false;
         if (preg_match('/^max\[([-]?\d{1,}\.?\d{0,}?)\]$/', $rule, $matches)) {
-            $isValid = doubleval($value) <= doubleval($matches[1]);
+            $isValid = $value === null || doubleval($value) <= doubleval($matches[1]);
         }
 
         return $isValid;

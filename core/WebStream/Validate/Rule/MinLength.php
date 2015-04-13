@@ -16,7 +16,7 @@ class MinLength implements IValidate
     {
         $isValid = false;
         if (preg_match('/^min_length\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
-            $isValid = intval($matches[1]) <= mb_strlen($value, "UTF-8");
+            $isValid = $value === null || intval($matches[1]) <= mb_strlen($value, "UTF-8");
         }
 
         return $isValid;

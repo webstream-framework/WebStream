@@ -16,7 +16,7 @@ class Regexp implements IValidate
     {
         $isValid = false;
         if (preg_match('/^regexp\[(\/.*?\/[a-z]*)\]$/', $rule, $matches)) {
-            $isValid = preg_match($matches[1], $value);
+            $isValid = $value === null || preg_match($matches[1], $value);
         }
 
         return $isValid;

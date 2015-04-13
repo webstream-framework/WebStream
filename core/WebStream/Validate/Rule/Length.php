@@ -16,7 +16,7 @@ class Length implements IValidate
     {
         $isValid = false;
         if (preg_match('/^length\[(0|[1-9]\d*)\]$/', $rule, $matches)) {
-            $isValid = mb_strlen($value, "UTF-8") === intval($matches[1]);
+            $isValid = $value === null || mb_strlen($value, "UTF-8") === intval($matches[1]);
         }
 
         return $isValid;

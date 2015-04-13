@@ -14,6 +14,6 @@ class Number implements IValidate
      */
     public function isValid($value, $rule)
     {
-        return is_numeric($value);
+        return $value === null || is_numeric($value);
     }
 }
