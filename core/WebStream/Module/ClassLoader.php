@@ -54,8 +54,12 @@ class ClassLoader
     {
         $includeFile = $this->getRoot() . "/" . $filepath;
         if (file_exists($includeFile)) {
-            include_once $includeFile;
-            Logger::debug($includeFile . " import success.");
+            if ($ext === 'php') {
+                include_once $filepath;
+                Logger::debug($filepath . " import success.");
+            } else {
+                Logger::debug($filepath . " is not phpfile.");
+            }
 
             return true;
         }
@@ -75,12 +79,17 @@ class ClassLoader
             $iterator = $this->getFileSearchIterator($includeDir);
             $isSuccess = true;
             foreach ($iterator as $filepath => $fileObject) {
-                if ($filepath === $includeDir . "/." || $filepath === $includeDir . "/..") {
+                if (preg_match("/(?:\/\.|\/\.\.)$/", $filepath)) {
                     continue;
                 }
                 if (is_file($filepath)) {
-                    include_once $filepath;
-                    Logger::debug($filepath . " import success.");
+                    $ext = pathinfo($filepath, PATHINFO_EXTENSION);
+                    if ($ext === 'php') {
+                        include_once $filepath;
+                        Logger::debug($filepath . " import success.");
+                    } else {
+                        Logger::debug($filepath . " is not phpfile.");
+                    }
                 } else {
                     Logger::warn($filepath . " import failure.");
                     $isSuccess = false;
