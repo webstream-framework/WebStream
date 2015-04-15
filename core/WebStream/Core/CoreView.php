@@ -2,14 +2,11 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Logger;
-use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Template\ITemplateEngine;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
-use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Exception\Extend\IOException;
-use WebStream\Exception\Extend\ResourceNotFoundException;
 
 /**
  * CoreViewクラス
@@ -21,28 +18,20 @@ class CoreView implements CoreInterface
 {
     use Utility;
 
-    /** HTML記法 */
-    const TEMPLATE_MARK_HTML       = '%H';
-    /** PHP記法 */
-    const TEMPLATE_MARK_PHP        = '%P';
-    /** JavaScript記法 */
-    const TEMPLATE_MARK_JAVASCRIPT = '%J';
-    /** XML記法 */
-    const TEMPLATE_MARK_XML        = '%X';
-    /** Template記法 */
-    const TEMPLATE_MARK_TEMPLATE   = '%T';
-    /** リクエスト */
+    /**
+     * @var Request リクエスト
+     */
     private $request;
-    /** レスポンス */
+
+    /**
+     * @var Response レスポンス
+     */
     private $response;
-    /** セッション */
-    private $session;
-    /** CoreDelegator */
-    private $coreDelegator;
-    /** テンプレートのタイムスタンプ */
-    private $timestamp;
-    /** キャッシュ保存ディレクトリ */
-    private $cacheDir;
+
+    /**
+     * @var ITemplateEngine テンプレートエンジン
+     */
+    private $templateEngine;
 
     /**
      * {@inheritdoc}
@@ -52,8 +41,6 @@ class CoreView implements CoreInterface
         Logger::debug("View start.");
         $this->request  = $container->request;
         $this->response = $container->response;
-        $this->session  = $container->session;
-        $this->coreDelegator = $container->coreDelegator;
     }
 
     /**
@@ -71,40 +58,24 @@ class CoreView implements CoreInterface
      */
     public function __initialize(Container $container)
     {
-        $this->timestamp = 0;
-        $this->cacheDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE;
     }
 
     /**
-     * テンプレートキャッシュを作成する
-     * @param string テンプレートファイルパス
-     * @param string 保存データ
-     * @param integer 有効期限
+     * テンプレートエンジンを設定する
+     * @param ITemplateEngine テンプレートエンジン
      */
-    final public function cache($filename, $data, $expire)
+    public function setTemplateEngine(ITemplateEngine $templateEngine = null)
     {
-        $cache = new Cache($this->cacheDir);
-        $filepath = $this->cacheDir . "/" . $filename . ".cache";
-        if (!file_exists($filepath) || $this->timestamp > filemtime($filepath)) {
-            if ($cache->save($filename, $data, $expire)) {
-                Logger::debug("Write template cache file: " . $filepath);
-            } else {
-                throw new IOException("File write failure: " . $filepath);
-            }
-        }
+        $this->templateEngine = $templateEngine;
     }
 
     /**
      * テンプレートを描画する
-     * @param AnnotationContainer テンプレートコンテナ
-     * @param array<mixed> パラメータ
-     * @param string mime type
+     * @param array<string> パラメータ
      */
-    final public function draw($templatePath,
-                               array $params,
-                               $mimeType = "html")
+    public function draw(array $params)
     {
-        // Content-typeを出力
+        $mimeType = $params["mimeType"] ?: "html";
         $this->outputHeader($mimeType);
 
         // HTML,XML以外はテンプレートを使用しない
@@ -114,79 +85,22 @@ class CoreView implements CoreInterface
             return;
         }
 
-        // テンプレートを使用しない場合
-        if ($templatePath === null) {
-            Logger::debug("Template is not used.");
-
-            return;
+        if ($this->templateEngine !== null) {
+            $this->templateEngine->render($params);
         }
-
-        // テンプレートファイルパス
-        $template = STREAM_APP_ROOT . "/app/views/" . $templatePath;
-
-        // テンプレートファイルがない場合エラー
-        if (!is_file($template)) {
-            throw new ResourceNotFoundException("Invalid template file path: " . $template);
-        }
-
-        // テンプレートファイルの最新の変更日時を取得
-        $timestamp = filemtime($template);
-        if ($timestamp > $this->timestamp) {
-            $this->timestamp = $timestamp;
-        }
-
-        // テンプレートが見つからない場合は500になるのでエラー処理は不要
-        $content = file_get_contents($template);
-        $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
-
-        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.*\)})/', function ($matches) {
-            return "<div class='" . $this->getAsyncDomId() . "'>$matches[1]</div>";
-        }, $content);
-
-        $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
-        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
-
-        if ($mimeType === "xml") {
-            $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
-        } elseif ($mimeType === "html") {
-            $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
-            $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
-            // formタグが含まれる場合はCSRFトークンを付与する
-            if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
-                $this->addToken($params, $content);
-            } else {
-                // formタグがない場合、CSRFトークンセッションは不要なので削除
-                $this->session->delete($this->getCsrfTokenKey());
-            }
-        }
-
-        // テンプレートファイルをコンパイルし一時ファイルを作成
-        $temp = $this->getTemporaryDirectory() . "/" . $this->getRandomstring(30);
-        $fileSize = file_put_contents($temp, $content, LOCK_EX);
-        if ($fileSize === false) {
-            throw new IOException("File write failure: " . $temp);
-        } else {
-            Logger::debug("Write temporary template file: " . $temp);
-            Logger::debug("Compiled template file size: " . $fileSize);
-        }
-
-        $params["__params__"] = $params;
-        $params["__mimeType__"] = $mimeType;
-        $this->outputHTML($temp, $params);
-
-        unlink($temp);
     }
 
     /**
-     * テンプレートを描画する
-     * @param string テンプレートファイル
-     * @param mixed 展開するパラメータ
+     * テンプレートキャッシュを作成する
+     * @param string テンプレートファイルパス
+     * @param string 保存データ
+     * @param integer 有効期限
      */
-    private function outputHTML($template, $params)
+    public function templateCache($filepath, $cacheData, $cacheTime)
     {
-        extract($params);
-        $params = null;
-        include($template);
+        if ($this->templateEngine instanceof \WebStream\Template\Basic) {
+            $this->templateEngine->cache($filepath, $cacheData, $cacheTime);
+        }
     }
 
     /**
@@ -196,69 +110,6 @@ class CoreView implements CoreInterface
     private function outputHeader($type)
     {
         $this->response->setType($type);
-    }
-
-    /**
-     * トークンを追加する
-     * @param Hash Viewに描画するパラメータの参照
-     * @param String HTML文字列の参照
-     */
-    private function addToken(&$params, &$content)
-    {
-        $token = sha1($this->session->id() . microtime());
-        $this->session->set($this->getCsrfTokenKey(), $token);
-        $params["__csrf_token__"] = $token;
-        $this->addToeknHTML($content);
-    }
-
-    /**
-     * すべてのformタグにCSRF対策トークンを追加する
-     * @param String HTML文字列の参照
-     */
-    private function addToeknHTML(&$content)
-    {
-        // <meta>タグによるcharsetが指定されない場合は文字化けするのでその対策を行う
-        $content = mb_convert_encoding($content, 'html-entities', "UTF-8");
-        // DOMでformにアペンドする
-        $doc = new \DOMDocument();
-        // テンプレートがが断片でなく、完全の場合(layoutを使わずrenderだけで描画した場合)
-        // 警告が出るが処理は正常に実行出来るので無視する
-        @$doc->loadHTML($content);
-        $nodeList = $doc->getElementsByTagName("form");
-        $dummy_value = $this->getRandomString();
-        $nodeLength = $nodeList->length;
-        for ($i = 0; $i < $nodeLength; $i++) {
-            $node = $nodeList->item($i);
-            $method = $node->getAttribute("method");
-            if (preg_match('/^post$|^get$/i', $method)) {
-                $newNode = $doc->createElement("input");
-                $newNode->setAttribute("type", "hidden");
-                $newNode->setAttribute("name", $this->getCsrfTokenKey());
-                $newNode->setAttribute("value", $dummy_value);
-                $node->appendChild($newNode);
-            }
-        }
-        if ($nodeLength !== 0) {
-            $innerHTML = "";
-            $bodyNodeList = $doc->getElementsByTagName("html");
-            $bodyNode = $bodyNodeList->item(0);
-            $children = $bodyNode->childNodes;
-            foreach ($children as $child) {
-                $tmp = new \DOMDocument();
-                $tmp->formatOutput = true;
-                $tmp->appendChild($tmp->importNode($child, true));
-                $innerHTML .= trim($tmp->saveHTML());
-            }
-            $content = str_replace($dummy_value, '<?php echo $__csrf_token__; ?>', $innerHTML);
-        }
-        // 実体参照化をもとに戻す。
-        $map = array('&gt;' => '>',
-                     '&lt;' => '<',
-                     '%20'  => ' ',
-                     '%24'  => '$',
-                     '%5C'  => '\\');
-
-        $content = str_replace(array_keys($map), array_values($map), $content);
     }
 
     /**

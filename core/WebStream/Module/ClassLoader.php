@@ -38,27 +38,30 @@ class ClassLoader
     /**
      * クラスをロードする
      * @param string|array クラス名
+     * @return array<string> ロード済みクラスリスト
      */
     public function load($className)
     {
-        if (is_array($className)) {
-            $this->loadClassList($className);
-        } else {
-            $this->loadClass($className);
-        }
+        return is_array($className) ? $this->loadClassList($className) : $this->loadClass($className);
     }
 
     /**
      * ファイルをインポートする
      * @param string ファイルパス
+     * @param callable フィルタリング無名関数 trueを返すとインポート
      * @return boolean インポート結果
      */
-    public function import($filepath)
+    public function import($filepath, callable $filter = null)
     {
         $includeFile = $this->getRoot() . "/" . $filepath;
-        if (file_exists($includeFile)) {
-            include_once $includeFile;
-            Logger::debug($includeFile . " import success.");
+        if (is_file($includeFile)) {
+            $ext = pathinfo($includeFile, PATHINFO_EXTENSION);
+            if ($ext === 'php') {
+                if ($filter === null || (is_callable($filter) && $filter($includeFile) === true)) {
+                    include_once $includeFile;
+                    Logger::debug($includeFile . " import success.");
+                }
+            }
 
             return true;
         }
@@ -69,21 +72,27 @@ class ClassLoader
     /**
      * 指定ディレクトリのファイルをインポートする
      * @param string ディレクトリパス
+     * @param callable フィルタリング無名関数 trueを返すとインポート
      * @return boolean インポート結果
      */
-    public function importAll($dirPath)
+    public function importAll($dirPath, callable $filter = null)
     {
         $includeDir = realpath($this->getRoot() . "/" . $dirPath);
         if (is_dir($includeDir)) {
             $iterator = $this->getFileSearchIterator($includeDir);
             $isSuccess = true;
             foreach ($iterator as $filepath => $fileObject) {
-                if ($filepath === $includeDir . "/." || $filepath === $includeDir . "/..") {
+                if (preg_match("/(?:\/\.|\/\.\.)$/", $filepath)) {
                     continue;
                 }
                 if (is_file($filepath)) {
-                    include_once $filepath;
-                    Logger::debug($filepath . " import success.");
+                    $ext = pathinfo($filepath, PATHINFO_EXTENSION);
+                    if ($ext === 'php') {
+                        if ($filter === null || (is_callable($filter) && $filter($filepath) === true)) {
+                            include_once $filepath;
+                            Logger::debug($filepath . " import success.");
+                        }
+                    }
                 } else {
                     Logger::warn($filepath . " import failure.");
                     $isSuccess = false;
@@ -97,10 +106,11 @@ class ClassLoader
     /**
      * ロード可能なクラスを返却する
      * @param string クラス名(フルパス指定の場合はクラスパス)
-     * @return string|array ロード可能クラス
+     * @return array<string> ロード可能クラス
      */
     private function loadClass($className)
     {
+        $includeList = [];
         $rootDir = $this->getRoot();
 
         // 名前空間セパレータをパスセパレータに置換
@@ -116,7 +126,7 @@ class ClassLoader
             include_once $includeFile;
             Logger::debug($includeFile . " load success. (search from " . $rootDir . "/core/)");
 
-            return;
+            return [$includeFile];
         }
 
         // さらに見つからなかったらappディレクトリを名前空間付きで全検索
@@ -126,7 +136,7 @@ class ClassLoader
                 include_once $filepath;
                 Logger::debug($filepath . " load success. (search from " . $this->applicationRoot . "/app/)");
 
-                return;
+                return [$filepath];
             }
         }
 
@@ -135,17 +145,16 @@ class ClassLoader
             $classNameWithoutNamespace = $matches[1];
             // この処理が走るケースはapp配下のクラスがディレクトリ構成と名前空間が一致していない
             // 場合以外ない(テスト用クラス除く)ので、app配下の検索を優先する
-            $isInclude = false;
             $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
+                    $includeList[] = $filepath;
                     Logger::debug($filepath . " load success. (full search)");
-                    $isInclude = true;
                 }
             }
-            if ($isInclude) {
-                return;
+            if (!empty($includeList)) {
+                return $includeList;
             }
 
             // ここに到達するのはテスト用クラスのみ
@@ -153,24 +162,33 @@ class ClassLoader
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
-                    Logger::debug($includeFile . " load success. (full search, use in test)");
-                    $isInclude = true;
+                    $includeList[] = $filepath;
+                    Logger::debug($filepath . " load success. (full search, use in test)");
                 }
             }
-            if ($isInclude) {
-                return;
+            if (!empty($includeList)) {
+                return $includeList;
             }
         }
+
+        return $includeList;
     }
 
     /**
      * ロード可能なクラスを複数返却する
      * @param array クラス名
+     * @return array<string> ロード済みクラスリスト
      */
     private function loadClassList($classList)
     {
+        $includedlist = [];
         foreach ($classList as $className) {
-            $this->loadClass($className);
+            $result = $this->loadClass($className);
+            if (is_array($result)) {
+                $includedlist = array_merge($includedlist, $result);
+            }
         }
+
+        return $includedlist;
     }
 }

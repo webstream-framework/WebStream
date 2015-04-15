@@ -96,7 +96,7 @@ class ExceptionDelegator
             }
 
             foreach ($invokeMethods as $classpath => $invokeMethod) {
-                $params = ["class" => get_class($this->instance), "method" => $this->method];
+                $params = ["class" => get_class($this->instance), "method" => $this->method, "exception" => $originException];
                 $invokeMethod->invokeArgs($this->instance, [$params]);
                 Logger::debug("Execution of handling is success: " . $classpath);
             }

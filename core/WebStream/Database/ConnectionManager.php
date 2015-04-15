@@ -77,7 +77,7 @@ class ConnectionManager
             $databaseConfigContainer = new Container(false);
             foreach ($config as $key => $value) {
                 $dsnHash .= $key . $value;
-                $databaseConfigContainer->{$key} = $value;
+                $databaseConfigContainer->set($key, $value);
             }
             $dsnHash = md5($dsnHash);
 

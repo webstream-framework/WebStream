@@ -16,7 +16,7 @@ abstract class Annotation
      * constructor
      * @param array<string> アノテーションリスト
      */
-    public function __construct($annotations = [])
+    public function __construct(array $annotations = [])
     {
         $factory = new ContainerFactory($annotations);
         $this->onInject($factory->createContainer());

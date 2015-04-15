@@ -15,5 +15,4 @@ class TestExceptionHandlerParentController extends CoreController
     {
         echo "parent";
     }
-
 }

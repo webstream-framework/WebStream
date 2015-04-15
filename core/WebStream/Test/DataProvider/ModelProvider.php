@@ -138,6 +138,15 @@ trait ModelProvider
         ];
     }
 
+    public function entityUseTraitCauseCollisionProvider()
+    {
+        return [
+            ["/test_model47", "integerstring", "/test_model_prepare8"],
+            ["/test_model48", "integerstring", "/test_model_prepare9"],
+            ["/test_model49", "integerstring", "/test_model_prepare10"],
+        ];
+    }
+
     public function multipleQueryAnnotationProvider()
     {
         return [
