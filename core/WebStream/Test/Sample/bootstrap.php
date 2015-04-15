@@ -116,6 +116,11 @@ if ($isXhprof) {
 $classLoader = new ClassLoader();
 $classLoader->test();
 spl_autoload_register([$classLoader, "load"]);
+// app以下をすべて読み込む
+$classLoader->importAll("core/WebStream/Test/Sample/app", function ($filepath) {
+    // MVCレイヤのクラスとview配下のphpファイルは除外
+    return preg_match("/(?:(?:Controller|Service|Model)\.php|app\/views\/.+\.php)$/", $filepath) === 0;
+});
 register_shutdown_function('shutdownHandler');
 
 // サービスロケータをロード

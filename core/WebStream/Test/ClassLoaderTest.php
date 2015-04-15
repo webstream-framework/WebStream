@@ -133,6 +133,22 @@ class ClassLoaderTest extends TestBase
 
     /**
      * 正常系
+     * インポートするファイルをフィルタリングできること
+     * @test
+     */
+    public function okImportAllWithFilter()
+    {
+        $classLoader = new ClassLoader();
+        $classLoader->test();
+        $classLoader->importAll("core/WebStream/Test/TestData/ClassLoaderFilterTest", function ($filepath) {
+            return strpos($filepath, "ClassLoaderTestFilter1") !== false;
+        });
+        $this->assertTrue(function_exists("testImportAllFilter1"));
+        $this->assertFalse(function_exists("testImportAllFilter2"));
+    }
+
+    /**
+     * 正常系
      * 複数のクラスロード時に存在しないクラスが指定された場合、
      * 存在するクラスのみロードされること
      * @test

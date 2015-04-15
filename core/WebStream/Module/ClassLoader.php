@@ -48,17 +48,19 @@ class ClassLoader
     /**
      * ファイルをインポートする
      * @param string ファイルパス
+     * @param callable フィルタリング無名関数 trueを返すとインポート
      * @return boolean インポート結果
      */
-    public function import($filepath)
+    public function import($filepath, callable $filter = null)
     {
         $includeFile = $this->getRoot() . "/" . $filepath;
-        if (file_exists($includeFile)) {
+        if (is_file($includeFile)) {
+            $ext = pathinfo($includeFile, PATHINFO_EXTENSION);
             if ($ext === 'php') {
-                include_once $filepath;
-                Logger::debug($filepath . " import success.");
-            } else {
-                Logger::debug($filepath . " is not phpfile.");
+                if ($filter === null || (is_callable($filter) && $filter($includeFile) === true)) {
+                    include_once $includeFile;
+                    Logger::debug($includeFile . " import success.");
+                }
             }
 
             return true;
@@ -70,9 +72,10 @@ class ClassLoader
     /**
      * 指定ディレクトリのファイルをインポートする
      * @param string ディレクトリパス
+     * @param callable フィルタリング無名関数 trueを返すとインポート
      * @return boolean インポート結果
      */
-    public function importAll($dirPath)
+    public function importAll($dirPath, callable $filter = null)
     {
         $includeDir = realpath($this->getRoot() . "/" . $dirPath);
         if (is_dir($includeDir)) {
@@ -85,10 +88,10 @@ class ClassLoader
                 if (is_file($filepath)) {
                     $ext = pathinfo($filepath, PATHINFO_EXTENSION);
                     if ($ext === 'php') {
-                        include_once $filepath;
-                        Logger::debug($filepath . " import success.");
-                    } else {
-                        Logger::debug($filepath . " is not phpfile.");
+                        if ($filter === null || (is_callable($filter) && $filter($filepath) === true)) {
+                            include_once $filepath;
+                            Logger::debug($filepath . " import success.");
+                        }
                     }
                 } else {
                     Logger::warn($filepath . " import failure.");
