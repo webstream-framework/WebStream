@@ -93,9 +93,6 @@ class AnnotationDelegator
         // @Template
         $annotationContainer->template = $factory->createTemplate();
 
-        // @TemplateCache
-        $annotationContainer->templateCache = $factory->createTemplateCache();
-
         // @ExceptionHandler
         $annotationContainer->exceptionHandler = $factory->createExceptionHandler();
 

@@ -38,11 +38,11 @@ require_once dirname(__FILE__) . '/../../Annotation/Inject.php';
 require_once dirname(__FILE__) . '/../../Annotation/Autowired.php';
 require_once dirname(__FILE__) . '/../../Annotation/Header.php';
 require_once dirname(__FILE__) . '/../../Annotation/Filter.php';
-require_once dirname(__FILE__) . '/../../Annotation/Template.php';
-require_once dirname(__FILE__) . '/../../Annotation/TemplateCache.php';
 require_once dirname(__FILE__) . '/../../Annotation/ExceptionHandler.php';
 require_once dirname(__FILE__) . '/../../Annotation/Database.php';
 require_once dirname(__FILE__) . '/../../Annotation/Query.php';
+require_once dirname(__FILE__) . '/../../Annotation/Template.php';
+require_once dirname(__FILE__) . '/../../Annotation/Validate.php';
 require_once dirname(__FILE__) . '/../../Database/DatabaseManager.php';
 require_once dirname(__FILE__) . '/../../Database/ConnectionManager.php';
 require_once dirname(__FILE__) . '/../../Database/EntityManager.php';
@@ -61,7 +61,20 @@ require_once dirname(__FILE__) . '/../../Delegate/AnnotationDelegatorFactory.php
 require_once dirname(__FILE__) . '/../../Delegate/ExceptionDelegator.php';
 require_once dirname(__FILE__) . '/../../Delegate/Resolver.php';
 require_once dirname(__FILE__) . '/../../Delegate/Router.php';
-require_once dirname(__FILE__) . '/../../Delegate/Validator.php';
+require_once dirname(__FILE__) . '/../../Template/ITemplateEngine.php';
+require_once dirname(__FILE__) . '/../../Template/Basic.php';
+require_once dirname(__FILE__) . '/../../Template/Twig.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/IValidate.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Equal.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Length.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Max.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/MaxLength.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Min.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/MinLength.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Number.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Range.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Regexp.php';
+require_once dirname(__FILE__) . '/../../Validate/Rule/Required.php';
 require_once dirname(__FILE__) . '/../../Exception/ApplicationException.php';
 require_once dirname(__FILE__) . '/../../Exception/UncatchableException.php';
 require_once dirname(__FILE__) . '/../../Exception/DelegateException.php';
@@ -89,7 +102,6 @@ require_once dirname(__FILE__) . '/../../Http/Request.php';
 require_once dirname(__FILE__) . '/../../Http/Response.php';
 require_once dirname(__FILE__) . '/../../Http/Session.php';
 require_once dirname(__FILE__) . '/config/routes.php';
-require_once dirname(__FILE__) . '/config/validates.php';
 
 // ログ出力ディレクトリ、ログレベルをテスト用に変更
 Logger::init("core/WebStream/Test/Sample/config/log.ini");
@@ -104,6 +116,11 @@ if ($isXhprof) {
 $classLoader = new ClassLoader();
 $classLoader->test();
 spl_autoload_register([$classLoader, "load"]);
+// app以下をすべて読み込む
+$classLoader->importAll("core/WebStream/Test/Sample/app", function ($filepath) {
+    // MVCレイヤのクラスとview配下のphpファイルは除外
+    return preg_match("/(?:(?:Controller|Service|Model)\.php|app\/views\/.+\.php)$/", $filepath) === 0;
+});
 register_shutdown_function('shutdownHandler');
 
 // サービスロケータをロード

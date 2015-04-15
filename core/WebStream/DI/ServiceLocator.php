@@ -4,7 +4,6 @@ namespace WebStream\DI;
 use WebStream\Module\Utility;
 use WebStream\Module\Container;
 use WebStream\Delegate\Router;
-use WebStream\Delegate\Validator;
 use WebStream\Delegate\CoreDelegator;
 use WebStream\Delegate\AnnotationDelegator;
 use WebStream\Http\Request;
@@ -88,10 +87,6 @@ class ServiceLocator
         $container->router = function () use (&$container) {
             return new Router($container->request);
         };
-        // Validator
-        $container->validator = function () use (&$container) {
-            return new Validator($container->request, $container->router);
-        };
         // CoreDelegator
         $container->coreDelegator = function () use (&$container) {
             return new CoreDelegator($container);
@@ -106,6 +101,10 @@ class ServiceLocator
         $container->applicationDir = $isTest ? $this->getTestApplicationDir() : "app";
         // test
         $container->isTest = $isTest;
+        // twig
+        $container->twig = function () {
+            Twig_Autoloader::register();
+        };
 
         return $container;
     }

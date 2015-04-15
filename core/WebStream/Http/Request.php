@@ -219,6 +219,16 @@ class Request
     }
 
     /**
+     * DELETEかどうかチェックする
+     * @return boolean DELETEならtrue
+     */
+    public function isDelete()
+    {
+        // not implementation
+        return false;
+    }
+
+    /**
      * GETパラメータ取得
      * @param string パラメータキー
      * @return string|array<string> GETパラメータ
@@ -265,7 +275,7 @@ class Request
      */
     public function delete()
     {
-        // TODO implementation
+        // not implementation
         return null;
     }
 }

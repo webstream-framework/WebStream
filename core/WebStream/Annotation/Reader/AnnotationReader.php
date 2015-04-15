@@ -3,7 +3,6 @@ namespace WebStream\Annotation\Reader;
 
 use WebStream\Core\CoreInterface;
 use WebStream\Module\Container;
-use WebStream\Module\ClassLoader;
 use WebStream\Delegate\ExceptionDelegator;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
@@ -53,7 +52,6 @@ class AnnotationReader
         $this->container = $container;
         $this->refClass = new \ReflectionClass($instance);
         $this->injectedAnnotations = [];
-        $this->loadCustomAnnotation();
     }
 
     /**
@@ -86,18 +84,6 @@ class AnnotationReader
         } catch (DoctrineAnnotationException $e) {
             throw new AnnotationException($e);
         }
-    }
-
-    /**
-     * カスタムアノテーションをロードする
-     */
-    private function loadCustomAnnotation()
-    {
-        $classLoader = new ClassLoader();
-        if ($this->container->isTest) {
-            $classLoader->test();
-        }
-        $classLoader->importAll($this->container->applicationDir . "/annotations");
     }
 
     /**

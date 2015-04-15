@@ -9,92 +9,96 @@ namespace WebStream\Test\DataProvider;
  */
 trait TemplateProvider
 {
-    public function templateProvider()
+    public function basicTemplateProvider()
     {
         return [
-            ["/test_template/index1", "index1"],
-            ["/test_template/index2", "hoge"],
-            ["/test_template/index3", "honoka"],
-            ["/test_template/index4", "kotori"],
-            ["/test_template/index5", "nicomaki"],
-            ["/test_template/index6", "printemps"],
-            ["/test_template/index7", "rinchan"]
+            ["/test_template/basic/index1", "index1"],
+            ["/test_template/basic/index2", "index2"],
+            ["/test_template/basic/index3", "index3"],
+            ["/test_template/basic/index4", "index4"],
+            ["/test_template/basic/index5", "index5"],
+            ["/test_template/basic/index6", "index6"],
+            ["/test_template/basic/index7", "index7"],
+            ["/test_template/basic/index8", "index8"],
+            ["/test_template/basic/index9", "index9"],
+            ["/test_template/basic/index10", "index10"],
+            ["/test_template/basic/index11", "index11"],
+            ["/test_template/basic/index12", "WebStream\Delegate\CoreExceptionDelegator"],
+            ["/test_template/basic/index13", "WebStream\Delegate\CoreExceptionDelegator"],
+            ["/test_template/basic/index14", "WebStream\Test\TestData\Sample\App\Helper\TestBasicTemplateWithHelperHelper"],
+            ["/test_template/basic/index15", "WebStream\Test\TestData\Sample\App\Service\TestBasicTemplateWithServiceService"],
+            ["/test_template/basic/index16", "WebStream\Test\TestData\Sample\App\Model\TestBasicTemplateWithModelModel"],
         ];
     }
 
-    public function templateModelProvider()
+    public function basicTemplateJavaScriptEscapeProvider()
     {
         return [
-            ["/test_template/model/is_model", "WebStream\Delegate\CoreExecuteDelegator"],
-            ["/test_template/model/origin_model", "WebStream\Test\TestData\Sample\App\Model\TestTemplateWithModelModel"],
-            ["/test_template/model/access_db", "nicomaki"]
+            ["/test_template/basic/javascript1", "<html><head><script type='text/javascript'>alert('honoka\u000D\u000Akotori')</script></head></html>"],
+            ["/test_template/basic/javascript2", "<html><head><script type='text/javascript'>alert('honoka\u000D\u000Aumi')</script></head></html>"],
+            ["/test_template/basic/javascript3", "<html><head><script type='text/javascript'>alert('kotori\u000D\u000Aumi')</script></head></html>"],
+            ["/test_template/basic/javascript4", "<html><head><script type='text/javascript'>alert('nico\u000D\u000A\u000D\u000A\u000D\u000Amaki')</script></head></html>"],
+            ["/test_template/basic/javascript5", "<html><head><script type='text/javascript'>alert('\u0022erichika\u0022')</script></head></html>"],
+            ["/test_template/basic/javascript6", "<html><head><script type='text/javascript'>alert('\u0027nozomi\u0027')</script></head></html>"],
+            ["/test_template/basic/javascript7", "<html><head><script type='text/javascript'>alert('\\x3cscript\\x3e\\x3c\/script\\x3e')</script></head></html>"],
+            ["/test_template/basic/javascript8", "<html><head><script type='text/javascript'>alert('rin\u000B\u000Cpana')</script></head></html>"]
         ];
     }
 
-    public function templateHelperProvider()
+    public function basicTemplateXmlProvider()
     {
         return [
-            ["/test_template/helper/is_helper", "WebStream\Delegate\CoreExecuteDelegator"],
-            ["/test_template/helper/origin_helper", "WebStream\Test\TestData\Sample\App\Helper\TestTemplateWithHelperHelper"],
-            ["/test_template/helper/access_helper", "kayochin"]
+            ["/test_template/basic/xml", "application/xml"]
         ];
     }
 
-    public function templateHtmlEscapeProvider()
+    public function basicTemplateHtmlEscapeProvider()
     {
         return [
-            ["/test_template/html1", "&lt;p&gt;test&lt;/p&gt;"]
+            ["/test_template/basic/html1", "<p>test</p>"],
+            ["/test_template/basic/html2", "&lt;p&gt;test&lt;/p&gt;"]
         ];
     }
 
-    public function templatePhpEscapeProvider()
+    public function basicTemplateCacheTimeProvider()
     {
         return [
-            ["/test_template/php1", "<p>test</p>"]
+            ["/test_template/basic/index17"]
         ];
     }
 
-    public function templateJavaScriptEscapeProvider()
+    public function basicTemplateErrorProvider()
     {
         return [
-            ["/test_template/javascript1", "<html><head><script type='text/javascript'>alert('honoka\u000D\u000Akotori')</script></head></html>"],
-            ["/test_template/javascript2", "<html><head><script type='text/javascript'>alert('honoka\u000D\u000Aumi')</script></head></html>"],
-            ["/test_template/javascript3", "<html><head><script type='text/javascript'>alert('kotori\u000D\u000Aumi')</script></head></html>"],
-            ["/test_template/javascript4", "<html><head><script type='text/javascript'>alert('nico\u000D\u000A\u000D\u000A\u000D\u000Amaki')</script></head></html>"],
-            ["/test_template/javascript5", "<html><head><script type='text/javascript'>alert('\u0022erichika\u0022')</script></head></html>"],
-            ["/test_template/javascript6", "<html><head><script type='text/javascript'>alert('\u0027nozomi\u0027')</script></head></html>"],
-            ["/test_template/javascript7", "<html><head><script type='text/javascript'>alert('\\x3cscript\\x3e\\x3c\/script\\x3e')</script></head></html>"],
-            ["/test_template/javascript8", "<html><head><script type='text/javascript'>alert('rin\u000B\u000Cpana')</script></head></html>"]
+            ["/test_template/basic/error1", 500],
+            ["/test_template/basic/error2", 404],
+            ["/test_template/basic/error3", 500],
+            ["/test_template/basic/error4", 500],
+            ["/test_template/basic/error5", 500],
+            ["/test_template/basic/error6", 500],
+            ["/test_template/basic/error7", 500],
+            ["/test_template/basic/error8", 500],
+            ["/test_template/basic/error9", 500],
+            ["/test_template/basic/error10", 500]
         ];
     }
 
-    public function templatePhpNonEscapeProvider()
+    public function twigTemplateProvider()
     {
         return [
-            ["/test_template/php1", "<p>test</p>"]
+            ["/test_template/twig/index1", "index1"],
+            ["/test_template/twig/index2", "index2"],
+            ["/test_template/twig/index3", "honoka"],
+            ["/test_template/twig/index4", "index4"],
+            ["/test_template/twig/index5", "index5"],
+            ["/test_template/twig/index6", "index6"]
         ];
     }
 
-    public function templateErrorProvider()
+    public function twigTemplateErrorProvider()
     {
         return [
-            ["/test_template/error1", 404],
-            ["/test_template/error2", 404],
-            ["/test_template/error3", 500],
-            ["/test_template/error4", 500],
-            ["/test_template/error5", 500],
-            ["/test_template/error6", 500],
-            ["/test_template/error7", 500],
-            ["/test_template/error8", 500],
-            ["/test_template/error9", 500]
-        ];
-    }
-
-    public function notfoundModelOrHelperProvider()
-    {
-        return [
-            ["/test_template/model/null_model", 500],
-            ["/test_template/helper/null_helper", 500]
+            ["/test_template/twig/error1", 404]
         ];
     }
 }
