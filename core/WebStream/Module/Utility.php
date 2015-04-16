@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\Exception\SystemException;
+
 /**
  * Utility
  * @author Ryuichi Tanaka
@@ -77,7 +79,11 @@ trait Utility
             }
         }
 
-        return $isProjectRoot ? $targetPath : null;
+        if (!$isProjectRoot) {
+            throw new SystemException("'.projectroot' file must be put in directly under the project directory.");
+        }
+
+        return $targetPath;
     }
 
     /**
@@ -147,9 +153,8 @@ trait Utility
     {
         // 正規化した絶対パス
         $realpath = $this->getRoot() . DIRECTORY_SEPARATOR . $filepath;
-        if (file_exists($realpath)) {
-            return parse_ini_file($realpath);
-        }
+
+        return file_exists($realpath) ? parse_ini_file($realpath) : null;
     }
 
     /**

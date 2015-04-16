@@ -12,7 +12,7 @@ use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Exception\ApplicationException;
-use WebStream\Exception\UncatchableException;
+use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Exception\Extend\MethodNotFoundException;
@@ -109,7 +109,7 @@ class CoreExecuteDelegator
                     $e = new ApplicationException($e->getMessage(), 500, $e);
                     break;
                 case "RuntimeException":
-                    $e = new UncatchableException($e->getMessage(), 500, $e);
+                    $e = new SystemException($e->getMessage(), 500, $e);
                     break;
             }
 

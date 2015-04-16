@@ -76,7 +76,7 @@ require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Range.php';
 require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Regexp.php';
 require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Required.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/ApplicationException.php';
-require_once dirname(__FILE__) . '/core/WebStream/Exception/UncatchableException.php';
+require_once dirname(__FILE__) . '/core/WebStream/Exception/SystemException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/DelegateException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/Extend/AnnotationException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/Extend/ClassNotFoundException.php';
@@ -108,7 +108,7 @@ Logger::init("config/log.ini");
 $classLoader = new ClassLoader();
 spl_autoload_register([$classLoader, "load"]);
 // app以下をすべて読み込む
-$classLoader->importAll("core/WebStream/Test/Sample/app", function ($filepath) {
+$classLoader->importAll("app", function ($filepath) {
     // MVCレイヤのクラスとview配下のphpファイルは除外
     return preg_match("/(?:(?:Controller|Service|Model)\.php|app\/views\/.+\.php)$/", $filepath) === 0;
 });

@@ -76,7 +76,7 @@ require_once dirname(__FILE__) . '/../../Validate/Rule/Range.php';
 require_once dirname(__FILE__) . '/../../Validate/Rule/Regexp.php';
 require_once dirname(__FILE__) . '/../../Validate/Rule/Required.php';
 require_once dirname(__FILE__) . '/../../Exception/ApplicationException.php';
-require_once dirname(__FILE__) . '/../../Exception/UncatchableException.php';
+require_once dirname(__FILE__) . '/../../Exception/SystemException.php';
 require_once dirname(__FILE__) . '/../../Exception/DelegateException.php';
 require_once dirname(__FILE__) . '/../../Exception/Extend/AnnotationException.php';
 require_once dirname(__FILE__) . '/../../Exception/Extend/ClassNotFoundException.php';

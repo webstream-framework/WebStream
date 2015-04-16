@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Exception\Extend;
 
-use WebStream\Exception\UncatchableException;
+use WebStream\Exception\SystemException;
 
 /**
  * CollectionException
@@ -9,7 +9,7 @@ use WebStream\Exception\UncatchableException;
  * @since 2013/12/14
  * @version 0.4
  */
-class CollectionException extends UncatchableException
+class CollectionException extends SystemException
 {
     /**
      * constructor

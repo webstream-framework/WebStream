@@ -6,7 +6,7 @@ use WebStream\Module\Logger;
 use WebStream\Module\Utility;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
-use WebStream\Exception\UncatchableException;
+use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
 
 /**
@@ -94,7 +94,7 @@ class Application
                 Logger::error($e->getMessage(), $e->getTraceAsString());
                 $this->response->move(500);
             }
-        } catch (UncatchableException $e) {
+        } catch (SystemException $e) {
             // 内部例外の内、ハンドリング不許可の例外
             $this->response->move($e->getCode());
         }
