@@ -103,6 +103,8 @@ require_once dirname(__FILE__) . '/core/WebStream/Http/Response.php';
 require_once dirname(__FILE__) . '/core/WebStream/Http/Session.php';
 require_once dirname(__FILE__) . '/config/routes.php';
 
+date_default_timezone_set('Asia/Tokyo');
+
 Logger::init("config/log.ini");
 
 $classLoader = new ClassLoader();

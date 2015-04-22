@@ -298,7 +298,7 @@ class ModelTest extends TestBase
      * 正常系
      * 複数のtraitをuseし、競合したメソッドをinsteadofした場合に結果をエンティティクラスにマッピングできること
      * @test
-     * @dataProvider entityUseTraitCauseCollision
+     * @dataProvider entityUseTraitCauseCollisionProvider
      */
     public function okEntityUseTraitCauseCollision($path, $response, $preparePath)
     {
@@ -376,4 +376,18 @@ class ModelTest extends TestBase
         $html = $http->get($url);
         $this->assertEquals($html, "WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError3Controller#model2");
     }
+
+    /**
+     * 異常系
+     * QueryXMLファイルの解析に失敗した場合、例外が発生すること
+     * @test
+     */
+    public function ngFailedToParseQueryXmlFile()
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . "/test_model50";
+        $html = $http->get($url);
+        $this->assertEquals($html, "WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError4Controller#model1");
+    }
+
 }

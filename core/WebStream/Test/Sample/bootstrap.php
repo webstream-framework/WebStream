@@ -103,6 +103,9 @@ require_once dirname(__FILE__) . '/../../Http/Response.php';
 require_once dirname(__FILE__) . '/../../Http/Session.php';
 require_once dirname(__FILE__) . '/config/routes.php';
 
+// デフォルトタイムゾーン
+date_default_timezone_set('Asia/Tokyo');
+
 // ログ出力ディレクトリ、ログレベルをテスト用に変更
 Logger::init("core/WebStream/Test/Sample/config/log.ini");
 
