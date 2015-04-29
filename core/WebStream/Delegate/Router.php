@@ -64,7 +64,7 @@ class Router
                 throw new RouterException("Include the prohibit routing path: " . $path);
             }
             // 許可したルーティングパス定義に合っていなければ弾く
-            if (!preg_match('/^\/{1}(?:$|[a-zA-Z]{1}[a-zA-Z0-9.-_\/]*$)/', $path)) {
+            if (!preg_match('/^\/{1}(?:$|:?[a-zA-Z]{1}[a-zA-Z0-9-_\/\.:]{0,}$)/', $path)) {
                 throw new RouterException("Invalid path defintion: " . $path);
             }
             // ルールとURLがマッチした場合に動的にチェックを掛ける
