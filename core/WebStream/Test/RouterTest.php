@@ -35,7 +35,7 @@ class RouterTest extends TestBase
      * @test
      * @dataProvider resolvePathWithoutPlaceHolderProvider
      */
-    public function okResolvePathWithoutPlaceHolder($path, $ca, $responseText)
+    public function okResolvePathWithoutPlaceHolder($path, $responseText)
     {
         $url = $this->getDocumentRootURL() . $path;
         $response = file_get_contents($url);
@@ -48,9 +48,9 @@ class RouterTest extends TestBase
      * @test
      * @dataProvider resolvePathWithPlaceHolderProvider
      */
-    public function okResolvePathWithPlaceHolder($path, $ca, $param)
+    public function okResolvePathWithPlaceHolder($path, $param)
     {
-        $path = preg_replace('/:[a-zA-Z0-9]+/', $param, $path, 1);
+        $path = preg_replace('/:[a-zA-Z0-9_]+/', $param, $path, 1);
         $url = $this->getDocumentRootURL() . $path;
         $response = file_get_contents($url);
         $this->assertEquals($response, $param);
@@ -229,5 +229,20 @@ class RouterTest extends TestBase
         @file_get_contents($url);
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "500");
+    }
+
+    /**
+     * 異常系
+     * プレースホルダーの先頭文字が数字の場合、
+     * 404エラーになること
+     * @test
+     * @dataProvider placeHolderInitialCharIsNumberProvider
+     */
+    public function ngPlaceHolderInitialCharIsNumber($path)
+    {
+        $url = $this->getDocumentRootURL() . $path;
+        @file_get_contents($url);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "404");
     }
 }

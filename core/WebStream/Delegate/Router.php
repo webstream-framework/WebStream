@@ -113,7 +113,7 @@ class Router
                 $tokens[$i] = $token;
             }
             // プレースホルダのパラメータをセット
-            $expantion_path = $path;
+            $expantionPath = $path;
             // PATH_INFOの階層数とルーティング定義の階層数が一致すればルーティングがマッチ
             if (($this->pathInfo !== $path) &&
                 count(explode('/', $path)) === count(explode('/', $this->pathInfo))) {
@@ -124,12 +124,13 @@ class Router
                         $key = $key_list[$j - 1];
                         $route["params"][$key] = Security::safetyIn($matches[$j]);
                         // プレースホルダを一時展開する
-                        $expantion_path = preg_replace('/:[a-zA-Z0-9]+/', $matches[$j], $expantion_path, 1);
+                        $expantionPath = preg_replace('/:[a-zA-Z_]{1}[a-zA-Z0-9_]{0,}/', $matches[$j], $expantionPath, 1);
                     }
                 }
             }
+
             // プレースホルダを展開済みのパス定義が完全一致したときはController、Actionを展開する
-            if ($this->pathInfo === $expantion_path &&
+            if ($this->pathInfo === $expantionPath &&
                 preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
                 $route["controller"] = $matches[1];
                 $route["action"] = $matches[2];

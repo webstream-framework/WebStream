@@ -13,15 +13,17 @@ trait RouterProvider
     public function resolvePathWithoutPlaceHolderProvider()
     {
         return [
-            ["/", "test#test1", "test1"],
-            ["/top", "test#test2", "test2"]
+            ["/", "test1"],
+            ["/top", "test2"]
         ];
     }
 
     public function resolvePathWithPlaceHolderProvider()
     {
         return [
-            ['/top/:id', "test#test3", "test3"]
+            ['/top/:id', "test3"],
+            ['/top/snake1/:snake_id', "test4"],
+            ['/top/:_snake_id', "test5"]
         ];
     }
 
@@ -124,6 +126,13 @@ trait RouterProvider
         return [
             ["/snake_ng1"],
             ["/snake_ng2"]
+        ];
+    }
+
+    public function placeHolderInitialCharIsNumberProvider()
+    {
+        return [
+            ["/placeholder_ng1/1"]
         ];
     }
 }
