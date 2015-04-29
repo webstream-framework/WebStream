@@ -112,6 +112,13 @@ trait RouterProvider
         ];
     }
 
+    public function compileLessProvider()
+    {
+        return [
+            ['/css/sample_less.css', '/core/WebStream/Test/Sample/app/views/_public/css/sample_less.css']
+        ];
+    }
+
     // 異常系
     public function resolveUnknownProvider()
     {

@@ -95,6 +95,21 @@ class Router
             $this->route["staticFile"] = $staticFile;
 
             return;
+        } elseif (pathinfo($staticFile, PATHINFO_EXTENSION) == 'css') {
+            // cssファイル指定かつ存在しない場合で、同ディレクトリ内にlessファイルがあればcssにコンパイルする
+            $less = new \lessc();
+            $dirpath = dirname($staticFile);
+            $filenameWitoutExt = pathinfo($staticFile, PATHINFO_FILENAME);
+            $lessFilepath = $dirpath . "/" . $filenameWitoutExt . ".less";
+            if (@$less->checkedCompile($lessFilepath, $staticFile)) {
+                if (is_file($staticFile)) {
+                    $this->route["staticFile"] = $staticFile;
+                } else {
+                    Logger::error("Failed to file create, cause parmission denied: " . $dirpath);
+                }
+
+                return;
+            }
         }
         // ルーティングルールからController、Actionを取得
         foreach (self::$rules as $path => $ca) {

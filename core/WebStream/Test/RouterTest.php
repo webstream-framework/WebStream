@@ -203,6 +203,22 @@ class RouterTest extends TestBase
     }
 
     /**
+     * 正常系
+     * LESSファイルをCSSファイルに動的にコンパイルできること
+     * @test
+     * @dataProvider compileLessProvider
+     */
+    public function okCompileLess($path, $filepath)
+    {
+        if (is_file($this->getProjectRootPath() . $filepath)) {
+            unlink($this->getProjectRootPath() . $filepath);
+        }
+        $http = new HttpClient();
+        $result = $http->get($this->getDocumentRootURL() . $path);
+        $this->assertEquals($http->getStatusCode(), 200);
+    }
+
+    /**
      * 異常系
      * 存在しないコントローラまたはアクションが指定された場合、500エラーになること
      * @test
