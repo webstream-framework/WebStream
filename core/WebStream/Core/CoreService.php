@@ -5,6 +5,7 @@ use WebStream\Delegate\Resolver;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Module\PropertyProxy;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 
@@ -17,6 +18,7 @@ use WebStream\Annotation\Filter;
 class CoreService implements CoreInterface
 {
     use Utility;
+    use PropertyProxy;
 
     /**
      * @var Container コンテナ
@@ -43,6 +45,7 @@ class CoreService implements CoreInterface
     public function __destruct()
     {
         Logger::debug("Service end.");
+        $this->__clear();
     }
 
     /**

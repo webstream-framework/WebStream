@@ -326,5 +326,9 @@ Router::setRule([
     '/test_validate/custom/mail/post' => "test_validate#post_mail",
     '/test_validate/custom/mail/put' => "test_validate#put_mail",
     '/test_validate/custom/mail/all' => "test_validate#all_mail",
-    '/test_validate/custom/invalid/get' => "test_validate#duplicate_validate_rule"
+    '/test_validate/custom/invalid/get' => "test_validate#duplicate_validate_rule",
+    '/test_view_model_in_service/service1' => "test_view_model_in_service#service1",
+    '/test_view_model_in_service/service2' => "test_view_model_in_service#service2",
+    '/test_view_model_in_model/model1' => "test_view_model_in_model#model1",
+    '/test_view_model_in_model/model2' => "test_view_model_in_model#model2"
 ]);

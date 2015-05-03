@@ -71,6 +71,14 @@ class CoreExecuteDelegator
     }
 
     /**
+     * overload getter
+     */
+    public function __get($name)
+    {
+        return $this->instance->{$name};
+    }
+
+    /**
      * 処理を実行する
      * @param string メソッド名
      * @param array 引数リスト

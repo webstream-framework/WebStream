@@ -312,6 +312,22 @@ class ModelTest extends TestBase
     }
 
     /**
+     * 正常系
+     * プロパティを明示的に定義しなくてもViewから参照できること
+     * ただしプロパティを明示的に定義した場合かつGetterを準備しない場合は参照できないこと
+     * @test
+     * @dataProvider okPropertyProxyProvider
+     */
+    public function okPropertyProxy($path, $response)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
      * 異常系
      * 不明なDatabaseDriverを指定した場合、例外が発生すること
      * @test

@@ -4,6 +4,7 @@ namespace WebStream\Core;
 use WebStream\Delegate\Resolver;
 use WebStream\Module\Utility;
 use WebStream\Module\Logger;
+use WebStream\Module\PropertyProxy;
 use WebStream\Module\Container;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
@@ -18,6 +19,7 @@ use WebStream\Exception\Extend\CsrfException;
 class CoreController implements CoreInterface
 {
     use Utility;
+    use PropertyProxy;
 
     /**
      * @var Session セッション
@@ -33,6 +35,11 @@ class CoreController implements CoreInterface
      * @var Response レスポンス
      */
     private $response;
+
+    /**
+     * @var CoreDelegator コアデリゲータ
+     */
+    private $coreDelegator;
 
     /**
      * @var array<mixed> カスタムアノテーション
@@ -57,6 +64,7 @@ class CoreController implements CoreInterface
     public function __destruct()
     {
         Logger::debug("Controller end.");
+        $this->__clear();
     }
 
     /**

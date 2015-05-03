@@ -38,4 +38,12 @@ trait ServiceProvider
             ['/exist_service_exist_model_exist_model_method_params', "abcdef"]
         ];
     }
+
+    public function okPropertyProxyProvider()
+    {
+        return [
+            ['/test_view_model_in_service/service1', "honoka"],
+            ['/test_view_model_in_service/service2', "1"]
+        ];
+    }
 }
