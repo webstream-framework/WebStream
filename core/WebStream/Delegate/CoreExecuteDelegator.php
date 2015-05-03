@@ -75,9 +75,10 @@ class CoreExecuteDelegator
      */
     public function __get($name)
     {
-        return $this->instance->{$name};
-    }
+        $instance = $this->injectedInstance ?: $this->instance;
 
+        return $instance->{$name};
+    }
     /**
      * 処理を実行する
      * @param string メソッド名
