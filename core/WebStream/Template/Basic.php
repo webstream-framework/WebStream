@@ -81,8 +81,13 @@ class Basic implements ITemplateEngine
         $content = file_get_contents($realpath);
         $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
 
-        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.*\)})/', function ($matches) {
-            return "<div class='" . $this->getAsyncDomId() . "'>$matches[1]</div>";
+        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.+?\)})/', function ($matches) {
+            $asyncId = $this->getAsyncDomId();
+            $context = preg_replace_callback('/\$' . $this->getHelperVariableName() . '->async\((.+?)\)/', function ($matches2) use ($asyncId) {
+                return '$' . $this->getHelperVariableName() . '->async(' . $matches2[1] . ',\'' . $asyncId . '\')';
+            }, $matches[1]);
+
+            return "<div id='$asyncId'>$context</div>";
         }, $content);
 
         $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);

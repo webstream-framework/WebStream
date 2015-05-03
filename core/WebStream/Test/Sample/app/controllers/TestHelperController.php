@@ -70,8 +70,26 @@ class TestHelperController extends CoreController
     {
     }
 
+    /**
+     * @Inject
+     * @Template("base8.tmpl")
+     */
+    public function help8()
+    {
+    }
+
     public function help7Async()
     {
         echo "<p>async</p>";
+    }
+
+    public function help8Async2()
+    {
+        echo "nico";
+    }
+
+    public function help8Async3()
+    {
+        echo "maki";
     }
 }
