@@ -61,6 +61,7 @@ class CoreModel implements CoreInterface
     public function __destruct()
     {
         Logger::debug("Model end.");
+        $this->__clear();
     }
 
     /**
