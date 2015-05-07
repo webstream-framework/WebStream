@@ -38,4 +38,12 @@ class TestSecurityController extends CoreController
     public function testCsrfPostView()
     {
     }
+
+    /**
+     * @Inject
+     * @Template("csrf_helper.tmpl")
+     */
+    public function testCsrfHelper()
+    {
+    }
 }

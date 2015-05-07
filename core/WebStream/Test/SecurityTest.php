@@ -50,13 +50,14 @@ class SecurityTest extends TestBase
 
     /**
      * 正常系
-     * @test
      * CSRF対策トークンをformタグに対して自動的に付与できること
+     * @test
+     * @dataProvider createCsrfTokenProvider
      */
-    public function okCreateCsrfToken()
+    public function okCreateCsrfToken($path)
     {
         // CSRFテストページのHTMLを取得
-        $html = file_get_contents($this->getDocumentRootURL() . "/csrf");
+        $html = file_get_contents($this->getDocumentRootURL() . $path);
         // DOMを使ってCSRFトークンを抜く
         $doc = new \DOMDocument();
         @$doc->loadHTML($html);

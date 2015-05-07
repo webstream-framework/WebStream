@@ -79,6 +79,7 @@ Router::setRule([
     '/csrf_get' => "test_security#test_csrf_get",
     '/csrf_post' => "test_security#test_csrf_post",
     '/csrf_post_view' => "test_security#test_csrf_post_view",
+    '/csrf_helper' => "test_security#test_csrf_helper",
     '/test_header/html' => "test_header#test1",
     '/test_header/xml' => "test_header#test2",
     '/test_header/atom' => "test_header#test3",

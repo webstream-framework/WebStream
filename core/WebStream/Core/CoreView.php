@@ -91,6 +91,16 @@ class CoreView implements CoreInterface
     }
 
     /**
+     * CSRFトークンを追加する
+     */
+    public function drawCsrfToken()
+    {
+        if ($this->templateEngine instanceof \WebStream\Template\Basic) {
+            $this->templateEngine->drawCsrfToken();
+        }
+    }
+
+    /**
      * テンプレートキャッシュを作成する
      * @param string テンプレートファイルパス
      * @param string 保存データ

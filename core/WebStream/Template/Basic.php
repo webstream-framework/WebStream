@@ -44,6 +44,11 @@ class Basic implements ITemplateEngine
     private $timestamp;
 
     /**
+     * @var string CSRF対策トークン
+     */
+    private $csrfToken;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
@@ -98,13 +103,6 @@ class Basic implements ITemplateEngine
         } elseif ($mimeType === "html") {
             $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
             $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
-            // formタグが含まれる場合はCSRFトークンを付与する
-            if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
-                $this->addToken($params, $content);
-            } else {
-                // formタグがない場合、CSRFトークンセッションは不要なので削除
-                $this->session->delete($this->getCsrfTokenKey());
-            }
         }
 
         // テンプレートファイルをコンパイルし一時ファイルを作成
@@ -115,6 +113,15 @@ class Basic implements ITemplateEngine
         } else {
             Logger::debug("Write temporary template file: " . $temp);
             Logger::debug("Compiled template file size: " . $fileSize);
+        }
+
+        if ($this->csrfToken === null) {
+            $this->csrfToken = sha1($this->session->id() . microtime());
+        }
+
+        // includeを実行する前にセッションに値をセットしないとViewテンプレートから$_SESSION値が参照できない
+        if ($this->session->get($this->getCsrfTokenKey()) === null) {
+            $this->session->set($this->getCsrfTokenKey(), $this->csrfToken);
         }
 
         $params["__params__"] = $params;
@@ -135,6 +142,28 @@ class Basic implements ITemplateEngine
         $this->container->filename = $filename;
         $params["mimeType"] = $mimeType;
         $this->render($params);
+    }
+
+    /**
+     * PHPコードを有効にしたHTML文字列を出力する
+     */
+    public function drawCsrfToken()
+    {
+        // PHPコードを有効にするためバッファリングを取得、終了する
+        $content = ob_get_clean();
+
+        // バッファリングを再開
+        $this->container->response->start();
+
+        // CSRFトークンを付与
+        if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
+            $this->addToken($content);
+        } else {
+            // formタグがない場合、CSRFトークンセッションは不要なので削除
+            $this->session->delete($this->getCsrfTokenKey());
+        }
+
+        echo $content;
     }
 
     /**
@@ -170,23 +199,10 @@ class Basic implements ITemplateEngine
     }
 
     /**
-     * トークンを追加する
-     * @param array<string> Viewに描画するパラメータの参照
-     * @param string HTML文字列の参照
-     */
-    private function addToken(&$params, &$content)
-    {
-        $token = sha1($this->session->id() . microtime());
-        $this->session->set($this->getCsrfTokenKey(), $token);
-        $params["__csrf_token__"] = $token;
-        $this->addToeknHTML($content);
-    }
-
-    /**
      * すべてのformタグにCSRF対策トークンを追加する
      * @param string HTML文字列の参照
      */
-    private function addToeknHTML(&$content)
+    private function addToken(&$content)
     {
         // <meta>タグによるcharsetが指定されない場合は文字化けするのでその対策を行う
         $content = mb_convert_encoding($content, 'html-entities', "UTF-8");
@@ -220,7 +236,8 @@ class Basic implements ITemplateEngine
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
-            $content = str_replace($dummy_value, '<?php echo $__csrf_token__; ?>', $innerHTML);
+
+            $content = str_replace($dummy_value, $this->csrfToken, $innerHTML);
         }
         // 実体参照化をもとに戻す。
         $map = array('&gt;' => '>',
@@ -228,6 +245,14 @@ class Basic implements ITemplateEngine
                      '%20'  => ' ',
                      '%24'  => '$',
                      '%5C'  => '\\');
+
+        // HTMLタグを補完する
+        $content = <<< HTML
+<!DOCTYPE html>
+<html>
+$content
+</html>
+HTML;
 
         $content = str_replace(array_keys($map), array_values($map), $content);
     }
