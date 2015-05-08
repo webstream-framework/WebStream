@@ -37,11 +37,11 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Container/Container
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/AnnotationReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Inject.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Autowired.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/Header.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/Filter.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/Template.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/ExceptionHandler.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/CsrfProtection.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Database.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/ExceptionHandler.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Filter.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Header.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Query.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Template.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Validate.php';

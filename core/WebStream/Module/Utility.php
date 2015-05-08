@@ -21,6 +21,15 @@ trait Utility
     }
 
     /**
+     * CSRF•»©`•Ø•Û•ÿ•√•¿§Ú∑µ»¥§π§Î
+     * @return string CSRF•»©`•Ø•Û•ÿ•√•¿
+     */
+    public function getCsrfTokenHeader()
+    {
+        return "X-CSRF-Token";
+    }
+
+    /**
      * CoreHelper#async§« π”√§π§ÎID§Ú∑µ»¥§π§Î
      * @return string DOMID
      */

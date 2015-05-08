@@ -8,7 +8,6 @@ use WebStream\Module\PropertyProxy;
 use WebStream\Module\Container;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
-use WebStream\Exception\Extend\CsrfException;
 
 /**
  * CoreControllerクラス
@@ -92,29 +91,6 @@ class CoreController implements CoreInterface
      */
     public function __initialize(Container $container)
     {
-        // CSRF
-        $csrfKey = $this->getCsrfTokenKey();
-        $sessionToken = $this->session->get($csrfKey);
-        $requestToken = null;
-
-        if (isset($sessionToken)) {
-            // CSRFトークンはワンタイムなので削除する
-            $this->session->delete($csrfKey);
-        }
-
-        if ($this->request->isPost()) {
-            $requestToken = $this->request->post($csrfKey);
-        } elseif ($this->request->isGet()) {
-            $requestToken = $this->request->get($csrfKey);
-        }
-
-        // CSRFトークンが送信されているかつサーバのトークンが一致
-        // しない場合はエラーとする。
-        if ($requestToken !== $sessionToken) {
-            throw new CsrfException("Sent invalid CSRF token");
-        }
-
-        // Service/Modelロード
         $pageName = $this->coreDelegator->getPageName();
         $resolver = new Resolver($container);
         $this->{$pageName} = $resolver->runService() ?: $resolver->runModel();

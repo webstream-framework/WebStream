@@ -4,6 +4,7 @@ namespace WebStream\Test\TestData\Sample\App\Controller;
 use WebStream\Core\CoreController;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Template;
+use WebStream\Annotation\CsrfProtection;
 
 class TestSecurityController extends CoreController
 {
@@ -33,6 +34,7 @@ class TestSecurityController extends CoreController
 
     /**
      * @Inject
+     * @CsrfProtection
      * @Template("csrf_post_view.tmpl")
      */
     public function testCsrfPostView()
