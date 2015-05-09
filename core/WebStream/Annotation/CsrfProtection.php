@@ -39,11 +39,6 @@ class CsrfProtection extends Annotation implements IMethod
         $tokenByRequest = $container->request->post($this->getCsrfTokenKey()) ?: $container->request->getHeader($this->getCsrfTokenHeader());
         $tokenInSession = $container->session->get($this->getCsrfTokenKey());
 
-        if ($tokenInSession === null) {
-            // CSRFトークンはワンタイムなので削除する
-            $container->session->delete($this->getCsrfTokenKey());
-        }
-
         // POSTリクエスト以外はチェックしない
         if (!$container->request->isPost()) {
             return;
