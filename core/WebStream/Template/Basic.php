@@ -217,7 +217,7 @@ class Basic implements ITemplateEngine
         for ($i = 0; $i < $nodeLength; $i++) {
             $node = $nodeList->item($i);
             $method = $node->getAttribute("method");
-            if (preg_match('/^post$|^get$/i', $method)) {
+            if (preg_match('/^post$/i', $method)) {
                 $newNode = $doc->createElement("input");
                 $newNode->setAttribute("type", "hidden");
                 $newNode->setAttribute("name", $this->getCsrfTokenKey());
