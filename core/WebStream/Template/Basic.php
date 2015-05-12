@@ -84,26 +84,7 @@ class Basic implements ITemplateEngine
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($realpath);
-        $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
-
-        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.+?\)})/', function ($matches) {
-            $asyncId = $this->getAsyncDomId();
-            $context = preg_replace_callback('/\$' . $this->getHelperVariableName() . '->async\((.+?)\)/', function ($matches2) use ($asyncId) {
-                return '$' . $this->getHelperVariableName() . '->async(' . $matches2[1] . ',\'' . $asyncId . '\')';
-            }, $matches[1]);
-
-            return "<div id='$asyncId'>$context</div>";
-        }, $content);
-
-        $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
-        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
-
-        if ($mimeType === "xml") {
-            $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
-        } elseif ($mimeType === "html") {
-            $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
-            $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
-        }
+        $this->replaceTemplateMark($content, $mimeType);
 
         // テンプレートファイルをコンパイルし一時ファイルを作成
         $temp = $this->getTemporaryDirectory() . "/" . $this->getRandomstring(30);
@@ -132,28 +113,21 @@ class Basic implements ITemplateEngine
     }
 
     /**
-     * 部分テンプレートを描画する
-     * @param string テンプレートファイル名
-     * @param array<mixed> パラメータ
-     * @param string mime type
+     * HelperのPHPコードを有効にしたHTML文字列を出力する
+     * @param array<string> Viewパラメータ
      */
-    public function draw($filename, $params, $mimeType)
+    public function renderHelper(array $params)
     {
-        $this->container->filename = $filename;
-        $params["mimeType"] = $mimeType;
-        $this->render($params);
-    }
+        $mimeType = $params["mimeType"];
 
-    /**
-     * PHPコードを有効にしたHTML文字列を出力する
-     */
-    public function drawCsrfToken()
-    {
-        // PHPコードを有効にするためバッファリングを取得、終了する
+        // Helperで出力されるコードを有効にするためバッファリングを取得、終了する
         $content = ob_get_clean();
 
         // バッファリングを再開
         $this->container->response->start();
+        $isReplaced = $this->replaceTemplateMark($content, $mimeType);
+
+        $params = ["model" => $params["model"], "helper" => $params["helper"]];
 
         // CSRFトークンを付与
         if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
@@ -163,7 +137,43 @@ class Basic implements ITemplateEngine
             $this->session->delete($this->getCsrfTokenKey());
         }
 
-        echo $content;
+        // テンプレートファイルをコンパイルし一時ファイルを作成
+        $temp = $this->getTemporaryDirectory() . "/" . $this->getRandomstring(30);
+        $fileSize = file_put_contents($temp, $content, LOCK_EX);
+        if ($fileSize === false) {
+            throw new IOException("File write failure: " . $temp);
+        } else {
+            Logger::debug("Write temporary template file: " . $temp);
+            Logger::debug("Compiled template file size: " . $fileSize);
+        }
+
+        $params["__params__"] = $params;
+        $params["__mimeType__"] = $mimeType;
+        $this->outputHTML($temp, $params);
+
+        unlink($temp);
+
+        // テンプレート記法がある場合、再帰的に展開していく
+        if ($isReplaced) {
+            $this->renderHelper([
+                "mimeType" => $mimeType,
+                "model" => $params["model"],
+                "helper" => $params["helper"]
+            ]);
+        }
+    }
+
+    /**
+     * テンプレートを描画する
+     * @param string テンプレートファイル名
+     * @param array<mixed> パラメータ
+     * @param string mime type
+     */
+    public function draw($filename, $params, $mimeType)
+    {
+        $this->container->filename = $filename;
+        $params["mimeType"] = $mimeType;
+        $this->render($params);
     }
 
     /**
@@ -196,6 +206,45 @@ class Basic implements ITemplateEngine
         extract($params);
         $params = null;
         include($template);
+    }
+
+    /**
+     * テンプレート記法を変換する
+     * @param string 変換前出力内容
+     * @param string mimeType
+     * @return bool 変換されたらtrue
+     */
+    private function replaceTemplateMark(&$content, $mimeType)
+    {
+        $originContentHash = md5($content);
+
+        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.+?\)})/', function ($matches) {
+            $asyncId = $this->getAsyncDomId();
+            $context = preg_replace_callback('/\$' . $this->getHelperVariableName() . '->async\((.+?)\)/', function ($matches2) use ($asyncId) {
+                return '$' . $this->getHelperVariableName() . '->async(' . $matches2[1] . ',\'' . $asyncId . '\')';
+            }, $matches[1]);
+
+            return "<div id='$asyncId'>$context</div>";
+        }, $content);
+
+        $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
+        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
+
+        if ($mimeType === "xml") {
+            $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
+        } elseif ($mimeType === "html") {
+            $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
+            $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
+        }
+
+        $replacedContentHash = md5($content);
+
+        // XML開始タグのみ変換比較には使わない
+        if ($mimeType === 'xml') {
+            $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
+        }
+
+        return $originContentHash !== $replacedContentHash;
     }
 
     /**
@@ -236,7 +285,6 @@ class Basic implements ITemplateEngine
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
-
             $content = str_replace($dummy_value, $this->csrfToken, $innerHTML);
         }
         // 実体参照化をもとに戻す。

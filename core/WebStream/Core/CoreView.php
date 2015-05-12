@@ -87,16 +87,9 @@ class CoreView implements CoreInterface
 
         if ($this->templateEngine !== null) {
             $this->templateEngine->render($params);
-        }
-    }
-
-    /**
-     * CSRFトークンを追加する
-     */
-    public function drawCsrfToken()
-    {
-        if ($this->templateEngine instanceof \WebStream\Template\Basic) {
-            $this->templateEngine->drawCsrfToken();
+            if ($this->templateEngine instanceof \WebStream\Template\Basic) {
+                $this->templateEngine->renderHelper($params);
+            }
         }
     }
 

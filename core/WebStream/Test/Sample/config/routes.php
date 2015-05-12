@@ -47,6 +47,8 @@ Router::setRule([
     '/test_template/basic/index15' => "test_basic_template_with_service#index1",
     '/test_template/basic/index16' => "test_basic_template_with_model#index1",
     '/test_template/basic/index17' => "test_basic_template#index12",
+    '/test_template/basic/index18' => "test_basic_template_with_helper#index2",
+    '/test_template/basic/index19' => "test_basic_template_with_helper#index3",
     '/test_template/basic/error1' => "test_basic_template#error1",
     '/test_template/basic/error2' => "test_basic_template#error2",
     '/test_template/basic/error3' => "test_basic_template#error3",

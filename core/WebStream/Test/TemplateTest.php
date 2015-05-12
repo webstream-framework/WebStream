@@ -123,6 +123,24 @@ class TemplateTest extends TestBase
     }
 
     /**
+     * 正常系
+     * DB処理が絡むTwigテンプレートに対して正常にアクセスできること
+     * @test
+     * @dataProvider twigTemplateWithDBProvider
+     */
+    public function okTwitTemplateWithDB($path, $response)
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . "/test_model_clear";
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . "/test_model_prepare";
+        $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $responseText = file_get_contents($url);
+        $this->assertEquals($response, $responseText);
+    }
+
+    /**
      * 異常系
      * テンプレート記述に間違いがある場合、例外が発生すること
      * @test

@@ -40,39 +40,14 @@ class Twig implements ITemplateEngine
     public function render(array $params)
     {
         $dirname = $this->camel2snake($this->container->router->routingParams()['controller']);
-        $filepath = STREAM_APP_ROOT . "/app/views/" . $dirname . "/" . $this->container->filename;
-        $realpath = realpath($filepath);
+        $templateDir = STREAM_APP_ROOT . "/app/views/" . $dirname;
+        $sharedDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED;
 
-        $filename = null;
-        $dirpath = null;
-
-        if ($realpath !== false) {
-            $filename = basename($realpath);
-            $dirpath = dirname($realpath);
+        if (is_dir($templateDir)) {
+            $this->loader->addPath($templateDir);
         }
-
-        $filepath = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED . "/" . $this->container->filename;
-        $realpath = realpath($filepath);
-
-        $sharedFilename = null;
-        $sharedDirpath = null;
-
-        if ($realpath !== false) {
-            $sharedFilename = basename($realpath);
-            $sharedDirpath = dirname($realpath);
-        }
-
-        $filename = $filename ?: $sharedFilename;
-
-        if ($filename === null) {
-            throw new ResourceNotFoundException("Invalid template file: " . safetyOut($this->container->filename));
-        }
-
-        if ($dirpath !== null) {
-            $this->loader->addPath($dirpath);
-        }
-        if ($sharedDirpath !== null) {
-            $this->loader->addPath($sharedDirpath);
+        if (is_dir($sharedDir)) {
+            $this->loader->addPath($sharedDir);
         }
 
         $escaper = new \Twig_Extension_Escaper(true);
@@ -85,9 +60,13 @@ class Twig implements ITemplateEngine
             $twig->addExtension(new \Twig_Extension_Debug());
         }
 
-        echo $twig->loadTemplate($filename)->render([
-            "model" => $params["model"],
-            "helper" => $params["helper"]
-        ]);
+        try {
+            echo $twig->loadTemplate($this->container->filename)->render([
+                "model" => $params["model"],
+                "helper" => $params["helper"]
+            ]);
+        } catch (\Twig_Error_Loader $e) {
+            throw new ResourceNotFoundException($e);
+        }
     }
 }
