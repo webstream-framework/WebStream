@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Webstream by mapserver2007</title>
+    <title>Webstream by webstream-framework</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
@@ -20,9 +20,9 @@
   <body>
       <div id="header">
         <nav>
-          <li class="fork"><a href="https://github.com/mapserver2007/WebStream">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/mapserver2007/WebStream/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/mapserver2007/WebStream/tarball/master">TAR</a></li>
+          <li class="fork"><a href="https://github.com/webstream-framework/WebStream">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/webstream-framework/WebStream/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/webstream-framework/WebStream/tarball/master">TAR</a></li>
           <li class="title">DOWNLOADS</li>
         </nav>
       </div><!-- end header -->
@@ -34,7 +34,7 @@
           <h1>Webstream</h1>
           <p>MVC+ServiceによるWebアプリケーションフレームワーク</p>
           <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/mapserver2007">mapserver2007</a></span>
+          <span class="credits left">Project maintained by <a href="https://github.com/webstream-framework">webstream-framework</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
@@ -126,6 +126,70 @@ Controllerクラスでは<a href="#annotaion">アノテーション</a>を使っ
 
 <p>Serviceクラス内の<code>$this-&gt;{ページ名}</code>オブジェクトにはModelクラスのインスタンスが格納されています。ModelクラスにアクセスしてDB処理を実行します。
 また、ServiceクラスにはContoller、Service、Model、Helperの各クラスに属さないユーザ定義クラスへのパスが通っています。<code>app/libraries/</code>ディレクトリに任意のクラスを定義することでServiceクラスからアクセスできます。例えば、外部APIにアクセスするクラスや、データをバインドするEntityクラスなど特定用途のクラスはlibrariesに定義してください。</p>
+
+<p>Serviceクラスは、Viewから参照されるデータを格納する<strong>ViewModel</strong>の機能を内包しています。
+Viewから参照するデータはServiceクラスのGetterメソッドを経由して参照することになりますが、データ量が多くなる場合、Getterメソッドとそれに使うプロパティが増えていきます。
+これらはServiceの機能とは本質的には無関係な定義であるにもかかわらず、コード量として多くなってしまうため、Serviceでは<code>PropertyProxy</code>という機能を使い、簡単にViewModelを使えるようにしています。
+Serviceクラスの中で、未定義のプロパティに値をセットすると、PropertyProxyにより、Serviceクラス内で値が保持されます。保持されたデータはViewから参照可能になります。
+これにより、Viewから参照するデータをGetterメソッドなしで参照でき、カプセル化した状態で値を保持することができます。</p>
+
+<p><strong>PropertyProxyを使わない場合</strong></p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreService</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// PropertyProxyなしの場合、Getterメソッドが必要</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogService</span> <span class="pl-k">extends</span> <span class="pl-e">CoreService</span> {</span>
+<span class="pl-s1">    <span class="pl-c">// プロパティはpublicにすべきではない</span></span>
+<span class="pl-s1">    <span class="pl-k">private</span> <span class="pl-smi">$title</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">getTitle</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-c">// ViewからはpublicなGetterメソッドでなければ参照不可</span></span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">title</span>;</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> entry() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">title</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>マイブログ<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<div class="highlight highlight-html"><pre>&lt;!DOCTYPE html PUBLIC <span class="pl-s">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span>
+  <span class="pl-s">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;
+&lt;<span class="pl-ent">html</span> <span class="pl-e">xmlns</span>=<span class="pl-s"><span class="pl-pds">"</span>http://www.w3.org/1999/xhtml<span class="pl-pds">"</span></span> <span class="pl-e">xml:lang</span>=<span class="pl-s"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span> <span class="pl-e">lang</span>=<span class="pl-s"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">meta</span> <span class="pl-e">http-equiv</span>=<span class="pl-s"><span class="pl-pds">"</span>Content-Type<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span>text/html; charset=UTF-8<span class="pl-pds">"</span></span>/&gt;
+    &lt;<span class="pl-ent">head</span>&gt;
+        &lt;<span class="pl-ent">title</span>&gt;%H{$model-&gt;getTitle()}&lt;/<span class="pl-ent">title</span>&gt;
+    &lt;/<span class="pl-ent">head</span>&gt;
+    &lt;<span class="pl-ent">body</span>&gt;
+    &lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
+
+<p><strong>PropertyProxyを使った場合</strong></p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreService</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// PropertyProxy使用の場合、Getterメソッドは不要</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogService</span> <span class="pl-k">extends</span> <span class="pl-e">CoreService</span> {</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> entry() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">title</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>マイブログ<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<div class="highlight highlight-html"><pre>&lt;!DOCTYPE html PUBLIC <span class="pl-s">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span>
+  <span class="pl-s">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;
+&lt;<span class="pl-ent">html</span> <span class="pl-e">xmlns</span>=<span class="pl-s"><span class="pl-pds">"</span>http://www.w3.org/1999/xhtml<span class="pl-pds">"</span></span> <span class="pl-e">xml:lang</span>=<span class="pl-s"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span> <span class="pl-e">lang</span>=<span class="pl-s"><span class="pl-pds">"</span>ja<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">meta</span> <span class="pl-e">http-equiv</span>=<span class="pl-s"><span class="pl-pds">"</span>Content-Type<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span>text/html; charset=UTF-8<span class="pl-pds">"</span></span>/&gt;
+    &lt;<span class="pl-ent">head</span>&gt;
+        &lt;<span class="pl-ent">title</span>&gt;%H{$model-&gt;title}&lt;/<span class="pl-ent">title</span>&gt;
+    &lt;/<span class="pl-ent">head</span>&gt;
+    &lt;<span class="pl-ent">body</span>&gt;
+    &lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
+
+<p>なお、定義済みのプロパティにセットした場合は、PropertyProxyは使われません。
+また、この機能はModelでも有効ですが、Serviceクラスを作る必要のない簡単な処理の場合以外はServiceクラスのViewModel機能を使うことを推奨します。</p>
 
 <h2>
 <a id="model" class="anchor" href="#model" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#model">Model</a>
@@ -419,33 +483,53 @@ Model/Serviceオブジェクトは<code>$model</code>変数に格納されます
 <span class="pl-s1">    }</span>
 <span class="pl-s1">}</span></pre></div>
 
-<p>BasicテンプレートとTwigテンプレートの違いは、Basicテンプレートではテンプレートキャッシュ機能とCSRF対策トークン自動挿入機能がつきます。
-テンプレートキャッシュ機能は、出力した内容をまるごとキャッシュする機能で、<code>cacheTime</code>属性で指定した時間(秒)だけキャッシュします。CSRF対策トークン機能は、formタグが使用された場合自動的にCSRF対策が有効になる機能です。</p>
-
-<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
-<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
-<span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">/**</span></span>
-<span class="pl-s1"><span class="pl-c"> * テンプレートキャッシュを600秒有効にする</span></span>
-<span class="pl-s1"><span class="pl-c"> * @Inject</span></span>
-<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl", engine="basic", cacheTime=600)</span></span>
-<span class="pl-s1"><span class="pl-c"> */</span></span>
-<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
-<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
-<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
-<span class="pl-s1">    }</span>
-<span class="pl-s1">}</span></pre></div>
+<p>Basicテンプレートにはテンプレートキャッシュ機能とCSRF対策トークン自動挿入機能がつきます。この機能により、CSRF対策が自動的に有効になります。
+Basicテンプレートを指定している場合に<code>&lt;form&gt;</code>タグが含まれる場合、CSRF対策トークンが自動挿入されます。
+(ただし、method="get"の場合は有効になりません。)</p>
 
 <div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">head</span>&gt;
 &lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>&gt;
 &lt;<span class="pl-ent">title</span>&gt;CSRF CHECK&lt;/<span class="pl-ent">title</span>&gt;
 &lt;/<span class="pl-ent">head</span>&gt;
 &lt;<span class="pl-ent">body</span>&gt;
-&lt;<span class="pl-ent">form</span> <span class="pl-e">action</span>=<span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-e">method</span>=<span class="pl-s"><span class="pl-pds">"</span>post<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">form</span> <span class="pl-e">action</span>=<span class="pl-s"><span class="pl-pds">"</span>/form_register<span class="pl-pds">"</span></span> <span class="pl-e">method</span>=<span class="pl-s"><span class="pl-pds">"</span>post<span class="pl-pds">"</span></span>&gt;
     &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span>&gt;
     &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>hidden<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>__CSRF_TOKEN__<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>a2891f68edeb487a9140edf8575a8e3382f96c0d<span class="pl-pds">"</span></span>&gt;
 &lt;/<span class="pl-ent">form</span>&gt;
 &lt;/<span class="pl-ent">body</span>&gt;</pre></div>
+
+<p>フォームの送り先のControllerクラスで<code>@CsrfProtection</code>アノテーションを指定すると、CSRFチェック処理が実行されます。</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c">     * @CsrfProtection</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> formRegister() {</span>
+<span class="pl-s1">        <span class="pl-c">// CSRFエラーがあった場合、例外が発生し、ここには到達しない</span></span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>CSRF対策トークンの送信はPOSTで通常行いますが、HTTPヘッダ<code>X-CSRF-Token</code>にトークン文字列を指定して送信することも可能です。</p>
+
+<p>テンプレートキャッシュ機能は、出力した内容をまるごとキャッシュする機能で、<code>cacheTime</code>属性で指定した時間(秒)だけキャッシュします。</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * テンプレートキャッシュを600秒有効にする例</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Template("index.tmpl", engine="basic", cacheTime=600)</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute() {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">Blog</span><span class="pl-k">-&gt;</span>entry();</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
 <p>Viewテンプレートでは以下の構文が使用可能です。</p>
 
@@ -587,7 +671,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <h3>
 <a id="routesphp" class="anchor" href="#routesphp" aria-hidden="true"><span class="octicon octicon-link"></span></a>routes.php</h3>
 
-<p>ルーティング設定により、URI設計を行うことができます。ルーティングにはmod_rewiteが必要です。<br>
+<p>ルーティング設定により、URI設計を行うことができます。ルーティングにはmod_rewiteが必要です。
 ルーティング定義は<code>config/routes.php</code>に記述します。  </p>
 
 <div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Router</span>;</span>
@@ -612,24 +696,25 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <span class="pl-s1">}</span></pre></div>
 
 <h2>
-<a id="バリデーション定義" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>バリデーション定義</h2>
+<a id="バリデーション定義" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#validate">バリデーション定義</a>
+</h2>
 
-<h3>
-<a id="validatesphp" class="anchor" href="#validatesphp" aria-hidden="true"><span class="octicon octicon-link"></span></a>validates.php</h3>
+<p>Controllerクラスのアクションメソッドに<code>@Validate</code>アノテーションを記述することでバリデーションを有効にできます。</p>
 
-<p>バリデーション設定により、GET/POST/PUT/DELETEリクエストに含まれるパラメータをチェックすることができます。<br>
-バリデーション定義は<code>config/validates.php</code>に記述します。  </p>
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebSteram\Annotation\Validate</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * GETリクエストのtestパラメータの指定がない場合、エラーになる例</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Validate(key="test", rule="required", method="get")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">execute</span>() {</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
 
-<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">WebStream\Validator</span>;</span>
-<span class="pl-s1"><span class="pl-c1">Validator</span><span class="pl-k">::</span>setRule([</span>
-<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">"</span>sample#validateForm<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> [</span>
-<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">"</span>post#name<span class="pl-pds">"</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>,</span>
-<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">"</span>get#page<span class="pl-pds">"</span></span>  <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>required|number<span class="pl-pds">"</span></span></span>
-<span class="pl-s1">    ]</span>
-<span class="pl-s1">]);</span></pre></div>
-
-<p>Validator::setRule内にバリデーション定義を記述します。
-定義は、キーにクラス#アクション、バリューにバリデーション内容を記述します。バリデーション内容もキー、バリュー形式になっており、キーにリクエストメソッド#パラメータ名、バリューにチェックルールを記述します。</p>
+<p>バリデーションルールは以下のものが用意されています。</p>
 
 <h4>
 <a id="バリデーションチェックルール" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%AB" aria-hidden="true"><span class="octicon octicon-link"></span></a>バリデーションチェックルール</h4>
@@ -685,8 +770,43 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 </tbody>
 </table>
 
+<h3>
+<a id="カスタムバリデーション" class="anchor" href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>カスタムバリデーション</h3>
+
+<p>用意されているバリデーションルール以外に、開発者が独自にルールを定義することが出来ます。
+<code>app</code>ディレクトリ配下の任意の場所にバリデーションクラスを作成します。</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Blog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Validate\Rule\IValidate</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Page</span> <span class="pl-k">implements</span> <span class="pl-e">IValidate</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">isValid</span>(<span class="pl-smi">$value</span>, <span class="pl-smi">$rule</span>)</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$value</span> <span class="pl-k">===</span> <span class="pl-c1">null</span> <span class="pl-k">||</span> (<span class="pl-k">bool</span>) <span class="pl-c1">preg_match</span>(<span class="pl-sr"><span class="pl-pds">'/</span><span class="pl-k">^</span><span class="pl-pds">[1-9]</span>{1,}<span class="pl-pds">[0-9]</span>{0,}<span class="pl-k">$</span><span class="pl-pds">/'</span></span>, <span class="pl-smi">$value</span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p><code>WebStream\Validate\Rule\IValidate</code>インタフェースを実装し、戻り値が<code>bool</code>型の<code>isValid</code>メソッドを実装します。
+バリデーションが成功すればtrue、失敗すればfalseを返すようにします。
+クラス名がルール名と紐付いているので、<code>@Validate</code>アノテーションに指定します。
+ただし、ルール名はクラス名をスネークケースに変換したものになります。</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebSteram\Annotation\Validate</span>;</span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span> {</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Inject</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Validate(key="p", rule="page", method="get")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">execute</span>() {</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
 <h2>
-<a id="リクエストパラメータ" class="anchor" href="#%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF" aria-hidden="true"><span class="octicon octicon-link"></span></a>リクエストパラメータ</h2>
+<a id="リクエストパラメータ" class="anchor" href="#%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#request">リクエストパラメータ</a>
+</h2>
 
 <p>GET/POST/PUT/DELETEで送信した値をControllerで取得できます。
 <code>$this-&gt;request</code>オブジェクトからリクエストパラメータを取得でき、<code>get</code>,<code>post</code>,<code>put</code>,<code>delete</code>メソッドにそれぞれアクセスします。</p>
@@ -701,7 +821,8 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <span class="pl-s1">}</span></pre></div>
 
 <h2>
-<a id="セッション" class="anchor" href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>セッション</h2>
+<a id="セッション" class="anchor" href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#session">セッション</a>
+</h2>
 
 <p>ログイン処理などを実装するときに、セッション管理を使用しますが、WebStreamでは<code>$this-&gt;session</code>オブジェクトを使用します。セッション期限を指定するには<code>restart</code>メソッドを使用します。</p>
 
@@ -795,6 +916,11 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <td>例外を補足して別処理を実行する</td>
 <td>
 <a href="https://github.com/ExceptionHandler" class="user-mention">@ExceptionHandler</a>("\Exception")<br><a href="https://github.com/ExceptionHandler" class="user-mention">@ExceptionHandler</a>({"\RuntimeException","\LogicException"})</td>
+</tr>
+<tr>
+<td>@CsrfProtection</td>
+<td>CSRF対策処理を実行する</td>
+<td>@CsrfProtection</td>
 </tr>
 </tbody>
 </table>
