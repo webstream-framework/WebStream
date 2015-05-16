@@ -130,11 +130,10 @@ class Basic implements ITemplateEngine
         $params = ["model" => $params["model"], "helper" => $params["helper"]];
 
         // CSRFトークンを付与
+        // CSRFチェックが実行される前に非同期でリクエストがあった場合を考慮して
+        // CSRFトークンは削除しない
         if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
             $this->addToken($content);
-        } else {
-            // formタグがない場合、CSRFトークンセッションは不要なので削除
-            $this->session->delete($this->getCsrfTokenKey());
         }
 
         // テンプレートファイルをコンパイルし一時ファイルを作成

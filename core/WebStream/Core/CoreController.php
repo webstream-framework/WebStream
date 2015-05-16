@@ -91,7 +91,6 @@ class CoreController implements CoreInterface
      */
     public function __initialize(Container $container)
     {
-        $this->session->delete($this->getCsrfTokenKey());
         $pageName = $this->coreDelegator->getPageName();
         $resolver = new Resolver($container);
         $this->{$pageName} = $resolver->runService() ?: $resolver->runModel();
