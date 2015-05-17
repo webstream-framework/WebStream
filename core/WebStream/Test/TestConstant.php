@@ -10,7 +10,9 @@ trait TestConstant
 
     private function getProjectRootPath()
     {
-        return "/Users/mapserver2007/Dropbox/workspace/webstream-framework/WebStream";
+        if (preg_match('/(.+webstream-framework\/WebStream)/', dirname(__FILE__), $matches)) {
+            return $matches[1];
+        }
     }
 
     private function getSampleAppPath()
