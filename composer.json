@@ -7,6 +7,7 @@
         "leafo/lessphp": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "phing/phing": "*"
     }
 }
