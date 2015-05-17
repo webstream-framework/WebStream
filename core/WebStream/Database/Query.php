@@ -132,7 +132,7 @@ class Query
                 $errorCode = "(ERROR CODE: ${messages[1]})";
                 throw new DatabaseException("${message} ${sqlState} ${errorCode}");
             }
-        } catch (\PDOException $e) {
+        } catch (\Exception $e) {
             throw new DatabaseException($e);
         }
     }
