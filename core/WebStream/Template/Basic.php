@@ -44,11 +44,6 @@ class Basic implements ITemplateEngine
     private $timestamp;
 
     /**
-     * @var string CSRF対策トークン
-     */
-    private $csrfToken;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
@@ -96,15 +91,6 @@ class Basic implements ITemplateEngine
             Logger::debug("Compiled template file size: " . $fileSize);
         }
 
-        if ($this->csrfToken === null) {
-            $this->csrfToken = sha1($this->session->id() . microtime());
-        }
-
-        // includeを実行する前にセッションに値をセットしないとViewテンプレートから$_SESSION値が参照できない
-        if ($this->session->get($this->getCsrfTokenKey()) === null) {
-            $this->session->set($this->getCsrfTokenKey(), $this->csrfToken);
-        }
-
         $params["__params__"] = $params;
         $params["__mimeType__"] = $mimeType;
         $this->outputHTML($temp, $params);
@@ -133,7 +119,9 @@ class Basic implements ITemplateEngine
         // CSRFチェックが実行される前に非同期でリクエストがあった場合を考慮して
         // CSRFトークンは削除しない
         if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
-            $this->addToken($content);
+            $csrfToken = sha1($this->session->id() . microtime());
+            $this->session->set($this->getCsrfTokenKey(), $csrfToken);
+            $this->addToken($content, $csrfToken);
         }
 
         // テンプレートファイルをコンパイルし一時ファイルを作成
@@ -250,7 +238,7 @@ class Basic implements ITemplateEngine
      * すべてのformタグにCSRF対策トークンを追加する
      * @param string HTML文字列の参照
      */
-    private function addToken(&$content)
+    private function addToken(&$content, $csrfToken)
     {
         // <meta>タグによるcharsetが指定されない場合は文字化けするのでその対策を行う
         $content = mb_convert_encoding($content, 'html-entities', "UTF-8");
@@ -284,7 +272,7 @@ class Basic implements ITemplateEngine
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
-            $content = str_replace($dummy_value, $this->csrfToken, $innerHTML);
+            $content = str_replace($dummy_value, $csrfToken, $innerHTML);
         }
         // 実体参照化をもとに戻す。
         $map = array('&gt;' => '>',
