@@ -12,8 +12,8 @@ use WebStream\Exception\SystemException;
 trait Utility
 {
     /**
-     * CSRF¥È©`¥¯¥ó¥­©`¤ò·µÈ´¤¹¤ë
-     * @return string CSRF¥È©`¥¯¥ó¥­©`
+     * CSRFãƒˆãƒ¼ã‚¯ãƒ³ã‚­ãƒ¼ã‚’è¿”å´ã™ã‚‹
+     * @return string CSRFãƒˆãƒ¼ã‚¯ãƒ³ã‚­ãƒ¼
      */
     public function getCsrfTokenKey()
     {
@@ -21,8 +21,8 @@ trait Utility
     }
 
     /**
-     * CSRF¥È©`¥¯¥ó¥Ø¥Ã¥À¤ò·µÈ´¤¹¤ë
-     * @return string CSRF¥È©`¥¯¥ó¥Ø¥Ã¥À
+     * CSRFãƒˆãƒ¼ã‚¯ãƒ³ãƒ˜ãƒƒãƒ€ã‚’è¿”å´ã™ã‚‹
+     * @return string CSRFãƒˆãƒ¼ã‚¯ãƒ³ãƒ˜ãƒƒãƒ€
      */
     public function getCsrfTokenHeader()
     {
@@ -30,7 +30,7 @@ trait Utility
     }
 
     /**
-     * CoreHelper#async¤ÇÊ¹ÓÃ¤¹¤ëID¤ò·µÈ´¤¹¤ë
+     * CoreHelper#asyncã§ä½¿ç”¨ã™ã‚‹IDã‚’è¿”å´ã™ã‚‹
      * @return string DOMID
      */
     public function getAsyncDomId()
@@ -39,8 +39,8 @@ trait Utility
     }
 
     /**
-     * View¤ÇÓĞ„¿¤ÊModel‰äÊıÃû¤ò·µÈ´¤¹¤ë
-     * @return string Model‰äÊıÃû
+     * Viewã§æœ‰åŠ¹ãªModelå¤‰æ•°åã‚’è¿”å´ã™ã‚‹
+     * @return string Modelå¤‰æ•°å
      */
     public function getModelVariableName()
     {
@@ -48,8 +48,8 @@ trait Utility
     }
 
     /**
-     * View¤ÇÓĞ„¿¤ÊHelper‰äÊıÃû¤ò·µÈ´¤¹¤ë
-     * @return string Helper‰äÊıÃû
+     * Viewã§æœ‰åŠ¹ãªHelperå¤‰æ•°åã‚’è¿”å´ã™ã‚‹
+     * @return string Helperå¤‰æ•°å
      */
     public function getHelperVariableName()
     {
@@ -57,8 +57,8 @@ trait Utility
     }
 
     /**
-     * ¥×¥í¥¸¥§¥¯¥È¥ë©`¥È¥Õ¥¡¥¤¥ëÃû¤ò·µÈ´¤¹¤ë
-     * @return string ¥×¥í¥¸¥§¥¯¥È¥ë©`¥È¥Õ¥¡¥¤¥ëÃû
+     * ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ«ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«åã‚’è¿”å´ã™ã‚‹
+     * @return string ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ«ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å
      */
     private function getProjectFileName()
     {
@@ -66,12 +66,12 @@ trait Utility
     }
 
     /**
-     * ¥×¥í¥¸¥§¥¯¥È¥Ç¥£¥ì¥¯¥È¥ê¤Î½~Œ¥Ñ¥¹¤ò·µ¤¹
-     * @return string ¥×¥í¥¸¥§¥¯¥È¥Ç¥£¥ì¥¯¥È¥ê¤Î½~Œ¥Ñ¥¹
+     * ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®çµ¶å¯¾ãƒ‘ã‚¹ã‚’è¿”ã™
+     * @return string ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®çµ¶å¯¾ãƒ‘ã‚¹
      */
     public function getRoot()
     {
-        // ÉÏÎ»ëAŒÓ¤òŞ{¤ê¡¢.projectroot¥Õ¥¡¥¤¥ë¤òÒŠ¤Ä¤±¤ë
+        // ä¸Šä½éšå±¤ã‚’è¾¿ã‚Šã€.projectrootãƒ•ã‚¡ã‚¤ãƒ«ã‚’è¦‹ã¤ã‘ã‚‹
         $targetPath = realpath(dirname(__FILE__));
         $isProjectRoot = false;
 
@@ -96,8 +96,8 @@ trait Utility
     }
 
     /**
-     * ¥Æ¥¹¥È­h¾³¤Ç¤Î¥¢¥×¥ê¥±©`¥·¥ç¥ó¥ë©`¥È¥Ñ¥¹¤ò·µÈ´¤¹¤ë(±¾·¬¤Ç¤ÏÊ¹ÓÃ¤·¤Ê¤¤)
-     * @return string ¥¢¥×¥ê¥±©`¥·¥ç¥ó¥ë©`¥È¥Ñ¥¹
+     * ãƒ†ã‚¹ãƒˆç’°å¢ƒã§ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹ã‚’è¿”å´ã™ã‚‹(æœ¬ç•ªã§ã¯ä½¿ç”¨ã—ãªã„)
+     * @return string ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹
      */
     public function getTestApplicationRoot()
     {
@@ -105,8 +105,8 @@ trait Utility
     }
 
     /**
-     * ¥Æ¥¹¥È­h¾³¤Ç¤Î¥¢¥×¥ê¥±©`¥·¥ç¥ó¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹¤ò·µÈ´¤¹¤ë(±¾·¬¤Ç¤ÏÊ¹ÓÃ¤·¤Ê¤¤)
-     * @return string ¥¢¥×¥ê¥±©`¥·¥ç¥ó¥ë©`¥È¥Ñ¥¹
+     * ãƒ†ã‚¹ãƒˆç’°å¢ƒã§ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ã‚’è¿”å´ã™ã‚‹(æœ¬ç•ªã§ã¯ä½¿ç”¨ã—ãªã„)
+     * @return string ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹
      */
     public function getTestApplicationDir()
     {
@@ -114,9 +114,9 @@ trait Utility
     }
 
     /**
-     * ¥Õ¥¡¥¤¥ë—ÊË÷¥¤¥Æ¥ì©`¥¿¤ò·µÈ´¤¹¤ë
-     * @param string ¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
-     * @return object ¥¤¥Æ¥ì©`¥¿
+     * ãƒ•ã‚¡ã‚¤ãƒ«æ¤œç´¢ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’è¿”å´ã™ã‚‹
+     * @param string ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
+     * @return object ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
      */
     public function getFileSearchIterator($path)
     {
@@ -128,10 +128,10 @@ trait Utility
     }
 
     /**
-     * Ö¸¶¨¤·¤¿¥Õ¥¡¥¤¥ë¤ÎÃûÇ°¿Õég¤òÈ¡µÃ¤¹¤ë
-     * @param string ¥Õ¥¡¥¤¥ë¥Ñ¥¹
-     * @param string Æğµã¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
-     * @return string ÃûÇ°¿Õég
+     * æŒ‡å®šã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰ç©ºé–“ã‚’å–å¾—ã™ã‚‹
+     * @param string ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+     * @param string èµ·ç‚¹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
+     * @return string åå‰ç©ºé–“
      */
     public function getNamespace($filepath, $baseDir = null)
     {
@@ -154,22 +154,22 @@ trait Utility
     }
 
     /**
-     * ÔO¶¨¥Õ¥¡¥¤¥ë¤ò¥Ñ©`¥¹¤¹¤ë
-     * @param string ¥×¥í¥¸¥§¥¯¥È¥ë©`¥È¤«¤é¤ÎÏàŒ¥Ñ¥¹
-     * @return hash ÔO¶¨Çéˆó
+     * è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹ã™ã‚‹
+     * @param string ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ«ãƒ¼ãƒˆã‹ã‚‰ã®ç›¸å¯¾ãƒ‘ã‚¹
+     * @return hash è¨­å®šæƒ…å ±
      */
     public function parseConfig($filepath)
     {
-        // ÕıÒ»¯¤·¤¿½~Œ¥Ñ¥¹
+        // æ­£è¦åŒ–ã—ãŸçµ¶å¯¾ãƒ‘ã‚¹
         $realpath = $this->getRoot() . DIRECTORY_SEPARATOR . $filepath;
 
         return file_exists($realpath) ? parse_ini_file($realpath) : null;
     }
 
     /**
-     * ¥é¥ó¥À¥à¤ÊÎÄ×ÖÁĞ¤òÉú³É¤·¤Æ·µÈ´¤¹¤ë
-     * @param int Éú³É¤¹¤ëÎÄ×ÖÊı(Ê¡ÂÔ•r¤Ï10ÎÄ×Ö)
-     * @return string ¥é¥ó¥À¥àÎÄ×ÖÁĞ
+     * ãƒ©ãƒ³ãƒ€ãƒ ãªæ–‡å­—åˆ—ã‚’ç”Ÿæˆã—ã¦è¿”å´ã™ã‚‹
+     * @param int ç”Ÿæˆã™ã‚‹æ–‡å­—æ•°(çœç•¥æ™‚ã¯10æ–‡å­—)
+     * @return string ãƒ©ãƒ³ãƒ€ãƒ æ–‡å­—åˆ—
      */
     public function getRandomstring($length = 10)
     {
@@ -184,8 +184,8 @@ trait Utility
     }
 
     /**
-     * Ò»•r¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹¤ò·µÈ´¤¹¤ë
-     * @return string Ò»•r¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
+     * ä¸€æ™‚ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ã‚’è¿”å´ã™ã‚‹
+     * @return string ä¸€æ™‚ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
      */
     public function getTemporaryDirectory()
     {
@@ -193,9 +193,9 @@ trait Utility
     }
 
     /**
-     * ¥­¥ã¥á¥ë¥±©`¥¹ÎÄ×ÖÁĞ¤ò¥¹¥Í©`¥¯¥±©`¥¹ÎÄ×ÖÁĞ¤ËÖÃ“Q¤¹¤ë
-     * @param string ¥­¥ã¥á¥ë¥±©`¥¹ÎÄ×ÖÁĞ
-     * @return string ¥¹¥Í©`¥¯¥±©`¥¹ÎÄ×ÖÁĞ
+     * ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—ã‚’ã‚¹ãƒãƒ¼ã‚¯ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—ã«ç½®æ›ã™ã‚‹
+     * @param string ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—
+     * @return string ã‚¹ãƒãƒ¼ã‚¯ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—
      */
     public function camel2snake($str)
     {
@@ -207,9 +207,9 @@ trait Utility
     }
 
     /**
-     * ¥¹¥Í©`¥¯¥±©`¥¹ÎÄ×ÖÁĞ¤ò¥¢¥Ã¥Ñ©`¥­¥ã¥á¥ë¥±©`¥¹¤ËÖÃ“Q¤¹¤ë
-     * @param string ¥¹¥Í©`¥¯¥±©`¥¹ÎÄ×ÖÁĞ
-     * @return string ¥¢¥Ã¥Ñ©`¥­¥ã¥á¥ë¥±©`¥¹ÎÄ×ÖÁĞ
+     * ã‚¹ãƒãƒ¼ã‚¯ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—ã‚’ã‚¢ãƒƒãƒ‘ãƒ¼ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹ã«ç½®æ›ã™ã‚‹
+     * @param string ã‚¹ãƒãƒ¼ã‚¯ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—
+     * @return string ã‚¢ãƒƒãƒ‘ãƒ¼ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—
      */
     public function snake2ucamel($str)
     {
@@ -221,9 +221,9 @@ trait Utility
     }
 
     /**
-     * ¥¹¥Í©`¥¯¥±©`¥¹ÎÄ×ÖÁĞ¤ò¥í©`¥ï©`¥­¥ã¥á¥ë¥±©`¥¹¤ËÖÃ“Q¤¹¤ë
-     * @param string ¥¹¥Í©`¥¯¥±©`¥¹ÎÄ×ÖÁĞ
-     * @return string ¥í©`¥ï©`¥­¥ã¥á¥ë¥±©`¥¹ÎÄ×ÖÁĞ
+     * ã‚¹ãƒãƒ¼ã‚¯ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—ã‚’ãƒ­ãƒ¼ãƒ¯ãƒ¼ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹ã«ç½®æ›ã™ã‚‹
+     * @param string ã‚¹ãƒãƒ¼ã‚¯ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—
+     * @return string ãƒ­ãƒ¼ãƒ¯ãƒ¼ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹æ–‡å­—åˆ—
      */
     public function snake2lcamel($str)
     {
@@ -231,9 +231,9 @@ trait Utility
     }
 
     /**
-     * XML¥ª¥Ö¥¸¥§¥¯¥È¤òÅäÁĞ¤Ë‰ä“Q¤¹¤ë
-     * @param object XML¥ª¥Ö¥¸¥§¥¯¥È
-     * @return Hash ÅäÁĞ/¥Ï¥Ã¥·¥å¥Ç©`¥¿
+     * XMLã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é…åˆ—ã«å¤‰æ›ã™ã‚‹
+     * @param object XMLã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     * @return Hash é…åˆ—/ãƒãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿
      */
     public function xml2array($xml)
     {
@@ -255,9 +255,9 @@ trait Utility
     }
 
     /**
-     * ¥Õ¥¡¥¤¥ë¤«¤émime¥¿¥¤¥×¤ò·µÈ´¤¹¤ë
-     * @param string ¥Õ¥¡¥¤¥ë¥¿¥¤¥×
-     * @return string mime¥¿¥¤¥×
+     * ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰mimeã‚¿ã‚¤ãƒ—ã‚’è¿”å´ã™ã‚‹
+     * @param string ãƒ•ã‚¡ã‚¤ãƒ«ã‚¿ã‚¤ãƒ—
+     * @return string mimeã‚¿ã‚¤ãƒ—
      */
     public function getMimeType($type)
     {
@@ -298,9 +298,9 @@ trait Utility
     }
 
     /**
-     * ¥Ç©`¥¿¤Î¥Ğ¥¤¥ÈéL¤ò·µÈ´¤¹¤ë
-     * @param string ÎÄ×ÖÁĞ
-     * @return string ¥Ğ¥¤¥ÈéL
+     * ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒˆé•·ã‚’è¿”å´ã™ã‚‹
+     * @param string æ–‡å­—åˆ—
+     * @return string ãƒã‚¤ãƒˆé•·
      */
     public function bytelen($data)
     {
@@ -308,9 +308,9 @@ trait Utility
     }
 
     /**
-     * ¥Ç©`¥¿¤ò¥·¥ê¥¢¥é¥¤¥º»¯¤·¤Æ¥Æ¥­¥¹¥È¥Ç©`¥¿¤Ë¥¨¥ó¥³©`¥É¤¹¤ë
-     * @param object ŒÏó¥Ç©`¥¿
-     * @return string ¥¨¥ó¥³©`¥É¤·¤¿¥Ç©`¥¿
+     * ãƒ‡ãƒ¼ã‚¿ã‚’ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºåŒ–ã—ã¦ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã«ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹
+     * @param object å¯¾è±¡ãƒ‡ãƒ¼ã‚¿
+     * @return string ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ãŸãƒ‡ãƒ¼ã‚¿
      */
     public function encode($data)
     {
@@ -318,9 +318,9 @@ trait Utility
     }
 
     /**
-     * ¥Ç©`¥¿¤ò¥Ç¥·¥ê¥¢¥é¥¤¥º»¯¤·¤ÆÔª¤Î¥Ç©`¥¿¤ò¥Ç¥³©`¥É¤¹¤ë
-     * @param string ¥¨¥ó¥³©`¥Éœg¤ß¥Ç©`¥¿
-     * @return object ¥Ç¥³©`¥É¤·¤¿¥Ç©`¥¿
+     * ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ‡ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºåŒ–ã—ã¦å…ƒã®ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã™ã‚‹
+     * @param string ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ãƒ‡ãƒ¼ã‚¿
+     * @return object ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ãŸãƒ‡ãƒ¼ã‚¿
      */
     public function decode($data)
     {
@@ -328,10 +328,10 @@ trait Utility
     }
 
     /**
-     * ÒªËØ¤¬´æÔÚ¤¹¤ë¤«¤É¤¦¤«
-     * @param array —ÊË÷ŒÏóÅäÁĞ
-     * @param mixed —ÊË÷‚
-     * @return bool ´æÔÚ¤¹¤ì¤Ğtrue
+     * è¦ç´ ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹
+     * @param array æ¤œç´¢å¯¾è±¡é…åˆ—
+     * @param mixed æ¤œç´¢å€¤
+     * @return bool å­˜åœ¨ã™ã‚Œã°true
      */
     public function inArray($target, $list)
     {
@@ -341,16 +341,16 @@ trait Utility
             case "integer":
                 return array_key_exists($target, array_flip($list));
             default:
-                // ¤½¤ìÒÔÍâ¤ÎˆöºÏ¡¢in_array¤òÊ¹ÓÃ¤¹¤ë
+                // ãã‚Œä»¥å¤–ã®å ´åˆã€in_arrayã‚’ä½¿ç”¨ã™ã‚‹
                 return in_array($target, $list, true);
         }
     }
 
     /**
-     * CoreHelper#async¤ÇÊ¹ÓÃ¤¹¤ë¥³©`¥É¤ò·µÈ´¤¹¤ë
+     * CoreHelper#asyncã§ä½¿ç”¨ã™ã‚‹ã‚³ãƒ¼ãƒ‰ã‚’è¿”å´ã™ã‚‹
      * @param string URL
-     * @param string CSS¥¯¥é¥¹Ãû
-     * @return string ¥³©`¥É
+     * @param string CSSã‚¯ãƒ©ã‚¹å
+     * @return string ã‚³ãƒ¼ãƒ‰
      */
     public function asyncHelperCode($url, $id)
     {
