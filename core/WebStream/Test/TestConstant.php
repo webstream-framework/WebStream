@@ -5,7 +5,7 @@ trait TestConstant
 {
     private function getDocumentRootURL()
     {
-        return "http://localhost/webstream-framework/WebStream/core/WebStream/Test/Sample";
+        return "http://" . gethostname() . "/webstream-framework/WebStream/core/WebStream/Test/Sample";
     }
 
     private function getProjectRootPath()
