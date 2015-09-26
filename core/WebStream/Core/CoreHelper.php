@@ -86,14 +86,14 @@ class CoreHelper implements CoreInterface
     /**
      * 非同期処理を実行する
      * @param string パス
+     * @param string DOMID
      * @return string JavaScript文字列
      */
-    public function async($path)
+    public function async($path, $id)
     {
         $safetyPath = str_replace('\\', '', $this->encodeJavaScript($path));
         $url = "//" . $this->container->request->server("HTTP_HOST") . $this->container->request->getBaseURL() . $safetyPath;
-        $className = $this->getAsyncDomId();
 
-        return "<script type='text/javascript'>" . $this->asyncHelperCode($url, $className) . "</script>";
+        return "<script type='text/javascript'>" . $this->asyncHelperCode($url, $id) . "</script>";
     }
 }

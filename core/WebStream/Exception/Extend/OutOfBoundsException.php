@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Exception\Extend;
 
-use WebStream\Exception\UncatchableException;
+use WebStream\Exception\SystemException;
 
 /**
  * OutOfBoundsException
@@ -9,7 +9,7 @@ use WebStream\Exception\UncatchableException;
  * @since 2014/05/06
  * @version 0.4
  */
-class OutOfBoundsException extends UncatchableException
+class OutOfBoundsException extends SystemException
 {
     /**
      * constructor

@@ -9,6 +9,7 @@ use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\container\AnnotationListContainer;
 use WebStream\Module\Logger;
 use WebStream\Module\Container;
+use WebStream\Exception\Extend\DatabaseException;
 
 /**
  * Query
@@ -67,7 +68,11 @@ class Query extends Annotation implements IMethods, IRead
             $xmlObjectList = [];
             foreach ($files as $file) {
                 if (file_exists($file)) {
-                    $xmlObjectList[] = simplexml_load_file($file);
+                    $xmlObject = simplexml_load_file($file);
+                    if ($xmlObject === false) {
+                        throw new DatabaseException("Failded to parse query file: " . $file);
+                    }
+                    $xmlObjectList[] = $xmlObject;
                 }
             }
 

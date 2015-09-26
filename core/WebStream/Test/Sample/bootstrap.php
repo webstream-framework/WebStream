@@ -8,11 +8,12 @@ use WebStream\DI\ServiceLocator;
 require_once dirname(__FILE__) . "/../../../../vendor/autoload.php";
 require_once dirname(__FILE__) . '/../../Module/Utility.php';
 require_once dirname(__FILE__) . '/../../Module/ClassLoader.php';
-require_once dirname(__FILE__) . '/../../Module/Logger.php';
 require_once dirname(__FILE__) . '/../../Module/Cache.php';
 require_once dirname(__FILE__) . '/../../Module/Container.php';
 require_once dirname(__FILE__) . '/../../Module/Functions.php';
 require_once dirname(__FILE__) . '/../../Module/HttpClient.php';
+require_once dirname(__FILE__) . '/../../Module/Logger.php';
+require_once dirname(__FILE__) . '/../../Module/PropertyProxy.php';
 require_once dirname(__FILE__) . '/../../Module/Security.php';
 require_once dirname(__FILE__) . '/../../Module/Singleton.php';
 require_once dirname(__FILE__) . '/../../Module/ValueProxy.php';
@@ -36,10 +37,11 @@ require_once dirname(__FILE__) . '/../../Annotation/Container/ContainerFactory.p
 require_once dirname(__FILE__) . '/../../Annotation/Reader/AnnotationReader.php';
 require_once dirname(__FILE__) . '/../../Annotation/Inject.php';
 require_once dirname(__FILE__) . '/../../Annotation/Autowired.php';
-require_once dirname(__FILE__) . '/../../Annotation/Header.php';
-require_once dirname(__FILE__) . '/../../Annotation/Filter.php';
-require_once dirname(__FILE__) . '/../../Annotation/ExceptionHandler.php';
+require_once dirname(__FILE__) . '/../../Annotation/CsrfProtection.php';
 require_once dirname(__FILE__) . '/../../Annotation/Database.php';
+require_once dirname(__FILE__) . '/../../Annotation/ExceptionHandler.php';
+require_once dirname(__FILE__) . '/../../Annotation/Filter.php';
+require_once dirname(__FILE__) . '/../../Annotation/Header.php';
 require_once dirname(__FILE__) . '/../../Annotation/Query.php';
 require_once dirname(__FILE__) . '/../../Annotation/Template.php';
 require_once dirname(__FILE__) . '/../../Annotation/Validate.php';
@@ -76,7 +78,7 @@ require_once dirname(__FILE__) . '/../../Validate/Rule/Range.php';
 require_once dirname(__FILE__) . '/../../Validate/Rule/Regexp.php';
 require_once dirname(__FILE__) . '/../../Validate/Rule/Required.php';
 require_once dirname(__FILE__) . '/../../Exception/ApplicationException.php';
-require_once dirname(__FILE__) . '/../../Exception/UncatchableException.php';
+require_once dirname(__FILE__) . '/../../Exception/SystemException.php';
 require_once dirname(__FILE__) . '/../../Exception/DelegateException.php';
 require_once dirname(__FILE__) . '/../../Exception/Extend/AnnotationException.php';
 require_once dirname(__FILE__) . '/../../Exception/Extend/ClassNotFoundException.php';
@@ -102,6 +104,9 @@ require_once dirname(__FILE__) . '/../../Http/Request.php';
 require_once dirname(__FILE__) . '/../../Http/Response.php';
 require_once dirname(__FILE__) . '/../../Http/Session.php';
 require_once dirname(__FILE__) . '/config/routes.php';
+
+// デフォルトタイムゾーン
+date_default_timezone_set('Asia/Tokyo');
 
 // ログ出力ディレクトリ、ログレベルをテスト用に変更
 Logger::init("core/WebStream/Test/Sample/config/log.ini");

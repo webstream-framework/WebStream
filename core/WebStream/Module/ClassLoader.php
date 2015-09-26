@@ -82,7 +82,7 @@ class ClassLoader
             $iterator = $this->getFileSearchIterator($includeDir);
             $isSuccess = true;
             foreach ($iterator as $filepath => $fileObject) {
-                if (preg_match("/(?:\/\.|\/\.\.)$/", $filepath)) {
+                if (preg_match("/(?:\/\.|\/\.\.|\.DS_Store)$/", $filepath)) {
                     continue;
                 }
                 if (is_file($filepath)) {

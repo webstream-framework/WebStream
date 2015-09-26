@@ -15,4 +15,22 @@ class TestBasicTemplateWithHelperController extends CoreController
     {
         // helperオブジェクトが取得できること
     }
+
+    /**
+     * @Inject
+     * @Template("index2.tmpl")
+     */
+    public function index2()
+    {
+        // helperの中に記述したテンプレート記法を展開できること
+    }
+
+    /**
+     * @Inject
+     * @Template("index3.tmpl")
+     */
+    public function index3()
+    {
+        // helperの中に記述したテンプレート記法を3段階展開できること
+    }
 }

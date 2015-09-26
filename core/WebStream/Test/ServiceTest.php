@@ -90,4 +90,20 @@ class ServiceTest extends TestBase
         list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
         $this->assertEquals($status_code, "200");
     }
+
+    /**
+     * 正常系
+     * プロパティを明示的に定義しなくてもViewから参照できること
+     * ただしプロパティを明示的に定義した場合かつGetterを準備しない場合は参照できないこと
+     * @test
+     * @dataProvider okPropertyProxyProvider
+     */
+    public function okPropertyProxy($path, $str)
+    {
+        $url = $this->getDocumentRootURL() . $path;
+        $response = file_get_contents($url);
+        $this->assertEquals($response, $str);
+        list($version, $status_code, $msg) = explode(' ', $http_response_header[0], 3);
+        $this->assertEquals($status_code, "200");
+    }
 }

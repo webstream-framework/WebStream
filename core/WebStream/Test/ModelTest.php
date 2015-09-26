@@ -298,13 +298,29 @@ class ModelTest extends TestBase
      * 正常系
      * 複数のtraitをuseし、競合したメソッドをinsteadofした場合に結果をエンティティクラスにマッピングできること
      * @test
-     * @dataProvider entityUseTraitCauseCollision
+     * @dataProvider entityUseTraitCauseCollisionProvider
      */
     public function okEntityUseTraitCauseCollision($path, $response, $preparePath)
     {
         $http = new HttpClient();
         $url = $this->getDocumentRootURL() . $preparePath;
         $http->get($url);
+        $url = $this->getDocumentRootURL() . $path;
+        $html = $http->get($url);
+        $this->assertEquals($http->getStatusCode(), 200);
+        $this->assertEquals($html, $response);
+    }
+
+    /**
+     * 正常系
+     * プロパティを明示的に定義しなくてもViewから参照できること
+     * ただしプロパティを明示的に定義した場合かつGetterを準備しない場合は参照できないこと
+     * @test
+     * @dataProvider okPropertyProxyProvider
+     */
+    public function okPropertyProxy($path, $response)
+    {
+        $http = new HttpClient();
         $url = $this->getDocumentRootURL() . $path;
         $html = $http->get($url);
         $this->assertEquals($http->getStatusCode(), 200);
@@ -376,4 +392,18 @@ class ModelTest extends TestBase
         $html = $http->get($url);
         $this->assertEquals($html, "WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError3Controller#model2");
     }
+
+    /**
+     * 異常系
+     * QueryXMLファイルの解析に失敗した場合、例外が発生すること
+     * @test
+     */
+    public function ngFailedToParseQueryXmlFile()
+    {
+        $http = new HttpClient();
+        $url = $this->getDocumentRootURL() . "/test_model50";
+        $html = $http->get($url);
+        $this->assertEquals($html, "WebStream\Test\TestData\Sample\App\Controller\TestDatabaseError4Controller#model1");
+    }
+
 }

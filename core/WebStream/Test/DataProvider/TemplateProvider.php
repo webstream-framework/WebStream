@@ -28,6 +28,8 @@ trait TemplateProvider
             ["/test_template/basic/index14", "WebStream\Test\TestData\Sample\App\Helper\TestBasicTemplateWithHelperHelper"],
             ["/test_template/basic/index15", "WebStream\Test\TestData\Sample\App\Service\TestBasicTemplateWithServiceService"],
             ["/test_template/basic/index16", "WebStream\Test\TestData\Sample\App\Model\TestBasicTemplateWithModelModel"],
+            ["/test_template/basic/index18", "index18"],
+            ["/test_template/basic/index19", "index19"]
         ];
     }
 
@@ -88,10 +90,16 @@ trait TemplateProvider
         return [
             ["/test_template/twig/index1", "index1"],
             ["/test_template/twig/index2", "index2"],
-            ["/test_template/twig/index3", "honoka"],
             ["/test_template/twig/index4", "index4"],
             ["/test_template/twig/index5", "index5"],
             ["/test_template/twig/index6", "index6"]
+        ];
+    }
+
+    public function twigTemplateWithDBProvider()
+    {
+        return [
+            ["/test_template/twig/index3", "honoka"]
         ];
     }
 

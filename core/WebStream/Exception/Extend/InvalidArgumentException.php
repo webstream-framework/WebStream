@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Exception\Extend;
 
-use WebStream\Exception\UncatchableException;
+use WebStream\Exception\SystemException;
 
 /**
  * InvalidArgumentException
@@ -9,7 +9,7 @@ use WebStream\Exception\UncatchableException;
  * @since 2014/05/06
  * @version 0.4
  */
-class InvalidArgumentException extends UncatchableException
+class InvalidArgumentException extends SystemException
 {
     /**
      * constructor

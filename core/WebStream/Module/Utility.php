@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\Exception\SystemException;
+
 /**
  * Utility
  * @author Ryuichi Tanaka
@@ -19,12 +21,21 @@ trait Utility
     }
 
     /**
+     * CSRFトークンヘッダを返却する
+     * @return string CSRFトークンヘッダ
+     */
+    public function getCsrfTokenHeader()
+    {
+        return "X-CSRF-Token";
+    }
+
+    /**
      * CoreHelper#asyncで使用するIDを返却する
      * @return string DOMID
      */
     public function getAsyncDomId()
     {
-        return "W80f2647ef3d2cfe2e4301261ffc7290bb23f5095";
+        return $this->getRandomstring(32);
     }
 
     /**
@@ -77,7 +88,11 @@ trait Utility
             }
         }
 
-        return $isProjectRoot ? $targetPath : null;
+        if (!$isProjectRoot) {
+            throw new SystemException("'.projectroot' file must be put in directly under the project directory.");
+        }
+
+        return $targetPath;
     }
 
     /**
@@ -147,9 +162,8 @@ trait Utility
     {
         // 正規化した絶対パス
         $realpath = $this->getRoot() . DIRECTORY_SEPARATOR . $filepath;
-        if (file_exists($realpath)) {
-            return parse_ini_file($realpath);
-        }
+
+        return file_exists($realpath) ? parse_ini_file($realpath) : null;
     }
 
     /**
@@ -338,10 +352,10 @@ trait Utility
      * @param string CSSクラス名
      * @return string コード
      */
-    public function asyncHelperCode($url, $className)
+    public function asyncHelperCode($url, $id)
     {
         return <<< JSCODE
-(function (c,b) {var a;a=window.XMLHttpRequest?new XMLHttpRequest:new ActiveXObject("Microsoft.XMLHTTP");a.onreadystatechange=function () {4==a.readyState&&200==a.status&&(console.log(document.getElementsByClassName(b)[0].outerHTML),document.getElementsByClassName(b)[0].outerHTML=a.responseText)};a.open("GET",c,!0);a.send()})("$url","$className");
+(function (c,b) {var a;a=window.XMLHttpRequest?new XMLHttpRequest:new ActiveXObject("Microsoft.XMLHTTP");a.onreadystatechange=function () {4==a.readyState&&200==a.status&&(document.getElementById(b).outerHTML=a.responseText)};a.open("GET",c,!0);a.send()})("$url","$id");
 JSCODE;
     }
 }

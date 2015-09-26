@@ -57,6 +57,15 @@ class Logger
     }
 
     /**
+     * Loggerが初期化済みかどうかチェックする
+     * @param bool 初期化済みならtrue
+     */
+    public static function isInitialized()
+    {
+        return self::$logger !== null;
+    }
+
+    /**
      * Loggerを終了する
      */
     public static function finalize()
