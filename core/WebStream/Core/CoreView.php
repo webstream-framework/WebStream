@@ -87,6 +87,9 @@ class CoreView implements CoreInterface
 
         if ($this->templateEngine !== null) {
             $this->templateEngine->render($params);
+            if ($this->templateEngine instanceof \WebStream\Template\Basic) {
+                $this->templateEngine->renderHelper($params);
+            }
         }
     }
 

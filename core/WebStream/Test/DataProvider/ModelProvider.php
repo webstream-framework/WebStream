@@ -158,4 +158,12 @@ trait ModelProvider
             ["/test_model46", "umichangstring", "/test_model_prepare3", "/test_model_prepare10"]
         ];
     }
+
+    public function okPropertyProxyProvider()
+    {
+        return [
+            ['/test_view_model_in_model/model1', "honoka"],
+            ['/test_view_model_in_model/model2', "1"]
+        ];
+    }
 }

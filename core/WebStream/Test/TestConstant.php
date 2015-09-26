@@ -5,12 +5,14 @@ trait TestConstant
 {
     private function getDocumentRootURL()
     {
-        return "http://localhost/webstream-framework/WebStream/core/WebStream/Test/Sample";
+        return "http://" . gethostname() . "/webstream-framework/WebStream/core/WebStream/Test/Sample";
     }
 
     private function getProjectRootPath()
     {
-        return "/Users/mapserver2007/Dropbox/workspace/webstream-framework/WebStream";
+        if (preg_match('/(.+webstream-framework\/WebStream)/', dirname(__FILE__), $matches)) {
+            return $matches[1];
+        }
     }
 
     private function getSampleAppPath()

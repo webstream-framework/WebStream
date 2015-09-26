@@ -79,28 +79,7 @@ class Basic implements ITemplateEngine
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
         $content = file_get_contents($realpath);
-        $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
-
-        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.*\)})/', function ($matches) {
-            return "<div class='" . $this->getAsyncDomId() . "'>$matches[1]</div>";
-        }, $content);
-
-        $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
-        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
-
-        if ($mimeType === "xml") {
-            $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
-        } elseif ($mimeType === "html") {
-            $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
-            $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
-            // formタグが含まれる場合はCSRFトークンを付与する
-            if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
-                $this->addToken($params, $content);
-            } else {
-                // formタグがない場合、CSRFトークンセッションは不要なので削除
-                $this->session->delete($this->getCsrfTokenKey());
-            }
-        }
+        $this->replaceTemplateMark($content, $mimeType);
 
         // テンプレートファイルをコンパイルし一時ファイルを作成
         $temp = $this->getTemporaryDirectory() . "/" . $this->getRandomstring(30);
@@ -120,7 +99,59 @@ class Basic implements ITemplateEngine
     }
 
     /**
-     * 部分テンプレートを描画する
+     * HelperのPHPコードを有効にしたHTML文字列を出力する
+     * @param array<string> Viewパラメータ
+     */
+    public function renderHelper(array $params)
+    {
+        $mimeType = $params["mimeType"];
+
+        // Helperで出力されるコードを有効にするためバッファリングを取得、終了する
+        $content = ob_get_clean();
+
+        // バッファリングを再開
+        $this->container->response->start();
+        $isReplaced = $this->replaceTemplateMark($content, $mimeType);
+
+        $params = ["model" => $params["model"], "helper" => $params["helper"]];
+
+        // CSRFトークンを付与
+        // CSRFチェックが実行される前に非同期でリクエストがあった場合を考慮して
+        // CSRFトークンは削除しない
+        if (preg_match('/<form.*?>.*?<\/form>/is', $content)) {
+            $csrfToken = sha1($this->session->id() . microtime());
+            $this->session->set($this->getCsrfTokenKey(), $csrfToken);
+            $this->addToken($content, $csrfToken);
+        }
+
+        // テンプレートファイルをコンパイルし一時ファイルを作成
+        $temp = $this->getTemporaryDirectory() . "/" . $this->getRandomstring(30);
+        $fileSize = file_put_contents($temp, $content, LOCK_EX);
+        if ($fileSize === false) {
+            throw new IOException("File write failure: " . $temp);
+        } else {
+            Logger::debug("Write temporary template file: " . $temp);
+            Logger::debug("Compiled template file size: " . $fileSize);
+        }
+
+        $params["__params__"] = $params;
+        $params["__mimeType__"] = $mimeType;
+        $this->outputHTML($temp, $params);
+
+        unlink($temp);
+
+        // テンプレート記法がある場合、再帰的に展開していく
+        if ($isReplaced) {
+            $this->renderHelper([
+                "mimeType" => $mimeType,
+                "model" => $params["model"],
+                "helper" => $params["helper"]
+            ]);
+        }
+    }
+
+    /**
+     * テンプレートを描画する
      * @param string テンプレートファイル名
      * @param array<mixed> パラメータ
      * @param string mime type
@@ -165,23 +196,49 @@ class Basic implements ITemplateEngine
     }
 
     /**
-     * トークンを追加する
-     * @param array<string> Viewに描画するパラメータの参照
-     * @param string HTML文字列の参照
+     * テンプレート記法を変換する
+     * @param string 変換前出力内容
+     * @param string mimeType
+     * @return bool 変換されたらtrue
      */
-    private function addToken(&$params, &$content)
+    private function replaceTemplateMark(&$content, $mimeType)
     {
-        $token = sha1($this->session->id() . microtime());
-        $this->session->set($this->getCsrfTokenKey(), $token);
-        $params["__csrf_token__"] = $token;
-        $this->addToeknHTML($content);
+        $originContentHash = md5($content);
+
+        $content = preg_replace_callback('/(%.{\$' . $this->getHelperVariableName() . '\->async\(.+?\)})/', function ($matches) {
+            $asyncId = $this->getAsyncDomId();
+            $context = preg_replace_callback('/\$' . $this->getHelperVariableName() . '->async\((.+?)\)/', function ($matches2) use ($asyncId) {
+                return '$' . $this->getHelperVariableName() . '->async(' . $matches2[1] . ',\'' . $asyncId . '\')';
+            }, $matches[1]);
+
+            return "<div id='$asyncId'>$context</div>";
+        }, $content);
+
+        $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
+        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
+
+        if ($mimeType === "xml") {
+            $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
+        } elseif ($mimeType === "html") {
+            $content = preg_replace('/' . self::TEMPLATE_MARK_HTML . '\{(.*?)\}/', '<?php echo safetyOut($1); ?>', $content);
+            $content = preg_replace('/' . self::TEMPLATE_MARK_JAVASCRIPT . '\{(.*?)\}/', '<?php echo safetyOutJavaScript($1); ?>', $content);
+        }
+
+        $replacedContentHash = md5($content);
+
+        // XML開始タグのみ変換比較には使わない
+        if ($mimeType === 'xml') {
+            $content = preg_replace('/^<\?xml/', '<<?php ?>?xml', $content);
+        }
+
+        return $originContentHash !== $replacedContentHash;
     }
 
     /**
      * すべてのformタグにCSRF対策トークンを追加する
      * @param string HTML文字列の参照
      */
-    private function addToeknHTML(&$content)
+    private function addToken(&$content, $csrfToken)
     {
         // <meta>タグによるcharsetが指定されない場合は文字化けするのでその対策を行う
         $content = mb_convert_encoding($content, 'html-entities', "UTF-8");
@@ -196,7 +253,7 @@ class Basic implements ITemplateEngine
         for ($i = 0; $i < $nodeLength; $i++) {
             $node = $nodeList->item($i);
             $method = $node->getAttribute("method");
-            if (preg_match('/^post$|^get$/i', $method)) {
+            if (preg_match('/^post$/i', $method)) {
                 $newNode = $doc->createElement("input");
                 $newNode->setAttribute("type", "hidden");
                 $newNode->setAttribute("name", $this->getCsrfTokenKey());
@@ -215,7 +272,7 @@ class Basic implements ITemplateEngine
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
-            $content = str_replace($dummy_value, '<?php echo $__csrf_token__; ?>', $innerHTML);
+            $content = str_replace($dummy_value, $csrfToken, $innerHTML);
         }
         // 実体参照化をもとに戻す。
         $map = array('&gt;' => '>',
@@ -223,6 +280,14 @@ class Basic implements ITemplateEngine
                      '%20'  => ' ',
                      '%24'  => '$',
                      '%5C'  => '\\');
+
+        // HTMLタグを補完する
+        $content = <<< HTML
+<!DOCTYPE html>
+<html>
+$content
+</html>
+HTML;
 
         $content = str_replace(array_keys($map), array_values($map), $content);
     }

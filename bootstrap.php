@@ -8,11 +8,12 @@ use WebStream\DI\ServiceLocator;
 require_once dirname(__FILE__) . "/vendor/autoload.php";
 require_once dirname(__FILE__) . '/core/WebStream/Module/Utility.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/ClassLoader.php';
-require_once dirname(__FILE__) . '/core/WebStream/Module/Logger.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/Cache.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/Container.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/Functions.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/HttpClient.php';
+require_once dirname(__FILE__) . '/core/WebStream/Module/Logger.php';
+require_once dirname(__FILE__) . '/core/WebStream/Module/PropertyProxy.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/Security.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/Singleton.php';
 require_once dirname(__FILE__) . '/core/WebStream/Module/ValueProxy.php';
@@ -36,11 +37,11 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Container/Container
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/AnnotationReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Inject.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Autowired.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/Header.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/Filter.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/Template.php';
-require_once dirname(__FILE__) . '/core/WebStream/Annotation/ExceptionHandler.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/CsrfProtection.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Database.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/ExceptionHandler.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Filter.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Header.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Query.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Template.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Validate.php';
@@ -76,7 +77,7 @@ require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Range.php';
 require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Regexp.php';
 require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Required.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/ApplicationException.php';
-require_once dirname(__FILE__) . '/core/WebStream/Exception/UncatchableException.php';
+require_once dirname(__FILE__) . '/core/WebStream/Exception/SystemException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/DelegateException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/Extend/AnnotationException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/Extend/ClassNotFoundException.php';
@@ -103,12 +104,14 @@ require_once dirname(__FILE__) . '/core/WebStream/Http/Response.php';
 require_once dirname(__FILE__) . '/core/WebStream/Http/Session.php';
 require_once dirname(__FILE__) . '/config/routes.php';
 
+date_default_timezone_set('Asia/Tokyo');
+
 Logger::init("config/log.ini");
 
 $classLoader = new ClassLoader();
 spl_autoload_register([$classLoader, "load"]);
 // app以下をすべて読み込む
-$classLoader->importAll("core/WebStream/Test/Sample/app", function ($filepath) {
+$classLoader->importAll("app", function ($filepath) {
     // MVCレイヤのクラスとview配下のphpファイルは除外
     return preg_match("/(?:(?:Controller|Service|Model)\.php|app\/views\/.+\.php)$/", $filepath) === 0;
 });

@@ -3,7 +3,7 @@ namespace WebStream\Delegate;
 
 use WebStream\Core\CoreInterface;
 use WebStream\Module\Logger;
-use WebStream\Exception\UncatchableException;
+use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
 
 /**
@@ -61,7 +61,7 @@ class ExceptionDelegator
     {
         // 捕捉可能な例外の場合のみDelegateExceptionでラップする
         // そうでない場合はそのままスロー
-        if ($this->exceptionObject instanceof UncatchableException) {
+        if ($this->exceptionObject instanceof SystemException) {
             throw $this->exceptionObject;
         } else {
             $originException = $this->exceptionObject;

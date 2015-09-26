@@ -20,6 +20,20 @@ class TestController extends CoreController
         echo $params["id"];
     }
 
+    public function test4($params)
+    {
+        echo $params["snake_id"];
+    }
+
+    public function test5($params)
+    {
+        echo $params["_snake_id"];
+    }
+
+    public function placeholderNg()
+    {
+    }
+
     public function testAction()
     {
         echo "testAction";

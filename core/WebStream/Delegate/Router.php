@@ -64,7 +64,7 @@ class Router
                 throw new RouterException("Include the prohibit routing path: " . $path);
             }
             // 許可したルーティングパス定義に合っていなければ弾く
-            if (!preg_match('/^\/{1}(?:$|[a-zA-Z]{1}[a-zA-Z0-9.-_\/]*$)/', $path)) {
+            if (!preg_match('/^\/{1}(?:$|:?[a-zA-Z]{1}[a-zA-Z0-9-_\/\.:]{0,}$)/', $path)) {
                 throw new RouterException("Invalid path defintion: " . $path);
             }
             // ルールとURLがマッチした場合に動的にチェックを掛ける
@@ -95,6 +95,21 @@ class Router
             $this->route["staticFile"] = $staticFile;
 
             return;
+        } elseif (pathinfo($staticFile, PATHINFO_EXTENSION) == 'css') {
+            // cssファイル指定かつ存在しない場合で、同ディレクトリ内にlessファイルがあればcssにコンパイルする
+            $less = new \lessc();
+            $dirpath = dirname($staticFile);
+            $filenameWitoutExt = pathinfo($staticFile, PATHINFO_FILENAME);
+            $lessFilepath = $dirpath . "/" . $filenameWitoutExt . ".less";
+            if (@$less->checkedCompile($lessFilepath, $staticFile)) {
+                if (is_file($staticFile)) {
+                    $this->route["staticFile"] = $staticFile;
+                } else {
+                    Logger::error("Failed to file create, cause parmission denied: " . $dirpath);
+                }
+
+                return;
+            }
         }
         // ルーティングルールからController、Actionを取得
         foreach (self::$rules as $path => $ca) {
@@ -113,7 +128,7 @@ class Router
                 $tokens[$i] = $token;
             }
             // プレースホルダのパラメータをセット
-            $expantion_path = $path;
+            $expantionPath = $path;
             // PATH_INFOの階層数とルーティング定義の階層数が一致すればルーティングがマッチ
             if (($this->pathInfo !== $path) &&
                 count(explode('/', $path)) === count(explode('/', $this->pathInfo))) {
@@ -124,12 +139,13 @@ class Router
                         $key = $key_list[$j - 1];
                         $route["params"][$key] = Security::safetyIn($matches[$j]);
                         // プレースホルダを一時展開する
-                        $expantion_path = preg_replace('/:[a-zA-Z0-9]+/', $matches[$j], $expantion_path, 1);
+                        $expantionPath = preg_replace('/:[a-zA-Z_]{1}[a-zA-Z0-9_]{0,}/', $matches[$j], $expantionPath, 1);
                     }
                 }
             }
+
             // プレースホルダを展開済みのパス定義が完全一致したときはController、Actionを展開する
-            if ($this->pathInfo === $expantion_path &&
+            if ($this->pathInfo === $expantionPath &&
                 preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
                 $route["controller"] = $matches[1];
                 $route["action"] = $matches[2];

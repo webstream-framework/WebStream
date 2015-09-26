@@ -21,4 +21,11 @@ trait SecurityProvider
              '&lt;div&gt;\\\\a&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/>&lt;!-- --&gt;&lt;![CDATA[&lt;/div&gt;']
         ];
     }
+
+    public function createCsrfTokenProvider()
+    {
+        return [
+            ['/csrf', '/csrf_helper']
+        ];
+    }
 }

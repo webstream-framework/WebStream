@@ -3,6 +3,7 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
+use WebStream\Module\PropertyProxy;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Database\DatabaseManager;
@@ -18,6 +19,8 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  */
 class CoreModel implements CoreInterface
 {
+    use PropertyProxy;
+
     /**
      * @var Container コンテナ
      */
@@ -58,6 +61,7 @@ class CoreModel implements CoreInterface
     public function __destruct()
     {
         Logger::debug("Model end.");
+        $this->__clear();
     }
 
     /**

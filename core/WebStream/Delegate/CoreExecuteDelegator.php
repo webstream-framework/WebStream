@@ -12,7 +12,7 @@ use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Exception\ApplicationException;
-use WebStream\Exception\UncatchableException;
+use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Exception\Extend\MethodNotFoundException;
@@ -71,6 +71,15 @@ class CoreExecuteDelegator
     }
 
     /**
+     * overload getter
+     */
+    public function __get($name)
+    {
+        $instance = $this->injectedInstance ?: $this->instance;
+
+        return $instance->{$name};
+    }
+    /**
      * 処理を実行する
      * @param string メソッド名
      * @param array 引数リスト
@@ -109,7 +118,7 @@ class CoreExecuteDelegator
                     $e = new ApplicationException($e->getMessage(), 500, $e);
                     break;
                 case "RuntimeException":
-                    $e = new UncatchableException($e->getMessage(), 500, $e);
+                    $e = new SystemException($e->getMessage(), 500, $e);
                     break;
             }
 
@@ -226,6 +235,7 @@ class CoreExecuteDelegator
                 "helper" => $resolver->runHelper(),
                 "mimeType" => $mimeType
             ]);
+
             if ($template->cacheTime !== null) {
                 $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
                 $view->templateCache($cacheFile, ob_get_contents(), $template->cacheTime);
