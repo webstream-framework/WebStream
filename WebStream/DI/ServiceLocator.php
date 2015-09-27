@@ -88,8 +88,6 @@ class ServiceLocator
         $container->applicationRoot = $this->getRoot();
         // ApplicationDir
         $container->applicationDir = "app";
-        // test
-        $container->isTest = $isTest;
         // twig
         $container->twig = function () {
             Twig_Autoloader::register();
