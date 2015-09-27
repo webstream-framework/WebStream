@@ -28,14 +28,6 @@ class ClassLoader
     }
 
     /**
-     * テスト環境を設定する
-     */
-    public function test()
-    {
-        $this->applicationRoot = $this->getTestApplicationRoot();
-    }
-
-    /**
      * クラスをロードする
      * @param string|array クラス名
      * @return array<string> ロード済みクラスリスト
