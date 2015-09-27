@@ -96,24 +96,6 @@ trait Utility
     }
 
     /**
-     * テスト環境でのアプリケーションルートパスを返却する(本番では使用しない)
-     * @return string アプリケーションルートパス
-     */
-    public function getTestApplicationRoot()
-    {
-        return $this->getRoot() . "/core/WebStream/Test/Sample";
-    }
-
-    /**
-     * テスト環境でのアプリケーションディレクトリパスを返却する(本番では使用しない)
-     * @return string アプリケーションルートパス
-     */
-    public function getTestApplicationDir()
-    {
-        return "core/WebStream/Test/Sample/app";
-    }
-
-    /**
      * ファイル検索イテレータを返却する
      * @param string ディレクトリパス
      * @return object イテレータ
