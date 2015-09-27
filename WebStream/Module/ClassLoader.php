@@ -110,7 +110,6 @@ class ClassLoader
      */
     private function loadClass($className)
     {
-        $includeList = [];
         $rootDir = $this->getRoot();
 
         // 名前空間セパレータをパスセパレータに置換
@@ -129,18 +128,22 @@ class ClassLoader
             return [$includeFile];
         }
 
-        // さらに見つからなかったらappディレクトリを名前空間付きで全検索
+        // さらに見つからなかったらappディレクトリを名前空間付きで全検索し、マッチするもの全てをincludeする
         $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
+        $includeList = [];
         foreach ($iterator as $filepath => $fileObject) {
             if (strpos($filepath, $className . ".php") !== false) {
                 include_once $filepath;
+                $includeList[] = $filepath;
                 Logger::debug($filepath . " load success. (search from " . $this->applicationRoot . "/app/)");
-
-                return [$filepath];
             }
+        }
+        if (!empty($includeList)) {
+            return $includeList;
         }
 
         // 名前空間とディレクトリ構成が一致していない場合、クラス名を抜き出して、マッチするもの全てをincludeする
+        $includeList = [];
         if (preg_match("/(?:.*\/){0,}(.+)/", $className, $matches)) {
             $classNameWithoutNamespace = $matches[1];
             // この処理が走るケースはapp配下のクラスがディレクトリ構成と名前空間が一致していない

@@ -65,6 +65,7 @@ class Validate extends Annotation implements IMethod
             $filepath = "core/WebStream/Validate/Rule/" . $className . ".php";
             if (!$classLoader->import($filepath)) {
                 $loadList = $classLoader->load($className);
+                // バリデーションルールのクラス名が複数指定されている場合は適用判断不可能なのでエラー
                 if (count($loadList) >= 2) {
                     $errorMsg = "Class load failed because the same class name has been identified: " . $className . "";
                     throw new ValidateException($errorMsg);
