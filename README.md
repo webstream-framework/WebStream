@@ -14,10 +14,10 @@ http://mapserver2007.github.io/WebStream/
 * 0.7.0 (PHP7.0RC7)
 
 ## タグ
-* 0.1.10
-* 0.2.0
-* 0.3.17
-* 0.4.2
+* 0.1.10 (PHP4.x)
+* 0.2.0  (PHP5.2.x)
+* 0.3.17 (PHP5.3.x)
+* 0.4.2  (PHP5.4.x)
 
 ## License
 Licensed under the MIT
