@@ -4,7 +4,7 @@ WebStreamはMVCアーキテクチャをベースとしたWebアプリケーシ�
 ***
 
 ## ドキュメント
-http://mapserver2007.github.io/WebStream/
+http://webstream-framework.github.io/WebStream
 
 ## チケット
 [mapserver2007.tracpath.com](https://mapserver2007.tracpath.com/-/dashboard)
