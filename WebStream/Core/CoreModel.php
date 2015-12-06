@@ -4,6 +4,7 @@ namespace WebStream\Core;
 use WebStream\Module\Container;
 use WebStream\Module\Logger;
 use WebStream\Module\PropertyProxy;
+use WebStream\Module\Utility;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Database\DatabaseManager;
@@ -19,6 +20,7 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  */
 class CoreModel implements CoreInterface
 {
+    use Utility;
     use PropertyProxy;
 
     /**
@@ -98,7 +100,14 @@ class CoreModel implements CoreInterface
      */
     final public function __call($method, $arguments)
     {
-        $filepath = debug_backtrace()[1]["file"];
+        $trace = debug_backtrace();
+        $filepath = null;
+        for ($i = 0; $i < count($trace); $i++) {
+            $filepath = $trace[$i]["file"];
+            if ($filepath !== null) {
+                break;
+            }
+        }
 
         // DBコネクションが取得できなければエラー
         if (!$this->manager->loadConnection($filepath)) {
@@ -156,7 +165,19 @@ class CoreModel implements CoreInterface
                     $bind = $arguments[0];
                 }
 
-                $modelMethod = debug_backtrace()[3]["function"];
+                $trace = debug_backtrace();
+                $modelMethod = null;
+                for ($i = 0; $i < count($trace); $i++) {
+                    if ($this->inArray($trace[$i]["function"], ["__call", "__execute"])) {
+                        continue;
+                    }
+
+                    if ($trace[$i]["function"] !== null) {
+                        $modelMethod = $trace[$i]["function"];
+                        break;
+                    }
+                }
+
                 $queryKey = get_class($this) . "#" . $modelMethod;
                 $queryId = $method;
 
