@@ -47,6 +47,15 @@ class Logger
     }
 
     /**
+     * インスタンスを返却する
+     * @return WebStream\Module\Logger ロガーインスタンス
+     */
+    public static function getInstance()
+    {
+        return self::$logger;
+    }
+
+    /**
      * Loggerを初期化する
      * @param string 設定ファイルパス
      */
@@ -74,7 +83,7 @@ class Logger
             return;
         }
         if (self::$logger->toLogLevelValue('debug') >= self::$logger->getLogLevel()) {
-            self::$logger->write("DEBUG", "Logger finalized.");
+            self::$logger->write(\Psr\Log\LogLevel::DEBUG, "Logger finalized.");
         }
         self::$logger = null;
     }
@@ -94,8 +103,7 @@ class Logger
             }
         }
         if (self::$logger->toLogLevelValue($level) >= self::$logger->getLogLevel()) {
-            $logArgument = [strtoupper($level)];
-            call_user_func_array([self::$logger, "write"], array_merge($logArgument, $arguments));
+            call_user_func_array([self::$logger, "write"], array_merge([$level], $arguments));
         }
     }
 
@@ -160,24 +168,34 @@ class Logger
 
     /**
      * ログレベルを数値に変換
+     * ログレベルはWebStream独自、PSR-3両方対応
      * @param string ログレベル文字列
      * @return integer ログレベル数値
      */
-    public function toLogLevelValue($level)
+    public function toLogLevelValue(string $level)
     {
         switch (strtolower($level)) {
             case 'debug':
                 return 1;
             case 'info':
                 return 2;
-            case 'warn':
+            case 'notice':    // PSR-3
                 return 3;
-            case 'error':
+            case 'warn':
+            case 'warning':   // PSR-3
                 return 4;
-            case 'fatal':
+            case 'error':
                 return 5;
+            case 'critical':  // PSR-3
+                return 6;
+            case 'alert':     // PSR-3
+                return 7;
+            case 'emergency': // PSR-3
+                return 8;
+            case 'fatal':
+                return 9;
             default:
-                return 0;
+                throw new LoggerException("Undefined log level: $level");
         }
     }
 
@@ -252,10 +270,25 @@ class Logger
      * @param string 書きだす文字列
      * @param string スタックトレース文字列
      */
-    private function write($level, $msg, $stacktrace = null)
+    public function write($level, $msg, $context = null)
     {
-        $msg = $this->message($msg, $stacktrace);
-        $msg = "[".$this->getTimeStamp()."] [".$level."] ".$msg."\n";
+        if (is_array($context)) {
+            // sprintfと同様の展開
+            // [a-zA-Z0-9_-\.] 以外もキーには指定可能だが仕様としてこれ以外は不可とする
+            preg_match_all('/\{\s*([a-zA-Z0-9._-]+)\s*?\}/', $msg, $matches);
+            foreach ($matches[1] as $index => $value) {
+                if (array_key_exists($value, $context)) {
+                    $matches[1][$index] = $context[$value];
+                } else {
+                    unset($matches[0][$index]);
+                }
+            }
+            $msg = str_replace($matches[0], $matches[1], $msg);
+        } else {
+            $msg = $this->message($msg, $context);
+        }
+
+        $msg = "[".$this->getTimeStamp()."] [".strtoupper($level)."] ".$msg."\n";
         $this->rotate();
         try {
             @error_log($msg, 3, $this->logPath);

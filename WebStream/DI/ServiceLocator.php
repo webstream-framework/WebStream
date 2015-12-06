@@ -3,6 +3,8 @@ namespace WebStream\DI;
 
 use WebStream\Module\Utility;
 use WebStream\Module\Container;
+use WebStream\Module\Logger;
+use WebStream\Module\LoggerAdapter;
 use WebStream\Delegate\Router;
 use WebStream\Delegate\CoreDelegator;
 use WebStream\Delegate\AnnotationDelegator;
@@ -83,6 +85,10 @@ class ServiceLocator
         // AnnotationDelegator
         $container->annotationDelegator = function () use (&$container) {
             return new AnnotationDelegator($container);
+        };
+        // LoggerAdapter
+        $container->logger = function () use (&$container) {
+            return new LoggerAdapter(Logger::getInstance());
         };
         // ApplicationRoot
         $container->applicationRoot = $this->getRoot();

@@ -54,7 +54,7 @@ class Application
     private function init()
     {
         /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.4.0');
+        define('STREAM_VERSION', '0.7.0');
         /** プロジェクトディレクトリの絶対パスを定義 */
         define('STREAM_ROOT', $this->getRoot());
         /** アプリケーションディレクトリ */
