@@ -49,12 +49,18 @@ class CoreModel implements CoreInterface
     protected $annotation;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    protected $logger;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
         Logger::debug("Model start.");
         $this->container = $container;
+        $this->logger = $container->logger;
     }
 
     /**

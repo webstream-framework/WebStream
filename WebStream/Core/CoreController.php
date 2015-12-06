@@ -46,6 +46,11 @@ class CoreController implements CoreInterface
     protected $annotation;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    protected $logger;
+
+    /**
      * {@inheritdoc}
      */
     final public function __construct(Container $container)
@@ -54,6 +59,7 @@ class CoreController implements CoreInterface
         $this->request   = $container->request;
         $this->response  = $container->response;
         $this->session   = $container->session;
+        $this->logger    = $container->logger;
         $this->coreDelegator = $container->coreDelegator;
     }
 

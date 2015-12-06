@@ -82,9 +82,7 @@ class Logger
         if (!isset(self::$logger) || self::$logger === null) {
             return;
         }
-        if (self::$logger->toLogLevelValue('debug') >= self::$logger->getLogLevel()) {
-            self::$logger->write(\Psr\Log\LogLevel::DEBUG, "Logger finalized.");
-        }
+        self::$logger->write(\Psr\Log\LogLevel::DEBUG, "Logger finalized.");
         self::$logger = null;
     }
 
@@ -102,9 +100,8 @@ class Logger
                 throw new LoggerException("Logger is not initialized.");
             }
         }
-        if (self::$logger->toLogLevelValue($level) >= self::$logger->getLogLevel()) {
-            call_user_func_array([self::$logger, "write"], array_merge([$level], $arguments));
-        }
+
+        call_user_func_array([self::$logger, "write"], array_merge([$level], $arguments));
     }
 
     /**
@@ -272,6 +269,10 @@ class Logger
      */
     public function write($level, $msg, $context = null)
     {
+        if ($this->logLevel > $this->toLogLevelValue($level)) {
+            return;
+        }
+
         if (is_array($context)) {
             // sprintfと同様の展開
             // [a-zA-Z0-9_-\.] 以外もキーには指定可能だが仕様としてこれ以外は不可とする
@@ -411,15 +412,6 @@ class Logger
     public function getLogPath()
     {
         return $this->logPath;
-    }
-
-    /**
-     * ログレベルを返却する
-     * @return string ログ出力パス
-     */
-    public function getLogLevel()
-    {
-        return $this->logLevel;
     }
 
     /**

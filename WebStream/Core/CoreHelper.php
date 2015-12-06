@@ -29,12 +29,18 @@ class CoreHelper implements CoreInterface
     protected $annotation;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    protected $logger;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
-        $this->container = $container;
         Logger::debug("Helper start.");
+        $this->container = $container;
+        $this->logger = $container->logger;
     }
 
     /**
