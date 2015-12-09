@@ -92,15 +92,15 @@ class CoreExecuteDelegator
             $result = null;
 
             if ($instance instanceof CoreController) {
-                $this->controllerInjector($method, $arguments);
+                $this->controllerInjector($this->getOriginMethod($method), $arguments);
             } elseif ($instance instanceof CoreService) {
-                $result = $this->serviceInjector($method, $arguments);
+                $result = $this->serviceInjector($this->getOriginMethod($method), $arguments);
             } elseif ($instance instanceof CoreModel) {
-                $result = $this->modelInjector($method, $arguments);
+                $result = $this->modelInjector($this->getOriginMethod($method), $arguments);
             } elseif ($instance instanceof CoreView) {
                 $this->viewInjector($method, $arguments);
             } elseif ($instance instanceof CoreHelper) {
-                $result = $this->helperInjector($method, $arguments);
+                $result = $this->helperInjector($this->getOriginMethod($method), $arguments);
             }
 
             return $result;
@@ -187,8 +187,6 @@ class CoreExecuteDelegator
 
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
-
             // @Header
             $mimeType = $this->annotation->header->mimeType;
 
@@ -259,8 +257,6 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
-
             // @Filter
             $filter = $this->annotation->filter;
 
@@ -301,8 +297,6 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
-
             // @Filter
             $filter = $this->annotation->filter;
 
@@ -412,5 +406,45 @@ class CoreExecuteDelegator
         }
 
         return $this->execute($method, $arguments);
+    }
+
+    /**
+     * 実メソッド名を返却する
+     * @param  stirng $method エイリアスメソッド名
+     * @return stirng 実メソッド名
+     */
+    private function getOriginMethod($method)
+    {
+        $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
+        // 実メソッドが定義済みの場合、エイリアスメソッド参照はしない
+        if (method_exists($this->instance, $method)) {
+            return $method;
+        }
+
+        // Aliasメソッドが定義されている場合、メソッド名を置き換える
+        $originMethod = null;
+        foreach ($this->annotation->alias as $annotation) {
+            $m = $annotation->method->{$method};
+
+            if ($originMethod !== null && $m !== null) {
+                throw new AnnotationException("Alias method of the same name is defined: $method");
+            }
+            if ($m !== null) {
+                $originMethod = $m;
+            }
+        }
+
+        if ($originMethod !== null) {
+            $class = get_class($this->instance);
+            Logger::debug("Alias method found. Transfer from ${class}#${method} to ${class}#${originMethod}.");
+        } else {
+            $originMethod = $method;
+        }
+
+        // 実メソッドのアノテーション情報を取得
+        $this->annotation = $this->container->annotationDelegator->read($this->instance, $originMethod);
+
+        return $originMethod;
     }
 }

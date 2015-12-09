@@ -46,7 +46,8 @@ class AnnotationDelegatorFactory
             "template" => "WebStream\Annotation\Template",
             "exceptionHandler" => "WebStream\Annotation\ExceptionHandler",
             "database" => "WebStream\Annotation\Database",
-            "query" => "WebStream\Annotation\Query"
+            "query" => "WebStream\Annotation\Query",
+            "alias" => "WebStream\Annotation\Alias"
         ];
     }
 
@@ -225,6 +226,22 @@ class AnnotationDelegatorFactory
 
         return function () use ($queryAnnotations) {
             return $queryAnnotations;
+        };
+    }
+
+    /**
+     * Alias結果を返却する
+     * @return Callable Alias結果
+     */
+    public function createAlias()
+    {
+        $aliasAnnotations = [];
+        if (array_key_exists($this->injectedAnnotationKeys["alias"], $this->injectedAnnotation)) {
+            $aliasAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["alias"]];
+        }
+
+        return function () use ($aliasAnnotations) {
+            return $aliasAnnotations;
         };
     }
 

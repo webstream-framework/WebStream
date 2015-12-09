@@ -96,6 +96,9 @@ class AnnotationDelegator
         // @ExceptionHandler
         $annotationContainer->exceptionHandler = $factory->createExceptionHandler();
 
+        // @Alias
+        $annotationContainer->alias = $factory->createAlias();
+
         // custom annotation
         $annotationContainer->customAnnotations = $factory->createCustomAnnotation();
 
@@ -125,6 +128,9 @@ class AnnotationDelegator
 
         // @ExceptionHandler
         $annotationContainer->exceptionHandler = $factory->createExceptionHandler();
+
+        // @Alias
+        $annotationContainer->alias = $factory->createAlias();
 
         // custom annotation
         $annotationContainer->customAnnotations = $factory->createCustomAnnotation();
@@ -161,6 +167,9 @@ class AnnotationDelegator
 
         // @Query
         $annotationContainer->query = $factory->createQuery();
+
+        // @Alias
+        $annotationContainer->alias = $factory->createAlias();
 
         // custom annotation
         $annotationContainer->customAnnotations = $factory->createCustomAnnotation();
@@ -215,6 +224,9 @@ class AnnotationDelegator
 
         // @ExceptionHandler
         $annotationContainer->exceptionHandler = $factory->createExceptionHandler();
+
+        // @Alias
+        $annotationContainer->alias = $factory->createAlias();
 
         // custom annotation
         $annotationContainer->customAnnotations = $factory->createCustomAnnotation();
