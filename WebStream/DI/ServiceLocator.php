@@ -87,7 +87,7 @@ class ServiceLocator
             return new AnnotationDelegator($container);
         };
         // LoggerAdapter
-        $container->logger = function () use (&$container) {
+        $container->logger = function () {
             return new LoggerAdapter(Logger::getInstance());
         };
         // ApplicationRoot
