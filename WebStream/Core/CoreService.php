@@ -8,6 +8,7 @@ use WebStream\Module\Logger;
 use WebStream\Module\PropertyProxy;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 
 /**
  * CoreService
@@ -15,7 +16,7 @@ use WebStream\Annotation\Filter;
  * @since 2011/09/11
  * @version 0.4.1
  */
-class CoreService implements CoreInterface
+class CoreService implements CoreInterface, IAnnotatable
 {
     use Utility;
     use PropertyProxy;

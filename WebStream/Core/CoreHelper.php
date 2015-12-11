@@ -7,6 +7,7 @@ use WebStream\Module\Security;
 use WebStream\Module\Logger;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 
 /**
  * CoreHelperクラス
@@ -14,7 +15,7 @@ use WebStream\Annotation\Filter;
  * @since 2011/11/30
  * @version 0.4
  */
-class CoreHelper implements CoreInterface
+class CoreHelper implements CoreInterface, IAnnotatable
 {
     use Utility;
 

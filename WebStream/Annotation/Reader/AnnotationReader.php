@@ -42,6 +42,11 @@ class AnnotationReader
     private $exception;
 
     /**
+     * @var string 読み込み対象アノテーションクラスパス
+     */
+    private $annotationClasspath;
+
+    /**
      * constructor
      * @param CoreInterface インスタンス
      * @param Container 依存コンテナ
@@ -74,10 +79,12 @@ class AnnotationReader
 
     /**
      * アノテーション情報を読み込む
+     * @param stirng 読み込み対象アノテーションクラスパス
      */
-    public function read()
+    public function read($annotationClasspath = null)
     {
         try {
+            $this->annotationClasspath = $annotationClasspath;
             $this->readClass();
             $this->readMethods();
             $this->readProperties();
@@ -106,6 +113,11 @@ class AnnotationReader
 
                 for ($i = 1; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+
+                    // アノテーションクラスパスが指定された場合、一致したアノテーション以外は読み込まない
+                    if ($this->annotationClasspath !== null && $this->annotationClasspath !== get_class($annotation)) {
+                        continue;
+                    }
 
                     try {
                         $annotation->onClassInject($this->instance, $this->container, $refClass);
@@ -161,6 +173,11 @@ class AnnotationReader
 
                 for ($i = 1; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+
+                    // アノテーションクラスパスが指定された場合、一致したアノテーション以外は読み込まない
+                    if ($this->annotationClasspath !== null && $this->annotationClasspath !== get_class($annotation)) {
+                        continue;
+                    }
 
                     // IMethodを実装している場合、アクションメソッドのアノテーション以外は読み込まない
                     if ($executeMethod !== $method->name && $annotation instanceof \WebStream\Annotation\Base\IMethod) {
@@ -218,6 +235,11 @@ class AnnotationReader
 
                 for ($i = 1; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+
+                    // アノテーションクラスパスが指定された場合、一致したアノテーション以外は読み込まない
+                    if ($this->annotationClasspath !== null && $this->annotationClasspath !== get_class($annotation)) {
+                        continue;
+                    }
 
                     try {
                         $annotation->onPropertyInject($this->instance, $this->container, $property);

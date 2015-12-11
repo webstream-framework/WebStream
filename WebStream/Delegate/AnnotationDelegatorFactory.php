@@ -4,6 +4,7 @@ namespace WebStream\Delegate;
 use WebStream\Core\CoreController;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Exception\Extend\AnnotationException;
 
@@ -52,21 +53,75 @@ class AnnotationDelegatorFactory
     }
 
     /**
-     * Header結果を返却する
-     * @return Callable Header結果
+     * CustomAnnotation結果を返却する
+     * @param  string アノテーションID
+     * @return Callable CustomAnnotation結果
      */
-    public function createHeader()
+    public function createAnnotationCallable($annotationId)
     {
-        $headerAnnotations = null;
-        if (array_key_exists($this->injectedAnnotationKeys["header"], $this->injectedAnnotation)) {
-            $headerAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["header"]];
+        $classpath = array_key_exists($annotationId, $this->injectedAnnotationKeys) ?
+            $this->injectedAnnotationKeys[$annotationId] : null;
+        $annotations = array_key_exists($classpath, $this->injectedAnnotation) ?
+            $this->injectedAnnotation[$classpath] : null;
+        $annotationCallable = function() {};
+
+        // TODO Validateがいないんですけどいいのこれ？
+
+        switch ($classpath) {
+            case "WebStream\Annotation\Header":
+                $annotationCallable = $this->createHeader($annotations);
+                break;
+            case "WebStream\Annotation\Filter":
+                $annotationCallable = $this->createFilter($annotations);
+                break;
+            case "WebStream\Annotation\Template":
+                $annotationCallable = $this->createTemplate($annotations);
+                break;
+            case "WebStream\Annotation\ExceptionHandler":
+                $annotationCallable = $this->createExceptionHandler($annotations);
+                break;
+            case "WebStream\Annotation\Database":
+                $annotationCallable = $this->createDatabase($annotations);
+                break;
+            case "WebStream\Annotation\Query":
+                $annotationCallable = $this->createQuery($annotations);
+                break;
+            case "WebStream\Annotation\Alias":
+                $annotationCallable = $this->createAlias($annotations);
+                break;
         }
 
-        return function () use (&$headerAnnotations) {
+        return $annotationCallable;
+    }
+
+    /**
+     * CustomAnnotation結果を返却する
+     * @return Callable CustomAnnotation結果
+     */
+    public function createCustomAnnotationCallable()
+    {
+        $injectedAnnotation = $this->injectedAnnotation;
+        foreach ($this->injectedAnnotationKeys as $annotationKey) {
+            unset($injectedAnnotation[$annotationKey]);
+        }
+
+        return function () use ($injectedAnnotation) {
+            return $injectedAnnotation;
+        };
+    }
+
+    /**
+     * Header結果を返却する
+     * @param  array<AnnotationContainer> アノテーションコンテナリスト
+     * @return Callable Header結果
+     */
+    private function createHeader($containerList)
+    {
+        return function () use ($containerList) {
             $headerContainer = new Container();
             $headerContainer->mimeType = "html";
-            if ($headerAnnotations !== null) {
-                $headerContainer->mimeType = $headerAnnotations[0]->contentType ?: $headerContainer->mimeType;
+            if ($containerList !== null) {
+                $headerContainer->mimeType = $containerList[0]->contentType ?: $headerContainer->mimeType;
             }
 
             return $headerContainer;
@@ -75,27 +130,23 @@ class AnnotationDelegatorFactory
 
     /**
      * Filter結果を返却する
+     * @param  array<AnnotationContainer> アノテーションコンテナリスト
      * @return Callable Filter結果
      */
-    public function createFilter()
+    private function createFilter($containerList)
     {
-        $filterAnnotations = null;
-        if (array_key_exists($this->injectedAnnotationKeys["filter"], $this->injectedAnnotation)) {
-            $filterAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["filter"]];
-        }
-
-        return function () use ($filterAnnotations) {
+        return function () use ($containerList) {
             $filterListContainer = new Container();
             $filterListContainer->initialize = new AnnotationListContainer();
             $filterListContainer->before     = new AnnotationListContainer();
             $filterListContainer->after      = new AnnotationListContainer();
 
-            if ($filterAnnotations !== null) {
+            if ($containerList !== null) {
                 $exceptMethods = [];
 
                 // アクションメソッドの@Filter(type="skip")をチェックする
                 // 1メソッドに対して複数の@Filterが指定されてもエラーにはしない
-                foreach ($filterAnnotations as $filterAnnotation) {
+                foreach ($containerList as $filterAnnotation) {
                     if ($filterAnnotation->classpath . "#" . $filterAnnotation->action === $filterAnnotation->method->class . "#" . $filterAnnotation->method->name) {
                         if ($filterAnnotation->annotation->type === 'skip') {
                             $exceptMethods = $filterAnnotation->annotation->except;
@@ -107,7 +158,7 @@ class AnnotationDelegatorFactory
                 }
 
                 $isInitialized = false;
-                foreach ($filterAnnotations as $filterAnnotation) {
+                foreach ($containerList as $filterAnnotation) {
                     $type = $filterAnnotation->annotation->type;
                     $only = $filterAnnotation->annotation->only;
                     $except = $filterAnnotation->annotation->except;
@@ -163,19 +214,15 @@ class AnnotationDelegatorFactory
 
     /**
      * Template結果を返却する
+     * @param  array<AnnotationContainer> アノテーションコンテナリスト
      * @return Callable Template結果
      */
-    public function createTemplate()
+    private function createTemplate($containerList)
     {
-        $templateAnnotations = null;
-        if (array_key_exists($this->injectedAnnotationKeys["template"], $this->injectedAnnotation)) {
-            $templateAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["template"]];
-        }
-
-        return function () use ($templateAnnotations) {
+        return function () use ($containerList) {
             $templateContainer = new Container(false);
-            $templateContainer->engine = $templateAnnotations[0]->engine;
-            $templateContainer->cacheTime = $templateAnnotations[0]->cacheTime;
+            $templateContainer->engine = $containerList !== null ? $containerList[0]->engine : null;
+            $templateContainer->cacheTime = $containerList !== null ? $containerList[0]->cacheTime : null;
 
             return $templateContainer;
         };
@@ -183,81 +230,49 @@ class AnnotationDelegatorFactory
 
     /**
      * ExceptionHandler結果を返却する
+     * @param  array<AnnotationContainer> アノテーションコンテナリスト
      * @return Callable ExceptionHandler結果
      */
-    public function createExceptionHandler()
+    private function createExceptionHandler($containerList)
     {
-        $exceptionHandlerAnnotations = [];
-        if (array_key_exists($this->injectedAnnotationKeys["exceptionHandler"], $this->injectedAnnotation)) {
-            $exceptionHandlerAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["exceptionHandler"]];
-        }
-
-        return function () use ($exceptionHandlerAnnotations) {
-            return $exceptionHandlerAnnotations;
+        return function () use ($containerList) {
+            return $containerList === null ? [] : $containerList;
         };
     }
 
     /**
      * Database結果を返却する
+     * @param  array<AnnotationContainer> アノテーションコンテナリスト
      * @return Callable Database結果
      */
-    public function createDatabase()
+    private function createDatabase($containerList)
     {
-        $databaseAnnotations = null;
-        if (array_key_exists($this->injectedAnnotationKeys["database"], $this->injectedAnnotation)) {
-            $databaseAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["database"]];
-        }
-
-        return function () use ($databaseAnnotations) {
-            return $databaseAnnotations;
+        return function () use ($containerList) {
+            return $containerList;
         };
     }
 
     /**
      * Query結果を返却する
+     * @param  array<AnnotationContainer> アノテーションコンテナリスト
      * @return Callable Query結果
      */
-    public function createQuery()
+    private function createQuery($containerList)
     {
-        $queryAnnotations = null;
-        if (array_key_exists($this->injectedAnnotationKeys["query"], $this->injectedAnnotation)) {
-            $queryAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["query"]];
-        }
-
-        return function () use ($queryAnnotations) {
-            return $queryAnnotations;
+        return function () use ($containerList) {
+            return $containerList;
         };
     }
 
     /**
      * Alias結果を返却する
+     * @param  array<AnnotationContainer> アノテーションコンテナリスト
      * @return Callable Alias結果
      */
-    public function createAlias()
+    private function createAlias($containerList)
     {
-        $aliasAnnotations = [];
-        if (array_key_exists($this->injectedAnnotationKeys["alias"], $this->injectedAnnotation)) {
-            $aliasAnnotations = $this->injectedAnnotation[$this->injectedAnnotationKeys["alias"]];
-        }
-
-        return function () use ($aliasAnnotations) {
-            return $aliasAnnotations;
-        };
-    }
-
-    /**
-     * CustomAnnotation結果を返却する
-     * @return Callable CustomAnnotation結果
-     */
-    public function createCustomAnnotation()
-    {
-        $injectedAnnotation = $this->injectedAnnotation;
-        foreach ($this->injectedAnnotationKeys as $annotationKey) {
-            unset($injectedAnnotation[$annotationKey]);
-        }
-
-        return function () use ($injectedAnnotation) {
-            return $injectedAnnotation;
+        return function () use ($containerList) {
+            return $containerList === null ? [] : $containerList;;
         };
     }
 }

@@ -7,6 +7,7 @@ use WebStream\Module\Utility;
 use WebStream\Template\ITemplateEngine;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 
 /**
  * CoreViewクラス
@@ -14,7 +15,7 @@ use WebStream\Annotation\Filter;
  * @since 2011/09/12
  * @version 0.4
  */
-class CoreView implements CoreInterface
+class CoreView implements CoreInterface, IAnnotatable
 {
     use Utility;
 

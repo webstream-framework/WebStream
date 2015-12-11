@@ -8,6 +8,7 @@ use WebStream\Module\PropertyProxy;
 use WebStream\Module\Container;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 
 /**
  * CoreControllerクラス
@@ -15,7 +16,7 @@ use WebStream\Annotation\Filter;
  * @since 2011/09/11
  * @version 0.4.2
  */
-class CoreController implements CoreInterface
+class CoreController implements CoreInterface, IAnnotatable
 {
     use Utility;
     use PropertyProxy;

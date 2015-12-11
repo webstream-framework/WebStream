@@ -75,10 +75,9 @@ class CoreExecuteDelegator
      */
     public function __get($name)
     {
-        $instance = $this->injectedInstance ?: $this->instance;
-
-        return $instance->{$name};
+        return $this->getInstance()->{$name};
     }
+
     /**
      * 処理を実行する
      * @param string メソッド名
@@ -86,20 +85,23 @@ class CoreExecuteDelegator
      */
     public function run($method, $arguments = [])
     {
-        $instance = $this->injectedInstance ?: $this->instance;
+        // すでに注入済みのインスタンスの場合、そのまま実行
+        if ($this->injectedInstance !== null) {
+            return $this->execute($method, $arguments);
+        }
 
         try {
             $result = null;
 
-            if ($instance instanceof CoreController) {
+            if ($this->instance instanceof CoreController) {
                 $this->controllerInjector($this->getOriginMethod($method), $arguments);
-            } elseif ($instance instanceof CoreService) {
+            } elseif ($this->instance instanceof CoreService) {
                 $result = $this->serviceInjector($this->getOriginMethod($method), $arguments);
-            } elseif ($instance instanceof CoreModel) {
+            } elseif ($this->instance instanceof CoreModel) {
                 $result = $this->modelInjector($this->getOriginMethod($method), $arguments);
-            } elseif ($instance instanceof CoreView) {
+            } elseif ($this->instance instanceof CoreView) {
                 $this->viewInjector($method, $arguments);
-            } elseif ($instance instanceof CoreHelper) {
+            } elseif ($this->instance instanceof CoreHelper) {
                 $result = $this->helperInjector($this->getOriginMethod($method), $arguments);
             }
 
@@ -122,7 +124,7 @@ class CoreExecuteDelegator
                     break;
             }
 
-            $exception = new ExceptionDelegator($instance, $e, $method);
+            $exception = new ExceptionDelegator($this->getInstance(), $e, $method);
 
             if ($this->annotation !== null && is_array($this->annotation->exceptionHandler)) {
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
@@ -187,6 +189,8 @@ class CoreExecuteDelegator
 
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
             // @Header
             $mimeType = $this->annotation->header->mimeType;
 
@@ -257,6 +261,8 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
             // @Filter
             $filter = $this->annotation->filter;
 
@@ -297,6 +303,8 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
+            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+
             // @Filter
             $filter = $this->annotation->filter;
 
@@ -415,23 +423,20 @@ class CoreExecuteDelegator
      */
     private function getOriginMethod($method)
     {
-        $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
-
         // 実メソッドが定義済みの場合、エイリアスメソッド参照はしない
         if (method_exists($this->instance, $method)) {
             return $method;
         }
 
-        // Aliasメソッドが定義されている場合、メソッド名を置き換える
-        $originMethod = null;
-        foreach ($this->annotation->alias as $annotation) {
-            $m = $annotation->method->{$method};
+        $annotation = $this->container->annotationDelegator->read($this->instance, $method, "WebStream\Annotation\Alias");
 
-            if ($originMethod !== null && $m !== null) {
+        $originMethod = null;
+        foreach ($annotation->alias as $alias) {
+            if ($originMethod !== null && $alias->{$method} !== null) {
                 throw new AnnotationException("Alias method of the same name is defined: $method");
             }
-            if ($m !== null) {
-                $originMethod = $m;
+            if ($alias->{$method} !== null) {
+                $originMethod = $alias->{$method};
             }
         }
 
@@ -441,9 +446,6 @@ class CoreExecuteDelegator
         } else {
             $originMethod = $method;
         }
-
-        // 実メソッドのアノテーション情報を取得
-        $this->annotation = $this->container->annotationDelegator->read($this->instance, $originMethod);
 
         return $originMethod;
     }

@@ -2,9 +2,7 @@
 namespace WebStream\Annotation;
 
 use WebStream\Annotation\Base\Annotation;
-use WebStream\Annotation\Base\IClass;
 use WebStream\Annotation\Base\IMethods;
-use WebStream\Annotation\Base\IProperty;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Container\AnnotationContainer;
@@ -19,9 +17,9 @@ use WebStream\Exception\Extend\AnnotationException;
  * @version 0.7
  *
  * @Annotation
- * @Target({"CLASS","METHOD","PROPERTY"})
+ * @Target("METHOD")
  */
-class Alias extends Annotation implements IClass, IMethods, IProperty, IRead
+class Alias extends Annotation implements IMethods, IRead
 {
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -40,9 +38,6 @@ class Alias extends Annotation implements IClass, IMethods, IProperty, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        $this->injectedContainer->class = new AnnotationContainer();
-        $this->injectedContainer->method = new AnnotationContainer();
-        $this->injectedContainer->property = new AnnotationContainer();
         Logger::debug("@Alias injected.");
     }
 
@@ -57,14 +52,6 @@ class Alias extends Annotation implements IClass, IMethods, IProperty, IRead
     /**
      * {@inheritdoc}
      */
-    public function onClassInject(CoreInterface &$instance, Container $container, \ReflectionClass $class)
-    {
-        // not inmplement
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
     {
         $aliasMethodName = $this->annotation->name;
@@ -72,14 +59,6 @@ class Alias extends Annotation implements IClass, IMethods, IProperty, IRead
             throw new AnnotationException("Alias method is invalid: " . $aliasMethodName);
         }
 
-        $this->injectedContainer->method->{$aliasMethodName} = $method->name;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function onPropertyInject(CoreInterface &$instance, Container $container, \ReflectionProperty $property)
-    {
-        // not inmplement
+        $this->injectedContainer->{$aliasMethodName} = $method->name;
     }
 }

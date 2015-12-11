@@ -7,6 +7,7 @@ use WebStream\Module\PropertyProxy;
 use WebStream\Module\Utility;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
 use WebStream\Exception\Extend\DatabaseException;
@@ -18,7 +19,7 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  * @since 2012/09/01
  * @version 0.4
  */
-class CoreModel implements CoreInterface
+class CoreModel implements CoreInterface, IAnnotatable
 {
     use Utility;
     use PropertyProxy;
