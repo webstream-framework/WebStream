@@ -3,9 +3,9 @@ namespace WebStream\Core;
 
 use WebStream\Delegate\Resolver;
 use WebStream\Module\Utility;
-use WebStream\Module\Logger;
 use WebStream\Module\PropertyProxy;
 use WebStream\Module\Container;
+use WebStream\Log\Logger;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;

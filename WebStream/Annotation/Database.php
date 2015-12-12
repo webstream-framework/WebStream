@@ -6,8 +6,8 @@ use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IClass;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**

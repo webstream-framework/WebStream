@@ -7,8 +7,8 @@ use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\container\AnnotationListContainer;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**

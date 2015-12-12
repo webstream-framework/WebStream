@@ -3,8 +3,8 @@ namespace WebStream\DI;
 
 use WebStream\Module\Utility;
 use WebStream\Module\Container;
-use WebStream\Module\Logger;
-use WebStream\Module\LoggerAdapter;
+use WebStream\Log\Logger;
+use WebStream\Log\LoggerAdapter;
 use WebStream\Delegate\Router;
 use WebStream\Delegate\CoreDelegator;
 use WebStream\Delegate\AnnotationDelegator;

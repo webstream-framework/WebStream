@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\Log\Logger;
+
 /**
  * HttpClient
  * @author Ryuichi TANAKA.

@@ -6,7 +6,7 @@ use WebStream\Annotation\Base\IProperty;
 use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\AnnotationException;
 
 /**

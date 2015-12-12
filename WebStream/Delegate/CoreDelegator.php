@@ -3,9 +3,9 @@ namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
 use WebStream\Module\Utility;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**

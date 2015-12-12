@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Database\Driver;
 
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
+use WebStream\Log\Logger;
 
 /**
  * DatabaseDriver

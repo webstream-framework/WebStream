@@ -2,8 +2,8 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Module\Logger;
 use WebStream\Module\Utility;
+use WebStream\Log\Logger;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;

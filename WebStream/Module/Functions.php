@@ -6,7 +6,7 @@
  * @version 0.4
  */
 
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 use WebStream\Module\Security;
 use WebStream\DI\ServiceLocator;
 

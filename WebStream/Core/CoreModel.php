@@ -2,9 +2,9 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Module\Logger;
 use WebStream\Module\PropertyProxy;
 use WebStream\Module\Utility;
+use WebStream\Log\Logger;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;

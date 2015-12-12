@@ -5,9 +5,9 @@ use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\CsrfException;
 
 /**

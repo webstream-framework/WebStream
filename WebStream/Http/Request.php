@@ -2,7 +2,7 @@
 namespace WebStream\Http;
 
 use WebStream\Module\Security;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 use WebStream\Http\Method\Get;
 use WebStream\Http\Method\Post;
 use WebStream\Http\Method\Put;

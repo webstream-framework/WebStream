@@ -2,7 +2,7 @@
 namespace WebStream\Http;
 
 use WebStream\Module\Utility;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 
 /**
  * Response

@@ -1,5 +1,5 @@
 <?php
-namespace WebStream\Module;
+namespace WebStream\Log;
 
 /**
  * LoggerAdapterクラス
@@ -18,7 +18,7 @@ class LoggerAdapter implements \Psr\Log\LoggerInterface
     /**
      * コンストラクタ
      */
-    public function __construct(\WebStream\Module\Logger $logger)
+    public function __construct(\WebStream\Log\Logger $logger)
     {
         $this->logger = $logger;
     }

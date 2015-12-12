@@ -2,7 +2,7 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreInterface;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
 

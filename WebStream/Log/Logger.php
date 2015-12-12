@@ -1,6 +1,7 @@
 <?php
-namespace WebStream\Module;
+namespace WebStream\Log;
 
+use WebStream\Module\Utility;
 use WebStream\Exception\Extend\LoggerException;
 
 /**

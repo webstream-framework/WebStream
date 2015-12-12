@@ -1,10 +1,10 @@
 <?php
 namespace WebStream\Template;
 
-use WebStream\Module\Logger;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility;
 use WebStream\Module\Container;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 
 /**

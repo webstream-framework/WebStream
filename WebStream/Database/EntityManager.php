@@ -2,7 +2,7 @@
 namespace WebStream\Database;
 
 use WebStream\Module\Utility;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 
 /**
  * EntityManager

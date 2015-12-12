@@ -2,7 +2,7 @@
 namespace WebStream\Delegate;
 
 use WebStream\Module\Security;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\RouterException;
 
 /**

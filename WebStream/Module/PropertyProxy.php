@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\Log\Logger;
+
 /**
  * PropertyProxyクラス
  * @author Ryuichi Tanaka

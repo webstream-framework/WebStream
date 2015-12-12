@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Http;
 
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\SessionTimeoutException;
 
 /**

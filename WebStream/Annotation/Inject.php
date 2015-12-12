@@ -3,7 +3,7 @@ namespace WebStream\Annotation;
 
 use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 
 /**
  * Inject

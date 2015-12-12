@@ -1,9 +1,9 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Module\Utility;
+use WebStream\Log\Logger;
 use WebStream\Template\ITemplateEngine;
 use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;

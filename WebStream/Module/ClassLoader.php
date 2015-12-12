@@ -2,7 +2,9 @@
 namespace WebStream\Module;
 
 require_once dirname(__FILE__) . '/Utility.php';
-require_once dirname(__FILE__) . '/Logger.php';
+require_once dirname(__FILE__) . '/../Log/Logger.php';
+
+use WebStream\Log\Logger;
 
 /**
  * クラスローダ

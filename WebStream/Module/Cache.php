@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\IOException;
 
 /**
