@@ -329,6 +329,15 @@ trait Utility
     }
 
     /**
+     * デフォルトロガーフォーマッタ
+     * @return string デフォルトロガーフォーマッタ
+     */
+    public function defaultLoggerFormatter()
+    {
+        return '[%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m';
+    }
+
+    /**
      * CoreHelper#asyncで使用するコードを返却する
      * @param string URL
      * @param string CSSクラス名

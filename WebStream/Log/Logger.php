@@ -2,32 +2,57 @@
 namespace WebStream\Log;
 
 use WebStream\Module\Utility;
+use WebStream\Module\Container;
 use WebStream\Exception\Extend\LoggerException;
 
 /**
  * Loggerクラス
  * @author Ryuichi Tanaka
  * @since 2012/01/16
- * @version 0.4
+ * @version 0.7
  */
 class Logger
 {
     use Utility;
 
-    /** インスタンス */
+    /**
+     * @var Logger ロガー
+     */
     private static $logger;
-    /** 設定ファイル */
+
+    /**
+     * @var LoggerFormatter ロガーフォーマッタ
+     */
+    private static $formatter;
+
+    /**
+     * @var string 設定ファイルパス
+     */
     private static $configPath;
 
-    /** ログパス */
+    /**
+     * @var string ログファイルパス
+     */
     private $logPath;
-    /** ログレベル */
+
+    /**
+     * @var string ログレベル
+     */
     private $logLevel;
-    /** ローテートサイクル */
+
+    /**
+     * @var string ローテートサイクル
+     */
     private $rotateCycle;
-    /** ログローテートサイズ */
+
+    /**
+     * @var int ログローテートサイズ
+     */
     private $rotateSize;
-    /** ログステータスファイルパス */
+
+    /**
+     * @var string ログステータスファイルパス
+     */
     private $statusPath;
 
     /**
@@ -64,6 +89,7 @@ class Logger
     {
         self::$configPath = $configPath;
         self::$logger = new Logger($configPath);
+        self::$formatter = new LoggerFormatter($configPath);
     }
 
     /**
@@ -85,6 +111,7 @@ class Logger
         }
         self::$logger->write(\Psr\Log\LogLevel::DEBUG, "Logger finalized.");
         self::$logger = null;
+        self::$formatter = null;
     }
 
     /**
@@ -290,10 +317,9 @@ class Logger
             $msg = $this->message($msg, $context);
         }
 
-        $msg = "[".$this->getTimeStamp()."] [".strtoupper($level)."] ".$msg."\n";
         $this->rotate();
         try {
-            @error_log($msg, 3, $this->logPath);
+            @error_log(self::$formatter->getFormattedMessage($msg, $level), 3, $this->logPath);
         } catch (\Exception $e) {
             throw new LoggerException($e);
         }

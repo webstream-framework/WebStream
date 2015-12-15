@@ -12,7 +12,9 @@ class LoggerAdapter implements \Psr\Log\LoggerInterface
 {
     use \Psr\Log\LoggerTrait;
 
-    /** ロガーインスタンス */
+    /**
+     * @var Logger ロガーインスタンス
+     */
     private $logger;
 
     /**
