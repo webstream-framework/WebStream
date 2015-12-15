@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IClass;
 use WebStream\Annotation\Container\AnnotationContainer;
@@ -52,7 +52,7 @@ class Database extends Annotation implements IClass, IRead
     /**
      * {@inheritdoc}
      */
-    public function onClassInject(CoreInterface &$instance, Container $container, \ReflectionClass $class)
+    public function onClassInject(IAnnotatable &$instance, Container $container, \ReflectionClass $class)
     {
         $driver = $this->annotation->driver;
         $config = $this->annotation->config;

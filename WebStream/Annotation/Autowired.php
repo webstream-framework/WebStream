@@ -2,8 +2,8 @@
 namespace WebStream\Annotation;
 
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IProperty;
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
 use WebStream\Log\Logger;
@@ -37,7 +37,7 @@ class Autowired extends Annotation implements IProperty
     /**
      * {@inheritdoc}
      */
-    public function onPropertyInject(CoreInterface &$instance, Container $container, \ReflectionProperty $property)
+    public function onPropertyInject(IAnnotatable &$instance, Container $container, \ReflectionProperty $property)
     {
         if ($property->isPrivate() || $property->isProtected()) {
             $property->setAccessible(true);

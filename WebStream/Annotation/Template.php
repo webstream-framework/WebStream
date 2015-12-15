@@ -3,6 +3,7 @@ namespace WebStream\Annotation;
 
 use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Container\AnnotationContainer;
@@ -57,7 +58,7 @@ class Template extends Annotation implements IMethod, IRead
     /**
      * {@inheritdoc}
      */
-    public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
+    public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
         $filename = $this->annotation->value;
         $engine = $this->annotation->engine ?: "basic";

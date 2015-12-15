@@ -65,8 +65,6 @@ class AnnotationDelegatorFactory
             $this->injectedAnnotation[$classpath] : null;
         $annotationCallable = function() {};
 
-        // TODO Validateがいないんですけどいいのこれ？
-
         switch ($classpath) {
             case "WebStream\Annotation\Header":
                 $annotationCallable = $this->createHeader($annotations);

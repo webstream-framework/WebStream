@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Annotation\Base;
 
-use WebStream\Core\CoreInterface;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Module\Container;
 
 /**
@@ -14,9 +14,9 @@ interface IMethods
 {
     /**
      * メソッドオブジェクトを注入
-     * @param CoreInterface 注入先インスタンス
+     * @param IAnnotatable 注入先インスタンス
      * @param Container 依存コンテナ
      * @param ReflectionMethod リフレクションメソッドオブジェクト
      */
-    public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method);
+    public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method);
 }

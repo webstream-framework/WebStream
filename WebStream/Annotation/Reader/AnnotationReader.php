@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Annotation\Reader;
 
-use WebStream\Core\CoreInterface;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Module\Container;
 use WebStream\Delegate\ExceptionDelegator;
 use WebStream\Exception\Extend\AnnotationException;
@@ -48,10 +48,10 @@ class AnnotationReader
 
     /**
      * constructor
-     * @param CoreInterface インスタンス
+     * @param IAnnotatable アノテーション使用可能インスタンス
      * @param Container 依存コンテナ
      */
-    public function __construct(CoreInterface &$instance, Container $container)
+    public function __construct(IAnnotatable &$instance, Container $container)
     {
         $this->instance = $instance;
         $this->container = $container;

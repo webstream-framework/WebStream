@@ -3,6 +3,7 @@ namespace WebStream\Annotation;
 
 use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Container\AnnotationContainer;
@@ -53,7 +54,7 @@ class Query extends Annotation implements IMethods, IRead
     /**
      * {@inheritdoc}
      */
-    public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
+    public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
         $key = $method->class . "#" . $method->name;
         if ($this->injectedContainer->{$key} === null) {

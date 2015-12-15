@@ -2,6 +2,7 @@
 namespace WebStream\Annotation;
 
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Core\CoreInterface;
@@ -52,7 +53,7 @@ class Alias extends Annotation implements IMethods, IRead
     /**
      * {@inheritdoc}
      */
-    public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
+    public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
         $aliasMethodName = $this->annotation->name;
         if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]{0,}$/', $aliasMethodName)) {

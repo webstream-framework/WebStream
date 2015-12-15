@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Annotation\Base;
 
-use WebStream\Core\CoreInterface;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Module\Container;
 
 /**
@@ -14,9 +14,9 @@ interface IClass
 {
     /**
      * クラスオブジェクトを注入
-     * @param CoreInterface 注入先インスタンス
+     * @param IAnnotatable 注入先インスタンス
      * @param Container 依存コンテナ
      * @param ReflectionClass リフレクションクラスオブジェクト
      */
-    public function onClassInject(CoreInterface &$instance, Container $container, \ReflectionClass $class);
+    public function onClassInject(IAnnotatable &$instance, Container $container, \ReflectionClass $class);
 }

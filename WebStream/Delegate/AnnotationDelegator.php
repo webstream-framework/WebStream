@@ -51,14 +51,14 @@ class AnnotationDelegator
      * @param string アノテーションクラスパス
      * @return Container コンテナ
      */
-    public function read($instance, $method, $classpath = null)
+    public function read($instance, $method = null, $classpath = null)
     {
         if (!$instance instanceof IAnnotatable) {
             Logger::warn("Annotation is not available this class: " . get_class($instance));
             return;
         }
 
-        $this->container->executeMethod = $method;
+        $this->container->executeMethod = $method ?: "";
 
         if ($instance instanceof CoreController) {
             return $this->readController($instance, $classpath);
@@ -256,7 +256,23 @@ class AnnotationDelegator
      */
     private function readModule(IAnnotatable $instance, $classpath)
     {
-        // TODO 他のクラス共通
+        $container = $this->container;
+        $reader = new AnnotationReader($instance, $container);
+        $reader->read($classpath);
+        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
 
+        $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
+        $annotationContainer = new AnnotationContainer();
+
+        // @Filter
+        $annotationContainer->filter = $factory->createAnnotationCallable("filter");
+
+        // @Alias
+        $annotationContainer->alias = $factory->createAnnotationCallable("alias");
+
+        // custom annotation
+        $annotationContainer->customAnnotations = $factory->createCustomAnnotationCallable();
+
+        return $annotationContainer;
     }
 }

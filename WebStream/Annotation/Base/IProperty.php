@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Annotation\Base;
 
-use WebStream\Core\CoreInterface;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Module\Container;
 
 /**
@@ -14,9 +14,9 @@ interface IProperty
 {
     /**
      * プロパティオブジェクトを注入
-     * @param CoreInterface 注入先インスタンス
+     * @param IAnnotatable 注入先インスタンス
      * @param Container 依存コンテナ
      * @param ReflectionProperty リフレクションプロパティオブジェクト
      */
-    public function onPropertyInject(CoreInterface &$instance, Container $container, \ReflectionProperty $property);
+    public function onPropertyInject(IAnnotatable &$instance, Container $container, \ReflectionProperty $property);
 }
