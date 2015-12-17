@@ -825,7 +825,33 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <a id="ロギング" class="anchor" href="#%E3%83%AD%E3%82%AE%E3%83%B3%E3%82%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#logging">ロギング</a>
 </h2>
 
-<p>Controller、Service、Model、Helperクラスではロガーを使用できます。  </p>
+<p><code>config/log.ini</code>または<code>config/log.yml</code>を配置し、ログ設定を記述します。<br>
+ログ格納ディレクトリには書き込み権限を与えておく必要があります。  </p>
+
+<pre><code>; プロジェクトルートからの相対パスまたは絶対パス
+path = log/webstream.log
+; ログレベル
+level = debug
+; ログローテート設定(day|month|year)
+rotate_cycle = day
+; ログローテート設定(サイズ:Byte)
+rotate_size = 1024
+; ログに表示するアプリケーション名
+applicationName = webstream
+; ログフォーマット設定
+; 設定しない場合はデフォルト設定になる
+; %c ログに表示するアプリケーション名
+: %d 日付(%Y-%m-%d %H:%M)
+; %d{(指定フォーマット)} 日付 例：%d{%Y-%m-%d %H:%M.%f}
+; %l ログレベル(小文字)
+; %L ログレベル(大文字)
+; 表示幅指定 例：%5L → [INFO ]、[DEBUG]など
+;   表示幅指定は%c、%l、%L、%dに適用可
+; %m ログメッセージ
+format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
+</code></pre>
+
+<p>Controller、Service、Model、Helperクラスでロガーを使用できます。  </p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
@@ -843,6 +869,10 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 
 <p>ControllerとModelではアノテーションを使ってクラスやメソッドを操作することができます。アノテーションを利用することで便利な処理が可能になります。<br>
 クラスまたはメソッドに対するアノテーションは<code>@Inject</code>、プロパティに対するアノテーションは<code>@Autowired</code>の指定が必須です。</p>
+
+<p>アノテーションを適用するクラスは<code>IAnnotatable</code>を実装する必要があります。<br>
+例えば<code>app/libraries/</code>に独自で定義したクラスには開発者が<code>IAnnotatable</code>を実装しないと、アノテーションが有効になりません。<br>
+なお、Controller、Service、Model、Helperの各クラスはデフォルトで実装されているため改めて開発者が実装する必要はありません。</p>
 
 <table>
 <thead>
@@ -876,6 +906,12 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <td>プロパティに対するアノテーションを有効にする</td>
 <td>
 <a href="https://github.com/Autowired" class="user-mention">@Autowired</a>(value="hoge")<br><a href="https://github.com/Autowired" class="user-mention">@Autowired</a>(type="\Hoge")</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Alias" class="user-mention">@Alias</a></td>
+<td>指定されたメソッド名で受けてアノテーションが定義されたメソッドへ転送する</td>
+<td>
+<a href="https://github.com/Alias" class="user-mention">@Alias</a>(name="aliasMethod")</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Filter" class="user-mention">@Filter</a></td>
