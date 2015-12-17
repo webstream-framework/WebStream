@@ -334,7 +334,16 @@ trait Utility
      */
     public function defaultLoggerFormatter()
     {
-        return '[%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m';
+        return '[%d{' . $this->defaultDateTimeFormatter() . '.%f}][%5L] %m';
+    }
+
+    /**
+     * デフォルトDateTimeフォーマッタ
+     * @return string デフォルトDateTimeフォーマッタ
+     */
+    public function defaultDateTimeFormatter()
+    {
+        return "%Y-%m-%d %H:%M:%S";
     }
 
     /**

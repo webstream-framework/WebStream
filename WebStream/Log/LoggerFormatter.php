@@ -115,18 +115,23 @@ class LoggerFormatter
      */
     private function compileDateTime($message)
     {
-        if (preg_match('/%d(?:\{(.+?)\}){0,1}/', $message, $formatMatches)) {
+        if (preg_match('/%([0-9]{0,})d(?:\{(.+?)\}){1}/', $message, $formatMatches)) {
+            $message = preg_replace('/%[0-9]{0,}d/', '%d', $message);
             $now = microtime(true);
             if (preg_match('/^[0-9]*\\.([0-9]+)$/', $now, $matches)) {
                 $decimal = str_pad(substr($matches[1], 0, 3), 3, "0");
             } else {
                 $decimal = "000";
             }
-
-            $dateTimeFormat = preg_replace('/(%f)/', $decimal, $formatMatches[1]);
+            $dateTimeFormat = preg_replace('/(%f)/', $decimal, $formatMatches[2]);
             $dateTime = strftime($dateTimeFormat, $now);
-
-            $message = preg_replace('/%d(?:\{.*\}){0,1}/', $dateTime, $message);
+            $dateTime = empty($formatMatches[1]) ? $dateTime : str_pad($dateTime, $formatMatches[1], ' ');
+            $message = preg_replace('/%d\{.+?\}/', $dateTime, $message);
+        } elseif (preg_match('/%([0-9]{0,})d/', $message, $formatMatches)) {
+            $message = preg_replace('/%[0-9]{0,}d/', '%d', $message);
+            $dateTime = strftime($this->defaultDateTimeFormatter());
+            $dateTime = empty($formatMatches[1]) ? $dateTime : str_pad($dateTime, $formatMatches[1], ' ');
+            $message = preg_replace('/%d/', $dateTime, $message);
         }
 
         return $message;
@@ -142,11 +147,11 @@ class LoggerFormatter
     {
         // ログレベル
         if (preg_match('/%([0-9]{0,})L/', $message, $matches)) {
-            $upperLevel = strtoupper($matches[1] !== null ? str_pad($logLevel, $matches[1], ' ') : $logLevel);
+            $upperLevel = strtoupper(empty($matches[1]) ? $logLevel : str_pad($logLevel, $matches[1], ' '));
             $message = preg_replace('/%([0-9]{0,})L/', $upperLevel, $message);
         }
         if (preg_match('/%([0-9]{0,})l/', $message, $matches)) {
-            $lowerLevel = $matches[1] !== null ? str_pad($logLevel, $matches[1], ' ') : $logLevel;
+            $lowerLevel = empty($matches[1]) ? $logLevel : str_pad($logLevel, $matches[1], ' ');
             $message = preg_replace('/%([0-9]{0,})l/', $lowerLevel, $message);
         }
 
