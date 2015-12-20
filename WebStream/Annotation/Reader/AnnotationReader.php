@@ -2,6 +2,12 @@
 namespace WebStream\Annotation\Reader;
 
 use WebStream\Annotation\Base\IAnnotatable;
+use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IClass;
+use WebStream\Annotation\Base\IMethod;
+use WebStream\Annotation\Base\IMethods;
+use WebStream\Annotation\Base\IProperty;
+use WebStream\Annotation\Base\IRead;
 use WebStream\Module\Container;
 use WebStream\Delegate\ExceptionDelegator;
 use WebStream\Exception\Extend\AnnotationException;
@@ -106,13 +112,12 @@ class AnnotationReader
 
             // アノテーション定義がなければ次へ
             if (!empty($annotations)) {
-                // @Injectは先頭に定義されていなければならない
-                if (!$annotations[0] instanceof \WebStream\Annotation\Inject) {
-                    throw new AnnotationException("@Inject must be defined at the top of class.");
-                }
-
-                for ($i = 1; $i < count($annotations); $i++) {
+                for ($i = 0; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+
+                    if (!$annotation instanceof IClass) {
+                        continue;
+                    }
 
                     // アノテーションクラスパスが指定された場合、一致したアノテーション以外は読み込まない
                     if ($this->annotationClasspath !== null && $this->annotationClasspath !== get_class($annotation)) {
@@ -131,7 +136,7 @@ class AnnotationReader
                     $key = get_class($annotation);
 
                     // IReadを実装している場合、任意のデータを返却する
-                    if ($annotation instanceof \WebStream\Annotation\Base\IRead) {
+                    if ($annotation instanceof IRead) {
                         if (!array_key_exists($key, $this->injectedAnnotations)) {
                             $this->injectedAnnotations[$key] = [];
                         }
@@ -166,13 +171,12 @@ class AnnotationReader
                     continue;
                 }
 
-                // @Injectは先頭に定義されていなければならない
-                if (!$annotations[0] instanceof \WebStream\Annotation\Inject) {
-                    throw new AnnotationException("@Inject must be defined at the top of method.");
-                }
-
-                for ($i = 1; $i < count($annotations); $i++) {
+                for ($i = 0; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+
+                    if (!$annotation instanceof IMethod && !$annotation instanceof IMethods) {
+                        continue;
+                    }
 
                     // アノテーションクラスパスが指定された場合、一致したアノテーション以外は読み込まない
                     if ($this->annotationClasspath !== null && $this->annotationClasspath !== get_class($annotation)) {
@@ -196,7 +200,7 @@ class AnnotationReader
                     $key = get_class($annotation);
 
                     // IReadを実装している場合、任意のデータを返却する
-                    if ($annotation instanceof \WebStream\Annotation\Base\IRead) {
+                    if ($annotation instanceof IRead) {
                         if (!array_key_exists($key, $this->injectedAnnotations)) {
                             $this->injectedAnnotations[$key] = [];
                         }
@@ -228,13 +232,13 @@ class AnnotationReader
                 if (empty($annotations)) {
                     continue;
                 }
-                // @Injectは先頭に定義されていなければならない
-                if (!$annotations[0] instanceof \WebStream\Annotation\Inject) {
-                    throw new AnnotationException("@Inject must be defined at the top of property.");
-                }
 
-                for ($i = 1; $i < count($annotations); $i++) {
+                for ($i = 0; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+
+                    if (!$annotation instanceof IProperty) {
+                        continue;
+                    }
 
                     // アノテーションクラスパスが指定された場合、一致したアノテーション以外は読み込まない
                     if ($this->annotationClasspath !== null && $this->annotationClasspath !== get_class($annotation)) {
@@ -255,7 +259,7 @@ class AnnotationReader
                     $key = get_class($annotation);
 
                     // IReadを実装している場合、任意のデータを返却する
-                    if ($annotation instanceof \WebStream\Annotation\Base\IRead) {
+                    if ($annotation instanceof IRead) {
                         if (!array_key_exists($key, $this->injectedAnnotations)) {
                             $this->injectedAnnotations[$key] = [];
                         }

@@ -5,7 +5,6 @@ use WebStream\Module\Container;
 use WebStream\Module\PropertyProxy;
 use WebStream\Module\Utility;
 use WebStream\Log\Logger;
-use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Database\DatabaseManager;
@@ -75,7 +74,6 @@ class CoreModel implements CoreInterface, IAnnotatable
 
     /**
      * 初期化処理
-     * @Inject
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)

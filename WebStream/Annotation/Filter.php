@@ -37,7 +37,7 @@ class Filter extends Annotation implements IMethods, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Filter injected.");
+        Logger::debug("@Filter annotated.");
     }
 
     /**

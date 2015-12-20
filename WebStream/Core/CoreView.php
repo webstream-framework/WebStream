@@ -5,7 +5,6 @@ use WebStream\Module\Container;
 use WebStream\Module\Utility;
 use WebStream\Log\Logger;
 use WebStream\Template\ITemplateEngine;
-use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 
@@ -54,7 +53,6 @@ class CoreView implements CoreInterface, IAnnotatable
 
     /**
      * 初期化処理
-     * @Inject
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)
