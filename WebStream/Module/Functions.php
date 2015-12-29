@@ -16,9 +16,6 @@ use WebStream\DI\ServiceLocator;
 if (!function_exists('shutdownHandler')) {
     function shutdownHandler()
     {
-        // サービスロケータをクリア
-        ServiceLocator::removeContainer();
-
         // ログ処理
         if ($error = error_get_last()) {
             $errorMsg = $error['message'] . " " . $error['file'] . "(" . $error['line'] . ")";
@@ -47,8 +44,10 @@ if (!function_exists('shutdownHandler')) {
             }
         }
 
-        // オブジェクトを解放
-        Logger::finalize();
+        $instance = ServiceLocator::getInstance();
+        if ($instance !== null) {
+            $instance->removeContainer();
+        }
     }
 }
 

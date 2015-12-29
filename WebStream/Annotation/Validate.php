@@ -7,8 +7,10 @@ use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\ClassLoader;
+use WebStream\DI\ServiceLocator;
 use WebStream\Log\Logger;
 use WebStream\Exception\Extend\ValidateException;
 use WebStream\Exception\Extend\AnnotationException;
@@ -24,7 +26,7 @@ use WebStream\Exception\Extend\AnnotationException;
  */
 class Validate extends Annotation implements IMethod
 {
-    use Utility;
+    use CommonUtils, ApplicationUtils;
 
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -81,7 +83,9 @@ class Validate extends Annotation implements IMethod
                 $classpath = $namespace . "\\" . $className;
             }
 
-            $classpath = $classpath ?: $this->getNamespace($this->getRoot() . "/" . $filepath) . "\\" . $className;
+            $container = ServiceLocator::getInstance()->getContainer();
+            $root = $container->applicationInfo->applicationRoot;
+            $classpath = $classpath ?: $this->getNamespace($root . "/" . $filepath) . "\\" . $className;
             if (!class_exists($classpath)) {
                 $errorMsg = "Invalid Validate class's classpath: " . $classpath . "";
                 throw new AnnotationException($errorMsg);

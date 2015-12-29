@@ -7,7 +7,7 @@ use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Log\Logger;
@@ -26,7 +26,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class CoreExecuteDelegator
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var CoreInterface インスタンス

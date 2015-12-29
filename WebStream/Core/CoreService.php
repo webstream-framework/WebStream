@@ -3,7 +3,6 @@ namespace WebStream\Core;
 
 use WebStream\Delegate\Resolver;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
 use WebStream\Module\PropertyProxy;
 use WebStream\Log\Logger;
 use WebStream\Annotation\Filter;
@@ -17,7 +16,6 @@ use WebStream\Annotation\Base\IAnnotatable;
  */
 class CoreService implements CoreInterface, IAnnotatable
 {
-    use Utility;
     use PropertyProxy;
 
     /**

@@ -2,12 +2,13 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
 use WebStream\Log\Logger;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
+
+use WebStream\DI\ServiceLocator;
 
 /**
  * Applicationクラス
@@ -17,8 +18,6 @@ use WebStream\Exception\DelegateException;
  */
 class Application
 {
-    use Utility;
-
     /** Request */
     private $request;
     /** Response */
@@ -50,22 +49,23 @@ class Application
 
     /**
      * 内部で使用する定数を定義
+     * Obsolete 定数は削除予定
      */
     private function init()
     {
         /** streamのバージョン定義 */
         define('STREAM_VERSION', '0.7.0');
         /** プロジェクトディレクトリの絶対パスを定義 */
-        define('STREAM_ROOT', $this->getRoot());
+        // define('STREAM_ROOT', $this->getRoot());
         /** アプリケーションディレクトリ */
-        define('STREAM_APP_DIR', $this->container->applicationDir);
+        define('STREAM_APP_DIR', $this->container->applicationInfo->applicationDir);
         /** アプリケーションルートパス */
-        define('STREAM_APP_ROOT', $this->container->applicationRoot);
+        define('STREAM_APP_ROOT', $this->container->applicationInfo->applicationRoot);
         /** publicディレクトリ */
         define('STREAM_VIEW_SHARED', "_shared");
         define('STREAM_VIEW_PUBLIC', "_public");
         define('STREAM_VIEW_CACHE', "_cache");
-        /** キャッシュprefix */
+        // /** キャッシュprefix */
         define('STREAM_CACHE_PREFIX', "webstream-cache-");
     }
 
@@ -74,6 +74,22 @@ class Application
      */
     public function run()
     {
+        \WebStream\Delegate\Router2::setRule([
+            '/' => "test#test1",
+            '/top' => "test#test2",
+        ]);
+        $container = ServiceLocator::getInstance()->getContainer();
+        $router = new \WebStream\Delegate\Router2($container->request);
+        $router->inject('logger', $container->logger)
+               ->inject('applicationInfo', $container->applicationInfo);
+        $router->resolve();
+
+        // var_dump($router->getRoutingResult());
+
+
+
+
+
         try {
             $this->init();
             $this->resolver = new Resolver($this->container);

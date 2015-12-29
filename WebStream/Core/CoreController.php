@@ -2,7 +2,6 @@
 namespace WebStream\Core;
 
 use WebStream\Delegate\Resolver;
-use WebStream\Module\Utility;
 use WebStream\Module\PropertyProxy;
 use WebStream\Module\Container;
 use WebStream\Log\Logger;
@@ -17,7 +16,6 @@ use WebStream\Annotation\Base\IAnnotatable;
  */
 class CoreController implements CoreInterface, IAnnotatable
 {
-    use Utility;
     use PropertyProxy;
 
     /**

@@ -2,7 +2,8 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
 use WebStream\Log\Logger;
@@ -16,9 +17,10 @@ use WebStream\Exception\Extend\ClassNotFoundException;
  */
 class CoreDelegator
 {
-    use Utility
+    use CommonUtils;
+    use ApplicationUtils
     {
-        Utility::getNamespace as getDefinedNamespace;
+        ApplicationUtils::getNamespace as getDefinedNamespace;
     }
 
     /** DIコンテナ */

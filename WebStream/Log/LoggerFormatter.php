@@ -1,7 +1,8 @@
 <?php
 namespace WebStream\Log;
 
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\FileUtils;
+use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Exception\Extend\LoggerException;
 
 /**
@@ -13,7 +14,8 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class LoggerFormatter
 {
-    use Utility;
+    use FileUtils;
+    use LoggerUtils;
 
     /**
      * @var string ログフォーマット

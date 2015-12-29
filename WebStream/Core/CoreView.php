@@ -2,7 +2,7 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Log\Logger;
 use WebStream\Template\ITemplateEngine;
 use WebStream\Annotation\Filter;
@@ -16,7 +16,7 @@ use WebStream\Annotation\Base\IAnnotatable;
  */
 class CoreView implements CoreInterface, IAnnotatable
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var Request リクエスト

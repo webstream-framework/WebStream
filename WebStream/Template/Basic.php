@@ -2,7 +2,9 @@
 namespace WebStream\Template;
 
 use WebStream\Module\Cache;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\ApplicationUtils;
+use WebStream\Module\Utility\SecurityUtils;
 use WebStream\Module\Container;
 use WebStream\Log\Logger;
 use WebStream\Exception\Extend\ResourceNotFoundException;
@@ -15,7 +17,7 @@ use WebStream\Exception\Extend\ResourceNotFoundException;
  */
 class Basic implements ITemplateEngine
 {
-    use Utility;
+    use CommonUtils, ApplicationUtils, SecurityUtils;
 
     /** HTML記法 */
     const TEMPLATE_MARK_HTML       = '%H';

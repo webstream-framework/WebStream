@@ -1,32 +1,29 @@
 <?php
 namespace WebStream\Module;
 
-require_once dirname(__FILE__) . '/Utility.php';
+require_once dirname(__FILE__) . '/Utility/FileUtils.php';
+require_once dirname(__FILE__) . '/../DI/ServiceLocator.php';
 require_once dirname(__FILE__) . '/../Log/Logger.php';
 
+use WebStream\Module\Utility\FileUtils;
+use WebStream\DI\ServiceLocator;
 use WebStream\Log\Logger;
 
 /**
  * クラスローダ
  * @author Ryuichi TANAKA.
  * @since 2013/09/02
- * @version 0.4.2
+ * @version 0.7
  */
 class ClassLoader
 {
-    use Utility;
-
-    /**
-     * @var string アプリケーションルートパス
-     */
-    private $applicationRoot;
+    use FileUtils;
 
     /**
      * コンストラクタ
      */
     public function __construct()
     {
-        $this->applicationRoot = $this->getRoot();
     }
 
     /**
@@ -47,7 +44,9 @@ class ClassLoader
      */
     public function import($filepath, callable $filter = null)
     {
-        $includeFile = $this->getRoot() . "/" . $filepath;
+        $container = ServiceLocator::getInstance()->getContainer();
+        $rootDir = $container->applicationInfo->applicationRoot;
+        $includeFile = $rootDir . "/" . $filepath;
         if (is_file($includeFile)) {
             $ext = pathinfo($includeFile, PATHINFO_EXTENSION);
             if ($ext === 'php') {
@@ -71,7 +70,9 @@ class ClassLoader
      */
     public function importAll($dirPath, callable $filter = null)
     {
-        $includeDir = realpath($this->getRoot() . "/" . $dirPath);
+        $container = ServiceLocator::getInstance()->getContainer();
+        $rootDir = $container->applicationInfo->applicationRoot;
+        $includeDir = realpath($rootDir . "/" . $dirPath);
         if (is_dir($includeDir)) {
             $iterator = $this->getFileSearchIterator($includeDir);
             $isSuccess = true;
@@ -104,7 +105,8 @@ class ClassLoader
      */
     private function loadClass($className)
     {
-        $rootDir = $this->getRoot();
+        $container = ServiceLocator::getInstance()->getContainer();
+        $rootDir = $container->applicationInfo->applicationRoot;
 
         // 名前空間セパレータをパスセパレータに置換
         if (DIRECTORY_SEPARATOR === '/') {
@@ -123,13 +125,13 @@ class ClassLoader
         }
 
         // さらに見つからなかったらappディレクトリを名前空間付きで全検索し、マッチするもの全てをincludeする
-        $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
+        $iterator = $this->getFileSearchIterator($rootDir . "/app");
         $includeList = [];
         foreach ($iterator as $filepath => $fileObject) {
             if (strpos($filepath, $className . ".php") !== false) {
                 include_once $filepath;
                 $includeList[] = $filepath;
-                Logger::debug($filepath . " load success. (search from " . $this->applicationRoot . "/app/)");
+                Logger::debug($filepath . " load success. (search from " . $rootDir . "/app/)");
             }
         }
         if (!empty($includeList)) {
@@ -142,7 +144,7 @@ class ClassLoader
             $classNameWithoutNamespace = $matches[1];
             // この処理が走るケースはapp配下のクラスがディレクトリ構成と名前空間が一致していない
             // 場合以外ない(テスト用クラス除く)ので、app配下の検索を優先する
-            $iterator = $this->getFileSearchIterator($this->applicationRoot . "/app");
+            $iterator = $this->getFileSearchIterator($rootDir . "/app");
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;

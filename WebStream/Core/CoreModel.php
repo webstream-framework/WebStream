@@ -3,7 +3,7 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\PropertyProxy;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Log\Logger;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
@@ -20,7 +20,7 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  */
 class CoreModel implements CoreInterface, IAnnotatable
 {
-    use Utility;
+    use CommonUtils;
     use PropertyProxy;
 
     /**

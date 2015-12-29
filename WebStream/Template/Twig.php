@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Template;
 
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 
@@ -13,7 +13,7 @@ use WebStream\Exception\Extend\ResourceNotFoundException;
  */
 class Twig implements ITemplateEngine
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var Container 依存コンテナ

@@ -2,6 +2,8 @@
 namespace WebStream\Module;
 
 use WebStream\Log\Logger;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\SecurityUtils;
 use WebStream\Exception\Extend\IOException;
 
 /**
@@ -12,7 +14,8 @@ use WebStream\Exception\Extend\IOException;
  */
 class Cache
 {
-    use Utility;
+    use CommonUtils;
+    use SecurityUtils;
 
     /** キャッシュの保存ディレクトリ */
     private $savePath;

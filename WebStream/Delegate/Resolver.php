@@ -6,7 +6,8 @@ use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Core\CoreHelper;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+// use WebStream\Module\Utility;
+use WebStream\Module\Utility\FileUtils;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 
@@ -18,7 +19,9 @@ use WebStream\Exception\Extend\ResourceNotFoundException;
  */
 class Resolver
 {
-    use Utility;
+    // use Utility;
+
+    use FileUtils;
 
     /**
      * @var Router ルーティングオブジェクト

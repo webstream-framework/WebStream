@@ -1,7 +1,8 @@
 <?php
 namespace WebStream\DI;
 
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\ApplicationUtils;
+use WebStream\Module\Singleton;
 use WebStream\Module\Container;
 use WebStream\Log\Logger;
 use WebStream\Log\LoggerAdapter;
@@ -19,38 +20,14 @@ use WebStream\Http\Session;
  */
 class ServiceLocator
 {
-    use Utility;
-
-    /** コンテナ */
-    private static $container;
+    use Singleton, ApplicationUtils;
 
     /**
-     * コンストラクタ
+     * コンテナをクリア
      */
-    private function __construct()
+    public function removeContainer()
     {
-    }
-
-    /**
-     * コンテナを返却する
-     * @return object コンテナ
-     */
-    public static function getContainer()
-    {
-        if (!is_object(self::$container)) {
-            $serviceLocator = new ServiceLocator();
-            self::$container = $serviceLocator->createContainer();
-        }
-
-        return self::$container;
-    }
-
-    /**
-     * コンテナを削除する
-     */
-    public static function removeContainer()
-    {
-        self::$container = null;
+        $this->__clear();
     }
 
     /**
@@ -58,7 +35,7 @@ class ServiceLocator
      * @param boolean テスト環境フラグ
      * @return object コンテナ
      */
-    private function createContainer()
+    public function getContainer()
     {
         $container = new Container();
 
@@ -90,13 +67,22 @@ class ServiceLocator
         $container->logger = function () {
             return new LoggerAdapter(Logger::getInstance());
         };
-        // ApplicationRoot
-        $container->applicationRoot = $this->getRoot();
-        // ApplicationDir
-        $container->applicationDir = "app";
         // twig
         $container->twig = function () {
             Twig_Autoloader::register();
+        };
+
+        $applicationRoot = $this->getApplicationRoot();
+        $container->applicationInfo = function() use ($applicationRoot) {
+            $info = new Container();
+            $info->applicationRoot = $applicationRoot;
+            $info->applicationDir = "app";
+            $info->sharedDir = "_shared";
+            $info->publicDir = "_public";
+            $info->cacheDir = "_cache";
+            $info->cachePrefix = "webstream-cache-";
+
+            return $info;
         };
 
         return $container;

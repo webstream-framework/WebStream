@@ -5,20 +5,25 @@ namespace WebStream\Module;
  * Singleton
  * @author Ryuichi Tanaka
  * @since 2015/03/06
- * @version 0.4
+ * @version 0.7
  */
 trait Singleton
 {
     /**
      * @var インスタンス
      */
-    private static $__obj;
+    private static $instance;
 
     /**
      * constructor
      */
-    private function __construct()
+    public function __construct()
     {
+    }
+
+    public function __destruct()
+    {
+        $this->__clear();
     }
 
     /**
@@ -27,11 +32,17 @@ trait Singleton
      */
     public static function getInstance()
     {
-        if (!is_object(self::$__obj)) {
-            self::$__obj = new self();
+        if (!is_object(static::$instance)) {
+            static::$instance = new static();
         }
 
-        return self::$__obj;
+        static::$instance->getContainer();
+        return static::$instance;
+    }
+
+    public function __clear()
+    {
+        static::$instance = null;
     }
 
     /**

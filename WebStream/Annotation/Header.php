@@ -7,7 +7,7 @@ use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Log\Logger;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Exception\Extend\InvalidRequestException;
@@ -23,7 +23,7 @@ use WebStream\Exception\Extend\InvalidRequestException;
  */
 class Header extends Annotation implements IMethod, IRead
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var AnnotationContainer アノテーションコンテナ

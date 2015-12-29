@@ -6,7 +6,7 @@ use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\SecurityUtils;
 use WebStream\Log\Logger;
 use WebStream\Exception\Extend\CsrfException;
 
@@ -21,7 +21,7 @@ use WebStream\Exception\Extend\CsrfException;
  */
 class CsrfProtection extends Annotation implements IMethod
 {
-    use Utility;
+    use SecurityUtils;
 
     /**
      * {@inheritdoc}

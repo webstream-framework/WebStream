@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Container;
 use WebStream\Module\Security;
 use WebStream\Log\Logger;
@@ -16,7 +16,7 @@ use WebStream\Annotation\Base\IAnnotatable;
  */
 class CoreHelper implements CoreInterface, IAnnotatable
 {
-    use Utility;
+    use ApplicationUtils;
 
     /**
      * @var Container DIコンテナ

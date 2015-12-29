@@ -1,8 +1,9 @@
 <?php
 namespace WebStream\Log;
 
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\FileUtils;
 use WebStream\Module\Container;
+use WebStream\DI\ServiceLocator;
 use WebStream\Exception\Extend\LoggerException;
 
 /**
@@ -13,7 +14,7 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class Logger
 {
-    use Utility;
+    use FileUtils;
 
     /**
      * @var Logger ロガー
@@ -106,10 +107,6 @@ class Logger
      */
     public static function finalize()
     {
-        if (!isset(self::$logger) || self::$logger === null) {
-            return;
-        }
-        self::$logger->write(\Psr\Log\LogLevel::DEBUG, "Logger finalized.");
         self::$logger = null;
         self::$formatter = null;
     }
@@ -157,7 +154,8 @@ class Logger
         $path = $log["path"];
         // 絶対パスでのチェック
         if (!realpath(dirname($path))) {
-            $path = $this->getRoot() . "/" . $log["path"];
+            $container = ServiceLocator::getInstance()->getContainer();
+            $path = $container->applicationInfo->applicationRoot . "/" . $log["path"];
             // プロジェクトルートからの相対パスでのチェック
             if (!file_exists(dirname($path))) {
                 throw new LoggerException("Log directory does not exist: " . dirname($path));

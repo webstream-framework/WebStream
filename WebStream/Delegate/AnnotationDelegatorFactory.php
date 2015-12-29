@@ -3,7 +3,7 @@ namespace WebStream\Delegate;
 
 use WebStream\Core\CoreController;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\Container\AnnotationListContainer;
 use WebStream\Exception\Extend\AnnotationException;
@@ -16,7 +16,7 @@ use WebStream\Exception\Extend\AnnotationException;
  */
 class AnnotationDelegatorFactory
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var Container 注入結果のコンテナ
