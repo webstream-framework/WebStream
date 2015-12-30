@@ -114,6 +114,7 @@ class AnnotationReader
             if (!empty($annotations)) {
                 for ($i = 0; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+                    $annotation->inject('logger', $this->container->logger);
 
                     if (!$annotation instanceof IClass) {
                         continue;
@@ -173,6 +174,7 @@ class AnnotationReader
 
                 for ($i = 0; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+                    $annotation->inject('logger', $this->container->logger);
 
                     if (!$annotation instanceof IMethod && !$annotation instanceof IMethods) {
                         continue;
@@ -235,6 +237,7 @@ class AnnotationReader
 
                 for ($i = 0; $i < count($annotations); $i++) {
                     $annotation = $annotations[$i];
+                    $annotation->inject('logger', $this->container->logger);
 
                     if (!$annotation instanceof IProperty) {
                         continue;

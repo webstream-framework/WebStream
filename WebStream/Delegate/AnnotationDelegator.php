@@ -8,7 +8,6 @@ use WebStream\Core\CoreModel;
 use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Annotation\Container\AnnotationContainer;
@@ -27,6 +26,11 @@ class AnnotationDelegator
     private $container;
 
     /**
+     * @var Logger ロガー
+     */
+    private $logger;
+
+    /**
      * Constructor
      * @param CoreInterface インスタンス
      * @param Container DIContainer
@@ -34,6 +38,7 @@ class AnnotationDelegator
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->logger = $container->logger;
     }
 
     /**
@@ -41,7 +46,7 @@ class AnnotationDelegator
      */
     public function __destruct()
     {
-        Logger::debug("AnnotationDelegator container is clear.");
+        $this->logger->debug("AnnotationDelegator container is clear.");
     }
 
     /**
@@ -54,7 +59,7 @@ class AnnotationDelegator
     public function read($instance, $method = null, $classpath = null)
     {
         if (!$instance instanceof IAnnotatable) {
-            Logger::warn("Annotation is not available this class: " . get_class($instance));
+            $this->logger->warn("Annotation is not available this class: " . get_class($instance));
             return;
         }
 

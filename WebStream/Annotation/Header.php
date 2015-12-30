@@ -8,7 +8,6 @@ use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Exception\Extend\InvalidRequestException;
 
@@ -67,7 +66,6 @@ class Header extends Annotation implements IMethod, IRead
     public function onInject(AnnotationContainer $annotation)
     {
         $this->annotation = $annotation;
-        Logger::debug("@Header injected.");
     }
 
     /**
@@ -83,6 +81,8 @@ class Header extends Annotation implements IMethod, IRead
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $allowMethods = $this->annotation->allowMethod;
         $ext = $this->annotation->contentType;
 
@@ -109,7 +109,7 @@ class Header extends Annotation implements IMethod, IRead
                 throw new InvalidRequestException($errorMsg);
             }
 
-            Logger::debug("Accepted request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction);
+            $this->logger->debug("Accepted request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction);
 
             if ($ext !== null) {
                 $contentType = $this->contentTypeList[$ext];
@@ -117,7 +117,7 @@ class Header extends Annotation implements IMethod, IRead
                     $errorMsg = "Invalid value '$ext' in 'contentType' attribute of @Header.";
                     throw new AnnotationException($errorMsg);
                 }
-                Logger::debug("Accepted contentType '$ext' in " . $classpathWithAction);
+                $this->logger->debug("Accepted contentType '$ext' in " . $classpathWithAction);
             }
         }
     }

@@ -64,10 +64,7 @@ class ServiceLocator
         };
         // CoreDelegator
         $container->coreDelegator = function () use (&$container) {
-            $coreDelegator = new CoreDelegator($container);
-            $coreDelegator->inject('logger', $container->logger);
-
-            return $coreDelegator;
+            return new CoreDelegator($container);
         };
         // AnnotationDelegator
         $container->annotationDelegator = function () use (&$container) {

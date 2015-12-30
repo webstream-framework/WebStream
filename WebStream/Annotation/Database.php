@@ -7,14 +7,13 @@ use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IClass;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**
  * Database
  * @author Ryuichi TANAKA.
  * @since 2013/12/07
- * @version 0.4
+ * @version 0.7
  *
  * @Annotation
  * @Target("CLASS")
@@ -38,7 +37,6 @@ class Database extends Annotation implements IClass, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Database injected.");
     }
 
     /**
@@ -54,6 +52,8 @@ class Database extends Annotation implements IClass, IRead
      */
     public function onClassInject(IAnnotatable &$instance, Container $container, \ReflectionClass $class)
     {
+        $this->injectedLog($this);
+
         $driver = $this->annotation->driver;
         $config = $this->annotation->config;
 

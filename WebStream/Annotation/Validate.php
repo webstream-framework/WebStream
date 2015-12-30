@@ -11,7 +11,6 @@ use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\ClassLoader;
 use WebStream\DI\ServiceLocator;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\ValidateException;
 use WebStream\Exception\Extend\AnnotationException;
 
@@ -19,7 +18,7 @@ use WebStream\Exception\Extend\AnnotationException;
  * Validate
  * @author Ryuichi TANAKA.
  * @since 2015/03/30
- * @version 0.4
+ * @version 0.7
  *
  * @Annotation
  * @Target("METHOD")
@@ -40,7 +39,6 @@ class Validate extends Annotation implements IMethod
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Validate injected.");
     }
 
     /**
@@ -48,6 +46,8 @@ class Validate extends Annotation implements IMethod
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $key = $this->annotation->key;
         $rule = $this->annotation->rule;
         $method = $this->annotation->method;

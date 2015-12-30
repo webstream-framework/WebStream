@@ -4,7 +4,6 @@ namespace WebStream\Core;
 use WebStream\Delegate\Resolver;
 use WebStream\Module\Container;
 use WebStream\Module\PropertyProxy;
-use WebStream\Log\Logger;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 
@@ -38,9 +37,9 @@ class CoreService implements CoreInterface, IAnnotatable
      */
     public function __construct(Container $container)
     {
-        Logger::debug("Service start.");
         $this->container = $container;
         $this->logger = $container->logger;
+        $this->logger->debug("Service start.");
     }
 
     /**
@@ -48,7 +47,7 @@ class CoreService implements CoreInterface, IAnnotatable
      */
     public function __destruct()
     {
-        Logger::debug("Service end.");
+        $this->logger->debug("Service end.");
         $this->__clear();
     }
 

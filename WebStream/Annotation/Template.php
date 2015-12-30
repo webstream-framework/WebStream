@@ -8,7 +8,6 @@ use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Template\Basic;
 use WebStream\Template\Twig;
 use WebStream\Exception\Extend\AnnotationException;
@@ -17,7 +16,7 @@ use WebStream\Exception\Extend\AnnotationException;
  * Template
  * @author Ryuichi TANAKA.
  * @since 2013/10/10
- * @version 0.4.1
+ * @version 0.7
  *
  * @Annotation
  * @Target("METHOD")
@@ -41,7 +40,6 @@ class Template extends Annotation implements IMethod, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Template injected.");
     }
 
     /**
@@ -57,6 +55,8 @@ class Template extends Annotation implements IMethod, IRead
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $filename = $this->annotation->value;
         $engine = $this->annotation->engine ?: "basic";
         $debug = $this->annotation->debug;
@@ -92,13 +92,13 @@ class Template extends Annotation implements IMethod, IRead
             $container->debug = $debug;
 
             if ($cacheTime !== null) {
-                Logger::warn("'cacheTime' attribute is not used in Twig template.");
+                $this->logger->warn("'cacheTime' attribute is not used in Twig template.");
             }
 
             $this->injectedContainer->engine = new Twig($container);
         } elseif ($engine === "basic") {
             if ($debug !== null) {
-                Logger::warn("'debug' attribute is not used in Basic template.");
+                $this->logger->warn("'debug' attribute is not used in Basic template.");
             }
 
             if ($cacheTime !== null) {
@@ -118,7 +118,7 @@ class Template extends Annotation implements IMethod, IRead
                     $errorMsg = "Expire value is out of integer range: @Template(cacheTime=" . strval($cacheTime) . ")";
                     throw new AnnotationException($errorMsg);
                 } elseif ($cacheTime >= PHP_INT_MAX) {
-                    Logger::warn("Expire value converted the maximum of PHP Integer.");
+                    $this->logger->warn("Expire value converted the maximum of PHP Integer.");
                 }
 
                 $this->injectedContainer->cacheTime = $cacheTime;

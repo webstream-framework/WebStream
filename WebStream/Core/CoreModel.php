@@ -4,7 +4,6 @@ namespace WebStream\Core;
 use WebStream\Module\Container;
 use WebStream\Module\PropertyProxy;
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Log\Logger;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Database\DatabaseManager;
@@ -58,9 +57,9 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     public function __construct(Container $container)
     {
-        Logger::debug("Model start.");
         $this->container = $container;
         $this->logger = $container->logger;
+        $this->logger->debug("Model start.");
     }
 
     /**
@@ -68,7 +67,7 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     public function __destruct()
     {
-        Logger::debug("Model end.");
+        $this->logger->debug("Model end.");
         $this->__clear();
     }
 
@@ -79,7 +78,7 @@ class CoreModel implements CoreInterface, IAnnotatable
     public function __initialize(Container $container)
     {
         if ($container->connectionContainerList === null) {
-            Logger::warn("Can't use database in Model Layer.");
+            $this->logger->warn("Can't use database in Model Layer.");
 
             return;
         }

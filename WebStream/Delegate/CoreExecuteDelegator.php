@@ -10,7 +10,6 @@ use WebStream\Core\CoreHelper;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
@@ -44,6 +43,11 @@ class CoreExecuteDelegator
     private $container;
 
     /**
+     * @var Logger ロガー
+     */
+    private $logger;
+
+    /**
      * @var AnnotationContainer アノテーション
      */
     private $annotation;
@@ -60,6 +64,7 @@ class CoreExecuteDelegator
     {
         $this->instance = $instance;
         $this->container = $container;
+        $this->logger = $container->logger;
     }
 
     /**
@@ -125,6 +130,7 @@ class CoreExecuteDelegator
             }
 
             $exception = new ExceptionDelegator($this->getInstance(), $e, $method);
+            $exception->inject('logger', $this->logger);
 
             if ($this->annotation !== null && is_array($this->annotation->exceptionHandler)) {
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
@@ -177,10 +183,11 @@ class CoreExecuteDelegator
         $pageName = $this->container->coreDelegator->getPageName();
         $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
         $cache = new Cache($applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->cacheDir);
+        $cache->inject('logger', $this->logger);
         $data = $cache->get($cacheFile);
 
         if ($data !== null) {
-            Logger::debug("Template cache read success: $cacheFile.cache");
+            $this->logger->debug("Template cache read success: $cacheFile.cache");
             echo $data;
 
             return;
@@ -212,6 +219,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->exceptionHandler);
                 $exception->raise();
             }
@@ -281,6 +289,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->exceptionHandler);
                 $exception->raise();
             }
@@ -324,6 +333,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
                 $exception->raise();
             }
@@ -361,6 +371,7 @@ class CoreExecuteDelegator
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $this->annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
+                $exception->inject('logger', $this->logger);
                 $exception->raise();
             }
 
@@ -403,6 +414,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
                 $exception->raise();
             }
@@ -444,7 +456,7 @@ class CoreExecuteDelegator
 
         if ($originMethod !== null) {
             $class = get_class($this->instance);
-            Logger::debug("Alias method found. Transfer from ${class}#${method} to ${class}#${originMethod}.");
+            $this->logger->debug("Alias method found. Transfer from ${class}#${method} to ${class}#${originMethod}.");
         } else {
             $originMethod = $method;
         }

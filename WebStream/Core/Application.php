@@ -2,7 +2,6 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
@@ -13,29 +12,23 @@ use WebStream\DI\ServiceLocator;
  * Applicationクラス
  * @author Ryuichi Tanaka
  * @since 2011/08/19
- * @version 0.4
+ * @version 0.7
  */
 class Application
 {
-    /** Request */
-    private $request;
-    /** Response */
-    private $response;
-    /** Resolver */
-    private $resolver;
-    /** Container */
+    /**
+     * @var Container DIコンテナ
+     */
     private $container;
 
     /**
      * アプリケーション共通で使用するクラスを初期化する
-     * @param Object DIコンテナ
+     * @param Container DIコンテナ
      */
     public function __construct(Container $container)
     {
-        Logger::debug("Application start");
         $this->container = $container;
-        $this->response  = $container->response;
-        $this->request   = $container->request;
+        $this->container->logger->debug("Application start");
     }
 
     /**
@@ -43,7 +36,7 @@ class Application
      */
     public function __destruct()
     {
-        Logger::debug("Application end");
+        $this->container->logger->debug("Application end");
     }
 
     /**
@@ -52,8 +45,8 @@ class Application
     public function run()
     {
         try {
-            $this->resolver = new Resolver($this->container);
-            $this->resolver->runController(); // MVCレイヤへのリクエストの振り分けを実行する
+            $resolver = new Resolver($this->container);
+            $resolver->runController(); // MVCレイヤへのリクエストの振り分けを実行する
         } catch (ApplicationException $e) {
             // 内部例外の内、ハンドリングを許可している例外
             try {
@@ -63,16 +56,16 @@ class Application
                     $e = $e->getOriginException();
                 }
                 if (!$isHandled) {
-                    $this->response->move($e->getCode());
+                    $this->container->response->move($e->getCode());
                 }
             } catch (\Exception $e) {
                 // 開発者由来の例外は全て500
-                Logger::error($e->getMessage(), $e->getTraceAsString());
-                $this->response->move(500);
+                $this->container->logger->error($e->getMessage(), $e->getTraceAsString());
+                $this->container->response->move(500);
             }
         } catch (SystemException $e) {
             // 内部例外の内、ハンドリング不許可の例外
-            $this->response->move($e->getCode());
+            $this->container->response->move($e->getCode());
         }
     }
 }

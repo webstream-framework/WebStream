@@ -14,7 +14,7 @@ use WebStream\Exception\Extend\ResourceNotFoundException;
  * Resolver
  * @author Ryuichi TANAKA.
  * @since 2012/12/22
- * @version 0.4
+ * @version 0.7
  */
 class Resolver
 {

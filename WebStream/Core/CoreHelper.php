@@ -4,7 +4,6 @@ namespace WebStream\Core;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Container;
 use WebStream\Module\Security;
-use WebStream\Log\Logger;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 
@@ -38,9 +37,9 @@ class CoreHelper implements CoreInterface, IAnnotatable
      */
     public function __construct(Container $container)
     {
-        Logger::debug("Helper start.");
         $this->container = $container;
         $this->logger = $container->logger;
+        $this->logger->debug("Helper start.");
     }
 
     /**
@@ -48,7 +47,7 @@ class CoreHelper implements CoreInterface, IAnnotatable
      */
     public function __destruct()
     {
-        Logger::debug("Helper end.");
+        $this->logger->debug("Helper end.");
     }
 
     /**

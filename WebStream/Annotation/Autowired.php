@@ -6,14 +6,13 @@ use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IProperty;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\AnnotationException;
 
 /**
  * Autowired
  * @author Ryuichi TANAKA.
  * @since 2013/09/17
- * @version 0.4
+ * @version 0.7
  *
  * @Annotation
  * @Target("PROPERTY")
@@ -31,7 +30,6 @@ class Autowired extends Annotation implements IProperty
     public function onInject(AnnotationContainer $annotation)
     {
         $this->annotation = $annotation;
-        Logger::debug("@Autowired injected.");
     }
 
     /**
@@ -39,6 +37,8 @@ class Autowired extends Annotation implements IProperty
      */
     public function onPropertyInject(IAnnotatable &$instance, Container $container, \ReflectionProperty $property)
     {
+        $this->injectedLog($this);
+
         if ($property->isPrivate() || $property->isProtected()) {
             $property->setAccessible(true);
         }
@@ -58,7 +58,7 @@ class Autowired extends Annotation implements IProperty
                     }
                 } else {
                     // プリミティブ型の場合、警告を出すだけに留める
-                    Logger::warn("Failed to cast '$value' to '$type'.");
+                    $this->logger->warn("Failed to cast '$value' to '$type'.");
                 }
             } else { // value属性の指定がない場合、参照型であればインスタンスを代入する
                 if (class_exists($type)) {
@@ -79,7 +79,7 @@ class Autowired extends Annotation implements IProperty
         } else {
             // 不明な属性が指定された場合、警告を出す
             $key = $property->class . "." . $property->name;
-            Logger::warn("An unknown attribute is specified in $key.");
+            $this->logger->warn("An unknown attribute is specified in $key.");
         }
     }
 }

@@ -2,12 +2,10 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
-use WebStream\DI\Injector;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\ClassNotFoundException;
 
 /**
@@ -18,7 +16,6 @@ use WebStream\Exception\Extend\ClassNotFoundException;
  */
 class CoreDelegator
 {
-    use Injector;
     use CommonUtils;
     use ApplicationUtils
     {
@@ -29,6 +26,11 @@ class CoreDelegator
      * @var Container DIコンテナ
      */
     private $container;
+
+    /**
+     * @var Logger ロガー
+     */
+    private $logger;
 
     /**
      * @var Container Coreレイヤコンテナ
@@ -42,6 +44,7 @@ class CoreDelegator
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->logger = $container->logger;
         $this->coreContainer = new Container();
         $this->initialize();
     }

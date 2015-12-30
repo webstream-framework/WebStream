@@ -7,7 +7,6 @@ use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 
 /**
  * Filter
@@ -37,7 +36,6 @@ class Filter extends Annotation implements IMethods, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Filter annotated.");
     }
 
     /**
@@ -53,6 +51,8 @@ class Filter extends Annotation implements IMethods, IRead
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $this->injectedContainer->annotation = $this->annotation;
         $this->injectedContainer->method = $method;
         $this->injectedContainer->classpath = get_class($instance);

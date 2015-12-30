@@ -8,7 +8,6 @@ use WebStream\Annotation\Base\IRead;
 use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\AnnotationException;
 
 /**
@@ -39,7 +38,6 @@ class Alias extends Annotation implements IMethods, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Alias injected.");
     }
 
     /**
@@ -55,6 +53,8 @@ class Alias extends Annotation implements IMethods, IRead
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $aliasMethodName = $this->annotation->name;
         if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]{0,}$/', $aliasMethodName)) {
             throw new AnnotationException("Alias method is invalid: " . $aliasMethodName);

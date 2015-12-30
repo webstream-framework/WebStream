@@ -7,14 +7,13 @@ use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
 use WebStream\Module\Utility\SecurityUtils;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\CsrfException;
 
 /**
  * CsrfProtection
  * @author Ryuichi TANAKA.
  * @since 2015/05/08
- * @version 0.4
+ * @version 0.7
  *
  * @Annotation
  * @Target("METHOD")
@@ -28,7 +27,6 @@ class CsrfProtection extends Annotation implements IMethod
      */
     public function onInject(AnnotationContainer $annotation)
     {
-        Logger::debug("@CsrfProtection injected.");
     }
 
     /**
@@ -36,6 +34,8 @@ class CsrfProtection extends Annotation implements IMethod
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $tokenByRequest = $container->request->post($this->getCsrfTokenKey()) ?: $container->request->getHeader($this->getCsrfTokenHeader());
         $tokenInSession = $container->session->get($this->getCsrfTokenKey());
         $container->session->delete($this->getCsrfTokenKey());

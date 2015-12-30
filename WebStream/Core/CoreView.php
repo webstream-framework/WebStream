@@ -3,7 +3,6 @@ namespace WebStream\Core;
 
 use WebStream\Module\Container;
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Log\Logger;
 use WebStream\Template\ITemplateEngine;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
@@ -12,7 +11,7 @@ use WebStream\Annotation\Base\IAnnotatable;
  * CoreViewクラス
  * @author Ryuichi TANAKA.
  * @since 2011/09/12
- * @version 0.4
+ * @version 0.7
  */
 class CoreView implements CoreInterface, IAnnotatable
 {
@@ -29,12 +28,18 @@ class CoreView implements CoreInterface, IAnnotatable
     private $templateEngine;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    private $logger;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
-        Logger::debug("View start.");
         $this->container = $container;
+        $this->logger = $container->logger;
+        $this->logger->debug("View start.");
     }
 
     /**
@@ -42,7 +47,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     public function __destruct()
     {
-        Logger::debug("View end.");
+        $this->logger->debug("View end.");
     }
 
     /**
@@ -73,7 +78,7 @@ class CoreView implements CoreInterface, IAnnotatable
 
         // HTML,XML以外はテンプレートを使用しない
         if ($mimeType !== "html" && $mimeType !== "xml") {
-            Logger::debug("Only html or xml draw view template.");
+            $this->logger->debug("Only html or xml draw view template.");
 
             return;
         }

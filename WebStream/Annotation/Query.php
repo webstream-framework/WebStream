@@ -9,7 +9,6 @@ use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\container\AnnotationListContainer;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**
@@ -40,7 +39,6 @@ class Query extends Annotation implements IMethods, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Query injected.");
     }
 
     /**
@@ -56,6 +54,8 @@ class Query extends Annotation implements IMethods, IRead
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $key = $method->class . "#" . $method->name;
         if ($this->injectedContainer->{$key} === null) {
             $this->injectedContainer->{$key} = new AnnotationListContainer();
