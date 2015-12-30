@@ -19,14 +19,9 @@ class CoreView implements CoreInterface, IAnnotatable
     use CommonUtils;
 
     /**
-     * @var Request リクエスト
+     * @var Container 依存コンテナ
      */
-    private $request;
-
-    /**
-     * @var Response レスポンス
-     */
-    private $response;
+    private $container;
 
     /**
      * @var ITemplateEngine テンプレートエンジン
@@ -39,8 +34,7 @@ class CoreView implements CoreInterface, IAnnotatable
     public function __construct(Container $container)
     {
         Logger::debug("View start.");
-        $this->request  = $container->request;
-        $this->response = $container->response;
+        $this->container = $container;
     }
 
     /**
@@ -111,7 +105,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     private function outputHeader($type)
     {
-        $this->response->setType($type);
+        $this->container->response->setType($type);
     }
 
     /**
@@ -120,11 +114,12 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     final public function __file($filepath)
     {
-        if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/css\/.+\.css$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/js\/.+\.js$/i', $filepath)) { // 画像,css,jsの場合
+        $publicDir = $this->container->applicationInfo->publicDir;
+        if (preg_match('/\/views\/' . $publicDir . '\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
+            preg_match('/\/views\/' . $publicDir . '\/css\/.+\.css$/i', $filepath) ||
+            preg_match('/\/views\/' . $publicDir . '\/js\/.+\.js$/i', $filepath)) { // 画像,css,jsの場合
             $this->display($filepath);
-        } elseif (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/file\/.+$/i', $filepath)) { // それ以外のファイル
+        } elseif (preg_match('/\/views\/' . $publicDir . '\/file\/.+$/i', $filepath)) { // それ以外のファイル
             $this->download($filepath);
         } else { // 全てのファイル
             $this->display($filepath);
@@ -137,7 +132,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     final private function display($filename)
     {
-        $this->response->displayFile($filename);
+        $this->container->response->displayFile($filename);
     }
 
     /**
@@ -146,7 +141,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     final private function download($filename)
     {
-        $userAgent = $this->request->userAgent();
-        $this->response->downloadFile($filename, $userAgent);
+        $userAgent = $this->container->request->userAgent();
+        $this->container->response->downloadFile($filename, $userAgent);
     }
 }

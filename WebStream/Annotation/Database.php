@@ -61,7 +61,7 @@ class Database extends Annotation implements IClass, IRead
             throw new DatabaseException("Database driver is undefined：" . $driver);
         }
 
-        $configPath = STREAM_APP_ROOT . "/" . $config;
+        $configPath = $container->applicationInfo->applicationRoot . "/" . $config;
         $configRealPath = realpath($configPath);
         if (!file_exists($configRealPath)) {
             throw new DatabaseException("Database config file is not found: " . $configPath);

@@ -14,7 +14,7 @@ use WebStream\Exception\Extend\ClassNotFoundException;
  * CoreDelegator
  * @author Ryuichi TANAKA.
  * @since 2011/11/30
- * @version 0.4
+ * @version 0.7
  */
 class CoreDelegator
 {
@@ -94,7 +94,7 @@ class CoreDelegator
         if ($serviceNamespace !== null) {
             $serviceClassPath = $serviceNamespace . "\\" . $serviceClassName;
             $this->coreContainer->service = function () use ($container, $classLoader, $serviceClassPath, $serviceClassName) {
-                if ($classLoader->import(STREAM_APP_DIR . "/services/" . $serviceClassName . ".php")) {
+                if ($classLoader->import($container->applicationInfo->applicationDir . "/services/" . $serviceClassName . ".php")) {
                     return new $serviceClassPath($container);
                 }
             };
@@ -106,7 +106,7 @@ class CoreDelegator
         if ($modelNamespace !== null) {
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
             $this->coreContainer->model = function () use ($container, $classLoader, $modelClassPath, $modelClassName) {
-                if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
+                if ($classLoader->import($container->applicationInfo->applicationDir . "/models/" . $modelClassName . ".php")) {
                     return new $modelClassPath($container);
                 }
             };
@@ -120,7 +120,7 @@ class CoreDelegator
         if ($helperNamespace !== null) {
             $helperClassPath = $helperNamespace . "\\" . $helperClassName;
             $this->coreContainer->helper = function () use ($container, $classLoader, $helperClassPath, $helperClassName) {
-                if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $helperClassName . ".php")) {
+                if ($classLoader->import($container->applicationInfo->applicationDir . "/helpers/" . $helperClassName . ".php")) {
                     return new $helperClassPath($container);
                 }
             };
@@ -139,7 +139,7 @@ class CoreDelegator
     public function getNamespace($className)
     {
         $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(STREAM_APP_ROOT . "/app"),
+            new \RecursiveDirectoryIterator($this->container->applicationInfo->applicationRoot . "/app"),
             \RecursiveIteratorIterator::LEAVES_ONLY,
             \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
         );

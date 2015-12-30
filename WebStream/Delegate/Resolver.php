@@ -74,7 +74,7 @@ class Resolver
         $this->response->start();
 
         if ($this->router->controller !== null && $this->router->action !== null) {
-            $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
+            $iterator = $this->getFileSearchIterator($this->container->applicationInfo->applicationRoot . "/app/controllers");
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $this->router->controller . ".php") !== false) {
                     include_once $filepath;

@@ -39,9 +39,10 @@ class Twig implements ITemplateEngine
      */
     public function render(array $params)
     {
+        $applicationInfo = $this->container->applicationInfo;
         $dirname = $this->camel2snake($this->container->router->pageName);
-        $templateDir = STREAM_APP_ROOT . "/app/views/" . $dirname;
-        $sharedDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED;
+        $templateDir = $applicationInfo->applicationRoot . "/app/views/" . $dirname;
+        $sharedDir = $applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->sharedDir;
 
         if (is_dir($templateDir)) {
             $this->loader->addPath($templateDir);
@@ -52,7 +53,7 @@ class Twig implements ITemplateEngine
 
         $escaper = new \Twig_Extension_Escaper(true);
         $twig = new \Twig_Environment($this->loader, [
-            'cache' => STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE,
+            'cache' => $applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->cacheDir,
             'auto_reload' => true,
             'debug' => $this->container->debug
         ]);

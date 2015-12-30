@@ -64,8 +64,8 @@ class Basic implements ITemplateEngine
         $params = ["model" => $params["model"], "helper" => $params["helper"]];
         $dirname = $this->camel2snake($this->container->router->pageName);
 
-        $filepath = STREAM_APP_ROOT . "/app/views/" . $dirname . "/" . $this->container->filename;
-        $sharedpath = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED . "/" . $this->container->filename;
+        $filepath = $this->container->applicationInfo->applicationRoot . "/app/views/" . $dirname . "/" . $this->container->filename;
+        $sharedpath = $this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->sharedDir . "/" . $this->container->filename;
 
         $realpath = realpath($filepath) ?: realpath($sharedpath);
 
@@ -173,7 +173,7 @@ class Basic implements ITemplateEngine
      */
     public function cache($filename, $data, $expire)
     {
-        $cacheDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE;
+        $cacheDir = $this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->cacheDir;
         $cache = new Cache($cacheDir);
         $filepath = $cacheDir . "/" . $filename . ".cache";
         if (!file_exists($filepath) || $this->timestamp > filemtime($filepath)) {

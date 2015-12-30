@@ -7,7 +7,6 @@ use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
-
 use WebStream\DI\ServiceLocator;
 
 /**
@@ -48,34 +47,11 @@ class Application
     }
 
     /**
-     * 内部で使用する定数を定義
-     * Obsolete 定数は削除予定
-     */
-    private function init()
-    {
-        /** streamのバージョン定義 */
-        define('STREAM_VERSION', '0.7.0');
-        /** プロジェクトディレクトリの絶対パスを定義 */
-        // define('STREAM_ROOT', $this->getRoot());
-        /** アプリケーションディレクトリ */
-        define('STREAM_APP_DIR', $this->container->applicationInfo->applicationDir);
-        /** アプリケーションルートパス */
-        define('STREAM_APP_ROOT', $this->container->applicationInfo->applicationRoot);
-        /** publicディレクトリ */
-        define('STREAM_VIEW_SHARED', "_shared");
-        define('STREAM_VIEW_PUBLIC', "_public");
-        define('STREAM_VIEW_CACHE', "_cache");
-        // /** キャッシュprefix */
-        define('STREAM_CACHE_PREFIX', "webstream-cache-");
-    }
-
-    /**
      * アプリケーションを起動する
      */
     public function run()
     {
         try {
-            $this->init();
             $this->resolver = new Resolver($this->container);
             $this->resolver->runController(); // MVCレイヤへのリクエストの振り分けを実行する
         } catch (ApplicationException $e) {

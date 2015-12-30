@@ -171,10 +171,12 @@ class CoreExecuteDelegator
             throw new MethodNotFoundException("${class}#${method} is not defined.");
         }
 
+        $applicationInfo = $this->container->applicationInfo;
+
         // テンプレートキャッシュチェック
         $pageName = $this->container->coreDelegator->getPageName();
-        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
-        $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
+        $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+        $cache = new Cache($applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->cacheDir);
         $data = $cache->get($cacheFile);
 
         if ($data !== null) {
@@ -239,7 +241,7 @@ class CoreExecuteDelegator
             ]);
 
             if ($template->cacheTime !== null) {
-                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+                $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
                 $view->templateCache($cacheFile, ob_get_contents(), $template->cacheTime);
             }
 
