@@ -39,7 +39,7 @@ class Twig implements ITemplateEngine
      */
     public function render(array $params)
     {
-        $dirname = $this->camel2snake($this->container->router->routingParams()['controller']);
+        $dirname = $this->camel2snake($this->container->router->pageName);
         $templateDir = STREAM_APP_ROOT . "/app/views/" . $dirname;
         $sharedDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED;
 

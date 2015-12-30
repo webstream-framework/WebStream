@@ -37,7 +37,7 @@ class Container
      */
     public function __set($key, $value)
     {
-        if (is_callable($value)) {
+        if ($value instanceof \Closure) {
             call_user_func_array([$this, 'registerAsLazy'], [$key, $value]);
         } else {
             $this->set($key, $value);
@@ -62,7 +62,7 @@ class Container
      */
     public function __call($name, $arguments)
     {
-        if (is_callable($arguments[0])) {
+        if ($arguments[0] instanceof \Closure) {
             array_unshift($arguments, $name);
             call_user_func_array([$this, 'registerAsLazy'], $arguments);
         } else {

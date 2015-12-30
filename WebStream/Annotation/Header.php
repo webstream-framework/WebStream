@@ -83,8 +83,6 @@ class Header extends Annotation implements IMethod, IRead
      */
     public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
-        $action = $this->camel2snake($container->router->action());
-        $classpathWithAction = $method->class . "#" . $action;
         $allowMethods = $this->annotation->allowMethod;
         $ext = $this->annotation->contentType;
 
@@ -101,6 +99,9 @@ class Header extends Annotation implements IMethod, IRead
                 }
                 $allowMethods[$i] = strtoupper($allowMethods[$i]);
             }
+
+            $action = $this->camel2snake($container->router->action);
+            $classpathWithAction = $method->class . "#" . $action;
 
             // 複数指定した場合、一つでも許可されていればOK
             if (!$this->inArray($container->request->requestMethod(), $allowMethods)) {

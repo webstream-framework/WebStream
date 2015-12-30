@@ -56,6 +56,6 @@ class Filter extends Annotation implements IMethods, IRead
         $this->injectedContainer->annotation = $this->annotation;
         $this->injectedContainer->method = $method;
         $this->injectedContainer->classpath = get_class($instance);
-        $this->injectedContainer->action = $container->router->action();
+        $this->injectedContainer->action = $container->router->action;
     }
 }

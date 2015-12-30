@@ -62,7 +62,7 @@ class Basic implements ITemplateEngine
     {
         $mimeType = $params["mimeType"];
         $params = ["model" => $params["model"], "helper" => $params["helper"]];
-        $dirname = $this->camel2snake($this->container->router->routingParams()['controller']);
+        $dirname = $this->camel2snake($this->container->router->pageName);
 
         $filepath = STREAM_APP_ROOT . "/app/views/" . $dirname . "/" . $this->container->filename;
         $sharedpath = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED . "/" . $this->container->filename;

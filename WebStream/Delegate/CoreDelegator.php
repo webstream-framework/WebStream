@@ -2,6 +2,7 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
+use WebStream\DI\Injector;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Container;
@@ -17,21 +18,26 @@ use WebStream\Exception\Extend\ClassNotFoundException;
  */
 class CoreDelegator
 {
+    use Injector;
     use CommonUtils;
     use ApplicationUtils
     {
         ApplicationUtils::getNamespace as getDefinedNamespace;
     }
 
-    /** DIコンテナ */
+    /**
+     * @var Container DIコンテナ
+     */
     private $container;
 
-    /** CoreContainer */
+    /**
+     * @var Container Coreレイヤコンテナ
+     */
     private $coreContainer;
 
     /**
      * Constructor
-     * @param object DIContainer
+     * @param Container 依存コンテナ
      */
     public function __construct(Container $container)
     {
@@ -50,7 +56,7 @@ class CoreDelegator
         $this->coreContainer->remove("service");
         $this->coreContainer->remove("model");
         $this->coreContainer->remove("helper");
-        Logger::debug("CoreDelegator container is clear.");
+        $this->logger->debug("CoreDelegator container is clear.");
     }
 
     /**
@@ -64,14 +70,14 @@ class CoreDelegator
         $serviceClassName = $pageName . "Service";
         $modelClassName   = $pageName . "Model";
         $helperClassName  = $pageName . "Helper";
-        $controllerNamespace = $this->getNamespace($container->router->controller());
+        $controllerNamespace = $this->getNamespace($container->router->controller);
         $serviceNamespace    = $this->getNamespace($serviceClassName);
         $modelNamespace      = $this->getNamespace($modelClassName);
         $helperNamespace     = $this->getNamespace($helperClassName);
 
         // Controller
         $this->coreContainer->controller = function () use ($container, $controllerNamespace) {
-            $controllerClassPath = $controllerNamespace . "\\" . $container->router->controller();
+            $controllerClassPath = $controllerNamespace . "\\" . $container->router->controller;
             if (!class_exists($controllerClassPath)) {
                 throw new ClassNotFoundException("Undefined class path: " . $controllerClassPath);
             }
@@ -152,9 +158,7 @@ class CoreDelegator
      */
     public function getPageName()
     {
-        $params = $this->container->router->routingParams();
-
-        return $this->snake2ucamel($params['controller']);
+        return $this->container->router->pageName;
     }
 
     /**

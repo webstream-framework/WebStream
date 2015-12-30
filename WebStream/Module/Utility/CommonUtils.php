@@ -102,7 +102,7 @@ trait CommonUtils
      */
     public function snake2lcamel($str)
     {
-        return lcfirst(self::snake2ucamel($str));
+        return lcfirst($this->snake2ucamel($str));
     }
 
     /**

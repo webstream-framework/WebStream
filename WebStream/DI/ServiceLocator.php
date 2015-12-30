@@ -53,11 +53,21 @@ class ServiceLocator
         };
         // Router
         $container->router = function () use (&$container) {
-            return new Router($container->request);
+            // Router
+            $config = \Spyc::YAMLLoad($container->applicationInfo->applicationRoot . $container->applicationInfo->routeConfigPath);
+            $router = new Router($config, $container->request);
+            $router->inject('logger', $container->logger)
+                   ->inject('applicationInfo', $container->applicationInfo);
+            $router->resolve();
+
+            return $router->getRoutingResult();
         };
         // CoreDelegator
         $container->coreDelegator = function () use (&$container) {
-            return new CoreDelegator($container);
+            $coreDelegator = new CoreDelegator($container);
+            $coreDelegator->inject('logger', $container->logger);
+
+            return $coreDelegator;
         };
         // AnnotationDelegator
         $container->annotationDelegator = function () use (&$container) {
@@ -81,6 +91,7 @@ class ServiceLocator
             $info->publicDir = "_public";
             $info->cacheDir = "_cache";
             $info->cachePrefix = "webstream-cache-";
+            $info->routeConfigPath = "/config/routes.yml";
 
             return $info;
         };

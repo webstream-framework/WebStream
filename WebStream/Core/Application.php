@@ -74,22 +74,6 @@ class Application
      */
     public function run()
     {
-        \WebStream\Delegate\Router2::setRule([
-            '/' => "test#test1",
-            '/top' => "test#test2",
-        ]);
-        $container = ServiceLocator::getInstance()->getContainer();
-        $router = new \WebStream\Delegate\Router2($container->request);
-        $router->inject('logger', $container->logger)
-               ->inject('applicationInfo', $container->applicationInfo);
-        $router->resolve();
-
-        // var_dump($router->getRoutingResult());
-
-
-
-
-
         try {
             $this->init();
             $this->resolver = new Resolver($this->container);
