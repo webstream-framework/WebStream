@@ -36,12 +36,18 @@ class CsrfProtection extends Annotation implements IMethod
     {
         $this->injectedLog($this);
 
-        $tokenByRequest = $container->request->post($this->getCsrfTokenKey()) ?: $container->request->getHeader($this->getCsrfTokenHeader());
+        $tokenByRequest = null;
+        if (array_key_exists($this->getCsrfTokenKey(), $container->request->post)) {
+            $tokenByRequest = $container->request->post[$this->getCsrfTokenKey()];
+        } elseif (array_key_exists($this->getCsrfTokenHeader(), $container->request->header)) {
+            $tokenByRequest = $container->request->header[$this->getCsrfTokenHeader()];
+        }
+
         $tokenInSession = $container->session->get($this->getCsrfTokenKey());
         $container->session->delete($this->getCsrfTokenKey());
 
         // POSTリクエスト以外はチェックしない
-        if (!$container->request->isPost()) {
+        if ($container->request->requestMethod !== 'POST') {
             return;
         }
 

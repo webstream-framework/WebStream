@@ -104,12 +104,12 @@ class Header extends Annotation implements IMethod, IRead
             $classpathWithAction = $method->class . "#" . $action;
 
             // 複数指定した場合、一つでも許可されていればOK
-            if (!$this->inArray($container->request->requestMethod(), $allowMethods)) {
-                $errorMsg = "Not allowed request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction;
+            if (!$this->inArray($container->request->requestMethod, $allowMethods)) {
+                $errorMsg = "Not allowed request method '" . $container->request->requestMethod . "' in " . $classpathWithAction;
                 throw new InvalidRequestException($errorMsg);
             }
 
-            $this->logger->debug("Accepted request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction);
+            $this->logger->debug("Accepted request method '" . $container->request->requestMethod . "' in " . $classpathWithAction);
 
             if ($ext !== null) {
                 $contentType = $this->contentTypeList[$ext];

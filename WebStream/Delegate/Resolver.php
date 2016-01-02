@@ -87,7 +87,7 @@ class Resolver
             $controller->__callStaticFile($this->router->staticFile);
         } else {
             $this->response->clean();
-            $errorMsg = "Failed to resolve the routing: " . $this->request->server("REQUEST_URI");
+            $errorMsg = "Failed to resolve the routing: " . $this->request->requestUri;
             throw new ResourceNotFoundException($errorMsg);
         }
 

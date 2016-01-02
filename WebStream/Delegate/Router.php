@@ -2,7 +2,6 @@
 namespace WebStream\Delegate;
 
 use WebStream\DI\Injector;
-use WebStream\Http\Request;
 use WebStream\Module\Container;
 use WebStream\Module\Security;
 use WebStream\Module\Utility\CommonUtils;
@@ -24,7 +23,7 @@ class Router
     private $rules;
 
     /**
-     * @var Request リクエスト
+     * @var Container リクエストコンテナ
      */
     private $request;
 
@@ -37,7 +36,7 @@ class Router
      * コンストラクタ
      * @param Request リクエストオブジェクト
      */
-    public function __construct(array $rules, Request $request)
+    public function __construct(array $rules, Container $request)
     {
         $this->rules = $rules;
         $this->request = $request;
@@ -92,7 +91,7 @@ class Router
             }
             // ルールとURLがマッチした場合に動的にチェックを掛ける
             // パスがマッチしたときにアクション名をチェックし、その時点で弾く
-            if ($this->request->getPathInfo() === $path) {
+            if ($this->request->pathInfo === $path) {
                 // ルーティング定義(Controller#Action)が正しい場合
                 // _(アンダースコア)は許可するが、２回以上の連続の場合、末尾につく場合は許可しない
                 // NG例：my__blog, my_blog_
@@ -128,11 +127,11 @@ class Router
             // プレースホルダのパラメータをセット
             $expantionPath = $path;
             // PATH_INFOの階層数とルーティング定義の階層数が一致すればルーティングがマッチ
-            if (($this->request->getPathInfo() !== $path) &&
-                count(explode('/', $path)) === count(explode('/', $this->request->getPathInfo()))) {
+            if (($this->request->pathInfo !== $path) &&
+                count(explode('/', $path)) === count(explode('/', $this->request->pathInfo))) {
                 // プレースホルダと実URLをひもづける
                 $pathPattern = "/^\/" . implode("\/", $tokens) . "$/";
-                if (preg_match($pathPattern, $this->request->getPathInfo(), $matches)) {
+                if (preg_match($pathPattern, $this->request->pathInfo, $matches)) {
                     for ($j = 1; $j < count($matches); $j++) {
                         $key = $keyList[$j - 1];
                         $placeholderedParams[$key] = Security::safetyIn($matches[$j]);
@@ -143,7 +142,7 @@ class Router
             }
 
             // プレースホルダを展開済みのパス定義が完全一致したときはController、Actionを展開する
-            if ($this->request->getPathInfo() === $expantionPath &&
+            if ($this->request->pathInfo === $expantionPath &&
                 preg_match('/^(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))#(?:([a-z]{1}(?:_(?=[a-z])|[a-z0-9])+))$/', $ca, $matches)) {
                 $this->setController($matches[1]);
                 $this->setAction($matches[2]);
@@ -161,7 +160,7 @@ class Router
      */
     private function resolveStaticFilePath()
     {
-        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir . $this->request->getPathInfo();
+        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir . $this->request->pathInfo;
 
         if (is_file($staticFile)) {
             $this->routingContainer->staticFile = $staticFile;

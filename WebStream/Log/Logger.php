@@ -65,13 +65,13 @@ class Logger
         $this->loadCofig($configPath);
     }
 
-    /**
-     * デストラクタ
-     */
-    public function __destruct()
-    {
-        Logger::finalize();
-    }
+    // /**
+    //  * デストラクタ
+    //  */
+    // public function __destruct()
+    // {
+    //     Logger::finalize();
+    // }
 
     /**
      * インスタンスを返却する
@@ -118,7 +118,7 @@ class Logger
      */
     public static function __callStatic($level, $arguments)
     {
-        if (self::$logger === null) {
+        if (self::$logger === null || self::$formatter === null) {
             if (self::$configPath !== null) {
                 self::init(self::$configPath);
             } else {

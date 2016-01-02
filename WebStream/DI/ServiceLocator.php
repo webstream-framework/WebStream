@@ -17,18 +17,11 @@ use WebStream\Http\Session;
  * ServiceLocatorクラス
  * @author Ryuichi TANAKA.
  * @since 2013/01/14
+ * @version 0.7
  */
 class ServiceLocator
 {
     use Singleton, ApplicationUtils;
-
-    /**
-     * コンテナをクリア
-     */
-    public function removeContainer()
-    {
-        $this->__clear();
-    }
 
     /**
      * コンテナを作成する
@@ -39,10 +32,13 @@ class ServiceLocator
     {
         $container = new Container();
 
-        // Request
-        $container->request = function () {
-            return new Request();
+        $container->request = function () use (&$container) {
+            $request = new Request();
+            $request->inject('logger', $container->logger);
+
+            return $request->getContainer();
         };
+
         // Response
         $container->response = function () {
             return new Response();

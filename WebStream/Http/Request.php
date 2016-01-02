@@ -2,131 +2,106 @@
 namespace WebStream\Http;
 
 use WebStream\Module\Security;
-use WebStream\Log\Logger;
-use WebStream\Http\Method\Get;
-use WebStream\Http\Method\Post;
-use WebStream\Http\Method\Put;
+use WebStream\Module\Container;
+use WebStream\DI\Injector;
 
 /**
  * Request
  * @author Ryuichi TANAKA.
  * @since 2013/11/12
- * @version 0.4.1
+ * @version 0.7
  */
 class Request
 {
+    use Injector;
+
     /**
-     * @var Get GETパラメータ
+     * @var Container リクエストコンテナ
      */
-    private $get;
+    private $container;
 
     /**
-     * @var Post POSTパラメータ
-     */
-    private $post;
-
-    /**
-     * @var Put PUTパラメータ
-     */
-    private $put;
-
-    // private $delete;
-    // private $head;
-    // private $options;
-    // private $trace;
-
-    /** ドキュメントルートパス */
-    private $documentRoot;
-
-    /**
-     * コンストラクタ
+     * constructor
      */
     public function __construct()
     {
-        $this->get = new Get();
-        $this->post = new Post();
-        $this->put = new Put();
+        $this->container = new Container(false);
+        $this->createRequestContainer();
     }
 
     /**
-     * デストラクタ
+     * destructor
      */
     public function __destruct()
     {
-        Logger::debug("Request is clear.");
+        $this->logger->debug("Request is clear.");
     }
 
     /**
-     * ベースURLを取得する
-     * @return String ベースURL
+     * リクエストコンテナを返却する
+     * @return Container リクエストコンテナ
      */
-    public function getBaseURL()
+    public function getContainer()
     {
-        $script_name = $this->server("SCRIPT_NAME");
-        $request_uri = $this->server("REQUEST_URI");
+        return $this->container;
+    }
 
-        $base_url = null;
-        if (strpos($request_uri, $script_name) === 0) {
+    /**
+     * リクエストコンテナを作成する
+     */
+    private function createRequestContainer()
+    {
+        $this->container->referer = $this->server("HTTP_REFERER");
+        $this->container->userAgent = $this->server("HTTP_USER_AGENT");
+        $this->container->requestMethod = $this->server("REQUEST_METHOD");
+        $this->container->authUser = $this->server("PHP_AUTH_USER");
+        $this->container->authPassword = $this->server("PHP_AUTH_PW");
+        $this->container->queryString = $this->server("QUERY_STRING");
+        $this->container->requestUri = $this->server("REQUEST_URI");
+
+        $scriptName = $this->server("SCRIPT_NAME");
+        if (strpos($this->container->requestUri, $scriptName) === 0) {
             // フロントコントローラが省略の場合
-            $base_url = $script_name;
-        } elseif (strpos($request_uri, dirname($script_name)) === 0) {
+            $this->container->baseUrl = $scriptName;
+        } elseif (strpos($this->container->requestUri, dirname($scriptName)) === 0) {
             // フロントコントローラ指定の場合
-            $base_url = rtrim(dirname($script_name), "/");
+            $this->container->baseUrl = rtrim(dirname($scriptName), "/");
         }
 
-        return $base_url;
-    }
-
-    /**
-     * REQUEST_URI情報を取得する
-     * @return string REQUEST_URI情報
-     */
-    public function getRequestUri()
-    {
-        return $this->server("REQUEST_URI");
-    }
-
-    /**
-     * PATH情報を取得する
-     * @return string PATH情報
-     */
-    public function getPathInfo()
-    {
-        $base_url = $this->getBaseURL();
-        $request_uri = $this->server("REQUEST_URI");
-
+        $requestUri = $this->container->requestUri;
         // GETパラメータ指定を除去する
-        if (($pos = strpos($request_uri, "?")) !== false) {
-            $request_uri = substr($request_uri, 0, $pos);
+        if (($pos = strpos($requestUri, "?")) !== false) {
+            $requestUri = substr($requestUri, 0, $pos);
         }
 
         // PATH情報から取得する文字列を安全にする
-        $pathInfo = Security::safetyIn(substr($request_uri, strlen($base_url)));
+        $this->container->pathInfo = Security::safetyIn(substr($requestUri, strlen($this->container->baseUrl)));
 
-        return $pathInfo;
-    }
-
-    /**
-     * クエリストリングを返却する
-     * @return String クエリストリング
-     */
-    public function getQueryString()
-    {
-        return $this->server("QUERY_STRING");
-    }
-
-    /**
-     * ヘッダを取得する
-     * @param String ヘッダタイプ
-     * @return String ヘッダ値
-     */
-    public function getHeader($type)
-    {
-        $headers = getallheaders();
-        foreach ($headers as $key => $value) {
-            if ($key === $type) {
-                return $value;
+        if (function_exists('getallheaders')) {
+            $headers = [];
+            foreach (getallheaders() as $key => $value) {
+                $headers[$key] = Security::safetyIn($value);
             }
+            $this->container->header = $headers;
+        }
+
+        $this->container->get = $this->container->post = $this->container->put = $this->container->delete = [];
+        switch ($this->container->requestMethod) {
+            case 'GET':
+                $this->container->get = Security::safetyIn($_GET);
+                break;
+            case 'POST':
+                $this->container->post = Security::safetyIn($_POST);
+                break;
+            case 'PUT':
+                parse_str(file_get_contents('php://input'), $putdata);
+                $this->container->put = Security::safetyIn($putdata);
+                break;
+            case 'DELETE':
+                // not implements
+                break;
+            default:
+                break;
         }
     }
 
@@ -134,148 +109,12 @@ class Request
      * SERVERパラメータ取得
      * @param string パラメータキー
      */
-    public function server($key)
+    private function server($key)
     {
         if (array_key_exists($key, $_SERVER)) {
             return Security::safetyIn($_SERVER[$key]);
         } else {
             return null;
         }
-    }
-
-    /**
-     * リファラを取得する
-     * @return String リファラ
-     */
-    public function referer()
-    {
-        return $this->server("HTTP_REFERER");
-    }
-
-    /**
-     * リクエストメソッドを取得する
-     * @return String リクエストメソッド
-     */
-    public function requestMethod()
-    {
-        return $this->server("REQUEST_METHOD");
-    }
-
-    /**
-     * ユーザエージェントを取得する
-     * @return String ユーザエージェント
-     */
-    public function userAgent()
-    {
-        return $this->server("HTTP_USER_AGENT");
-    }
-
-    /**
-     * Basic認証のユーザIDを取得する
-     * @return String Basic認証ユーザID
-     */
-    public function authUser()
-    {
-        return $this->server("PHP_AUTH_USER");
-    }
-
-    /**
-     * Basic認証のパスワードを取得する
-     * @return String Basic認証パスワード
-     */
-    public function authPassword()
-    {
-        return $this->server("PHP_AUTH_PW");
-    }
-
-    /**
-     * GETかどうかチェックする
-     * @return boolean GETならtrue
-     */
-    public function isGet()
-    {
-        return $this->requestMethod() === "GET";
-    }
-
-    /**
-     * POSTかどうかチェックする
-     * @return boolean POSTならtrue
-     */
-    public function isPost()
-    {
-        return $this->requestMethod() === "POST" && (
-            $this->getHeader("Content-Type") === "application/x-www-form-urlencoded" ||
-            $this->getHeader("Content-Type") === "multipart/form-data"
-        );
-    }
-
-    /**
-     * PUTかどうかチェックする
-     * @return boolean PUTならtrue
-     */
-    public function isPut()
-    {
-        return $this->requestMethod() === "PUT";
-    }
-
-    /**
-     * DELETEかどうかチェックする
-     * @return boolean DELETEならtrue
-     */
-    public function isDelete()
-    {
-        // not implementation
-        return false;
-    }
-
-    /**
-     * GETパラメータ取得
-     * @param string パラメータキー
-     * @return string|array<string> GETパラメータ
-     */
-    public function get($key = null)
-    {
-        $params = $this->get->params();
-
-        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
-    }
-
-    /**
-     * POSTパラメータ取得
-     * @param string パラメータキー
-     * @return string|array<string> POSTパラメータ
-     */
-    public function post($key = null)
-    {
-        $params = $this->post->params();
-
-        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
-    }
-
-    /**
-     * PUTパラメータ取得
-     * PUTを使用してレスポンスを返す場合、
-     * リソース新規作成：201
-     * リソース更新：200または204
-     * を返却しなければならない
-     * @param string パラメータキー
-     * @return string|array<string> PUTパラメータ
-     */
-    public function put($key = null)
-    {
-        $params = $this->put->params();
-
-        return $key === null ? $params : (array_key_exists($key, $params) ? $params[$key] : null);
-    }
-
-    /**
-     * DELETEパラメータ取得
-     * DELETEを使用してレスポンスを返す場合、
-     * 200、202、204のいずれかを返却しなければならない
-     */
-    public function delete()
-    {
-        // not implementation
-        return null;
     }
 }

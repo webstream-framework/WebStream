@@ -98,21 +98,21 @@ class Validate extends Annotation implements IMethod
             }
 
             $params = null;
-            if ($container->request->isGet()) {
+            if ($container->request->requestMethod === 'GET') {
                 if ($method === null || "get" === mb_strtolower($method)) {
-                    $params = $container->request->get();
+                    $params = $container->request->get;
                 }
-            } elseif ($container->request->isPost()) {
+            } elseif ($container->request->requestMethod === 'POST') {
                 if ($method === null || "post" === mb_strtolower($method)) {
-                    $params = $container->request->post();
+                    $params = $container->request->post;
                 }
-            } elseif ($container->request->isPut()) {
+            } elseif ($container->request->requestMethod === 'PUT') {
                 if ($method === null || "put" === mb_strtolower($method)) {
-                    $params = $container->request->put();
+                    $params = $container->request->put;
                 }
-            } elseif ($container->request->isDelete()) {
+            } elseif ($container->request->requestMethod === 'DELETE') {
                 if ($method === null || "delete" === mb_strtolower($method)) {
-                    $params = $container->request->delete();
+                    $params = $container->request->delete;
                 }
             } else {
                 $errorMsg = "Unsupported method is specified: " . safetyOut($method);

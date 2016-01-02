@@ -11,7 +11,7 @@ http://webstream-framework.github.io/WebStream
 
 ## ブランチ
 * master
-* 0.7.0 (PHP7.0RC7)
+* 0.7.0 (PHP7.0.1)
 
 ## タグ
 * 0.1.10 (PHP4.x)
