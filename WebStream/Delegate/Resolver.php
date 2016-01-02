@@ -6,7 +6,7 @@ use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Core\CoreHelper;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\FileUtils;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 
@@ -14,11 +14,11 @@ use WebStream\Exception\Extend\ResourceNotFoundException;
  * Resolver
  * @author Ryuichi TANAKA.
  * @since 2012/12/22
- * @version 0.4
+ * @version 0.7
  */
 class Resolver
 {
-    use Utility;
+    use FileUtils;
 
     /**
      * @var Router ルーティングオブジェクト
@@ -68,33 +68,26 @@ class Resolver
      */
     public function runController()
     {
-        // ルータインスタンスをセットする必要がある
-        if (!$this->router instanceof Router) {
-            throw new RouterException("Required router instance to start the Controller");
-        }
-
-        // ルーティング解決を実行
-        $this->router->resolve();
         // セッションスタート
         $this->session->start();
         // バッファリング開始
         $this->response->start();
 
-        if ($this->router->controller() !== null && $this->router->action() !== null) {
-            $iterator = $this->getFileSearchIterator(STREAM_APP_ROOT . "/app/controllers");
+        if ($this->router->controller !== null && $this->router->action !== null) {
+            $iterator = $this->getFileSearchIterator($this->container->applicationInfo->applicationRoot . "/app/controllers");
             foreach ($iterator as $filepath => $fileObject) {
-                if (strpos($filepath, $this->router->controller() . ".php") !== false) {
+                if (strpos($filepath, $this->router->controller . ".php") !== false) {
                     include_once $filepath;
                 }
             }
             $controllerDelegator = new CoreExecuteDelegator($this->container->coreDelegator->getController(), $this->container);
-            $controllerDelegator->run($this->router->action(), [$this->router->params()]);
-        } elseif ($this->router->staticFile() !== null) {
+            $controllerDelegator->run($this->router->action, [$this->router->params]);
+        } elseif ($this->router->staticFile !== null) {
             $controller = new CoreController($this->container);
-            $controller->__callStaticFile($this->router->staticFile());
+            $controller->__callStaticFile($this->router->staticFile);
         } else {
             $this->response->clean();
-            $errorMsg = "Failed to resolve the routing: " . $this->request->server("REQUEST_URI");
+            $errorMsg = "Failed to resolve the routing: " . $this->request->requestUri;
             throw new ResourceNotFoundException($errorMsg);
         }
 

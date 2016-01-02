@@ -1,14 +1,13 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Exception\Extend\InvalidRequestException;
 
@@ -23,7 +22,7 @@ use WebStream\Exception\Extend\InvalidRequestException;
  */
 class Header extends Annotation implements IMethod, IRead
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -67,7 +66,6 @@ class Header extends Annotation implements IMethod, IRead
     public function onInject(AnnotationContainer $annotation)
     {
         $this->annotation = $annotation;
-        Logger::debug("@Header injected.");
     }
 
     /**
@@ -81,10 +79,10 @@ class Header extends Annotation implements IMethod, IRead
     /**
      * {@inheritdoc}
      */
-    public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
+    public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
-        $action = $this->camel2snake($container->router->action());
-        $classpathWithAction = $method->class . "#" . $action;
+        $this->injectedLog($this);
+
         $allowMethods = $this->annotation->allowMethod;
         $ext = $this->annotation->contentType;
 
@@ -102,13 +100,16 @@ class Header extends Annotation implements IMethod, IRead
                 $allowMethods[$i] = strtoupper($allowMethods[$i]);
             }
 
+            $action = $this->camel2snake($container->router->action);
+            $classpathWithAction = $method->class . "#" . $action;
+
             // 複数指定した場合、一つでも許可されていればOK
-            if (!$this->inArray($container->request->requestMethod(), $allowMethods)) {
-                $errorMsg = "Not allowed request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction;
+            if (!$this->inArray($container->request->requestMethod, $allowMethods)) {
+                $errorMsg = "Not allowed request method '" . $container->request->requestMethod . "' in " . $classpathWithAction;
                 throw new InvalidRequestException($errorMsg);
             }
 
-            Logger::debug("Accepted request method '" . $container->request->requestMethod() . "' in " . $classpathWithAction);
+            $this->logger->debug("Accepted request method '" . $container->request->requestMethod . "' in " . $classpathWithAction);
 
             if ($ext !== null) {
                 $contentType = $this->contentTypeList[$ext];
@@ -116,7 +117,7 @@ class Header extends Annotation implements IMethod, IRead
                     $errorMsg = "Invalid value '$ext' in 'contentType' attribute of @Header.";
                     throw new AnnotationException($errorMsg);
                 }
-                Logger::debug("Accepted contentType '$ext' in " . $classpathWithAction);
+                $this->logger->debug("Accepted contentType '$ext' in " . $classpathWithAction);
             }
         }
     }

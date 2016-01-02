@@ -1,9 +1,10 @@
 <?php
 namespace WebStream\Template;
 
-use WebStream\Module\Logger;
 use WebStream\Module\Cache;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\ApplicationUtils;
+use WebStream\Module\Utility\SecurityUtils;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 
@@ -11,11 +12,11 @@ use WebStream\Exception\Extend\ResourceNotFoundException;
  * Basic
  * @author Ryuichi Tanaka
  * @since 2015/03/18
- * @version 0.4.0
+ * @version 0.7
  */
 class Basic implements ITemplateEngine
 {
-    use Utility;
+    use CommonUtils, ApplicationUtils, SecurityUtils;
 
     /** HTML記法 */
     const TEMPLATE_MARK_HTML       = '%H';
@@ -44,6 +45,11 @@ class Basic implements ITemplateEngine
     private $timestamp;
 
     /**
+     * @var Logger ロガー
+     */
+    private $logger;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
@@ -51,6 +57,7 @@ class Basic implements ITemplateEngine
         $this->container = $container;
         $this->session  = $container->session;
         $this->timestamp = 0;
+        $this->logger = $container->logger;
     }
 
     /**
@@ -60,10 +67,10 @@ class Basic implements ITemplateEngine
     {
         $mimeType = $params["mimeType"];
         $params = ["model" => $params["model"], "helper" => $params["helper"]];
-        $dirname = $this->camel2snake($this->container->router->routingParams()['controller']);
+        $dirname = $this->camel2snake($this->container->router->pageName);
 
-        $filepath = STREAM_APP_ROOT . "/app/views/" . $dirname . "/" . $this->container->filename;
-        $sharedpath = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_SHARED . "/" . $this->container->filename;
+        $filepath = $this->container->applicationInfo->applicationRoot . "/app/views/" . $dirname . "/" . $this->container->filename;
+        $sharedpath = $this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->sharedDir . "/" . $this->container->filename;
 
         $realpath = realpath($filepath) ?: realpath($sharedpath);
 
@@ -87,8 +94,8 @@ class Basic implements ITemplateEngine
         if ($fileSize === false) {
             throw new IOException("File write failure: " . $temp);
         } else {
-            Logger::debug("Write temporary template file: " . $temp);
-            Logger::debug("Compiled template file size: " . $fileSize);
+            $this->logger->debug("Write temporary template file: " . $temp);
+            $this->logger->debug("Compiled template file size: " . $fileSize);
         }
 
         $params["__params__"] = $params;
@@ -130,8 +137,8 @@ class Basic implements ITemplateEngine
         if ($fileSize === false) {
             throw new IOException("File write failure: " . $temp);
         } else {
-            Logger::debug("Write temporary template file: " . $temp);
-            Logger::debug("Compiled template file size: " . $fileSize);
+            $this->logger->debug("Write temporary template file: " . $temp);
+            $this->logger->debug("Compiled template file size: " . $fileSize);
         }
 
         $params["__params__"] = $params;
@@ -171,12 +178,13 @@ class Basic implements ITemplateEngine
      */
     public function cache($filename, $data, $expire)
     {
-        $cacheDir = STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE;
+        $cacheDir = $this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->cacheDir;
         $cache = new Cache($cacheDir);
+        $cache->inject('logger', $this->logger);
         $filepath = $cacheDir . "/" . $filename . ".cache";
         if (!file_exists($filepath) || $this->timestamp > filemtime($filepath)) {
             if ($cache->save($filename, $data, $expire)) {
-                Logger::debug("Write template cache file: " . $filepath);
+                $this->logger->debug("Write template cache file: " . $filepath);
             } else {
                 throw new IOException("File write failure: " . $filepath);
             }

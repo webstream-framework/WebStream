@@ -2,10 +2,10 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Module\Logger;
 use WebStream\Module\PropertyProxy;
-use WebStream\Annotation\Inject;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
 use WebStream\Exception\Extend\DatabaseException;
@@ -17,8 +17,9 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  * @since 2012/09/01
  * @version 0.4
  */
-class CoreModel implements CoreInterface
+class CoreModel implements CoreInterface, IAnnotatable
 {
+    use CommonUtils;
     use PropertyProxy;
 
     /**
@@ -47,12 +48,18 @@ class CoreModel implements CoreInterface
     protected $annotation;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    protected $logger;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
-        Logger::debug("Model start.");
         $this->container = $container;
+        $this->logger = $container->logger;
+        $this->logger->debug("Model start.");
     }
 
     /**
@@ -60,19 +67,18 @@ class CoreModel implements CoreInterface
      */
     public function __destruct()
     {
-        Logger::debug("Model end.");
+        $this->logger->debug("Model end.");
         $this->__clear();
     }
 
     /**
      * 初期化処理
-     * @Inject
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)
     {
         if ($container->connectionContainerList === null) {
-            Logger::warn("Can't use database in Model Layer.");
+            $this->logger->warn("Can't use database in Model Layer.");
 
             return;
         }
@@ -98,7 +104,14 @@ class CoreModel implements CoreInterface
      */
     final public function __call($method, $arguments)
     {
-        $filepath = debug_backtrace()[1]["file"];
+        $trace = debug_backtrace();
+        $filepath = null;
+        for ($i = 0; $i < count($trace); $i++) {
+            $filepath = $trace[$i]["file"];
+            if ($filepath !== null) {
+                break;
+            }
+        }
 
         // DBコネクションが取得できなければエラー
         if (!$this->manager->loadConnection($filepath)) {
@@ -156,7 +169,19 @@ class CoreModel implements CoreInterface
                     $bind = $arguments[0];
                 }
 
-                $modelMethod = debug_backtrace()[3]["function"];
+                $trace = debug_backtrace();
+                $modelMethod = null;
+                for ($i = 0; $i < count($trace); $i++) {
+                    if ($this->inArray($trace[$i]["function"], ["__call", "__execute"])) {
+                        continue;
+                    }
+
+                    if ($trace[$i]["function"] !== null) {
+                        $modelMethod = $trace[$i]["function"];
+                        break;
+                    }
+                }
+
                 $queryKey = get_class($this) . "#" . $modelMethod;
                 $queryId = $method;
 

@@ -1,24 +1,25 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Base\IAnnotatable;
-use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IMethods;
+use WebStream\Annotation\Base\IRead;
+use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
+use WebStream\Exception\Extend\AnnotationException;
 
 /**
- * ExceptionHandler
+ * Alias
  * @author Ryuichi TANAKA.
- * @since 2013/11/22
- * @version 0.4
+ * @since 2015/12/05
+ * @version 0.7
  *
  * @Annotation
  * @Target("METHOD")
  */
-class ExceptionHandler extends Annotation implements IMethods, IRead
+class Alias extends Annotation implements IMethods, IRead
 {
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -54,12 +55,11 @@ class ExceptionHandler extends Annotation implements IMethods, IRead
     {
         $this->injectedLog($this);
 
-        $exceptions = $this->annotation->value;
-        if (!is_array($exceptions)) {
-            $exceptions = [$exceptions];
+        $aliasMethodName = $this->annotation->name;
+        if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]{0,}$/', $aliasMethodName)) {
+            throw new AnnotationException("Alias method is invalid: " . $aliasMethodName);
         }
 
-        $this->injectedContainer->exceptions = $exceptions;
-        $this->injectedContainer->method = $method;
+        $this->injectedContainer->{$aliasMethodName} = $method->name;
     }
 }

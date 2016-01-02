@@ -2,12 +2,10 @@
 namespace WebStream\Core;
 
 use WebStream\Delegate\Resolver;
-use WebStream\Module\Utility;
-use WebStream\Module\Logger;
 use WebStream\Module\PropertyProxy;
 use WebStream\Module\Container;
-use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 
 /**
  * CoreControllerクラス
@@ -15,9 +13,8 @@ use WebStream\Annotation\Filter;
  * @since 2011/09/11
  * @version 0.4.2
  */
-class CoreController implements CoreInterface
+class CoreController implements CoreInterface, IAnnotatable
 {
-    use Utility;
     use PropertyProxy;
 
     /**
@@ -46,15 +43,21 @@ class CoreController implements CoreInterface
     protected $annotation;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    protected $logger;
+
+    /**
      * {@inheritdoc}
      */
     final public function __construct(Container $container)
     {
-        Logger::debug("Controller start.");
         $this->request   = $container->request;
         $this->response  = $container->response;
         $this->session   = $container->session;
+        $this->logger    = $container->logger;
         $this->coreDelegator = $container->coreDelegator;
+        $this->logger->debug("Controller start.");
     }
 
     /**
@@ -62,7 +65,7 @@ class CoreController implements CoreInterface
      */
     public function __destruct()
     {
-        Logger::debug("Controller end.");
+        $this->logger->debug("Controller end.");
         $this->__clear();
     }
 
@@ -86,7 +89,6 @@ class CoreController implements CoreInterface
 
     /**
      * 初期化処理
-     * @Inject
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)

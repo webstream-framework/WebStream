@@ -1,17 +1,20 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\DI\Injector;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\SecurityUtils;
 use WebStream\Exception\Extend\IOException;
 
 /**
  * Cacheクラス
  * @author Ryuichi Tanaka
  * @since 2011/10/08
- * @version 0.4.1
+ * @version 0.7
  */
 class Cache
 {
-    use Utility;
+    use Injector, CommonUtils, SecurityUtils;
 
     /** キャッシュの保存ディレクトリ */
     private $savePath;
@@ -39,7 +42,7 @@ class Cache
         if ($cache !== null) {
             $path = $this->savePath . "/" . $id . '.cache';
             $cachePath = realpath($path);
-            Logger::info("Get cache: ${cachePath}");
+            $this->logger->info("Get cache: ${cachePath}");
 
             return $cache["data"];
         }
@@ -80,7 +83,7 @@ class Cache
             if ($data["ttl"] !== -1) {
                 // 期限切れのキャッシュは削除
                 if (time() > $data["time"] + $data["ttl"]) {
-                    Logger::warn("Expired cache: ${cachePath}");
+                    $this->logger->warn("Expired cache: ${cachePath}");
                     unlink($cachePath);
 
                     return null;
@@ -117,7 +120,7 @@ class Cache
             if (!is_file($cachePath) || (is_file($cachePath) && $overwrite === true)) {
                 $result = @file_put_contents($cachePath, $this->encode($content), LOCK_EX);
                 if ($result !== false) { // ファイルが書き込めた場合
-                    Logger::info("Create cache: ${cachePath}");
+                    $this->logger->info("Create cache: ${cachePath}");
                     // キャッシュファイルのパーミッションを777にする
                     @chmod($cachePath, 0777);
 
@@ -127,7 +130,7 @@ class Cache
                 }
             }
         } else {
-            Logger::error("Invalid cache directory: " . $this->savePath);
+            $this->logger->error("Invalid cache directory: " . $this->savePath);
         }
 
         return false;
@@ -141,11 +144,11 @@ class Cache
     {
         $cachePath = realpath($this->savePath . "/" . $id . '.cache');
         if ($cachePath) {
-            Logger::debug("Cache delete success: ${cachePath}");
+            $this->logger->debug("Cache delete success: ${cachePath}");
 
             return unlink($cachePath);
         } else {
-            Logger::error("Cache delete failure: ${cachePath}");
+            $this->logger->error("Cache delete failure: ${cachePath}");
 
             return false;
         }

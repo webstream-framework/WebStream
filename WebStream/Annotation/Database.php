@@ -1,12 +1,11 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IClass;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\DatabaseException;
 
@@ -14,7 +13,7 @@ use WebStream\Exception\Extend\DatabaseException;
  * Database
  * @author Ryuichi TANAKA.
  * @since 2013/12/07
- * @version 0.4
+ * @version 0.7
  *
  * @Annotation
  * @Target("CLASS")
@@ -38,7 +37,6 @@ class Database extends Annotation implements IClass, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Database injected.");
     }
 
     /**
@@ -52,8 +50,10 @@ class Database extends Annotation implements IClass, IRead
     /**
      * {@inheritdoc}
      */
-    public function onClassInject(CoreInterface &$instance, Container $container, \ReflectionClass $class)
+    public function onClassInject(IAnnotatable &$instance, Container $container, \ReflectionClass $class)
     {
+        $this->injectedLog($this);
+
         $driver = $this->annotation->driver;
         $config = $this->annotation->config;
 
@@ -61,7 +61,7 @@ class Database extends Annotation implements IClass, IRead
             throw new DatabaseException("Database driver is undefined：" . $driver);
         }
 
-        $configPath = STREAM_APP_ROOT . "/" . $config;
+        $configPath = $container->applicationInfo->applicationRoot . "/" . $config;
         $configRealPath = realpath($configPath);
         if (!file_exists($configRealPath)) {
             throw new DatabaseException("Database config file is not found: " . $configPath);

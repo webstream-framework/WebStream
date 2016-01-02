@@ -1,12 +1,11 @@
 <?php
 namespace WebStream\Annotation;
 
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
 
 /**
@@ -37,7 +36,6 @@ class Filter extends Annotation implements IMethods, IRead
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Filter injected.");
     }
 
     /**
@@ -51,11 +49,13 @@ class Filter extends Annotation implements IMethods, IRead
     /**
      * {@inheritdoc}
      */
-    public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
+    public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $this->injectedContainer->annotation = $this->annotation;
         $this->injectedContainer->method = $method;
         $this->injectedContainer->classpath = get_class($instance);
-        $this->injectedContainer->action = $container->router->action();
+        $this->injectedContainer->action = $container->router->action;
     }
 }

@@ -1,32 +1,26 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Template\ITemplateEngine;
-use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 
 /**
  * CoreViewクラス
  * @author Ryuichi TANAKA.
  * @since 2011/09/12
- * @version 0.4
+ * @version 0.7
  */
-class CoreView implements CoreInterface
+class CoreView implements CoreInterface, IAnnotatable
 {
-    use Utility;
+    use CommonUtils;
 
     /**
-     * @var Request リクエスト
+     * @var Container 依存コンテナ
      */
-    private $request;
-
-    /**
-     * @var Response レスポンス
-     */
-    private $response;
+    private $container;
 
     /**
      * @var ITemplateEngine テンプレートエンジン
@@ -34,13 +28,18 @@ class CoreView implements CoreInterface
     private $templateEngine;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    private $logger;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
-        Logger::debug("View start.");
-        $this->request  = $container->request;
-        $this->response = $container->response;
+        $this->container = $container;
+        $this->logger = $container->logger;
+        $this->logger->debug("View start.");
     }
 
     /**
@@ -48,12 +47,11 @@ class CoreView implements CoreInterface
      */
     public function __destruct()
     {
-        Logger::debug("View end.");
+        $this->logger->debug("View end.");
     }
 
     /**
      * 初期化処理
-     * @Inject
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)
@@ -80,7 +78,7 @@ class CoreView implements CoreInterface
 
         // HTML,XML以外はテンプレートを使用しない
         if ($mimeType !== "html" && $mimeType !== "xml") {
-            Logger::debug("Only html or xml draw view template.");
+            $this->logger->debug("Only html or xml draw view template.");
 
             return;
         }
@@ -112,7 +110,7 @@ class CoreView implements CoreInterface
      */
     private function outputHeader($type)
     {
-        $this->response->setType($type);
+        $this->container->response->setType($type);
     }
 
     /**
@@ -121,11 +119,12 @@ class CoreView implements CoreInterface
      */
     final public function __file($filepath)
     {
-        if (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/css\/.+\.css$/i', $filepath) ||
-            preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/js\/.+\.js$/i', $filepath)) { // 画像,css,jsの場合
+        $publicDir = $this->container->applicationInfo->publicDir;
+        if (preg_match('/\/views\/' . $publicDir . '\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
+            preg_match('/\/views\/' . $publicDir . '\/css\/.+\.css$/i', $filepath) ||
+            preg_match('/\/views\/' . $publicDir . '\/js\/.+\.js$/i', $filepath)) { // 画像,css,jsの場合
             $this->display($filepath);
-        } elseif (preg_match('/\/views\/'.STREAM_VIEW_PUBLIC.'\/file\/.+$/i', $filepath)) { // それ以外のファイル
+        } elseif (preg_match('/\/views\/' . $publicDir . '\/file\/.+$/i', $filepath)) { // それ以外のファイル
             $this->download($filepath);
         } else { // 全てのファイル
             $this->display($filepath);
@@ -138,7 +137,7 @@ class CoreView implements CoreInterface
      */
     final private function display($filename)
     {
-        $this->response->displayFile($filename);
+        $this->container->response->displayFile($filename);
     }
 
     /**
@@ -147,7 +146,7 @@ class CoreView implements CoreInterface
      */
     final private function download($filename)
     {
-        $userAgent = $this->request->userAgent();
-        $this->response->downloadFile($filename, $userAgent);
+        $userAgent = $this->container->request->userAgent();
+        $this->container->response->downloadFile($filename, $userAgent);
     }
 }

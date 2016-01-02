@@ -1,12 +1,11 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Container;
 use WebStream\Module\Security;
-use WebStream\Module\Logger;
-use WebStream\Annotation\Inject;
 use WebStream\Annotation\Filter;
+use WebStream\Annotation\Base\IAnnotatable;
 
 /**
  * CoreHelperクラス
@@ -14,9 +13,9 @@ use WebStream\Annotation\Filter;
  * @since 2011/11/30
  * @version 0.4
  */
-class CoreHelper implements CoreInterface
+class CoreHelper implements CoreInterface, IAnnotatable
 {
-    use Utility;
+    use ApplicationUtils;
 
     /**
      * @var Container DIコンテナ
@@ -29,12 +28,18 @@ class CoreHelper implements CoreInterface
     protected $annotation;
 
     /**
+     * @var LoggerAdapter ロガー
+     */
+    protected $logger;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
         $this->container = $container;
-        Logger::debug("Helper start.");
+        $this->logger = $container->logger;
+        $this->logger->debug("Helper start.");
     }
 
     /**
@@ -42,12 +47,11 @@ class CoreHelper implements CoreInterface
      */
     public function __destruct()
     {
-        Logger::debug("Helper end.");
+        $this->logger->debug("Helper end.");
     }
 
     /**
      * 初期化処理
-     * @Inject
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)

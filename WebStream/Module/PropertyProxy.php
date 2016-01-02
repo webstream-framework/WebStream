@@ -5,7 +5,7 @@ namespace WebStream\Module;
  * PropertyProxyクラス
  * @author Ryuichi Tanaka
  * @since 2015/05/02
- * @version 0.4.1
+ * @version 0.7
  */
 trait PropertyProxy
 {
@@ -25,7 +25,6 @@ trait PropertyProxy
 
         $called = debug_backtrace()[0]['class'];
         $this->__propertyContainer->{$name} = $value;
-        Logger::debug("Undefied property name '$name' proxied from $called.");
     }
 
     /**

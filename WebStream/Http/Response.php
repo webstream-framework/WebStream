@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Http;
 
-use WebStream\Module\Utility;
-use WebStream\Module\Logger;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Log\Logger;
 
 /**
  * Response
@@ -12,7 +12,7 @@ use WebStream\Module\Logger;
  */
 class Response
 {
-    use Utility;
+    use CommonUtils;
 
     /** HTTPバージョン */
     const HTTP_VERSION = '1.1';

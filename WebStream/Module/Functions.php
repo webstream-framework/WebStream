@@ -3,12 +3,12 @@
  * Functions
  * @author Ryuichi TANAKA.
  * @since 2013/09/04
- * @version 0.4
+ * @version 0.7
  */
 
-use WebStream\Module\Logger;
 use WebStream\Module\Security;
 use WebStream\DI\ServiceLocator;
+use WebStream\Log\Logger;
 
 /**
  * ハンドリングできないエラーをハンドリングする
@@ -16,9 +16,6 @@ use WebStream\DI\ServiceLocator;
 if (!function_exists('shutdownHandler')) {
     function shutdownHandler()
     {
-        // サービスロケータをクリア
-        ServiceLocator::removeContainer();
-
         // ログ処理
         if ($error = error_get_last()) {
             $errorMsg = $error['message'] . " " . $error['file'] . "(" . $error['line'] . ")";
@@ -46,9 +43,6 @@ if (!function_exists('shutdownHandler')) {
                     break;
             }
         }
-
-        // オブジェクトを解放
-        Logger::finalize();
     }
 }
 

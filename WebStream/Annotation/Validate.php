@@ -3,12 +3,14 @@ namespace WebStream\Annotation;
 
 use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Base\Annotation;
+use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Logger;
 use WebStream\Module\Container;
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\ClassLoader;
+use WebStream\DI\ServiceLocator;
 use WebStream\Exception\Extend\ValidateException;
 use WebStream\Exception\Extend\AnnotationException;
 
@@ -16,14 +18,14 @@ use WebStream\Exception\Extend\AnnotationException;
  * Validate
  * @author Ryuichi TANAKA.
  * @since 2015/03/30
- * @version 0.4
+ * @version 0.7
  *
  * @Annotation
  * @Target("METHOD")
  */
 class Validate extends Annotation implements IMethod
 {
-    use Utility;
+    use CommonUtils, ApplicationUtils;
 
     /**
      * @var AnnotationContainer アノテーションコンテナ
@@ -37,14 +39,15 @@ class Validate extends Annotation implements IMethod
     {
         $this->annotation = $annotation;
         $this->injectedContainer = new AnnotationContainer();
-        Logger::debug("@Validate injected.");
     }
 
     /**
      * {@inheritdoc}
      */
-    public function onMethodInject(CoreInterface &$instance, Container $container, \ReflectionMethod $method)
+    public function onMethodInject(IAnnotatable &$instance, Container $container, \ReflectionMethod $method)
     {
+        $this->injectedLog($this);
+
         $key = $this->annotation->key;
         $rule = $this->annotation->rule;
         $method = $this->annotation->method;
@@ -80,7 +83,9 @@ class Validate extends Annotation implements IMethod
                 $classpath = $namespace . "\\" . $className;
             }
 
-            $classpath = $classpath ?: $this->getNamespace($this->getRoot() . "/" . $filepath) . "\\" . $className;
+            $container = ServiceLocator::getInstance()->getContainer();
+            $root = $container->applicationInfo->applicationRoot;
+            $classpath = $classpath ?: $this->getNamespace($root . "/" . $filepath) . "\\" . $className;
             if (!class_exists($classpath)) {
                 $errorMsg = "Invalid Validate class's classpath: " . $classpath . "";
                 throw new AnnotationException($errorMsg);
@@ -93,21 +98,21 @@ class Validate extends Annotation implements IMethod
             }
 
             $params = null;
-            if ($container->request->isGet()) {
+            if ($container->request->requestMethod === 'GET') {
                 if ($method === null || "get" === mb_strtolower($method)) {
-                    $params = $container->request->get();
+                    $params = $container->request->get;
                 }
-            } elseif ($container->request->isPost()) {
+            } elseif ($container->request->requestMethod === 'POST') {
                 if ($method === null || "post" === mb_strtolower($method)) {
-                    $params = $container->request->post();
+                    $params = $container->request->post;
                 }
-            } elseif ($container->request->isPut()) {
+            } elseif ($container->request->requestMethod === 'PUT') {
                 if ($method === null || "put" === mb_strtolower($method)) {
-                    $params = $container->request->put();
+                    $params = $container->request->put;
                 }
-            } elseif ($container->request->isDelete()) {
+            } elseif ($container->request->requestMethod === 'DELETE') {
                 if ($method === null || "delete" === mb_strtolower($method)) {
-                    $params = $container->request->delete();
+                    $params = $container->request->delete;
                 }
             } else {
                 $errorMsg = "Unsupported method is specified: " . safetyOut($method);

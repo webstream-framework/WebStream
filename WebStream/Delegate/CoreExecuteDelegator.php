@@ -7,8 +7,7 @@ use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
-use WebStream\Module\Utility;
-use WebStream\Module\Logger;
+use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Exception\ApplicationException;
@@ -26,7 +25,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class CoreExecuteDelegator
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var CoreInterface インスタンス
@@ -42,6 +41,11 @@ class CoreExecuteDelegator
      * @var Container 依存コンテナ
      */
     private $container;
+
+    /**
+     * @var Logger ロガー
+     */
+    private $logger;
 
     /**
      * @var AnnotationContainer アノテーション
@@ -60,6 +64,7 @@ class CoreExecuteDelegator
     {
         $this->instance = $instance;
         $this->container = $container;
+        $this->logger = $container->logger;
     }
 
     /**
@@ -75,10 +80,9 @@ class CoreExecuteDelegator
      */
     public function __get($name)
     {
-        $instance = $this->injectedInstance ?: $this->instance;
-
-        return $instance->{$name};
+        return $this->getInstance()->{$name};
     }
+
     /**
      * 処理を実行する
      * @param string メソッド名
@@ -86,21 +90,24 @@ class CoreExecuteDelegator
      */
     public function run($method, $arguments = [])
     {
-        $instance = $this->injectedInstance ?: $this->instance;
+        // すでに注入済みのインスタンスの場合、そのまま実行
+        if ($this->injectedInstance !== null) {
+            return $this->execute($method, $arguments);
+        }
 
         try {
             $result = null;
 
-            if ($instance instanceof CoreController) {
-                $this->controllerInjector($method, $arguments);
-            } elseif ($instance instanceof CoreService) {
-                $result = $this->serviceInjector($method, $arguments);
-            } elseif ($instance instanceof CoreModel) {
-                $result = $this->modelInjector($method, $arguments);
-            } elseif ($instance instanceof CoreView) {
+            if ($this->instance instanceof CoreController) {
+                $this->controllerInjector($this->getOriginMethod($method), $arguments);
+            } elseif ($this->instance instanceof CoreService) {
+                $result = $this->serviceInjector($this->getOriginMethod($method), $arguments);
+            } elseif ($this->instance instanceof CoreModel) {
+                $result = $this->modelInjector($this->getOriginMethod($method), $arguments);
+            } elseif ($this->instance instanceof CoreView) {
                 $this->viewInjector($method, $arguments);
-            } elseif ($instance instanceof CoreHelper) {
-                $result = $this->helperInjector($method, $arguments);
+            } elseif ($this->instance instanceof CoreHelper) {
+                $result = $this->helperInjector($this->getOriginMethod($method), $arguments);
             }
 
             return $result;
@@ -122,7 +129,8 @@ class CoreExecuteDelegator
                     break;
             }
 
-            $exception = new ExceptionDelegator($instance, $e, $method);
+            $exception = new ExceptionDelegator($this->getInstance(), $e, $method);
+            $exception->inject('logger', $this->logger);
 
             if ($this->annotation !== null && is_array($this->annotation->exceptionHandler)) {
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
@@ -169,14 +177,17 @@ class CoreExecuteDelegator
             throw new MethodNotFoundException("${class}#${method} is not defined.");
         }
 
+        $applicationInfo = $this->container->applicationInfo;
+
         // テンプレートキャッシュチェック
         $pageName = $this->container->coreDelegator->getPageName();
-        $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
-        $cache = new Cache(STREAM_APP_ROOT . "/app/views/" . STREAM_VIEW_CACHE);
+        $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+        $cache = new Cache($applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->cacheDir);
+        $cache->inject('logger', $this->logger);
         $data = $cache->get($cacheFile);
 
         if ($data !== null) {
-            Logger::debug("Template cache read success: $cacheFile.cache");
+            $this->logger->debug("Template cache read success: $cacheFile.cache");
             echo $data;
 
             return;
@@ -208,6 +219,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->exceptionHandler);
                 $exception->raise();
             }
@@ -237,7 +249,7 @@ class CoreExecuteDelegator
             ]);
 
             if ($template->cacheTime !== null) {
-                $cacheFile = STREAM_CACHE_PREFIX . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+                $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
                 $view->templateCache($cacheFile, ob_get_contents(), $template->cacheTime);
             }
 
@@ -277,6 +289,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->exceptionHandler);
                 $exception->raise();
             }
@@ -320,6 +333,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
                 $exception->raise();
             }
@@ -357,6 +371,7 @@ class CoreExecuteDelegator
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $this->annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
+                $exception->inject('logger', $this->logger);
                 $exception->raise();
             }
 
@@ -399,6 +414,7 @@ class CoreExecuteDelegator
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
                 }
+                $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);
                 $exception->raise();
             }
@@ -412,5 +428,39 @@ class CoreExecuteDelegator
         }
 
         return $this->execute($method, $arguments);
+    }
+
+    /**
+     * 実メソッド名を返却する
+     * @param  stirng $method エイリアスメソッド名
+     * @return stirng 実メソッド名
+     */
+    private function getOriginMethod($method)
+    {
+        // 実メソッドが定義済みの場合、エイリアスメソッド参照はしない
+        if (method_exists($this->instance, $method)) {
+            return $method;
+        }
+
+        $annotation = $this->container->annotationDelegator->read($this->instance, $method, "WebStream\Annotation\Alias");
+
+        $originMethod = null;
+        foreach ($annotation->alias as $alias) {
+            if ($originMethod !== null && $alias->{$method} !== null) {
+                throw new AnnotationException("Alias method of the same name is defined: $method");
+            }
+            if ($alias->{$method} !== null) {
+                $originMethod = $alias->{$method};
+            }
+        }
+
+        if ($originMethod !== null) {
+            $class = get_class($this->instance);
+            $this->logger->debug("Alias method found. Transfer from ${class}#${method} to ${class}#${originMethod}.");
+        } else {
+            $originMethod = $method;
+        }
+
+        return $originMethod;
     }
 }

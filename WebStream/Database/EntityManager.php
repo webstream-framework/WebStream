@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Module\Utility;
-use WebStream\Module\Logger;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Log\Logger;
 
 /**
  * EntityManager
@@ -12,7 +12,7 @@ use WebStream\Module\Logger;
  */
 class EntityManager
 {
-    use Utility;
+    use CommonUtils;
 
     /**
      * @var string エンティティクラスパス

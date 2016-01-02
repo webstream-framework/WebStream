@@ -1,8 +1,11 @@
 <?php
 namespace WebStream\DI;
 
-use WebStream\Module\Utility;
+use WebStream\Module\Utility\ApplicationUtils;
+use WebStream\Module\Singleton;
 use WebStream\Module\Container;
+use WebStream\Log\Logger;
+use WebStream\Log\LoggerAdapter;
 use WebStream\Delegate\Router;
 use WebStream\Delegate\CoreDelegator;
 use WebStream\Delegate\AnnotationDelegator;
@@ -14,56 +17,28 @@ use WebStream\Http\Session;
  * ServiceLocatorクラス
  * @author Ryuichi TANAKA.
  * @since 2013/01/14
+ * @version 0.7
  */
 class ServiceLocator
 {
-    use Utility;
-
-    /** コンテナ */
-    private static $container;
-
-    /**
-     * コンストラクタ
-     */
-    private function __construct()
-    {
-    }
-
-    /**
-     * コンテナを返却する
-     * @return object コンテナ
-     */
-    public static function getContainer()
-    {
-        if (!is_object(self::$container)) {
-            $serviceLocator = new ServiceLocator();
-            self::$container = $serviceLocator->createContainer();
-        }
-
-        return self::$container;
-    }
-
-    /**
-     * コンテナを削除する
-     */
-    public static function removeContainer()
-    {
-        self::$container = null;
-    }
+    use Singleton, ApplicationUtils;
 
     /**
      * コンテナを作成する
      * @param boolean テスト環境フラグ
      * @return object コンテナ
      */
-    private function createContainer()
+    public function getContainer()
     {
         $container = new Container();
 
-        // Request
-        $container->request = function () {
-            return new Request();
+        $container->request = function () use (&$container) {
+            $request = new Request();
+            $request->inject('logger', $container->logger);
+
+            return $request->getContainer();
         };
+
         // Response
         $container->response = function () {
             return new Response();
@@ -74,7 +49,14 @@ class ServiceLocator
         };
         // Router
         $container->router = function () use (&$container) {
-            return new Router($container->request);
+            // Router
+            $config = \Spyc::YAMLLoad($container->applicationInfo->applicationRoot . $container->applicationInfo->routeConfigPath);
+            $router = new Router($config, $container->request);
+            $router->inject('logger', $container->logger)
+                   ->inject('applicationInfo', $container->applicationInfo);
+            $router->resolve();
+
+            return $router->getRoutingResult();
         };
         // CoreDelegator
         $container->coreDelegator = function () use (&$container) {
@@ -84,13 +66,27 @@ class ServiceLocator
         $container->annotationDelegator = function () use (&$container) {
             return new AnnotationDelegator($container);
         };
-        // ApplicationRoot
-        $container->applicationRoot = $this->getRoot();
-        // ApplicationDir
-        $container->applicationDir = "app";
+        // LoggerAdapter
+        $container->logger = function () {
+            return new LoggerAdapter(Logger::getInstance());
+        };
         // twig
         $container->twig = function () {
             Twig_Autoloader::register();
+        };
+
+        $applicationRoot = $this->getApplicationRoot();
+        $container->applicationInfo = function() use ($applicationRoot) {
+            $info = new Container();
+            $info->applicationRoot = $applicationRoot;
+            $info->applicationDir = "app";
+            $info->sharedDir = "_shared";
+            $info->publicDir = "_public";
+            $info->cacheDir = "_cache";
+            $info->cachePrefix = "webstream-cache-";
+            $info->routeConfigPath = "/config/routes.yml";
+
+            return $info;
         };
 
         return $container;

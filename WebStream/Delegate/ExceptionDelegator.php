@@ -2,18 +2,20 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreInterface;
-use WebStream\Module\Logger;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
+use WebStream\DI\Injector;
 
 /**
  * ExceptionDelegator
  * @author Ryuichi TANAKA.
  * @since 2014/05/05
- * @version 0.4
+ * @version 0.7
  */
 class ExceptionDelegator
 {
+    use Injector;
+
     /**
      * @var CoreInterface インスタンス
      */
@@ -98,7 +100,7 @@ class ExceptionDelegator
             foreach ($invokeMethods as $classpath => $invokeMethod) {
                 $params = ["class" => get_class($this->instance), "method" => $this->method, "exception" => $originException];
                 $invokeMethod->invokeArgs($this->instance, [$params]);
-                Logger::debug("Execution of handling is success: " . $classpath);
+                $this->logger->debug("Execution of handling is success: " . $classpath);
             }
 
             throw $delegateException ?: $originException;

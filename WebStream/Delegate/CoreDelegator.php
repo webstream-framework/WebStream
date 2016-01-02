@@ -2,8 +2,8 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
-use WebStream\Module\Utility;
-use WebStream\Module\Logger;
+use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
 use WebStream\Exception\Extend\ClassNotFoundException;
@@ -12,28 +12,39 @@ use WebStream\Exception\Extend\ClassNotFoundException;
  * CoreDelegator
  * @author Ryuichi TANAKA.
  * @since 2011/11/30
- * @version 0.4
+ * @version 0.7
  */
 class CoreDelegator
 {
-    use Utility
+    use CommonUtils;
+    use ApplicationUtils
     {
-        Utility::getNamespace as getDefinedNamespace;
+        ApplicationUtils::getNamespace as getDefinedNamespace;
     }
 
-    /** DIコンテナ */
+    /**
+     * @var Container DIコンテナ
+     */
     private $container;
 
-    /** CoreContainer */
+    /**
+     * @var Logger ロガー
+     */
+    private $logger;
+
+    /**
+     * @var Container Coreレイヤコンテナ
+     */
     private $coreContainer;
 
     /**
      * Constructor
-     * @param object DIContainer
+     * @param Container 依存コンテナ
      */
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->logger = $container->logger;
         $this->coreContainer = new Container();
         $this->initialize();
     }
@@ -48,7 +59,7 @@ class CoreDelegator
         $this->coreContainer->remove("service");
         $this->coreContainer->remove("model");
         $this->coreContainer->remove("helper");
-        Logger::debug("CoreDelegator container is clear.");
+        $this->logger->debug("CoreDelegator container is clear.");
     }
 
     /**
@@ -62,14 +73,14 @@ class CoreDelegator
         $serviceClassName = $pageName . "Service";
         $modelClassName   = $pageName . "Model";
         $helperClassName  = $pageName . "Helper";
-        $controllerNamespace = $this->getNamespace($container->router->controller());
+        $controllerNamespace = $this->getNamespace($container->router->controller);
         $serviceNamespace    = $this->getNamespace($serviceClassName);
         $modelNamespace      = $this->getNamespace($modelClassName);
         $helperNamespace     = $this->getNamespace($helperClassName);
 
         // Controller
         $this->coreContainer->controller = function () use ($container, $controllerNamespace) {
-            $controllerClassPath = $controllerNamespace . "\\" . $container->router->controller();
+            $controllerClassPath = $controllerNamespace . "\\" . $container->router->controller;
             if (!class_exists($controllerClassPath)) {
                 throw new ClassNotFoundException("Undefined class path: " . $controllerClassPath);
             }
@@ -86,7 +97,7 @@ class CoreDelegator
         if ($serviceNamespace !== null) {
             $serviceClassPath = $serviceNamespace . "\\" . $serviceClassName;
             $this->coreContainer->service = function () use ($container, $classLoader, $serviceClassPath, $serviceClassName) {
-                if ($classLoader->import(STREAM_APP_DIR . "/services/" . $serviceClassName . ".php")) {
+                if ($classLoader->import($container->applicationInfo->applicationDir . "/services/" . $serviceClassName . ".php")) {
                     return new $serviceClassPath($container);
                 }
             };
@@ -98,7 +109,7 @@ class CoreDelegator
         if ($modelNamespace !== null) {
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
             $this->coreContainer->model = function () use ($container, $classLoader, $modelClassPath, $modelClassName) {
-                if ($classLoader->import(STREAM_APP_DIR . "/models/" . $modelClassName . ".php")) {
+                if ($classLoader->import($container->applicationInfo->applicationDir . "/models/" . $modelClassName . ".php")) {
                     return new $modelClassPath($container);
                 }
             };
@@ -112,7 +123,7 @@ class CoreDelegator
         if ($helperNamespace !== null) {
             $helperClassPath = $helperNamespace . "\\" . $helperClassName;
             $this->coreContainer->helper = function () use ($container, $classLoader, $helperClassPath, $helperClassName) {
-                if ($classLoader->import(STREAM_APP_DIR . "/helpers/" . $helperClassName . ".php")) {
+                if ($classLoader->import($container->applicationInfo->applicationDir . "/helpers/" . $helperClassName . ".php")) {
                     return new $helperClassPath($container);
                 }
             };
@@ -131,7 +142,7 @@ class CoreDelegator
     public function getNamespace($className)
     {
         $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(STREAM_APP_ROOT . "/app"),
+            new \RecursiveDirectoryIterator($this->container->applicationInfo->applicationRoot . "/app"),
             \RecursiveIteratorIterator::LEAVES_ONLY,
             \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
         );
@@ -150,9 +161,7 @@ class CoreDelegator
      */
     public function getPageName()
     {
-        $params = $this->container->router->routingParams();
-
-        return $this->snake2ucamel($params['controller']);
+        return $this->container->router->pageName;
     }
 
     /**

@@ -3,7 +3,7 @@ namespace WebStream\Database\Driver;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 
 /**
  * Postgresql

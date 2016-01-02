@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Module\Logger;
+use WebStream\Log\Logger;
 use WebStream\Exception\Extend\CollectionException;
 
 /**
