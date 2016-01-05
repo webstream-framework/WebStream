@@ -41,7 +41,10 @@ class ServiceLocator
 
         // Response
         $container->response = function () {
-            return new Response();
+            $response = new Response();
+            $response->inject('logger', $container->logger);
+
+            return $response;
         };
         // Session
         $container->session = function () {

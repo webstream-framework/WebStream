@@ -97,7 +97,6 @@ class CoreExecuteDelegator
 
         try {
             $result = null;
-
             if ($this->instance instanceof CoreController) {
                 $this->controllerInjector($this->getOriginMethod($method), $arguments);
             } elseif ($this->instance instanceof CoreService) {

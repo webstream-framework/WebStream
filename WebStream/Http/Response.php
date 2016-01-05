@@ -2,13 +2,12 @@
 namespace WebStream\Http;
 
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Log\Logger;
 
 /**
  * Response
  * @author Ryuichi TANAKA.
  * @since 2012/12/19
- * @version 0.4
+ * @version 0.7
  */
 class Response
 {
@@ -52,7 +51,7 @@ class Response
      */
     public function __destruct()
     {
-        Logger::debug("Response is clear.");
+        $this->logger->debug("Response is clear.");
     }
 
     /**
@@ -290,7 +289,7 @@ class Response
             header('X-XSS-Protection: ' . $this->xxssProtection);
         }
 
-        Logger::info("HTTP access occured: status code " . $this->statusCode);
+        $this->logger->info("HTTP access occured: status code " . $this->statusCode);
     }
 
     /**
