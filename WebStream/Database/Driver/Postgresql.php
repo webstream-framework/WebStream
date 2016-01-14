@@ -3,7 +3,6 @@ namespace WebStream\Database\Driver;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
-use WebStream\Log\Logger;
 
 /**
  * Postgresql
@@ -29,9 +28,7 @@ class Postgresql extends DatabaseDriver
         ];
 
         $config = new Configuration([\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
-
         $this->connection = DriverManager::getConnection($params, $config);
-
-        Logger::debug("PostgreSQL connect.");
+        $this->logger->debug(get_class($this) . " connect.");
     }
 }

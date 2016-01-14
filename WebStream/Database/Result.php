@@ -1,34 +1,44 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Log\Logger;
+use WebStream\DI\Injector;
 use WebStream\Exception\Extend\CollectionException;
 
 /**
  * Result
  * @author Ryuichi TANAKA.
  * @since 2013/12/14
- * @version 0.4
+ * @version 0.7
  */
 class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 {
-    /** ステートメントオブジェクト */
+    use Injector;
+
+    /**
+     * @var Doctrine\DBAL\Statement ステートメント
+     */
     private $stmt;
 
-    /** 列データ */
+    /**
+     * @var array<mixed> 列データ
+     */
     private $row;
 
-    /** キャッシュ化列データ */
+    /**
+     * @var array<mixed> キャッシュ化列データ
+     */
     private $rowCache;
 
-    /** インデックス位置 */
+    /**
+     * @var int インデックス位置
+     */
     private $position;
 
     /**
      * コンストラクタ
-     * @param Doctrine\DBAL\Statement ステートメントオブジェクト
+     * @param Doctrine\DBAL\Driver\Statement ステートメントオブジェクト
      */
-    public function __construct(\Doctrine\DBAL\Statement $stmt)
+    public function __construct(\Doctrine\DBAL\Driver\Statement $stmt)
     {
         $this->stmt = $stmt;
         $this->position = 0;
@@ -197,7 +207,7 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
     public function toArray()
     {
         $this->rowCache = $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
-        Logger::debug("All results to array and cached.");
+        $this->logger->debug("All results to array and cached.");
         $this->stmt = null;
 
         return $this->rowCache;

@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Http;
 
+use WebStream\DI\Injector;
 use WebStream\Module\Utility\CommonUtils;
 
 /**
@@ -11,7 +12,7 @@ use WebStream\Module\Utility\CommonUtils;
  */
 class Response
 {
-    use CommonUtils;
+    use Injector, CommonUtils;
 
     /** HTTPバージョン */
     const HTTP_VERSION = '1.1';

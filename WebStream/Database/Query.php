@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Log\Logger;
+use WebStream\DI\Injector;
 use WebStream\Database\Driver\DatabaseDriver;
 use WebStream\Exception\Extend\DatabaseException;
 
@@ -9,20 +9,30 @@ use WebStream\Exception\Extend\DatabaseException;
  * Query
  * @author Ryuichi TANAKA.
  * @since 2013/12/07
- * @version 0.4
+ * @version 0.7
  */
 class Query
 {
-    /** データベースドライバ */
+    use Injector;
+
+    /**
+     * @var DatabaseDriver データベースドライバ
+     */
     private $driver;
 
-    /** SQL */
+    /**
+     * @var string SQL
+     */
     private $sql;
 
-    /** バインドパラメータ */
+    /**
+     * @var array<mixed> バインドパラメータ
+     */
     private $bind;
 
-    /** ステートメント */
+    /**
+     * @var Doctrine\DBAL\Statement ステートメント
+     */
     private $stmt;
 
     /**
@@ -58,10 +68,12 @@ class Query
      */
     public function select()
     {
-        Logger::debug("execute select.");
+        $this->logger->debug("execute select.");
         $this->execute();
+        $result = new Result($this->stmt);
+        $result->inject('logger', $this->logger);
 
-        return new Result($this->stmt);
+        return $result;
     }
 
     /**
@@ -70,7 +82,7 @@ class Query
      */
     public function insert()
     {
-        Logger::debug("execute insert.");
+        $this->logger->debug("execute insert.");
 
         return $this->execute();
     }
@@ -81,7 +93,7 @@ class Query
      */
     public function update()
     {
-        Logger::debug("execute update.");
+        $this->logger->debug("execute update.");
 
         return $this->execute();
     }
@@ -92,7 +104,7 @@ class Query
      */
     public function delete()
     {
-        Logger::debug("execute delete.");
+        $this->logger->debug("execute delete.");
 
         return $this->execute();
     }
@@ -110,9 +122,9 @@ class Query
             if ($stmt === false) {
                 throw new DatabaseException("Can't create statement: ". $this->sql);
             }
-            Logger::info("Executed SQL: " . $this->sql);
+            $this->logger->info("Executed SQL: " . $this->sql);
             foreach ($this->bind as $key => $value) {
-                Logger::info("Bind statement: $key => $value");
+                $this->logger->info("Bind statement: $key => $value");
                 if (preg_match("/^[0-9]+$/", $value) && is_int($value)) {
                     $stmt->bindValue($key, $value, \PDO::PARAM_INT);
                 } else {

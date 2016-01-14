@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Database\Driver;
 
+use WebStream\DI\Injector;
 use WebStream\Module\Container;
-use WebStream\Log\Logger;
 
 /**
  * DatabaseDriver
@@ -12,6 +12,8 @@ use WebStream\Log\Logger;
  */
 abstract class DatabaseDriver
 {
+    use Injector;
+
     /**
      * @var object DBオブジェクト
      */
@@ -28,7 +30,6 @@ abstract class DatabaseDriver
     public function __construct(Container $config)
     {
         $this->config = $config;
-        Logger::debug("Load driver: " . get_class($this));
     }
 
     /**
@@ -36,7 +37,7 @@ abstract class DatabaseDriver
      */
     public function __destruct()
     {
-        Logger::debug("Release driver: " . get_class($this));
+        // $this->logger->debug("Release driver: " . get_class($this));
     }
 
     /**
@@ -50,7 +51,7 @@ abstract class DatabaseDriver
     public function disconnect()
     {
         if ($this->connection !== null) {
-            Logger::debug("Database disconnect.");
+            $this->logger->debug("Database disconnect.");
             $this->connection->close();
             $this->connection = null;
         }
