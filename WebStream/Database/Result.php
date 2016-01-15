@@ -215,10 +215,13 @@ class Result implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 
     /**
      * 検索結果をエンティティとして返却する
-     * @return object 検索結果
+     * @return ResultEntity 検索結果
      */
     public function toEntity($classpath)
     {
-        return new ResultEntity($this->stmt->getWrappedStatement(), $classpath);
+        $resultEntity = new ResultEntity($this->stmt->getWrappedStatement(), $classpath);
+        $resultEntity->inject('logger', $this->logger)->initialize();
+
+        return $resultEntity;
     }
 }

@@ -205,9 +205,6 @@ class CoreModel implements CoreInterface, IAnnotatable
                             if ($xmlObject !== null) {
                                 $xmlElement = $xmlObject->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
                                 if (!empty($xmlElement)) {
-                                    // TODO
-                                    // trim($xmlElement[0]->__toString()) のほうがいいかもしれない
-                                    // テストがやりにくくて死にたい。上記で動くかTestAppで試すこと
                                     $query = ["sql" => trim($xmlElement[0]->__toString()), "method" => $xmlElement[0]->getName()];
                                     $entity = $xmlElement[0]->attributes()["entity"];
                                     $query["entity"] = $entity !== null ? $entity->__toString() : null;

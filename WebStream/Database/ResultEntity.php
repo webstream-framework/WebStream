@@ -8,7 +8,7 @@ use WebStream\Exception\Extend\CollectionException;
  * ResultEntity
  * @author Ryuichi TANAKA.
  * @since 2015/01/11
- * @version 0.4
+ * @version 0.7
  */
 class ResultEntity implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 {
@@ -50,7 +50,6 @@ class ResultEntity implements \Iterator, \SeekableIterator, \ArrayAccess, \Count
         $this->position = 0;
         $this->rowCache = [];
         $this->entityManager = new EntityManager($classpath);
-        $this->entityManager->setColumnMeta($this->getColumnMeta());
     }
 
     /**
@@ -60,6 +59,15 @@ class ResultEntity implements \Iterator, \SeekableIterator, \ArrayAccess, \Count
     {
         $this->stmt = null;
         $this->rowCache = null;
+    }
+
+    /**
+     * 初期処理
+     */
+    public function initialize()
+    {
+        $this->entityManager->inject('logger', $this->logger)
+                            ->setColumnMeta($this->getColumnMeta());
     }
 
     /**

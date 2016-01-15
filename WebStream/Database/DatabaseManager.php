@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Database;
 
+use WebStream\DI\Injector;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\DatabaseException;
 
@@ -12,6 +13,8 @@ use WebStream\Exception\Extend\DatabaseException;
  */
 class DatabaseManager
 {
+    use Injector;
+
     /**
      * @var ConnectionManager コネクションマネージャ
      */
