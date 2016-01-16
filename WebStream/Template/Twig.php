@@ -9,7 +9,7 @@ use WebStream\Exception\Extend\ResourceNotFoundException;
  * Twig
  * @author Ryuichi Tanaka
  * @since 2015/03/18
- * @version 0.4.0
+ * @version 0.7
  */
 class Twig implements ITemplateEngine
 {

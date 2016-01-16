@@ -1,18 +1,18 @@
 <?php
 namespace WebStream\Database;
 
+use WebStream\DI\Injector;
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Log\Logger;
 
 /**
  * EntityManager
  * @author Ryuichi TANAKA.
  * @since 2015/01/11
- * @version 0.4
+ * @version 0.7
  */
 class EntityManager
 {
-    use CommonUtils;
+    use Injector, CommonUtils;
 
     /**
      * @var string エンティティクラスパス
@@ -91,7 +91,7 @@ class EntityManager
             if (array_key_exists($col, $propertyMap)) {
                 $propertyMap[$col]->setValue($instance, $value);
             } else {
-                Logger::error("Column '$col' is failed mapping in " . $this->classpath);
+                $this->logger->error("Column '$col' is failed mapping in " . $this->classpath);
             }
         }
 

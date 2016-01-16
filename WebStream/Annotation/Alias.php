@@ -5,7 +5,6 @@ use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Base\IRead;
-use WebStream\Core\CoreInterface;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\AnnotationException;

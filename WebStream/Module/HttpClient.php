@@ -1,38 +1,66 @@
 <?php
 namespace WebStream\Module;
 
-use WebStream\Log\Logger;
+use WebStream\DI\Injector;
 
 /**
  * HttpClient
  * @author Ryuichi TANAKA.
  * @since 2010/10/20
- * @version 0.4.1
+ * @version 0.7
  */
 class HttpClient
 {
-    /** レスポンスヘッダ */
+    use Injector;
+
+    /**
+     * @var array レスポンスヘッダ
+     */
     private $responseHeader;
-    /** ステータスコード */
+
+    /**
+     * @var int レスポンスヘッダ
+     */
     private $status_code;
-    /** コンテントタイプ */
+
+    /**
+     * @var string コンテントタイプ
+     */
     private $content_type;
-    /** タイムアウト時間 */
+
+    /**
+     * @var int タイムアウト時間
+     */
     private $timeout;
-    /** PROXYホスト名 */
+
+    /**
+     * @var string PROXYホスト名
+     */
     private $proxy_host;
-    /** PROXYポート番号 */
+
+    /**
+     * @var int PROXYポート番号
+     */
     private $proxy_port;
-    /** Basic認証ID */
+
+    /**
+     * @var string Basic認証ID
+     */
     private $basic_auth_id;
-    /** Basic認証パスワード */
+
+    /**
+     * @var string Basic認証パスワード
+     */
     private $basic_auth_password;
-    /** デフォルトタイムアウト時間 */
+
+    /**
+     * @var string デフォルトタイムアウト時間
+     */
     const DEFAULT_TIMEOUT = 3;
 
     /**
      * コンストラクタ
-     * @param Hash オプションパラメータ
+     * @param array<string> オプションパラメータ
      */
     public function __construct($options = [])
     {
@@ -41,11 +69,13 @@ class HttpClient
         $this->proxy_port          = $this->getOptionParameter($options, "proxy_port");
         $this->basic_auth_id       = $this->getOptionParameter($options, "basic_auth_id");
         $this->basic_auth_password = $this->getOptionParameter($options, "basic_auth_password");
+        // HttpClientはどのレイヤからも呼び出し可能なので、明示的なロガー注入を必須としない
+        $this->logger = new class() { public function __call($name, $args) {} };
     }
 
     /**
      * ステータスコードを返却する
-     * @return Integer ステータスコード
+     * @return int ステータスコード
      */
     public function getStatusCode()
     {
@@ -54,7 +84,7 @@ class HttpClient
 
     /**
      * コンテントタイプを返却する
-     * @return String コンテントタイプ
+     * @return string コンテントタイプ
      */
     public function getContentType()
     {
@@ -63,7 +93,7 @@ class HttpClient
 
     /**
      * レスポンスヘッダを返却する
-     * @return Array レスポンスヘッダ
+     * @return array レスポンスヘッダ
      */
     public function getResponseHeader()
     {
@@ -72,10 +102,10 @@ class HttpClient
 
     /**
      * GETリクエストを発行する
-     * @param String URL
-     * @param Hash リクエストパラメータ
-     * @param Hash リクエストヘッダ
-     * @return String レスポンス
+     * @param string URL
+     * @param array<mixed> リクエストパラメータ
+     * @param array リクエストヘッダ
+     * @return string レスポンス
      */
     public function get($url, $params = "", $headers = [])
     {
@@ -84,10 +114,10 @@ class HttpClient
 
     /**
      * POSTリクエストを発行する
-     * @param String URL
-     * @param Hash リクエストパラメータ
-     * @param Hash リクエストヘッダ
-     * @return String レスポンス
+     * @param string URL
+     * @param array<mixed> リクエストパラメータ
+     * @param array リクエストヘッダ
+     * @return string レスポンス
      */
     public function post($url, $params, $headers = [])
     {
@@ -96,10 +126,10 @@ class HttpClient
 
     /**
      * PUTリクエストを発行する
-     * @param String URL
-     * @param Hash リクエストパラメータ
-     * @param Hash リクエストヘッダ
-     * @return String レスポンス
+     * @param string URL
+     * @param array<mixed> リクエストパラメータ
+     * @param array リクエストヘッダ
+     * @return string レスポンス
      */
     public function put($url, $params, $headers = [])
     {
@@ -108,7 +138,7 @@ class HttpClient
 
     /**
      * PROXY設定をする
-     * @param Hash リクエストコンテント
+     * @param array<string> リクエストコンテント
      */
     private function proxy(&$request)
     {
@@ -122,7 +152,7 @@ class HttpClient
 
     /**
      * Basic認証を設定する
-     * @param Hash リクエストヘッダ
+     * @param array リクエストヘッダ
      */
     private function basicAuth(&$headers)
     {
@@ -132,11 +162,11 @@ class HttpClient
 
     /**
      * HTTP通信を実行する
-     * @param String URL
-     * @param Hash リクエストヘッダ
-     * @param Hash リクエストパラメータ
-     * @param String 実行するRESTメソッド
-     * @return String レスポンス
+     * @param string URL
+     * @param array リクエストヘッダ
+     * @param array<string> リクエストパラメータ
+     * @param string 実行するRESTメソッド
+     * @return string レスポンス
      */
     private function http($url, $headers, $params, $method)
     {
@@ -178,10 +208,10 @@ class HttpClient
             $hasHeader = @get_headers($url);
             if ($hasHeader === false) { // ヘッダを持たない場合、存在しないURL
                 $this->status_code = 404;
-                Logger::error("URL not found: " . $url);
+                $this->logger->error("URL not found: " . $url);
             } else { // ヘッダを持つ場合はタイムアウトが発生
                 $this->status_code = 408;
-                Logger::error("Request timeout: " . $url);
+                $this->logger->error("Request timeout: " . $url);
             }
 
             return null;
@@ -202,14 +232,14 @@ class HttpClient
         }
 
         if ($this->status_code === 200) { // HTTP通信の結果が200
-            Logger::info("HTTP {$method} success({$this->status_code}): {$url}");
+            $this->logger->info("HTTP {$method} success({$this->status_code}): {$url}");
 
             return $response;
         } else { // HTTP通信の結果が200以外
             if ($this->status_code === null) {
                 $this->status_code = 500;
             }
-            Logger::error("HTTP {$method} failure({$this->status_code}): {$url}");
+            $this->logger->error("HTTP {$method} failure({$this->status_code}): {$url}");
 
             return null;
         }
@@ -217,10 +247,10 @@ class HttpClient
 
     /**
      * 配列から安全に値を取得する
-     * @param Hash オプション配列
-     * @param String 配列キー
-     * @param String or Integer デフォルト値
-     * @return String or Integer オプション配列の値
+     * @param array<string> オプション配列
+     * @param string 配列キー
+     * @param string or Integer デフォルト値
+     * @return mixed オプション配列の値
      */
     private function getOptionParameter($options, $key, $default_value = null)
     {

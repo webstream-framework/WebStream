@@ -32,16 +32,23 @@ class ServiceLocator
     {
         $container = new Container();
 
+        // LoggerAdapter
+        $container->logger = function () {
+            return new LoggerAdapter(Logger::getInstance());
+        };
+        // Request
         $container->request = function () use (&$container) {
             $request = new Request();
             $request->inject('logger', $container->logger);
 
             return $request->getContainer();
         };
-
         // Response
-        $container->response = function () {
-            return new Response();
+        $container->response = function () use (&$container) {
+            $response = new Response();
+            $response->inject('logger', $container->logger);
+
+            return $response;
         };
         // Session
         $container->session = function () {
@@ -66,15 +73,11 @@ class ServiceLocator
         $container->annotationDelegator = function () use (&$container) {
             return new AnnotationDelegator($container);
         };
-        // LoggerAdapter
-        $container->logger = function () {
-            return new LoggerAdapter(Logger::getInstance());
-        };
         // twig
         $container->twig = function () {
             Twig_Autoloader::register();
         };
-
+        // Application Info
         $applicationRoot = $this->getApplicationRoot();
         $container->applicationInfo = function() use ($applicationRoot) {
             $info = new Container();

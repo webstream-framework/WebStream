@@ -2,12 +2,10 @@
 namespace WebStream\Module;
 
 require_once dirname(__FILE__) . '/Utility/FileUtils.php';
-require_once dirname(__FILE__) . '/../DI/ServiceLocator.php';
-require_once dirname(__FILE__) . '/../Log/Logger.php';
+require_once dirname(__FILE__) . '/../DI/Injector.php';
 
 use WebStream\Module\Utility\FileUtils;
-use WebStream\DI\ServiceLocator;
-use WebStream\Log\Logger;
+use WebStream\DI\Injector;
 
 /**
  * クラスローダ
@@ -17,7 +15,7 @@ use WebStream\Log\Logger;
  */
 class ClassLoader
 {
-    use FileUtils;
+    use Injector, FileUtils;
 
     /**
      * コンストラクタ
@@ -44,15 +42,14 @@ class ClassLoader
      */
     public function import($filepath, callable $filter = null)
     {
-        $container = ServiceLocator::getInstance()->getContainer();
-        $rootDir = $container->applicationInfo->applicationRoot;
+        $rootDir = $this->applicationInfo->applicationRoot;
         $includeFile = $rootDir . "/" . $filepath;
         if (is_file($includeFile)) {
             $ext = pathinfo($includeFile, PATHINFO_EXTENSION);
             if ($ext === 'php') {
                 if ($filter === null || (is_callable($filter) && $filter($includeFile) === true)) {
                     include_once $includeFile;
-                    Logger::debug($includeFile . " import success.");
+                    $this->logger->debug($includeFile . " import success.");
                 }
             }
 
@@ -70,8 +67,7 @@ class ClassLoader
      */
     public function importAll($dirPath, callable $filter = null)
     {
-        $container = ServiceLocator::getInstance()->getContainer();
-        $rootDir = $container->applicationInfo->applicationRoot;
+        $rootDir = $this->applicationInfo->applicationRoot;
         $includeDir = realpath($rootDir . "/" . $dirPath);
         if (is_dir($includeDir)) {
             $iterator = $this->getFileSearchIterator($includeDir);
@@ -85,11 +81,11 @@ class ClassLoader
                     if ($ext === 'php') {
                         if ($filter === null || (is_callable($filter) && $filter($filepath) === true)) {
                             include_once $filepath;
-                            Logger::debug($filepath . " import success.");
+                            $this->logger->debug($filepath . " import success.");
                         }
                     }
                 } else {
-                    Logger::warn($filepath . " import failure.");
+                    $this->logger->warn($filepath . " import failure.");
                     $isSuccess = false;
                 }
             }
@@ -105,8 +101,7 @@ class ClassLoader
      */
     private function loadClass($className)
     {
-        $container = ServiceLocator::getInstance()->getContainer();
-        $rootDir = $container->applicationInfo->applicationRoot;
+        $rootDir = $this->applicationInfo->applicationRoot;
 
         // 名前空間セパレータをパスセパレータに置換
         if (DIRECTORY_SEPARATOR === '/') {
@@ -119,7 +114,7 @@ class ClassLoader
         $includeFile = $rootDir . "/core/" . $className . ".php";
         if (is_file($includeFile)) {
             include_once $includeFile;
-            Logger::debug($includeFile . " load success. (search from " . $rootDir . "/core/)");
+            $this->logger->debug($includeFile . " load success. (search from " . $rootDir . "/core/)");
 
             return [$includeFile];
         }
@@ -131,7 +126,7 @@ class ClassLoader
             if (strpos($filepath, $className . ".php") !== false) {
                 include_once $filepath;
                 $includeList[] = $filepath;
-                Logger::debug($filepath . " load success. (search from " . $rootDir . "/app/)");
+                $this->logger->debug($filepath . " load success. (search from " . $rootDir . "/app/)");
             }
         }
         if (!empty($includeList)) {
@@ -149,7 +144,7 @@ class ClassLoader
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
                     $includeList[] = $filepath;
-                    Logger::debug($filepath . " load success. (full search)");
+                    $this->logger->debug($filepath . " load success. (full search)");
                 }
             }
             if (!empty($includeList)) {
@@ -162,7 +157,7 @@ class ClassLoader
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {
                     include_once $filepath;
                     $includeList[] = $filepath;
-                    Logger::debug($filepath . " load success. (full search, use in test)");
+                    $this->logger->debug($filepath . " load success. (full search, use in test)");
                 }
             }
             if (!empty($includeList)) {

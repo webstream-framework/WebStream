@@ -59,8 +59,7 @@ class Router
         // ルーティングルールの検証
         $this->validate();
         // ルーティング結果の格納
-        $this->resolveRouting();
-        $this->resolveStaticFilePath();
+        $this->resolveRouting() ?: $this->resolveStaticFilePath();
     }
 
     /**
@@ -150,9 +149,11 @@ class Router
                 $this->logger->info("Routed path: " . $matches[1] . "#" . $matches[2]);
 
                 // ルーティングルールがマッチした場合は抜ける
-                break;
+                return true;
             }
         }
+
+        return false;
     }
 
     /**

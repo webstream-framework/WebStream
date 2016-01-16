@@ -24,11 +24,11 @@ class ConnectionManager
 
     /**
      * constructor
-     * @param array<AnnotationContainer> データベース接続項目コンテナ
+     * @param Container 依存コンテナ
      */
-    public function __construct(array $connectionItemContainerList)
+    public function __construct(Container $container)
     {
-        $this->initialize($connectionItemContainerList);
+        $this->initialize($container);
     }
 
     /**
@@ -53,14 +53,15 @@ class ConnectionManager
 
     /**
      * 初期処理
-     * @param array<AnnotationContainer> データベース接続項目コンテナ
+     * @param Container 依存コンテナ
      */
-    private function initialize(array $connectionItemContainerList)
+    private function initialize(Container $container)
     {
         $this->classpathMap = [];
         $this->connectionContainer = new Container();
+        $logger = $container->logger;
 
-        foreach ($connectionItemContainerList as $container) {
+        foreach ($container->connectionContainerList as $container) {
             $config = null;
             $ext = pathinfo($container->configPath, PATHINFO_EXTENSION);
             if ($ext === 'ini') {
@@ -83,8 +84,11 @@ class ConnectionManager
 
             $this->classpathMap[$container->filepath] = $dsnHash;
 
-            $this->connectionContainer->{$dsnHash} = function () use ($driverClassPath, $databaseConfigContainer) {
-                return new $driverClassPath($databaseConfigContainer);
+            $this->connectionContainer->{$dsnHash} = function () use ($driverClassPath, $databaseConfigContainer, $logger) {
+                $driver = new $driverClassPath($databaseConfigContainer);
+                $driver->inject('logger', $logger);
+
+                return $driver;
             };
         }
     }

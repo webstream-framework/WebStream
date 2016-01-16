@@ -1,7 +1,8 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Log\Logger;
+use WebStream\DI\Injector;
+use WebStream\Module\Container;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**
@@ -12,6 +13,8 @@ use WebStream\Exception\Extend\DatabaseException;
  */
 class DatabaseManager
 {
+    use Injector;
+
     /**
      * @var ConnectionManager コネクションマネージャ
      */
@@ -28,12 +31,18 @@ class DatabaseManager
     private $query;
 
     /**
-     * constructor
-     * @param array<AnnotationContainer> データベース接続項目コンテナ
+     * @var Logger ロガー
      */
-    public function __construct(array $connectionItemContainerList)
+    private $logger;
+
+    /**
+     * constructor
+     * @param Container 依存コンテナ
+     */
+    public function __construct(Container $container)
     {
-        $this->connectionManager = new ConnectionManager($connectionItemContainerList);
+        $this->connectionManager = new ConnectionManager($container);
+        $this->logger = $container->logger;
     }
 
     /**
@@ -53,6 +62,7 @@ class DatabaseManager
         try {
             $this->connection->connect();
             $this->query = new Query($this->connection);
+            $this->query->inject('logger', $this->logger);
         } catch (\PDOException $e) {
             throw new DatabaseException($e);
         }
@@ -84,7 +94,7 @@ class DatabaseManager
         // 既にトランザクションが開始されている場合、継続しているトランザクションを有効のままにする
         // トランザクションを破棄して再度開始する場合は明示的に破棄してから再呼び出しする
         if ($this->inTransaction()) {
-            Logger::debug("Transaction already started.");
+            $this->logger->debug("Transaction already started.");
 
             return;
         }
@@ -93,7 +103,7 @@ class DatabaseManager
             throw new DatabaseException("Failed to start transaction.");
         }
 
-        Logger::debug("Transaction start.");
+        $this->logger->debug("Transaction start.");
     }
 
     /**
@@ -103,7 +113,7 @@ class DatabaseManager
     {
         if ($this->inTransaction()) {
             $this->connection->commit();
-            Logger::debug("Execute commit.");
+            $this->logger->debug("Execute commit.");
         }
 
         $this->disconnect();
@@ -124,7 +134,7 @@ class DatabaseManager
 
         $this->query = null;
         $this->disconnect();
-        Logger::debug("Execute rollback.");
+        $this->logger->debug("Execute rollback.");
     }
 
     /**

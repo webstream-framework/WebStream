@@ -67,8 +67,10 @@ class CoreDelegator
      */
     private function initialize()
     {
-        $classLoader = new ClassLoader();
         $container = $this->container;
+        $classLoader = new ClassLoader();
+        $classLoader->inject('logger', $container->logger)
+                    ->inject('applicationInfo', $container->applicationInfo);
         $pageName = $this->getPageName();
         $serviceClassName = $pageName . "Service";
         $modelClassName   = $pageName . "Model";

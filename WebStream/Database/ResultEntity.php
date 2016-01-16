@@ -1,27 +1,37 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Log\Logger;
+use WebStream\DI\Injector;
 use WebStream\Exception\Extend\CollectionException;
 
 /**
  * ResultEntity
  * @author Ryuichi TANAKA.
  * @since 2015/01/11
- * @version 0.4
+ * @version 0.7
  */
 class ResultEntity implements \Iterator, \SeekableIterator, \ArrayAccess, \Countable
 {
-    /** ステートメントオブジェクト */
+    use Injector;
+
+    /**
+     * @var Doctrine\DBAL\Statement ステートメント
+     */
     private $stmt;
 
-    /** 列データ */
+    /**
+     * @var array<mixed> 列データ
+     */
     private $row;
 
-    /** キャッシュ化列データ */
+    /**
+     * @var array<mixed> キャッシュ化列データ
+     */
     private $rowCache;
 
-    /** インデックス位置 */
+    /**
+     * @var int インデックス位置
+     */
     private $position;
 
     /**
@@ -31,16 +41,15 @@ class ResultEntity implements \Iterator, \SeekableIterator, \ArrayAccess, \Count
 
     /**
      * コンストラクタ
-     * @param Doctrine\DBAL\Statement ステートメントオブジェクト
+     * @param Doctrine\DBAL\Driver\Statement ステートメントオブジェクト
      * @param string エンティティクラスパス
      */
-    public function __construct(\Doctrine\DBAL\Driver\PDOStatement $stmt, $classpath)
+    public function __construct(\Doctrine\DBAL\Driver\Statement $stmt, $classpath)
     {
         $this->stmt = $stmt;
         $this->position = 0;
         $this->rowCache = [];
         $this->entityManager = new EntityManager($classpath);
-        $this->entityManager->setColumnMeta($this->getColumnMeta());
     }
 
     /**
@@ -50,6 +59,15 @@ class ResultEntity implements \Iterator, \SeekableIterator, \ArrayAccess, \Count
     {
         $this->stmt = null;
         $this->rowCache = null;
+    }
+
+    /**
+     * 初期処理
+     */
+    public function initialize()
+    {
+        $this->entityManager->inject('logger', $this->logger)
+                            ->setColumnMeta($this->getColumnMeta());
     }
 
     /**
@@ -205,7 +223,7 @@ class ResultEntity implements \Iterator, \SeekableIterator, \ArrayAccess, \Count
     public function toArray()
     {
         $this->rowCache = $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
-        Logger::debug("All results to array and cached.");
+        $this->logger->debug("All results to array and cached.");
         $this->stmt = null;
 
         return $this->rowCache;

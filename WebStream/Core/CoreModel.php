@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Core;
 
+use WebStream\DI\Injector;
 use WebStream\Module\Container;
-use WebStream\Module\PropertyProxy;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
@@ -15,12 +15,11 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  * CoreModel
  * @author Ryuichi TANAKA.
  * @since 2012/09/01
- * @version 0.4
+ * @version 0.7
  */
 class CoreModel implements CoreInterface, IAnnotatable
 {
-    use CommonUtils;
-    use PropertyProxy;
+    use Injector, CommonUtils;
 
     /**
      * @var Container コンテナ
@@ -51,6 +50,8 @@ class CoreModel implements CoreInterface, IAnnotatable
      * @var LoggerAdapter ロガー
      */
     protected $logger;
+
+    private $classpath;
 
     /**
      * {@inheritdoc}
@@ -84,8 +85,10 @@ class CoreModel implements CoreInterface, IAnnotatable
         }
 
         $this->queryAnnotations = $container->queryAnnotations;
-        $this->manager = new DatabaseManager($container->connectionContainerList);
+        $container->logger = $this->logger;
+        $this->manager = new DatabaseManager($container);
         $this->isAutoCommit = true;
+        $this->classpath = get_class($this);
     }
 
     /**
@@ -182,7 +185,7 @@ class CoreModel implements CoreInterface, IAnnotatable
                     }
                 }
 
-                $queryKey = get_class($this) . "#" . $modelMethod;
+                $queryKey = $this->classpath . "#" . $modelMethod;
                 $queryId = $method;
 
                 $refClass = new \ReflectionClass($this);
@@ -202,7 +205,7 @@ class CoreModel implements CoreInterface, IAnnotatable
                             if ($xmlObject !== null) {
                                 $xmlElement = $xmlObject->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
                                 if (!empty($xmlElement)) {
-                                    $query = ["sql" => trim($xmlElement[0]), "method" => $xmlElement[0]->getName()];
+                                    $query = ["sql" => trim($xmlElement[0]->__toString()), "method" => $xmlElement[0]->getName()];
                                     $entity = $xmlElement[0]->attributes()["entity"];
                                     $query["entity"] = $entity !== null ? $entity->__toString() : null;
                                 }

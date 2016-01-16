@@ -3,7 +3,6 @@ namespace WebStream\Database\Driver;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
-use WebStream\Log\Logger;
 
 /**
  * Sqlite
@@ -32,7 +31,6 @@ class Sqlite extends DatabaseDriver
         ]);
 
         $this->connection = DriverManager::getConnection($params, $config);
-
-        Logger::debug("SQLite connect.");
+        $this->logger->debug(get_class($this) . " connect.");
     }
 }

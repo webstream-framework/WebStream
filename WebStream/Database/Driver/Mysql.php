@@ -3,7 +3,6 @@ namespace WebStream\Database\Driver;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
-use WebStream\Log\Logger;
 
 /**
  * Mysql
@@ -36,7 +35,6 @@ class Mysql extends DatabaseDriver
         ]);
 
         $this->connection = DriverManager::getConnection($params, $config);
-
-        Logger::debug("MySQL connect.");
+        $this->logger->debug(get_class($this) . " connect.");
     }
 }

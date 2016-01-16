@@ -7,7 +7,7 @@ use WebStream\Module\Container;
  * ITemplateEngine
  * @author Ryuichi Tanaka
  * @since 2015/03/18
- * @version 0.4.0
+ * @version 0.7
  */
 interface ITemplateEngine
 {
