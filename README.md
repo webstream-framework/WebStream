@@ -1,7 +1,8 @@
 # WebStream
+[![Build Status](https://travis-ci.org/webstream-framework/Test.svg?branch=master)](https://travis-ci.org/webstream-framework/Test)
+
 WebStreamはMVCアーキテクチャをベースとしたWebアプリケーションフレームワークです。  
 さらにS(Service)層を追加した4層構造のアーキテクチャとなっています。  
-***
 
 ## ドキュメント
 http://webstream-framework.github.io/WebStream
@@ -11,7 +12,7 @@ http://webstream-framework.github.io/WebStream
 
 ## ブランチ
 * master
-* 0.7.0 (PHP7.0.1)
+* 0.7.0 (PHP7.0.2)
 
 ## タグ
 * 0.1.10 (PHP4.x)

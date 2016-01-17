@@ -89,7 +89,9 @@ class Response
      */
     public function setType($fileType)
     {
-        $this->mimeType = $this->mime[$fileType];
+        if (array_key_exists($fileType, $this->mime)) {
+            $this->mimeType = $this->mime[$fileType];
+        }
         // 不明なファイルが指定された場合、画面に表示させずダウンロードさせる
         if (!$this->mimeType) {
             $this->mimeType = $this->mime['file'];
@@ -312,7 +314,7 @@ class Response
     /**
      * Mime-Type
      */
-    private $mime = [
+    protected $mime = [
         'txt'   => 'text/plain',
         'jpeg'  => 'image/jpeg',
         'jpg'   => 'image/jpeg',
@@ -475,7 +477,7 @@ class Response
     {
         $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $this->setType($type);
-        $this->setContentLength(filesize($filename));
+        $this->setContentLength(file_exists($filename) ? filesize($filename) : 0);
         $this->setFile($filename);
     }
 
@@ -488,7 +490,7 @@ class Response
     {
         $type = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $this->setType($type);
-        $this->setContentLength(filesize($filename));
+        $this->setContentLength(file_exists($filename) ? filesize($filename) : 0);
         $this->setContentDisposition($filename);
         $this->setExpires(0);
         $this->setContentTransferEncoding('binary');
