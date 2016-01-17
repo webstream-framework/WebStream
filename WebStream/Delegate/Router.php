@@ -161,7 +161,7 @@ class Router
      */
     private function resolveStaticFilePath()
     {
-        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir . $this->request->pathInfo;
+        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir . "/" . $this->request->pathInfo;
 
         if (is_file($staticFile)) {
             $this->routingContainer->staticFile = $staticFile;
@@ -171,6 +171,12 @@ class Router
             $dirpath = dirname($staticFile);
             $filenameWitoutExt = pathinfo($staticFile, PATHINFO_FILENAME);
             $lessFilepath = $dirpath . "/" . $filenameWitoutExt . ".less";
+            // lessファイルも見つからない場合はエラー
+            if (!file_exists($lessFilepath)) {
+                $this->logger->error("The file of css has been specified, but not found even file of less:" . $lessFilepath);
+
+                return;
+            }
             if (@$less->checkedCompile($lessFilepath, $staticFile)) {
                 if (is_file($staticFile)) {
                     $this->routingContainer->staticFile = $staticFile;
