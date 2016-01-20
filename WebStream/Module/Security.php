@@ -5,7 +5,7 @@ namespace WebStream\Module;
  * Securityクラス
  * @author Ryuichi TANAKA.
  * @since 2011/09/18
- * @version 0.4
+ * @version 0.7
  */
 class Security
 {
