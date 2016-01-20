@@ -52,7 +52,10 @@ class ServiceLocator
         };
         // Session
         $container->session = function () {
-            return new Session();
+            $session = new Session();
+            $session->inject('logger', $container->logger);
+
+            return $session;
         };
         // Router
         $container->router = function () use (&$container) {
