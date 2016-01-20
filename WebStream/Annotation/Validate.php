@@ -64,6 +64,8 @@ class Validate extends Annotation implements IMethod
             $className = $this->snake2ucamel($matches[1]);
             $classpath = null;
             $classLoader = new ClassLoader();
+            $classLoader->inject('logger', $container->logger)
+                        ->inject('applicationInfo', $container->applicationInfo);
             // デフォルトバリデーションルールのパス
             $filepath = "core/WebStream/Validate/Rule/" . $className . ".php";
             if (!$classLoader->import($filepath)) {
@@ -83,7 +85,6 @@ class Validate extends Annotation implements IMethod
                 $classpath = $namespace . "\\" . $className;
             }
 
-            $container = ServiceLocator::getInstance()->getContainer();
             $root = $container->applicationInfo->applicationRoot;
             $classpath = $classpath ?: $this->getNamespace($root . "/" . $filepath) . "\\" . $className;
             if (!class_exists($classpath)) {
