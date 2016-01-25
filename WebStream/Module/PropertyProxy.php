@@ -22,8 +22,6 @@ trait PropertyProxy
         if ($this->__propertyContainer === null) {
             $this->__propertyContainer = new Container(false);
         }
-
-        $called = debug_backtrace()[0]['class'];
         $this->__propertyContainer->{$name} = $value;
     }
 

@@ -1,17 +1,19 @@
 <?php
 namespace WebStream\Http;
 
-use WebStream\Log\Logger;
+use WebStream\DI\Injector;
 use WebStream\Exception\Extend\SessionTimeoutException;
 
 /**
  * セッションクラス
  * @author Ryuichi TANAKA.
  * @since 2010/08/24
- * @version 0.4
+ * @version 0.7
  */
 class Session
 {
+    use Injector;
+
     /** セッション名 */
     const SESSION_NAME = 'WSSESS';
     /** 初回起動チェッククッキー名 */
@@ -21,7 +23,7 @@ class Session
 
     /**
      * コンストラクタ
-     * @param integer セッションの有効期限(秒)
+     * @param int セッションの有効期限(秒)
      * @param string Cookieを有効にするパス
      * @param string Cookieを有効にするドメイン
      * @param boolean Secure属性を有効にする
@@ -37,7 +39,7 @@ class Session
      */
     public function __destruct()
     {
-        Logger::debug("Session is clear.");
+        $this->logger->debug("Session is clear.");
     }
 
     /**
@@ -161,7 +163,7 @@ class Session
     public function destroy()
     {
         // セッション変数を全て初期化
-        $_SESSION = array();
+        $_SESSION = [];
         // Cookieを削除
         setcookie(session_name(), '', time() - 3600, '/');
         setcookie(self::INITIAL_STARTED_COOKIE_NAME, '', time() - 3600, '/');
