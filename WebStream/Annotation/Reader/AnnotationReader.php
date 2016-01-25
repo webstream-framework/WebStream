@@ -28,7 +28,7 @@ class AnnotationReader
     private $refClass;
 
     /**
-     * @var CoreInterface インスタンス
+     * @var IAnnotatable インスタンス
      */
     private $instance;
 
@@ -86,6 +86,7 @@ class AnnotationReader
     /**
      * アノテーション情報を読み込む
      * @param stirng 読み込み対象アノテーションクラスパス
+     * @throws DoctrineAnnotationException
      */
     public function read($annotationClasspath = null)
     {
@@ -112,7 +113,7 @@ class AnnotationReader
 
             // アノテーション定義がなければ次へ
             if (!empty($annotations)) {
-                for ($i = 0; $i < count($annotations); $i++) {
+                for ($i = 0, $count = count($annotations); $i < $count; $i++) {
                     $annotation = $annotations[$i];
                     $annotation->inject('logger', $this->container->logger);
 
@@ -235,7 +236,7 @@ class AnnotationReader
                     continue;
                 }
 
-                for ($i = 0; $i < count($annotations); $i++) {
+                for ($i = 0, $count = count($annotations); $i < $count; $i++) {
                     $annotation = $annotations[$i];
                     $annotation->inject('logger', $this->container->logger);
 

@@ -11,7 +11,7 @@ interface IRead
 {
     /**
      * 注入結果を返却する
-     * @return AnnotationContainer 注入結果
+     * @return WebStream\Annotation\Container\AnnotationContainer 注入結果
      */
     public function onInjected();
 }

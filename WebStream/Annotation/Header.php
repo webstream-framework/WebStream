@@ -25,9 +25,9 @@ class Header extends Annotation implements IMethod, IRead
     use CommonUtils;
 
     /**
-     * @var AnnotationContainer アノテーションコンテナ
+     * @var WebStream\Annotation\Container\AnnotationContainer アノテーションコンテナ
      */
-    private $annotaion;
+    private $annotation;
 
     /**
      * @var array<string> mimeタイプリスト
