@@ -51,7 +51,7 @@ class ServiceLocator
             return $response;
         };
         // Session
-        $container->session = function () {
+        $container->session = function () use (&$container) {
             $session = new Session();
             $session->inject('logger', $container->logger);
 
@@ -91,6 +91,7 @@ class ServiceLocator
             $info->cacheDir = "_cache";
             $info->cachePrefix = "webstream-cache-";
             $info->routeConfigPath = "/config/routes.yml";
+            $info->validateRuleDir = "core/WebStream/Validate/Rule/";
 
             return $info;
         };
