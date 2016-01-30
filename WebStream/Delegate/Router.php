@@ -161,7 +161,7 @@ class Router
      */
     private function resolveStaticFilePath()
     {
-        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir . "/" . $this->request->pathInfo;
+        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir .  $this->request->pathInfo;
 
         if (is_file($staticFile)) {
             $this->routingContainer->staticFile = $staticFile;
