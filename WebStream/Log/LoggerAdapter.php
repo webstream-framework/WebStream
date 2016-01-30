@@ -27,8 +27,8 @@ class LoggerAdapter implements \Psr\Log\LoggerInterface
 
     /**
      * PSR-3ロガーに定義されていないログレベルの呼び出しを受ける
-     * @param  string $name      ログレベル
-     * @param  array  $arguments 引数
+     * @param string $name ログレベル
+     * @param array $arguments 引数
      */
     public function __call($name, $arguments)
     {
@@ -53,5 +53,21 @@ class LoggerAdapter implements \Psr\Log\LoggerInterface
     public function log($level, $message, array $context = [])
     {
         $this->logger->write($level, $message, $context);
+    }
+
+    /**
+     * 遅延書き出しを有効にする
+     */
+    public function enableLazyWrite()
+    {
+        $this->logger->lazyWrite();
+    }
+
+    /**
+     * 即時書き出しを有効にする
+     */
+    public function enableDirectWrite()
+    {
+        $this->logger->directWrite();
     }
 }
