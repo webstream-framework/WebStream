@@ -6,6 +6,7 @@ use WebStream\Module\Singleton;
 use WebStream\Module\Container;
 use WebStream\Log\Logger;
 use WebStream\Log\LoggerAdapter;
+use WebStream\Log\Outputter\FileOutputter;
 use WebStream\Delegate\Router;
 use WebStream\Delegate\CoreDelegator;
 use WebStream\Delegate\AnnotationDelegator;
@@ -34,7 +35,12 @@ class ServiceLocator
 
         // LoggerAdapter
         $container->logger = function () {
-            return new LoggerAdapter(Logger::getInstance());
+            $instance = Logger::getInstance();
+            $instance->setOutputter([
+                new FileOutputter($instance->getConfig()->logPath)
+            ]);
+
+            return new LoggerAdapter($instance);
         };
         // Request
         $container->request = function () use (&$container) {

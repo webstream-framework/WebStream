@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Log;
 
-use WebStream\Module\Utility\FileUtils;
+use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Module\Container;
 use WebStream\DI\ServiceLocator;
 use WebStream\Exception\Extend\LoggerException;
@@ -14,7 +14,7 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class Logger
 {
-    use FileUtils;
+    use LoggerUtils;
 
     /**
      * @var Logger ロガー
@@ -27,51 +27,62 @@ class Logger
     private static $formatter;
 
     /**
-     * @var string 設定ファイルパス
+     * @var Container ログ設定コンテナ
      */
-    private static $configPath;
+    private static $config;
 
     /**
-     * @var string ログファイルパス
+     * @var Container ログ設定コンテナ
      */
-    private $logPath;
+    private $logConfig;
 
     /**
-     * @var string ログレベル
+     * @var array<IOoutputter> Outputterリスト
      */
-    private $logLevel;
-
-    /**
-     * @var string ローテートサイクル
-     */
-    private $rotateCycle;
-
-    /**
-     * @var int ログローテートサイズ
-     */
-    private $rotateSize;
-
-    /**
-     * @var string ログステータスファイルパス
-     */
-    private $statusPath;
+    private $outputters;
 
     /**
      * コンストラクタ
-     * @param string ログファイルパス
+     * @param Container ログ設定コンテナ
      */
-    private function __construct($configPath)
+    private function __construct(Container $logConfig)
     {
-        $this->loadCofig($configPath);
+        $this->logConfig = $logConfig;
+        $this->outputters = [];
     }
 
-    // /**
-    //  * デストラクタ
-    //  */
-    // public function __destruct()
-    // {
-    //     Logger::finalize();
-    // }
+    /**
+     * ログ設定を返却する
+     * @return Container ログ設定
+     */
+    public function getConfig()
+    {
+        return $this->logConfig;
+    }
+
+    /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        $this->directWrite();
+    }
+
+    /**
+     * 遅延書き出しを有効にする
+     */
+    public static function enableLazyWrite()
+    {
+        self::$logger->lazyWrite();
+    }
+
+    /**
+     * 即時書き出しを有効にする
+     */
+    public static function enableDirectWrite()
+    {
+        self::$logger->directWrite();
+    }
 
     /**
      * インスタンスを返却する
@@ -84,13 +95,23 @@ class Logger
 
     /**
      * Loggerを初期化する
-     * @param string 設定ファイルパス
+     * @param Container ログ設定コンテナ
      */
-    public static function init($configPath = "config/log.ini")
+    public static function init(Container $config)
     {
-        self::$configPath = $configPath;
-        self::$logger = new Logger($configPath);
-        self::$formatter = new LoggerFormatter($configPath);
+        self::$config = $config;
+        self::$logger = new Logger($config);
+        self::$formatter = new LoggerFormatter($config);
+    }
+
+    /**
+     * Loggerを終了する
+     */
+    public static function finalize()
+    {
+        self::$config = null;
+        self::$logger = null;
+        self::$formatter = null;
     }
 
     /**
@@ -103,15 +124,6 @@ class Logger
     }
 
     /**
-     * Loggerを終了する
-     */
-    public static function finalize()
-    {
-        self::$logger = null;
-        self::$formatter = null;
-    }
-
-    /**
      * Loggerメソッドの呼び出しを受ける
      * @param string メソッド名(ログレベル文字列)
      * @param array 引数
@@ -119,8 +131,8 @@ class Logger
     public static function __callStatic($level, $arguments)
     {
         if (self::$logger === null || self::$formatter === null) {
-            if (self::$configPath !== null) {
-                self::init(self::$configPath);
+            if (self::$config !== null) {
+                self::init(self::$config);
             } else {
                 throw new LoggerException("Logger is not initialized.");
             }
@@ -130,127 +142,17 @@ class Logger
     }
 
     /**
-     * 設定ファイルを読み込む
-     * @param string 設定ファイルパス
+     * Outputterを設定する
+     * @param array<IOutputter> $outputters Outputterリスト
      */
-    private function loadCofig($configPath)
+    public function setOutputter(array $outputters)
     {
-        $log = $this->parseConfig($configPath);
-
-        // 設定ファイルが存在するかどうか
-        if ($log === null) {
-            throw new LoggerException("Log config file does not exist: " . $configPath);
-        }
-
-        // ログレベル取得
-        $logLevel = $this->toLogLevelValue($log["level"]);
-        // 妥当なログレベルかどうか
-        if ($logLevel === 0) {
-            throw new LoggerException("Invalid log level: " . $log["level"]);
-        }
-        $this->logLevel = $logLevel;
-
-        // パスを取得
-        $path = $log["path"];
-        // 絶対パスでのチェック
-        if (!realpath(dirname($path))) {
-            $container = ServiceLocator::getInstance()->getContainer();
-            $path = $container->applicationInfo->applicationRoot . "/" . $log["path"];
-            // プロジェクトルートからの相対パスでのチェック
-            if (!file_exists(dirname($path))) {
-                throw new LoggerException("Log directory does not exist: " . dirname($path));
+        foreach ($outputters as $outputter) {
+            if (!$outputter instanceof \WebStream\Log\Outputter\IOutputter) {
+                throw new LoggerException("Log outputter must implement WebStream\Log\Outputter\IOutputter.");
             }
         }
-        $this->logPath = $path;
-
-        // ステータスファイルパスを設定
-        $this->statusPath = preg_replace_callback('/(.*)\..+/', function ($matches) {
-            return "$matches[1].status";
-        }, $this->logPath);
-
-        // ログローテート設定(時間)
-        if (isset($log["rotate_cycle"])) {
-            $rotateCycle = $this->cycle2value($log["rotate_cycle"]);
-            // 妥当なローテートサイクルか
-            if ($rotateCycle === 0) {
-                throw new LoggerException("Invalid log rotate cycle: " . $log["rotate_cycle"]);
-            }
-            $this->rotateCycle = $rotateCycle;
-        }
-
-        // ログローテート
-        if (isset($log["rotate_size"])) {
-            $rotateSize = intval($log["rotate_size"]);
-            // ローテートサイズが不正の場合(正の整数以外の値が設定された場合)
-            if ($rotateSize <= 0) {
-                throw new LoggerException("Invalid log rotate size: " . $log["rotate_size"]);
-            }
-            $this->rotateSize = $rotateSize;
-        }
-    }
-
-    /**
-     * ログレベルを数値に変換
-     * ログレベルはWebStream独自、PSR-3両方対応
-     * @param string ログレベル文字列
-     * @return integer ログレベル数値
-     */
-    public function toLogLevelValue(string $level)
-    {
-        switch (strtolower($level)) {
-            case 'debug':
-                return 1;
-            case 'info':
-                return 2;
-            case 'notice':    // PSR-3
-                return 3;
-            case 'warn':
-            case 'warning':   // PSR-3
-                return 4;
-            case 'error':
-                return 5;
-            case 'critical':  // PSR-3
-                return 6;
-            case 'alert':     // PSR-3
-                return 7;
-            case 'emergency': // PSR-3
-                return 8;
-            case 'fatal':
-                return 9;
-            default:
-                throw new LoggerException("Undefined log level: $level");
-        }
-    }
-
-    /**
-     * ログローテートサイクルを時間に変換
-     * @param string ローテートサイクル
-     * @return integer ローテート時間
-     */
-    private function cycle2value($cycle)
-    {
-        $day_to_h = 24;
-        $week_to_h = $day_to_h * 7;
-        $month_to_h = $day_to_h * intval(date("t", time()));
-        $year_to_h = $day_to_h * 365;
-
-        $year = date("Y");
-        if (($year % 4 === 0 && $year % 100 !== 0) || $year % 400 === 0) {
-            $year_to_h = $day_to_h * 366;
-        }
-
-        switch (strtolower($cycle)) {
-            case 'day':
-                return $day_to_h;
-            case 'week':
-                return $week_to_h;
-            case 'month':
-                return $month_to_h;
-            case 'year':
-                return $year_to_h;
-            default:
-                return 0;
-        }
+        $this->outputters = $outputters;
     }
 
     /**
@@ -288,14 +190,13 @@ class Logger
 
     /**
      * ログを書き出す
-     * @param string ログパス
      * @param string ログレベル文字列
-     * @param string 書きだす文字列
-     * @param string スタックトレース文字列
+     * @param string 出力文字列
+     * @param array<mixed> 埋め込み値リスト
      */
     public function write($level, $msg, $context = null)
     {
-        if ($this->logLevel > $this->toLogLevelValue($level)) {
+        if ($this->logConfig->logLevel > $this->toLogLevelValue($level)) {
             return;
         }
 
@@ -317,7 +218,13 @@ class Logger
 
         $this->rotate();
         try {
-            @error_log(self::$formatter->getFormattedMessage($msg, $level), 3, $this->logPath);
+            if (count($this->outputters) > 0) {
+                foreach ($this->outputters as $outputter) {
+                    $outputter->write(self::$formatter->getFormattedMessage($msg, $level));
+                }
+            } else {
+                error_log(self::$formatter->getFormattedMessage($msg, $level), 3, $this->logConfig->logPath);
+            }
         } catch (\Exception $e) {
             throw new LoggerException($e);
         }
@@ -328,7 +235,7 @@ class Logger
      */
     private function writeStatus()
     {
-        file_put_contents($this->statusPath, intval(preg_replace('/^.*\s/', '', microtime())));
+        file_put_contents($this->logConfig->statusPath, intval(preg_replace('/^.*\s/', '', microtime())));
     }
 
     /**
@@ -336,8 +243,8 @@ class Logger
      */
     private function readStatus()
     {
-        $handle = fopen($this->statusPath, "r");
-        $size = filesize($this->statusPath);
+        $handle = fopen($this->logConfig->statusPath, "r");
+        $size = filesize($this->logConfig->statusPath);
         $content = fread($handle, $size);
         fclose($handle);
         if (!preg_match('/^\d{10}$/', $content)) {
@@ -353,7 +260,7 @@ class Logger
     private function createstatusPath()
     {
         // ステータスファイルがない場合は書きだす
-        if (!is_file($this->statusPath)) {
+        if (!is_file($this->logConfig->statusPath)) {
             $this->writeStatus();
         }
     }
@@ -366,13 +273,13 @@ class Logger
     private function rotate()
     {
         // ログファイルがない場合はローテートしない
-        if (!realpath($this->logPath)) {
+        if (!realpath($this->logConfig->logPath)) {
             return;
         }
         // ログローテート実行
-        if ($this->rotateCycle !== null) {
+        if ($this->logConfig->rotateCycle !== null) {
             $this->rotateByCycle();
-        } elseif ($this->rotateSize !== null) {
+        } elseif ($this->logConfig->rotateSize !== null) {
             $this->rotateBySize();
         }
     }
@@ -387,12 +294,12 @@ class Logger
         $from_date = date("YmdHis", $from);
         $to_date = date("YmdHis", $to);
         $archive_path = null;
-        if (preg_match('/(.*)\.(.+)/', $this->logPath, $matches)) {
+        if (preg_match('/(.*)\.(.+)/', $this->logConfig->logPath, $matches)) {
             $archive_path = "$matches[1].${from_date}-${to_date}.$matches[2]";
             // mvを実行
-            rename($this->logPath, $archive_path);
+            rename($this->logConfig->logPath, $archive_path);
             // ステータスファイルを削除
-            unlink($this->statusPath);
+            unlink($this->logConfig->statusPath);
         }
     }
 
@@ -404,11 +311,11 @@ class Logger
     {
         $this->createstatusPath();
         $now = intval(preg_replace('/^.*\s/', '', microtime()));
-        $createdAt = $this->readStatus($this->statusPath);
+        $createdAt = $this->readStatus($this->logConfig->statusPath);
 
         // ローテート周期を過ぎている場合はログファイルをアーカイブする
         $hour = intval(floor(($now - $createdAt) / 3600));
-        if ($hour >= $this->rotateCycle) {
+        if ($hour >= $this->logConfig->rotateCycle) {
             $this->runRotate($createdAt, $now);
         }
     }
@@ -423,9 +330,9 @@ class Logger
         $now = intval(preg_replace('/^.*\s/', '', microtime()));
         $createdAt = $this->readStatus();
 
-        $size_kb = (int) floor(filesize($this->logPath) / 1024);
+        $size_kb = (int) floor(filesize($this->logConfig->logPath) / 1024);
         // 指定したサイズより大きければローテート
-        if ($size_kb >= $this->rotateSize) {
+        if ($size_kb >= $this->logConfig->rotateSize) {
             $this->runRotate($createdAt, $now);
         }
     }
@@ -436,7 +343,7 @@ class Logger
      */
     public function getLogPath()
     {
-        return $this->logPath;
+        return $this->logConfig->logPath;
     }
 
     /**
@@ -445,7 +352,7 @@ class Logger
      */
     public function getLogRotateCycle()
     {
-        return $this->rotateCycle;
+        return $this->logConfig->rotateCycle;
     }
 
     /**
@@ -454,6 +361,30 @@ class Logger
      */
     public function getLogRotateSize()
     {
-        return $this->rotateSize;
+        return $this->logConfig->rotateSize;
+    }
+
+    /**
+     * 遅延書き出しを有効にする
+     */
+    public function lazyWrite()
+    {
+        foreach ($this->outputters as $outputter) {
+            if ($outputter instanceof \WebStream\Log\Outputter\ILazyWriter) {
+                $outputter->enableLazyWrite();
+            }
+        }
+    }
+
+    /**
+     * 即時書き出しを有効にする
+     */
+    public function directWrite()
+    {
+        foreach ($this->outputters as $outputter) {
+            if ($outputter instanceof \WebStream\Log\Outputter\ILazyWriter) {
+                $outputter->enableDirectWrite();
+            }
+        }
     }
 }

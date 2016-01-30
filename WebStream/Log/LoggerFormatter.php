@@ -1,9 +1,8 @@
 <?php
 namespace WebStream\Log;
 
-use WebStream\Module\Utility\FileUtils;
+use WebStream\Module\Container;
 use WebStream\Module\Utility\LoggerUtils;
-use WebStream\Exception\Extend\LoggerException;
 
 /**
  * LoggerFormatterクラス
@@ -14,26 +13,21 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class LoggerFormatter
 {
-    use FileUtils;
     use LoggerUtils;
 
     /**
-     * @var string ログフォーマット
+     * @var Container ログ設定コンテナ
      */
-    private $format;
-
-    /**
-     * @var アプリケーション名
-     */
-    private $applicationName;
+    private $logConfig;
 
     /**
      * コンストラクタ
      * @param string 設定ファイルパス
      */
-    public function __construct($configPath)
+    public function __construct(Container $logConfig)
     {
-        $this->loadConfig($configPath);
+        // $this->loadConfig($configPath);
+        $this->logConfig = $logConfig;
         $this->compile();
     }
 
@@ -45,7 +39,7 @@ class LoggerFormatter
      */
     public function getFormattedMessage($message, $logLevel)
     {
-        $formattedMessage = $this->format;
+        $formattedMessage = $this->logConfig->format;
 
         // 日付
         $formattedMessage = $this->compileDateTime($formattedMessage);
@@ -60,37 +54,11 @@ class LoggerFormatter
     }
 
     /**
-     * 設定ファイルを読み込む
-     * @param string 設定ファイルパス
-     */
-    private function loadConfig($configPath)
-    {
-        $log = $this->parseConfig($configPath);
-
-        // 設定ファイルが存在するかどうか
-        if ($log === null) {
-            throw new LoggerException("Log config file does not exist: " . $configPath);
-        }
-
-        // ログアプリケーション名
-        if (isset($log["applicationName"])) {
-            $this->applicationName = $log["applicationName"];
-        }
-
-        // ログフォーマット
-        if (isset($log["format"])) {
-            $this->format = $log["format"];
-        } else {
-            $this->format = $this->defaultLoggerFormatter();
-        }
-    }
-
-    /**
      * 固定の項目を埋め込む
      */
     private function compile()
     {
-        $this->format = $this->compileApplicationName($this->format, $this->applicationName);
+        $this->logConfig->format = $this->compileApplicationName($this->logConfig->format, $this->logConfig->applicationName);
     }
 
     /**
@@ -102,7 +70,7 @@ class LoggerFormatter
     private function compileApplicationName($message, $applicationName)
     {
         // アプリケーション名
-        if ($applicationName !== null && preg_match('/%([0-9]{0,})c/', $this->format, $matches)) {
+        if ($applicationName !== null && preg_match('/%([0-9]{0,})c/', $this->logConfig->format, $matches)) {
             $applicationName = $matches[1] !== null ? str_pad($applicationName, intval($matches[1]), ' ') : $applicationName;
             $message = preg_replace('/%(?:[0-9]{0,})c/', $applicationName, $message);
         }
@@ -120,10 +88,9 @@ class LoggerFormatter
         if (preg_match('/%([0-9]{0,})d(?:\{(.+?)\}){1}/', $message, $formatMatches)) {
             $message = preg_replace('/%[0-9]{0,}d/', '%d', $message);
             $now = microtime(true);
-            if (preg_match('/^[0-9]*\\.([0-9]+)$/', $now, $matches)) {
+            $decimal = "000";
+            if (preg_match('/^[0-9]*\\.([0-9]+)$/', $now, $matches) === 1) {
                 $decimal = str_pad(substr($matches[1], 0, 3), 3, "0");
-            } else {
-                $decimal = "000";
             }
             $dateTimeFormat = preg_replace('/(%f)/', $decimal, $formatMatches[2]);
             $dateTime = strftime($dateTimeFormat, $now);

@@ -28,9 +28,9 @@ class Validate extends Annotation implements IMethod
     use CommonUtils, ApplicationUtils;
 
     /**
-     * @var AnnotationContainer アノテーションコンテナ
+     * @var WebStream\Annotation\Container\AnnotationContainer アノテーションコンテナ
      */
-    private $annotaion;
+    private $annotation;
 
     /**
      * {@inheritdoc}

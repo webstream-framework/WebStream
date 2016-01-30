@@ -91,9 +91,8 @@ class Response
     {
         if (array_key_exists($fileType, $this->mime)) {
             $this->mimeType = $this->mime[$fileType];
-        }
-        // 不明なファイルが指定された場合、画面に表示させずダウンロードさせる
-        if (!$this->mimeType) {
+        } else {
+            // 不明なファイルが指定された場合、画面に表示させずダウンロードさせる
             $this->mimeType = $this->mime['file'];
         }
     }
@@ -234,6 +233,10 @@ class Response
      */
     public function header()
     {
+        if (headers_sent()) {
+            return;
+        }
+
         // StatusCode
         $headerMessage = 'HTTP/' . self::HTTP_VERSION . ' ' .
                          $this->statusCode . ' ' . $this->status[$this->statusCode];

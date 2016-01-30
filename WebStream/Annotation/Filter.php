@@ -20,12 +20,12 @@ use WebStream\Module\Container;
 class Filter extends Annotation implements IMethods, IRead
 {
     /**
-     * @var AnnotationContainer アノテーションコンテナ
+     * @var WebStream\Annotation\Container\AnnotationContainer アノテーションコンテナ
      */
-    private $annotaion;
+    private $annotation;
 
     /**
-     * @var AnnotationContainer 注入結果
+     * @var WebStream\Annotation\Container\AnnotationContainer 注入結果
      */
     private $injectedContainer;
 

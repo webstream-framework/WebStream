@@ -21,12 +21,12 @@ use WebStream\Exception\Extend\DatabaseException;
 class Database extends Annotation implements IClass, IRead
 {
     /**
-     * @var AnnotationContainer アノテーションコンテナ
+     * @var WebStream\Annotation\Container\AnnotationContainer アノテーションコンテナ
      */
-    private $annotaion;
+    private $annotation;
 
     /**
-     * @var AnnotationContainer 注入結果
+     * @var WebStream\Annotation\Container\AnnotationContainer 注入結果
      */
     private $injectedContainer;
 

@@ -4,6 +4,7 @@ namespace WebStream\Module;
 require_once dirname(__FILE__) . '/Utility/FileUtils.php';
 require_once dirname(__FILE__) . '/../DI/Injector.php';
 
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Utility\FileUtils;
 use WebStream\DI\Injector;
 
@@ -18,10 +19,16 @@ class ClassLoader
     use Injector, FileUtils;
 
     /**
+     * @var string アプリケーションルートパス
+     */
+    private $applicationRoot;
+
+    /**
      * コンストラクタ
      */
     public function __construct()
     {
+        $this->applicationRoot = $this->getApplicationRoot();
     }
 
     /**
@@ -42,8 +49,7 @@ class ClassLoader
      */
     public function import($filepath, callable $filter = null)
     {
-        $rootDir = $this->applicationInfo->applicationRoot;
-        $includeFile = $rootDir . "/" . $filepath;
+        $includeFile = $this->applicationRoot . "/" . $filepath;
         if (is_file($includeFile)) {
             $ext = pathinfo($includeFile, PATHINFO_EXTENSION);
             if ($ext === 'php') {
@@ -67,8 +73,7 @@ class ClassLoader
      */
     public function importAll($dirPath, callable $filter = null)
     {
-        $rootDir = $this->applicationInfo->applicationRoot;
-        $includeDir = realpath($rootDir . "/" . $dirPath);
+        $includeDir = realpath($this->applicationRoot . "/" . $dirPath);
         if (is_dir($includeDir)) {
             $iterator = $this->getFileSearchIterator($includeDir);
             $isSuccess = true;
@@ -101,7 +106,7 @@ class ClassLoader
      */
     private function loadClass($className)
     {
-        $rootDir = $this->applicationInfo->applicationRoot;
+        $rootDir = $this->applicationRoot;
 
         // 名前空間セパレータをパスセパレータに置換
         if (DIRECTORY_SEPARATOR === '/') {

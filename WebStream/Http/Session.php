@@ -86,6 +86,10 @@ class Session
      */
     public function start()
     {
+        if (headers_sent()) {
+            return;
+        }
+
         // セッション名を設定
         session_name(self::SESSION_NAME);
         // セッションを開始

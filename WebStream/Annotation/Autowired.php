@@ -20,9 +20,9 @@ use WebStream\Exception\Extend\AnnotationException;
 class Autowired extends Annotation implements IProperty
 {
     /**
-     * @var AnnotationContainer アノテーションコンテナ
+     * @var WebStream\Annotation\Container\AnnotationContainer アノテーションコンテナ
      */
-    private $annotaion;
+    private $annotation;
 
     /**
      * {@inheritdoc}
