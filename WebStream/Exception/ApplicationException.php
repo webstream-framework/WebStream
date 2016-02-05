@@ -2,6 +2,7 @@
 namespace WebStream\Exception;
 
 use WebStream\Log\Logger;
+use WebStream\Module\Utility\LoggerUtils;
 
 /**
  * ApplicationException
@@ -11,6 +12,8 @@ use WebStream\Log\Logger;
  */
 class ApplicationException extends \LogicException
 {
+    use LoggerUtils;
+
     /**
      * constructor
      */
@@ -28,7 +31,7 @@ class ApplicationException extends \LogicException
 
         Logger::error(get_class($exception) . " is thrown: " . $exception->getFile() . "(" . $exception->getLine() . ")");
         if (!empty($message)) {
-            Logger::error($this->getMessage(), $this->getTraceAsString());
+            Logger::error($this->addStackTrace($this->getMessage(), $this->getTraceAsString()));
         }
     }
 }

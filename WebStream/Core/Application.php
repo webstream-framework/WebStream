@@ -2,6 +2,7 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
+use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
@@ -16,6 +17,8 @@ use WebStream\DI\ServiceLocator;
  */
 class Application
 {
+    use LoggerUtils;
+
     /**
      * @var Container DIコンテナ
      */
@@ -60,7 +63,7 @@ class Application
                 }
             } catch (\Exception $e) {
                 // 開発者由来の例外は全て500
-                $this->container->logger->error($e->getMessage(), $e->getTraceAsString());
+                $this->container->logger->error($this->addStackTrace($e->getMessage(), $e->getTraceAsString()));
                 $this->container->response->move(500);
             }
         } catch (SystemException $e) {

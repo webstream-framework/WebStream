@@ -32,7 +32,7 @@ class ConsoleOutputter implements IOutputter
     {
         $sapi = php_sapi_name();
         if (array_key_exists($sapi, $this->sapis) && $this->sapis[$sapi] === 'console') {
-            echo $text . PHP_EOL;
+            echo $text;
         }
     }
 }

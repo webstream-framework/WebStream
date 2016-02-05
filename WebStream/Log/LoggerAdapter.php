@@ -33,22 +33,22 @@ class LoggerAdapter implements \Psr\Log\LoggerInterface
     public function __call($name, $arguments)
     {
         $message = null;
-        $context = [];
         if (array_key_exists(0, $arguments)) {
             $message = $arguments[0];
         }
-        if (array_key_exists(1, $arguments) && is_array($arguments[1])) {
-            $context = $arguments[1];
-        }
 
-        $this->log($name, $message, $context);
+        if (array_key_exists(1, $arguments)) {
+            $this->log($name, $message, $arguments[1]);
+        } else {
+            $this->log($name, $message, []);
+        }
     }
 
     /**
      * Logs with an arbitrary level.
-     * @param mixed $level ログレベル
+     * @param int $level ログレベル
      * @param string $message メッセージ
-     * @param array $context コンテキスト
+     * @param array $context 埋め込み値リスト
      */
     public function log($level, $message, array $context = [])
     {

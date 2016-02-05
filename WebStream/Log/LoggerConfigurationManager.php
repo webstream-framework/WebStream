@@ -159,7 +159,7 @@ class LoggerConfigurationManager
      */
     private function loadApplicationName()
     {
-        if (array_key_exists("application_name", $this->configMap)) {
+        if (array_key_exists("application_name", $this->configMap) && !empty($this->configMap["application_name"])) {
             $this->logContainer->applicationName = $this->configMap["application_name"];
         }
 
