@@ -3,7 +3,6 @@ namespace WebStream\Log;
 
 use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Module\Container;
-use WebStream\DI\ServiceLocator;
 use WebStream\Exception\Extend\LoggerException;
 
 /**
@@ -37,7 +36,7 @@ class Logger
     private $logConfig;
 
     /**
-     * @var array<IOoutputter> Outputterリスト
+     * @var array<IOutputter> Outputterリスト
      */
     private $outputters;
 
@@ -168,27 +167,6 @@ class Logger
     }
 
     /**
-     * ログメッセージにスタックトレースの内容を追加する
-     * @param string ログメッセージ
-     * @param string スタックトレース文字列
-     * @return string 加工済みログメッセージ
-     */
-    private function message($msg, $stacktrace = null)
-    {
-        // スタックトレースから原因となるエラー箇所のみ抽出
-        $stacktraceList = explode("#", $stacktrace);
-        foreach ($stacktraceList as $stacktraceLine) {
-            if ($stacktraceLine === "") {
-                continue;
-            }
-            $msg .= "\n";
-            $msg .= "\t#" . trim($stacktraceLine);
-        }
-
-        return $msg;
-    }
-
-    /**
      * ログを書き出す
      * @param string ログレベル文字列
      * @param string 出力文字列
@@ -200,7 +178,7 @@ class Logger
             return;
         }
 
-        if (is_array($context)) {
+        if (is_array($context) && count($context) > 0) {
             // sprintfと同様の展開
             // [a-zA-Z0-9_-\.] 以外もキーには指定可能だが仕様としてこれ以外は不可とする
             preg_match_all('/\{\s*([a-zA-Z0-9._-]+)\s*?\}/', $msg, $matches);
@@ -212,8 +190,6 @@ class Logger
                 }
             }
             $msg = str_replace($matches[0], $matches[1], $msg);
-        } else {
-            $msg = $this->message($msg, $context);
         }
 
         $this->rotate();
@@ -225,6 +201,8 @@ class Logger
             } else {
                 error_log(self::$formatter->getFormattedMessage($msg, $level), 3, $this->logConfig->logPath);
             }
+        } catch (LoggerException $e) {
+            throw $e;
         } catch (\Exception $e) {
             throw new LoggerException($e);
         }
@@ -240,6 +218,7 @@ class Logger
 
     /**
      * ログステータスファイルを読み込む
+     * @return int UnixTime
      */
     private function readStatus()
     {

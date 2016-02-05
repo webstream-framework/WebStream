@@ -26,7 +26,6 @@ class LoggerFormatter
      */
     public function __construct(Container $logConfig)
     {
-        // $this->loadConfig($configPath);
         $this->logConfig = $logConfig;
         $this->compile();
     }
@@ -50,7 +49,7 @@ class LoggerFormatter
         // メッセージ
         $formattedMessage = preg_replace('/%m/', $message, $formattedMessage);
 
-        return $formattedMessage . "\n";
+        return $formattedMessage . PHP_EOL;
     }
 
     /**

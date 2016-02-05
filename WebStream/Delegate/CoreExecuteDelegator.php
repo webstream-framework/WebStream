@@ -140,6 +140,7 @@ class CoreExecuteDelegator
 
     /**
      * オリジナルのインスタンスを返却する
+     * @return CoreInterface インスタンス
      */
     public function getInstance()
     {
