@@ -32,7 +32,7 @@ class File
      * constructor
      * @param string $filepath ファイルパス
      */
-    public function __construct(stirng $filePath)
+    public function __construct(string $filePath)
     {
         // realpathを含めてキャッシュクリア
         clearstatcache(true);
@@ -40,7 +40,7 @@ class File
         if ($realpath = realpath($filePath)) {
             $this->filePath = $realpath;
             $this->fileName = basename($filePath);
-            $this->fileExt = pathinfo($filePath, PATHINFO_FILENAME);
+            $this->fileExt = pathinfo($filePath, PATHINFO_EXTENSION);
         }
     }
 
@@ -102,10 +102,6 @@ class File
      */
     public function isReadable()
     {
-        if (!$this->exists()) {
-            return false;
-        }
-
         // Fileオブジェクト作成後に属性が変わることを考慮しキャッシュクリアする
         clearstatcache();
 
@@ -118,10 +114,6 @@ class File
      */
     public function isWritable()
     {
-        if (!$this->exists()) {
-            return false;
-        }
-
         // Fileオブジェクト作成後に属性が変わることを考慮しキャッシュクリアする
         clearstatcache();
 
@@ -134,10 +126,6 @@ class File
      */
     public function isExecutable()
     {
-        if (!$this->exists()) {
-            return false;
-        }
-
         // Fileオブジェクト作成後に属性が変わることを考慮しキャッシュクリアする
         clearstatcache();
 

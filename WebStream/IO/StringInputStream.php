@@ -18,14 +18,10 @@ class StringInputStream extends InputStream
      * construct
      * @param string $str 文字列
      */
-    public function __construct(string $str)
+    public function __construct($str)
     {
-        $this->cursorPosition = 0;
-        $this->markedPosition = 0;
-
-        // 文字列をストリームとして扱う
-        $this->stream = $str;
-        $this->length = count($str);
+        parent::__construct($str);
+        $this->length = strlen($str);
     }
 
     /**
@@ -37,10 +33,7 @@ class StringInputStream extends InputStream
     }
 
     /**
-     * 入力ストリームからデータを読み込む
-     * 引数に数値を指定した場合、指定数値バイトだけ読み込む
-     * @param int length 読み込みバイト数
-     * @return string 読み込みデータ
+     * {@inheritdoc}
      */
     public function read($length = null)
     {
@@ -50,18 +43,41 @@ class StringInputStream extends InputStream
 
         $out = "";
         if ($length === null) {
-            $endPosition = $this->length > $this->cursorPosition ?
-                $this->cursorPosition : $this->length;
-
-            $out = substr($this->stream, $endPosition);
+            $length = 1;
+            $out = substr($this->stream, $this->cursorPosition, $length);
+            $this->cursorPosition += $length;
         } else {
             // $lengthがファイル終端を越えないようにする
-            if ($this->length > $this->cursorPosition + $length) {
+            if (($this->cursorPosition + $length) > $this->length) {
                 $length = $this->length - $this->cursorPosition;
             }
 
             $out = substr($this->stream, $this->cursorPosition, $length);
+            $this->cursorPosition += $length;
         }
+
+        return $out;
+    }
+
+    public function readLine()
+    {
+        if ($this->eof()) {
+            return null;
+        }
+
+        // 処理対象の残りのバイト数
+        $targetLength = $this->length - $this->cursorPosition;
+
+        // 処理対象の文字列
+        $text = substr($this->stream, $this->cursorPosition, $targetLength);
+        $lengthEOL = strlen(PHP_EOL);
+        $notLinePart = strstr($text, PHP_EOL);
+
+        // 残りの文字列に改行がない場合は0を設定
+        $notLinePartLength = $notLinePart === false ? 0 : strlen($notLinePart);
+        $offset = $targetLength - $notLinePartLength;
+        $out = substr($text, 0, $offset);
+        $this->skip($offset + $lengthEOL);
 
         return $out;
     }
@@ -71,13 +87,12 @@ class StringInputStream extends InputStream
      */
     public function skip(int $pos)
     {
-        // 文字列長より後方を指定した場合、-1を返す
-        if ($this->cursorPosition + $pos > $this->length - 1) {
+        $start = $this->cursorPosition;
+        $this->cursorPosition += $pos;
+
+        if ($this->eof()) {
             return -1;
         }
-
-        $start = $this->cursorPosition;
-        $this->cursorPosition = $pos;
 
         $skipNum = 0;
         if ($start > $this->cursorPosition) {
@@ -92,24 +107,11 @@ class StringInputStream extends InputStream
     }
 
     /**
-     * 入力ストリームの現在位置にmarkを設定する
+     * {@inheritdoc}
      */
-    public function mark()
-    {
-        $this->markedPosition = $this->cursorPosition;
-    }
-
-    /**
-     * 最後にmarkされた位置に再配置する
-     */
-    public function reset()
-    {
-        $this->markedPosition = 0;
-    }
-
     public function eof()
     {
-        return $this->cursorPosition >= $this->length - 1;
+        return $this->cursorPosition > $this->length - 1;
     }
 
     /**
