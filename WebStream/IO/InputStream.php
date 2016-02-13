@@ -5,6 +5,8 @@ use WebStream\Exception\Extend\IOException;
 
 /**
  * InputStream
+ * ftellの戻り値仕様により32ビット数値を返すため2GB以上のファイルを読み込むと動かなくなる
+ * C言語のftell仕様依存
  * @author Ryuichi TANAKA.
  * @since 2016/02/05
  * @version 0.7

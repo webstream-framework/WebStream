@@ -67,15 +67,18 @@ class FileInputStream extends InputStream
 
         $out = null;
         if ($length === null) {
-            if (($out = fread($this->stream, 1)) === false) {
-                throw new IOException("Failed to fread.");
+            if (($out = @fread($this->stream, 1)) === false) {
+                throw new IOException("Failed to read stream.");
             }
         } else {
             if (!is_int($length)) {
                 throw new InvalidArgumentException("Stream read must be a numeric value.");
             }
-            if (($out = fread($this->stream, $length)) === false) {
-                throw new IOException("Failed to fread.");
+            // ポインタ位置が負になった場合、警告が出てfalseを返す
+            // ポインタの終端を越えた場合、読み込みを終了する
+            // すでに終端位置の場合、空文字を返す
+            if (($out = @fread($this->stream, $length)) === false) {
+                throw new IOException("Failed to read stream.");
             }
         }
 
@@ -98,6 +101,8 @@ class FileInputStream extends InputStream
             return null;
         }
 
+        $this->cursorPosition = ftell($this->stream);
+
         return trim($out);
     }
 
@@ -117,10 +122,10 @@ class FileInputStream extends InputStream
 
         $skipNum = 0;
         if ($start > $this->cursorPosition) {
-            // 前方へ移動
+            // 後方へ移動
             $skipNum = $start - $this->cursorPosition;
         } else {
-            // 後方へ移動
+            // 前方へ移動
             $skipNum = $this->cursorPosition - $start;
         }
 
@@ -139,6 +144,7 @@ class FileInputStream extends InputStream
         // ポインタ位置をmark位置に移動
         fseek($this->stream, SEEK_SET, $this->markedPosition);
         // mark位置を初期値に戻す
+        $this->cursorPosition = $this->markedPosition;
         $this->markedPosition = 0;
     }
 

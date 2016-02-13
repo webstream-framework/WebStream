@@ -70,7 +70,7 @@ class InputStreamReader
      */
     public function skip(int $pos)
     {
-        $this->stream->skip($pos);
+        return $this->stream->skip($pos);
     }
 
     /**
