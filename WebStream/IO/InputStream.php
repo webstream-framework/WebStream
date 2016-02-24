@@ -80,6 +80,7 @@ abstract class InputStream
 
     /**
      * 入力ストリームの現在位置にmarkを設定する
+     * @param int マークするバイト位置
      * @throws IOException
      */
     public function mark()
@@ -102,6 +103,7 @@ abstract class InputStream
         }
 
         // mark位置を初期値に戻す
+        $this->cursorPosition = $this->markedPosition;
         $this->markedPosition = 0;
     }
 

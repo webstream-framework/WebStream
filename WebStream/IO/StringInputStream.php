@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\IO;
 
+use WebStream\Exception\Extend\InvalidArgumentException;
 use WebStream\Exception\Extend\IOException;
 
 /**
@@ -81,6 +82,11 @@ class StringInputStream extends InputStream
         return $out;
     }
 
+    /**
+     * 入力ストリームから行単位でデータを読み込む
+     * 末尾に改行コードは含まない
+     * @return string 読み込みデータ
+     */
     public function readLine()
     {
         if ($this->eof()) {

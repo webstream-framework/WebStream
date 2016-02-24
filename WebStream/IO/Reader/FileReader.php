@@ -12,12 +12,19 @@ use WebStream\IO\FileInputStream;
 class FileReader extends InputStreamReader
 {
     /**
+     * @var int バッファリングサイズ
+     */
+    private $bufferSize;
+
+    /**
      * constructor
      * @param mixed $file ファイルオブジェクトまたはファイルパス
+     * @param int $bufferSize バッファリングサイズ
      */
-    public function __construct($file)
+    public function __construct($file, int $bufferSize = 8192)
     {
         parent::__construct(new FileInputStream($file));
+        $this->bufferSize = $bufferSize;
     }
 
     /**
@@ -27,7 +34,7 @@ class FileReader extends InputStreamReader
     public function read()
     {
         $out = "";
-        while (($data = $this->stream->read(8192)) !== null) {
+        while (($data = $this->stream->read($this->bufferSize)) !== null) {
             $out .= $data;
         }
 
