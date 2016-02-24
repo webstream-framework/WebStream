@@ -4,20 +4,20 @@
 [![Test Coverage](https://codeclimate.com/github/webstream-framework/Test/badges/coverage.svg)](https://codeclimate.com/github/webstream-framework/Test/coverage)
 [![Code Climate](https://codeclimate.com/github/webstream-framework/Test/badges/gpa.svg)](https://codeclimate.com/github/webstream-framework/Test)
 
-WebStreamはMVCアーキテクチャをベースとしたWebアプリケーションフレームワークです。  
-さらにS(Service)層を追加した4層構造のアーキテクチャとなっています。  
+WebStream is a Web application framework which is based on MVC architecture.  
+Further, this architecture added service layer on basic MVC three-layer.
 
-## ドキュメント
+## document
 http://webstream-framework.github.io/WebStream
 
-## チケット
+## ticket
 [mapserver2007.tracpath.com](https://mapserver2007.tracpath.com/-/dashboard)
 
-## ブランチ
+## branches
 * master
 * 0.7.0 (PHP7.0.2)
 
-## タグ
+## tags
 * 0.1.10 (PHP4.x)
 * 0.2.0  (PHP5.2.x)
 * 0.3.17 (PHP5.3.x)
