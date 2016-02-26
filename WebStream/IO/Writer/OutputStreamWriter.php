@@ -2,6 +2,7 @@
 namespace WebStream\IO\Writer;
 
 use WebStream\IO\OutputStream;
+use WebStream\Exception\Extend\InvalidArgumentException;
 
 /**
  * OutputStreamWriter
@@ -45,12 +46,14 @@ class OutputStreamWriter
     /**
      * 出力ストリームに書き出す
      * @param mixed $buf 出力データ
-     * @param int $off データ開始位置
-     * @param int $len 書き出すバイト数
      * @throws WebStream\Exception\Extend\IOException
      */
-    public function write($buf, int $off = null, int $len = null)
+    public function write($buf)
     {
+        $args = func_get_arg();
+        $off = array_key_exists(1, $args) ? $args[1] : null;
+        $len = array_key_exists(2, $args) ? $args[2] : null;
+
         $this->stream->write($buf, $off, $len);
     }
 
