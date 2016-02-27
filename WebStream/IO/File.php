@@ -37,11 +37,10 @@ class File
         // realpathを含めてキャッシュクリア
         clearstatcache(true);
 
-        if ($realpath = realpath($filePath)) {
-            $this->filePath = $realpath;
-            $this->fileName = basename($filePath);
-            $this->fileExt = pathinfo($filePath, PATHINFO_EXTENSION);
-        }
+        $realPath = realpath($filePath);
+        $this->filePath = $realPath !== false ? $realPath : $filePath;
+        $this->fileName = basename($this->filePath);
+        $this->fileExt = pathinfo($this->filePath, PATHINFO_EXTENSION);
     }
 
     /**

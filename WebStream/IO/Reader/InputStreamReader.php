@@ -48,7 +48,7 @@ class InputStreamReader
     public function read()
     {
         $args = func_get_args();
-        $length = count($args) === 1 && is_int($args[0]) ? $args[0] : null;
+        $length = count($args) === 1 ? $args[0] : null;
 
         return $this->stream->read($length);
     }
