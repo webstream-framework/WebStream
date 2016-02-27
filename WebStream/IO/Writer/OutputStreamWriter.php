@@ -50,7 +50,7 @@ class OutputStreamWriter
      */
     public function write($buf)
     {
-        $args = func_get_arg();
+        $args = func_get_args();
         $off = array_key_exists(1, $args) ? $args[1] : null;
         $len = array_key_exists(2, $args) ? $args[2] : null;
 

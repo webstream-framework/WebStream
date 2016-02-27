@@ -16,9 +16,9 @@ class FileWriter extends OutputStreamWriter
      * constructor
      * @param mixed $file ファイルオブジェクトまたはファイルパス
      */
-    public function __construct($file, $bufferSize = null)
+    public function __construct($file, bool $isAppend = false, int $bufferSize = null)
     {
-        parent::__construct(new FileOutputStream($file));
+        parent::__construct(new FileOutputStream($file, $isAppend));
 
         // fwriteのデフォルトバッファリングサイズは8KBなので、指定無しの場合は8KBになる
         // また、同じストリームに対して出力を行うプロセスが複数ある場合、8KBごとに停止する
