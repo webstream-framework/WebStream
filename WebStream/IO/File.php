@@ -162,11 +162,6 @@ class File
         // Fileオブジェクト作成後に属性が変わることを考慮しキャッシュクリアする
         clearstatcache();
 
-        // 読み込み不可のシンボリックリンクの場合、例外を発生させる
-        if (!$this->isReadable()) {
-            throw new IOException("No read access to " . $this->filePath);
-        }
-
         return @is_link($this->filePath);
     }
 
@@ -203,4 +198,51 @@ class File
         return $this->isLink() || $this->isDirectory() || $this->isFile();
     }
 
+    /**
+     * ファイルを削除する
+     * @return bool 削除結果
+     */
+    public function delete()
+    {
+        // Fileオブジェクト作成後に属性が変わることを考慮しキャッシュクリアする
+        clearstatcache();
+
+        $isDeleted = false;
+        if ($this->isWritable()) {
+            if ($this->isDirectory()) {
+                $isDeleted = rmdir($this->filePath);
+            } else {
+                $isDeleted = unlink($this->filePath);
+            }
+        }
+
+        return $isDeleted;
+    }
+
+    /**
+     * ファイルをリネームする
+     * @param string $destPath 変更後ファイル名
+     * @return bool リネーム結果
+     */
+    public function renameTo($destPath)
+    {
+        $dirname = dirname($destPath);
+        $dir = new File($dirname);
+        if (!$dir->isWritable()) {
+            throw new IOException("Cannot writable: " . $destPath);
+        }
+        $dirPath = $dir->getFilePath();
+        $absDestPath = $dirPath . "/" . basename($destPath);
+
+        return rename($this->filePath, $absDestPath);
+    }
+
+    /**
+     * ファイルサイズを返却する
+     * @return int ファイルサイズ
+     */
+    public function size()
+    {
+        return $this->exists() ? filesize($this->filePath) : 0;
+    }
 }

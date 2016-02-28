@@ -58,15 +58,6 @@ class OutputStreamWriter
     }
 
     /**
-     * 改行を書き出す
-     * @throws WebStream\Exception\Extend\IOException
-     */
-    public function newLine()
-    {
-        $this->stream->write(PHP_EOL);
-    }
-
-    /**
      * バッファリングしているすべての出力バイトを出力ストリームを閉じずに強制的に書き出す
      * writeを実行した時点では書き出されておらず、flushした時点ですべて書き出す
      * @throws WebStream\Exception\Extend\IOException
@@ -74,5 +65,14 @@ class OutputStreamWriter
     public function flush()
     {
         $this->stream->flush();
+    }
+
+    /**
+     * 改行を書き出す
+     * @throws WebStream\Exception\Extend\IOException
+     */
+    public function newLine()
+    {
+        $this->stream->write(PHP_EOL);
     }
 }

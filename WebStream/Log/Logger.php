@@ -1,8 +1,14 @@
 <?php
 namespace WebStream\Log;
 
+use WebStream\DI\Injector;
+use WebStream\IO\File;
+use WebStream\IO\FileInputStream;
+use WebStream\IO\Reader\FileReader;
+use WebStream\IO\Writer\SimpleFileWriter;
 use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Module\Container;
+use WebStream\Exception\Extend\IOException;
 use WebStream\Exception\Extend\LoggerException;
 
 /**
@@ -13,7 +19,7 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class Logger
 {
-    use LoggerUtils;
+    use Injector, LoggerUtils;
 
     /**
      * @var Logger ロガー
@@ -41,6 +47,21 @@ class Logger
     private $outputters;
 
     /**
+     * @var Container IOコンテナ
+     */
+    private $ioContainer;
+
+    /**
+     * @var File ログファイル
+     */
+    private $logFile;
+
+    /**
+     * @var File ステータスファイル
+     */
+    private $statusFile;
+
+    /**
      * コンストラクタ
      * @param Container ログ設定コンテナ
      */
@@ -48,6 +69,32 @@ class Logger
     {
         $this->logConfig = $logConfig;
         $this->outputters = [];
+
+        $logFile = new File($logConfig->logPath);
+        $statusFile = new File($logConfig->statusPath);
+
+        $this->ioContainer = new Container();
+
+        $this->ioContainer->statusReader = function () use ($statusFile) {
+            return new FileReader($statusFile);
+        };
+        $this->ioContainer->statusWriter = function () use ($statusFile) {
+            return new SimpleFileWriter($statusFile->getFilePath());
+        };
+        $this->ioContainer->logWriter = function () use ($logFile) {
+            return new SimpleFileWriter($logFile->getFilePath());
+        };
+
+        $this->logFile = $logFile;
+        $this->statusFile = $statusFile;
+    }
+
+    /**
+     * デストラクタ
+     */
+    public function __destruct()
+    {
+        $this->directWrite();
     }
 
     /**
@@ -57,14 +104,6 @@ class Logger
     public function getConfig()
     {
         return $this->logConfig;
-    }
-
-    /**
-     * デストラクタ
-     */
-    public function __destruct()
-    {
-        $this->directWrite();
     }
 
     /**
@@ -192,55 +231,21 @@ class Logger
             $msg = str_replace($matches[0], $matches[1], $msg);
         }
 
+        // ログローテート処理
         $this->rotate();
+
         try {
             if (count($this->outputters) > 0) {
                 foreach ($this->outputters as $outputter) {
                     $outputter->write(self::$formatter->getFormattedMessage($msg, $level));
                 }
             } else {
-                error_log(self::$formatter->getFormattedMessage($msg, $level), 3, $this->logConfig->logPath);
+                $this->ioContainer->logWriter->write(self::$formatter->getFormattedMessage($msg, $level) . PHP_EOL);
             }
         } catch (LoggerException $e) {
             throw $e;
-        } catch (\Exception $e) {
+        } catch (IOException $e) {
             throw new LoggerException($e);
-        }
-    }
-
-    /**
-     * ログステータスファイルに書きこむ
-     */
-    private function writeStatus()
-    {
-        file_put_contents($this->logConfig->statusPath, intval(preg_replace('/^.*\s/', '', microtime())));
-    }
-
-    /**
-     * ログステータスファイルを読み込む
-     * @return int UnixTime
-     */
-    private function readStatus()
-    {
-        $handle = fopen($this->logConfig->statusPath, "r");
-        $size = filesize($this->logConfig->statusPath);
-        $content = fread($handle, $size);
-        fclose($handle);
-        if (!preg_match('/^\d{10}$/', $content)) {
-            throw new LoggerException("Invalid log state file contents: " . $content);
-        }
-
-        return intval($content);
-    }
-
-    /**
-     * ステータスファイルを作成する
-     */
-    private function createstatusPath()
-    {
-        // ステータスファイルがない場合は書きだす
-        if (!is_file($this->logConfig->statusPath)) {
-            $this->writeStatus();
         }
     }
 
@@ -252,14 +257,50 @@ class Logger
     private function rotate()
     {
         // ログファイルがない場合はローテートしない
-        if (!realpath($this->logConfig->logPath)) {
+        if (!$this->logFile->exists()) {
             return;
         }
+
         // ログローテート実行
         if ($this->logConfig->rotateCycle !== null) {
             $this->rotateByCycle();
         } elseif ($this->logConfig->rotateSize !== null) {
             $this->rotateBySize();
+        }
+    }
+
+    /**
+     * ログステータスファイルに書きこむ
+     * @throws IOException
+     */
+    private function writeStatus()
+    {
+        $this->ioContainer->statusWriter->write(intval(preg_replace('/^.*\s/', '', microtime())));
+    }
+
+    /**
+     * ログステータスファイルを読み込む
+     * @return int UnixTime
+     * @throws LoggerException
+     */
+    private function readStatus()
+    {
+        $content = $this->ioContainer->statusReader->read();
+        if (!preg_match('/^\d{10}$/', $content)) {
+            throw new LoggerException("Invalid log state file contents: " . $content);
+        }
+
+        return intval($content);
+    }
+
+    /**
+     * ステータスファイルを作成する
+     */
+    private function createStatusFile()
+    {
+        // ステータスファイルがない場合は書きだす
+        if (!$this->statusFile->exists()) {
+            $this->writeStatus();
         }
     }
 
@@ -270,15 +311,15 @@ class Logger
      */
     private function runRotate($from, $to)
     {
-        $from_date = date("YmdHis", $from);
-        $to_date = date("YmdHis", $to);
-        $archive_path = null;
+        $fromDate = date("YmdHis", $from);
+        $toDate = date("YmdHis", $to);
+        $archivePath = null;
         if (preg_match('/(.*)\.(.+)/', $this->logConfig->logPath, $matches)) {
-            $archive_path = "$matches[1].${from_date}-${to_date}.$matches[2]";
+            $archivePath = "$matches[1].${fromDate}-${toDate}.$matches[2]";
             // mvを実行
-            rename($this->logConfig->logPath, $archive_path);
+            $this->logFile->renameTo($archivePath);
             // ステータスファイルを削除
-            unlink($this->logConfig->statusPath);
+            $this->statusFile->delete();
         }
     }
 
@@ -288,11 +329,10 @@ class Logger
      */
     private function rotateByCycle()
     {
-        $this->createstatusPath();
+        $this->createStatusFile();
         $now = intval(preg_replace('/^.*\s/', '', microtime()));
-        $createdAt = $this->readStatus($this->logConfig->statusPath);
+        $createdAt = $this->readStatus();
 
-        // ローテート周期を過ぎている場合はログファイルをアーカイブする
         $hour = intval(floor(($now - $createdAt) / 3600));
         if ($hour >= $this->logConfig->rotateCycle) {
             $this->runRotate($createdAt, $now);
@@ -305,13 +345,13 @@ class Logger
      */
     private function rotateBySize()
     {
-        $this->createstatusPath();
+        $this->createStatusFile();
         $now = intval(preg_replace('/^.*\s/', '', microtime()));
         $createdAt = $this->readStatus();
 
-        $size_kb = (int) floor(filesize($this->logConfig->logPath) / 1024);
+        $sizeKb = (int) floor($this->logFile->size() / 1024);
         // 指定したサイズより大きければローテート
-        if ($size_kb >= $this->logConfig->rotateSize) {
+        if ($sizeKb >= $this->logConfig->rotateSize) {
             $this->runRotate($createdAt, $now);
         }
     }

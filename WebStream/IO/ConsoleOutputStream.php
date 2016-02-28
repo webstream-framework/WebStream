@@ -9,11 +9,17 @@ namespace WebStream\IO;
  */
 class ConsoleOutputStream extends OutputStream
 {
+    /**
+     * constructor
+     */
     public function __construct()
     {
         parent::__construct("");
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function write($buf, int $off = null, int $len = null)
     {
         $data = null;
@@ -30,11 +36,17 @@ class ConsoleOutputStream extends OutputStream
         $this->stream .= $data;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function close()
     {
         $this->stream = null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function flush()
     {
         echo $this->stream;

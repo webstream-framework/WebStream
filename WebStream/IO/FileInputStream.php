@@ -27,12 +27,14 @@ class FileInputStream extends InputStream
     {
         if ($file instanceof File) {
             $this->file = $file;
-        } else if (is_string($file)) {
+        } elseif (is_string($file)) {
             $this->file = new File($file);
         } else {
             throw new InvalidArgumentException("Unable to open file: " . $file);
         }
-        $stream = @fopen($this->file->getAbsoluteFilePath(), 'r');
+
+        // 読み込みはロックを掛けずダーティーリード
+        $stream = fopen($this->file->getAbsoluteFilePath(), 'r');
         if (!is_resource($stream) || $stream === false) {
             throw new IOException("Unable open " . $this->file->getAbsoluteFilePath());
         }
