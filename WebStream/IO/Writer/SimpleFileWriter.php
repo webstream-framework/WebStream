@@ -7,11 +7,12 @@ use WebStream\Exception\Extend\IOException;
 
 /**
  * SimpleFileWriter
+ * OutputStreamWriterを継承しているが、write以外の機能を無効にする
  * @author Ryuichi TANAKA.
  * @since 2016/02/25
  * @version 0.7
  */
-class SimpleFileWriter
+class SimpleFileWriter extends OutputStreamWriter
 {
     /**
      * @var string ファイルパス
@@ -76,5 +77,29 @@ class SimpleFileWriter
         fflush($stream);
         flock($stream, LOCK_UN);
         fclose($stream);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function close()
+    {
+        // Nothing to do
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function flush()
+    {
+        // Nothing to do
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function newLine()
+    {
+        $this->write(PHP_EOL);
     }
 }
