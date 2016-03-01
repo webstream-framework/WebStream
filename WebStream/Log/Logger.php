@@ -3,7 +3,6 @@ namespace WebStream\Log;
 
 use WebStream\DI\Injector;
 use WebStream\IO\File;
-use WebStream\IO\FileInputStream;
 use WebStream\IO\Reader\FileReader;
 use WebStream\IO\Writer\SimpleFileWriter;
 use WebStream\Module\Utility\LoggerUtils;

@@ -42,6 +42,9 @@ class FileOutputter implements IOutputter, ILazyWriter
         $this->isLazyWrite = true;
     }
 
+    /**
+     * destructor
+     */
     public function __destruct()
     {
         try {
@@ -79,12 +82,31 @@ class FileOutputter implements IOutputter, ILazyWriter
     {
         if ($this->isLazyWrite) {
             if (count($this->logMessages) >= $this->bufferSize) {
-                $this->writeLog(implode("", $this->logMessages));
-                $this->logMessages = [];
+                $this->flush();
+                $this->clear();
             }
             $this->logMessages[] = $message;
         } else {
             $this->writeLog($message);
+        }
+    }
+
+    /**
+     * バッファをクリアする
+     */
+    private function clear()
+    {
+        $this->logMessages = [];
+    }
+
+    /**
+     * バッファをログ出力する
+     */
+    private function flush()
+    {
+        if ($this->isLazyWrite && count($this->logMessages) > 0) {
+            $this->writeLog(implode("", $this->logMessages));
+            $this->clear();
         }
     }
 
@@ -94,6 +116,7 @@ class FileOutputter implements IOutputter, ILazyWriter
      */
     private function writeLog($message)
     {
+        // TODO FileWriterに差し替える
         error_log($message, 3, $this->logPath);
     }
 }

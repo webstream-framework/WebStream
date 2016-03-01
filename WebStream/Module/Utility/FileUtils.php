@@ -22,7 +22,7 @@ trait FileUtils
         // 正規化した絶対パス
         $realpath = $this->getApplicationRoot() . DIRECTORY_SEPARATOR . $filepath;
 
-        return file_exists($realpath) ? parse_ini_file($realpath) : null;
+        return is_file($realpath) ? parse_ini_file($realpath) : null;
     }
 
     /**

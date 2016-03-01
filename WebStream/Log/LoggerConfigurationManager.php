@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Log;
 
+use WebStream\DI\Injector;
+use WebStream\IO\File;
 use WebStream\Module\Utility\FileUtils;
 use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Module\Container;
@@ -14,12 +16,17 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class LoggerConfigurationManager
 {
-    use FileUtils, LoggerUtils;
+    use Injector, FileUtils, LoggerUtils;
 
     /**
      * @var Container ログ設定コンテナ
      */
     private $logContainer;
+
+    /**
+     * @var Container IOコンテナ
+     */
+    private $ioContainer;
 
     /**
      * @var array<string> ログ設定情報
@@ -28,22 +35,41 @@ class LoggerConfigurationManager
 
     /**
      * Constructor
+     * @param mixed $config ログ設定
+     * @throws LoggerException
      */
-    public function __construct()
+    public function __construct($config)
     {
+        if (is_array($config)) {
+            $configMap = $config;
+        } else {
+            $configMap = $this->parseConfig($config);
+            if ($configMap === null) {
+                throw new LoggerException("Log config file does not exist: " . $config);
+            }
+        }
+
         $this->logContainer = new Container(false);
-        $this->configMap = [];
+        $this->ioContainer = new Container();
+
+        $rootDir = $this->getApplicationRoot();
+        $this->ioContainer->file = function () use ($rootDir, $configMap) {
+            if (!array_key_exists("path", $configMap)) {
+                throw new LoggerException("Log path must be defined.");
+            }
+            return new File($rootDir . "/" . $configMap["path"]);
+        };
+
+        $this->configMap = $configMap;
     }
 
     /**
      * 設定を読み込む
-     * @param string $configPath 設定ファイル相対パス
      * @throws LoggerException
      */
-    public function load($configPath)
+    public function load()
     {
-        $this->loadConfigFile($configPath)
-             ->loadLogLevel()
+        $this->loadLogLevel()
              ->loadLogFilePath()
              ->loadRotateCycle()
              ->loadRotateSize()
@@ -58,22 +84,6 @@ class LoggerConfigurationManager
     public function getConfig()
     {
         return $this->logContainer;
-    }
-
-    /**
-     * 設定ファイルを読み込む
-     * @param string $configPath 設定アイル相対パス
-     * @throws LoggerException
-     */
-    private function loadConfigFile($configPath)
-    {
-        $configMap = $this->parseConfig($configPath);
-        if ($configMap === null) {
-            throw new LoggerException("Log config file does not exist: " . $configPath);
-        }
-        $this->configMap = $configMap;
-
-        return $this;
     }
 
     /**
@@ -101,16 +111,12 @@ class LoggerConfigurationManager
      */
     private function loadLogFilePath()
     {
-        if (!array_key_exists("path", $this->configMap)) {
-            throw new LoggerException("Log path must be defined.");
+        $file = $this->ioContainer->file;
+        if (!($file->exists() && $file->isFile())) {
+            throw new LoggerException("Log directory does not exist: " . $file->getFilePath());
         }
 
-        $path = $this->getApplicationRoot() . "/" . $this->configMap["path"];
-        if (!file_exists(dirname($path))) {
-            throw new LoggerException("Log directory does not exist: " . dirname($path));
-        }
-        $this->logContainer->logPath = $path;
-
+        $this->logContainer->logPath = $file->getFilePath();
         $this->logContainer->statusPath = preg_replace_callback('/(.*)\..+/', function ($matches) {
             return "$matches[1].status";
         }, $this->logContainer->logPath);
