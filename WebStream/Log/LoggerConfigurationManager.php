@@ -35,6 +35,8 @@ class LoggerConfigurationManager
 
     /**
      * Constructor
+     * @param mixed $config ログ設定
+     * @throws LoggerException
      */
     public function __construct($config)
     {
