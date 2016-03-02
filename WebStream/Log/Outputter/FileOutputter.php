@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Log\Outputter;
 
+use WebStream\IO\Writer\SimpleFileWriter;
+
 /**
  * FileOutputter
  * @author Ryuichi Tanaka
@@ -30,6 +32,11 @@ class FileOutputter implements IOutputter, ILazyWriter
     private $isLazyWrite;
 
     /**
+     * @var SimpleFileWriter Writerオブジェクト
+     */
+    private $writer;
+
+    /**
      * constructor
      * @param string $logPath ログファイルパス
      * @param int $bufferSize バッファリングサイズ
@@ -40,6 +47,7 @@ class FileOutputter implements IOutputter, ILazyWriter
         $this->logMessages = [];
         $this->bufferSize = $bufferSize;
         $this->isLazyWrite = true;
+        $this->writer = new SimpleFileWriter($logPath);
     }
 
     /**
@@ -116,7 +124,6 @@ class FileOutputter implements IOutputter, ILazyWriter
      */
     private function writeLog($message)
     {
-        // TODO FileWriterに差し替える
-        error_log($message, 3, $this->logPath);
+        $this->writer->write($message);
     }
 }
