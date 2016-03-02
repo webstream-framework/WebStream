@@ -97,9 +97,6 @@ class LoggerConfigurationManager
         }
 
         $logLevel = $this->toLogLevelValue($this->configMap["level"]);
-        if ($logLevel === 0) {
-            throw new LoggerException("Invalid log level: " . $this->configMap["level"]);
-        }
         $this->logContainer->logLevel = $logLevel;
 
         return $this;
