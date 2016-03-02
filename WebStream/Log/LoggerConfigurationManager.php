@@ -128,12 +128,7 @@ class LoggerConfigurationManager
     private function loadRotateCycle()
     {
         if (array_key_exists("rotate_cycle", $this->configMap)) {
-            $rotateCycle = $this->cycle2value($this->configMap["rotate_cycle"]);
-            // 妥当なローテートサイクルか
-            if ($rotateCycle === 0) {
-                throw new LoggerException("Invalid log rotate cycle: " . $this->configMap["rotate_cycle"]);
-            }
-            $this->logContainer->rotateCycle = $rotateCycle;
+            $this->logContainer->rotateCycle = $this->cycle2value($this->configMap["rotate_cycle"]);
         }
 
         return $this;
@@ -187,6 +182,7 @@ class LoggerConfigurationManager
      * ログローテートサイクルを時間に変換
      * @param string ローテートサイクル
      * @return int ローテート時間
+     * @throws LoggerException
      */
     private function cycle2value($cycle)
     {
@@ -210,7 +206,7 @@ class LoggerConfigurationManager
             case 'year':
                 return $year_to_h;
             default:
-                return 0;
+                throw new LoggerException("Invalid log rotate cycle: " . $cycle);
         }
     }
 }
