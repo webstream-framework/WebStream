@@ -245,4 +245,13 @@ class File
     {
         return $this->exists() ? filesize($this->filePath) : 0;
     }
+
+    /**
+     * ファイル更新日時を返却する
+     * @return int ファイル更新日時
+     */
+    public function lastModified()
+    {
+        return $this->exists() ? filemtime($this->filePath) : 0;
+    }
 }
