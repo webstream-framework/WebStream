@@ -1,6 +1,9 @@
 <?php
 namespace WebStream\Template;
 
+use WebStream\IO\File;
+use WebStream\IO\Reader\FileReader;
+use WebStream\IO\Writer\FileWriter;
 use WebStream\Module\Cache;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Utility\ApplicationUtils;
@@ -69,40 +72,39 @@ class Basic implements ITemplateEngine
         $params = ["model" => $params["model"], "helper" => $params["helper"]];
         $dirname = $this->camel2snake($this->container->router->pageName);
 
-        $filepath = $this->container->applicationInfo->applicationRoot . "/app/views/" . $dirname . "/" . $this->container->filename;
-        $sharedpath = $this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->sharedDir . "/" . $this->container->filename;
+        $templateFile = new File($this->container->applicationInfo->applicationRoot . "/app/views/" . $dirname . "/" . $this->container->filename);
+        $sharedFile = new File($this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->sharedDir . "/" . $this->container->filename);
 
-        $realpath = realpath($filepath) ?: realpath($sharedpath);
-
-        if ($realpath === false) {
-            throw new ResourceNotFoundException("Invalid template file path: " . safetyOut($filepath));
+        $file = $templateFile->exists() ? $templateFile : ($sharedFile->exists() ? $sharedFile : null);
+        if ($file === null) {
+            $errorMessage = "Invalid template file path: " . $templateFile->getFilePath() . " or " .  $sharedFile->getFilePath();
+            throw new ResourceNotFoundException($errorMessage);
         }
 
         // テンプレートファイルの最新の変更日時を取得
-        $timestamp = filemtime($realpath);
+        $timestamp = $file->lastModified();
         if ($timestamp > $this->timestamp) {
             $this->timestamp = $timestamp;
         }
 
         // テンプレートが見つからない場合は500になるのでエラー処理は不要
-        $content = file_get_contents($realpath);
+        $reader = new FileReader($file);
+        $content = $reader->read();
         $this->replaceTemplateMark($content, $mimeType);
 
         // テンプレートファイルをコンパイルし一時ファイルを作成
-        $temp = $this->getTemporaryDirectory() . "/" . $this->getRandomstring(30);
-        $fileSize = file_put_contents($temp, $content, LOCK_EX);
-        if ($fileSize === false) {
-            throw new IOException("File write failure: " . $temp);
-        } else {
-            $this->logger->debug("Write temporary template file: " . $temp);
-            $this->logger->debug("Compiled template file size: " . $fileSize);
-        }
+        $tmpFile = new File($this->getTemporaryDirectory() . "/" . $this->getRandomstring(30));
+        $writer = new FileWriter($tmpFile);
+        $writer->write($content);
+        $writer->close();
+        $this->logger->debug("Write temporary template file: " . $tmpFile->getFilePath());
+        $this->logger->debug("Compiled template file size: " . $tmpFile->size());
 
         $params["__params__"] = $params;
         $params["__mimeType__"] = $mimeType;
-        $this->outputHTML($temp, $params);
+        $this->outputHTML($tmpFile->getFilePath(), $params);
 
-        unlink($temp);
+        $tmpFile->delete();
     }
 
     /**
@@ -132,20 +134,18 @@ class Basic implements ITemplateEngine
         }
 
         // テンプレートファイルをコンパイルし一時ファイルを作成
-        $temp = $this->getTemporaryDirectory() . "/" . $this->getRandomstring(30);
-        $fileSize = file_put_contents($temp, $content, LOCK_EX);
-        if ($fileSize === false) {
-            throw new IOException("File write failure: " . $temp);
-        } else {
-            $this->logger->debug("Write temporary template file: " . $temp);
-            $this->logger->debug("Compiled template file size: " . $fileSize);
-        }
+        $tmpFile = new File($this->getTemporaryDirectory() . "/" . $this->getRandomstring(30));
+        $writer = new FileWriter($tmpFile);
+        $writer->write($content);
+        $writer->close();
+        $this->logger->debug("Write temporary template file: " . $tmpFile->getFilePath());
+        $this->logger->debug("Compiled template file size: " . $tmpFile->size());
 
         $params["__params__"] = $params;
         $params["__mimeType__"] = $mimeType;
-        $this->outputHTML($temp, $params);
+        $this->outputHTML($tmpFile->getFilePath(), $params);
 
-        unlink($temp);
+        $tmpFile->delete();
 
         // テンプレート記法がある場合、再帰的に展開していく
         if ($isReplaced) {
@@ -175,18 +175,19 @@ class Basic implements ITemplateEngine
      * @param string テンプレートファイルパス
      * @param string 保存データ
      * @param integer 有効期限
+     * @throws IOException
      */
     public function cache($filename, $data, $expire)
     {
         $cacheDir = $this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->cacheDir;
         $cache = new Cache($cacheDir);
         $cache->inject('logger', $this->logger);
-        $filepath = $cacheDir . "/" . $filename . ".cache";
-        if (!file_exists($filepath) || $this->timestamp > filemtime($filepath)) {
+        $file = new File($cacheDir . "/" . $filename . ".cache");
+        if (!$file->exists() || $this->timestamp > $file->lastModified()) {
             if ($cache->save($filename, $data, $expire)) {
-                $this->logger->debug("Write template cache file: " . $filepath);
+                $this->logger->debug("Write template cache file: " . $file->getFilePath());
             } else {
-                throw new IOException("File write failure: " . $filepath);
+                throw new IOException("File write failure: " . $file->getFilePath());
             }
         }
     }
@@ -256,7 +257,7 @@ class Basic implements ITemplateEngine
         // 警告が出るが処理は正常に実行出来るので無視する
         @$doc->loadHTML($content);
         $nodeList = $doc->getElementsByTagName("form");
-        $dummy_value = $this->getRandomString();
+        $dummyValue = $this->getRandomString();
         $nodeLength = $nodeList->length;
         for ($i = 0; $i < $nodeLength; $i++) {
             $node = $nodeList->item($i);
@@ -265,7 +266,7 @@ class Basic implements ITemplateEngine
                 $newNode = $doc->createElement("input");
                 $newNode->setAttribute("type", "hidden");
                 $newNode->setAttribute("name", $this->getCsrfTokenKey());
-                $newNode->setAttribute("value", $dummy_value);
+                $newNode->setAttribute("value", $dummyValue);
                 $node->appendChild($newNode);
             }
         }
@@ -280,7 +281,7 @@ class Basic implements ITemplateEngine
                 $tmp->appendChild($tmp->importNode($child, true));
                 $innerHTML .= trim($tmp->saveHTML());
             }
-            $content = str_replace($dummy_value, $csrfToken, $innerHTML);
+            $content = str_replace($dummyValue, $csrfToken, $innerHTML);
         }
         // 実体参照化をもとに戻す。
         $map = array('&gt;' => '>',
