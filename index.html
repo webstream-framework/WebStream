@@ -1,39 +1,48 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>Webstream by webstream-framework</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Webstream</h1>
-      <h2 class="project-tagline">MVC+ServiceによるWebアプリケーションフレームワーク</h2>
-      <a href="https://github.com/webstream-framework/WebStream" class="btn">View on GitHub</a>
-      <a href="https://github.com/webstream-framework/WebStream/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/webstream-framework/WebStream/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <section class="main-content">
-      <h1>
-<a id="webstream" class="anchor" href="#webstream" aria-hidden="true"><span class="octicon octicon-link"></span></a>WebStream</h1>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Webstream by webstream-framework</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Webstream</h1>
+        <h2>MVC+ServiceによるWebアプリケーションフレームワーク</h2>
+        <a href="https://github.com/webstream-framework/WebStream" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="webstream" class="anchor" href="#webstream" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebStream</h1>
 
 <p>WebStreamはMVCアーキテクチャをベースとしたWebアプリケーションフレームワークです。<br>
 さらにS(Service)層を追加した4層構造のアーキテクチャとなっています。</p>
 
 <h2>
-<a id="webstreamのアーキテクチャ" class="anchor" href="#webstream%E3%81%AE%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3" aria-hidden="true"><span class="octicon octicon-link"></span></a>WebStreamのアーキテクチャ</h2>
+<a id="webstreamのアーキテクチャ" class="anchor" href="#webstream%E3%81%AE%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebStreamのアーキテクチャ</h2>
 
 <p>WebStreamはMVCを拡張したアーキテクチャを採用しており、Serviceレイヤを追加しています。<br>
 MVCはFat Controller/Fat Model問題を引き起こしやすいアーキテクチャであるため、ビジネスロジックはServiceに定義します。<br>
 また、View内でビジネスロジックを書く場合はHelperを利用し、Viewはレンダリングに専念させます。</p>
 
 <h2>
-<a id="controller" class="anchor" href="#controller" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#controller">Controller</a>
+<a id="controller" class="anchor" href="#controller" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#controller">Controller</a>
 </h2>
 
 <p>Contollerではクライアントからのリクエストを受け付け、ServiceまたはModelを呼び出します。<br>
@@ -42,13 +51,13 @@ Controllerの処理が完了したらViewを呼び出します。Viewへパラ�
 <code>app/controllers</code>に<code>WebStream\Core\CoreController</code>クラスを継承したクラスを定義します。</p>
 
 <h3>
-<a id="controllerクラスの定義" class="anchor" href="#controller%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controllerクラスの定義</h3>
+<a id="controllerクラスの定義" class="anchor" href="#controller%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Controllerクラスの定義</h3>
 
 <p>Controllerクラスは<code>\WebStream\Core\CoreController</code>クラスを継承します。<br>
 ControllerクラスからはServiceクラスまたはModelクラスを参照できます。またViewテンプレートを呼び出して描画できます。</p>
 
 <h4>
-<a id="serviceクラスmodelクラス呼び出し" class="anchor" href="#service%E3%82%AF%E3%83%A9%E3%82%B9model%E3%82%AF%E3%83%A9%E3%82%B9%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97" aria-hidden="true"><span class="octicon octicon-link"></span></a>Serviceクラス、Modelクラス呼び出し</h4>
+<a id="serviceクラスmodelクラス呼び出し" class="anchor" href="#service%E3%82%AF%E3%83%A9%E3%82%B9model%E3%82%AF%E3%83%A9%E3%82%B9%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Serviceクラス、Modelクラス呼び出し</h4>
 
 <p>Serviceクラス、Modelクラスは以下のように呼び出します。</p>
 
@@ -67,7 +76,7 @@ Serviceクラスを定義せずModelクラスのみ定義した場合はModelク
 Controllerクラスでは<a href="#annotaion">アノテーション</a>を使ってメソッドやプロパティを操作できます。</p>
 
 <h4>
-<a id="viewテンプレート呼び出し" class="anchor" href="#view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97" aria-hidden="true"><span class="octicon octicon-link"></span></a>Viewテンプレート呼び出し</h4>
+<a id="viewテンプレート呼び出し" class="anchor" href="#view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Viewテンプレート呼び出し</h4>
 
 <p>HTMLを描画するにはControllerからViewテンプレートを呼び出します。Viewテンプレート呼び出しは<a href="#annotaion">アノテーション</a>を利用します。</p>
 
@@ -89,7 +98,7 @@ Controllerクラスでは<a href="#annotaion">アノテーション</a>を使っ
 テンプレートファイルは<code>app/views/(ページ名)/</code>に保存します。このときのページ名はスネークケースで指定します(詳細は<a href="#view">View</a>で説明します)。</p>
 
 <h2>
-<a id="service" class="anchor" href="#service" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#service">Service</a>
+<a id="service" class="anchor" href="#service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#service">Service</a>
 </h2>
 
 <p>ServiceクラスではContollerクラスから受け取ったリクエストやデータを使って処理をしたり、View経由でビジネスロジックを実行します。<br>
@@ -174,7 +183,7 @@ Serviceクラスの中で、未定義のプロパティに値をセットする�
 また、この機能はModelでも有効ですが、Serviceクラスを作る必要のない簡単な処理の場合以外はServiceクラスのViewModel機能を使うことを推奨します。</p>
 
 <h2>
-<a id="model" class="anchor" href="#model" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#model">Model</a>
+<a id="model" class="anchor" href="#model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#model">Model</a>
 </h2>
 
 <p>ModelクラスはControllerクラス、ServiceクラスまたはViewクラスからのリクエストや受け取ったデータを元にデータベースに問い合わせます。<br>
@@ -215,7 +224,7 @@ Serviceクラスが定義されない場合はController、Viewから直接呼�
 <p>Modelクラスでは以下のメソッドが利用可能です。</p>
 
 <h4>
-<a id="modelで利用可能なメソッド一覧" class="anchor" href="#model%E3%81%A7%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E4%B8%80%E8%A6%A7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelで利用可能なメソッド一覧</h4>
+<a id="modelで利用可能なメソッド一覧" class="anchor" href="#model%E3%81%A7%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E4%B8%80%E8%A6%A7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Modelで利用可能なメソッド一覧</h4>
 
 <table>
 <thead>
@@ -265,7 +274,7 @@ Serviceクラスが定義されない場合はController、Viewから直接呼�
 </table>
 
 <h4>
-<a id="クエリファイルによるsql実行" class="anchor" href="#%E3%82%AF%E3%82%A8%E3%83%AA%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8Bsql%E5%AE%9F%E8%A1%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>クエリファイルによるSQL実行</h4>
+<a id="クエリファイルによるsql実行" class="anchor" href="#%E3%82%AF%E3%82%A8%E3%83%AA%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8Bsql%E5%AE%9F%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>クエリファイルによるSQL実行</h4>
 
 <p>Modelクラスでは直接SQLをメソッド内に記述する以外に、クエリファイル(XML)を使ってSQLを実行できます。クエリファイルは<code>query/</code>に保存します。</p>
 
@@ -305,7 +314,7 @@ mapperタグ配下にSQLを記述するタグを記述します。<code>&lt;sele
 <span class="pl-s1">}</span></pre></div>
 
 <h4>
-<a id="クエリファイルによるsql実行結果をエンティティクラスにマッピングする" class="anchor" href="#%E3%82%AF%E3%82%A8%E3%83%AA%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8Bsql%E5%AE%9F%E8%A1%8C%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AB%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0%E3%81%99%E3%82%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>クエリファイルによるSQL実行結果をエンティティクラスにマッピングする</h4>
+<a id="クエリファイルによるsql実行結果をエンティティクラスにマッピングする" class="anchor" href="#%E3%82%AF%E3%82%A8%E3%83%AA%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8Bsql%E5%AE%9F%E8%A1%8C%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AB%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0%E3%81%99%E3%82%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>クエリファイルによるSQL実行結果をエンティティクラスにマッピングする</h4>
 
 <p>クエリファイルの<code>&lt;select&gt;</code>タグの<code>entity</code>属性にクラスパスを設定すると、取得結果をマッピングすることができます。<br>
 Modelクラスでは直接SQLをメソッド内に記述する以外に、クエリファイル(XML)を使ってSQLを実行できます。クエリファイルは<code>query/</code>に保存します。</p>
@@ -342,7 +351,7 @@ Modelクラスでは直接SQLをメソッド内に記述する以外に、クエ
 テーブルのカラム名がスネークケースである場合、自動的に名前をローワーキャメルケースに変換した上でマッピングされます。カラム名がエンティティクラスのフィールド名にマッピングできない命名になっている場合、SQLのAS句で別名を付けて対応してください。</p>
 
 <h4>
-<a id="取得結果を配列にする" class="anchor" href="#%E5%8F%96%E5%BE%97%E7%B5%90%E6%9E%9C%E3%82%92%E9%85%8D%E5%88%97%E3%81%AB%E3%81%99%E3%82%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>取得結果を配列にする</h4>
+<a id="取得結果を配列にする" class="anchor" href="#%E5%8F%96%E5%BE%97%E7%B5%90%E6%9E%9C%E3%82%92%E9%85%8D%E5%88%97%E3%81%AB%E3%81%99%E3%82%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>取得結果を配列にする</h4>
 
 <p><code>select</code>で取得した結果を配列に変換します。</p>
 
@@ -351,7 +360,7 @@ Modelクラスでは直接SQLをメソッド内に記述する以外に、クエ
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>getData(<span class="pl-smi">$bind</span>)<span class="pl-k">-&gt;</span>toArray();</span></pre></div>
 
 <h4>
-<a id="取得結果をエンティティにする" class="anchor" href="#%E5%8F%96%E5%BE%97%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3%E3%81%AB%E3%81%99%E3%82%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>取得結果をエンティティにする</h4>
+<a id="取得結果をエンティティにする" class="anchor" href="#%E5%8F%96%E5%BE%97%E7%B5%90%E6%9E%9C%E3%82%92%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3%E3%81%AB%E3%81%99%E3%82%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>取得結果をエンティティにする</h4>
 
 <p><code>select</code>で取得した結果をエンティティに変換します。</p>
 
@@ -364,14 +373,14 @@ Modelクラスでは直接SQLをメソッド内に記述する以外に、クエ
 <p><a href="#annotaion">アノテーション</a>を使い、クエリファイルパスを指定します。これによりクエリファイルに記述したSQLが自動的に紐付けられます。</p>
 
 <h4>
-<a id="トランザクション処理" class="anchor" href="#%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B6%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%87%A6%E7%90%86" aria-hidden="true"><span class="octicon octicon-link"></span></a>トランザクション処理</h4>
+<a id="トランザクション処理" class="anchor" href="#%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B6%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%87%A6%E7%90%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>トランザクション処理</h4>
 
 <p><code>$this-&gt;beginTransation()</code>でトランザクションを開始し<code>$this-&gt;commit()</code>でコミット、<code>$this-&gt;rollback()</code>でロールバックを実行します。<br>
 ただし、DBMSがトランザクション処理に対応していない場合はトランザクション処理は有効になりません。<br>
 なお、トランザクション処理を明示しない場合、処理が終了後、自動的にコミットを実行します。</p>
 
 <h2>
-<a id="view" class="anchor" href="#view" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#view">View</a>
+<a id="view" class="anchor" href="#view" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#view">View</a>
 </h2>
 
 <p>Viewは画面に出力するHTMLなどを描画し、Controllerクラスから呼ばれます。HTML等の描画はWebStream独自のテンプレート機能を利用します。<br>
@@ -516,7 +525,7 @@ Basicテンプレートを指定している場合に<code>&lt;form&gt;</code>�
 <p>Viewテンプレートでは以下の構文が使用可能です。</p>
 
 <h3>
-<a id="viewテンプレート構文" class="anchor" href="#view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E6%A7%8B%E6%96%87" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#template_keyword">Viewテンプレート構文</a>
+<a id="viewテンプレート構文" class="anchor" href="#view%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E6%A7%8B%E6%96%87" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#template_keyword">Viewテンプレート構文</a>
 </h3>
 
 <table>
@@ -551,7 +560,7 @@ Basicテンプレートを指定している場合に<code>&lt;form&gt;</code>�
 </table>
 
 <h2>
-<a id="helper" class="anchor" href="#helper" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#helper">Helper</a>
+<a id="helper" class="anchor" href="#helper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#helper">Helper</a>
 </h2>
 
 <p>Viewの描画に関するロジックが必要な場合はHelperを呼び出します。<br>
@@ -583,7 +592,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>ただし、Helper内で直接echoで出力するとエスケープされないので注意してください。</p>
 
 <h2>
-<a id="命名規則まとめ" class="anchor" href="#%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87%E3%81%BE%E3%81%A8%E3%82%81" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#naming_rule">命名規則まとめ</a>
+<a id="命名規則まとめ" class="anchor" href="#%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87%E3%81%BE%E3%81%A8%E3%82%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#naming_rule">命名規則まとめ</a>
 </h2>
 
 <p>各クラスの命名規則、保存場所のまとめは以下のとおりです。</p>
@@ -647,11 +656,11 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>エンティティマッピングで使用するエンティティクラスや外部APIを利用するためのクラスなどはここに定義します。</p>
 
 <h2>
-<a id="ルーティング定義" class="anchor" href="#%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#routing">ルーティング定義</a>
+<a id="ルーティング定義" class="anchor" href="#%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#routing">ルーティング定義</a>
 </h2>
 
 <h3>
-<a id="routesphp" class="anchor" href="#routesphp" aria-hidden="true"><span class="octicon octicon-link"></span></a>routes.php</h3>
+<a id="routesphp" class="anchor" href="#routesphp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>routes.php</h3>
 
 <p>ルーティング設定により、URI設計を行うことができます。ルーティングにはmod_rewiteが必要です。<br>
 ルーティング定義は<code>config/routes.php</code>に記述します。</p>
@@ -665,7 +674,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>ルーティングルールは配列で定義し、キーにURIパス定義、バリューにクラス、アクション定義を記述します。誤った定義が記述された場合、例外が発生します。</p>
 
 <h3>
-<a id="uriパス定義" class="anchor" href="#uri%E3%83%91%E3%82%B9%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>URIパス定義</h3>
+<a id="uriパス定義" class="anchor" href="#uri%E3%83%91%E3%82%B9%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>URIパス定義</h3>
 
 <p>URIパスは<code>/path/to</code>形式で定義します。またURIには変数の設定が可能で、<code>:value</code>形式で記述します。例えば、<code>/blog/:id</code>と定義し、<code>/blog/10</code>にアクセスした場合、Controllerクラスでは以下の方法で値を取得出来ます。</p>
 
@@ -678,7 +687,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <span class="pl-s1">}</span></pre></div>
 
 <h2>
-<a id="バリデーション定義" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#validate">バリデーション定義</a>
+<a id="バリデーション定義" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#validate">バリデーション定義</a>
 </h2>
 
 <p>Controllerクラスのアクションメソッドに<code>@Validate</code>アノテーションを記述することでバリデーションを有効にできます。</p>
@@ -699,7 +708,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>バリデーションルールは以下のものが用意されています。</p>
 
 <h4>
-<a id="バリデーションチェックルール" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%AB" aria-hidden="true"><span class="octicon octicon-link"></span></a>バリデーションチェックルール</h4>
+<a id="バリデーションチェックルール" class="anchor" href="#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%AB" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>バリデーションチェックルール</h4>
 
 <table>
 <thead>
@@ -753,7 +762,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 </table>
 
 <h3>
-<a id="カスタムバリデーション" class="anchor" href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>カスタムバリデーション</h3>
+<a id="カスタムバリデーション" class="anchor" href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>カスタムバリデーション</h3>
 
 <p>用意されているバリデーションルール以外に、開発者が独自にルールを定義することが出来ます。<br>
 <code>app</code>ディレクトリ配下の任意の場所にバリデーションクラスを作成します。</p>
@@ -787,7 +796,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <span class="pl-s1">}</span></pre></div>
 
 <h2>
-<a id="リクエストパラメータ" class="anchor" href="#%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#request">リクエストパラメータ</a>
+<a id="リクエストパラメータ" class="anchor" href="#%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#request">リクエストパラメータ</a>
 </h2>
 
 <p>GET/POST/PUT/DELETEで送信した値をControllerで取得できます。<br>
@@ -803,7 +812,7 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <span class="pl-s1">}</span></pre></div>
 
 <h2>
-<a id="セッション" class="anchor" href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#session">セッション</a>
+<a id="セッション" class="anchor" href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#session">セッション</a>
 </h2>
 
 <p>ログイン処理などを実装するときに、セッション管理を使用しますが、WebStreamでは<code>$this-&gt;session</code>オブジェクトを使用します。セッション期限を指定するには<code>restart</code>メソッドを使用します。</p>
@@ -822,8 +831,11 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>セッションがタイムアウトした場合、<code>SessionTimeoutException</code>が発生します。</p>
 
 <h2>
-<a id="ロギング" class="anchor" href="#%E3%83%AD%E3%82%AE%E3%83%B3%E3%82%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#logging">ロギング</a>
+<a id="ロギング" class="anchor" href="#%E3%83%AD%E3%82%AE%E3%83%B3%E3%82%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#logging">ロギング</a>
 </h2>
+
+<h3>
+<a id="ログ設定" class="anchor" href="#%E3%83%AD%E3%82%B0%E8%A8%AD%E5%AE%9A" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ログ設定</h3>
 
 <p><code>config/log.ini</code>または<code>config/log.yml</code>を配置し、ログ設定を記述します。<br>
 ログ格納ディレクトリには書き込み権限を与えておく必要があります。  </p>
@@ -863,8 +875,97 @@ format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
 
 <p>ログレベルについては、<a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md">PSR-3</a>に準拠しています。</p>
 
+<h3>
+<a id="ロガーのカスタマイズ" class="anchor" href="#%E3%83%AD%E3%82%AC%E3%83%BC%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%9E%E3%82%A4%E3%82%BA" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ロガーのカスタマイズ</h3>
+
+<p>デフォルトではロガーはログファイル出力しますが、Outputterを切り替えることで出力先を変更することができます。<br>
+ロガーインスタンスを新たに生成し、Outputterを差し替えます。</p>
+
+<pre><code>$instance = Logger::getInstance();
+$instance-&gt;setOutputter([
+   new BrowserOutputter()
+]);
+$customLogger = new LoggerAdapter($instance);
+</code></pre>
+
+<p>WebStream標準では以下のOutputterが用意してあります。独自に定義すれば出力先を自由に変えることができます。  </p>
+
+<table>
+<thead>
+<tr>
+<th>Outputter種類</th>
+<th>出力先</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FileOutputter</td>
+<td>指定したログファイルに出力</td>
+</tr>
+<tr>
+<td>BrowserOutputter</td>
+<td>ブラウザに出力</td>
+</tr>
+<tr>
+<td>ConsoleOutputter</td>
+<td>コンソールに出力</td>
+</tr>
+</tbody>
+</table>
+
 <h2>
-<a id="アノテーション" class="anchor" href="#%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#annotation">アノテーション</a>
+<a id="ファイル入出力" class="anchor" href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%85%A5%E5%87%BA%E5%8A%9B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#io">ファイル入出力</a>
+</h2>
+
+<p>PHP標準の<code>file</code>、<code>file_get_contents</code>、<code>file_put_contents</code>などを使うとファイル入出力ができますが、WebStreamでは安全にファイル入出力を行うためのクラスが用意してあります。  </p>
+
+<table>
+<thead>
+<tr>
+<th>クラス</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FileReader</td>
+<td>ファイル読み込みを行う<br>ファイルはロックしない</td>
+</tr>
+<tr>
+<td>FileWriter</td>
+<td>ファイル書き込みを行う<br>書き込み時に排他ロックを取得する<br>ファイルを閉じるまでロックし続ける</td>
+</tr>
+<tr>
+<td>SimpleFileWriter</td>
+<td>ファイル書き込みを行う<br>書き込み時に排他ロックを取得する<br>書き込む度にファイルを閉じてロックを解放する</td>
+</tr>
+</tbody>
+</table>
+
+<p>これらのクラスはファイルの読み込みや書き込みになんらかの問題が発生した場合、<code>IOException</code>をスローするので、適切に例外処理することができます。<br>
+さらに以下のクラスを使うことで、ファイルオブジェクトを取得することができます。それにより、さらに高度なファイル処理が可能になります。  </p>
+
+<table>
+<thead>
+<tr>
+<th>クラス</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>InputStreamReader</td>
+<td>ファイル読み込みを行う<br>入力ストリームを操作可能</td>
+</tr>
+<tr>
+<td>OutputstreamWriter</td>
+<td>ファイル書き込みを行う<br>出力ストリームを操作可能</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="アノテーション" class="anchor" href="#%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#annotation">アノテーション</a>
 </h2>
 
 <p>ControllerとModelではアノテーションを使ってクラスやメソッドを操作することができます。アノテーションを利用することで便利な処理が可能になります。<br>
@@ -890,7 +991,7 @@ format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
 </table>
 
 <h4>
-<a id="すべてのレイヤで使用可能なアノテーション" class="anchor" href="#%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E3%83%AC%E3%82%A4%E3%83%A4%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>すべてのレイヤで使用可能なアノテーション</h4>
+<a id="すべてのレイヤで使用可能なアノテーション" class="anchor" href="#%E3%81%99%E3%81%B9%E3%81%A6%E3%81%AE%E3%83%AC%E3%82%A4%E3%83%A4%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>すべてのレイヤで使用可能なアノテーション</h4>
 
 <table>
 <thead>
@@ -923,7 +1024,7 @@ format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
 </table>
 
 <h4>
-<a id="controllerで使用可能なアノテーション" class="anchor" href="#controller%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controllerで使用可能なアノテーション</h4>
+<a id="controllerで使用可能なアノテーション" class="anchor" href="#controller%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Controllerで使用可能なアノテーション</h4>
 
 <table>
 <thead>
@@ -961,7 +1062,7 @@ format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
 </table>
 
 <h4>
-<a id="modelで使用可能なアノテーション" class="anchor" href="#model%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modelで使用可能なアノテーション</h4>
+<a id="modelで使用可能なアノテーション" class="anchor" href="#model%E3%81%A7%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Modelで使用可能なアノテーション</h4>
 
 <table>
 <thead>
@@ -988,12 +1089,12 @@ format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
 </table>
 
 <h3>
-<a id="カスタムアノテーション" class="anchor" href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span class="octicon octicon-link"></span></a>カスタムアノテーション</h3>
+<a id="カスタムアノテーション" class="anchor" href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>カスタムアノテーション</h3>
 
 <p>用意されているアノテーション(デフォルトアノテーション)以外に独自のカスタムアノテーションを定義することができます。</p>
 
 <h4>
-<a id="定義方法" class="anchor" href="#%E5%AE%9A%E7%BE%A9%E6%96%B9%E6%B3%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>定義方法</h4>
+<a id="定義方法" class="anchor" href="#%E5%AE%9A%E7%BE%A9%E6%96%B9%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>定義方法</h4>
 
 <p><code>app</code>ディレクトリ以下の任意の場所にクラスを定義します。定義したクラスは自動的にクラスパスが通ります。<br>
 クラスの定義は以下のルールに従って定義してください。</p>
@@ -1103,14 +1204,24 @@ format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
 </table>
 
 <p>デフォルトアノテーションは使用できるレイヤが制限されていますが、カスタムアノテーションはController/Service/Modelレイヤで使用可能です。</p>
+        </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/webstream-framework/WebStream">Webstream</a> is maintained by <a href="https://github.com/webstream-framework">webstream-framework</a>.</span>
+        <aside id="sidebar">
+          <a href="https://github.com/webstream-framework/WebStream/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/webstream-framework/WebStream/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+          <p class="repo-owner"><a href="https://github.com/webstream-framework/WebStream"></a> is maintained by <a href="https://github.com/webstream-framework">webstream-framework</a>.</p>
 
-    </section>
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
 
   
   </body>
