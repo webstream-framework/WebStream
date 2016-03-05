@@ -50,7 +50,7 @@ class CoreController implements CoreInterface, IAnnotatable
     /**
      * {@inheritdoc}
      */
-    final public function __construct(Container $container)
+    public function __construct(Container $container)
     {
         $this->request   = $container->request;
         $this->response  = $container->response;
@@ -79,16 +79,15 @@ class CoreController implements CoreInterface, IAnnotatable
     }
 
     /**
-     * カスタムアノテーション情報を設定する
-     * @param array<mixed> カスタムアノテーション情報
+    * {@inheritdoc}
      */
-    final public function __customAnnotation(array $annotation)
+    public function __customAnnotation(array $annotation)
     {
         $this->annotation = $annotation;
     }
 
     /**
-     * 初期化処理
+    * {@inheritdoc}
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)

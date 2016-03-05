@@ -27,4 +27,10 @@ interface CoreInterface
      * @param Container DIContainer
      */
     public function __initialize(Container $container);
+
+    /**
+    * カスタムアノテーション情報を設定する
+    * @param array<mixed> カスタムアノテーション情報
+     */
+    public function __customAnnotation(array $annotation);
 }
