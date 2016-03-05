@@ -51,10 +51,17 @@ class CoreView implements CoreInterface, IAnnotatable
     }
 
     /**
-     * 初期化処理
+     * {@inheritdoc}
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __customAnnotation(array $annotation)
     {
     }
 

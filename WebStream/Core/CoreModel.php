@@ -73,7 +73,7 @@ class CoreModel implements CoreInterface, IAnnotatable
     }
 
     /**
-     * 初期化処理
+     * {@inheritdoc}
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)
@@ -92,10 +92,9 @@ class CoreModel implements CoreInterface, IAnnotatable
     }
 
     /**
-     * カスタムアノテーション情報を設定する
-     * @param array<mixed> カスタムアノテーション情報
+    * {@inheritdoc}
      */
-    final public function __customAnnotation(array $annotation)
+    public function __customAnnotation(array $annotation)
     {
         $this->annotation = $annotation;
     }
