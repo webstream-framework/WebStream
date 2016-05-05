@@ -13,6 +13,7 @@ use WebStream\Module\ClassLoader;
 use WebStream\DI\ServiceLocator;
 use WebStream\Exception\Extend\ValidateException;
 use WebStream\Exception\Extend\AnnotationException;
+use WebStream\Exception\Extend\InvalidRequestException;
 
 /**
  * Validate
@@ -56,7 +57,7 @@ class Validate extends Annotation implements IMethod
 
         if ($method !== null && !$this->inArray($method, ["get", "post", "put", "delete"])) {
             $errorMsg = "Invalid method attribute is specified: " . safetyOut($method);
-            throw new AnnotationException($errorMsg);
+            throw new ValidateException($errorMsg);
         }
 
         // パラメータの有無にかかわらずルール定義が間違っている場合はエラー
@@ -119,7 +120,7 @@ class Validate extends Annotation implements IMethod
                 }
             } else {
                 $errorMsg = "Unsupported method is specified: " . safetyOut($method);
-                throw new AnnotationException($errorMsg);
+                throw new InvalidRequestException($errorMsg);
             }
 
             // パラメータの指定なしの場合、value=null

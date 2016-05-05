@@ -75,10 +75,11 @@ class CoreDelegator
         $serviceClassName = $pageName . "Service";
         $modelClassName   = $pageName . "Model";
         $helperClassName  = $pageName . "Helper";
-        $controllerNamespace = $this->getNamespace($container->router->controller);
-        $serviceNamespace    = $this->getNamespace($serviceClassName);
-        $modelNamespace      = $this->getNamespace($modelClassName);
-        $helperNamespace     = $this->getNamespace($helperClassName);
+        $appRoot = $container->applicationInfo->applicationRoot . "/app";
+        $controllerNamespace = $this->getNamespace($appRoot, $container->router->controller);
+        $serviceNamespace    = $this->getNamespace($appRoot, $serviceClassName);
+        $modelNamespace      = $this->getNamespace($appRoot, $modelClassName);
+        $helperNamespace     = $this->getNamespace($appRoot, $helperClassName);
 
         // Controller
         $this->coreContainer->controller = function () use ($container, $controllerNamespace) {
@@ -138,19 +139,22 @@ class CoreDelegator
 
     /**
      * 名前空間を返却する
+     * @param string アプリケーションルート
      * @param string クラス名
      * @return string 名前空間
      */
-    public function getNamespace($className)
+    public function getNamespace($appRoot, $className)
     {
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($this->container->applicationInfo->applicationRoot . "/app"),
-            \RecursiveIteratorIterator::LEAVES_ONLY,
-            \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
-        );
-        foreach ($iterator as $filepath => $fileObject) {
-            if (strpos($filepath, $className . ".php") !== false) {
-                return $this->getDefinedNamespace($filepath);
+        if (file_exists($appRoot) && is_dir($appRoot)) {
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($appRoot),
+                \RecursiveIteratorIterator::LEAVES_ONLY,
+                \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
+            );
+            foreach ($iterator as $filepath => $fileObject) {
+                if (strpos($filepath, $className . ".php") !== false) {
+                    return $this->getDefinedNamespace($filepath);
+                }
             }
         }
 
