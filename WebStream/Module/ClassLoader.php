@@ -113,18 +113,7 @@ class ClassLoader
             $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);
         }
 
-        // まずcoreディレクトリを検索
-        // coreディレクトリは名前空間とディレクトリパスが
-        // 紐づいているのでそのまま連結して読ませる
-        $includeFile = $rootDir . "/core/" . $className . ".php";
-        if (is_file($includeFile)) {
-            include_once $includeFile;
-            $this->logger->debug($includeFile . " load success. (search from " . $rootDir . "/core/)");
-
-            return [$includeFile];
-        }
-
-        // さらに見つからなかったらappディレクトリを名前空間付きで全検索し、マッチするもの全てをincludeする
+        // appディレクトリを名前空間付きで全検索し、マッチするもの全てをincludeする
         $iterator = $this->getFileSearchIterator($rootDir . "/app");
         $includeList = [];
         foreach ($iterator as $filepath => $fileObject) {
@@ -156,7 +145,7 @@ class ClassLoader
                 return $includeList;
             }
 
-            // ここに到達するのはテスト用クラスのみ
+            // プロジェクトルート配下すべてのディレクトリを検索する
             $iterator = $this->getFileSearchIterator($rootDir . "/core");
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $classNameWithoutNamespace . ".php") !== false) {

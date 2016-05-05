@@ -32,10 +32,15 @@ trait FileUtils
      */
     public function getFileSearchIterator($path)
     {
-        return new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($path),
-            \RecursiveIteratorIterator::LEAVES_ONLY,
-            \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
-        );
+        $iterator = [];
+        if (file_exists($path) && is_dir($path)) {
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::LEAVES_ONLY,
+                \RecursiveIteratorIterator::CATCH_GET_CHILD // for Permission deny
+            );
+        }
+
+        return $iterator;
     }
 }
