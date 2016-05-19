@@ -30,6 +30,7 @@ class Application
      */
     public function __construct(Container $container)
     {
+        register_shutdown_function([&$this, 'shutdownHandler']);
         $this->container = $container;
         $this->container->logger->debug("Application start");
     }
@@ -69,6 +70,42 @@ class Application
         } catch (SystemException $e) {
             // 内部例外の内、ハンドリング不許可の例外
             $this->container->response->move($e->getCode());
+        }
+    }
+
+    /**
+     * 例外捕捉不可な異常時のアプリケーション終了処理
+     */
+    public function shutdownHandler()
+    {
+        if ($error = error_get_last()) {
+            $errorMsg = $error['message'] . " " . $error['file'] . "(" . $error['line'] . ")";
+            switch ($error['type']) {
+                case E_ERROR:
+                case E_CORE_ERROR:
+                case E_COMPILE_ERROR:
+                case E_USER_ERROR:
+                case E_RECOVERABLE_ERROR:
+                    $this->container->logger->fatal($errorMsg);
+                    break;
+                case E_PARSE:
+                    $this->container->logger->error($errorMsg);
+                    break;
+                case E_WARNING:
+                case E_CORE_WARNING:
+                case E_COMPILE_WARNING:
+                case E_USER_WARNING:
+                case E_STRICT:
+                case E_NOTICE:
+                case E_USER_NOTICE:
+                case E_DEPRECATED:
+                case E_USER_DEPRECATED:
+                    $this->container->logger->warn($errorMsg);
+                    break;
+            }
+
+            $this->container->logger->enableDirectWrite();
+            $this->container->response->move(500);
         }
     }
 }

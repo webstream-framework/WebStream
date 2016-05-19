@@ -131,6 +131,16 @@ class Logger
     }
 
     /**
+     * ファイナライザ
+     */
+    public static function finalize()
+    {
+        self::$config = null;
+        self::$logger = null;
+        self::$formatter = null;
+    }
+
+    /**
      * Loggerを初期化する
      * @param Container ログ設定コンテナ
      */
@@ -139,16 +149,6 @@ class Logger
         self::$config = $config;
         self::$logger = new Logger($config);
         self::$formatter = new LoggerFormatter($config);
-    }
-
-    /**
-     * Loggerを終了する
-     */
-    public static function finalize()
-    {
-        self::$config = null;
-        self::$logger = null;
-        self::$formatter = null;
     }
 
     /**
