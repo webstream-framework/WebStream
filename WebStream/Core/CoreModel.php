@@ -4,6 +4,7 @@ namespace WebStream\Core;
 use WebStream\DI\Injector;
 use WebStream\Module\Container;
 use WebStream\Module\Utility\CommonUtils;
+use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Database\DatabaseManager;
@@ -19,7 +20,7 @@ use WebStream\Exception\Extend\MethodNotFoundException;
  */
 class CoreModel implements CoreInterface, IAnnotatable
 {
-    use Injector, CommonUtils;
+    use Injector, CommonUtils, ApplicationUtils;
 
     /**
      * @var Container コンテナ
@@ -51,14 +52,11 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     protected $logger;
 
-    private $classpath;
-
     /**
      * {@inheritdoc}
      */
     public function __construct(Container $container)
     {
-        $this->container = $container;
         $this->logger = $container->logger;
         $this->logger->debug("Model start.");
     }
@@ -86,9 +84,8 @@ class CoreModel implements CoreInterface, IAnnotatable
 
         $this->queryAnnotations = $container->queryAnnotations;
         $container->logger = $this->logger;
-        $this->manager = new DatabaseManager($container);
         $this->isAutoCommit = true;
-        $this->classpath = get_class($this);
+        $this->container = $container;
     }
 
     /**
@@ -115,6 +112,8 @@ class CoreModel implements CoreInterface, IAnnotatable
             }
         }
 
+        $this->manager = new DatabaseManager($this->container);
+
         // DBコネクションが取得できなければエラー
         if (!$this->manager->loadConnection($filepath)) {
             throw new MethodNotFoundException("Undefined method called: $method");
@@ -124,7 +123,7 @@ class CoreModel implements CoreInterface, IAnnotatable
             $this->manager->connect();
         }
 
-        $result = $this->__execute($method, $arguments);
+        $result = $this->__execute($method, $arguments, $filepath);
 
         if ($this->isAutoCommit) {
             if (is_int($result) && $result > 0) {
@@ -140,8 +139,9 @@ class CoreModel implements CoreInterface, IAnnotatable
      * DB処理を実行する
      * @param string メソッド名
      * @param array sql/bindパラメータ
+     * @param string 現在実行中のクラスのファイルパス
      */
-    final public function __execute($method, $arguments)
+    final public function __execute($method, $arguments, $filepath)
     {
         $result = null;
 
@@ -184,11 +184,8 @@ class CoreModel implements CoreInterface, IAnnotatable
                     }
                 }
 
-                $queryKey = $this->classpath . "#" . $modelMethod;
-                $queryId = $method;
-
-                $refClass = new \ReflectionClass($this);
-                $classpath = $refClass->getNamespaceName();
+                $namespace = substr($this->getNamespace($filepath), 1);
+                $queryKey = $namespace . "\\" . basename($filepath, ".php") . "#" . $modelMethod;
 
                 $query = null;
                 foreach ($this->queryAnnotations as $queryAnnotation) {
@@ -202,11 +199,13 @@ class CoreModel implements CoreInterface, IAnnotatable
                         $xmlObjectList = $queryFunction->fetch();
                         foreach ($xmlObjectList as $xmlObject) {
                             if ($xmlObject !== null) {
-                                $xmlElement = $xmlObject->xpath("//mapper[@namespace='$classpath']/*[@id='$queryId']");
+                                $xmlElement = $xmlObject->xpath("//mapper[@namespace='$namespace']/*[@id='$method']");
+
                                 if (!empty($xmlElement)) {
                                     $query = ["sql" => trim($xmlElement[0]->__toString()), "method" => $xmlElement[0]->getName()];
                                     $entity = $xmlElement[0]->attributes()["entity"];
                                     $query["entity"] = $entity !== null ? $entity->__toString() : null;
+                                    break;
                                 }
                             }
                         }
