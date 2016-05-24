@@ -84,6 +84,7 @@ class CoreModel implements CoreInterface, IAnnotatable
 
         $this->queryAnnotations = $container->queryAnnotations;
         $container->logger = $this->logger;
+        $this->manager = new DatabaseManager($container);
         $this->isAutoCommit = true;
         $this->container = $container;
     }
@@ -111,8 +112,6 @@ class CoreModel implements CoreInterface, IAnnotatable
                 break;
             }
         }
-
-        $this->manager = new DatabaseManager($this->container);
 
         // DBコネクションが取得できなければエラー
         if (!$this->manager->loadConnection($filepath)) {
