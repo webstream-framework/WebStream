@@ -2,6 +2,8 @@
 namespace WebStream\Log\Outputter;
 
 use WebStream\IO\Writer\SimpleFileWriter;
+use WebStream\Log\LoggerCache;
+use WebStream\Module\Utility\LoggerUtils;
 
 /**
  * FileOutputter
@@ -11,15 +13,12 @@ use WebStream\IO\Writer\SimpleFileWriter;
  */
 class FileOutputter implements IOutputter, ILazyWriter
 {
+    use LoggerUtils;
+
     /**
      * @var string ログファイルパス
      */
     private $logPath;
-
-    /**
-     * @var array<string> ログメッセージリスト
-     */
-    private $logMessages;
 
     /**
      * @var int バッファリングサイズ
@@ -37,6 +36,11 @@ class FileOutputter implements IOutputter, ILazyWriter
     private $writer;
 
     /**
+     * @var LoggerCache ログキャッシュ
+     */
+    private $cache;
+
+    /**
      * constructor
      * @param string $logPath ログファイルパス
      * @param int $bufferSize バッファリングサイズ
@@ -44,9 +48,8 @@ class FileOutputter implements IOutputter, ILazyWriter
     public function __construct($logPath, $bufferSize = 1000)
     {
         $this->logPath = $logPath;
-        $this->logMessages = [];
         $this->bufferSize = $bufferSize;
-        $this->isLazyWrite = true;
+        $this->enableLazyWrite();
         $this->writer = new SimpleFileWriter($logPath);
     }
 
@@ -56,7 +59,9 @@ class FileOutputter implements IOutputter, ILazyWriter
     public function __destruct()
     {
         try {
-            $this->writeLog(implode("", $this->logMessages));
+            if ($this->isLazyWrite) {
+                $this->writeLog(implode("", $this->cache->get()));
+            }
         } catch (\Exception $ignore) {
             // デストラクタで例外が発生すると致命的なエラーとなる
         }
@@ -67,7 +72,10 @@ class FileOutputter implements IOutputter, ILazyWriter
      */
     public function enableLazyWrite()
     {
-        $this->isLazyWrite = true;
+        if ($this->enableApcu()) {
+            $this->isLazyWrite = true;
+            $this->cache = new LoggerCache();
+        }
     }
 
     /**
@@ -75,12 +83,12 @@ class FileOutputter implements IOutputter, ILazyWriter
      */
     public function enableDirectWrite()
     {
-        if (count($this->logMessages) > 0) {
-            $this->writeLog(implode("", $this->logMessages));
-            $this->logMessages = [];
+        if ($this->isLazyWrite && $this->cache->length() > 0) {
+            $this->writeLog(implode("", $this->cache->get()));
         }
 
         $this->isLazyWrite = false;
+        $this->cache = null;
     }
 
     /**
@@ -89,22 +97,14 @@ class FileOutputter implements IOutputter, ILazyWriter
     public function write($message)
     {
         if ($this->isLazyWrite) {
-            if (count($this->logMessages) >= $this->bufferSize) {
+            if ($this->cache->length() >= $this->bufferSize) {
                 $this->flush();
                 $this->clear();
             }
-            $this->logMessages[] = $message;
+            $this->cache->add($message);
         } else {
             $this->writeLog($message);
         }
-    }
-
-    /**
-     * バッファをクリアする
-     */
-    private function clear()
-    {
-        $this->logMessages = [];
     }
 
     /**
@@ -112,9 +112,8 @@ class FileOutputter implements IOutputter, ILazyWriter
      */
     private function flush()
     {
-        if ($this->isLazyWrite && count($this->logMessages) > 0) {
-            $this->writeLog(implode("", $this->logMessages));
-            $this->clear();
+        if ($this->isLazyWrite && $this->cache->length() > 0) {
+            $this->writeLog(implode("", $this->cache->get()));
         }
     }
 
