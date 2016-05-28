@@ -36,7 +36,6 @@ trait Singleton
             static::$instance = new static();
         }
 
-        static::$instance->getContainer();
         return static::$instance;
     }
 
