@@ -140,7 +140,7 @@ class Container
      * @param  array    $context  クロージャの引数リスト
      * @return void
      */
-    public function registerAsDynamic($key, $callback, $context = array())
+    public function registerAsDynamic($key, $callback, $context = [])
     {
         $valueObject = new ValueProxy($callback, $context, true);
         $this->values[$key] = $valueObject->fetch();
