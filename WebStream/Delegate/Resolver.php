@@ -138,13 +138,4 @@ class Resolver
 
         return $helper;
     }
-
-    /**
-     * 指定したステータスコードのページに遷移する
-     * @param Integer ステータスコード
-     */
-    public function move($statusCode)
-    {
-        $this->response->move($statusCode);
-    }
 }
