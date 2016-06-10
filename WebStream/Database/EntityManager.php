@@ -50,15 +50,19 @@ class EntityManager
     public function getEntity($row)
     {
         $instance = new $this->classpath();
-        $refClass = new \ReflectionClass($this->classpath);
-        $properties = $refClass->getProperties();
+        $propertyMap = null;
 
-        $propertyMap = [];
-        foreach ($properties as $property) {
-            if ($property->isPrivate() || $property->isProtected()) {
-                $property->setAccessible(true);
+        // EntityPropertyを使っている場合はリフレクションを使用しない
+        if (!array_key_exists("WebStream\Database\EntityProperty", class_uses($instance))) {
+            $propertyMap = [];
+            $refClass = new \ReflectionClass($instance);
+            $properties = $refClass->getProperties();
+            foreach ($properties as $property) {
+                if ($property->isPrivate() || $property->isProtected()) {
+                    $property->setAccessible(true);
+                }
+                $propertyMap[strtolower($property->getName())] = $property;
             }
-            $propertyMap[strtolower($property->getName())] = $property;
         }
 
         foreach ($row as $col => $value) {
@@ -88,10 +92,14 @@ class EntityManager
 
             $col = strtolower($this->snake2lcamel($col));
 
-            if (array_key_exists($col, $propertyMap)) {
-                $propertyMap[$col]->setValue($instance, $value);
+            if ($propertyMap === null) {
+                $instance->{$col} = $value;
             } else {
-                $this->logger->error("Column '$col' is failed mapping in " . $this->classpath);
+                if (array_key_exists($col, $propertyMap)) {
+                    $propertyMap[$col]->setValue($instance, $value);
+                } else {
+                    $this->logger->error("Column '$col' is failed mapping in " . $this->classpath);
+                }
             }
         }
 
