@@ -104,16 +104,8 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     final public function __call($method, $arguments)
     {
-        $trace = debug_backtrace();
-        $filepath = null;
-        for ($i = 0; $i < count($trace); $i++) {
-            $filepath = $trace[$i]["file"];
-            if ($filepath !== null) {
-                break;
-            }
-        }
-
         // DBコネクションが取得できなければエラー
+        $filepath = debug_backtrace()[0]["file"];
         if (!$this->manager->loadConnection($filepath)) {
             throw new MethodNotFoundException("Undefined method called: $method");
         }
@@ -153,7 +145,7 @@ class CoreModel implements CoreInterface, IAnnotatable
                 }
 
                 if (is_string($sql)) {
-                    if ($method !== 'select') {
+                    if ($method !== 'select' && $this->isAutoCommit) {
                         $this->manager->beginTransaction();
                     }
                     if (is_array($bind)) {
@@ -250,7 +242,7 @@ class CoreModel implements CoreInterface, IAnnotatable
                     }
                 } else {
                     if (is_string($sql)) {
-                        if ($method !== 'select') {
+                        if ($method !== 'select' && $this->isAutoCommit) {
                             $this->manager->beginTransaction();
                         }
                         if (is_array($bind)) {
@@ -282,6 +274,16 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     final public function beginTransaction()
     {
+        $filepath = debug_backtrace()[0]["file"];
+        if (!$this->manager->loadConnection($filepath)) {
+            throw new MethodNotFoundException("Undefined method called: $method");
+        }
+
+        if ($this->manager->isConnected() === false) {
+            $this->manager->connect();
+        }
+
+        $this->manager->beginTransaction();
         $this->isAutoCommit = false;
     }
 

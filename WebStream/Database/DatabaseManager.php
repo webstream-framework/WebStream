@@ -78,7 +78,10 @@ class DatabaseManager
         }
 
         if ($this->inTransaction()) {
-            $this->connection->commit();
+            // トランザクションが明示的に開始された状態でcommit/rollbackが行われていない場合
+            // ログに警告を書き込み、強制的にロールバックする
+            $this->connection->rollback();
+            $this->logger->warn("Not has been executed commit or rollback after the transaction started.");
         }
 
         $this->connection->disconnect();
@@ -111,12 +114,19 @@ class DatabaseManager
      */
     public function commit()
     {
-        if ($this->inTransaction()) {
-            $this->connection->commit();
-            $this->logger->debug("Execute commit.");
+        try {
+            if ($this->connection !== null && $this->inTransaction()) {
+                $this->connection->commit();
+                $this->logger->debug("Execute commit.");
+            } else {
+                throw new DatabaseException("Can't execute commit.");
+            }
+        } catch (\PDOException $e) {
+            $this->query = null;
+            throw new DatabaseException($e);
+        } finally {
+            $this->disconnect();
         }
-
-        $this->disconnect();
     }
 
     /**
@@ -125,16 +135,18 @@ class DatabaseManager
     public function rollback()
     {
         try {
-            $this->connection->rollback();
+            if ($this->connection !== null && $this->inTransaction()) {
+                $this->connection->rollback();
+                $this->logger->debug("Execute rollback.");
+            } else {
+                throw new DatabaseException("Can't execute rollback.");
+            }
         } catch (\PDOException $e) {
             $this->query = null;
-            $this->disconnect();
             throw new DatabaseException($e);
+        } finally {
+            $this->disconnect();
         }
-
-        $this->query = null;
-        $this->disconnect();
-        $this->logger->debug("Execute rollback.");
     }
 
     /**
