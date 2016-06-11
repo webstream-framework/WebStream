@@ -510,7 +510,9 @@ class Response
      */
     public function move($statusCode)
     {
-        ob_clean(); // これまでの出力バッファをクリア
+        if (ob_get_contents()) {
+            ob_clean();
+        }
         $statusCode = array_key_exists($statusCode, $this->status) ? $statusCode : 500;
         $this->setStatusCode($statusCode);
         $bodyMessage = $statusCode . ' ' . $this->status[$statusCode];
