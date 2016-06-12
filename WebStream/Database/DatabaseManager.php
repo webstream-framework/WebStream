@@ -115,9 +115,13 @@ class DatabaseManager
     public function commit()
     {
         try {
-            if ($this->connection !== null && $this->inTransaction()) {
-                $this->connection->commit();
-                $this->logger->debug("Execute commit.");
+            if ($this->connection !== null) {
+                if ($this->inTransaction()) {
+                    $this->connection->commit();
+                    $this->logger->debug("Execute commit.");
+                } else {
+                    $this->logger->warn("Not executed commit because the transaction is not started.");
+                }
             } else {
                 throw new DatabaseException("Can't execute commit.");
             }
@@ -135,9 +139,13 @@ class DatabaseManager
     public function rollback()
     {
         try {
-            if ($this->connection !== null && $this->inTransaction()) {
-                $this->connection->rollback();
-                $this->logger->debug("Execute rollback.");
+            if ($this->connection !== null) {
+                if ($this->inTransaction()) {
+                    $this->connection->rollback();
+                    $this->logger->debug("Execute rollback.");
+                } else {
+                    $this->logger->warn("Not executed rollback because the transaction is not started.");
+                }
             } else {
                 throw new DatabaseException("Can't execute rollback.");
             }
