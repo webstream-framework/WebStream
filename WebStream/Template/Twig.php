@@ -4,6 +4,7 @@ namespace WebStream\Template;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\ResourceNotFoundException;
+use WebStream\Exception\Extend\InvalidArgumentException;
 
 /**
  * Twig
@@ -51,7 +52,7 @@ class Twig implements ITemplateEngine
             $this->loader->addPath($sharedDir);
         }
 
-        $escaper = new \Twig_Extension_Escaper(true);
+        $escaper = new \Twig_Extension_Escaper("html");
         $twig = new \Twig_Environment($this->loader, [
             'cache' => $applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->cacheDir,
             'auto_reload' => true,
@@ -66,6 +67,13 @@ class Twig implements ITemplateEngine
                 "model" => $params["model"],
                 "helper" => $params["helper"]
             ]);
+
+            // 内部エラーが起きている場合は例外を出力
+            if (error_get_last() !== null) {
+                $message = error_get_last()["message"];
+                error_clear_last();
+                throw new InvalidArgumentException($message);
+            }
         } catch (\Twig_Error_Loader $e) {
             throw new ResourceNotFoundException($e);
         }
