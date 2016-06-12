@@ -204,7 +204,7 @@ class CoreModel implements CoreInterface, IAnnotatable
                 }
 
                 if ($query === null) {
-                    throw new DatabaseException("SQL statement can't getting from xml file.");
+                    throw new DatabaseException("SQL statement can't getting from xml file: " . $modelMethod);
                 }
 
                 $sql = $query["sql"];
