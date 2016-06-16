@@ -137,6 +137,6 @@ class Security
      */
     public static function safetyOutXML($data)
     {
-        return preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $data);
+        return htmlspecialchars($data, ENT_XML1, "UTF-8");
     }
 }

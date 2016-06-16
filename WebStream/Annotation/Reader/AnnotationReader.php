@@ -187,7 +187,9 @@ class AnnotationReader
                     }
 
                     // IMethodを実装している場合、アクションメソッドのアノテーション以外は読み込まない
-                    if ($executeMethod !== $method->name && $annotation instanceof \WebStream\Annotation\Base\IMethod) {
+                    // PHPのメソッドは大文字小文字を区別しないため、そのまま比較するとルーティング解決結果と実際のメソッド名が合わないケースがある
+                    // PHPの仕様に合わせてメソッド名の文字列比較は小文字に変換してから行う
+                    if (strtolower($executeMethod) !== strtolower($method->name) && $annotation instanceof \WebStream\Annotation\Base\IMethod) {
                         continue;
                     }
 
