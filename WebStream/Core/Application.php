@@ -2,7 +2,6 @@
 namespace WebStream\Core;
 
 use WebStream\Module\Container;
-use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
@@ -17,8 +16,6 @@ use WebStream\DI\ServiceLocator;
  */
 class Application
 {
-    use LoggerUtils;
-
     /**
      * @var Container DIコンテナ
      */
