@@ -29,6 +29,7 @@ class Postgresql extends DatabaseDriver
 
         $config = new Configuration([\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
         $this->connection = DriverManager::getConnection($params, $config);
+
         $this->logger->debug(get_class($this) . " connect.");
     }
 }

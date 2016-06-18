@@ -4,6 +4,7 @@ namespace WebStream\Database;
 use WebStream\DI\Injector;
 use WebStream\Module\Container;
 use WebStream\Exception\Extend\DatabaseException;
+use Doctrine\DBAL\Connection;
 
 /**
  * DatabaseManager
@@ -91,8 +92,9 @@ class DatabaseManager
 
     /**
      * トランザクションを開始する
+     * @param int $isolationLevel トランザクション分離レベル
      */
-    public function beginTransaction()
+    public function beginTransaction(int $isolationLevel)
     {
         // 既にトランザクションが開始されている場合、継続しているトランザクションを有効のままにする
         // トランザクションを破棄して再度開始する場合は明示的に破棄してから再呼び出しする
@@ -104,6 +106,15 @@ class DatabaseManager
 
         if (!$this->connection->beginTransaction()) {
             throw new DatabaseException("Failed to start transaction.");
+        }
+
+        if ($isolationLevel === Connection::TRANSACTION_READ_UNCOMMITTED ||
+            $isolationLevel === Connection::TRANSACTION_READ_COMMITTED ||
+            $isolationLevel === Connection::TRANSACTION_REPEATABLE_READ ||
+            $isolationLevel === Connection::TRANSACTION_SERIALIZABLE) {
+            $this->connection->setTransactionIsolation($isolationLevel);
+        } else {
+            throw new DatabaseException("Invalid transaction isolation level: " . $isolationLevel);
         }
 
         $this->logger->debug("Transaction start.");
@@ -182,6 +193,15 @@ class DatabaseManager
     public function isConnected()
     {
         return $this->connection->isConnected();
+    }
+
+    /**
+     * トランザクション分離レベルを返却する
+     * @return int トランザクション分離レベル
+     */
+    public function getTransactionIsolation()
+    {
+        return $this->connection->getTransactionIsolation();
     }
 
     /**

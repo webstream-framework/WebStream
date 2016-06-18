@@ -11,6 +11,7 @@ use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
 use WebStream\Exception\Extend\DatabaseException;
 use WebStream\Exception\Extend\MethodNotFoundException;
+use Doctrine\DBAL\Connection;
 
 /**
  * CoreModel
@@ -146,7 +147,7 @@ class CoreModel implements CoreInterface, IAnnotatable
 
                 if (is_string($sql)) {
                     if ($method !== 'select' && $this->isAutoCommit) {
-                        $this->manager->beginTransaction();
+                        $this->manager->beginTransaction(Connection::TRANSACTION_READ_COMMITTED);
                     }
                     if (is_array($bind)) {
                         $result = $this->manager->query($sql, $bind)->{$method}();
@@ -243,7 +244,7 @@ class CoreModel implements CoreInterface, IAnnotatable
                 } else {
                     if (is_string($sql)) {
                         if ($method !== 'select' && $this->isAutoCommit) {
-                            $this->manager->beginTransaction();
+                            $this->manager->beginTransaction(Connection::TRANSACTION_READ_COMMITTED);
                         }
                         if (is_array($bind)) {
                             $result = $this->manager->query($sql, $bind)->{$method}();
@@ -271,8 +272,9 @@ class CoreModel implements CoreInterface, IAnnotatable
 
     /**
      * トランザクション開始
+     * @param int $isolationLevel トランザクション分離レベル
      */
-    final public function beginTransaction()
+    final public function beginTransaction(int $isolationLevel = Connection::TRANSACTION_READ_COMMITTED)
     {
         $filepath = debug_backtrace()[0]["file"];
         if (!$this->manager->loadConnection($filepath)) {
@@ -283,7 +285,7 @@ class CoreModel implements CoreInterface, IAnnotatable
             $this->manager->connect();
         }
 
-        $this->manager->beginTransaction();
+        $this->manager->beginTransaction($isolationLevel);
         $this->isAutoCommit = false;
     }
 

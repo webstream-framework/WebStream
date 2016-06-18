@@ -3,6 +3,7 @@ namespace WebStream\Database\Driver;
 
 use WebStream\DI\Injector;
 use WebStream\Module\Container;
+use Doctrine\DBAL\Connection;
 
 /**
  * DatabaseDriver
@@ -118,5 +119,23 @@ abstract class DatabaseDriver
     public function getStatement($sql)
     {
         return $this->connection !== null ? $this->connection->prepare($sql) : null;
+    }
+
+    /**
+     * トランザクション分離レベルを返却する
+     * @return int トランザクション分離レベル
+     */
+    public function getTransactionIsolation()
+    {
+        return $this->connection->getTransactionIsolation();
+    }
+
+    /**
+     * トランザクション分離レベルを設定する
+     * @param int $isolationLevel トランザクション分離レベル
+     */
+    public function setTransactionIsolation(int $isolationLevel)
+    {
+        $this->connection->setTransactionIsolation($isolationLevel);
     }
 }
