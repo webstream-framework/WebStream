@@ -241,8 +241,6 @@ class Logger
             } else {
                 $this->ioContainer->logWriter->write(self::$formatter->getFormattedMessage($msg, $level) . PHP_EOL);
             }
-        } catch (LoggerException $e) {
-            throw $e;
         } catch (IOException $e) {
             throw new LoggerException($e);
         }

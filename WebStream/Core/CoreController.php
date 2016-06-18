@@ -79,7 +79,7 @@ class CoreController implements CoreInterface, IAnnotatable
     }
 
     /**
-    * {@inheritdoc}
+     * {@inheritdoc}
      */
     public function __customAnnotation(array $annotation)
     {
@@ -87,7 +87,7 @@ class CoreController implements CoreInterface, IAnnotatable
     }
 
     /**
-    * {@inheritdoc}
+     * {@inheritdoc}
      * @Filter(type="initialize")
      */
     public function __initialize(Container $container)
