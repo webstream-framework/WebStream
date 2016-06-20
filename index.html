@@ -88,11 +88,11 @@ Controllerクラスでは<a href="#annotaion">アノテーション</a>を使っ
 <span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
 <span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-c">/**</span></span>
-<span class="pl-s1"><span class="pl-c"> * @Template("index.tmpl")</span></span>
-<span class="pl-s1"><span class="pl-c"> */</span></span>
 <span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span></span>
 <span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @Template("index.tmpl")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-c1">funciton</span> execute()</span>
 <span class="pl-s1">    {</span>
 <span class="pl-s1">        <span class="pl-c">// $this-&gt;{ページ名}-&gt;(Service|Modelクラスのメソッド)</span></span>
@@ -273,7 +273,7 @@ Serviceクラスが定義されない場合はController、Viewから直接呼�
 <td>DELETEを実行する。</td>
 </tr>
 <tr>
-<td>beginTransation()</td>
+<td>beginTransation(int $isolationLevel = 2)</td>
 <td>トランザクションを開始する。</td>
 </tr>
 <tr>
@@ -405,7 +405,9 @@ Modelクラスでは直接SQLをメソッド内に記述する以外に、クエ
 
 <p><code>$this-&gt;beginTransation()</code>でトランザクションを開始し<code>$this-&gt;commit()</code>でコミット、<code>$this-&gt;rollback()</code>でロールバックを実行します。<br>
 ただし、DBMSがトランザクション処理に対応していない場合はトランザクション処理は有効になりません。<br>
-なお、トランザクション処理を明示しない場合、処理が終了後、自動的にコミットを実行します。</p>
+なお、トランザクション処理を明示しない場合、処理が終了後、自動的にコミットを実行します。<br>
+<code>$this-&gt;beginTransation()</code>はトランザクション分離レベルを引数として指定できます。<br>
+指定可能なトランザクション分離レベルは<code>Doctrine\DBAL\Connection</code>に定義されている値となります。</p>
 
 <h2>
 <a id="view" class="anchor" href="#view" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#view">View</a>
