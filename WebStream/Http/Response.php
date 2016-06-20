@@ -535,7 +535,14 @@ class Response
      */
     public function end()
     {
-        $this->setBody(ob_get_clean());
+        $body = "";
+        if (error_get_last() === null) {
+            $body = ob_get_clean();
+        } else {
+            $this->clean();
+        }
+
+        $this->setBody($body);
         $this->send();
     }
 
