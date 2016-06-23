@@ -84,9 +84,13 @@ class Application
                 case E_USER_ERROR:
                 case E_RECOVERABLE_ERROR:
                     $this->container->logger->fatal($errorMsg);
+                    $this->container->logger->enableDirectWrite();
+                    $this->container->response->move(500);
                     break;
                 case E_PARSE:
                     $this->container->logger->error($errorMsg);
+                    $this->container->logger->enableDirectWrite();
+                    $this->container->response->move(500);
                     break;
                 case E_WARNING:
                 case E_CORE_WARNING:
@@ -98,11 +102,9 @@ class Application
                 case E_DEPRECATED:
                 case E_USER_DEPRECATED:
                     $this->container->logger->warn($errorMsg);
+                    $this->container->logger->enableDirectWrite();
                     break;
             }
-
-            $this->container->logger->enableDirectWrite();
-            $this->container->response->move(500);
         }
     }
 }
