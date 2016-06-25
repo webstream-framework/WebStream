@@ -224,7 +224,13 @@ class Basic implements ITemplateEngine
         }, $content);
 
         $content = preg_replace('/' . self::TEMPLATE_MARK_PHP . '\{(.*?)\}/', '<?php echo $1; ?>', $content);
-        $content = preg_replace('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', '<?php $this->draw("$1", $__params__, $__mimeType__); ?>', $content);
+        $content = preg_replace_callback('/' . self::TEMPLATE_MARK_TEMPLATE . '\{(.*?)\}/', function ($matches) {
+            if (substr($matches[1], 0, 1) === '$') {
+                return self::TEMPLATE_MARK_TEMPLATE . '{<?php echo ' . $matches[1] . ';?>}';
+            } else {
+                return '<?php $this->draw(\'' . $matches[1] . '\', $__params__, $__mimeType__); ?>';
+            }
+        }, $content);
 
         if ($mimeType === "xml") {
             $content = preg_replace('/' . self::TEMPLATE_MARK_XML . '\{(.*?)\}/', '<?php echo safetyOutXML($1); ?>', $content);
