@@ -536,10 +536,30 @@ class Response
     public function end()
     {
         $body = "";
-        if (error_get_last() === null) {
+        if (($error = error_get_last()) === null) {
             $body = ob_get_clean();
         } else {
-            $this->clean();
+            switch ($error['type']) {
+                case E_ERROR:
+                case E_CORE_ERROR:
+                case E_COMPILE_ERROR:
+                case E_USER_ERROR:
+                case E_RECOVERABLE_ERROR:
+                case E_PARSE:
+                    $this->clean();
+                    break;
+                case E_WARNING:
+                case E_CORE_WARNING:
+                case E_COMPILE_WARNING:
+                case E_USER_WARNING:
+                case E_STRICT:
+                case E_NOTICE:
+                case E_USER_NOTICE:
+                case E_DEPRECATED:
+                case E_USER_DEPRECATED:
+                    $body = ob_get_clean();
+                    break;
+            }
         }
 
         $this->setBody($body);
