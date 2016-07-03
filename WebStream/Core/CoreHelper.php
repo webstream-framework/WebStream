@@ -95,7 +95,7 @@ class CoreHelper implements CoreInterface, IAnnotatable
     public function async($path, $id)
     {
         $safetyPath = str_replace('\\', '', $this->encodeJavaScript($path));
-        $url = "//" . $this->container->request->server("HTTP_HOST") . $this->container->request->getBaseURL() . $safetyPath;
+        $url = "//" . $this->container->request->httpHost . $this->container->request->baseUri . $safetyPath;
 
         return "<script type='text/javascript'>" . $this->asyncHelperCode($url, $id) . "</script>";
     }

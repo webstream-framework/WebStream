@@ -58,6 +58,7 @@ class Request
         $this->container->authPassword = $this->server("PHP_AUTH_PW");
         $this->container->queryString = $this->server("QUERY_STRING");
         $this->container->requestUri = $this->server("REQUEST_URI");
+        $this->container->httpHost = $this->server("HTTP_HOST");
 
         $scriptName = $this->server("SCRIPT_NAME");
         if (strpos($this->container->requestUri, $scriptName) === 0) {
@@ -83,6 +84,16 @@ class Request
                 $headers[$key] = Security::safetyIn($value);
             }
             $this->container->header = $headers;
+        }
+
+        $scriptName = $this->server("SCRIPT_NAME");
+        $requestUri = $this->server("REQUEST_URI");
+        if (strpos($requestUri, $scriptName) === 0) {
+            // フロントコントローラが省略の場合
+            $this->container->baseUri = $scriptName;
+        } elseif (strpos($requestUri, dirname($scriptName)) === 0) {
+            // フロントコントローラ指定の場合
+            $this->container->baseUri = rtrim(dirname($scriptName), "/");
         }
 
         $this->container->get = $this->container->post = $this->container->put = $this->container->delete = [];
