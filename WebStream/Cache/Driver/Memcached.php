@@ -135,7 +135,7 @@ class Memcached implements ICache
         }
         $allKeys = $this->cache->getAllKeys();
         if ($allKeys === false) {
-            $this->logger->warn();
+            $this->logger->warn("Can't get cache keys: " . $this->cachePrefix . "*");
             $this->cache->flush();
 
             return true;
