@@ -15,49 +15,16 @@ class Memcached implements ICache
     use Injector;
 
     /**
-     * @var \Memcached memcachedオブジェクト
+     * @var Container キャッシュ依存コンテナ
      */
-    private $cache;
+    private $cacheContainer;
 
     /**
-     * @var bool キャッシュ使用可能フラグ
+     * {@inheritdoc}
      */
-    private $isAvairable;
-
-    /**
-     * @var string キャッシュ接頭辞
-     */
-    private $cachePrefix;
-
-    /**
-     * constructor
-     */
-    public function __construct(Container $container)
+    public function __construct(Container $cacheContainer)
     {
-        $this->isAvairable = extension_loaded('memcached');
-        $this->cachePrefix = $container->cachePrefix;
-
-        if ($this->isAvairable) {
-            $this->cache = new \Memcached();
-            $this->cache->addServers($container->servers);
-
-            $defaultOptions = [
-                \Memcached::OPT_CONNECT_TIMEOUT => 50,
-                \Memcached::OPT_RETRY_TIMEOUT => 50,
-                \Memcached::OPT_SEND_TIMEOUT => 50,
-                \Memcached::OPT_RECV_TIMEOUT => 50,
-                \Memcached::OPT_POLL_TIMEOUT => 50,
-                \Memcached::OPT_COMPRESSION => true,
-                \Memcached::OPT_LIBKETAMA_COMPATIBLE => true,
-                \Memcached::OPT_BINARY_PROTOCOL => true
-            ];
-
-            if (\Memcached::HAVE_IGBINARY) {
-                $defaultOptions[\Memcached::OPT_SERIALIZER] = \Memcached::SERIALIZER_IGBINARY;
-            }
-
-            $this->cache->setOptions($defaultOptions);
-        }
+        $this->cacheContainer = $cacheContainer;
     }
 
     /**
@@ -68,29 +35,29 @@ class Memcached implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cachePrefix . $key;
+        $key = $this->cacheContainer->cachePrefix . $key;
         $result = null;
 
         if ($ttl > 0) {
             if ($overwrite) {
-                if ($this->cache->replace($key, $value, $ttl) === false) {
-                    $result = $this->cache->set($key, $value, $ttl);
+                if ($this->cacheContainer->driver->replace($key, $value, $ttl) === false) {
+                    $result = $this->cacheContainer->driver->set($key, $value, $ttl);
                 }
             } else {
-                $result = $this->cache->set($key, $value, $ttl);
+                $result = $this->cacheContainer->driver->set($key, $value, $ttl);
             }
         } else {
             if ($overwrite) {
-                if ($this->cache->replace($key, $value) === false) {
-                    $result = $this->cache->set($key, $value);
+                if ($this->cacheContainer->driver->replace($key, $value) === false) {
+                    $result = $this->cacheContainer->driver->set($key, $value);
                 }
             } else {
-                $result = $this->cache->set($key, $value);
+                $result = $this->cacheContainer->driver->set($key, $value);
             }
         }
 
         $this->logger->info("Execute cache save: " . $key);
-        $this->verifyReturnCode(\Memcached::RES_SUCCESS);
+        $this->verifyReturnCode($this->cacheContainer->codes['success']);
 
         return $result;
     }
@@ -103,11 +70,16 @@ class Memcached implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cachePrefix . $key;
-        $value = $this->cache->get($key);
-        $this->logger->info("Execute cache read: " . $key);
+        $key = $this->cacheContainer->cachePrefix . $key;
+        $result = $this->cacheContainer->driver->get($key);
 
-        return $this->verifyReturnCode(\Memcached::RES_SUCCESS) ? $value : null;
+        if ($result !== false) {
+            $this->logger->info("Execute cache read: " . $key);
+        } else {
+            $this->logger->warn("Failed to read cache: " . $key);
+        }
+
+        return $this->verifyReturnCode($this->cacheContainer->codes['success']) ? $result : null;
     }
 
     /**
@@ -118,11 +90,16 @@ class Memcached implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cachePrefix . $key;
-        $this->cache->delete($key);
-        $this->logger->info("Execute cache cleared: " . $key);
+        $key = $this->cacheContainer->cachePrefix . $key;
+        $this->cacheContainer->driver->delete($key);
 
-        return $this->verifyReturnCode(\Memcached::RES_NOTFOUND);
+        if ($this->verifyReturnCode($this->cacheContainer->codes['notfound'])) {
+            $this->logger->info("Execute cache cleared: " . $key);
+            return true;
+        } else {
+            $this->logger->warn("Failed to clear cache: " . $key);
+            return false;
+        }
     }
 
     /**
@@ -133,15 +110,15 @@ class Memcached implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $allKeys = $this->cache->getAllKeys();
+        $allKeys = $this->cacheContainer->driver->getAllKeys();
         if ($allKeys === false) {
-            $this->logger->warn("Can't get cache keys: " . $this->cachePrefix . "*");
-            $this->cache->flush();
+            $this->logger->warn("Can't get cache keys: " . $this->cacheContainer->cachePrefix . "*");
+            $this->cacheContainer->driver->flush();
 
             return true;
         }
 
-        $prefixLength = strlen($this->cachePrefix);
+        $prefixLength = strlen($this->cacheContainer->cachePrefix);
         $targetKeys = [];
         foreach ($allKeys as $key) {
             if (substr($key, 0, $prefixLength)) {
@@ -150,9 +127,14 @@ class Memcached implements ICache
         }
 
         $this->deleteMulti($targetKeys);
-        $this->logger->info("Execute all cache cleared: " . $this->cachePrefix . "*");
 
-        return $this->verifyReturnCode(\Memcached::RES_NOTFOUND);
+        if ($this->verifyReturnCode($this->cacheContainer->codes['notfound'])) {
+            $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
+            return true;
+        } else {
+            $this->logger->warn("Failed to clear all cache: " . $this->cacheContainer->cachePrefix . "*");
+            return false;
+        }
     }
 
     /**
@@ -160,10 +142,10 @@ class Memcached implements ICache
      * @param int $code 想定コード
      * @return bool 検証結果
      */
-    private function verifyReturnCode(int $code)
+    private function verifyReturnCode(int $code): bool
     {
-        if ($code !== $this->cache->getResultCode()) {
-            $message = $this->cache->getResultMessage();
+        if ($code !== $this->cacheContainer->driver->getResultCode()) {
+            $message = $this->cacheContainer->driver->getResultMessage();
             $this->logger->warn("Error $code interacting with memcached: $message");
 
             return false;
@@ -178,7 +160,7 @@ class Memcached implements ICache
      */
     private function isAvailableCacheLibrary(): bool
     {
-        if ($this->isAvairable) {
+        if ($this->cacheContainer->available) {
             return true;
         }
 

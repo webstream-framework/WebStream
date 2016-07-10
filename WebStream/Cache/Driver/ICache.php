@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Cache\Driver;
 
+use WebStream\Module\Container;
+
 /**
  * ICache
  * @author Ryuichi TANAKA.
@@ -9,6 +11,12 @@ namespace WebStream\Cache\Driver;
  */
 interface ICache
 {
+    /**
+     * Constructor
+     * @param Container $container 依存コンテナ
+     */
+    public function __construct(Container $container);
+
     /**
      * キャッシュを登録する
      * @param mixed $key キャッシュキー
