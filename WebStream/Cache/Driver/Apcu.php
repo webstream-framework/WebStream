@@ -31,14 +31,14 @@ class Apcu implements ICache
     /**
      * {@inheritdoc}
      */
-    public function add($key, $value, $ttl = 0, $overrite = false): bool
+    public function add($key, $value, $ttl = 0, $overwrite = false): bool
     {
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
         $key = $this->cacheContainer->cachePrefix . $key;
 
-        $result = $overrite ? $this->cacheContainer->driver->delegate("apcu_store", [$key, $value, $ttl]) :
+        $result = $overwrite ? $this->cacheContainer->driver->delegate("apcu_store", [$key, $value, $ttl]) :
             $this->cacheContainer->driver->delegate("apcu_add", [$key, $value, $ttl]);
         $this->logger->info("Execute cache save: " . $key);
 

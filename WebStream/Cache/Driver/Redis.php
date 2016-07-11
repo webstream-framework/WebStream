@@ -30,7 +30,7 @@ class Redis implements ICache
     /**
      * {@inheritdoc}
      */
-    public function add($key, $value, $ttl = 0, $overrite = false): bool
+    public function add($key, $value, $ttl = 0, $overwrite = false): bool
     {
         if (!$this->isAvailableCacheLibrary()) {
             return false;
@@ -42,13 +42,13 @@ class Redis implements ICache
 
         $result = false;
         if ($ttl > 0) {
-            if ($overrite) {
+            if ($overwrite) {
                 $result = $this->cacheContainer->driver->setEx($key, $ttl, $value);
             } else {
                 $result = $this->cacheContainer->driver->set($key, $value, ['nx', 'ex' => $ttl]);
             }
         } else {
-            if ($overrite) {
+            if ($overwrite) {
                 $result = $this->cacheContainer->driver->set($key, $value);
             } else {
                 $result = $this->cacheContainer->driver->setNx($key, $value);

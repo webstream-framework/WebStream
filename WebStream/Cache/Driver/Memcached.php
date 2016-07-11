@@ -127,7 +127,7 @@ class Memcached implements ICache
             }
         }
 
-        $this->deleteMulti($targetKeys);
+        $this->cacheContainer->driver->deleteMulti($targetKeys);
 
         if ($this->verifyReturnCode($this->cacheContainer->codes['notfound'])) {
             $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
