@@ -22,9 +22,9 @@ interface ICache
      * @param mixed $key キャッシュキー
      * @param mixed $value キャッシュ値
      * @param int $ttl キャッシュ保持期間(秒)
-     * @param bool $overrite 上書きフラグ
+     * @param bool $overwrite 上書きフラグ
      */
-    public function add($key, $value, $ttl, $overrite): bool;
+    public function add($key, $value, $ttl, $overwrite): bool;
 
     /**
      * キャッシュを取得する

@@ -11,6 +11,12 @@ use WebStream\Module\Container;
  */
 class CacheDriverFactory
 {
+    /**
+     * キャッシュドライバオブジェクトを作成する
+     * @param string $classpath ドライバクラスパス
+     * @param Container $config 依存コンテナ
+     * @return ICache キャッシュドライバオブジェクト
+     */
     public function create(string $classpath, Container $config = null): ICache
     {
         $cache = null;
@@ -24,23 +30,36 @@ class CacheDriverFactory
             case "WebStream\Cache\Driver\Redis":
                 $cache = $this->createRedis($config);
                 break;
-            case "WebStream\Cache\Driver\TemporaryFile":
-                $cache = $this->createTemporaryFile();
-                break;
         }
 
         return $cache;
     }
 
+    /**
+     * APCuオブジェクトを返却する
+     * @return ICache キャッシュオブジェクト
+     */
     private function createApcu(): ICache
     {
         $cacheContainer = new Container();
         $cacheContainer->available = extension_loaded('apcu');
         $cacheContainer->cachePrefix = "cache.apcu.";
+        $cacheContainer->driver = new class()
+        {
+            public function delegate($function, array $args = [])
+            {
+                return function_exists($function) ? call_user_func_array($function, $args) : null;
+            }
+        };
 
         return new Apcu($cacheContainer);
     }
 
+    /**
+     * Memcachedオブジェクトを返却する
+     * @param Container $container 依存コンテナ
+     * @return ICache キャッシュオブジェクト
+     */
     private function createMemcached(Container $container): ICache
     {
         $cacheContainer = new Container();
@@ -76,6 +95,11 @@ class CacheDriverFactory
         return new Memcached($cacheContainer);
     }
 
+    /**
+     * Redisオブジェクトを返却する
+     * @param Container $container 依存コンテナ
+     * @return ICache キャッシュオブジェクト
+     */
     private function createRedis(Container $container): ICache
     {
         $cacheContainer = new Container();
@@ -111,10 +135,5 @@ class CacheDriverFactory
         }
 
         return new Redis($cacheContainer);
-    }
-
-    private function createTemporaryFile(): ICache
-    {
-
     }
 }

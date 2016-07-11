@@ -38,7 +38,8 @@ class Apcu implements ICache
         }
         $key = $this->cacheContainer->cachePrefix . $key;
 
-        $result = $overrite ? apcu_store($key, $value, $ttl) : apcu_add($key, $value, $ttl);
+        $result = $overrite ? $this->cacheContainer->driver->delegate("apcu_store", [$key, $value, $ttl]) :
+            $this->cacheContainer->driver->delegate("apcu_add", [$key, $value, $ttl]);
         $this->logger->info("Execute cache save: " . $key);
 
         return $result;
@@ -53,9 +54,9 @@ class Apcu implements ICache
             return null;
         }
         $key = $this->cacheContainer->cachePrefix . $key;
-        $value = apcu_fetch($key, $isSuccess);
+        $value = $this->cacheContainer->driver->delegate("apcu_fetch", [$key]);
 
-        if ($isSuccess) {
+        if ($value !== false) {
             $this->logger->info("Execute cache read: " . $key);
         } else {
             $this->logger->warn("Failed to read cache: " . $key);
@@ -75,7 +76,7 @@ class Apcu implements ICache
         }
         $key = $this->cacheContainer->cachePrefix . $key;
 
-        if (apcu_delete($key)) {
+        if ($this->cacheContainer->driver->delegate("apcu_delete", [$key])) {
             $this->logger->info("Execute cache cleared: " . $key);
             return true;
         } else {
@@ -94,16 +95,17 @@ class Apcu implements ICache
         }
 
         if (class_exists('\APCUIterator')) {
-            if (apcu_delete(new \APCUIterator('/^' . $this->cacheContainer->cachePrefix . '/', APC_ITER_KEY))) {
-                $this->logger->info("Execute all cache cleared: " . $key . "*");
+            $obj = new \APCUIterator('/^' . $this->cacheContainer->cachePrefix . '/', APC_ITER_KEY);
+            if ($this->cacheContainer->driver->delegate("apcu_delete", [$obj])) {
+                $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
                 return true;
             }
-        } elseif (apcu_clear_cache()) {
-            $this->logger->info("Execute all cache cleared: " . $key . "*");
+        } elseif ($this->cacheContainer->driver->delegate("apcu_clear_cache")) {
+            $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
             return true;
         }
 
-        $this->logger->warn("Failed to clear all cache: " . $key . "*");
+        $this->logger->warn("Failed to clear all cache: " . $this->cacheContainer->cachePrefix . "*");
         return false;
     }
 

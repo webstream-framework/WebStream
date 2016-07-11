@@ -136,7 +136,7 @@ class Redis implements ICache
             return true;
         }
 
-        $this->logger->warn("APCu cache library is unavailable.");
+        $this->logger->warn("Redis cache library is unavailable.");
 
         return false;
     }
