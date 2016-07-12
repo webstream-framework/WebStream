@@ -91,7 +91,7 @@ class Redis implements ICache
             return false;
         }
 
-        if ($this->cacheContainer->driver->delete($key)) {
+        if ($this->cacheContainer->driver->delete($key) > 0) {
             $this->logger->info("Execute cache cleared: " . $key);
             return true;
         } else {

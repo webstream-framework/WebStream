@@ -40,7 +40,8 @@ class Memcached implements ICache
 
         if ($ttl > 0) {
             if ($overwrite) {
-                if ($this->cacheContainer->driver->replace($key, $value, $ttl) === false) {
+                $result = $this->cacheContainer->driver->replace($key, $value, $ttl);
+                if ($result === false) {
                     $result = $this->cacheContainer->driver->set($key, $value, $ttl);
                 }
             } else {
