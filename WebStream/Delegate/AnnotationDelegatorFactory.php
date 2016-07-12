@@ -36,6 +36,7 @@ class AnnotationDelegatorFactory
     /**
      * Constructor
      * @param array<string> 注入後の返却情報
+     * @param Container 依存コンテナ
      */
     public function __construct(array $injectedAnnotation, Container $container)
     {
