@@ -22,13 +22,13 @@ class CacheDriverFactory
         $cache = null;
         switch ($classpath) {
             case "WebStream\Cache\Driver\Apcu":
-                $cache = $this->createApcu();
+                $cache = new $classpath($this->getApcuContainer());
                 break;
             case "WebStream\Cache\Driver\Memcached":
-                $cache = $this->createMemcached($config);
+                $cache = new $classpath($this->getMemcachedContainer($config));
                 break;
             case "WebStream\Cache\Driver\Redis":
-                $cache = $this->createRedis($config);
+                $cache = new $classpath($this->getRedisContainer($config));
                 break;
         }
 
@@ -37,9 +37,9 @@ class CacheDriverFactory
 
     /**
      * APCuオブジェクトを返却する
-     * @return ICache キャッシュオブジェクト
+     * @return Container キャッシュ依存コンテナ
      */
-    private function createApcu(): ICache
+    private function getApcuContainer(): Container
     {
         $cacheContainer = new Container();
         $cacheContainer->available = extension_loaded('apcu');
@@ -52,15 +52,15 @@ class CacheDriverFactory
             }
         };
 
-        return new Apcu($cacheContainer);
+        return $cacheContainer;
     }
 
     /**
      * Memcachedオブジェクトを返却する
      * @param Container $container 依存コンテナ
-     * @return ICache キャッシュオブジェクト
+     * @return Container キャッシュ依存コンテナ
      */
-    private function createMemcached(Container $container): ICache
+    private function getMemcachedContainer(Container $container): Container
     {
         $cacheContainer = new Container();
         $cacheContainer->driver = new \Memcached();
@@ -92,20 +92,21 @@ class CacheDriverFactory
             $cacheContainer->driver->setOptions($defaultOptions);
         }
 
-        return new Memcached($cacheContainer);
+        return $cacheContainer;
     }
 
     /**
      * Redisオブジェクトを返却する
      * @param Container $container 依存コンテナ
-     * @return ICache キャッシュオブジェクト
+     * @return Container キャッシュ依存コンテナ
      */
-    private function createRedis(Container $container): ICache
+    private function getRedisContainer(Container $container): Container
     {
         $cacheContainer = new Container();
         $cacheContainer->driver = new \Redis();
         $cacheContainer->available = extension_loaded('redis');
         $cacheContainer->cachePrefix = "cache.redis.";
+        $cacheContainer->redisOptPrefix = \Redis::OPT_PREFIX;
 
         if ($cacheContainer->available) {
             $host = $container->host;
@@ -134,6 +135,11 @@ class CacheDriverFactory
             }
         }
 
-        return new Redis($cacheContainer);
+        return $cacheContainer;
+    }
+
+    private function createTemporaryFile(): ICache
+    {
+        // TODO
     }
 }

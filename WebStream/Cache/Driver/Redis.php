@@ -111,11 +111,11 @@ class Redis implements ICache
 
         $it = null;
         $result = 1;
-        $this->cacheContainer->driver->setOption(\Redis::OPT_PREFIX, "");
+        $this->cacheContainer->driver->setOption($this->cacheContainer->redisOptPrefix, "");
         while ($keys = $this->cacheContainer->driver->scan($it, "*")) {
             $result *= $this->cacheContainer->driver->delete($keys);
         }
-        $this->cacheContainer->driver->setOption(\Redis::OPT_PREFIX, $this->cacheContainer->cachePrefix);
+        $this->cacheContainer->driver->setOption($this->cacheContainer->redisOptPrefix, $this->cacheContainer->cachePrefix);
 
         if ($result > 0) {
             $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
