@@ -21,6 +21,7 @@ class FileOutputStream extends OutputStream
     /**
      * constructor
      * @param mixed $file ファイルオブジェクトまたはファイルパス
+     * @param bool $isAppend 追記フラグ
      * @throws InvalidArgumentException
      * @throws IOException
      */

@@ -2,6 +2,9 @@
 namespace WebStream\Cache\Driver;
 
 use WebStream\Module\Container;
+use WebStream\IO\File;
+use WebStream\IO\Reader\FileReader;
+use WebStream\IO\Writer\FileWriter;
 
 /**
  * CacheDriverFactory
@@ -29,6 +32,9 @@ class CacheDriverFactory
                 break;
             case "WebStream\Cache\Driver\Redis":
                 $cache = new $classpath($this->getRedisContainer($config));
+                break;
+            case "WebStream\Cache\Driver\TemporaryFile":
+                $cache = new $classpath($this->getTemporaryFileContainer($config));
                 break;
         }
 
@@ -138,8 +144,34 @@ class CacheDriverFactory
         return $cacheContainer;
     }
 
-    private function createTemporaryFile(): ICache
+    /**
+     * TemporaryFileオブジェクトを返却する
+     * @param Container $container 依存コンテナ
+     * @return Container キャッシュ依存コンテナ
+     */
+    private function getTemporaryFileContainer(Container $container): Container
     {
-        // TODO
+        $cacheContainer = new Container();
+        $cacheContainer->cachePrefix = "cache.file.";
+        $dir = new File($container->cacheDir);
+        $cacheContainer->available = $dir->isWritable();
+        $cacheContainer->cacheDir = $container->cacheDir;
+        $cacheContainer->ioContainer = new Container();
+        $cacheContainer->ioContainer->fileReader = new class()
+        {
+            public function getReader(File $file)
+            {
+                return new FileReader($file);
+            }
+        };
+        $cacheContainer->ioContainer->fileWriter = new class()
+        {
+            public function getWriter($file, $isAppend)
+            {
+                return new FileWriter($file, $isAppend);
+            }
+        };
+
+        return $cacheContainer;
     }
 }
