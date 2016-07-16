@@ -5,6 +5,7 @@ use WebStream\Module\Container;
 use WebStream\IO\File;
 use WebStream\IO\Reader\FileReader;
 use WebStream\IO\Writer\FileWriter;
+use WebStream\Module\Utility\FileUtils;
 
 /**
  * CacheDriverFactory
@@ -169,6 +170,14 @@ class CacheDriverFactory
             public function getWriter($file, $isAppend)
             {
                 return new FileWriter($file, $isAppend);
+            }
+        };
+        $cacheContainer->ioContainer->fileIterator = new class()
+        {
+            use FileUtils;
+            public function getIterator($dirPath)
+            {
+                return $this->getFileSearchIterator($dirPath);
             }
         };
 

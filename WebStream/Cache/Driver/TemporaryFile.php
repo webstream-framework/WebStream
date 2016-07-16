@@ -3,10 +3,8 @@ namespace WebStream\Cache\Driver;
 
 use WebStream\DI\Injector;
 use WebStream\Module\Container;
-use WebStream\Module\Utility\FileUtils;
 use WebStream\Module\Utility\SecurityUtils;
 use WebStream\IO\File;
-use WebStream\IO\Writer\FileWriter;
 use WebStream\Exception\Extend\IOException;
 
 /**
@@ -17,7 +15,7 @@ use WebStream\Exception\Extend\IOException;
  */
 class TemporaryFile implements ICache
 {
-    use injector, FileUtils, SecurityUtils;
+    use injector, SecurityUtils;
 
     /**
      * @var Container キャッシュ依存コンテナ
@@ -86,7 +84,6 @@ class TemporaryFile implements ICache
         if ($file->isReadable()) {
             try {
                 $reader = $this->cacheContainer->ioContainer->fileReader->getReader($file);
-                // $reader = new FileReader($file);
                 $data = $this->decode($reader->read());
                 if ($data['ttl'] > 0) {
                     if (time() > $data['time'] + $data['ttl']) {
@@ -147,7 +144,7 @@ class TemporaryFile implements ICache
         $result = true;
 
         if ($dir->isReadable()) {
-            $iterator = $this->getFileSearchIterator($dir->getFilePath());
+            $iterator = $this->cacheContainer->ioContainer->fileIterator->getIterator($dir->getFilePath());
             foreach ($iterator as $filepath => $fileObject) {
                 if (strpos($filepath, $this->cacheContainer->cachePrefix, 0) !== false) {
                     try {
