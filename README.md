@@ -3,18 +3,15 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webstream-framework/WebStream/badges/quality-score.png?b=feature%2F0.7.0)](https://scrutinizer-ci.com/g/webstream-framework/WebStream/?branch=feature%2F0.7.0)
 [![Test Coverage](https://codeclimate.com/github/webstream-framework/Test/badges/coverage.svg)](https://codeclimate.com/github/webstream-framework/Test/coverage)
 
-WebStream is a Web application framework which is based on MVC architecture.  
+WebStream is a Web application framework for PHP which is based on MVC architecture.  
 Further, this architecture added service layer on basic MVC three-layer.
 
 ## document
 http://webstream-framework.github.io/WebStream
 
-## ticket
-[mapserver2007.tracpath.com](https://mapserver2007.tracpath.com/-/dashboard)
-
 ## branches
 * master
-* 0.7.0 (PHP7.0.2)
+* 0.7.0 (PHP7.0.7)
 
 ## tags
 * 0.1.10 (PHP4.x)
