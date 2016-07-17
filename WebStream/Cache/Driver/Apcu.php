@@ -6,7 +6,6 @@ use WebStream\Module\Container;
 
 /**
  * Apcu
- * TTLがリクエストによりずれる問題はAPCuの仕様なので対応しない
  * @author Ryuichi Tanaka
  * @since 2015/07/05
  * @version 0.7
@@ -21,11 +20,17 @@ class Apcu implements ICache
     private $cacheContainer;
 
     /**
+     * @var string キャッシュ接頭辞
+     */
+    private $cachePrefix;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $cacheContainer)
     {
         $this->cacheContainer = $cacheContainer;
+        $this->cachePrefix = $this->cacheContainer->cachePrefix . '.' . $this->cacheContainer->classPrefix . '.';
     }
 
     /**
@@ -36,7 +41,7 @@ class Apcu implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
 
         $result = $overwrite ? $this->cacheContainer->driver->delegate("apcu_store", [$key, $value, $ttl]) :
             $this->cacheContainer->driver->delegate("apcu_add", [$key, $value, $ttl]);
@@ -53,7 +58,7 @@ class Apcu implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return null;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
         $value = $this->cacheContainer->driver->delegate("apcu_fetch", [$key]);
 
         if ($value !== false) {
@@ -74,7 +79,7 @@ class Apcu implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
 
         if ($this->cacheContainer->driver->delegate("apcu_delete", [$key])) {
             $this->logger->info("Execute cache cleared: " . $key);
@@ -95,17 +100,17 @@ class Apcu implements ICache
         }
 
         if (class_exists('\APCUIterator')) {
-            $obj = new \APCUIterator('/^' . $this->cacheContainer->cachePrefix . '/', APC_ITER_KEY);
+            $obj = new \APCUIterator('/^' . $this->cachePrefix . '/', APC_ITER_KEY);
             if ($this->cacheContainer->driver->delegate("apcu_delete", [$obj])) {
-                $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
+                $this->logger->info("Execute all cache cleared: " . $this->cachePrefix . "*");
                 return true;
             }
         } elseif ($this->cacheContainer->driver->delegate("apcu_clear_cache")) {
-            $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
+            $this->logger->info("Execute all cache cleared: " . $this->cachePrefix . "*");
             return true;
         }
 
-        $this->logger->warn("Failed to clear all cache: " . $this->cacheContainer->cachePrefix . "*");
+        $this->logger->warn("Failed to clear all cache: " . $this->cachePrefix . "*");
         return false;
     }
 

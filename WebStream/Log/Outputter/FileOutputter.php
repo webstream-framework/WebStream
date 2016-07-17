@@ -55,7 +55,7 @@ class FileOutputter implements IOutputter, ILazyWriter
     public function __construct(string $logPath, int $bufferSize = 1000)
     {
         $this->logPath = $logPath;
-        $driver = $this->getCacheDriver("apcu");
+        $driver = $this->getCacheDriver("apcu", "logger_cache");
         // LoggerCacheの中ではログは取らない
         $driver->inject('logger', new class() { function __call($name, $args) {} });
         $this->driver = $driver;

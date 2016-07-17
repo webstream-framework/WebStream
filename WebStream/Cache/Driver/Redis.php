@@ -20,11 +20,17 @@ class Redis implements ICache
     private $cacheContainer;
 
     /**
+     * @var string キャッシュ接頭辞
+     */
+    private $cachePrefix;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $cacheContainer)
     {
         $this->cacheContainer = $cacheContainer;
+        $this->cachePrefix = $this->cacheContainer->cachePrefix . '.' . $this->cacheContainer->classPrefix . '.';
     }
 
     /**
@@ -115,13 +121,13 @@ class Redis implements ICache
         while ($keys = $this->cacheContainer->driver->scan($it, "*")) {
             $result *= $this->cacheContainer->driver->delete($keys);
         }
-        $this->cacheContainer->driver->setOption($this->cacheContainer->redisOptPrefix, $this->cacheContainer->cachePrefix);
+        $this->cacheContainer->driver->setOption($this->cacheContainer->redisOptPrefix, $this->cachePrefix);
 
         if ($result > 0) {
-            $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
+            $this->logger->info("Execute all cache cleared: " . $this->cachePrefix . "*");
             return true;
         } else {
-            $this->logger->warn("Failed to clear all cache: " . $this->cacheContainer->cachePrefix . "*");
+            $this->logger->warn("Failed to clear all cache: " . $this->cachePrefix . "*");
             return false;
         }
     }

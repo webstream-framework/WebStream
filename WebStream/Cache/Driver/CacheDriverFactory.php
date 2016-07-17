@@ -26,7 +26,7 @@ class CacheDriverFactory
         $cache = null;
         switch ($classpath) {
             case "WebStream\Cache\Driver\Apcu":
-                $cache = new $classpath($this->getApcuContainer());
+                $cache = new $classpath($this->getApcuContainer($config));
                 break;
             case "WebStream\Cache\Driver\Memcached":
                 $cache = new $classpath($this->getMemcachedContainer($config));
@@ -44,13 +44,15 @@ class CacheDriverFactory
 
     /**
      * APCuオブジェクトを返却する
+     * @param Container $container 依存コンテナ
      * @return Container キャッシュ依存コンテナ
      */
-    private function getApcuContainer(): Container
+    private function getApcuContainer(Container $container): Container
     {
         $cacheContainer = new Container();
         $cacheContainer->available = extension_loaded('apcu');
-        $cacheContainer->cachePrefix = "cache.apcu.";
+        $cacheContainer->cachePrefix = "cache.apcu";
+        $cacheContainer->classPrefix = $container->classPrefix;
         $cacheContainer->driver = new class()
         {
             public function delegate($function, array $args = [])
@@ -72,7 +74,8 @@ class CacheDriverFactory
         $cacheContainer = new Container();
         $cacheContainer->driver = new \Memcached();
         $cacheContainer->available = extension_loaded('memcached');
-        $cacheContainer->cachePrefix = "cache.memcached.";
+        $cacheContainer->cachePrefix = "cache.memcached";
+        $cacheContainer->classPrefix = $container->classPrefix;
         $cacheContainer->codes = [
             'success' => \Memcached::RES_SUCCESS,
             'notfound' => \Memcached::RES_NOTFOUND
@@ -112,7 +115,8 @@ class CacheDriverFactory
         $cacheContainer = new Container();
         $cacheContainer->driver = new \Redis();
         $cacheContainer->available = extension_loaded('redis');
-        $cacheContainer->cachePrefix = "cache.redis.";
+        $cacheContainer->cachePrefix = "cache.redis";
+        $cacheContainer->classPrefix = $container->classPrefix;
         $cacheContainer->redisOptPrefix = \Redis::OPT_PREFIX;
 
         if ($cacheContainer->available) {
@@ -137,7 +141,7 @@ class CacheDriverFactory
                     $cacheContainer->driver->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_IGBINARY);
                 }
 
-                $cacheContainer->driver->setOption(\Redis::OPT_PREFIX, $container->cachePrefix);
+                $cacheContainer->driver->setOption(\Redis::OPT_PREFIX, $container->cachePrefix . '.' . $container->classPrefix);
                 $cacheContainer->driver->setOption(\Redis::OPT_SCAN, \Redis::SCAN_RETRY);
             }
         }
@@ -153,7 +157,8 @@ class CacheDriverFactory
     private function getTemporaryFileContainer(Container $container): Container
     {
         $cacheContainer = new Container();
-        $cacheContainer->cachePrefix = "cache.file.";
+        $cacheContainer->cachePrefix = "cache.file";
+        $cacheContainer->classPrefix = $container->classPrefix;
         $dir = new File($container->cacheDir);
         $cacheContainer->available = $dir->isWritable();
         $cacheContainer->cacheDir = $container->cacheDir;
