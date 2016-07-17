@@ -21,34 +21,33 @@ trait CacheUtils
      * @param string $cacheName キャッシュドライバ名
      * @return ICache キャッシュドライバ
      */
-    public function getCacheDriver(string $cacheName): ICache
+    public function getCacheDriver(string $cacheName, string $classPrefix = null): ICache
     {
         $driver = null;
+        $config = new Container(false);
+        $config->classPrefix = $classPrefix;
         $factory = new CacheDriverFactory();
 
         switch ($cacheName) {
             case "apcu":
-                $driver = $factory->create("WebStream\Cache\Driver\Apcu");
+                $driver = $factory->create("WebStream\Cache\Driver\Apcu", $config);
                 break;
             case "memcached":
                 $cacheConfig = \Spyc::YAMLLoad($this->getApplicationRoot() . '/config/cache.yml');
                 if (array_key_exists('memcached', $cacheConfig)) {
-                    $config = new Container(false);
-                    $config->servers = [$cacheConfig['host'], $cacheConfig['port']];
+                    $config->servers = [[$cacheConfig['memcached']['host'], $cacheConfig['memcached']['port']]];
                     $driver = $factory->create("WebStream\Cache\Driver\Memcached", $config);
                 }
                 break;
             case "redis":
                 $cacheConfig = \Spyc::YAMLLoad($this->getApplicationRoot() . '/config/cache.yml');
                 if (array_key_exists('redis', $cacheConfig)) {
-                    $config = new Container(false);
-                    $config->host = $cacheConfig['host'];
-                    $config->port = $cacheConfig['port'];
+                    $config->host = $cacheConfig['redis']['host'];
+                    $config->port = $cacheConfig['redis']['port'];
                     $driver = $factory->create("WebStream\Cache\Driver\Redis", $config);
                 }
                 break;
             case "temporaryFile":
-                $config = new Container();
                 $config->cacheDir = "/tmp";
                 $driver = $factory->create("WebStream\Cache\Driver\TemporaryFile", $config);
                 break;

@@ -20,11 +20,17 @@ class Memcached implements ICache
     private $cacheContainer;
 
     /**
+     * @var string キャッシュ接頭辞
+     */
+    private $cachePrefix;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $cacheContainer)
     {
         $this->cacheContainer = $cacheContainer;
+        $this->cachePrefix = $this->cacheContainer->cachePrefix . '.' . $this->cacheContainer->classPrefix . '.';
     }
 
     /**
@@ -35,7 +41,7 @@ class Memcached implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
         $result = null;
 
         if ($ttl > 0) {
@@ -72,7 +78,7 @@ class Memcached implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
         $result = $this->cacheContainer->driver->get($key);
 
         if ($result !== false) {
@@ -92,7 +98,7 @@ class Memcached implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
         $this->cacheContainer->driver->delete($key);
 
         if ($this->verifyReturnCode($this->cacheContainer->codes['notfound'])) {
@@ -114,13 +120,13 @@ class Memcached implements ICache
         }
         $allKeys = $this->cacheContainer->driver->getAllKeys();
         if ($allKeys === false) {
-            $this->logger->warn("Can't get cache keys: " . $this->cacheContainer->cachePrefix . "*");
+            $this->logger->warn("Can't get cache keys: " . $this->cachePrefix . "*");
             $this->cacheContainer->driver->flush();
 
             return true;
         }
 
-        $prefixLength = strlen($this->cacheContainer->cachePrefix);
+        $prefixLength = strlen($this->cachePrefix);
         $targetKeys = [];
         foreach ($allKeys as $key) {
             if (substr($key, 0, $prefixLength)) {
@@ -131,10 +137,10 @@ class Memcached implements ICache
         $this->cacheContainer->driver->deleteMulti($targetKeys);
 
         if ($this->verifyReturnCode($this->cacheContainer->codes['notfound'])) {
-            $this->logger->info("Execute all cache cleared: " . $this->cacheContainer->cachePrefix . "*");
+            $this->logger->info("Execute all cache cleared: " . $this->cachePrefix . "*");
             return true;
         } else {
-            $this->logger->warn("Failed to clear all cache: " . $this->cacheContainer->cachePrefix . "*");
+            $this->logger->warn("Failed to clear all cache: " . $this->cachePrefix . "*");
             return false;
         }
     }
