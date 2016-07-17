@@ -84,14 +84,4 @@ trait LoggerUtils
                 throw new LoggerException("Undefined log level: $level");
         }
     }
-
-    /**
-     * APCuキャッシュが有効化どうか調べる
-     * LoggerCacheで使用する関数のみ調査
-     * @return bool 検査結果
-     */
-    public function enableApcu()
-    {
-        return function_exists('apcu_cache_info') && @apcu_cache_info() !== false;
-    }
 }

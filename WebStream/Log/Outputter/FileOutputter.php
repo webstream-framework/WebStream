@@ -2,8 +2,10 @@
 namespace WebStream\Log\Outputter;
 
 use WebStream\IO\Writer\SimpleFileWriter;
-use WebStream\Log\LoggerCache;
+use WebStream\Cache\LoggerCache;
+use WebStream\Cache\Driver\ICache;
 use WebStream\Module\Utility\LoggerUtils;
+use WebStream\Module\Utility\CacheUtils;
 
 /**
  * FileOutputter
@@ -13,12 +15,17 @@ use WebStream\Module\Utility\LoggerUtils;
  */
 class FileOutputter implements IOutputter, ILazyWriter
 {
-    use LoggerUtils;
+    use LoggerUtils, CacheUtils;
 
     /**
      * @var string ログファイルパス
      */
     private $logPath;
+
+    /**
+     * @var ICache キャッシュドライバ
+     */
+    private $driver;
 
     /**
      * @var int バッファリングサイズ
@@ -45,9 +52,13 @@ class FileOutputter implements IOutputter, ILazyWriter
      * @param string $logPath ログファイルパス
      * @param int $bufferSize バッファリングサイズ
      */
-    public function __construct($logPath, $bufferSize = 1000)
+    public function __construct(string $logPath, int $bufferSize = 1000)
     {
         $this->logPath = $logPath;
+        $driver = $this->getCacheDriver("apcu");
+        // LoggerCacheの中ではログは取らない
+        $driver->inject('logger', new class() { function __call($name, $args) {} });
+        $this->driver = $driver;
         $this->bufferSize = $bufferSize;
         $this->enableLazyWrite();
         $this->writer = new SimpleFileWriter($logPath);
@@ -72,9 +83,9 @@ class FileOutputter implements IOutputter, ILazyWriter
      */
     public function enableLazyWrite()
     {
-        if ($this->enableApcu()) {
+        if ($this->driver !== null) {
             $this->isLazyWrite = true;
-            $this->cache = new LoggerCache();
+            $this->cache = new LoggerCache($this->driver);
         }
     }
 
