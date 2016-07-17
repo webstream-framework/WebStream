@@ -1,5 +1,7 @@
 <?php
-namespace WebStream\Log;
+namespace WebStream\Cache;
+
+use WebStream\Cache\Driver\ICache;
 
 /**
  * LoggerCache
@@ -10,9 +12,14 @@ namespace WebStream\Log;
 class LoggerCache
 {
     /**
-     * @var string キャッシュ接頭辞
+     * @var ICache キャッシュドライバ
      */
-    private $prefix;
+    private $driver;
+
+    /**
+     * @var string キャッシュキー
+     */
+    private $key;
 
     /**
      * @var int キャッシュインデックス
@@ -22,9 +29,10 @@ class LoggerCache
     /**
      * constructor
      */
-    public function __construct()
+    public function __construct(ICache $driver)
     {
-        $this->prefix = md5(get_class($this));
+        $this->driver = $driver;
+        $this->key = md5(get_class($this));
         $this->index = 0;
     }
 
@@ -33,7 +41,7 @@ class LoggerCache
      */
     public function __destruct()
     {
-        apcu_clear_cache();
+        $this->driver->clear();
     }
 
     /**
@@ -42,7 +50,7 @@ class LoggerCache
      */
     public function add(string $content)
     {
-        apcu_add($this->prefix . $this->index++, $content);
+        $this->driver->add($this->key . $this->index++, $content);
     }
 
     /**
@@ -53,7 +61,7 @@ class LoggerCache
     {
         $list = [];
         for ($i = 0; $i < $this->index; $i++) {
-            $list[] = apcu_fetch($this->prefix . $i);
+            $list[] = $this->driver->get($this->key . $i);
         }
 
         return $list;
