@@ -4,11 +4,11 @@ namespace WebStream\Template;
 use WebStream\IO\File;
 use WebStream\IO\Reader\FileReader;
 use WebStream\IO\Writer\FileWriter;
-use WebStream\Module\Cache;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Utility\SecurityUtils;
 use WebStream\Module\Container;
+use WebStream\Cache\Driver\CacheDriverFactory;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 
 /**
@@ -180,11 +180,16 @@ class Basic implements ITemplateEngine
     public function cache($filename, $data, $expire)
     {
         $cacheDir = $this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->cacheDir;
-        $cache = new Cache($cacheDir);
+        $factory = new CacheDriverFactory();
+        $config = new Container(false);
+        $config->cacheDir = $cacheDir;
+        $config->classPrefix = "view_cache";
+        $cache = $factory->create("WebStream\Cache\Driver\TemporaryFile", $config);
         $cache->inject('logger', $this->logger);
+        var_dump($cacheDir . "/" . $filename . ".cache");
         $file = new File($cacheDir . "/" . $filename . ".cache");
         if (!$file->exists() || $this->timestamp > $file->lastModified()) {
-            if ($cache->save($filename, $data, $expire)) {
+            if ($cache->add($filename, $data, $expire)) {
                 $this->logger->debug("Write template cache file: " . $file->getFilePath());
             } else {
                 throw new IOException("File write failure: " . $file->getFilePath());

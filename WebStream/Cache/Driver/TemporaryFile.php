@@ -23,11 +23,17 @@ class TemporaryFile implements ICache
     private $cacheContainer;
 
     /**
+     * @var string キャッシュ接頭辞
+     */
+    private $cachePrefix;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(Container $cacheContainer)
     {
         $this->cacheContainer = $cacheContainer;
+        $this->cachePrefix = $this->cacheContainer->cachePrefix . '.' . $this->cacheContainer->classPrefix . '.';
     }
 
     /**
@@ -38,7 +44,7 @@ class TemporaryFile implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
         $writer = null;
         $isAppend = !$overwrite;
 
@@ -76,7 +82,7 @@ class TemporaryFile implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return null;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
         $value = null;
         $reader = null;
         $file = new File($this->cacheContainer->cacheDir . '/' . $key . '.cache');
@@ -118,7 +124,7 @@ class TemporaryFile implements ICache
         if (!$this->isAvailableCacheLibrary()) {
             return false;
         }
-        $key = $this->cacheContainer->cachePrefix . $key;
+        $key = $this->cachePrefix . $key;
         $result = false;
 
         $file = new File($this->cacheContainer->cacheDir . '/' . $key . '.cache');
@@ -146,14 +152,14 @@ class TemporaryFile implements ICache
         if ($dir->isReadable()) {
             $iterator = $this->cacheContainer->ioContainer->fileIterator->getIterator($dir->getFilePath());
             foreach ($iterator as $filepath => $fileObject) {
-                if (strpos($filepath, $this->cacheContainer->cachePrefix, 0) !== false) {
+                if (strpos($filepath, $this->cachePrefix, 0) !== false) {
                     try {
                         $file = new File($filepath);
                         if ($file->isWritable()) {
                             if ($file->delete()) {
-                                $this->logger->info("Execute cache cleared: " . $this->cacheContainer->cachePrefix . "*");
+                                $this->logger->info("Execute cache cleared: " . $this->cachePrefix . "*");
                             } else {
-                                $this->logger->warn("Failed to clear cache: " . $this->cacheContainer->cachePrefix . "*");
+                                $this->logger->warn("Failed to clear cache: " . $this->cachePrefix . "*");
                                 $result = false;
                             }
                         } else {

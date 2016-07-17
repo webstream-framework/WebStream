@@ -7,8 +7,8 @@ use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
+use WebStream\Cache\Driver\CacheDriverFactory;
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Module\Cache;
 use WebStream\Module\Container;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
@@ -182,7 +182,12 @@ class CoreExecuteDelegator
         // テンプレートキャッシュチェック
         $pageName = $this->container->coreDelegator->getPageName();
         $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
-        $cache = new Cache($applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->cacheDir);
+
+        $factory = new CacheDriverFactory();
+        $config = new Container(false);
+        $config->cacheDir = $applicationInfo->applicationRoot . "/app/views/" . $applicationInfo->cacheDir;
+        $config->classPrefix = "view_cache";
+        $cache = $factory->create("WebStream\Cache\Driver\TemporaryFile", $config);
         $cache->inject('logger', $this->logger);
         $data = $cache->get($cacheFile);
 
