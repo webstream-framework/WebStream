@@ -130,7 +130,11 @@ class TemporaryFile implements ICache
         $file = new File($this->cacheContainer->cacheDir . '/' . $key . '.cache');
         if ($file->isWritable()) {
             $result = $file->delete();
-            $this->logger->info("Execute cache cleared: " . $key);
+            if ($result) {
+                $this->logger->info("Execute cache cleared: " . $key);
+            } else {
+                $this->logger->warn("Failed to clear cache: " . $key);
+            }
         } else {
             $this->logger->warn("Failed to clear cache: " . $key);
         }

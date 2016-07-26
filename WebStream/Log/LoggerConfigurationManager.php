@@ -3,6 +3,7 @@ namespace WebStream\Log;
 
 use WebStream\DI\Injector;
 use WebStream\IO\File;
+use WebStream\IO\Writer\SimpleFileWriter;
 use WebStream\Module\Utility\FileUtils;
 use WebStream\Module\Utility\LoggerUtils;
 use WebStream\Module\Container;
@@ -59,6 +60,9 @@ class LoggerConfigurationManager
             }
             return new File($rootDir . "/" . $configMap["path"]);
         };
+        $this->ioContainer->fileWriter = function () use ($rootDir, $configMap) {
+            return new SimpleFileWriter($rootDir . "/" . $configMap["path"]);
+        };
 
         $this->configMap = $configMap;
     }
@@ -110,7 +114,7 @@ class LoggerConfigurationManager
     {
         $file = $this->ioContainer->file;
         if (!($file->exists() && $file->isFile())) {
-            throw new LoggerException("Log directory does not exist: " . $file->getFilePath());
+            $this->ioContainer->fileWriter->write("");
         }
 
         $this->logContainer->logPath = $file->getFilePath();
