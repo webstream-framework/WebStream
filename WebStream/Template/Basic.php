@@ -186,7 +186,7 @@ class Basic implements ITemplateEngine
         $config->classPrefix = "view_cache";
         $cache = $factory->create("WebStream\Cache\Driver\TemporaryFile", $config);
         $cache->inject('logger', $this->logger);
-        var_dump($cacheDir . "/" . $filename . ".cache");
+
         $file = new File($cacheDir . "/" . $filename . ".cache");
         if (!$file->exists() || $this->timestamp > $file->lastModified()) {
             if ($cache->add($filename, $data, $expire)) {
