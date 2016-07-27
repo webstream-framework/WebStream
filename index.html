@@ -736,8 +736,10 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>Controllerクラスのアクションメソッドに<code>@Validate</code>アノテーションを記述することでバリデーションを有効にできます。</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">MyBlog</span>;</span>
+<span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Core\CoreController</span>;</span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebSteram\Annotation\Validate</span>;</span>
+<span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">BlogController</span> <span class="pl-k">extends</span> <span class="pl-e">CoreController</span></span>
 <span class="pl-s1">{</span>
 <span class="pl-s1">    <span class="pl-c">/**</span></span>
@@ -887,6 +889,81 @@ Helperクラスのメソッドは<code>$helper</code>オブジェクトにより
 <p>セッションがタイムアウトした場合、<code>SessionTimeoutException</code>が発生します。</p>
 
 <h2>
+<a id="キャッシュ" class="anchor" href="#%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#cache">キャッシュ</a>
+</h2>
+
+<p>キャッシュ機能を使うことができます。使用できるキャッシュライブラリは以下のとおりです。</p>
+
+<table>
+<thead>
+<tr>
+<th>クラス</th>
+<th>出力先</th>
+<th>設定方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apcu</td>
+<td>APCuキャッシュを使用する</td>
+<td>APCuをインストールする</td>
+</tr>
+<tr>
+<td>Memcached</td>
+<td>memcachedを使用する</td>
+<td>memcachedをインストールする config/cache.ymlに設定</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>redisを使用する</td>
+<td>redisをインストールする config/cache.ymlに設定</td>
+</tr>
+<tr>
+<td>TemporaryFile</td>
+<td>ファイルキャッシュを使用する</td>
+<td>利用時に出力先を指定する</td>
+</tr>
+</tbody>
+</table>
+
+<p>キャッシュは<code>CacheDriverFactory</code>クラスを使うことで簡単に使用できます。  </p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Module\Container</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Cache\Driver\CacheDriverFactory</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$factory</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">CacheDriverFactory</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$config</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Container</span>(<span class="pl-c1">false</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$config</span><span class="pl-k">-&gt;</span><span class="pl-smi">cachePrefix</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>test_cache<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$cache</span> <span class="pl-k">=</span> <span class="pl-smi">$factory</span><span class="pl-k">-&gt;</span>create(<span class="pl-s"><span class="pl-pds">"</span>WebStream\Cache\Driver\Apcu<span class="pl-pds">"</span></span>, <span class="pl-smi">$config</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>inject(<span class="pl-s"><span class="pl-pds">'</span>logger<span class="pl-pds">'</span></span>, <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">logger</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>add(<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$value</span> <span class="pl-k">=</span> <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>get(<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>);</span></pre></div>
+
+<p>さらに簡単に使うためのUtilityが用意されているので、それを使うとより簡潔に書くことができます。  </p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">WebStream\Module\Utility\CacheUtils</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$cache</span> <span class="pl-k">=</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>getCacheDriver(<span class="pl-s"><span class="pl-pds">"</span>apcu<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>test_cache<span class="pl-pds">"</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>inject(<span class="pl-s"><span class="pl-pds">'</span>logger<span class="pl-pds">'</span></span>, <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span><span class="pl-smi">logger</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>add(<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$value</span> <span class="pl-k">=</span> <span class="pl-smi">$cache</span><span class="pl-k">-&gt;</span>get(<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>);</span></pre></div>
+
+<p>キャッシュライブラリとして使う場合の接続先情報は<code>config/cache.yml</code>に設定を書く必要があります。<br>
+<code>cache.yml</code>のサンプルは以下のとおりです。</p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-s">-<span class="pl-s">--</span></span>
+  <span class="pl-s"><span class="pl-ent">memcached:</span></span>
+    <span class="pl-s"><span class="pl-ent">host:</span> <span class="pl-s">192.168.1.100</span></span>
+    <span class="pl-c1"><span class="pl-ent">port:</span> 11211</span>
+  <span class="pl-s"><span class="pl-ent">redis:</span></span>
+    <span class="pl-s"><span class="pl-ent">host:</span> <span class="pl-s">192.168.1.100</span></span>
+    <span class="pl-c1"><span class="pl-ent">port:</span> 6379</span>
+  <span class="pl-s"><span class="pl-ent">temporaryfile:</span></span>
+    <span class="pl-s"><span class="pl-ent">path:</span> <span class="pl-s"><span class="pl-pds">"</span>/tmp<span class="pl-pds">"</span></span></span></pre></div>
+
+<h2>
 <a id="ロギング" class="anchor" href="#%E3%83%AD%E3%82%AE%E3%83%B3%E3%82%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#logging">ロギング</a>
 </h2>
 
@@ -976,8 +1053,9 @@ $customLogger = new LoggerAdapter($instance);
 <h3>
 <a id="ログの遅延書き込み機能" class="anchor" href="#%E3%83%AD%E3%82%B0%E3%81%AE%E9%81%85%E5%BB%B6%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E6%A9%9F%E8%83%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ログの遅延書き込み機能</h3>
 
-<p>APCuキャッシュが有効になっている場合、ログは一旦キャッシュに保存され、すべての処理終了後にまとめてログファイルに出力されます。<br>
-APCuキャッシュが使用不可の場合は、ログファイルに即時書き込みにいくため、パフォーマンス上あらかじめAPCuキャッシュをインストールしておくことを推奨します。</p>
+<p>キャッシュ機能が有効になっている場合、ログは一旦キャッシュに保存され、すべての処理終了後にまとめてログファイルに出力されます。<br>
+キャッシュは<code>APCu</code>、<code>Memcached</code>、<code>Redis</code>のいずれかが使用可能です(デフォルトはAPCu)。<br>
+これらのキャッシュライブラリが使用不可の場合はキャッシュせず即時ログ出力を行いますが、パフォーマンス上あらかじめキャッシュライブラリをインストールしておくことを推奨します。</p>
 
 <h2>
 <a id="ファイル入出力" class="anchor" href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%85%A5%E5%87%BA%E5%8A%9B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="#io">ファイル入出力</a>
