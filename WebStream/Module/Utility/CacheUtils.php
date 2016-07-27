@@ -48,8 +48,11 @@ trait CacheUtils
                 }
                 break;
             case "temporaryFile":
-                $config->cacheDir = "/tmp";
-                $driver = $factory->create("WebStream\Cache\Driver\TemporaryFile", $config);
+                $cacheConfig = \Spyc::YAMLLoad($this->getApplicationRoot() . '/config/cache.yml');
+                if (array_key_exists('temporaryfile', $cacheConfig)) {
+                    $config->cacheDir = $cacheConfig['temporaryfile']['path'];
+                    $driver = $factory->create("WebStream\Cache\Driver\TemporaryFile", $config);
+                }
                 break;
         }
 
