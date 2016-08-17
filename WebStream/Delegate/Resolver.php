@@ -83,7 +83,10 @@ class Resolver
             $controllerDelegator = new CoreExecuteDelegator($this->container->coreDelegator->getController(), $this->container);
             $controllerDelegator->run($this->router->action, [$this->router->params]);
         } elseif ($this->router->staticFile !== null) {
-            $controller = new CoreController($this->container);
+            $controller = new CoreController();
+            $controller->inject('coreDelegator', $this->container->coreDelegator)
+                       ->inject('logger', $this->container->logger);
+
             $controller->__callStaticFile($this->router->staticFile);
         } else {
             $this->response->clean();

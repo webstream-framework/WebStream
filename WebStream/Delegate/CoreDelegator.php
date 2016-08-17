@@ -88,7 +88,16 @@ class CoreDelegator
                 throw new ClassNotFoundException("Undefined class path: " . $controllerClassPath);
             }
 
-            return new $controllerClassPath($container);
+            $controller = new $controllerClassPath();
+            $controller->inject('request', $container->request)
+                       ->inject('response', $container->response)
+                       ->inject('session', $container->session)
+                       ->inject('coreDelegator', $container->coreDelegator)
+                       ->inject('logger', $container->logger);
+
+            $container->logger->debug("Controller start.");
+
+            return $controller;
         };
 
         // View
@@ -101,7 +110,13 @@ class CoreDelegator
             $serviceClassPath = $serviceNamespace . "\\" . $serviceClassName;
             $this->coreContainer->service = function () use ($container, $classLoader, $serviceClassPath, $serviceClassName) {
                 if ($classLoader->import($container->applicationInfo->applicationDir . "/services/" . $serviceClassName . ".php")) {
-                    return new $serviceClassPath($container);
+                    $service = new $serviceClassPath();
+                    $service->inject('coreDelegator', $container->coreDelegator)
+                            ->inject('logger', $container->logger);
+
+                    $container->logger->debug("Service start.");
+
+                    return $service;
                 }
             };
         } else {
@@ -113,7 +128,12 @@ class CoreDelegator
             $modelClassPath = $modelNamespace . "\\" . $modelClassName;
             $this->coreContainer->model = function () use ($container, $classLoader, $modelClassPath, $modelClassName) {
                 if ($classLoader->import($container->applicationInfo->applicationDir . "/models/" . $modelClassName . ".php")) {
-                    return new $modelClassPath($container);
+                    $model = new $modelClassPath();
+                    $model->inject('logger', $container->logger);
+
+                    $container->logger->debug("Model start.");
+
+                    return $model;
                 }
             };
         } else {
