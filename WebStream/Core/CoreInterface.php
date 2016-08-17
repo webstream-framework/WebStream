@@ -12,17 +12,6 @@ use WebStream\Module\Container;
 interface CoreInterface
 {
     /**
-     * Constructor
-     * @param Container DIContainer
-     */
-    public function __construct(Container $container);
-
-    /**
-     * Destructor
-     */
-    public function __destruct();
-
-    /**
      * 初期処理
      * @param Container DIContainer
      */

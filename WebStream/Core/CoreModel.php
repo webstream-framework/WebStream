@@ -56,15 +56,6 @@ class CoreModel implements CoreInterface, IAnnotatable
     /**
      * {@inheritdoc}
      */
-    public function __construct(Container $container)
-    {
-        $this->logger = $container->logger;
-        $this->logger->debug("Model start.");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __destruct()
     {
         $this->logger->debug("Model end.");

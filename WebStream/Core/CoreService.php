@@ -2,8 +2,8 @@
 namespace WebStream\Core;
 
 use WebStream\Delegate\Resolver;
+use WebStream\DI\Injector;
 use WebStream\Module\Container;
-use WebStream\Module\PropertyProxy;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 
@@ -15,12 +15,12 @@ use WebStream\Annotation\Base\IAnnotatable;
  */
 class CoreService implements CoreInterface, IAnnotatable
 {
-    use PropertyProxy;
+    use Injector;
 
     /**
-     * @var Container コンテナ
+     * @var CoreDelegator コアデリゲータ
      */
-    private $container;
+    private $coreDelegator;
 
     /**
      * @var array<mixed> カスタムアノテーション
@@ -31,16 +31,6 @@ class CoreService implements CoreInterface, IAnnotatable
      * @var LoggerAdapter ロガー
      */
     protected $logger;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-        $this->logger = $container->logger;
-        $this->logger->debug("Service start.");
-    }
 
     /**
      * {@inheritdoc}
@@ -57,8 +47,7 @@ class CoreService implements CoreInterface, IAnnotatable
      */
     public function __initialize(Container $container)
     {
-        $coreDelegator = $container->coreDelegator;
-        $pageName = $coreDelegator->getPageName();
+        $pageName = $this->coreDelegator->getPageName();
         $resolver = new Resolver($container);
         $this->{$pageName} = $resolver->runModel();
     }
@@ -79,8 +68,7 @@ class CoreService implements CoreInterface, IAnnotatable
      */
     final public function __call($method, $arguments)
     {
-        $coreDelegator = $this->container->coreDelegator;
-        $pageName = $coreDelegator->getPageName();
+        $pageName = $this->coreDelegator->getPageName();
 
         return $this->{$pageName}->run($method, $arguments);
     }
