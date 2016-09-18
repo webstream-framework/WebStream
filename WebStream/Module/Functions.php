@@ -7,7 +7,7 @@
  */
 
 use WebStream\Module\Security;
-use WebStream\DI\ServiceLocator;
+use WebStream\Module\ServiceLocator;
 
 /**
  * 入力データに対して安全なデータに変換をする

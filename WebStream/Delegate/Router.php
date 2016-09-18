@@ -2,7 +2,7 @@
 namespace WebStream\Delegate;
 
 use WebStream\DI\Injector;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Module\Security;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Exception\Extend\RouterException;
@@ -161,7 +161,9 @@ class Router
      */
     private function resolveStaticFilePath()
     {
-        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir .  $this->request->pathInfo;
+        var_dump($this->logger);
+
+        $staticFile = $this->applicationInfo->applicationRoot . "/app/views/" . $this->applicationInfo->publicDir . $this->request->pathInfo;
 
         if (is_file($staticFile)) {
             $this->routingContainer->staticFile = $staticFile;

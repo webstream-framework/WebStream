@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Database;
 
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**

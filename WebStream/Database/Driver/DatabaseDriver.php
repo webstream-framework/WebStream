@@ -2,7 +2,7 @@
 namespace WebStream\Database\Driver;
 
 use WebStream\DI\Injector;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use Doctrine\DBAL\Connection;
 
 /**

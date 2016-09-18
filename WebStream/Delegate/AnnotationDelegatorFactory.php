@@ -2,7 +2,7 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreController;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Annotation\Container\AnnotationListContainer;

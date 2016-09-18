@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 
 /**
  * CoreInterface

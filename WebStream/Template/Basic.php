@@ -7,7 +7,7 @@ use WebStream\IO\Writer\FileWriter;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Utility\SecurityUtils;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Cache\Driver\CacheDriverFactory;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 

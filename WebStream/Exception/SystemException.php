@@ -2,7 +2,7 @@
 namespace WebStream\Exception;
 
 use WebStream\Log\Logger;
-use WebStream\Module\Utility\LoggerUtils;
+use WebStream\Log\LoggerUtils;
 
 /**
  * SystemException

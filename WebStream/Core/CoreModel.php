@@ -2,7 +2,7 @@
 namespace WebStream\Core;
 
 use WebStream\DI\Injector;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Annotation\Filter;

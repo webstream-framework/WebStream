@@ -5,7 +5,7 @@ use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IProperty;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\Extend\AnnotationException;
 
 /**

@@ -2,7 +2,7 @@
 namespace WebStream\Database;
 
 use WebStream\DI\Injector;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\Extend\DatabaseException;
 use Doctrine\DBAL\Connection;
 

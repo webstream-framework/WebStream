@@ -5,7 +5,7 @@ use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Module\Utility\SecurityUtils;
 use WebStream\Exception\Extend\CsrfException;
 

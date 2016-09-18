@@ -7,7 +7,7 @@ use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Annotation\Container\AnnotationContainer;

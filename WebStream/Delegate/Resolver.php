@@ -5,7 +5,7 @@ use WebStream\Core\CoreController;
 use WebStream\Core\CoreService;
 use WebStream\Core\CoreModel;
 use WebStream\Core\CoreHelper;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Module\Utility\FileUtils;
 use WebStream\Exception\Extend\RouterException;
 use WebStream\Exception\Extend\ResourceNotFoundException;

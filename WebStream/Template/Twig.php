@@ -2,7 +2,7 @@
 namespace WebStream\Template;
 
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\Extend\ResourceNotFoundException;
 use WebStream\Exception\Extend\InvalidArgumentException;
 
