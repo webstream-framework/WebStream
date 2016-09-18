@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\DI\Test;
 
+require_once dirname(__FILE__) . '/../Modules/Container/Container.php';
 require_once dirname(__FILE__) . '/Fixtures/Injected.php';
 
 /**
