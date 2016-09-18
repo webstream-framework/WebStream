@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\DI;
 
+use WebStream\Container\Container;
+
 /**
  * Injector
  * @author Ryuichi TANAKA.
@@ -28,14 +30,19 @@ trait Injector
     }
 
     /**
+     * @var Container プロパティコンテナ
+     */
+    private $__propertyContainer;
+
+    /**
      * overload setter
      */
     public function __set($name, $value)
     {
-        if ($this->__propertyMap === null) {
-            $this->__propertyMap = [];
+        if ($this->__propertyContainer === null) {
+            $this->__propertyContainer = new Container(false);
         }
-        $this->__propertyMap[$name] = $value;
+        $this->__propertyContainer->{$name} = $value;
     }
 
     /**
@@ -43,7 +50,7 @@ trait Injector
      */
     public function __get($name)
     {
-        return $this->__propertyMap !== null && array_key_exists($name, $this->__propertyMap) ? $this->__propertyMap[$name] : null;
+        return $this->__propertyContainer !== null ? $this->__propertyContainer->{$name} : null;
     }
 
     /**
@@ -51,7 +58,7 @@ trait Injector
      */
     public function __isset($name)
     {
-        return $this->__propertyMap === null && array_key_exists($name, $this->__propertyMap) === false;
+        return $__propertyContainer === null || $__propertyContainer->{$name} === null;
     }
 
     /**
@@ -59,9 +66,7 @@ trait Injector
      */
     public function __unset($name)
     {
-        if ($this->__propertyMap !== null && array_key_exists($name, $this->__propertyMap)) {
-            unset($this->__propertyMap[$name]);
-        }
+        $this->__propertyContainer->remove($name);
     }
 
     /**
@@ -69,6 +74,6 @@ trait Injector
      */
     public function __clear()
     {
-        $this->__propertyMap = null;
+        $this->__propertyContainer = null;
     }
 }
