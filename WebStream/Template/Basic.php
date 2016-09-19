@@ -98,7 +98,7 @@ class Basic implements ITemplateEngine
         $writer->write($content);
         $writer->close();
         $this->logger->debug("Write temporary template file: " . $tmpFile->getFilePath());
-        $this->logger->debug("Compiled template file size: " . $tmpFile->size());
+        $this->logger->debug("Compiled template file size: " . $tmpFile->length());
 
         $params["__params__"] = $params;
         $params["__mimeType__"] = $mimeType;
@@ -139,7 +139,7 @@ class Basic implements ITemplateEngine
         $writer->write($content);
         $writer->close();
         $this->logger->debug("Write temporary template file: " . $tmpFile->getFilePath());
-        $this->logger->debug("Compiled template file size: " . $tmpFile->size());
+        $this->logger->debug("Compiled template file size: " . $tmpFile->length());
 
         $params["__params__"] = $params;
         $params["__mimeType__"] = $mimeType;
