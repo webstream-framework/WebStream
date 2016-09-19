@@ -9,7 +9,7 @@ use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
 use WebStream\Cache\Driver\CacheDriverFactory;
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;

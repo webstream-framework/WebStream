@@ -1,8 +1,7 @@
 <?php
 namespace WebStream\Log;
 
-use WebStream\Module\Container;
-use WebStream\Module\Utility\LoggerUtils;
+use WebStream\Container\Container;
 
 /**
  * LoggerFormatterクラス

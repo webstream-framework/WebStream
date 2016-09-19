@@ -2,7 +2,7 @@
 namespace WebStream\Annotation\Base;
 
 use WebStream\Annotation\Base\IAnnotatable;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 
 /**
  * IMethod

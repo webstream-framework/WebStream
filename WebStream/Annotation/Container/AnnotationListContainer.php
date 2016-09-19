@@ -1,8 +1,7 @@
 <?php
 namespace WebStream\Annotation\Container;
 
-use WebStream\Module\Container;
-use WebStream\Module\ValueProxy;
+use WebStream\Container\ValueProxy;
 use WebStream\Exception\Extend\CollectionException;
 
 /**

@@ -1,12 +1,9 @@
 <?php
 namespace WebStream\Log;
 
-use WebStream\DI\Injector;
 use WebStream\IO\File;
 use WebStream\IO\Writer\SimpleFileWriter;
-use WebStream\Module\Utility\FileUtils;
-use WebStream\Module\Utility\LoggerUtils;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\Extend\LoggerException;
 
 /**
@@ -17,8 +14,6 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class LoggerConfigurationManager
 {
-    use Injector, FileUtils, LoggerUtils;
-
     /**
      * @var Container ログ設定コンテナ
      */
@@ -44,7 +39,7 @@ class LoggerConfigurationManager
         if (is_array($config)) {
             $configMap = $config;
         } else {
-            $configMap = $this->parseConfig($config);
+            $configMap = parse_ini_file($config);
             if ($configMap === null) {
                 throw new LoggerException("Log config file does not exist: " . $config);
             }
@@ -53,15 +48,14 @@ class LoggerConfigurationManager
         $this->logContainer = new Container(false);
         $this->ioContainer = new Container();
 
-        $rootDir = $this->getApplicationRoot();
-        $this->ioContainer->file = function () use ($rootDir, $configMap) {
+        $this->ioContainer->file = function () use ($configMap) {
             if (!array_key_exists("path", $configMap)) {
                 throw new LoggerException("Log path must be defined.");
             }
-            return new File($rootDir . "/" . $configMap["path"]);
+            return new File($configMap["path"]);
         };
-        $this->ioContainer->fileWriter = function () use ($rootDir, $configMap) {
-            return new SimpleFileWriter($rootDir . "/" . $configMap["path"]);
+        $this->ioContainer->fileWriter = function () use ($configMap) {
+            return new SimpleFileWriter($configMap["path"]);
         };
 
         $this->configMap = $configMap;
@@ -211,6 +205,40 @@ class LoggerConfigurationManager
                 return $year_to_h;
             default:
                 throw new LoggerException("Invalid log rotate cycle: " . $cycle);
+        }
+    }
+
+    /**
+     * ログレベルを数値に変換
+     * ログレベルはWebStream独自、PSR-3両方対応
+     * @param string ログレベル文字列
+     * @throws LoggerException
+     * @return int ログレベル数値
+     */
+    private function toLogLevelValue(string $level)
+    {
+        switch (strtolower($level)) {
+            case 'debug':
+                return 1;
+            case 'info':
+                return 2;
+            case 'notice':    // PSR-3
+                return 3;
+            case 'warn':
+            case 'warning':   // PSR-3
+                return 4;
+            case 'error':
+                return 5;
+            case 'critical':  // PSR-3
+                return 6;
+            case 'alert':     // PSR-3
+                return 7;
+            case 'emergency': // PSR-3
+                return 8;
+            case 'fatal':
+                return 9;
+            default:
+                throw new LoggerException("Undefined log level: $level");
         }
     }
 }

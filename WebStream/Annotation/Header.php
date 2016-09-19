@@ -6,7 +6,7 @@ use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Exception\Extend\AnnotationException;
 use WebStream\Exception\Extend\InvalidRequestException;

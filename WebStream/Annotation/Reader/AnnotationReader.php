@@ -8,7 +8,7 @@ use WebStream\Annotation\Base\IMethod;
 use WebStream\Annotation\Base\IMethods;
 use WebStream\Annotation\Base\IProperty;
 use WebStream\Annotation\Base\IRead;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Delegate\ExceptionDelegator;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;

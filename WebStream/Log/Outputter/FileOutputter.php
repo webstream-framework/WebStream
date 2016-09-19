@@ -1,11 +1,11 @@
 <?php
 namespace WebStream\Log\Outputter;
 
-use WebStream\IO\Writer\SimpleFileWriter;
-use WebStream\Cache\LoggerCache;
 use WebStream\Cache\Driver\ICache;
-use WebStream\Module\Utility\LoggerUtils;
-use WebStream\Module\Utility\CacheUtils;
+use WebStream\Cache\Driver\CacheDriverFactory;
+use WebStream\Container\Container;
+use WebStream\IO\Writer\SimpleFileWriter;
+use WebStream\Log\LoggerCache;
 
 /**
  * FileOutputter
@@ -15,13 +15,6 @@ use WebStream\Module\Utility\CacheUtils;
  */
 class FileOutputter implements IOutputter, ILazyWriter
 {
-    use LoggerUtils, CacheUtils;
-
-    /**
-     * @var string ログファイルパス
-     */
-    private $logPath;
-
     /**
      * @var ICache キャッシュドライバ
      */
@@ -54,8 +47,11 @@ class FileOutputter implements IOutputter, ILazyWriter
      */
     public function __construct(string $logPath, int $bufferSize = 1000)
     {
-        $this->logPath = $logPath;
-        $driver = $this->getCacheDriver("apcu", "logger_cache");
+        $config = new Container(false);
+        $config->classPrefix = "logger_cache";
+        $factory = new CacheDriverFactory();
+        $driver = $factory->create("WebStream\Cache\Driver\Apcu", $config);
+
         // LoggerCacheの中ではログは取らない
         $driver->inject('logger', new class() { function __call($name, $args) {} });
         $this->driver = $driver;

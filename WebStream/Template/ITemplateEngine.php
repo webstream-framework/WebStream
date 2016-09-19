@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Template;
 
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 
 /**
  * ITemplateEngine

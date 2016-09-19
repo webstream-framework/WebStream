@@ -1,12 +1,12 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Delegate\Resolver;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
-use WebStream\DI\ServiceLocator;
+use WebStream\Module\ServiceLocator;
 
 /**
  * Applicationクラス

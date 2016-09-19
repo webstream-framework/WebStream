@@ -2,7 +2,7 @@
 namespace WebStream\Http;
 
 use WebStream\Module\Security;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\DI\Injector;
 
 /**

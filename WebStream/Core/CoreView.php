@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Module\Utility\CommonUtils;
 use WebStream\Template\ITemplateEngine;
 use WebStream\Annotation\Filter;

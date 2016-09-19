@@ -1,12 +1,10 @@
 <?php
 namespace WebStream\Log;
 
-use WebStream\DI\Injector;
 use WebStream\IO\File;
 use WebStream\IO\Reader\FileReader;
 use WebStream\IO\Writer\SimpleFileWriter;
-use WebStream\Module\Utility\LoggerUtils;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\Extend\IOException;
 use WebStream\Exception\Extend\LoggerException;
 
@@ -18,7 +16,7 @@ use WebStream\Exception\Extend\LoggerException;
  */
 class Logger
 {
-    use Injector, LoggerUtils;
+    use LoggerUtils;
 
     /**
      * @var Logger ロガー

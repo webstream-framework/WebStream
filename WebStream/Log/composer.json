@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpunit/phpunit": "5.*",
+        "psr/log": "1.0.0"
+    }
+}

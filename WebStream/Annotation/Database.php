@@ -6,7 +6,7 @@ use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Base\IClass;
 use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Module\Container;
+use WebStream\Container\Container;
 use WebStream\Exception\Extend\DatabaseException;
 
 /**

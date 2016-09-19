@@ -1,7 +1,7 @@
 <?php
 namespace WebStream\DI;
 
-use WebStream\Module\PropertyProxy;
+use WebStream\Container\Container;
 
 /**
  * Injector
@@ -11,7 +11,10 @@ use WebStream\Module\PropertyProxy;
  */
 trait Injector
 {
-    use PropertyProxy;
+    /**
+     * @var array<string> プロパティマップ
+     */
+    private $__propertyMap;
 
     /**
      * オブジェクトを注入する
@@ -24,5 +27,53 @@ trait Injector
         $this->{$name} = $object;
 
         return $this;
+    }
+
+    /**
+     * @var Container プロパティコンテナ
+     */
+    private $__propertyContainer;
+
+    /**
+     * overload setter
+     */
+    public function __set($name, $value)
+    {
+        if ($this->__propertyContainer === null) {
+            $this->__propertyContainer = new Container(false);
+        }
+        $this->__propertyContainer->{$name} = $value;
+    }
+
+    /**
+     * overload setter
+     */
+    public function __get($name)
+    {
+        return $this->__propertyContainer !== null ? $this->__propertyContainer->{$name} : null;
+    }
+
+    /**
+     * overload isset
+     */
+    public function __isset($name)
+    {
+        return $__propertyContainer === null || $__propertyContainer->{$name} === null;
+    }
+
+    /**
+     * overload unset
+     */
+    public function __unset($name)
+    {
+        $this->__propertyContainer->remove($name);
+    }
+
+    /**
+     * コンテナクリア
+     */
+    public function __clear()
+    {
+        $this->__propertyContainer = null;
     }
 }

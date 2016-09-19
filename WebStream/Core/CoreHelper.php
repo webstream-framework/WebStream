@@ -1,8 +1,8 @@
 <?php
 namespace WebStream\Core;
 
+use WebStream\Container\Container;
 use WebStream\Module\Utility\ApplicationUtils;
-use WebStream\Module\Container;
 use WebStream\Module\Security;
 use WebStream\Annotation\Filter;
 use WebStream\Annotation\Base\IAnnotatable;

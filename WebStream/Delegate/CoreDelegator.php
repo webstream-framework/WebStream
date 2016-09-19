@@ -2,9 +2,9 @@
 namespace WebStream\Delegate;
 
 use WebStream\Core\CoreView;
+use WebStream\Container\Container;
 use WebStream\Module\Utility\ApplicationUtils;
 use WebStream\Module\Utility\CommonUtils;
-use WebStream\Module\Container;
 use WebStream\Module\ClassLoader;
 use WebStream\Exception\Extend\ClassNotFoundException;
 

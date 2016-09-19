@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Module;
 
+use WebStream\Container\Container;
+
 /**
  * PropertyProxyクラス
  * @author Ryuichi Tanaka
