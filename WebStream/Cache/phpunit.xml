@@ -7,13 +7,12 @@
   </testsuites>
   <filter>
     <whitelist addUncoveredFilesFromWhitelist="true">
-      <directory>Driver</directory>
+      <directory suffix=".php">./</directory>
       <exclude>
+        <directory>./Test</directory>
+        <directory>./Modules</directory>
         <file>Driver/CacheDriverFactory.php</file>
       </exclude>
     </whitelist>
   </filter>
-  <logging>
-    <log type="coverage-clover" target="build/logs/clover.xml"/>
-  </logging>
 </phpunit>
