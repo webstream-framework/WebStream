@@ -3,3 +3,10 @@
 .DS_Store
 sandbox/
 Rakefile
+
+WebStream/**/Modules/**/*.yml
+WebStream/Modules/**/composer.json
+WebStream/Modules/**/phpunit.xml
+WebStream/Modules/**/README.md
+WebStream/Modules/**/.gitignore
+WebStream/Modules/**/Test/*
