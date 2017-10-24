@@ -31,7 +31,7 @@ use WebStream\Cache\Test\Providers\CacheProvider;
  * @since 2016/07/06
  * @version 0.7
  */
-class CacheTest extends \PHPUnit_Framework_TestCase
+class CacheTest extends \PHPUnit\Framework\TestCase
 {
     use CacheProvider;
 
