@@ -30,27 +30,6 @@ trait LoggerUtils
     }
 
     /**
-     * ログメッセージにスタックトレースの内容を追加する
-     * @param string ログメッセージ
-     * @param string スタックトレース文字列
-     * @return string 加工済みログメッセージ
-     */
-    public function addStackTrace($msg, $stacktrace)
-    {
-        // スタックトレースから原因となるエラー箇所のみ抽出
-        $stacktraceList = explode("#", $stacktrace);
-        foreach ($stacktraceList as $stacktraceLine) {
-            if ($stacktraceLine === "") {
-                continue;
-            }
-            $msg .= PHP_EOL;
-            $msg .= "\t#" . trim($stacktraceLine);
-        }
-
-        return $msg;
-    }
-
-    /**
      * ログレベルを数値に変換
      * ログレベルはWebStream独自、PSR-3両方対応
      * @param string ログレベル文字列

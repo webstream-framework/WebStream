@@ -7,11 +7,10 @@
   </testsuites>
   <filter>
     <whitelist addUncoveredFilesFromWhitelist="true">
-      <directory>./</directory>
+      <directory suffix=".php">./</directory>
       <exclude>
-        <directory>vendor</directory>
-        <directory>Test</directory>
-        <directory>Modules</directory>
+        <directory>./Test</directory>
+        <directory>./Modules</directory>
         <file>Outputter/ILazyWriter.php</file>
         <file>Outputter/IOutputter.php</file>
       </exclude>

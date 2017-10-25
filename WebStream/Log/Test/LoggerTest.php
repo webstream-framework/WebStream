@@ -47,7 +47,7 @@ use WebStream\Log\Test\Providers\LoggerProvider;
  * @author Ryuichi TANAKA.
  * @since 2016/01/30
  */
-class LoggerTest extends \PHPUnit_Framework_TestCase
+class LoggerTest extends \PHPUnit\Framework\TestCase
 {
     use LoggerProvider;
 
