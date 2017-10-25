@@ -7,14 +7,11 @@
   </testsuites>
   <filter>
     <whitelist addUncoveredFilesFromWhitelist="true">
-      <directory>./</directory>
+      <directory suffix=".php">./</directory>
       <exclude>
-        <directory>vendor</directory>
-        <directory>Test</directory>
+        <directory>./Test</directory>
+        <directory>./Modules</directory>
       </exclude>
     </whitelist>
   </filter>
-  <logging>
-    <log type="coverage-clover" target="build/logs/clover.xml"/>
-  </logging>
 </phpunit>

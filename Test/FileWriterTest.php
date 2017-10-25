@@ -24,7 +24,7 @@ use WebStream\IO\Test\Providers\FileWriterProvider;
  * @since 2016/08/18
  * @version 0.7
  */
-class FileWriterTest extends \PHPUnit_Framework_TestCase
+class FileWriterTest extends \PHPUnit\Framework\TestCase
 {
     use FileWriterProvider;
 

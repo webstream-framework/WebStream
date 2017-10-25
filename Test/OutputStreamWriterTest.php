@@ -27,7 +27,7 @@ use WebStream\IO\Test\Providers\OutputStreamWriterProvider;
  * @since 2016/08/19
  * @version 0.7
  */
-class OutputStreamWriterTest extends \PHPUnit_Framework_TestCase
+class OutputStreamWriterTest extends \PHPUnit\Framework\TestCase
 {
     use OutputStreamWriterProvider;
 

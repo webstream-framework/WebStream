@@ -5,20 +5,28 @@ services:
 
 language: php
 
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.1
+      env: VERSION=latest
+    - php: 7.0
+      env: VERSION=7.0
+
 before_script:
+  - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer install
   - mkdir -p build/logs
 
 script:
-  - docker run -v /home/travis/build/webstream-framework/IO:/workspace/ webstream/php-alpine vendor/bin/phpunit --configuration phpunit.xml
+  - if [[ $VERSION = 'latest' ]]; then docker run -v /home/travis/build/webstream-framework/IO:/workspace/ webstream/php-alpine phpdbg -qrr vendor/bin/phpunit --configuration phpunit.xml --coverage-clover=coverage.clover; fi
+  - if [[ $VERSION != 'latest' ]]; then docker run -v /home/travis/build/webstream-framework/IO:/workspace/ webstream/php-alpine vendor/bin/phpunit --configuration phpunit.xml; fi
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
-
-php:
-  - 7.0
-
-notifications:
-  slack:
-    secure: tobcQWs5nYA4dk9FkGsYEc7NKTOfwwB43eu4mAa6Iqmr5rRF8fpj0iebwfTrkXBcOCbqfwbr4OMWQ2Dq5PuAp0NlCkHGBr6QH4COzjopO/qOSllVkxnlwi/SKYLcrLdtWdwUCJRbpp72UWCJgq/mhP1ksJf6TtlzpCc5fkO0gxJNUvMb/uUqKUWebHK4bNtNTWE5ffy7Mnxh33Ad+CTV0bqPRuRgwkh0kR4lv/83ew+EzXkxzFPppy4BJMtuBqSDx2RFsY5d8ejwVTJzVz1JLMAKzvrf5VXU+EndeaIx68zDT0bwwyq2H07ovVrL4CTkbI2a4yJDZHPhLee9JQ1fVIS7idV30ChY8drsI1xQDKYkE/vaXjlKE/cB6uOE245X+Ht6uhILTJpwjHSu0CHX3RdyWSXnSg0AsaPZN2g/58W9CzfAK9w6tgVPtxhAE81L+7De9BehEfyUfDN5EN1o4C1KWH9LLw8z6Ha19DG2d/xhJOWSMFu64TiwkuQ3lb14x/R/bcO8rJpxcpnTp10r6NIRAMJKnbMiOmmzgu7EONiUPkjIFuf57p7/rCjGLCqE8OYOhh/xt1sWzn0T17ztzKTlhoJtBq6pvkbRY8OdGsfjUvlvbEJG9zi2qqv2d8DLhGXtFWu39+A1YfEwrdi/BANuLx7vLYHYRczjveyWAlw=
+  - if [[ $VERSION = 'latest' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [[ $VERSION = 'latest' ]]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi
