@@ -88,10 +88,21 @@ class File
                 $filePath = $linkPath;
             }
 
-            return $filePath;
+            $absoluteFilePath = realpath($filePath);
+            if ($absoluteFilePath === false) {
+                throw new IOException("File not found: " . $filePath);
+            }
+
+            return $absoluteFilePath;
         }
 
-        return $this->getFilePath();
+        $filePath = $this->getFilePath();
+        $absoluteFilePath = realpath($filePath);
+        if ($absoluteFilePath === false) {
+            throw new IOException("File not found: " . $filePath);
+        }
+
+        return $absoluteFilePath;
     }
 
     /**

@@ -15,8 +15,8 @@ interface IProperty
     /**
      * プロパティオブジェクトを注入
      * @param IAnnotatable 注入先インスタンス
-     * @param Container 依存コンテナ
      * @param ReflectionProperty リフレクションプロパティオブジェクト
+     * @param Container 依存コンテナ
      */
-    public function onPropertyInject(IAnnotatable &$instance, Container $container, \ReflectionProperty $property);
+    public function onPropertyInject(IAnnotatable $instance, \ReflectionProperty $property, Container $container);
 }

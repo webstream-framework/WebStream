@@ -1,9 +1,6 @@
 <?php
 namespace WebStream\Exception;
 
-use WebStream\Log\Logger;
-use WebStream\Log\LoggerUtils;
-
 /**
  * ApplicationException
  * @author Ryuichi TANAKA.
@@ -12,26 +9,46 @@ use WebStream\Log\LoggerUtils;
  */
 class ApplicationException extends \LogicException
 {
-    use LoggerUtils;
+    /**
+     * @var string エラーメッセージ
+     */
+    private $errorMessage;
 
     /**
      * constructor
+     * @param string $message エラーメッセージ
+     * @param int $code ステータスコード
+     * @param \Exception $exception 例外オブジェクト
      */
-    public function __construct($message, $code = 500, $exception = null)
+    public function __construct(string $message, int $code = 500, \Exception $exception = null)
     {
         parent::__construct($message, $code);
-
-        if (!Logger::isInitialized()) {
-            return;
-        }
 
         if ($exception === null) {
             $exception = $this;
         }
 
-        Logger::error(get_class($exception) . " is thrown: " . $exception->getFile() . "(" . $exception->getLine() . ")");
         if (!empty($message)) {
-            Logger::error($this->addStackTrace($this->getMessage(), $this->getTraceAsString()));
+            $message .= " ";
         }
+
+        $this->errorMessage = get_class($exception) . " is thrown: " . $message . $exception->getFile() . "(" . $exception->getLine() . ")";
+        $stacktraceList = explode("#", $exception->getTraceAsString());
+        foreach ($stacktraceList as $stacktraceLine) {
+            if ($stacktraceLine === "") {
+                continue;
+            }
+            $this->errorMessage .= PHP_EOL;
+            $this->errorMessage .= "\t#" . trim($stacktraceLine);
+        }
+    }
+
+    /**
+     * エラーメッセージを返却する
+     * @return string エラーメッセージ
+     */
+    public function getExceptionAsString(): string
+    {
+        return $this->errorMessage;
     }
 }

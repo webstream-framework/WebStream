@@ -1,8 +1,6 @@
 <?php
 namespace WebStream\Annotation\Base;
 
-use WebStream\Annotation\Container\AnnotationContainer;
-use WebStream\Annotation\Container\ContainerFactory;
 use WebStream\DI\Injector;
 
 /**
@@ -16,27 +14,23 @@ abstract class Annotation
     use Injector;
 
     /**
+     * @var Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * constructor
      * @param array<string> アノテーションリスト
      */
     public function __construct(array $annotations = [])
     {
-        $factory = new ContainerFactory($annotations);
-        $this->onInject($factory->createContainer());
-    }
-
-    /**
-     * Add injected log
-     * @param object アノテーションクラスオブジェクト
-     */
-    protected function injectedLog(Annotation $class)
-    {
-        $this->logger->debug("@" . get_class($class) . " injected.");
+        $this->logger = new class() { function __call($name, $args) {} };
+        $this->onInject($annotations);
     }
 
     /**
      * Injected event
-     * @param AnnotationContainer アノテーションコンテナ
+     * @param array<string> アノテーションコンテナ
      */
-    abstract public function onInject(AnnotationContainer $container);
+    abstract public function onInject(array $annotations);
 }

@@ -1,6 +1,8 @@
 <?php
 namespace WebStream\Annotation\Base;
 
+use WebStream\Container\Container;
+
 /**
  * IMethod
  * @author Ryuichi TANAKA.
@@ -11,7 +13,7 @@ interface IRead
 {
     /**
      * 注入結果を返却する
-     * @return WebStream\Annotation\Container\AnnotationContainer 注入結果
+     * @return array<string> 注入結果
      */
-    public function onInjected();
+    public function getAnnotationInfo(): array;
 }

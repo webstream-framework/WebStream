@@ -15,8 +15,8 @@ interface IClass
     /**
      * クラスオブジェクトを注入
      * @param IAnnotatable 注入先インスタンス
-     * @param Container 依存コンテナ
      * @param ReflectionClass リフレクションクラスオブジェクト
+     * @param Container 依存コンテナ
      */
-    public function onClassInject(IAnnotatable &$instance, Container $container, \ReflectionClass $class);
+    public function onClassInject(IAnnotatable $instance, \ReflectionClass $class, Container $container);
 }
