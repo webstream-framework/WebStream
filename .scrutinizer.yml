@@ -1,5 +1,16 @@
 checks:
     php: true
+build:
+    nodes:
+        analysis:
+            environment:
+                php: 7.0.20
+            tests:
+                override:
+                    - command: phpcs-run
+                      use_website_config: true
+                    - php-scrutinizer-run
+
 filter:
     excluded_paths:
         - 'Test/*'
@@ -7,18 +18,10 @@ filter:
 tools:
     external_code_coverage:
         timeout: 2400
+    php_sim: true
+    php_cpd: false
     php_code_coverage:
         enabled: false
-    php_code_sniffer:
-        config:
-            standard: 'PSR2'
-        filter:
-            excluded_paths:
-                - 'Test/*'
-                - 'Modules/*'
-    php_cpd:
-        excluded_dirs:
-            - Test
     php_cs_fixer:
         config:
             level: psr2
@@ -34,7 +37,8 @@ tools:
                 - naming
                 - design
             naming_rules:
-                short_variable: { minimum: 2 }
+                short_variable:
+                    minimum: 2
         filter:
             excluded_paths:
                 - 'Test/*'

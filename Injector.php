@@ -2,6 +2,8 @@
 namespace WebStream\DI;
 
 use WebStream\Container\Container;
+use WebStream\Exception\Extend\AnnotationException;
+use PhpDocReader\PhpDocReader;
 
 /**
  * Injector
@@ -12,9 +14,9 @@ use WebStream\Container\Container;
 trait Injector
 {
     /**
-     * @var array<string> プロパティマップ
+     * @var Container プロパティコンテナ
      */
-    private $__propertyMap;
+    private $__propertyContainer;
 
     /**
      * オブジェクトを注入する
@@ -22,7 +24,7 @@ trait Injector
      * @param mixed オブジェクト
      * @return Injector
      */
-    public function inject($name, $object)
+    public function inject(string $name, $object)
     {
         $this->{$name} = $object;
 
@@ -30,9 +32,34 @@ trait Injector
     }
 
     /**
-     * @var Container プロパティコンテナ
+     * 型指定されたオブジェクトを注入する
+     * @param string プロパティ名
+     * @param mixed オブジェクト
+     * @return Injector
      */
-    private $__propertyContainer;
+    public function strictInject(string $name, $object)
+    {
+        $reader = new PhpDocReader();
+        try {
+            $refClass = new \ReflectionClass($this);
+            while ($refClass !== false) {
+                if ($refClass->hasProperty($name)) {
+                    $refProperty = $refClass->getProperty($name);
+                    $classpath = $reader->getPropertyClass($refProperty);
+                    if ($object instanceof $classpath) {
+                        $this->inject($name, $object);
+                    } else {
+                        throw new AnnotationException("The type of injected property must be instance of ${classpath}");
+                    }
+                }
+                $refClass = $refClass->getParentClass();
+            }
+        } catch (\ReflectionException $e) {
+            throw new AnnotationException($e);
+        }
+
+        return $this;
+    }
 
     /**
      * overload setter
