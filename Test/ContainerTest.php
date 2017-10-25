@@ -16,7 +16,7 @@ use WebStream\Container\Test\Providers\ContainerProvider;
  * @since 2016/08/20
  * @version 0.7
  */
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends \PHPUnit\Framework\TestCase
 {
     use ContainerProvider;
 
