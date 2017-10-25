@@ -18,7 +18,7 @@ use WebStream\IO\Test\Providers\InputStreamReaderProvider;
  * @since 2016/08/18
  * @version 0.7
  */
-class InputStreamReaderTest extends \PHPUnit_Framework_TestCase
+class InputStreamReaderTest extends \PHPUnit\Framework\TestCase
 {
     use InputStreamReaderProvider;
 

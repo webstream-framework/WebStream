@@ -19,7 +19,7 @@ use WebStream\IO\Test\Providers\FileReaderProvider;
  * @since 2016/08/18
  * @version 0.7
  */
-class FileReaderTest extends \PHPUnit_Framework_TestCase
+class FileReaderTest extends \PHPUnit\Framework\TestCase
 {
     use FileReaderProvider;
 

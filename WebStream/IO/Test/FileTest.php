@@ -17,7 +17,7 @@ use WebStream\IO\Test\Providers\FileProvider;
  * @since 2016/08/19
  * @version 0.7
  */
-class FileTest extends \PHPUnit_Framework_TestCase
+class FileTest extends \PHPUnit\Framework\TestCase
 {
     use FileProvider;
 
@@ -217,5 +217,18 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         chmod($file->getFilePath(), 0444);
         $file->renameTo("/tmp/file-test-rename/" . $file->getFileName());
+    }
+
+    /**
+     * 異常系
+     * 絶対ファイルパスを取得できず例外が発生すること
+     * @test
+     * @expectedException WebStream\Exception\Extend\IOException
+     */
+    public function ngFileAbsolutePath()
+    {
+        $file = new File("/tmp/dummy.txt");
+        $file->getAbsoluteFilePath();
+        $this->assertTrue(false);
     }
 }
