@@ -1,0 +1,7 @@
+{
+    "require": {
+        "phpunit/phpunit": "6.*",
+        "mustangostang/spyc": "*",
+        "doctrine/dbal": "2.6.*"
+    }
+}

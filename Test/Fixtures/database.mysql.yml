@@ -1,0 +1,5 @@
+host: mysql
+port: 3306
+username: mysql
+password: mysql
+dbname: sandbox
