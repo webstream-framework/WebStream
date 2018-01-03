@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+  "-//github.com/mapserver2007//DTD Mapper 3.0//EN"
+  "http://localhost:8080/query/webstream-model-mapper.dtd">
+<mapper namespace="WebStream\Annotation\Test">
+  <select id="select1">
+    SQL
+  </select>
+  <select id="select2" entity="EntityClass">
+    SQL
+  </select>
+</mapper>
