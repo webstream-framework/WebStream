@@ -4,9 +4,9 @@
 sandbox/
 Rakefile
 
-WebStream/**/*.yml
-WebStream/**/composer.json
-WebStream/**/phpunit.xml
-WebStream/**/README.md
-WebStream/**/.gitignore
-WebStream/**/Test/*
+src/WebStream/**/*.yml
+src/WebStream/**/composer.json
+src/WebStream/**/phpunit.xml
+src/WebStream/**/README.md
+src/WebStream/**/.gitignore
+src/WebStream/**/Test/*
