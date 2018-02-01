@@ -1,0 +1,10 @@
+{
+    "require": {
+        "psr/log": "1.0.0",
+        "doctrine/annotations": "1.2.*",
+        "doctrine/dbal": "2.6.*",
+        "twig/twig": "1.*",
+        "mustangostang/spyc": "*",
+        "leafo/lessphp": "*"
+    }
+}
