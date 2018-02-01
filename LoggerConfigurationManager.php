@@ -111,7 +111,7 @@ class LoggerConfigurationManager
             $this->ioContainer->fileWriter->write("");
         }
 
-        $this->logContainer->logPath = $file->getFilePath();
+        $this->logContainer->logPath = $file->getAbsoluteFilePath();
         $this->logContainer->statusPath = preg_replace_callback('/(.*)\..+/', function ($matches) {
             return "$matches[1].status";
         }, $this->logContainer->logPath);
