@@ -169,7 +169,7 @@ class ClassLoader
                     $absoluteFilePath = $file->getAbsoluteFilePath();
                     include_once $absoluteFilePath;
                     $includeList[] = $absoluteFilePath;
-                    $logger->debug($absoluteFilePath . " load success. (search from " . $dir->getFilePath());
+                    $logger->debug($absoluteFilePath . " load success. (search from " . $dir->getFilePath() . ")");
                 }
             }
 
