@@ -22,11 +22,12 @@ class Security
         }
         // 渡されたデータが配列の場合、分解して再帰処理
         if (is_array($data)) {
-            while (list($key) = each($data)) {
-                $data[$key] = self::safetyIn($data[$key]);
+            $map = [];
+            foreach ($data as $key => $value) {
+                $map[$key] = $value;
             }
 
-            return $data;
+            return $map;
         }
         // 制御文字削除
         $removes = [];

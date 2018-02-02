@@ -8,9 +8,17 @@ use WebStream\Core\CoreModel;
 use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
 use WebStream\Container\Container;
+use WebStream\Annotation\Attributes\Alias;
+use WebStream\Annotation\Attributes\ExceptionHandler;
+use WebStream\Annotation\Attributes\Filter;
+use WebStream\Annotation\Attributes\Header;
+use WebStream\Annotation\Attributes\Template;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Reader\AnnotationReader;
+use WebStream\Annotation\Reader\Extend\FilterExtendReader;
 use WebStream\Annotation\Container\AnnotationContainer;
+use WebStream\Template\Basic;
+use WebStream\Template\Twig;
 
 /**
  * AnnotationDelegator
@@ -88,34 +96,82 @@ class AnnotationDelegator
      */
     private function readController(CoreController $instance, $classpath)
     {
-        $container = $this->container;
-        $reader = new AnnotationReader($instance, $container);
-        $reader->read($classpath);
-        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
-
-        $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new AnnotationContainer();
-
-        // exceptions
-        $annotationContainer->exception = $reader->getException();
+        $reader = new AnnotationReader($instance);
+        $reader->setActionMethod($this->container->executeMethod);
 
         // @Header
-        $annotationContainer->header = $factory->createAnnotationCallable("header");
+        $container = new Container();
+        $container->requestMethod = $this->container->request->requestMethod;
+        $container->contentType = 'html';
+        $container->logger = $this->container->logger;
+        $reader->readable(Header::class, $container);
 
         // @Filter
-        $annotationContainer->filter = $factory->createAnnotationCallable("filter");
+        $container = new Container();
+        $container->action = $this->container->executeMethod;
+        $container->logger = $this->container->logger;
+        $reader->readable(Filter::class, $container);
+        $reader->useExtendReader(Filter::class, FilterExtendReader::class);
 
         // @Template
-        $annotationContainer->template = $factory->createAnnotationCallable("template");
+        $container = new Container();
+        $container->action = $this->container->executeMethod;
+        $container->engine = [
+            'basic' => Basic::class,
+            'twig' => Twig::class
+        ];
+        $container->logger = $this->container->logger;
+        $reader->readable(Template::class, $container);
 
         // @ExceptionHandler
-        $annotationContainer->exceptionHandler = $factory->createAnnotationCallable("exceptionHandler");
+        $container = new Container();
+        $container->logger = $this->container->logger;
+        $reader->readable(ExceptionHandler::class, $container);
 
         // @Alias
-        $annotationContainer->alias = $factory->createAnnotationCallable("alias");
+        $container = new Container();
+        $container->action = $this->container->executeMethod;
+        $container->logger = $this->container->logger;
+        $reader->readable(Alias::class, $container);
 
-        // custom annotation
-        $annotationContainer->customAnnotations = $factory->createCustomAnnotationCallable();
+        // TODO custom annotation
+
+        $reader->readMethod();
+
+        $annotationContainer = new AnnotationContainer();
+        $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
+        $annotationContainer->exception = $reader->getException();
+
+
+        // var_dump($reader->getAnnotationInfoList());
+        // exit;
+        //
+        // // $reader->read($classpath);
+        // // $injectedAnnotation = $reader->getInjectedAnnotationInfo();
+        //
+        // $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
+        // $annotationContainer = new AnnotationContainer();
+        //
+        // // exceptions
+        // $annotationContainer->exception = $reader->getException();
+        //
+        // // @Header
+        // $annotationContainer->header = $factory->createAnnotationCallable("header");
+        //
+        // // @Filter
+        // $annotationContainer->filter = $factory->createAnnotationCallable("filter");
+        //
+        // // @Template
+        // $annotationContainer->template = $factory->createAnnotationCallable("template");
+        //
+        // // @ExceptionHandler
+        // $annotationContainer->exceptionHandler = $factory->createAnnotationCallable("exceptionHandler");
+        //
+        // // @Alias
+        // $annotationContainer->alias = $factory->createAnnotationCallable("alias");
+        //
+        // // custom annotation
+        // $annotationContainer->customAnnotations = $factory->createCustomAnnotationCallable();
 
         return $annotationContainer;
     }
@@ -202,12 +258,28 @@ class AnnotationDelegator
      */
     private function readView(CoreView $instance, $classpath)
     {
-        $container = $this->container;
-        $reader = new AnnotationReader($instance, $container);
-        $reader->read($classpath);
-        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
+        $reader = new AnnotationReader($instance);
+        // $reader->setActionMethod($this->container->executeMethod);
 
-        $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
+        // @Filter
+        $container = new Container();
+        // $container->action = $this->container->executeMethod;
+        $container->logger = $this->container->logger;
+        $reader->readable(Filter::class, $container);
+        $reader->useExtendReader(Filter::class, FilterExtendReader::class);
+        $reader->readMethod();
+
+        $annotationContainer = new AnnotationContainer();
+        $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
+        $annotationContainer->exception = $reader->getException();
+
+        //
+        // $container = $this->container;
+        // $reader = new AnnotationReader($instance, $container);
+        // $reader->read($classpath);
+        // $injectedAnnotation = $reader->getInjectedAnnotationInfo();
+        //
+        // $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
         $annotationContainer = new AnnotationContainer();
 
         // exceptions

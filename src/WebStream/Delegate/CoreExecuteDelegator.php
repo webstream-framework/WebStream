@@ -9,6 +9,9 @@ use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
 use WebStream\Cache\Driver\CacheDriverFactory;
 use WebStream\Container\Container;
+use WebStream\Annotation\Attributes\Filter;
+use WebStream\Annotation\Attributes\Header;
+use WebStream\Annotation\Attributes\Template;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
@@ -203,23 +206,33 @@ class CoreExecuteDelegator
 
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotationClosure = function ($classpath) use ($annotation) {
+                if (array_key_exists($classpath, $annotation->annotationInfoList)) {
+                    return $annotation->annotationInfoList[$classpath];
+                }
+                return null;
+            };
 
             // @Header
-            $mimeType = $this->annotation->header->mimeType;
+            $header = $annotationClosure(Header::class);
+            // $mimeType = $this->annotation->header->mimeType;
 
             // @Filter
-            $filter = $this->annotation->filter;
+            $filter = $annotationClosure(Filter::class);
 
             // @Template
-            $template = $this->annotation->template;
+            $template = $annotationClosure(Template::class);
+
+
+            // $template = $this->annotation->template;
 
             // custom annotation
-            $this->instance->__customAnnotation($this->annotation->customAnnotations);
+            // $this->instance->__customAnnotation($this->annotation->customAnnotations);
 
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
-            $exception = $this->annotation->exception;
+            $exception = $annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
                 if ($this->annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $this->annotation->exceptionHandler;
@@ -245,17 +258,19 @@ class CoreExecuteDelegator
             $this->execute($method, $arguments);
 
             // draw template
-            $view = $resolver->runView();
-            $view->setTemplateEngine($template->engine);
-            $view->draw([
-                "model" => $model,
-                "helper" => $resolver->runHelper(),
-                "mimeType" => $mimeType
-            ]);
+            if ($template !== null) {
+                $view = $resolver->runView();
+                $view->setTemplateEngine($template->engine);
+                $view->draw([
+                    "model" => $model,
+                    "helper" => $resolver->runHelper(),
+                    "mimeType" => $mimeType
+                ]);
 
-            if ($template->cacheTime !== null) {
-                $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
-                $view->templateCache($cacheFile, ob_get_contents(), $template->cacheTime);
+                if ($template->cacheTime !== null) {
+                    $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
+                    $view->templateCache($cacheFile, ob_get_contents(), $template->cacheTime);
+                }
             }
 
             // after filter
@@ -447,7 +462,7 @@ class CoreExecuteDelegator
             return $method;
         }
 
-        $annotation = $this->container->annotationDelegator->read($this->instance, $method, "WebStream\Annotation\Alias");
+        $annotation = $this->container->annotationDelegator->read($this->instance, $method, "WebStream\Annotation\Attributes\Alias");
 
         $originMethod = null;
         foreach ($annotation->alias as $alias) {

@@ -53,6 +53,9 @@ require_once dirname(__FILE__) . '/core/WebStream/Annotation/Base/IProperty.php'
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Base/IRead.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Base/Annotation.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/AnnotationReader.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/Extend/ExtendReader.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/Extend/FilterExtendReader.php';
+require_once dirname(__FILE__) . '/core/WebStream/Annotation/Reader/Extend/QueryExtendReader.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Attributes/Alias.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Attributes/CsrfProtection.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Attributes/Database.php';
@@ -167,4 +170,4 @@ $classLoader->importAll("app", function ($filepath) {
 
 // アプリケーションを起動
 $application = new \WebStream\Core\Application($container);
-// $application->run();
+$application->run();

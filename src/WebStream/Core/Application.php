@@ -51,6 +51,7 @@ class Application
         } catch (ApplicationException $e) {
             // 内部例外の内、ハンドリングを許可している例外
             try {
+                $this->container->logger->error($e->getMessage());
                 $isHandled = false;
                 if ($e instanceof DelegateException) {
                     $isHandled = $e->isHandled();
@@ -61,11 +62,12 @@ class Application
                 }
             } catch (\Exception $e) {
                 // 開発者由来の例外は全て500
-                $this->container->logger->error($this->addStackTrace($e->getMessage(), $e->getTraceAsString()));
+                $this->container->logger->fatal($e->getMessage());
                 $this->container->response->move(500);
             }
         } catch (SystemException $e) {
             // 内部例外の内、ハンドリング不許可の例外
+            $this->container->logger->fatal($e->getMessage());
             $this->container->response->move($e->getCode());
         }
     }
