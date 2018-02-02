@@ -2,6 +2,6 @@
     "require": {
         "phpunit/phpunit": "6.*",
         "doctrine/annotations": "1.2.*",
-        "doctrine/dbal": "2.5.*"
+        "doctrine/dbal": "2.6.*"
     }
 }

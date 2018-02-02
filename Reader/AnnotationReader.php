@@ -118,8 +118,12 @@ class AnnotationReader
         }
 
         foreach ($this->annotationInfoList as $key => $annotationInfo) {
+            if (!array_key_exists($key, $this->extendReaderMap)) {
+                continue;
+            }
             $readerClasspath = $this->extendReaderMap[$key];
-            $reader = new $readerClasspath();
+            $refClass = new \ReflectionClass($readerClasspath);
+            $reader = $refClass->newInstance();
             $reader->read($annotationInfo);
             $this->annotationInfoExtendList[$key] = $reader->getAnnotationInfo();
         }
