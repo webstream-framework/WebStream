@@ -72,11 +72,6 @@ class AnnotationReader
     private $exception;
 
     /**
-     * @var string 読み込み対象アノテーションクラスパス
-     */
-    // private $annotationClasspath;
-
-    /**
      * @var string アクションメソッド
      */
     private $actionMethod;
@@ -100,7 +95,6 @@ class AnnotationReader
         $this->readableMap = [];
         $this->extendReaderMap = [];
         $this->annotationInfoList = [];
-        $this->annotationInfoExtendList = [];
     }
 
     /**
@@ -113,10 +107,6 @@ class AnnotationReader
             return $this->annotationInfoList;
         }
 
-        if (!empty($this->annotationInfoExtendList)) {
-            return $this->annotationInfoExtendList;
-        }
-
         foreach ($this->annotationInfoList as $key => $annotationInfo) {
             if (!array_key_exists($key, $this->extendReaderMap)) {
                 continue;
@@ -125,10 +115,10 @@ class AnnotationReader
             $refClass = new \ReflectionClass($readerClasspath);
             $reader = $refClass->newInstance();
             $reader->read($annotationInfo);
-            $this->annotationInfoExtendList[$key] = $reader->getAnnotationInfo();
+            $this->annotationInfoList[$key] = $reader->getAnnotationInfo();
         }
 
-        return $this->annotationInfoExtendList;
+        return $this->annotationInfoList;
     }
 
     /**
@@ -295,9 +285,6 @@ class AnnotationReader
 
             $refClass = $refClass->getParentClass();
         }
-
-        // 拡張リーダー処理結果をクリアする
-        $this->annotationInfoExtendList = [];
     }
 
     /**
