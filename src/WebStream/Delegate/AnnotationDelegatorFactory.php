@@ -10,6 +10,7 @@ use WebStream\Exception\Extend\AnnotationException;
 
 /**
  * AnnotationDelegatorFactory
+ * @Deprecated
  * @author Ryuichi TANAKA.
  * @since 2015/02/23
  * @version 0.4

@@ -69,11 +69,12 @@ class Basic implements ITemplateEngine
     public function render(array $params)
     {
         $mimeType = $params["mimeType"];
+        $filename = $params["filename"];
         $params = ["model" => $params["model"], "helper" => $params["helper"]];
         $dirname = $this->camel2snake($this->container->router->pageName);
 
-        $templateFile = new File($this->container->applicationInfo->applicationRoot . "/app/views/" . $dirname . "/" . $this->container->filename);
-        $sharedFile = new File($this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->sharedDir . "/" . $this->container->filename);
+        $templateFile = new File($this->container->applicationInfo->applicationRoot . "/app/views/" . $dirname . "/" . $filename);
+        $sharedFile = new File($this->container->applicationInfo->applicationRoot . "/app/views/" . $this->container->applicationInfo->sharedDir . "/" . $filename);
 
         $file = $templateFile->exists() ? $templateFile : ($sharedFile->exists() ? $sharedFile : null);
         if ($file === null) {

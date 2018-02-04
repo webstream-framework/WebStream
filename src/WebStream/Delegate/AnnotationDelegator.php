@@ -142,7 +142,6 @@ class AnnotationDelegator
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
         $annotationContainer->exception = $reader->getException();
 
-
         // var_dump($reader->getAnnotationInfoList());
         // exit;
         //
@@ -263,7 +262,7 @@ class AnnotationDelegator
 
         // @Filter
         $container = new Container();
-        // $container->action = $this->container->executeMethod;
+        $container->action = $this->container->executeMethod;
         $container->logger = $this->container->logger;
         $reader->readable(Filter::class, $container);
         $reader->useExtendReader(Filter::class, FilterExtendReader::class);
@@ -280,13 +279,13 @@ class AnnotationDelegator
         // $injectedAnnotation = $reader->getInjectedAnnotationInfo();
         //
         // $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new AnnotationContainer();
-
-        // exceptions
-        $annotationContainer->exception = $reader->getException();
-
-        // @Filter
-        $annotationContainer->filter = $factory->createAnnotationCallable("filter");
+        // $annotationContainer = new AnnotationContainer();
+        //
+        // // exceptions
+        // $annotationContainer->exception = $reader->getException();
+        //
+        // // @Filter
+        // $annotationContainer->filter = $factory->createAnnotationCallable("filter");
 
         return $annotationContainer;
     }

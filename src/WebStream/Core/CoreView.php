@@ -80,11 +80,11 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     public function draw(array $params)
     {
-        $mimeType = $params["mimeType"] ?: "html";
+        $mimeType = $params["mimeType"];
         $this->outputHeader($mimeType);
 
         // HTML,XML以外はテンプレートを使用しない
-        if ($mimeType !== "html" && $mimeType !== "xml") {
+        if ($mimeType !== 'html' && $mimeType !== 'xml') {
             $this->logger->debug("Only html or xml draw view template.");
 
             return;

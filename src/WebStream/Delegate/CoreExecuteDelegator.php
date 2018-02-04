@@ -216,7 +216,6 @@ class CoreExecuteDelegator
 
             // @Header
             $header = $annotationClosure(Header::class);
-            // $mimeType = $this->annotation->header->mimeType;
 
             // @Filter
             $filter = $annotationClosure(Filter::class);
@@ -259,17 +258,22 @@ class CoreExecuteDelegator
 
             // draw template
             if ($template !== null) {
+                $mimeType = empty($header) ? "html" : $header[0]['contentType'];
+                $refClass = new \ReflectionClass($template[0]['engine']);
+                $templateEngine = $refClass->newInstance($this->container);
+
                 $view = $resolver->runView();
-                $view->setTemplateEngine($template->engine);
+                $view->setTemplateEngine($templateEngine);
                 $view->draw([
-                    "model" => $model,
-                    "helper" => $resolver->runHelper(),
-                    "mimeType" => $mimeType
+                    'model' => $model,
+                    'helper' => $resolver->runHelper(),
+                    'mimeType' => $mimeType,
+                    'filename' => $template[0]['filename']
                 ]);
 
-                if ($template->cacheTime !== null) {
+                if (array_key_exists('cacheTime', $template[0])) {
                     $cacheFile = $applicationInfo->cachePrefix . $this->camel2snake($pageName) . "-" . $this->camel2snake($method);
-                    $view->templateCache($cacheFile, ob_get_contents(), $template->cacheTime);
+                    $view->templateCache($cacheFile, ob_get_contents(), $template[0]['cacheTime']);
                 }
             }
 
@@ -382,14 +386,20 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotationClosure = function ($classpath) use ($annotation) {
+                if (array_key_exists($classpath, $annotation->annotationInfoList)) {
+                    return $annotation->annotationInfoList[$classpath];
+                }
+                return null;
+            };
 
             // @Filter
-            $filter = $this->annotation->filter;
+            $filter = $annotationClosure(Filter::class);
 
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
-            $exception = $this->annotation->exception;
+            $exception = $annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
                 $exception->inject('logger', $this->logger);
                 $exception->raise();
