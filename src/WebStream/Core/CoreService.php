@@ -4,7 +4,7 @@ namespace WebStream\Core;
 use WebStream\Delegate\Resolver;
 use WebStream\DI\Injector;
 use WebStream\Container\Container;
-use WebStream\Annotation\Filter;
+use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 
 /**

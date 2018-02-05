@@ -3,7 +3,7 @@ namespace WebStream\Core;
 
 use WebStream\DI\Injector;
 use WebStream\Container\Container;
-use WebStream\Annotation\Filter;
+use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;

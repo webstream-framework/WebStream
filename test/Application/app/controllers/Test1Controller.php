@@ -2,7 +2,6 @@
 namespace WebStream\Test\Controller;
 
 use WebStream\Core\CoreController;
-use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Attributes\Header;
 use WebStream\Annotation\Attributes\Template;
@@ -23,6 +22,6 @@ class Test1Controller extends CoreController
      */
     public function test1()
     {
-        echo "controller";
+        $this->Test1->test1();
     }
 }
