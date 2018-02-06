@@ -9,6 +9,7 @@ use WebStream\Core\CoreView;
 use WebStream\Core\CoreHelper;
 use WebStream\Cache\Driver\CacheDriverFactory;
 use WebStream\Container\Container;
+use WebStream\Annotation\Attributes\Database;
 use WebStream\Annotation\Attributes\ExceptionHandler;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Attributes\Header;
@@ -207,7 +208,7 @@ class CoreExecuteDelegator
 
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotation = $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
             $annotationClosure = function ($classpath) use ($annotation) {
                 if (array_key_exists($classpath, $annotation->annotationInfoList)) {
                     return $annotation->annotationInfoList[$classpath];
@@ -234,7 +235,7 @@ class CoreExecuteDelegator
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
-                if ($this->annotation->exceptionHandler !== null) {
+                if ($annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $exceptionHandler;
                 }
                 $exception->inject('logger', $this->logger);
@@ -296,7 +297,7 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotation = $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
             $annotationClosure = function ($classpath) use ($annotation) {
                 if (array_key_exists($classpath, $annotation->annotationInfoList)) {
                     return $annotation->annotationInfoList[$classpath];
@@ -314,7 +315,7 @@ class CoreExecuteDelegator
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
-                if ($this->annotation->exceptionHandler !== null) {
+                if ($annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $exceptionHandler;
                 }
                 $exception->inject('logger', $this->logger);
@@ -342,7 +343,7 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotation = $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
             $annotationClosure = function ($classpath) use ($annotation) {
                 if (array_key_exists($classpath, $annotation->annotationInfoList)) {
                     return $annotation->annotationInfoList[$classpath];
@@ -356,14 +357,17 @@ class CoreExecuteDelegator
             // @ExceptionHandler
             $exceptionHandler = $annotationClosure(ExceptionHandler::class);
 
+            // @Database
+            $database = $annotationClosure(Database::class);
+
             // custom annotation
             // $this->instance->__customAnnotation($this->annotation->customAnnotations);
 
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
-            $exception = $this->annotation->exception;
+            $exception = $annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
-                if ($this->annotation->exceptionHandler !== null) {
+                if ($annotation->exceptionHandler !== null) {
                     $this->exceptionHandler = $exceptionHandler;
                 }
                 $exception->inject('logger', $this->logger);
@@ -371,12 +375,17 @@ class CoreExecuteDelegator
                 $exception->raise();
             }
 
-            $initializeContainer = new Container(false);
-            $initializeContainer->connectionContainerList = $this->annotation->database;
-            $initializeContainer->queryAnnotations = $this->annotation->query;
+            $connectionContainerList = [];
+            foreach ($database as $databaseInfo) {
+                $container = new Container();
+                $container->driverClassPath = $databaseInfo['driverClassPath'];
+                $container->configPath = $databaseInfo['configPath'];
+                $container->filepath = $databaseInfo['filepath'];
+                $connectionContainerList[] = $container;
+            }
 
             foreach ($filter->initialize as $refMethod) {
-                $refMethod->invokeArgs($this->instance, [$initializeContainer]);
+                $refMethod->invokeArgs($this->instance, [$connectionContainerList]);
             }
 
             $this->injectedInstance = $this->instance;
@@ -395,7 +404,7 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotation = $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
             $annotationClosure = function ($classpath) use ($annotation) {
                 if (array_key_exists($classpath, $annotation->annotationInfoList)) {
                     return $annotation->annotationInfoList[$classpath];

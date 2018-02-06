@@ -22,6 +22,7 @@ class Test1Controller extends CoreController
      */
     public function test1()
     {
-        $this->Test1->test1();
+        $ttt = $this->Test1->test1();
+        var_dump($ttt);
     }
 }

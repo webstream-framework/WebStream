@@ -17,7 +17,7 @@ class Test1Service extends CoreService
 
     public function test1()
     {
-        $this->Test1->test1();
+        return $this->Test1->test1();
     }
 
     /**

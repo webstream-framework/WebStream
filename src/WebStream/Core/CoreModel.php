@@ -68,6 +68,7 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     public function __initialize(Container $container)
     {
+        var_dump($container);
         if ($container->connectionContainerList === null) {
             $this->logger->warn("Can't use database in Model Layer.");
 
@@ -98,6 +99,7 @@ class CoreModel implements CoreInterface, IAnnotatable
     {
         // DBコネクションが取得できなければエラー
         $filepath = debug_backtrace()[0]["file"];
+
         if (!$this->manager->loadConnection($filepath)) {
             throw new MethodNotFoundException("Undefined method called: $method");
         }

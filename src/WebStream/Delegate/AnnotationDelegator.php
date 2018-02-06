@@ -245,48 +245,26 @@ class AnnotationDelegator
         $container->logger = $this->container->logger;
         $reader->readable(Database::class, $container);
 
+        // @Query
+        $container = new Container();
+        $container->rootPath = $this->container->applicationInfo->applicationRoot;
+        $reader->readable(Query::class, $container);
+        $reader->useExtendReader(Query::class, QueryExtendReader::class);
+
+        // @Alias
+        $container = new Container();
+        $container->action = $this->container->executeMethod;
+        $container->logger = $this->container->logger;
+        $reader->readable(Alias::class, $container);
+
+        // TODO custom annotation
+
         $reader->readClass();
+        $reader->readMethod();
 
         $annotationContainer = new AnnotationContainer();
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
         $annotationContainer->exception = $reader->getException();
-
-
-        var_dump($annotationContainer->annotationInfoList);
-        exit;
-
-
-
-
-
-        $container = $this->container;
-        $reader = new AnnotationReader($instance, $container);
-        $reader->read($classpath);
-        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
-
-        $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new AnnotationContainer();
-
-        // exceptions
-        $annotationContainer->exception = $reader->getException();
-
-        // @Filter
-        $annotationContainer->filter = $factory->createAnnotationCallable("filter");
-
-        // @ExceptionHandler
-        $annotationContainer->exceptionHandler = $factory->createAnnotationCallable("exceptionHandler");
-
-        // @Database
-        $annotationContainer->database = $factory->createAnnotationCallable("database");
-
-        // @Query
-        $annotationContainer->query = $factory->createAnnotationCallable("query");
-
-        // @Alias
-        $annotationContainer->alias = $factory->createAnnotationCallable("alias");
-
-        // custom annotation
-        $annotationContainer->customAnnotations = $factory->createCustomAnnotationCallable();
 
         return $annotationContainer;
     }
