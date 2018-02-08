@@ -10,11 +10,11 @@ use WebStream\Annotation\Attributes\Query;
  */
 class Test1Model extends CoreModel
 {
+    /**
+     * @Query(file="query/webstream-test-mysql-mapper.xml")
+     */
     public function test1()
     {
-        $sql = "SELECT * FROM T_WebStream LIMIT :limit, :offset";
-        $bind = ["limit" => 0, "offset" => 1];
-
-        return $this->select($sql, $bind);
+        return $this->queryAnnotationSelect(["limit" => 0, "offset" => 1]);
     }
 }

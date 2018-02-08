@@ -13,6 +13,7 @@ use WebStream\Annotation\Attributes\Database;
 use WebStream\Annotation\Attributes\ExceptionHandler;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Attributes\Header;
+use WebStream\Annotation\Attributes\Query;
 use WebStream\Annotation\Attributes\Template;
 use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
@@ -360,6 +361,9 @@ class CoreExecuteDelegator
             // @Database
             $database = $annotationClosure(Database::class);
 
+            // @Query
+            $query = $annotationClosure(Query::class);
+
             // custom annotation
             // $this->instance->__customAnnotation($this->annotation->customAnnotations);
 
@@ -375,17 +379,12 @@ class CoreExecuteDelegator
                 $exception->raise();
             }
 
-            $connectionContainerList = [];
-            foreach ($database as $databaseInfo) {
-                $container = new Container();
-                $container->driverClassPath = $databaseInfo['driverClassPath'];
-                $container->configPath = $databaseInfo['configPath'];
-                $container->filepath = $databaseInfo['filepath'];
-                $connectionContainerList[] = $container;
-            }
+            $container = new Container(false);
+            $container->connectionContainerList = $database;
+            $container->queryAnnotations = $query;
 
             foreach ($filter->initialize as $refMethod) {
-                $refMethod->invokeArgs($this->instance, [$connectionContainerList]);
+                $refMethod->invokeArgs($this->instance, [$container]);
             }
 
             $this->injectedInstance = $this->instance;

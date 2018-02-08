@@ -13,10 +13,12 @@ use WebStream\Annotation\Attributes\Database;
 use WebStream\Annotation\Attributes\ExceptionHandler;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Attributes\Header;
+use WebStream\Annotation\Attributes\Query;
 use WebStream\Annotation\Attributes\Template;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Annotation\Reader\Extend\FilterExtendReader;
+use WebStream\Annotation\Reader\Extend\QueryExtendReader;
 use WebStream\Annotation\Container\AnnotationContainer;
 use WebStream\Template\Basic;
 use WebStream\Template\Twig;
@@ -248,6 +250,7 @@ class AnnotationDelegator
         // @Query
         $container = new Container();
         $container->rootPath = $this->container->applicationInfo->applicationRoot;
+        $container->logger = $this->container->logger;
         $reader->readable(Query::class, $container);
         $reader->useExtendReader(Query::class, QueryExtendReader::class);
 

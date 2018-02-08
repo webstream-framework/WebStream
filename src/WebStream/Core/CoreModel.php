@@ -36,7 +36,7 @@ class CoreModel implements CoreInterface, IAnnotatable
     /**
      * @var array<AnnotationContainer> クエリアノテーションリスト
      */
-    private $queryAnnotations;
+    // private $queryAnnotations;
 
     /**
      * @var boolean オートコミットフラグ
@@ -68,18 +68,21 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     public function __initialize(Container $container)
     {
-        var_dump($container);
-        if ($container->connectionContainerList === null) {
-            $this->logger->warn("Can't use database in Model Layer.");
+        // if ($container->connectionInfoList === null) {
+        //     $this->logger->warn("Can't use database in Model Layer.");
+        //
+        //     return;
+        // }
 
-            return;
-        }
+        $this->container = $container;
 
-        $this->queryAnnotations = $container->queryAnnotations;
-        $container->logger = $this->logger;
+
+
+        // $this->queryAnnotations = $container->queryAnnotations;
+        // $container->logger = $this->logger;
         $this->manager = new DatabaseManager($container);
         $this->isAutoCommit = true;
-        $this->container = $container;
+        // $this->container = $container;
     }
 
     /**
@@ -99,6 +102,9 @@ class CoreModel implements CoreInterface, IAnnotatable
     {
         // DBコネクションが取得できなければエラー
         $filepath = debug_backtrace()[0]["file"];
+
+        var_dump($filepath);
+        exit;
 
         if (!$this->manager->loadConnection($filepath)) {
             throw new MethodNotFoundException("Undefined method called: $method");
