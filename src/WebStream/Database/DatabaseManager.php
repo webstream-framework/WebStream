@@ -177,10 +177,17 @@ class DatabaseManager
      * @param  Closure $closure クロージャ
      * @return object 処理結果
      */
-    public function transactional(\Closure $closure)
+    public function transactional(\Closure $closure, $config = [])
     {
-        $this->beginTransaction();
-        $this->disableAutoCommit();
+        if (!array_key_exists('isolationLevel', $config)) {
+            $config['isolationLevel'] = Connection::TRANSACTION_READ_COMMITTED;
+        }
+        if (!array_key_exists('autoCommit', $config)) {
+            $config['autoCommit'] = false;
+        }
+
+        $this->isAutoCommit = $config['autoCommit'];
+        $this->beginTransaction($config['isolationLevel']);
         try {
             $result = $closure($this);
             $this->commit();

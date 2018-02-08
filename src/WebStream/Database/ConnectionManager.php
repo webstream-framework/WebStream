@@ -64,9 +64,9 @@ class ConnectionManager
         $logger = $container->logger;
         $innerException = null;
 
-        foreach ($container->connectionContainerList as $container) {
+        foreach ($container->connectionContainerList as $connectionContainer) {
             $config = null;
-            $configFile = new File($container->configPath);
+            $configFile = new File($connectionContainer->configPath);
 
             if (!$configFile->exists()) {
                 throw new DatabaseException("Database configuration file is not found: " . $configFile->getFilePath());
@@ -81,7 +81,7 @@ class ConnectionManager
                 throw new DatabaseException("Yaml or ini file only available database configuration file.");
             }
 
-            $driverClassPath = $container->driverClassPath;
+            $driverClassPath = $connectionContainer->driverClassPath;
 
             if (!class_exists($driverClassPath)) {
                 throw new ClassNotFoundException("$driverClassPath is not defined.");
@@ -95,7 +95,7 @@ class ConnectionManager
             }
             $dsnHash = md5($dsnHash);
 
-            $this->classpathMap[$container->filepath] = $dsnHash;
+            $this->classpathMap[$connectionContainer->filepath] = $dsnHash;
 
             $this->connectionContainer->{$dsnHash} = function () use ($driverClassPath, $databaseConfigContainer, $logger) {
                 $driver = new $driverClassPath($databaseConfigContainer);

@@ -25,6 +25,7 @@ use WebStream\Container\Container;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Test\Fixtures\DummyLogger;
 use WebStream\Database\Test\Providers\DatabaseProvider;
+use WebStream\Exception\Extend\DatabaseException;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -137,6 +138,94 @@ class TransactionTest extends \PHPUnit\Framework\TestCase
         $manager->connect();
         $result = $manager->query('SELECT COUNT(*) AS count FROM T_WebStream')->select();
         $rowCount = (int)$result[0]['count'];
+
+        $this->assertEquals(0, $rowCount);
+    }
+
+    /**
+     * 正常系
+     * トランザクションスコープによるcommitが実行できること
+     * @test
+     * @dataProvider transactionProvider
+     */
+    public function okCommitInTransactionScope($driverClassPath, $configPath)
+    {
+        $container = new Container();
+        $container->logger = new DummyLogger();
+        $config = new Container();
+        $config->configPath = dirname(__FILE__) . $configPath;
+        $config->driverClassPath = $driverClassPath;
+        $config->filepath = "test";
+        $container->connectionContainerList = [$config];
+
+        $manager = new DatabaseManager($container);
+        $manager->loadConnection($config->filepath);
+        $transactionConfig = [
+            'isolationLevel' => Connection::TRANSACTION_READ_COMMITTED,
+            'autoCommit' => false
+        ];
+
+        $manager->connect();
+        $manager->transactional(function ($conn) {
+            $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+            $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+            $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+            $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+        }, $transactionConfig);
+        $manager->disconnect();
+
+        $manager = new DatabaseManager($container);
+        $manager->loadConnection($config->filepath);
+        $manager->connect();
+        $result = $manager->query('SELECT COUNT(*) AS count FROM T_WebStream')->select();
+        $rowCount = (int)$result[0]['count'];
+        $manager->disconnect();
+
+        $this->assertEquals(4, $rowCount);
+    }
+
+
+    /**
+     * 正常系
+     * トランザクションスコープによるrollbackが実行できること
+     * @test
+     * @dataProvider transactionProvider
+     */
+    public function okRollbackInTransactionScope($driverClassPath, $configPath)
+    {
+        $container = new Container();
+        $container->logger = new DummyLogger();
+        $config = new Container();
+        $config->configPath = dirname(__FILE__) . $configPath;
+        $config->driverClassPath = $driverClassPath;
+        $config->filepath = "test";
+        $container->connectionContainerList = [$config];
+
+        $manager = new DatabaseManager($container);
+        $manager->loadConnection($config->filepath);
+        $manager->connect();
+
+        try {
+            $manager->transactional(function ($conn) {
+                $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+                $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+                $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+                $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+                // force execute an exception
+                throw new \Exception();
+            });
+        } catch (DatabaseException $e) {
+            // nothing to do
+        } finally {
+            $manager->disconnect();
+        }
+
+        $manager = new DatabaseManager($container);
+        $manager->loadConnection($config->filepath);
+        $manager->connect();
+        $result = $manager->query('SELECT COUNT(*) AS count FROM T_WebStream')->select();
+        $rowCount = (int)$result[0]['count'];
+        $manager->disconnect();
 
         $this->assertEquals(0, $rowCount);
     }
