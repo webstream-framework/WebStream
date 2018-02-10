@@ -4,6 +4,7 @@ namespace WebStream\Annotation\Test\Providers;
 use WebStream\Annotation\Test\Fixtures\QueryFixture1;
 use WebStream\Annotation\Test\Fixtures\QueryFixture2;
 use WebStream\Annotation\Test\Fixtures\QueryFixture3;
+use WebStream\Annotation\Test\Fixtures\QueryFixture4;
 
 /**
  * QueryAnnotationProvider
@@ -13,14 +14,36 @@ use WebStream\Annotation\Test\Fixtures\QueryFixture3;
  */
 trait QueryAnnotationProvider
 {
-    public function okProvider()
+    public function ok1Provider()
     {
         return [
             [QueryFixture1::class, "action1", dirname(__FILE__) . "/../Fixtures/", "select1",
-                ['sql' => 'SQL', 'method' => 'select', 'entity' => null]
+                [
+                    ['sql' => 'SQL', 'method' => 'select', 'entity' => null]
+                ]
             ],
             [QueryFixture1::class, "action1", dirname(__FILE__) . "/../Fixtures/", "select2",
-                ['sql' => 'SQL', 'method' => 'select', 'entity' => 'EntityClass']
+                [
+                    ['sql' => 'SQL', 'method' => 'select', 'entity' => 'EntityClass']
+                ]
+            ]
+        ];
+    }
+
+    public function ok2Provider()
+    {
+        return [
+            [QueryFixture4::class, "action1", dirname(__FILE__) . "/../Fixtures/", "select1",
+                [
+                    ['sql' => 'SQL', 'method' => 'select', 'entity' => null],
+                    ['sql' => 'SQL', 'method' => 'select', 'entity' => null]
+                ]
+            ],
+            [QueryFixture4::class, "action1", dirname(__FILE__) . "/../Fixtures/", "select2",
+                [
+                    ['sql' => 'SQL', 'method' => 'select', 'entity' => 'EntityClass'],
+                    ['sql' => 'SQL', 'method' => 'select', 'entity' => 'EntityClass']
+                ]
             ]
         ];
     }
