@@ -26,6 +26,7 @@ require_once dirname(__FILE__) . '/../Test/Providers/QueryAnnotationProvider.php
 require_once dirname(__FILE__) . '/../Test/Fixtures/QueryFixture1.php';
 require_once dirname(__FILE__) . '/../Test/Fixtures/QueryFixture2.php';
 require_once dirname(__FILE__) . '/../Test/Fixtures/QueryFixture3.php';
+require_once dirname(__FILE__) . '/../Test/Fixtures/QueryFixture4.php';
 
 use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Annotation\Reader\Extend\QueryExtendReader;
@@ -48,7 +49,7 @@ class QueryAnnotationTest extends \PHPUnit\Framework\TestCase
      * 正常系
      * クエリ情報を読み込めること
      * @test
-     * @dataProvider okProvider
+     * @dataProvider ok1Provider
      */
     public function okAnnotationTest($clazz, $action, $rootPath, $key, $result)
     {
@@ -60,19 +61,43 @@ class QueryAnnotationTest extends \PHPUnit\Framework\TestCase
         $annotaionReader->readable(Query::class, $container);
         $annotaionReader->useExtendReader(Query::class, QueryExtendReader::class);
         $annotaionReader->readMethod();
-        $annotation = $annotaionReader->getAnnotationInfoList();
+        $annotations = $annotaionReader->getAnnotationInfoList();
         $namespace = "WebStream\Annotation\Test";
         $method = $key;
         $queryKey = "WebStream\Annotation\Test\Fixtures\QueryFixture1#action1";
         $xpath = "//mapper[@namespace='$namespace']/*[@id='$method']";
 
-        $this->assertEquals($annotation[Query::class]($queryKey, $xpath), $result);
+        $this->assertEquals($annotations[Query::class]($queryKey, $xpath), $result);
+    }
+
+    /**
+     * 正常系
+     * クエリ情報を複数読み込めること
+     * @test
+     * @dataProvider ok2Provider
+     */
+    public function okMultipleAnnotationTest($clazz, $action, $rootPath, $key, $result)
+    {
+        $instance = new $clazz();
+        $container = new Container();
+        $container->rootPath = $rootPath;
+        $annotaionReader = new AnnotationReader($instance);
+        $annotaionReader->setActionMethod($action);
+        $annotaionReader->readable(Query::class, $container);
+        $annotaionReader->useExtendReader(Query::class, QueryExtendReader::class);
+        $annotaionReader->readMethod();
+        $annotations = $annotaionReader->getAnnotationInfoList();
+        $namespace = "WebStream\Annotation\Test";
+        $method = $key;
+        $queryKey = "WebStream\Annotation\Test\Fixtures\QueryFixture4#action1";
+        $xpath = "//mapper[@namespace='$namespace']/*[@id='$method']";
+
+        $this->assertEquals($annotations[Query::class]($queryKey, $xpath), $result);
     }
 
     /**
      * 異常系
      * クエリファイルパスが間違っている場合、例外が発生すること
-     * @test
      * @dataProvider ng1Provider
      * @expectedException WebStream\Exception\Extend\DatabaseException
      */
@@ -95,7 +120,6 @@ class QueryAnnotationTest extends \PHPUnit\Framework\TestCase
     /**
      * 異常系
      * クエリファイルパスが間違っている場合、例外が発生すること
-     * @test
      * @dataProvider ng2Provider
      * @expectedException WebStream\Exception\Extend\DatabaseException
      */

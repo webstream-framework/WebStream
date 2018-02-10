@@ -30,7 +30,7 @@ class QueryExtendReader extends ExtendReader
     public function read(array $annotationInfoList)
     {
         $func = function ($queryKey, $xpath) use ($annotationInfoList) {
-            $query = null;
+            $queryList = [];
             foreach ($annotationInfoList as $annotationInfo) {
                 $xmlObjects = $annotationInfo[$queryKey];
                 foreach ($xmlObjects as $xmlObject) {
@@ -39,12 +39,12 @@ class QueryExtendReader extends ExtendReader
                         $query = ["sql" => trim($xmlElement[0]->__toString()), "method" => $xmlElement[0]->getName()];
                         $entity = $xmlElement[0]->attributes()["entity"];
                         $query["entity"] = $entity !== null ? $entity->__toString() : null;
-                        break;
+                        $queryList[] = $query;
                     }
                 }
             }
 
-            return $query;
+            return $queryList;
         };
 
         $this->annotationInfo = function ($queryKey, $xpath) use ($func) {
