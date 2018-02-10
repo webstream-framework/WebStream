@@ -3,7 +3,7 @@
   "-//github.com/mapserver2007//DTD Mapper 3.0//EN"
   "http://localhost:8080/query/webstream-model-mapper.dtd">
 <mapper namespace="WebStream\Test\Model">
-  <select id="select">
+  <select id="querySelect">
     SELECT
         *
     FROM

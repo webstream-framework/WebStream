@@ -103,9 +103,6 @@ class CoreModel implements CoreInterface, IAnnotatable
         // DBコネクションが取得できなければエラー
         $filepath = debug_backtrace()[0]["file"];
 
-        var_dump($filepath);
-        exit;
-
         if (!$this->manager->loadConnection($filepath)) {
             throw new MethodNotFoundException("Undefined method called: $method");
         }
@@ -137,6 +134,9 @@ class CoreModel implements CoreInterface, IAnnotatable
         $result = null;
 
         try {
+
+            // TODO xmlのidにselect,update等が指定されると、メソッド実行の判定からのmethod_missingループになるバグ
+
             if (preg_match('/^(?:select|(?:dele|upda)te|insert)$/', $method)) {
                 $sql = $arguments[0];
                 $bind = null;
@@ -177,9 +177,20 @@ class CoreModel implements CoreInterface, IAnnotatable
 
                 $namespace = substr($this->getNamespace($filepath), 1);
                 $queryKey = $namespace . "\\" . basename($filepath, ".php") . "#" . $modelMethod;
+                $xpath = "//mapper[@namespace='$namespace']/*[@id='$method']";
 
+                $queryAnnotations = $this->container->queryAnnotations;
                 $query = null;
-                foreach ($this->queryAnnotations as $queryAnnotation) {
+
+                var_dump($queryAnnotations);
+                var_dump($queryAnnotations($queryKey, $xpath));
+                exit;
+
+                foreach ($queryAnnotations as $queryAnnotation) {
+                    var_dump($queryAnnotation($queryKey, $xpath));
+                    exit;
+
+
                     $queryFunctions = $queryAnnotation->get($queryKey);
 
                     if ($queryFunctions === null) {

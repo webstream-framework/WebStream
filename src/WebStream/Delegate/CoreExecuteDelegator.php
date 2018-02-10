@@ -379,12 +379,22 @@ class CoreExecuteDelegator
                 $exception->raise();
             }
 
-            $container = new Container(false);
-            $container->connectionContainerList = $database;
-            $container->queryAnnotations = $query;
+            $connectionContainerList = [];
+            foreach ($database as $databaseInfo) {
+                $container = new Container(false);
+                $container->filepath = $databaseInfo['filepath'];
+                $container->configPath = $databaseInfo['configPath'];
+                $container->driverClassPath = $databaseInfo['driverClassPath'];
+                $connectionContainerList[] = $container;
+            }
+
+            $connectionContainer = new Container();
+            $connectionContainer->connectionContainerList = $connectionContainerList;
+            $connectionContainer->register("queryAnnotations", $query);
+            $connectionContainer->logger = $this->logger;
 
             foreach ($filter->initialize as $refMethod) {
-                $refMethod->invokeArgs($this->instance, [$container]);
+                $refMethod->invokeArgs($this->instance, [$connectionContainer]);
             }
 
             $this->injectedInstance = $this->instance;

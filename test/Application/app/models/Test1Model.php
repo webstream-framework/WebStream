@@ -12,9 +12,10 @@ class Test1Model extends CoreModel
 {
     /**
      * @Query(file="query/webstream-test-mysql-mapper.xml")
+     * @Query(file="query/webstream-test-mysql-mapper.xml")
      */
     public function test1()
     {
-        return $this->queryAnnotationSelect(["limit" => 0, "offset" => 1]);
+        return $this->querySelect(["limit" => 0, "offset" => 1]);
     }
 }
