@@ -3,21 +3,15 @@ namespace WebStream\Test\Service;
 
 use WebStream\Core\CoreService;
 use WebStream\Annotation\Attributes\ExceptionHandler;
-use WebStream\Annotation\Attributes\Filter;
+use WebStream\Util\PropertyProxy;
 
 class Test1Service extends CoreService
 {
-    /**
-     * @Filter(type="before")
-     */
-    public function init()
-    {
-        echo "init";
-    }
+    use PropertyProxy;
 
     public function test1()
     {
-        return $this->Test1->test1();
+        $this->result = $this->Test1->test1();
     }
 
     /**

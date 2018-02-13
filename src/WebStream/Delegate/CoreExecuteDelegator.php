@@ -390,7 +390,7 @@ class CoreExecuteDelegator
 
             $connectionContainer = new Container();
             $connectionContainer->connectionContainerList = $connectionContainerList;
-            $connectionContainer->register("queryAnnotations", $query);
+            $connectionContainer->register("queryInfo", $query);
             $connectionContainer->logger = $this->logger;
 
             foreach ($filter->initialize as $refMethod) {
@@ -452,24 +452,30 @@ class CoreExecuteDelegator
     {
         // アノテーション注入処理は1度しか行わない
         if ($this->injectedInstance === null) {
-            $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotation = $this->annotation = $this->container->annotationDelegator->read($this->instance, $method);
+            $annotationClosure = function ($classpath) use ($annotation) {
+                if (array_key_exists($classpath, $annotation->annotationInfoList)) {
+                    return $annotation->annotationInfoList[$classpath];
+                }
+                return null;
+            };
 
             // @Filter
-            $filter = $this->annotation->filter;
+            $filter = $annotationClosure(Filter::class);
 
-            // custom annotation
-            $this->instance->__customAnnotation($this->annotation->customAnnotations);
+            // @ExceptionHandler
+            $exceptionHandler = $annotationClosure(ExceptionHandler::class);
 
-            if ($this->exceptionHandler === null) {
-                $this->exceptionHandler = $this->annotation->exceptionHandler;
-            }
+
+            // // custom annotation
+            // $this->instance->__customAnnotation($this->annotation->customAnnotations);
 
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
-            $exception = $this->annotation->exception;
+            $exception = $annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
-                if ($this->annotation->exceptionHandler !== null) {
-                    $this->exceptionHandler = $this->annotation->exceptionHandler;
+                if ($annotation->exceptionHandler !== null) {
+                    $this->exceptionHandler = $exceptionHandler;
                 }
                 $exception->inject('logger', $this->logger);
                 $exception->setExceptionHandler($this->annotation->exceptionHandler);

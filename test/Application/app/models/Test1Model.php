@@ -12,7 +12,6 @@ class Test1Model extends CoreModel
 {
     /**
      * @Query(file="query/webstream-test-mysql-mapper.xml")
-     * @Query(file="query/webstream-test-mysql-mapper.xml")
      */
     public function test1()
     {

@@ -139,7 +139,11 @@ class AnnotationDelegator
 
         // TODO custom annotation
 
+
         $reader->readMethod();
+
+
+        var_dump($reader->getAnnotationInfoList());
 
         $annotationContainer = new AnnotationContainer();
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
@@ -289,6 +293,7 @@ class AnnotationDelegator
         $container->logger = $this->container->logger;
         $reader->readable(Filter::class, $container);
         $reader->useExtendReader(Filter::class, FilterExtendReader::class);
+
         $reader->readMethod();
 
         $annotationContainer = new AnnotationContainer();
@@ -321,28 +326,32 @@ class AnnotationDelegator
      */
     private function readHelper(CoreHelper $instance, $classpath)
     {
-        $container = $this->container;
-        $reader = new AnnotationReader($instance, $container);
-        $reader->read($classpath);
-        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
-
-        $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new AnnotationContainer();
-
-        // exceptions
-        $annotationContainer->exception = $reader->getException();
+        $reader = new AnnotationReader($instance);
+        $reader->setActionMethod($this->container->executeMethod);
 
         // @Filter
-        $annotationContainer->filter = $factory->createAnnotationCallable("filter");
+        $container = new Container();
+        $container->action = $this->container->executeMethod;
+        $container->logger = $this->container->logger;
+        $reader->readable(Filter::class, $container);
+        $reader->useExtendReader(Filter::class, FilterExtendReader::class);
 
         // @ExceptionHandler
-        $annotationContainer->exceptionHandler = $factory->createAnnotationCallable("exceptionHandler");
+        $container = new Container();
+        $container->logger = $this->container->logger;
+        $reader->readable(ExceptionHandler::class, $container);
 
         // @Alias
-        $annotationContainer->alias = $factory->createAnnotationCallable("alias");
+        $container = new Container();
+        $container->action = $this->container->executeMethod;
+        $container->logger = $this->container->logger;
+        $reader->readable(Alias::class, $container);
 
-        // custom annotation
-        $annotationContainer->customAnnotations = $factory->createCustomAnnotationCallable();
+        $reader->readMethod();
+
+        $annotationContainer = new AnnotationContainer();
+        $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
+        $annotationContainer->exception = $reader->getException();
 
         return $annotationContainer;
     }

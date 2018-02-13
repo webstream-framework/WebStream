@@ -179,40 +179,9 @@ class CoreModel implements CoreInterface, IAnnotatable
                 $queryKey = $namespace . "\\" . basename($filepath, ".php") . "#" . $modelMethod;
                 $xpath = "//mapper[@namespace='$namespace']/*[@id='$method']";
 
-                $queryAnnotations = $this->container->queryAnnotations;
-                $query = null;
-
-                var_dump($queryAnnotations);
-                var_dump($queryAnnotations($queryKey, $xpath));
-                exit;
-
-                foreach ($queryAnnotations as $queryAnnotation) {
-                    var_dump($queryAnnotation($queryKey, $xpath));
-                    exit;
-
-
-                    $queryFunctions = $queryAnnotation->get($queryKey);
-
-                    if ($queryFunctions === null) {
-                        continue;
-                    }
-
-                    foreach ($queryFunctions as $queryFunction) {
-                        $xmlObjectList = $queryFunction->fetch();
-                        foreach ($xmlObjectList as $xmlObject) {
-                            if ($xmlObject !== null) {
-                                $xmlElement = $xmlObject->xpath("//mapper[@namespace='$namespace']/*[@id='$method']");
-
-                                if (!empty($xmlElement)) {
-                                    $query = ["sql" => trim($xmlElement[0]->__toString()), "method" => $xmlElement[0]->getName()];
-                                    $entity = $xmlElement[0]->attributes()["entity"];
-                                    $query["entity"] = $entity !== null ? $entity->__toString() : null;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
+                $queryInfo = $this->container->queryInfo;
+                $queryList = $queryInfo($queryKey, $xpath);
+                $query = array_shift($queryList);
 
                 if ($query === null) {
                     throw new DatabaseException("SQL statement can't getting from xml file: " . $modelMethod);
@@ -270,14 +239,14 @@ class CoreModel implements CoreInterface, IAnnotatable
                         throw new DatabaseException($errorMessage);
                     }
                 }
+
+                return $result;
             }
         } catch (DatabaseException $e) {
             $this->manager->rollback();
             $this->manager->disconnect();
             throw $e;
         }
-
-        return $result;
     }
 
     /**

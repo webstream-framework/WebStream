@@ -14,6 +14,7 @@ require_once dirname(__FILE__) . '/core/WebStream/Util/CommonUtils.php';
 require_once dirname(__FILE__) . '/core/WebStream/Util/ApplicationUtils.php';
 // require_once dirname(__FILE__) . '/core/WebStream/Module/Utility/FileUtils.php';
 require_once dirname(__FILE__) . '/core/WebStream/Util/SecurityUtils.php';
+require_once dirname(__FILE__) . '/core/WebStream/Util/PropertyProxy.php';
 require_once dirname(__FILE__) . '/core/WebStream/Annotation/Base/IAnnotatable.php';
 require_once dirname(__FILE__) . '/core/WebStream/Log/LoggerUtils.php';
 require_once dirname(__FILE__) . '/core/WebStream/Log/LoggerConfigurationManager.php';

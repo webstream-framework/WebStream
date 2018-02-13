@@ -2,7 +2,7 @@
 namespace WebStream\Core;
 
 use WebStream\Container\Container;
-use WebStream\Annotation\Filter;
+use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Util\ApplicationUtils;
 use WebStream\Util\Security;

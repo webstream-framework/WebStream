@@ -5,6 +5,7 @@ use WebStream\Core\CoreController;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Attributes\Header;
 use WebStream\Annotation\Attributes\Template;
+use WebStream\Annotation\Attributes\Custom\CustomControllerAnnotation;
 
 class Test1Controller extends CoreController
 {
@@ -13,16 +14,16 @@ class Test1Controller extends CoreController
      */
     public function init()
     {
-        echo "init";
+        echo "<!DOCTYPE html>";
     }
 
     /**
      * @Header(allowMethod="get")
      * @Template("test1.tmpl")
+     * @CustomControllerAnnotation
      */
     public function test1()
     {
-        $ttt = $this->Test1->test1();
-        var_dump($ttt);
+        $this->Test1->test1();
     }
 }
