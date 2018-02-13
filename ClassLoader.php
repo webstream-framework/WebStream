@@ -58,7 +58,7 @@ class ClassLoader
             if ($file->getFileExtension() === 'php') {
                 if ($filter === null || (is_callable($filter) && $filter($file->getFilePath()) === true)) {
                     include_once $file->getFilePath();
-                    $this->logger->debug($file->getFilePath() . " import success.");
+                    $this->logger->debug($file->getAbsoluteFilePath() . " import success.");
                 }
             }
 
@@ -79,7 +79,7 @@ class ClassLoader
         $dir = new File($this->applicationRoot . "/" . $dirPath);
         $isSuccess = true;
         if ($dir->isDirectory()) {
-            $iterator = $this->getFileSearchIterator($dir->getFilePath());
+            $iterator = $this->getFileSearchIterator($dir->getAbsoluteFilePath());
             foreach ($iterator as $filepath => $fileObject) {
                 if (preg_match("/(?:\/\.|\/\.\.|\.DS_Store)$/", $filepath)) {
                     continue;
@@ -89,7 +89,7 @@ class ClassLoader
                     if ($file->getFileExtension() === 'php') {
                         if ($filter === null || (is_callable($filter) && $filter($file->getFilePath()) === true)) {
                             include_once $file->getFilePath();
-                            $this->logger->debug($file->getFilePath() . " import success.");
+                            $this->logger->debug($file->getAbsoluteFilePath() . " import success.");
                         }
                     }
                 } else {
@@ -112,7 +112,7 @@ class ClassLoader
         $dir = new File($this->applicationRoot);
         $namespaces = [];
         if ($dir->isDirectory()) {
-            $iterator = $this->getFileSearchIterator($dir->getFilePath());
+            $iterator = $this->getFileSearchIterator($dir->getAbsoluteFilePath());
             foreach ($iterator as $filepath => $fileObject) {
                 if (preg_match("/(?:\/\.|\/\.\.|\.DS_Store)$/", $filepath)) {
                     continue;
@@ -159,7 +159,7 @@ class ClassLoader
                 $logger->error("Invalid search directory path: " . $dir->getFilePath());
                 return $includeList;
             }
-            $iterator = $this->getFileSearchIterator($dir->getFilePath());
+            $iterator = $this->getFileSearchIterator($dir->getAbsoluteFilePath());
             foreach ($iterator as $filepath => $fileObject) {
                 if (!$fileObject->isFile()) {
                     continue;
@@ -169,7 +169,7 @@ class ClassLoader
                     $absoluteFilePath = $file->getAbsoluteFilePath();
                     include_once $absoluteFilePath;
                     $includeList[] = $absoluteFilePath;
-                    $logger->debug($absoluteFilePath . " load success. (search from " . $dir->getFilePath() . ")");
+                    $logger->debug($absoluteFilePath . " load success. (search from " . $dir->getAbsoluteFilePath() . ")");
                 }
             }
 
