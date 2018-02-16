@@ -137,47 +137,14 @@ class AnnotationDelegator
         $container->logger = $this->container->logger;
         $reader->readable(Alias::class, $container);
 
-        // TODO custom annotation
-
-
         $reader->readMethod();
-
-
-        var_dump($reader->getAnnotationInfoList());
 
         $annotationContainer = new AnnotationContainer();
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
         $annotationContainer->exception = $reader->getException();
-
-        // var_dump($reader->getAnnotationInfoList());
-        // exit;
-        //
-        // // $reader->read($classpath);
-        // // $injectedAnnotation = $reader->getInjectedAnnotationInfo();
-        //
-        // $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        // $annotationContainer = new AnnotationContainer();
-        //
-        // // exceptions
-        // $annotationContainer->exception = $reader->getException();
-        //
-        // // @Header
-        // $annotationContainer->header = $factory->createAnnotationCallable("header");
-        //
-        // // @Filter
-        // $annotationContainer->filter = $factory->createAnnotationCallable("filter");
-        //
-        // // @Template
-        // $annotationContainer->template = $factory->createAnnotationCallable("template");
-        //
-        // // @ExceptionHandler
-        // $annotationContainer->exceptionHandler = $factory->createAnnotationCallable("exceptionHandler");
-        //
-        // // @Alias
-        // $annotationContainer->alias = $factory->createAnnotationCallable("alias");
-        //
-        // // custom annotation
-        // $annotationContainer->customAnnotations = $factory->createCustomAnnotationCallable();
+        $annotationContainer->customAnnotationInfoList = array_filter($annotationContainer->annotationInfoList, function ($key) {
+            return !in_array($key, [Filter::class, Header::class, ExceptionHandler::class, Template::class, Alias::class], true);
+        }, ARRAY_FILTER_USE_KEY);
 
         return $annotationContainer;
     }
@@ -211,13 +178,15 @@ class AnnotationDelegator
         $container->logger = $this->container->logger;
         $reader->readable(Alias::class, $container);
 
-        // TODO custom annotation
-
         $reader->readMethod();
 
         $annotationContainer = new AnnotationContainer();
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
         $annotationContainer->exception = $reader->getException();
+        $annotationContainer->customAnnotationInfoList = array_filter($annotationContainer->annotationInfoList, function ($key) {
+            return !in_array($key, [Filter::class, ExceptionHandler::class, Alias::class], true);
+        }, ARRAY_FILTER_USE_KEY);
+
 
         return $annotationContainer;
     }
@@ -264,14 +233,15 @@ class AnnotationDelegator
         $container->logger = $this->container->logger;
         $reader->readable(Alias::class, $container);
 
-        // TODO custom annotation
-
         $reader->readClass();
         $reader->readMethod();
 
         $annotationContainer = new AnnotationContainer();
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
         $annotationContainer->exception = $reader->getException();
+        $annotationContainer->customAnnotationInfoList = array_filter($annotationContainer->annotationInfoList, function ($key) {
+            return !in_array($key, [Filter::class, ExceptionHandler::class, Database::class, Query::class, Alias::class], true);
+        }, ARRAY_FILTER_USE_KEY);
 
         return $annotationContainer;
     }
@@ -285,7 +255,6 @@ class AnnotationDelegator
     private function readView(CoreView $instance, $classpath)
     {
         $reader = new AnnotationReader($instance);
-        // $reader->setActionMethod($this->container->executeMethod);
 
         // @Filter
         $container = new Container();
@@ -299,21 +268,6 @@ class AnnotationDelegator
         $annotationContainer = new AnnotationContainer();
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
         $annotationContainer->exception = $reader->getException();
-
-        //
-        // $container = $this->container;
-        // $reader = new AnnotationReader($instance, $container);
-        // $reader->read($classpath);
-        // $injectedAnnotation = $reader->getInjectedAnnotationInfo();
-        //
-        // $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        // $annotationContainer = new AnnotationContainer();
-        //
-        // // exceptions
-        // $annotationContainer->exception = $reader->getException();
-        //
-        // // @Filter
-        // $annotationContainer->filter = $factory->createAnnotationCallable("filter");
 
         return $annotationContainer;
     }
@@ -352,6 +306,9 @@ class AnnotationDelegator
         $annotationContainer = new AnnotationContainer();
         $annotationContainer->annotationInfoList = $reader->getAnnotationInfoList();
         $annotationContainer->exception = $reader->getException();
+        $annotationContainer->customAnnotationInfoList = array_filter($annotationContainer->annotationInfoList, function ($key) {
+            return !in_array($key, [Filter::class, ExceptionHandler::class, Alias::class], true);
+        }, ARRAY_FILTER_USE_KEY);
 
         return $annotationContainer;
     }

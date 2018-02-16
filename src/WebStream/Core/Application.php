@@ -49,10 +49,6 @@ class Application
             $resolver = new Resolver($this->container);
             $resolver->runController(); // MVCレイヤへのリクエストの振り分けを実行する
         } catch (ApplicationException $e) {
-
-            var_dump($e);
-            exit;
-
             // 内部例外の内、ハンドリングを許可している例外
             try {
                 $this->container->logger->error($e->getMessage());

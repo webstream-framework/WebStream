@@ -8,7 +8,7 @@ class Test1Helper extends CoreHelper
     public function write($list)
     {
         foreach ($list as $elem) {
-            echo "<p>" . $this->encodeHtml($elem->getName()) . "</p>";
+            echo $this->encodeHtml($elem->getName());
         }
     }
 }
