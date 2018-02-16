@@ -74,8 +74,8 @@ class ExceptionDelegator
         }
         $invokeMethods = [];
         foreach ($this->exceptionHandler as $exceptionHandlerAnnotation) {
-            $exceptions = $exceptionHandlerAnnotation->exceptions;
-            $refMethod = $exceptionHandlerAnnotation->method;
+            $exceptions = $exceptionHandlerAnnotation['exceptions'];
+            $refMethod = $exceptionHandlerAnnotation['refMethod'];
             foreach ($exceptions as $exception) {
                 if (is_a($originException, is_object($exception) ? get_class($exception) : $exception)) {
                     // 一つのメソッドに複数の捕捉例外が指定された場合(派生例外クラス含む)、先勝で1回のみ実行する

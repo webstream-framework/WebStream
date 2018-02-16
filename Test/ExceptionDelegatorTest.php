@@ -2,7 +2,6 @@
 namespace WebStream\Exception\Test;
 
 require_once dirname(__FILE__) . '/../Modules/DI/Injector.php';
-require_once dirname(__FILE__) . '/../Modules/Container/Container.php';
 require_once dirname(__FILE__) . '/../Test/Fixtures/InjectedClass.php';
 require_once dirname(__FILE__) . '/../Test/Providers/ExceptionDelegatorProvider.php';
 require_once dirname(__FILE__) . '/../Delegate/ExceptionDelegator.php';
@@ -14,15 +13,14 @@ use WebStream\Exception\ApplicationException;
 use WebStream\Exception\SystemException;
 use WebStream\Exception\DelegateException;
 use WebStream\Exception\Delegate\ExceptionDelegator;
-use WebStream\Container\Container;
 use WebStream\Exception\Test\Fixtures\InjectedClass;
 use WebStream\Exception\Test\Providers\ExceptionDelegatorProvider;
 
 /**
-* ExceptionDelegatorTest
-* @author Ryuichi TANAKA.
-* @since 2017/01/07
-* @version 0.7
+ * ExceptionDelegatorTest
+ * @author Ryuichi TANAKA.
+ * @since 2017/01/07
+ * @version 0.7
  */
 class ExceptionDelegatorTest extends \PHPUnit\Framework\TestCase
 {
@@ -35,10 +33,10 @@ class ExceptionDelegatorTest extends \PHPUnit\Framework\TestCase
      * @dataProvider exceptionProvider
      * @expectedException \Exception
      */
-    public function okDelegatableExceptionTest($handledException, $exceptionObject)
+    public function okDelegatableExceptionTest($handledException, $exceptionClass)
     {
         $instance = new InjectedClass();
-        $delegator = new ExceptionDelegator($instance, $exceptionObject);
+        $delegator = new ExceptionDelegator($instance, new $exceptionClass("error message"));
         $delegator->raise();
         $this->assertTrue(false);
     }
@@ -53,11 +51,12 @@ class ExceptionDelegatorTest extends \PHPUnit\Framework\TestCase
     public function okDelegateAndHandleTest($handledException, $exceptionObject)
     {
         $instance = new InjectedClass();
-        $container = new Container();
-        $container->exceptions = [$handledException];
-        $container->method = new \ReflectionMethod($instance, "handled1");
+        $handleList = [
+            'exceptions' => [$handledException],
+            'refMethod' => new \ReflectionMethod($instance, "handled1")
+        ];
         $delegator = new ExceptionDelegator($instance, $exceptionObject);
-        $delegator->setExceptionHandler([$container]);
+        $delegator->setExceptionHandler([$handleList]);
 
         $isAsserted = false;
         try {
