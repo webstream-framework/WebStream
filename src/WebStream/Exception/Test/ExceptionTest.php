@@ -25,10 +25,10 @@ require_once dirname(__FILE__) . '/../Extend/ValidateException.php';
 use WebStream\Exception\Test\Providers\ExceptionProvider;
 
 /**
-* ExceptionTest
-* @author Ryuichi TANAKA.
-* @since 2017/01/07
-* @version 0.7
+ * ExceptionTest
+ * @author Ryuichi TANAKA.
+ * @since 2017/01/07
+ * @version 0.7
  */
 class ExceptionTest extends \PHPUnit\Framework\TestCase
 {
