@@ -10,7 +10,6 @@ use WebStream\Annotation\Base\IProperty;
 use WebStream\Annotation\Base\IRead;
 use WebStream\Annotation\Reader\Extend\ExtendReader;
 use WebStream\Container\Container;
-use WebStream\DI\Injector;
 use WebStream\Exception\Delegate\ExceptionDelegator;
 use WebStream\Exception\Extend\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
@@ -24,27 +23,10 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class AnnotationReader
 {
-    use Injector;
-
-    /**
-     * @var \ReflectionClass リフレクションクラスオブジェクト
-     */
-    // private $refClass;
-
     /**
      * @var IAnnotatable インスタンス
      */
     private $instance;
-
-    /**
-     * @var Logger ロガー
-     */
-    // private $logger;
-
-    /**
-     * @var Container コンテナ
-     */
-    // private $container;
 
     /**
      * @var array<string> 読み込み可能アノテーション情報
@@ -79,7 +61,6 @@ class AnnotationReader
     /**
      * constructor
      * @param IAnnotatable ターゲットインスタンス
-     * @param Container 依存コンテナ
      */
     public function __construct(IAnnotatable $instance)
     {
@@ -194,11 +175,7 @@ class AnnotationReader
                     }
 
                     $key = get_class($annotation);
-                    if (!array_key_exists($key, $this->readableMap)) {
-                        continue;
-                    }
-
-                    $container = $this->readableMap[$key];
+                    $container = array_key_exists($key, $this->readableMap) ? $this->readableMap[$key] : new Container();
 
                     try {
                         $annotation->onClassInject($this->instance, $refClass, $container);
@@ -258,11 +235,7 @@ class AnnotationReader
 
                     // 読み込み可能なアノテーション以外は読み込まない
                     $key = get_class($annotation);
-                    if (!array_key_exists($key, $this->readableMap)) {
-                        continue;
-                    }
-
-                    $container = $this->readableMap[$key];
+                    $container = array_key_exists($key, $this->readableMap) ? $this->readableMap[$key] : new Container();
 
                     try {
                         $annotation->onMethodInject($this->instance, $refMethod, $container);
@@ -310,18 +283,13 @@ class AnnotationReader
 
                 for ($i = 0, $count = count($annotations); $i < $count; $i++) {
                     $annotation = $annotations[$i];
-                    // $annotation->inject('logger', $this->container->logger);
 
                     if (!$annotation instanceof IProperty) {
                         continue;
                     }
 
                     $key = get_class($annotation);
-                    if (!array_key_exists($key, $this->readableMap)) {
-                        continue;
-                    }
-
-                    $container = $this->readableMap[$key];
+                    $container = array_key_exists($key, $this->readableMap) ? $this->readableMap[$key] : new Container();
 
                     try {
                         $annotation->onPropertyInject($this->instance, $refProperty, $container);
