@@ -1,5 +1,5 @@
 <?php
-namespace WebStream\Validate\Rule;
+namespace WebStream\Annotation\Attributes\Ext\ValidateRule;
 
 /**
  * MaxLength
