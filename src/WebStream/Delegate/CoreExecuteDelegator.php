@@ -181,8 +181,8 @@ class CoreExecuteDelegator
     {
         if (!method_exists($this->instance, $method)) {
             $this->injectedInstance = $this->instance;
-            $this->instance = null;
             $class = get_class($this->instance);
+            $this->instance = null;
             throw new MethodNotFoundException("${class}#${method} is not defined.");
         }
 
@@ -492,15 +492,23 @@ class CoreExecuteDelegator
             return $method;
         }
 
-        $annotation = $this->container->annotationDelegator->read($this->instance, $method, Alias::class);
+        $annotation = $this->container->annotationDelegator->read($this->instance, $method);
+        $annotationClosure = function ($classpath) use ($annotation) {
+            if (array_key_exists($classpath, $annotation->annotationInfoList)) {
+                return $annotation->annotationInfoList[$classpath];
+            }
+            return null;
+        };
+
+        $annotation = $annotationClosure(Alias::class);
 
         $originMethod = null;
-        foreach ($annotation->alias as $alias) {
-            if ($originMethod !== null && $alias->{$method} !== null) {
+        foreach ($annotation as $alias) {
+            if ($originMethod !== null && $alias['method'] !== null) {
                 throw new AnnotationException("Alias method of the same name is defined: $method");
             }
-            if ($alias->{$method} !== null) {
-                $originMethod = $alias->{$method};
+            if ($alias['method'] !== null) {
+                $originMethod = $alias['method'];
             }
         }
 

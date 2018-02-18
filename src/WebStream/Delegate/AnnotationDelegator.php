@@ -32,9 +32,14 @@ use WebStream\Template\Twig;
 class AnnotationDelegator
 {
     /**
-     * @var Container コンテナ
+     * @var Container 依存コンテナ
      */
     private $container;
+
+    /**
+     * @var Container アノテーションコンテナ
+     */
+    private $annotationContainer;
 
     /**
      * @var Logger ロガー
@@ -49,6 +54,7 @@ class AnnotationDelegator
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->annotationContainer = new Container(false);
         $this->logger = $container->logger;
     }
 
@@ -64,10 +70,9 @@ class AnnotationDelegator
      * アノテーション情報をロードする
      * @param object インスタンス
      * @param string メソッド
-     * @param string アノテーションクラスパス
      * @return Container コンテナ
      */
-    public function read($instance, $method = null, $classpath = null)
+    public function read($instance, $method = null)
     {
         if (!$instance instanceof IAnnotatable) {
             $this->logger->warn("Annotation is not available this class: " . get_class($instance));
@@ -75,31 +80,47 @@ class AnnotationDelegator
         }
 
         $this->container->executeMethod = $method ?: "";
+        $annotationContainer = null;
 
         if ($instance instanceof CoreController) {
-            return $this->readController($instance, $classpath);
+            if ($this->annotationContainer->controller === null) {
+                $this->annotationContainer->controller = $this->readController($instance);
+            }
+            $annotationContainer = $this->annotationContainer->controller;
         } elseif ($instance instanceof CoreService) {
-            return $this->readService($instance, $classpath);
+            if ($this->annotationContainer->service === null) {
+                $this->annotationContainer->service = $this->readService($instance);
+            }
+            $annotationContainer = $this->annotationContainer->service;
         } elseif ($instance instanceof CoreModel) {
-            return $this->readModel($instance, $classpath);
+            if ($this->annotationContainer->model === null) {
+                $this->annotationContainer->model = $this->readModel($instance);
+            }
+            $annotationContainer = $this->annotationContainer->model;
         } elseif ($instance instanceof CoreView) {
-            return $this->readView($instance, $classpath);
+            if ($this->annotationContainer->view === null) {
+                $this->annotationContainer->view = $this->readView($instance);
+            }
+            $annotationContainer = $this->annotationContainer->model;
         } elseif ($instance instanceof CoreHelper) {
-            return $this->readHelper($instance, $classpath);
-        } else {
-            return $this->readModule($instance, $classpath);
+            if ($this->annotationContainer->helper === null) {
+                $this->annotationContainer->helper = $this->readHelper($instance);
+            }
+            $annotationContainer = $this->annotationContainer->helper;
         }
+
+        return $annotationContainer;
     }
 
     /**
      * Controllerのアノテーション情報をロードする
      * @param CoreController インスタンス
-     * @param string アノテーションクラスパス
      * @return Container コンテナ
      */
-    private function readController(CoreController $instance, $classpath)
+    private function readController(CoreController $instance)
     {
         $reader = new AnnotationReader($instance);
+        $reader->inject('defaultContainer', $this->container);
         $reader->setActionMethod($this->container->executeMethod);
 
         // @Header
@@ -152,10 +173,9 @@ class AnnotationDelegator
     /**
      * Serviceのアノテーション情報をロードする
      * @param CoreService インスタンス
-     * @param string アノテーションクラスパス
      * @return Container コンテナ
      */
-    private function readService(CoreService $instance, $classpath)
+    private function readService(CoreService $instance)
     {
         $reader = new AnnotationReader($instance);
         $reader->setActionMethod($this->container->executeMethod);
@@ -194,10 +214,9 @@ class AnnotationDelegator
     /**
      * Modelのアノテーション情報をロードする
      * @param CoreModel インスタンス
-     * @param string アノテーションクラスパス
      * @return Container コンテナ
      */
-    private function readModel(CoreModel $instance, $classpath)
+    private function readModel(CoreModel $instance)
     {
         $reader = new AnnotationReader($instance);
         $reader->setActionMethod($this->container->executeMethod);
@@ -249,10 +268,9 @@ class AnnotationDelegator
     /**
      * Viewのアノテーション情報をロードする
      * @param CoreView インスタンス
-     * @param string アノテーションクラスパス
      * @return Container コンテナ
      */
-    private function readView(CoreView $instance, $classpath)
+    private function readView(CoreView $instance)
     {
         $reader = new AnnotationReader($instance);
 
@@ -275,10 +293,9 @@ class AnnotationDelegator
     /**
      * Helperのアノテーション情報をロードする
      * @param CoreHelper インスタンス
-     * @param string アノテーションクラスパス
      * @return Container コンテナ
      */
-    private function readHelper(CoreHelper $instance, $classpath)
+    private function readHelper(CoreHelper $instance)
     {
         $reader = new AnnotationReader($instance);
         $reader->setActionMethod($this->container->executeMethod);
@@ -309,34 +326,6 @@ class AnnotationDelegator
         $annotationContainer->customAnnotationInfoList = array_filter($annotationContainer->annotationInfoList, function ($key) {
             return !in_array($key, [Filter::class, ExceptionHandler::class, Alias::class], true);
         }, ARRAY_FILTER_USE_KEY);
-
-        return $annotationContainer;
-    }
-
-    /**
-     * 他のモジュールのアノテーション情報をロードする
-     * @param object インスタンス
-     * @param string アノテーションクラスパス
-     * @return Container コンテナ
-     */
-    private function readModule(IAnnotatable $instance, $classpath)
-    {
-        $container = $this->container;
-        $reader = new AnnotationReader($instance, $container);
-        $reader->read($classpath);
-        $injectedAnnotation = $reader->getInjectedAnnotationInfo();
-
-        $factory = new AnnotationDelegatorFactory($injectedAnnotation, $container);
-        $annotationContainer = new AnnotationContainer();
-
-        // @Filter
-        $annotationContainer->filter = $factory->createAnnotationCallable("filter");
-
-        // @Alias
-        $annotationContainer->alias = $factory->createAnnotationCallable("alias");
-
-        // custom annotation
-        $annotationContainer->customAnnotations = $factory->createCustomAnnotationCallable();
 
         return $annotationContainer;
     }

@@ -2,10 +2,12 @@
 namespace WebStream\Test\Controller;
 
 use WebStream\Core\CoreController;
+use WebStream\Annotation\Attributes\Alias;
 use WebStream\Annotation\Attributes\ExceptionHandler;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Attributes\Header;
 use WebStream\Annotation\Attributes\Template;
+use WebStream\Annotation\Attributes\Validate;
 use WebStream\Annotation\Attributes\Custom\CustomControllerAnnotation;
 use WebStream\Exception\Extend\ForbiddenAccessException;
 
@@ -56,9 +58,24 @@ class Test1Controller extends CoreController
      */
     public function test4Error($params)
     {
-        var_dump($params);
+        echo $params['method'];
     }
 
+    /**
+     * @Alias(name="test5")
+     */
+    public function test5Alias()
+    {
+        echo "t5";
+    }
+
+    /**
+     * @Validate(key="test", rule="required", method="get")
+     */
+    public function test6()
+    {
+        var_dump($this->request);
+    }
 
     public function test9()
     {
