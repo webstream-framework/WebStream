@@ -87,5 +87,6 @@ class Test1Controller extends CoreController
      */
     public function test10()
     {
+        var_dump($this->annotation);
     }
 }
