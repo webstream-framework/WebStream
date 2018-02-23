@@ -115,9 +115,6 @@ class HeaderAnnotationTest extends \PHPUnit\Framework\TestCase
     public function ngUnReadableAnnotationTest($clazz, $action, $requestMethod)
     {
         $instance = new $clazz();
-        $container = new Container();
-        $container->requestMethod = $requestMethod;
-        $container->contentType = "html";
         $annotaionReader = new AnnotationReader($instance);
         $annotaionReader->setActionMethod($action);
         $annotaionReader->readMethod();

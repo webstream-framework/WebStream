@@ -4,6 +4,7 @@ namespace WebStream\Annotation\Attributes;
 use WebStream\Annotation\Base\Annotation;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Base\IMethod;
+use WebStream\Annotation\Attributes\Ext\ValidateRule\IValidate;
 use WebStream\ClassLoader\ClassLoader;
 use WebStream\Container\Container;
 use WebStream\Exception\Extend\AnnotationException;
@@ -55,26 +56,44 @@ class Validate extends Annotation implements IMethod
             $classpath = null;
             $classLoader = new ClassLoader($container->applicationInfo->applicationRoot);
             $classLoader->inject('logger', $container->logger);
+            $ignoreDir = $container->applicationInfo->externalLibraryRoot;
+            $fileName = $className . '.php';
+            $isLoaded = $classLoader->import($fileName, function ($filepath) use ($ignoreDir) {
+                if ($ignoreDir === null || $ignoreDir === "") {
+                    return true;
+                }
+                $pos = strpos($filepath, $ignoreDir);
+                return $pos === false || $pos !== 0;
+            });
 
             // デフォルトバリデーションルールのパス
-            $filepath = $className . '.php';
-            if (!$classLoader->import($filepath)) {
+            if (!$isLoaded) {
                 $loadList = $classLoader->load($className);
+                $loadListWithoutIgnorePathList = [];
+                foreach ($loadList as $path) {
+                    $pos = strpos($path, $ignoreDir);
+                    if ($pos === false || $pos !== 0) {
+                        $loadListWithoutIgnorePathList[] = $path;
+                    }
+                }
+
                 // バリデーションルールのクラス名が複数指定されている場合は適用判断不可能なのでエラー
-                if (count($loadList) >= 2) {
+                if (count($loadListWithoutIgnorePathList) >= 2) {
                     $errorMsg = "Class load failed because the same class name has been identified: " . $className . "";
                     throw new ValidateException($errorMsg);
                 }
 
-                if (count($loadList) === 0) {
-                    $errorMsg = "Invalid Validate class filepath: " . $filepath . "";
+                if (count($loadListWithoutIgnorePathList) === 0) {
+                    $errorMsg = "Invalid Validate class: " . $className . "";
                     throw new ValidateException($errorMsg);
                 }
             }
 
-            $namespaces = $classLoader->getNamespaces($filepath);
-            if (count($namespaces) > 0) {
-                $classpath = array_shift($namespaces) . "\\" . $className;
+            $namespaces = $classLoader->getNamespaces($fileName);
+            foreach ($namespaces as $namespace) {
+                if (strpos(IValidate::class, $namespace) === 0) {
+                    $classpath = $namespace . "\\" . $className;
+                }
             }
 
             if (!class_exists($classpath)) {
@@ -83,11 +102,6 @@ class Validate extends Annotation implements IMethod
             }
 
             $validateInstance = new $classpath();
-            if ($validateInstance instanceof WebStream\Validate\IValidate) {
-                $errorMsg = get_class($validateInstance) . " must be IValidate instance.";
-                throw new AnnotationException($errorMsg);
-            }
-
             $params = null;
             if ($container->request->requestMethod === 'GET') {
                 if ($method === null || "get" === mb_strtolower($method)) {

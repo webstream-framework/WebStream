@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/../Base/Annotation.php';
 require_once dirname(__FILE__) . '/../Base/IAnnotatable.php';
 require_once dirname(__FILE__) . '/../Base/IMethod.php';
 require_once dirname(__FILE__) . '/../Base/IRead.php';
+require_once dirname(__FILE__) . '/../Base/IExtension.php';
 require_once dirname(__FILE__) . '/../Reader/AnnotationReader.php';
 require_once dirname(__FILE__) . '/../Test/Fixtures/CustomAnnotation.php';
 require_once dirname(__FILE__) . '/../Test/Fixtures/CustomAnnotationFixture1.php';
