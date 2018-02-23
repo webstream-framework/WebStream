@@ -74,7 +74,15 @@ class Test1Controller extends CoreController
      */
     public function test6()
     {
-        var_dump($this->request);
+        echo "t6";
+    }
+
+    /**
+     * @Validate(key="test", rule="length[3]")
+     */
+    public function test7()
+    {
+        echo "t7";
     }
 
     public function test9()
@@ -83,10 +91,10 @@ class Test1Controller extends CoreController
     }
 
     /**
-     * @CustomControllerAnnotation(type="custom")
+     * @CustomControllerAnnotation(name="t10")
      */
     public function test10()
     {
-        var_dump($this->annotation);
+        echo $this->annotation[CustomControllerAnnotation::class][0]['name'];
     }
 }

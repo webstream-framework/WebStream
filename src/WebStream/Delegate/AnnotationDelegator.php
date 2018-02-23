@@ -15,6 +15,7 @@ use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Attributes\Header;
 use WebStream\Annotation\Attributes\Query;
 use WebStream\Annotation\Attributes\Template;
+use WebStream\Annotation\Attributes\Validate;
 use WebStream\Annotation\Base\IAnnotatable;
 use WebStream\Annotation\Reader\AnnotationReader;
 use WebStream\Annotation\Reader\Extend\FilterExtendReader;
@@ -146,6 +147,18 @@ class AnnotationDelegator
         ];
         $container->logger = $this->container->logger;
         $reader->readable(Template::class, $container);
+
+        // @Validate
+        $container = new Container();
+        $requestMethod = $this->container->request->requestMethod;
+        $container->request = new Container(false);
+        $container->request->requestMethod = $requestMethod;
+        $requestMethod = mb_strtolower($requestMethod);
+        $container->request->{$requestMethod} = $this->container->request->{$requestMethod};
+        $container->applicationInfo = new Container(false);
+        $container->applicationInfo = $this->container->applicationInfo;
+        $container->logger = $this->container->logger;
+        $reader->readable(Validate::class, $container);
 
         // @ExceptionHandler
         $container = new Container();

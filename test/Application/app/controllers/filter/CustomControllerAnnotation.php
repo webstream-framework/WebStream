@@ -37,6 +37,6 @@ class CustomControllerAnnotation extends Annotation implements IMethod, IRead, I
      */
     public function onMethodInject(IAnnotatable $instance, \ReflectionMethod $method, Container $container)
     {
-        echo $this->injectAnnotation['type'];
+        echo $this->injectAnnotation['name'];
     }
 }
