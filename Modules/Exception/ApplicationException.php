@@ -18,9 +18,9 @@ class ApplicationException extends \LogicException
      * constructor
      * @param string $message エラーメッセージ
      * @param int $code ステータスコード
-     * @param Exception $exception 例外オブジェクト
+     * @param \Exception $exception 例外オブジェクト
      */
-    public function __construct($message, $code = 500, $exception = null)
+    public function __construct(string $message, int $code = 500, \Exception $exception = null)
     {
         parent::__construct($message, $code);
 

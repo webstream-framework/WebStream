@@ -21,7 +21,7 @@ class DelegateException extends ApplicationException
 
     /**
      * constructor
-     * @param \Exception 例外オブジェクト
+     * @param \Exception $originException 例外オブジェクト
      */
     public function __construct(\Exception $originException)
     {

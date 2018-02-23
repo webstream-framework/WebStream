@@ -42,7 +42,8 @@ class Validate extends Annotation implements IMethod
     {
         $key = $this->injectAnnotation['key'];
         $rule = $this->injectAnnotation['rule'];
-        $method = $this->injectAnnotation['method'];
+        $method = array_key_exists('method', $this->injectAnnotation) ?
+            $this->injectAnnotation['method'] : "get";
 
         if ($method !== null && !array_key_exists($method, array_flip(["get", "post", "put", "delete"]))) {
             throw new ValidateException("Invalid method attribute is specified: " . $method);
