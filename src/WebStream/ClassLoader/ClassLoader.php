@@ -107,7 +107,7 @@ class ClassLoader
      * @param string ファイル名
      * @return array<string> 名前空間リスト
      */
-    public function getNamespaces($fileName)
+    public function getNamespaces($fileName): array
     {
         $dir = new File($this->applicationRoot);
         $namespaces = [];
@@ -122,11 +122,7 @@ class ClassLoader
                     $fis = new FileInputStream($file);
                     while (($line = $fis->readLine()) !== null) {
                         if (preg_match("/^namespace\s(.*);$/", $line, $matches)) {
-                            $namespace = $matches[1];
-                            if (substr($namespace, 0) !== '\\') {
-                                $namespace = '\\' . $namespace;
-                            }
-                            $namespaces[] = $namespace;
+                            $namespaces[] = $matches[1];
                         }
                     }
                     $fis->close();

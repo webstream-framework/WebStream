@@ -64,8 +64,8 @@ trait ClassLoaderProvider
     public function loadNamespaceProvider()
     {
         return [
-            [dirname(__FILE__) . '/../Fixtures', 'ImportFixture6.php', ['\WebStream\ClassLoader\Test\Fixtures']],
-            [dirname(__FILE__) . '/../Fixtures', 'ImportFixture7.php', ['\WebStream\ClassLoader\Test\Fixtures\NamespaceSub\Sub1', '\WebStream\ClassLoader\Test\Fixtures\NamespaceSub\Sub2']]
+            [dirname(__FILE__) . '/../Fixtures', 'ImportFixture6.php', ['WebStream\ClassLoader\Test\Fixtures']],
+            [dirname(__FILE__) . '/../Fixtures', 'ImportFixture7.php', ['WebStream\ClassLoader\Test\Fixtures\NamespaceSub\Sub1', 'WebStream\ClassLoader\Test\Fixtures\NamespaceSub\Sub2']]
         ];
     }
 
