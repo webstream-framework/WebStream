@@ -10,10 +10,16 @@ use WebStream\Annotation\Attributes\Query;
  */
 class Test1Model extends CoreModel
 {
+    public function test1()
+    {
+        return $this->select("SELECT * FROM T_WebStream LIMIT :limit, :offset", ["limit" => 0, "offset" => 1])
+            ->toEntity("WebStream\Test\Model\Entity\Test1Entitiy");
+    }
+
     /**
      * @Query(file="query/webstream-test-mysql-mapper.xml")
      */
-    public function test1()
+    public function test2()
     {
         return $this->querySelect(["limit" => 0, "offset" => 1]);
     }

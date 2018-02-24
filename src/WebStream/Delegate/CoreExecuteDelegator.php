@@ -1,6 +1,7 @@
 <?php
 namespace WebStream\Delegate;
 
+use WebStream\DI\Injector;
 use WebStream\Core\CoreInterface;
 use WebStream\Core\CoreController;
 use WebStream\Core\CoreService;
@@ -33,7 +34,7 @@ use Doctrine\Common\Annotations\AnnotationException as DoctrineAnnotationExcepti
  */
 class CoreExecuteDelegator
 {
-    use CommonUtils;
+    use Injector, CommonUtils;
 
     /**
      * @var CoreInterface インスタンス

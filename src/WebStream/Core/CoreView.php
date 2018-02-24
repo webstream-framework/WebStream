@@ -1,11 +1,12 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\Container\Container;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
-use WebStream\Util\CommonUtils;
+use WebStream\Container\Container;
+use WebStream\DI\Injector;
 use WebStream\Template\ITemplateEngine;
+use WebStream\Util\CommonUtils;
 
 /**
  * CoreViewクラス
@@ -15,7 +16,7 @@ use WebStream\Template\ITemplateEngine;
  */
 class CoreView implements CoreInterface, IAnnotatable
 {
-    use CommonUtils;
+    use Injector, CommonUtils;
 
     /**
      * @var Container 依存コンテナ
@@ -35,16 +36,6 @@ class CoreView implements CoreInterface, IAnnotatable
     /**
      * {@inheritdoc}
      */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-        $this->logger = $container->logger;
-        $this->logger->debug("View start.");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __destruct()
     {
         $this->logger->debug("View end.");
@@ -56,6 +47,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     public function __initialize(Container $container)
     {
+        $this->container = $container;
     }
 
     /**

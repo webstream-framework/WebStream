@@ -1,12 +1,12 @@
 <?php
 namespace WebStream\Core;
 
-use WebStream\DI\Injector;
-use WebStream\Container\Container;
 use WebStream\Annotation\Attributes\Filter;
 use WebStream\Annotation\Base\IAnnotatable;
+use WebStream\Container\Container;
 use WebStream\Database\DatabaseManager;
 use WebStream\Database\Result;
+use WebStream\DI\Injector;
 use WebStream\Exception\Extend\DatabaseException;
 use WebStream\Exception\Extend\MethodNotFoundException;
 use WebStream\Util\CommonUtils;
@@ -34,11 +34,6 @@ class CoreModel implements CoreInterface, IAnnotatable
     private $manager;
 
     /**
-     * @var array<AnnotationContainer> クエリアノテーションリスト
-     */
-    // private $queryAnnotations;
-
-    /**
      * @var boolean オートコミットフラグ
      */
     private $isAutoCommit;
@@ -54,7 +49,7 @@ class CoreModel implements CoreInterface, IAnnotatable
     protected $logger;
 
     /**
-     * {@inheritdoc}
+     * destructor
      */
     public function __destruct()
     {
@@ -68,21 +63,9 @@ class CoreModel implements CoreInterface, IAnnotatable
      */
     public function __initialize(Container $container)
     {
-        // if ($container->connectionInfoList === null) {
-        //     $this->logger->warn("Can't use database in Model Layer.");
-        //
-        //     return;
-        // }
-
         $this->container = $container;
-
-
-
-        // $this->queryAnnotations = $container->queryAnnotations;
-        // $container->logger = $this->logger;
         $this->manager = new DatabaseManager($container);
         $this->isAutoCommit = true;
-        // $this->container = $container;
     }
 
     /**
@@ -135,8 +118,9 @@ class CoreModel implements CoreInterface, IAnnotatable
 
         try {
 
-            // TODO xmlのidにselect,update等が指定されると、メソッド実行の判定からのmethod_missingループになるバグ
 
+            // TODO xmlのidにselect,update等が指定されると、メソッド実行の判定からのmethod_missingループになるバグ
+            //
             if (preg_match('/^(?:select|(?:dele|upda)te|insert)$/', $method)) {
                 $sql = $arguments[0];
                 $bind = null;
@@ -239,9 +223,9 @@ class CoreModel implements CoreInterface, IAnnotatable
                         throw new DatabaseException($errorMessage);
                     }
                 }
-
-                return $result;
             }
+
+            return $result;
         } catch (DatabaseException $e) {
             $this->manager->rollback();
             $this->manager->disconnect();

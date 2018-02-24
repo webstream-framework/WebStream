@@ -102,7 +102,7 @@ class AnnotationDelegator
             if ($this->annotationContainer->view === null) {
                 $this->annotationContainer->view = $this->readView($instance);
             }
-            $annotationContainer = $this->annotationContainer->model;
+            $annotationContainer = $this->annotationContainer->view;
         } elseif ($instance instanceof CoreHelper) {
             if ($this->annotationContainer->helper === null) {
                 $this->annotationContainer->helper = $this->readHelper($instance);

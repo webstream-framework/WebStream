@@ -34,11 +34,12 @@ class Test1Controller extends CoreController
      */
     public function test1()
     {
+        $this->Test1->test1();
     }
 
     public function test2()
     {
-        $this->Test1->test1();
+        $this->Test1->test2();
     }
 
     /**
@@ -85,9 +86,12 @@ class Test1Controller extends CoreController
         echo "t7";
     }
 
-    public function test9()
+    /**
+     * @Validate(key="test", rule="regexp[/\d+/]")
+     */
+    public function test8()
     {
-
+        echo "t8";
     }
 
     /**
