@@ -3,7 +3,7 @@
 .DS_Store
 sandbox/
 Rakefile
-
+test/Application/core/*
 src/WebStream/**/*.yml
 src/WebStream/**/composer.json
 src/WebStream/**/phpunit.xml
