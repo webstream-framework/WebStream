@@ -166,7 +166,7 @@ class Basic implements ITemplateEngine
      */
     public function draw($filename, $params, $mimeType)
     {
-        $this->container->filename = $filename;
+        $params["filename"] = $filename;
         $params["mimeType"] = $mimeType;
         $this->render($params);
     }
