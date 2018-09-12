@@ -887,7 +887,7 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 アノテーション     |説明                                         |サンプル
 -----------------|---------------------------------------------|------
 @Header          |リクエスト/レスポンスを制御する                       |@Header(contentType="html")<br>@Header(contentType="xml")<br>@Header(allowMethod="POST")<br>@Header(allowMethod={"GET","POST"})
-@Template        |Viewテンプレートを設定する                         |@Template("index.tmpl")<br>@Template("index.tmpl",name="head" type="parts")<br>@Template("index.tmpl",name="shared",type="shared")
+@Template        |Viewテンプレートを設定する                         |@Template("index.tmpl")<br>@Template("index.tmpl",engine="basic")<br>@Template("index.tmpl",engine="twig",cacheTime="1000")
 @ExceptionHandler|例外を補足して別処理を実行する                     |@ExceptionHandler("\Exception")<br>@ExceptionHandler({"\RuntimeException","\LogicException"})
 @CsrfProtection  |CSRF対策処理を実行する                          |@CsrfProtection
 
