@@ -344,7 +344,20 @@ $this->getData($bind)->toEntity($entityClasspath);
 ただし、DBMSがトランザクション処理に対応していない場合はトランザクション処理は有効になりません。  
 なお、トランザクション処理を明示しない場合、処理が終了後、自動的にコミットを実行します。  
 `$this->beginTransation()`はトランザクション分離レベルを引数として指定できます。  
-指定可能なトランザクション分離レベルは`Doctrine\DBAL\Connection`に定義されている値となります。
+指定可能なトランザクション分離レベルは`Doctrine\DBAL\Connection`に定義されている値となります。  
+
+また、明示的にcommit,rollbackを記述しなくてもトランザクションスコープを定義できる`transactional()`を用意しています。  
+
+```php
+$manager = new DatabaseManager($container);
+$manager->loadConnection($filepath);
+$manager->connect();
+$manager->transactional(function ($conn) {
+    // 正常終了した場合、自動的にコミット
+    // 例外が発生した場合、自動的にロールバック
+    $conn->query('INSERT INTO T_WebStream (name) VALUES (:name)', ['name' => 'test'])->insert();
+});
+```
 
 ## [View](#view)
 Viewは画面に出力するHTMLなどを描画し、Controllerクラスから呼ばれます。HTML等の描画はWebStream独自のテンプレート機能を利用します。  
@@ -388,7 +401,7 @@ use WebStream\Core\CoreController;
 
 /**
  * 基本テンプレートと共通テンプレートを呼び出す。
- * @Template("index.tmpl")
+ * @Template("base.tmpl")
  */
 class BlogController extends CoreController
 {
@@ -879,7 +892,6 @@ ControllerとModelではアノテーションを使ってクラスやメソッ�
 #### すべてのレイヤで使用可能なアノテーション
 アノテーション      |説明                                         |サンプル
 -----------------|---------------------------------------------|------
-@Autowired       |プロパティに対するアノテーションを有効にする         |@Autowired(value="hoge")<br>@Autowired(type="\Hoge")
 @Alias           |指定されたメソッド名で受けてアノテーションが定義されたメソッドへ転送する |@Alias(name="aliasMethod")
 @Filter          |メソッドが呼ばれる前または後に任意の処理を実行する    |@Filter(type="before")<br>@Filter(type="after")<br>@Filter(type="before" except="method1")<br>@Filter(type="before" only="method2")<br>@Filter(type="before",only="method1",except="method2")<br>@Filter(type="after",except={"method1","method2"})
 
