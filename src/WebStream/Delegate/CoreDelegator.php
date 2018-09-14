@@ -102,8 +102,11 @@ class CoreDelegator
 
         // View
         $this->coreContainer->view = function () use ($container) {
-            $view = new CoreView($container);
-            $view->inject('logger', $container->logger);
+            $view = new CoreView();
+            $view->inject('logger', $container->logger)
+                 ->inject('request', $container->request)
+                 ->inject('response', $container->response)
+                 ->inject('applicationInfo', $container->applicationInfo);
 
             $container->logger->debug("View start.");
 

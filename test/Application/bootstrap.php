@@ -105,17 +105,6 @@ require_once dirname(__FILE__) . '/core/WebStream/Delegate/Router.php';
 require_once dirname(__FILE__) . '/core/WebStream/Template/ITemplateEngine.php';
 require_once dirname(__FILE__) . '/core/WebStream/Template/Basic.php';
 require_once dirname(__FILE__) . '/core/WebStream/Template/Twig.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/IValidate.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Equal.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Length.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Max.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/MaxLength.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Min.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/MinLength.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Number.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Range.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Regexp.php';
-// require_once dirname(__FILE__) . '/core/WebStream/Validate/Rule/Required.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/ApplicationException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/SystemException.php';
 require_once dirname(__FILE__) . '/core/WebStream/Exception/Delegate/ExceptionDelegator.php';
@@ -168,7 +157,7 @@ $classLoader->importAll("app", function ($filepath) {
     // MVCレイヤのクラスとview配下のphpファイルは除外
     return preg_match("/(?:(?:Controller|Service|Model)\.php|app\/views\/.+\.php)$/", $filepath) === 0;
 });
-
+    
 // アプリケーションを起動
 $application = new \WebStream\Core\Application($container);
 $application->run();

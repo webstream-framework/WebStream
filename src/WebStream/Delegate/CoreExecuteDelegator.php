@@ -415,18 +415,11 @@ class CoreExecuteDelegator
                 return null;
             };
 
-            // @Filter
-            $filter = $annotationClosure(Filter::class);
-
             // 各アノテーションでエラーがあった場合この時点で例外を起こす。
             // 例外発生を遅延実行させないとエラーになっていないアノテーション情報が取れない
             $exception = $annotation->exception;
             if ($exception instanceof ExceptionDelegator) {
                 $exception->raise();
-            }
-
-            foreach ($filter->initialize as $refMethod) {
-                $refMethod->invokeArgs($this->instance, [$this->container]);
             }
 
             $this->injectedInstance = $this->instance;

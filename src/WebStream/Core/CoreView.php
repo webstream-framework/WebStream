@@ -19,9 +19,19 @@ class CoreView implements CoreInterface, IAnnotatable
     use Injector, CommonUtils;
 
     /**
-     * @var Container 依存コンテナ
+     * @var Request リクエスト
      */
-    private $container;
+    private $request;
+
+    /**
+     * @var Response レスポンス
+     */
+    private $response;
+
+    /**
+     * @var Container アプリケーション情報
+     */
+    private $applicationInfo;
 
     /**
      * @var ITemplateEngine テンプレートエンジン
@@ -43,11 +53,9 @@ class CoreView implements CoreInterface, IAnnotatable
 
     /**
      * {@inheritdoc}
-     * @Filter(type="initialize")
      */
     public function __initialize(Container $container)
     {
-        $this->container = $container;
     }
 
     /**
@@ -109,7 +117,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     private function outputHeader($type)
     {
-        $this->container->response->setType($type);
+        $this->response->setType($type);
     }
 
     /**
@@ -118,7 +126,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     final public function __file($filepath)
     {
-        $publicDir = $this->container->applicationInfo->publicDir;
+        $publicDir = $this->applicationInfo->publicDir;
         if (preg_match('/\/views\/' . $publicDir . '\/img\/.+\.(?:jp(?:e|)g|png|bmp|(?:tif|gi)f)$/i', $filepath) ||
             preg_match('/\/views\/' . $publicDir . '\/css\/.+\.css$/i', $filepath) ||
             preg_match('/\/views\/' . $publicDir . '\/js\/.+\.js$/i', $filepath)) { // 画像,css,jsの場合
@@ -136,7 +144,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     final private function display($filename)
     {
-        $this->container->response->displayFile($filename);
+        $this->response->displayFile($filename);
     }
 
     /**
@@ -145,7 +153,7 @@ class CoreView implements CoreInterface, IAnnotatable
      */
     final private function download($filename)
     {
-        $userAgent = $this->container->request->userAgent();
-        $this->container->response->downloadFile($filename, $userAgent);
+        $userAgent = $this->request->userAgent();
+        $this->response->downloadFile($filename, $userAgent);
     }
 }
