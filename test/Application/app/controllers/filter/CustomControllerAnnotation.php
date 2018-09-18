@@ -15,28 +15,23 @@ use WebStream\Container\Container;
 class CustomControllerAnnotation extends Annotation implements IMethod, IRead, IExtension
 {
     private $injectAnnotation;
+    private $readAnnotation;
 
-    /**
-     * {@inheritdoc}
-     */
     public function onInject(array $injectAnnotation)
     {
         $this->injectAnnotation = $injectAnnotation;
+        $this->readAnnotation = [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAnnotationInfo(): array
     {
         return $this->injectAnnotation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onMethodInject(IAnnotatable $instance, \ReflectionMethod $method, Container $container)
     {
-        echo $this->injectAnnotation['name'];
+        $this->readAnnotation = [
+            'name' => "custom"
+        ];
     }
 }

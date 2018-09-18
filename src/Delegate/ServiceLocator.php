@@ -97,7 +97,7 @@ class ServiceLocator
             $info->cacheDir = "_cache";
             $info->cachePrefix = "webstream-cache-";
             $info->routeConfigPath = "/config/routes.yml";
-            $info->validateRuleDir = "core/WebStream/Validate/Rule/";
+            $info->validateRuleDir = "core/Validate/Rule/";
             $info->externalLibraryRoot = $applicationRoot . "/vendor";
 
             return $info;
