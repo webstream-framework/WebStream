@@ -1,3 +1,4 @@
 '/filter': 'filter_test#action'
 '/database/mysql': 'database_test1#mysql'
 '/database/postgresql': 'database_test2#postgresql'
+'/validate/required': 'validate_test#required'

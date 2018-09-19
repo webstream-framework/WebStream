@@ -11,7 +11,7 @@ class DatabaseTest2Model extends CoreModel
 {
     public function getData()
     {
-        return $this->select("SELECT * FROM T_WebStream LIMIT :limit OFFSET :offset", ["limit" => 0, "offset" => 1])
+        return $this->select("SELECT * FROM T_WebStream LIMIT :limit OFFSET :offset", ["limit" => 1, "offset" => 0])
             ->toEntity("WebStream\Test\Model\Entity\TestEntitiy");
     }
 }
