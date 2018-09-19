@@ -712,8 +712,8 @@ class BlogController extends CoreController
 {
     public function execute()
     {
-        $getParams = $this->request->get(); // GETパラメータすべて取得
-        $getParam  = $this->request->get("name");
+        $getParams = $this->request->get; // GETパラメータすべて取得
+        $getParam  = $this->request->get["name"];
     }
 }
 ```
