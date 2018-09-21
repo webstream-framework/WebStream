@@ -661,12 +661,18 @@ regexp[//]   |正規表現チェック
 
 ### カスタムバリデーション
 用意されているバリデーションルール以外に、開発者が独自にルールを定義することが出来ます。  
-`app`ディレクトリ配下の任意の場所にバリデーションクラスを作成します。
+`app`ディレクトリ配下の任意の場所にバリデーションクラスを作成します。  
+
+カスタムバリデーションクラスを定義するには以下の満たす必要があります。  
+* 名前空間は`WebStream\Annotation\Attributes\Ext\ValidateRule`にする
+* `WebStream\Annotation\Attributes\Ext\ValidateRule\IValidate`を実装し、`isValid`メソッドを定義する
+* クラス名とルール名が対応づいている
+    * クラス名が`CustomValidate`の場合、ルール名は`custom_validate`
 
 ```php
-namespace Blog;
+namespace WebStream\Annotation\Attributes\Ext\ValidateRule;
 
-use WebStream\Validate\Rule\IValidate;
+use WebStream\Annotation\Attributes\Ext\ValidateRule\IValidate;
 
 class Page implements IValidate
 {
@@ -677,10 +683,9 @@ class Page implements IValidate
 }
 ```
 
-`WebStream\Validate\Rule\IValidate`インタフェースを実装し、戻り値が`bool`型の`isValid`メソッドを実装します。  
+`WebStream\Annotation\Attributes\Ext\ValidateRule\IValidate`インタフェースを実装し、戻り値が`bool`型の`isValid`メソッドを実装します。  
 バリデーションが成功すればtrue、失敗すればfalseを返すようにします。  
-クラス名がルール名と紐付いているので、`@Validate`アノテーションに指定します。  
-ただし、ルール名はクラス名をスネークケースに変換したものになります。
+クラス名がルール名と紐付いているので、`@Validate`アノテーションに指定します。
 
 ```php
 namespace MyBlog;
@@ -813,7 +818,7 @@ applicationName = webstream
 ; 設定しない場合はデフォルト設定になる
 ; %c ログに表示するアプリケーション名
 : %d 日付(%Y-%m-%d %H:%M)
-; %d{(指定フォーマット)} 日付 例：%d{%Y-%m-%d %H:%M.%f}
+; %d{{(指定フォーマット)}} 日付 例：%d{{%Y-%m-%d %H:%M.%f}}
 ; %l ログレベル(小文字)
 ; %L ログレベル(大文字)
 ; 表示幅指定 例：%5L → [INFO ]、[DEBUG]など
