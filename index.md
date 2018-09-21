@@ -824,7 +824,7 @@ applicationName = webstream
 ; 表示幅指定 例：%5L → [INFO ]、[DEBUG]など
 ;   表示幅指定は%c、%l、%L、%dに適用可
 ; %m ログメッセージ
-format = [%c][%d{%Y-%m-%d %H:%M:%S.%f}][%5L] %m
+format = [%c][%d{{%Y-%m-%d %H:%M:%S.%f}}][%5L] %m
 ```
 
 Controller、Service、Model、Helperクラスでロガーを使用できます。  
