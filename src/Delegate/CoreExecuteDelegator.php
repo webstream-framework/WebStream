@@ -374,7 +374,7 @@ class CoreExecuteDelegator
             }
 
             $connectionContainerList = [];
-            foreach ($database as $databaseInfo) {
+            foreach (($database ?? []) as $databaseInfo) {
                 $container = new Container(false);
                 $container->filepath = $databaseInfo['filepath'];
                 $container->configPath = $databaseInfo['configPath'];
